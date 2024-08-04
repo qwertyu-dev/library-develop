@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python基礎 - データ型と変数</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; padding: 20px; max-width: 800px; margin: 0 auto; }
+        h1, h2, h3 { color: #333; }
+        pre { background-color: #f4f4f4; padding: 10px; border-radius: 5px; overflow-x: auto; }
+        .quiz { background-color: #e7f3fe; padding: 15px; border-radius: 5px; margin-top: 20px; }
+        .quiz-question { margin-bottom: 15px; }
+        button { background-color: #4CAF50; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background-color: #45a049; }
+        #result { margin-top: 20px; font-weight: bold; }
+        .quiz-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .quiz-option {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .quiz-option:hover {
+            background-color: #f0f0f0;
+        }
+        .selected {
+            background-color: #e0e0e0;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>1.1 データ型と変数</h1>
+    
+    <h2>概要</h2>
+    <p>Pythonは動的型付け言語であり、変数の型を明示的に宣言する必要がありません。しかし、各変数には特定のデータ型が関連付けられています。主要なデータ型と変数の扱い方を学びましょう。</p>
+
+    <h2>主要なデータ型</h2>
+
+    <h3>1. 数値型</h3>
+    <p><strong>整数 (int):</strong> 正数、負数、ゼロを表します。</p>
+    <p><strong>浮動小数点数 (float):</strong> 小数点を含む数値を表します。</p>
+    <p><strong>複素数 (complex):</strong> 実部と虚部を持つ数を表します。</p>
+    <pre>
+# 数値型の例
+int_num = 10
+float_num = 3.14
+complex_num = 1 + 2j
+
+print(f"整数: {int_num}, 型: {type(int_num)}")
+print(f"浮動小数点数: {float_num}, 型: {type(float_num)}")
+print(f"複素数: {complex_num}, 型: {type(complex_num)}")
+    </pre>
+
+    <h3>2. 文字列 (str)</h3>
+    <p>テキストデータを表します。シングルクォート(') またはダブルクォート(") で囲みます。</p>
+    <pre>
+# 文字列の例
+single_quoted = 'Hello'
+double_quoted = "World"
+multi_line = """This is a
+multi-line string"""
+
+print(f"文字列1: {single_quoted}, 型: {type(single_quoted)}")
+print(f"文字列2: {double_quoted}, 型: {type(double_quoted)}")
+print(f"複数行文字列: \n{multi_line}")
+    </pre>
+
+    <h3>3. リスト (list)</h3>
+    <p>順序付けられた変更可能なシーケンスです。異なる型の要素を含むことができます。</p>
+    <pre>
+# リストの例
+mixed_list = [1, "two", 3.0, [4, 5]]
+print(f"リスト: {mixed_list}, 型: {type(mixed_list)}")
+print(f"リストの2番目の要素: {mixed_list[1]}")
+    </pre>
+
+    <h3>4. タプル (tuple)</h3>
+    <p>順序付けられた変更不可能なシーケンスです。</p>
+    <pre>
+# タプルの例
+my_tuple = (1, "two", 3.0)
+print(f"タプル: {my_tuple}, 型: {type(my_tuple)}")
+    </pre>
+
+    <h3>5. 辞書 (dict)</h3>
+    <p>キーと値のペアのコレクションです。</p>
+    <pre>
+# 辞書の例
+person = {"name": "Alice", "age": 30, "city": "New York"}
+print(f"辞書: {person}, 型: {type(person)}")
+print(f"personの'name': {person['name']}")
+    </pre>
+
+    <h3>6. セット (set)</h3>
+    <p>重複のない要素の集合です。順序は保証されません。</p>
+    <pre>
+# セットの例
+my_set = {1, 2, 3, 1, 2}  # 重複は自動的に削除される
+print(f"セット: {my_set}, 型: {type(my_set)}")
+    </pre>
+
+    <h2>変数のスコープと名前空間</h2>
+    <p>Pythonでは、変数のスコープは以下のように定義されます：</p>
+    <ul>
+        <li><strong>ローカルスコープ:</strong> 関数内で定義された変数</li>
+        <li><strong>グローバルスコープ:</strong> モジュールレベルで定義された変数</li>
+        <li><strong>ビルトインスコープ:</strong> Pythonの組み込み名前（関数や例外など）</li>
+    </ul>
+    
+    <pre>
+# スコープの例
+global_var = "I'm global"
+
+def my_function():
+    local_var = "I'm local"
+    print(local_var)
+    print(global_var)
+
+my_function()
+print(global_var)
+# print(local_var)  # これはエラーになる
+    </pre>
+
+    <h2>変数の命名規則</h2>
+    <ul>
+        <li>文字、数字、アンダースコアを使用可能</li>
+        <li>数字で始めることはできない</li>
+        <li>大文字と小文字は区別される</li>
+        <li>予約語（if, for, whileなど）は使用できない</li>
+    </ul>
+
+    <h2>型変換</h2>
+    <p>Pythonでは、異なる型間で変換を行うことができます。</p>
+    <pre>
+# 型変換の例
+num_str = "10"
+num_int = int(num_str)
+num_float = float(num_str)
+
+print(f"文字列: {num_str}, 型: {type(num_str)}")
+print(f"整数に変換: {num_int}, 型: {type(num_int)}")
+print(f"浮動小数点数に変換: {num_float}, 型: {type(num_float)}")
+    </pre>
+
+    <div class="quiz">
+        <h2>クイズ: データ型と変数</h2>
+        <form id="quizForm">
+            <div class="quiz-question">
+                <p>1. Pythonの整数型を表す正しい型は何ですか？</p>
+                <div class="quiz-options" data-question="q1">
+                    <div class="quiz-option">a) int</div>
+                    <div class="quiz-option">b) float</div>
+                    <div class="quiz-option">c) str</div>
+                    <div class="quiz-option">d) number</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p>2. 文字列を定義するために使用される記号は何ですか？</p>
+                <div class="quiz-options" data-question="q2">
+                    <div class="quiz-option">a) []</div>
+                    <div class="quiz-option">b) {}</div>
+                    <div class="quiz-option">c) ()</div>
+                    <div class="quiz-option">d) '' または ""</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p>3. Pythonのリストは何で囲まれていますか？</p>
+                <div class="quiz-options" data-question="q3">
+                    <div class="quiz-option">a) ()</div>
+                    <div class="quiz-option">b) []</div>
+                    <div class="quiz-option">c) {}</div>
+                    <div class="quiz-option">d) &lt;&gt;</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p>4. Pythonの辞書は何で囲まれていますか？</p>
+                <div class="quiz-options" data-question="q4">
+                    <div class="quiz-option">a) ()</div>
+                    <div class="quiz-option">b) []</div>
+                    <div class="quiz-option">c) {}</div>
+                    <div class="quiz-option">d) &lt;&gt;</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p>5. セットを定義するために使用される記号は何ですか？</p>
+                <div class="quiz-options" data-question="q5">
+                    <div class="quiz-option">a) ()</div>
+                    <div class="quiz-option">b) []</div>
+                    <div class="quiz-option">c) {}</div>
+                    <div class="quiz-option">d) &lt;&gt;</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p>6. 変数名として適切でないものはどれですか？</p>
+                <div class="quiz-options" data-question="q6">
+                    <div class="quiz-option">a) my_var</div>
+                    <div class="quiz-option">b) 2nd_place</div>
+                    <div class="quiz-option">c) _hidden</div>
+                    <div class="quiz-option">d) class</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p>7. グローバル変数を関数内で変更するために使用するキーワードは何ですか？</p>
+                <div class="quiz-options" data-question="q7">
+                    <div class="quiz-option">a) global</div>
+                    <div class="quiz-option">b) nonlocal</div>
+                    <div class="quiz-option">c) public</div>
+                    <div class="quiz-option">d) extern</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p>8. Pythonでコメントを書くために使用する記号は何ですか？</p>
+                <div class="quiz-options" data-question="q8">
+                    <div class="quiz-option">a) //</div>
+                    <div class="quiz-option">b) /*</div>
+                    <div class="quiz-option">c) #</div>
+                    <div class="quiz-option">d) --</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p>9. 次の式の結果は何ですか？ 3 + 2 * 4</p>
+                <div class="quiz-options" data-question="q9">
+                    <div class="quiz-option">a) 20</div>
+                    <div class="quiz-option">b) 11</div>
+                    <div class="quiz-option">c) 14</div>
+                    <div class="quiz-option">d) 24</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p>10. 文字列"Hello"を3回繰り返すPythonの式はどれですか？</p>
+                <div class="quiz-options" data-question="q10">
+                    <div class="quiz-option">a) "Hello" + "Hello" + "Hello"</div>
+                    <div class="quiz-option">b) "Hello" * 3</div>
+                    <div class="quiz-option">c) repeat("Hello", 3)</div>
+                    <div class="quiz-option">d) "Hello".repeat(3)</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p>11. タプルとリストの主な違いは何ですか？</p>
+                <div class="quiz-options" data-question="q11">
+                    <div class="quiz-option">a) タプルは丸括弧、リストは角括弧を使用する</div>
+                    <div class="quiz-option">b) タプルは変更不可能、リストは変更可能</div>
+                    <div class="quiz-option">c) タプルは数値のみ、リストは任意の型を格納できる</div>
+                    <div class="quiz-option">d) タプルは順序付け不可能、リストは順序付け可能</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p>12. 文字列 "Python" の長さを返す関数は何ですか？</p>
+                <div class="quiz-options" data-question="q12">
+                    <div class="quiz-option">a) size()</div>
+                    <div class="quiz-option">b) length()</div>
+                    <div class="quiz-option">c) len()</div>
+                    <div class="quiz-option">d) count()</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p>13. 浮動小数点数 3.14 を整数に変換するPythonコードは

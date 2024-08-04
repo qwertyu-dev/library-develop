@@ -1,0 +1,583 @@
+= パターン編集機能 設計書
+:toc:
+
+== 1. 要件定義
+
+=== 1.1. 要求分析
+パターン編集は、変更情報テーブルの各行について、各カラムの値を元に、リファレンスDBに設定する設定値を計算し、DB更新情報テーブルに格納する処理である。設定値の計算はパターンのマッチングに基づいて行う。リファレンスDBの各設定値を決定するための計算式は、変更情報明細の各カラムの値によって異なる。リファレンスDBにおける1明細の設定値を決定する一式の計算式の組み合わせの定義をパターンと呼ぶ。変更情報の各明細に対して条件判定を行い、条件に合致したパターンを適用する。
+
+=== 1.2. 移植での改善方針
+現行デザインを踏襲し、Factory/Facade/編集部品構成を取る。Factoryにより条件制御をまとめ、Factoryから呼ばれるFacadeにより条件に応じたデータ編集を行う。Facadeから呼ばれる編集部品を定義し、単一責務化する。Validation/整合性チェックを生成明細に対し適用する。一括申請で行われているデータ編集処理を引き受け、受付処理に対して、データ編集役割を適切に分配する。
+
+=== 1.3. 適用範囲
+本設計書は、パターン編集処理の機能設計を対象とする。パターン編集処理は、変更情報テーブルを入力とし、DB更新情報テーブルを出力する。本設計書では、パターン編集処理の要件定義、機能定義、システム要件、機能要件、設計詳細、システムデザイン、インターフェース設計、例外設計、ロギング設計、データ管理、実装方針、残課題、セキュリティ要件、運用記述について記載する。
+
+== 2. 機能定義
+
+=== 2.1. 機能概要
+
+==== 2.1.1. 機能の説明
+パターン編集は、変更情報テーブルの各行について、各カラムの値を元に、リファレンスDBに設定する設定値を計算し、DB更新情報テーブルに格納する処理である。設定値の計算はパターンのマッチングに基づいて行う。
+
+==== 2.1.2. 機能の目的
+パターン編集の目的は、変更情報テーブルの各行について、各カラムの値を元に、リファレンスDBに設定する設定値を計算し、DB更新情報テーブルに格納することである。これにより、リファレンスDBの更新情報を生成し、後続の反映・送信処理に引き渡すことができる。
+
+=== 2.2. 処理概要
+- 変更情報テーブルのpickleファイルを読み込み、DataFrameとして処理する。
+- 変更情報テーブルの各行について、Factoryにより適用するパターンを判定し、該当するFacadeを呼び出す。
+- Facadeは編集部品を呼び出し、設定値を計算する。
+- 計算結果をDB更新情報テーブルに格納し、pickleファイルとして永続化する。
+
+=== 2.3. データレイアウト
+
+.変更情報テーブルのデータレイアウト
+[cols="1,1,1"]
+|===
+| カラム名 | データ型 | 説明
+
+| 更新情報明細キー | string | 更新情報明細を一意に識別するキー 
+| 申請の種類 | string | 部署の新設・変更・廃止のどれにあたるか
+| 部店コード | string | 部店コード
+| 部店名称 | string | 部店名称
+| 課Grコード | string | 課Grコード
+| 課Gr名称 | string | 課Gr名称
+| 親部店コード | string | 親部店コード
+| 出張所コード | string | 出張所コード
+| 出張所名称 | string | 出張所名称
+| エリアコード | string | エリアコード
+| エリア名称 | string | エリア名称
+| 常駐部店コード | string | 常駐部店コード
+| 常駐部店名称 | string | 常駐部店名称
+| 有効日付 | date | 有効日付
+| 備考 | string | 備考
+| 部店カナ | string | 部店カナ
+| 部門コード | string | 部門コード
+| 主部門コード | string | 主部門コード
+| BPR AD対象フラグ | boolean | BPR AD対象フラグ
+| 共通認証受渡予定日 | date | 後続の行内共通認証システムに情報が受け渡される予定の日付
+|===
+
+.DB更新情報テーブルのデータレイアウト
+[cols="1,1,1"]
+|===
+| カラム名 | データ型 | 説明
+
+| 更新情報明細キー | string | 更新情報明細を一意に識別するキー
+| 共通認証受渡予定日 | date | 後続の行内共通認証システムに情報が受け渡される予定の日付
+| 更新の種類 | string | リファレンスDBに対する行の追加(create)・更新(update)・削除(delete)のどれにあたるか
+| 部店コード(BPR) | string | BPR部店コード
+| 部店名(BPR) | string | BPR部店名
+| 課Grコード(BPR) | string | BPR課Grコード
+| 課Gr名(BPR) | string | BPR課Gr名
+| 部店コード(人事) | string | 人事部店コード
+| 部店名(人事) | string | 人事部店名
+| 課Grコード(人事) | string | 人事課Grコード
+| 課Gr名(人事) | string | 人事課Gr名
+| 部店コード(エリア) | string | エリア部店コード
+| 部店名(エリア) | string | エリア部店名
+| 課Grコード(エリア) | string | エリア課Grコード
+| 課Gr名(エリア) | string | エリア課Gr名
+| 親部店コード | string | 親部店コード
+| 出張所コード | string | 出張所コード
+| 出張所名称 | string | 出張所名称
+| エリアコード | string | エリアコード
+| エリア名称 | string | エリア名称
+| 常駐部店コード | string | 常駐部店コード
+| 常駐部店名称 | string | 常駐部店名称
+| Global Address List用の各種設定値 | - | Global Address List用の各種設定値
+| Exchange Server用の各種設定値 | - | Exchange Server用の各種設定値
+| ネットワークドライブ用の各種設定値 | - | ネットワークドライブ用の各種設定値
+|===
+
+=== 2.4. データ制御パターン
+
+[cols="1,1"]
+|===
+| パターン名 | 条件
+
+| 通常部店 | 部店コードの先頭1桁が0
+| 法人営業部 | 部店コードの先頭1桁が1
+| ローン推進部 | 部店コードの先頭1桁が2
+| 海外拠点 | 部店コードの先頭1桁が3
+| 銀行本部 | 部店コードの先頭1桁が6
+| 関連会社 | 部店コードの先頭1桁が7
+| 持株会社 | 部店コードの先頭2桁が71または72
+| 寮 | 部店コードの先頭1桁が9
+|===
+
+=== 2.5. データ編集定義パターン
+
+[cols="1,1,1"]
+|===
+| パターン名 | 条件 | 編集内容
+
+| 通常部店 | 部店コードの先頭1桁が0 | 通常部店用の編集を行う
+| 法人営業部 | 部店コードの先頭1桁が1 | 法人営業部用の編集を行う
+| ローン推進部 | 部店コードの先頭1桁が2 | ローン推進部用の編集を行う
+| 海外拠点 | 部店コードの先頭1桁が3 | 海外拠点用の編集を行う
+| 銀行本部 | 部店コードの先頭1桁が6 | 銀行本部用の編集を行う
+| 関連会社 | 部店コードの先頭1桁が7 | 関連会社用の編集を行う
+| 持株会社 | 部店コードの先頭2桁が71または72 | 持株会社用の編集を行う
+| 寮 | 部店コードの先頭1桁が9 | 寮用の編集を行う
+|===
+
+=== 2.6. データ編集一覧
+
+[cols="1,1"]
+|===
+| 編集項目 | 編集内容
+
+| BPR部店コード | 変更情報テーブルの部店コードをセットする
+| BPR部店名 | 変更情報テーブルの部店名称をセットする 
+| BPR課Grコード | 変更情報テーブルの課Grコードをセットする
+| BPR課Gr名 | 変更情報テーブルの課Gr名称をセットする
+| 人事部店コード | 変更情報テーブルの部店コードをセットする
+| 人事部店名 | 変更情報テーブルの部店名称をセットする
+| 人事課Grコード | 変更情報テーブルの課Grコードをセットする
+| 人事課Gr名 | 変更情報テーブルの課Gr名称をセットする
+| エリア部店コード | 変更情報テーブルの部店コードをセットする
+| エリア部店名 | 変更情報テーブルの部店名称をセットする
+| エリア課Grコード | 変更情報テーブルの課Grコードをセットする
+| エリア課Gr名 | 変更情報テーブルの課Gr名称をセットする
+| 親部店コード | 変更情報テーブルの親部店コードをセットする
+| 出張所コード | 変更情報テーブルの出張所コードをセットする
+| 出張所名称 | 変更情報テーブルの出張所名称をセットする
+| エリアコード | 変更情報テーブルのエリアコードをセットする
+| エリア名称 | 変更情報テーブルのエリア名称をセットする
+| 常駐部店コード | 変更情報テーブルの常駐部店コードをセットする
+| 常駐部店名称 | 変更情報テーブルの常駐部店名称をセットする
+| Global Address List用の各種設定値 | 部店コード等の条件に基づき、Global Address List用の各種設定値を計算しセットする
+| Exchange Server用の各種設定値 | 部店コード等の条件に基づき、Exchange Server用の各種設定値を計算しセットする
+| ネットワークドライブ用の各種設定値 | 部店コード等の条件に基づき、ネットワークドライブ用の各種設定値を計算しセットする
+|===
+
+== 3. システム要件
+
+=== 3.1. システムの構成
+パターン編集処理は、変更情報テーブルを入力とし、DB更新情報テーブルを出力する。パターン編集処理は、Factory、Facade、編集部品の3つのコンポーネントで構成される。Factoryは変更情報テーブルの各行に対して適用するパターンを判定し、Facadeを呼び出す。Facadeは編集部品を呼び出し、設定値を計算する。編集部品は設定値の計算を行う。
+
+=== 3.2. システムの動作環境
+- Python 3.x
+- Pandas
+- Pickle
+
+== 4. 機能要件
+
+=== 4.1. データ受領
+- 変更情報テーブルのpickleファイルを読み込み、DataFrameとして処理する。
+
+=== 4.2. パターンの適用と編集処理
+- 変更情報テーブルの各行について、Factoryにより適用するパターンを判定し、該当するFacadeを呼び出す。
+- Facadeは編集部品を呼び出し、設定値を計算する。
+
+=== 4.3. データの永続化
+- 計算結果をDB更新情報テーブルに格納し、pickleファイルとして永続化する。
+
+=== 4.4. データの修正
+- 必要に応じて、DB更新情報テーブルのデータを修正する。
+
+== 5. 設計詳細
+
+=== 5.1. Factoryパターンの適用
+Factoryパターンを適用し、変更情報テーブルの各行に対して適用するパターンを判定する。Factoryは、変更情報テーブルの各行の部店コード等の条件に基づいて、適用するパターンを判定し、該当するFacadeを呼び出す。
+
+=== 5.2. Facadeパターンの適用
+Facadeパターンを適用し、編集部品を呼び出して設定値を計算する。Facadeは、編集部品を呼び出し、設定値を計算する。Facadeは、編集部品で発生した例外を処理する。
+
+=== 5.3. 編集部品
+編集部品は、設定値の計算を行う。編集部品は、変更情報テーブルの各カラムの値を元に、リファレンスDBの設定値を計算する。編集部品は、単独で編集を行う場合と、他のテーブルのデータを参照して編集を行う場合がある。
+
+== 6. システムデザイン
+
+=== 6.1. 処理フロー
+
+==== 6.1.1. シーケンス図
+
+[plantuml]
+----
+@startuml
+participant main
+participant Factory
+participant Facade
+participant 編集部品
+
+main -> Factory : 変更情報明細を渡す
+activate Factory 
+Factory -> Facade : 適用するパターンを判定し、Facadeを呼び出す
+deactivate Factory
+
+activate Facade
+loop 編集部品の呼び出し
+  Facade -> 編集部品 : 編集部品を呼び出す
+  activate 編集部品
+  編集部品 -> 編集部品 : 設定値を計算
+  編集部品 --> Facade : 計算結果を返す
+  deactivate 編集部品
+end
+Facade --> main : DB更新情報を返す
+deactivate Facade
+
+main -> main : DB更新情報をpickleで永続化
+@enduml
+----
+
+==== 6.1.2. アクティビティ図
+
+[plantuml]
+----
+@startuml
+start
+:変更情報明細を読み込む;
+
+partition Factory {
+  :条件に基づきパターンを判定する;
+  if (異例ケース?) then (yes)
+    :異例ケース用のFacadeを呼び出す;
+  else (no)  
+    :通常のFacadeを呼び出す;
+  endif
+}
+
+partition Facade {
+  while (編集部品の呼び出し)
+    :編集部品を呼び出す;
+    partition 編集部品 {
+      :設定値を計算する;
+      if (例外発生?) then (yes)
+        :例外をthrowする;
+      else (no)
+        :計算結果を返す;
+      endif  
+    }
+    if (例外発生?) then (yes)
+      :例外処理を行う;
+    else (no)
+    endif
+  endwhile
+}
+
+:DB更新情報をpickleで永続化する;
+stop
+@enduml
+----
+
+=== 6.2. システムアーキテクチャ
+
+==== 6.2.1. コンポーネント構成
+
+[plantuml]
+----
+@startuml
+skinparam componentStyle uml2
+
+package "パターン編集" {
+  [main] -right-> [Factory]
+  [Factory] -right-> [Facade]
+  [Facade] -right-> [編集部品]
+  [編集部品] -left-> [Facade]
+  database "変更情報テーブル" as changeInfoTable
+  database "DB更新情報テーブル" as dbUpdateInfoTable
+  [main] -down-> changeInfoTable
+  [Facade] -down-> dbUpdateInfoTable
+}
+@enduml
+----
+
+==== 6.2.2. コンポーネント間のインターフェース定義
+- main から Factory へ変更情報明細を渡す。
+- Factory から Facade へ適用するパターンを判定し、Facadeを呼び出す。
+- Facade から 編集部品 へ編集部品を呼び出す。
+- 編集部品 から Facade へ計算結果を返す。
+- Facade から main へDB更新情報を返す。
+
+==== 6.2.3. クラス図
+
+[plantuml]
+----
+@startuml
+class Main {
+  + main()
+}
+
+class Factory {
+  + create_facade(変更情報明細): Facade
+  - パターン判定条件
+}
+
+abstract class Facade {
+  + edit(変更情報明細): DB更新情報
+  # 編集部品の呼び出し定義
+  # 例外処理() 
+}
+
+class NormalFacade {
+}
+
+class ExceptionalFacade {
+}
+
+abstract class 編集部品 {
+  + calculate(): 設定値
+  # 計算式定義
+  # 単独編集フラグ  
+  # テーブルデータ参照フラグ
+}
+
+Main -> Factory
+Factory -> Facade
+Facade -> 編集部品
+NormalFacade --|> Facade
+ExceptionalFacade --|> Facade
+@enduml
+----
+
+=== 6.3. データ構造
+
+==== 6.3.1. 入力データ
+
+===== 6.3.1.1. 変更情報テーブル
+- 変更情報テーブルのデータ構造は2.3. データレイアウトに記載。
+
+==== 6.3.2. 出力データ
+
+===== 6.3.2.1. DB更新情報テーブル
+- DB更新情報テーブルのデータ構造は2.3. データレイアウトに記載。
+
+==== 6.3.3. 内部データ構造
+
+===== 6.3.3.1. パターン判定条件
+[cols="1,1,1,1"]
+|===
+| クラス名 | 属性名 | 型 | 説明
+
+| PatternCondition | normal_branch | str | 通常部店の条件
+| PatternCondition | corporate_sales_department | str | 法人営業部の条件
+| PatternCondition | loan_promotion_department | str | ローン推進部の条件 
+| PatternCondition | overseas_base | str | 海外拠点の条件
+| PatternCondition | bank_headquarters | str | 銀行本部の条件
+| PatternCondition | affiliated_company | str | 関連会社の条件
+| PatternCondition | holding_company | str | 持株会社の条件
+| PatternCondition | dormitory | str | 寮の条件
+|===
+
+===== 6.3.3.2. 編集部品定義
+[cols="1,1,1,1"]
+|===
+| クラス名 | 属性名 | 型 | 説明
+
+| EditComponent | bpr_branch_code | str | BPR部店コードの編集内容
+| EditComponent | bpr_branch_name | str | BPR部店名の編集内容
+| EditComponent | bpr_department_code | str | BPR課Grコードの編集内容
+| EditComponent | bpr_department_name | str | BPR課Gr名の編集内容
+| EditComponent | human_resources_branch_code | str | 人事部店コードの編集内容
+| EditComponent | human_resources_branch_name | str | 人事部店名の編集内容
+| EditComponent | human_resources_department_code | str | 人事課Grコードの編集内容
+| EditComponent | human_resources_department_name | str | 人事課Gr名の編集内容
+| EditComponent | area_branch_code | str | エリア部店コードの編集内容
+| EditComponent | area_branch_name | str | エリア部店名の編集内容
+| EditComponent | area_department_code | str | エリア課Grコードの編集内容
+| EditComponent | area_department_name | str | エリア課Gr名の編集内容
+| EditComponent | parent_branch_code | str | 親部店コードの編集内容
+| EditComponent | sub_branch_code | str | 出張所コードの編集内容
+| EditComponent | sub_branch_name | str | 出張所名称の編集内容
+| EditComponent | area_code | str | エリアコードの編集内容
+| EditComponent | area_name | str | エリア名称の編集内容
+| EditComponent | resident_branch_code | str | 常駐部店コードの編集内容
+| EditComponent | resident_branch_name | str | 常駐部店名称の編集内容
+| EditComponent | global_address_list_settings | str | Global Address List用の各種設定値の編集内容
+| EditComponent | exchange_server_settings | str | Exchange Server用の各種設定値の編集内容
+| EditComponent | network_drive_settings | str | ネットワークドライブ用の各種設定値の編集内容
+|===
+
+=== 6.4. 処理方式
+
+==== 6.4.1. Factoryによるパターン判定
+
+===== 6.4.1.1. パターン判定条件
+- パターン判定条件は6.3.3.1. パターン判定条件に記載。
+
+===== 6.4.1.2. 異例ケース判定
+[cols="1,1,1,1"]
+|===
+| クラス名 | 属性名 | 型 | 説明
+
+| ExceptionalCaseCondition | leave_of_absence_or_headquarters_assignment_parent_branch | str | 休職・本部詰の親部店の条件
+|===
+
+==== 6.4.2. Facadeによる編集処理
+
+===== 6.4.2.1. 編集部品の呼び出し
+- Facadeは6.3.3.2. 編集部品定義に従って編集部品を呼び出す。
+
+===== 6.4.2.2. 例外処理
+- 編集部品で発生した例外はthrowし、Facadeで例外処理を行う。
+
+==== 6.4.3. 編集部品による設定値計算
+
+===== 6.4.3.1. 計算式定義
+- 編集部品の計算式は6.3.3.2. 編集部品定義に記載。
+
+===== 6.4.3.2. 単独編集フラグ
+[cols="1,1,1,1"]
+|===
+| クラス名 | 属性名 | 型 | 説明
+
+| EditComponent | bpr_branch_code_standalone | bool | BPR部店コード編集の単独編集フラグ
+| EditComponent | bpr_branch_name_standalone | bool | BPR部店名編集の単独編集フラグ
+| EditComponent | bpr_department_code_standalone | bool | BPR課Grコード編集の単独編集フラグ
+| EditComponent | bpr_department_name_standalone | bool | BPR課Gr名編集の単独編集フラグ
+| EditComponent | human_resources_branch_code_standalone | bool | 人事部店コード編集の単独編集フラグ
+| EditComponent | human_resources_branch_name_standalone | bool | 人事部店名編集の単独編集フラグ
+| EditComponent | human_resources_department_code_standalone | bool | 人事課Grコード編集の単独編集フラグ
+| EditComponent | human_resources_department_name_standalone | bool | 人事課Gr名編集の単独編集フラグ
+| EditComponent | area_branch_code_standalone | bool | エリア部店コード編集の単独編集フラグ
+| EditComponent | area_branch_name_standalone | bool | エリア部店名編集の単独編集フラグ
+| EditComponent | area_department_code_standalone | bool | エリア課Grコード編集の単独編集フラグ
+| EditComponent | area_department_name_standalone | bool | エリア課Gr名編集の単独編集フラグ
+| EditComponent | parent_branch_code_standalone | bool | 親部店コード編集の単独編集フラグ
+| EditComponent | sub_branch_code_standalone | bool | 出張所コード編集の単独編集フラグ
+| EditComponent | sub_branch_name_standalone | bool | 出張所名称編集の単独編集フラグ
+| EditComponent | area_code_standalone | bool | エリアコード編集の単独編集フラグ
+| EditComponent | area_name_standalone | bool | エリア名称編集の単独編集フラグ
+| EditComponent | resident_branch_code_standalone | bool | 常駐部店コード編集の単独編集フラグ
+| EditComponent | resident_branch_name_standalone | bool | 常駐部店名称編集の単独編集フラグ
+| EditComponent | global_address_list_settings_standalone | bool | Global Address List用設定値編集の単独編集フラグ
+| EditComponent | exchange_server_settings_standalone | bool | Exchange Server用設定値編集の単独編集フラグ
+| EditComponent | network_drive_settings_standalone | bool | ネットワークドライブ用設定値編集の単独編集フラグ
+|===
+
+===== 6.4.3.3. テーブルデータ参照フラグ
+[cols="1,1,1,1"]
+|===
+| クラス名 | 属性名 | 型 | 説明
+
+| EditComponent | bpr_branch_code_reference | bool | BPR部店コード編集のテーブルデータ参照フラグ
+| EditComponent | bpr_branch_name_reference | bool | BPR部店名編集のテーブルデータ参照フラグ
+| EditComponent | bpr_department_code_reference | bool | BPR課Grコード編集のテーブルデータ参照フラグ
+| EditComponent | bpr_department_name_reference | bool | BPR課Gr名編集のテーブルデータ参照フラグ
+| EditComponent | human_resources_branch_code_reference | bool | 人事部店コード編集のテーブルデータ参照フラグ
+| EditComponent | human_resources_branch_name_reference | bool | 人事部店名編集のテーブルデータ参照フラグ
+| EditComponent | human_resources_department_code_reference | bool | 人事課Grコード編集のテーブルデータ参照フラグ
+| EditComponent | human_resources_department_name_reference | bool | 人事課Gr名編集のテーブルデータ参照フラグ
+| EditComponent | area_branch_code_reference | bool | エリア部店コード編集のテーブルデータ参照フラグ
+| EditComponent | area_branch_name_reference | bool | エリア部店名編集のテーブルデータ参照フラグ
+| EditComponent | area_department_code_reference | bool | エリア課Grコード編集のテーブルデータ参照フラグ
+| EditComponent | area_department_name_reference | bool | エリア課Gr名編集のテーブルデータ参照フラグ
+| EditComponent | parent_branch_code_reference | bool | 親部店コード編集のテーブルデータ参照フラグ
+| EditComponent | sub_branch_code_reference | bool | 出張所コード編集のテーブルデータ参照フラグ
+| EditComponent | sub_branch_name_reference | bool | 出張所名称編集のテーブルデータ参照フラグ
+| EditComponent | area_code_reference | bool | エリアコード編集のテーブルデータ参照フラグ
+| EditComponent | area_name_reference | bool | エリア名称編集のテーブルデータ参照フラグ
+| EditComponent | resident_branch_code_reference | bool | 常駐部店コード編集のテーブルデータ参照フラグ
+| EditComponent | resident_branch_name_reference | bool | 常駐部店名称編集のテーブルデータ参照フラグ
+| EditComponent | global_address_list_settings_reference | bool | Global Address List用設定値編集のテーブルデータ参照フラグ
+| EditComponent | exchange_server_settings_reference | bool | Exchange Server用設定値編集のテーブルデータ参照フラグ
+| EditComponent | network_drive_settings_reference | bool | ネットワークドライブ用設定値編集のテーブルデータ参照フラグ
+|===
+
+== 7. インターフェース設計
+
+=== 7.1. 外部インターフェース
+
+==== 7.1.1. 入力インターフェース
+
+===== 7.1.1.1. 変更情報テーブルの読み込み
+- 変更情報テーブルのpickleファイルを読み込み、DataFrameとして処理する。
+
+==== 7.1.2. 出力インターフェース
+
+===== 7.1.2.1. DB更新情報テーブルの出力
+- DB更新情報テーブルをpickleファイルとして出力する。
+
+=== 7.2. 内部インターフェース
+
+==== 7.2.1. 前後のコンポーネントとの連携
+- main から Factory へ変更情報明細を渡す。
+- Factory から Facade へ適用するパターンを判定し、Facadeを呼び出す。
+- Facade から 編集部品 へ編集部品を呼び出す。
+- 編集部品 から Facade へ計算結果を返す。
+- Facade から main へDB更新情報を返す。
+
+==== 7.2.2. データフォーマット
+- 変更情報テーブル、DB更新情報テーブルのデータフォーマットは2.3. データレイアウトに記載。
+
+== 8. 例外設計
+
+=== 8.1. 例外一覧
+[cols="1,1,1,1"]
+|===
+| 管理番号 | 発生事象定義 | 原因定義 | 対処指針
+
+| E001 | 変更情報テーブルのデータ不整合 | 変更情報テーブルのデータが不正 | 変更情報テーブルのデータを修正する
+| E002 | リファレンステーブルのデータ不整合 | リファレンステーブルのデータが不正 | リファレンステーブルのデータを修正する
+| E003 | パターン判定条件のデータ不整合 | パターン判定条件のデータが不正 | パターン判定条件のデータを修正する
+| E004 | 編集部品定義のデータ不整合 | 編集部品定義のデータが不正 | 編集部品定義のデータを修正する
+| E005 | 編集部品の計算式エラー | 編集部品の計算式が不正 | 編集部品の計算式を修正する
+|===
+
+=== 8.2. 例外処理方式
+- 編集部品で発生した例外はthrowし、Facadeで例外処理を行う。
+- 例外発生時はエラーログを出力し、処理を中断する。
+
+== 9. ロギング設計
+
+=== 9.1. ロギング項目
+
+==== 9.1.1. パターン処理でのエラー位置特定情報
+- エラーが発生したパターン編集処理の位置情報をログ出力する。
+
+==== 9.1.2. 申請部署、行・列位置、値、正しい型想定・値など
+- エラーが発生した変更情報テーブルの申請部署、行・列位置、値、正しい型想定・値などをログ出力する。
+
+== 10. データ管理
+
+=== 10.1. データモデル
+- 変更情報テーブル、DB更新情報テーブルのデータモデルは2.3. データレイアウトに記載。
+
+=== 10.2. 永続化データの管理
+- 変更情報テーブル、DB更新情報テーブルはpickleファイルとして永続化する。
+
+== 11. 実装方針
+
+=== 11.1. 開発言語
+- Python 3.x
+
+=== 11.2. フレームワーク
+- Pandas
+
+=== 11.3. ライブラリ
+- Pickle
+
+== 12. 残課題
+
+=== 12.1. 未決定事項
+- Global Address List用の各種設定値の詳細
+- Exchange Server用の各種設定値の詳細
+- ネットワークドライブ用の各種設定値の詳細
+
+=== 12.2. 対応予定時期
+- 2023年12月末までに決定する。
+
+== 13. セキュリティ要件
+- 特になし。
+
+== 14. 運用記述
+
+=== 14.1. 実行環境
+- リグレ環境で実施する。
+
+=== 14.2. データの取扱
+- 処理結果となるデータはリポジトリ管理する。
+
+=== 14.3. 実行スケジュール
+- Jenkinsで自動スケジュール設定する。
+- 日次実行する。
+- マニュアル対応でJenkins実行を行うことを想定する。
+
+=== 14.4. リリース手順
+- 処理後に、生成明細を本番環境へリリースする。
+
+== 15. 別紙
+- Global Address List用の各種設定値の詳細
+- Exchange Server用の各種設定値の詳細
+- ネットワークドライブ用の各種設定値の詳細

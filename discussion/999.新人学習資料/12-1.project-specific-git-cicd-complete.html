@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>プロジェクト固有のバージョン管理とCI/CD：完全版学習資料</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; padding: 20px; max-width: 800px; margin: 0 auto; }
+        h1, h2, h3 { color: #333; }
+        pre { background-color: #f4f4f4; padding: 10px; border-radius: 5px; overflow-x: auto; }
+        .quiz { background-color: #e7f3fe; padding: 15px; border-radius: 5px; margin-top: 20px; }
+        .quiz-question { margin-bottom: 20px; }
+        .options { margin-left: 20px; }
+        button { background-color: #4CAF50; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background-color: #45a049; }
+        #result { margin-top: 20px; font-weight: bold; }
+        .note { background-color: #ffffd9; padding: 10px; border-left: 5px solid #ffeb3b; margin: 15px 0; }
+    </style>
+</head>
+<body>
+    <h1>12. プロジェクト固有のバージョン管理とCI/CD</h1>
+
+    <h2>12.1 プロジェクトのGitブランチ戦略</h2>
+    <p>このプロジェクトでは、以下のブランチ戦略を採用しています：</p>
+    <ul>
+        <li>main: 製品のリリース可能な状態を常に保持</li>
+        <li>feature-xxx: 計画的に派生した開発の塊。開発計画者が作成</li>
+        <li>dev-xxx: 個別の開発者が作成する作業ブランチ</li>
+    </ul>
+    <pre>
+# feature-xxxブランチの作成（開発計画者が実行）
+git checkout -b feature-new-functionality main
+
+# 開発者の作業フロー
+git checkout -b dev-new-feature feature-new-functionality
+# 作業を行い、コミット
+git add .
+git commit -m "新機能の実装"
+
+# feature-xxxブランチへのマージ依頼準備
+git push origin dev-new-feature
+
+# マージ後、ローカルブランチの削除
+git branch -d dev-new-feature
+    </pre>
+
+    <h2>12.2 開発フロー</h2>
+    <ol>
+        <li>開発計画者がfeature-xxxブランチを作成</li>
+        <li>開発者はfeature-xxxから自分の作業ブランチ（dev-xxx）を作成</li>
+        <li>開発者は作業を完了後、feature-xxxへのプルリクエストを作成</li>
+        <li>コードレビュー後、feature-xxxにマージ</li>
+        <li>feature-xxxの開発が完了したら、mainへのマージを検討</li>
+    </ol>
+
+    <h2>12.3 CI/CD設定</h2>
+    <p>Jenkins を使用して、以下のCI/CDパイプラインを設定します：</p>
+    <pre>
+pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                sh 'python -m py_compile src/*.py'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'python -m pytest tests/'
+            }
+        }
+        stage('Static Code Analysis') {
+            steps {
+                sh 'pylint src/*.py'
+            }
+        }
+        stage('Deploy to Staging') {
+            when {
+                branch 'feature-*'
+            }
+            steps {
+                sh './deploy_to_staging.sh'
+            }
+        }
+    }
+    post {
+        always {
+            junit 'test-reports/*.xml'
+        }
+    }
+}
+    </pre>
+
+    <div class="note">
+        <h3>重要なポイント</h3>
+        <ul>
+            <li>直接mainにマージすることは避け、必ずfeature-xxxを経由する</li>
+            <li>feature-xxxブランチは開発計画に基づいて作成される</li>
+            <li>個々の開発者は必ずfeature-xxxから派生したブランチで作業する</li>
+            <li>CI/CDパイプラインは各feature-xxxブランチで自動的に実行される</li>
+            <li>コードレビューは必須であり、品質維持に重要な役割を果たす</li>
+        </ul>
+    </div>
+
+    <h2>クイズ: プロジェクト固有のバージョン管理とCI/CD</h2>
+    <div class="quiz">
+        <form id="quizForm">
+            <div class="quiz-question">
+                <p>1. このプロジェクトで、新しい機能の開発を始める際に最初に行うべき操作は？</p>
+                <div class="options">
+                    <input type="radio" name="q1" value="a" required> a) mainブランチから直接ブランチを作成する<br>
+                    <input type="radio" name="q1" value="b"> b) feature-xxxブランチから開発ブランチを作成する<br>
+                    <input type="radio" name="q1" value="c"> c) 開発計画者にfeature-xxxブランチの作成を依頼する<br>
+                    <input type="radio" name="q1" value="d"> d) 直接mainブランチで作業を開始する
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>2. プロジェクトの開発フローにおいて、マージ依頼の正しい方向は？</p>
+                <div class="options">
+                    <input type="radio" name="q2" value="a" required> a) dev-xxxブランチからmainブランチへ<br>
+                    <input type="radio" name="q2" value="b"> b) feature-xxxブランチからmainブランチへ<br>
+                    <input type="radio" name="q2" value="c"> c) dev-xxxブランチからfeature-xxxブランチへ<br>
+                    <input type="radio" name="q2" value="d"> d) feature-xxxブランチからdev-xxxブランチへ
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>3. feature-xxxブランチを作成する責任者は誰ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q3" value="a" required> a) 個々の開発者<br>
+                    <input type="radio" name="q3" value="b"> b) プロジェクトマネージャー<br>
+                    <input type="radio" name="q3" value="c"> c) 開発計画者<br>
+                    <input type="radio" name="q3" value="d"> d) CI/CDシステム管理者
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>4. プロジェクトのCI/CDパイプラインで、ステージング環境へのデプロイはどのタイミングで行われますか？</p>
+                <div class="options">
+                    <input type="radio" name="q4" value="a" required> a) mainブランチへのマージ時<br>
+                    <input type="radio" name="q4" value="b"> b) dev-xxxブランチでのコミット時<br>
+                    <input type="radio" name="q4" value="c"> c) feature-xxxブランチでのビルド成功時<br>
+                    <input type="radio" name="q4" value="d"> d) 手動でのみ行う
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>5. プロジェクトのGitワークフローにおいて、開発者が避けるべき行動は？</p>
+                <div class="options">
+                    <input type="radio" name="q5" value="a" required> a) feature-xxxブランチから開発ブランチを作成すること<br>
+                    <input type="radio" name="q5" value="b"> b) 開発ブランチでのコミットを小さく頻繁に行うこと<br>
+                    <input type="radio" name="q5" value="c"> c) プルリクエスト作成前にローカルでテストを実行すること<br>
+                    <input type="radio" name="q5" value="d"> d) 直接mainブランチで作業を行うこと
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>6. CI/CDパイプラインのテストステージで使用されているツールは何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q6" value="a" required> a) unittest<br>
+                    <input type="radio" name="q6" value="b"> b) pytest<br>
+                    <input type="radio" name="q6" value="c"> c) nose<br>
+                    <input type="radio" name="q6" value="d"> d) doctest
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>7. プロジェクトのCI/CDパイプラインに含まれていない段階は？</p>
+                <div class="options">
+                    <input type="radio" name="q7" value="a" required> a) ビルド<br>
+                    <input type="radio" name="q7" value="b"> b) テスト<br>
+                    <input type="radio" name="q7" value="c"> c) 静的コード解析<br>
+                    <input type="radio" name="q7" value="d"> d) 本番環境へのデプロイ
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>8. プロジェクトのブランチ戦略において、mainブランチの役割は何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q8" value="a" required> a) 日々の開発作業を行う場所<br>
+                    <input type="radio" name="q8" value="b"> b) テスト環境のコードを管理する<br>
+                    <input type="radio" name="q8" value="c"> c) 常にリリース可能な状態を保持する<br>
+                    <input type="radio" name="q8" value="d"> d) 全ての機能ブランチをマージする場所
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>9. プロジェクトのCI/CDパイプラインで使用されている静的コード解析ツールは何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q9" value="a" required> a) flake8<br>
+                    <input type="radio" name="q9" value="b"> b) pylint<br>
+                    <input type="radio" name="q9" value="c"> c) mypy<br>
+                    <input type="radio" name="q9" value="d"> d) black
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>10. プロジェクトのGitワークフローにおいて、feature-xxxブランチの目的は何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q10" value="a" required> a) 個々の開発者の日々の作業を管理する<br>
+                    <input type="radio" name="q10" value="b"> b) リリース版のコードを管理する<br>
+                    <input type="radio" name="q10" value="c"> c) 計画的に派生した開発の塊を管理する<br>
+                    <input type="radio" name="q10" value="d"> d) ホットフィックスを管理する
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>11. プロジェクトのCI/CDパイプラインで、テスト結果はどのように処理されていますか？</p>
+                <div class="options">
+                    <input type="radio" name="q11" value="a" required> a) コンソールに出力される<br>
+                    <input type="radio" name="q11" value="b"> b) ログファイルに保存される<br>
+                    <input type="radio" name="q11" value="c"> c) JUnitレポートとして保存される<br>
+                    <input type="radio" name="q11" value="d"> d) メールで開発者に送信される
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>12. プロジェクトの開発フローにおいて、コードレビューはどの段階で行われますか？</p>
+                <div class="options">
+                    <input type="radio" name="q12" value="a" required> a) dev-xxxブランチでの開発中<br>
+                    <input type="radio" name="q12" value="b"> b) feature-xxxブランチへのマージ前<br>
+                    <input type="radio" name="q12" value="c"> c) mainブランチへのマージ前<br>
+                    <input type="radio" name="q12" value="d"> d) ステージング環境へのデプロイ後
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>13. プロジェクトのGitワークフローにおいて、開発者が作業を開始する際のコマンドは？

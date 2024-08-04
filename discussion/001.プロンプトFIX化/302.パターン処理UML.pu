@@ -1,0 +1,134 @@
+<umls_パターン編集>
+
+コンポーネント図:
+
+[plantuml]
+----
+@startuml
+skinparam componentStyle uml2
+
+package "パターン編集" {
+  [main] -right-> [Factory]
+  [Factory] -right-> [Facade]
+  [Facade] -right-> [編集部品]
+  [編集部品] -left-> [Facade]
+  database "変更情報テーブル" as changeInfoTable
+  database "DB更新情報テーブル" as dbUpdateInfoTable
+  [main] -down-> changeInfoTable
+  [Facade] -down-> dbUpdateInfoTable
+}
+@enduml
+----
+
+シーケンス図:
+
+[plantuml]
+----
+@startuml
+participant main
+participant Factory
+participant Facade
+participant 編集部品
+
+main -> Factory : 変更情報明細を渡す
+activate Factory
+Factory -> Facade : 適用するパターンを判定し、Facadeを呼び出す
+deactivate Factory
+
+activate Facade
+loop 編集部品の呼び出し
+  Facade -> 編集部品 : 編集部品を呼び出す
+  activate 編集部品
+  編集部品 -> 編集部品 : 設定値を計算
+  編集部品 --> Facade : 計算結果を返す
+  deactivate 編集部品
+end
+Facade --> main : DB更新情報を返す
+deactivate Facade
+
+main -> main : DB更新情報をpickleで永続化
+@enduml
+----
+
+アクティビティ図:
+
+[plantuml]
+----
+@startuml
+start
+:変更情報明細を読み込む;
+
+partition Factory {
+  :条件に基づきパターンを判定する;
+  if (異例ケース?) then (yes)
+    :異例ケース用のFacadeを呼び出す;
+  else (no)
+    :通常のFacadeを呼び出す;
+  endif
+}
+
+partition Facade {
+  while (編集部品の呼び出し)
+    :編集部品を呼び出す;
+    partition 編集部品 {
+      :設定値を計算する;
+      if (例外発生?) then (yes)
+        :例外をthrowする;
+      else (no)
+        :計算結果を返す;
+      endif
+    }
+    if (例外発生?) then (yes)
+      :例外処理を行う;
+    else (no)
+    endif
+  endwhile
+}
+
+:DB更新情報をpickleで永続化する;
+stop
+@enduml
+----
+
+クラス図:
+
+[plantuml]
+----
+@startuml
+class Main {
+  + main()
+}
+
+class Factory {
+  + create_facade(変更情報明細): Facade
+  - パターン判定条件
+}
+
+abstract class Facade {
+  + edit(変更情報明細): DB更新情報
+  # 編集部品の呼び出し定義
+  # 例外処理()
+}
+
+class NormalFacade {
+}
+
+class ExceptionalFacade {
+}
+
+abstract class 編集部品 {
+  + calculate(): 設定値
+  # 計算式定義
+  # 単独編集フラグ
+  # テーブルデータ参照フラグ
+}
+
+Main -> Factory
+Factory -> Facade
+Facade -> 編集部品
+NormalFacade --|> Facade
+ExceptionalFacade --|> Facade
+@enduml
+----
+
+</umls_パターン編集>

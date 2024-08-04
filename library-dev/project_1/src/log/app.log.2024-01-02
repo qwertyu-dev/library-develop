@@ -1,0 +1,2873 @@
+2023-12-28 23:30:52 [INFO] validator_excel - main line 82: IBRDEV-I-0000001:
+2023-12-28 23:30:52 [INFO] validator_excel - main line 88: IBRDEV-I-0000003:
+2023-12-28 23:30:52 [INFO] validator_excel - main line 144: 
+|    | Columns   | Type    |
+|---:|:----------|:--------|
+|  0 | No        | int64   |
+|  1 | a         | object  |
+|  2 | b         | object  |
+|  3 | c         | int64   |
+|  4 | d         | int64   |
+|  5 | e         | int64   |
+|  6 | f         | int64   |
+|  7 | g         | object  |
+|  8 | h         | int64   |
+|  9 | i         | int64   |
+| 10 | j         | float64 |:
+2023-12-28 23:30:52 [WARNING] validator_excel - main line 159: validate error 検出件数: 0:
+2023-12-28 23:30:52 [INFO] validator_excel - main line 165: IBRDEV-I-0000002:
+2023-12-28 23:32:13 [INFO] validator_excel - main line 82: IBRDEV-I-0000001:
+2023-12-28 23:32:13 [INFO] validator_excel - main line 88: IBRDEV-I-0000003:
+2023-12-28 23:32:14 [INFO] validator_excel - main line 144: 
+|    | Columns   | Type    |
+|---:|:----------|:--------|
+|  0 | No        | int64   |
+|  1 | a         | object  |
+|  2 | b         | object  |
+|  3 | c         | int64   |
+|  4 | d         | int64   |
+|  5 | e         | int64   |
+|  6 | f         | int64   |
+|  7 | g         | object  |
+|  8 | h         | int64   |
+|  9 | i         | int64   |
+| 10 | j         | float64 |:
+2023-12-28 23:32:14 [WARNING] validator_excel - main line 159: validate error 検出件数: 0:
+2023-12-28 23:32:14 [INFO] validator_excel - main line 165: IBRDEV-I-0000002:
+2023-12-28 23:33:03 [INFO] validator_excel - main line 82: IBRDEV-I-0000001:起動しました
+2023-12-28 23:33:03 [INFO] validator_excel - main line 88: IBRDEV-I-0000003:
+2023-12-28 23:33:03 [INFO] validator_excel - main line 144: 
+|    | Columns   | Type    |
+|---:|:----------|:--------|
+|  0 | No        | int64   |
+|  1 | a         | object  |
+|  2 | b         | object  |
+|  3 | c         | int64   |
+|  4 | d         | int64   |
+|  5 | e         | int64   |
+|  6 | f         | int64   |
+|  7 | g         | object  |
+|  8 | h         | int64   |
+|  9 | i         | int64   |
+| 10 | j         | float64 |:
+2023-12-28 23:33:03 [WARNING] validator_excel - main line 159: validate error 検出件数: 0:
+2023-12-28 23:33:03 [INFO] validator_excel - main line 165: IBRDEV-I-0000002:
+2023-12-28 23:33:23 [INFO] validator_excel - main line 82: IBRDEV-I-0000001:起動しました
+2023-12-28 23:33:23 [INFO] validator_excel - main line 88: IBRDEV-I-0000003:
+2023-12-28 23:33:24 [INFO] validator_excel - main line 144: 
+|    | Columns   | Type    |
+|---:|:----------|:--------|
+|  0 | No        | int64   |
+|  1 | a         | object  |
+|  2 | b         | object  |
+|  3 | c         | int64   |
+|  4 | d         | int64   |
+|  5 | e         | int64   |
+|  6 | f         | int64   |
+|  7 | g         | object  |
+|  8 | h         | int64   |
+|  9 | i         | int64   |
+| 10 | j         | float64 |:
+2023-12-28 23:33:24 [WARNING] validator_excel - main line 159: validate error 検出件数: 0:
+2023-12-28 23:33:24 [INFO] validator_excel - main line 165: IBRDEV-I-0000002:終了しました
+2023-12-28 23:34:14 [INFO] validator_excel - main line 82: IBRDEV-I-0000001:起動しました
+2023-12-28 23:34:14 [INFO] validator_excel - main line 88: IBRDEV-I-0000003:
+2023-12-28 23:34:14 [INFO] validator_excel - main line 144: 
+|    | Columns   | Type    |
+|---:|:----------|:--------|
+|  0 | No        | int64   |
+|  1 | a         | object  |
+|  2 | b         | object  |
+|  3 | c         | int64   |
+|  4 | d         | int64   |
+|  5 | e         | int64   |
+|  6 | f         | int64   |
+|  7 | g         | object  |
+|  8 | h         | int64   |
+|  9 | i         | int64   |
+| 10 | j         | float64 |:
+2023-12-28 23:34:14 [WARNING] validator_excel - main line 159: validate error 検出件数: 0:
+2023-12-28 23:34:14 [INFO] validator_excel - main line 165: IBRDEV-I-0000002:終了しました
+2023-12-28 23:34:47 [INFO] validator_excel - main line 82: IBRDEV-I-0000001:起動しました
+2023-12-28 23:34:47 [INFO] validator_excel - main line 88: IBRDEV-I-0000003:
+2023-12-28 23:34:48 [INFO] validator_excel - main line 144: 
+|    | Columns   | Type    |
+|---:|:----------|:--------|
+|  0 | No        | int64   |
+|  1 | a         | object  |
+|  2 | b         | object  |
+|  3 | c         | int64   |
+|  4 | d         | int64   |
+|  5 | e         | int64   |
+|  6 | f         | int64   |
+|  7 | g         | object  |
+|  8 | h         | int64   |
+|  9 | i         | int64   |
+| 10 | j         | float64 |:
+2023-12-28 23:34:48 [WARNING] validator_excel - main line 159: validate error 検出件数: 0:
+2023-12-28 23:34:48 [INFO] validator_excel - main line 165: IBRDEV-I-0000002:終了しました
+2023-12-28 23:35:02 [INFO] validator_excel - main line 82: IBRDEV-I-0000001:起動しました
+2023-12-28 23:35:02 [INFO] validator_excel - main line 88: IBRDEV-I-0000003:
+2023-12-28 23:35:02 [ERROR] validator_excel - main line 169: Traceback (most recent call last):
+  File "/developer/library_dev/project_1/src/package/validator_excel/__main__.py", line 120, in main
+    _df = _df.astype({
+          ^^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandas/core/generic.py", line 6513, in astype
+    res_col = col.astype(dtype=cdt, copy=copy, errors=errors)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandas/core/generic.py", line 6534, in astype
+    new_data = self._mgr.astype(dtype=dtype, copy=copy, errors=errors)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandas/core/internals/managers.py", line 414, in astype
+    return self.apply(
+           ^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandas/core/internals/managers.py", line 354, in apply
+    applied = getattr(b, f)(**kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandas/core/internals/blocks.py", line 616, in astype
+    new_values = astype_array_safe(values, dtype, copy=copy, errors=errors)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandas/core/dtypes/astype.py", line 238, in astype_array_safe
+    new_values = astype_array(values, dtype, copy=copy)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandas/core/dtypes/astype.py", line 183, in astype_array
+    values = _astype_nansafe(values, dtype, copy=copy)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandas/core/dtypes/astype.py", line 134, in _astype_nansafe
+    return arr.astype(dtype, copy=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: 's': Error while type casting for column 'd'
+:
+2023-12-28 23:37:35 [INFO] validator_excel - main line 82: IBRDEV-I-0000001:起動しました
+2023-12-28 23:37:35 [INFO] validator_excel - main line 88: IBRDEV-I-0000003:
+2023-12-28 23:37:35 [INFO] validator_excel - main line 144: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-28 23:37:35 [WARNING] validator_excel - main line 159: validate error 検出件数: 2:
+2023-12-28 23:37:35 [ERROR] validator_excel - main line 169: Traceback (most recent call last):
+  File "/developer/library_dev/project_1/src/package/validator_excel/__main__.py", line 162, in main
+    log_msg(f'Valdation error at row {idx + 1}: {error}', LogLebel.ERROR)
+                                                          ^^^^^^^^
+NameError: name 'LogLebel' is not defined
+:
+2023-12-28 23:37:59 [INFO] validator_excel - main line 82: IBRDEV-I-0000001:起動しました
+2023-12-28 23:37:59 [INFO] validator_excel - main line 88: IBRDEV-I-0000003:
+2023-12-28 23:37:59 [INFO] validator_excel - main line 144: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-28 23:37:59 [WARNING] validator_excel - main line 159: validate error 検出件数: 2:
+2023-12-28 23:37:59 [ERROR] validator_excel - main line 162: Valdation error at row 1: <built-in method errors of pydantic_core._pydantic_core.ValidationError object at 0x7fb3b4ff7880>:
+2023-12-28 23:37:59 [ERROR] validator_excel - main line 162: Valdation error at row 2: <built-in method errors of pydantic_core._pydantic_core.ValidationError object at 0x7fb3b4ff76d0>:
+2023-12-28 23:37:59 [INFO] validator_excel - main line 165: IBRDEV-I-0000002:終了しました
+2023-12-28 23:38:38 [INFO] validator_excel - main line 82: IBRDEV-I-0000001:起動しました
+2023-12-28 23:38:38 [INFO] validator_excel - main line 88: IBRDEV-I-0000003:
+2023-12-28 23:38:38 [INFO] validator_excel - main line 144: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-28 23:38:38 [WARNING] validator_excel - main line 159: validate error 検出件数: 2:
+2023-12-28 23:38:38 [ERROR] validator_excel - main line 169: Traceback (most recent call last):
+  File "/developer/library_dev/project_1/src/package/validator_excel/__main__.py", line 162, in main
+    log_msg(f'Valdation error at row {idx + 1}: {error.value}', LogLevel.ERROR)
+                                                 ^^^^^^^^^^^
+AttributeError: 'builtin_function_or_method' object has no attribute 'value'
+:
+2023-12-28 23:38:47 [INFO] validator_excel - main line 82: IBRDEV-I-0000001:起動しました
+2023-12-28 23:38:47 [INFO] validator_excel - main line 88: IBRDEV-I-0000003:
+2023-12-28 23:38:47 [INFO] validator_excel - main line 144: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-28 23:38:47 [WARNING] validator_excel - main line 159: validate error 検出件数: 2:
+2023-12-28 23:38:47 [ERROR] validator_excel - main line 169: Traceback (most recent call last):
+  File "/developer/library_dev/project_1/src/package/validator_excel/__main__.py", line 162, in main
+    log_msg(f'Valdation error at row {idx + 1}: {error.value}', LogLevel.ERROR)
+                                                 ^^^^^^^^^^^
+AttributeError: 'builtin_function_or_method' object has no attribute 'value'
+:
+2023-12-28 23:38:53 [INFO] validator_excel - main line 82: IBRDEV-I-0000001:起動しました
+2023-12-28 23:38:53 [INFO] validator_excel - main line 88: IBRDEV-I-0000003:
+2023-12-28 23:38:53 [INFO] validator_excel - main line 144: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-28 23:38:53 [WARNING] validator_excel - main line 159: validate error 検出件数: 2:
+2023-12-28 23:38:53 [ERROR] validator_excel - main line 162: Valdation error at row 1: <built-in method errors of pydantic_core._pydantic_core.ValidationError object at 0x7f80e55a7880>:
+2023-12-28 23:38:53 [ERROR] validator_excel - main line 162: Valdation error at row 2: <built-in method errors of pydantic_core._pydantic_core.ValidationError object at 0x7f80e55a76d0>:
+2023-12-28 23:38:53 [INFO] validator_excel - main line 165: IBRDEV-I-0000002:終了しました
+2023-12-28 23:40:26 [INFO] validator_excel - main line 82: IBRDEV-I-0000001:起動しました
+2023-12-28 23:40:26 [INFO] validator_excel - main line 88: IBRDEV-I-0000003:
+2023-12-28 23:40:26 [INFO] validator_excel - main line 144: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-28 23:40:26 [WARNING] validator_excel - main line 159: validate error 検出件数: 2:
+2023-12-28 23:40:26 [ERROR] validator_excel - main line 162: Valdation error at row 1: <built-in method errors of pydantic_core._pydantic_core.ValidationError object at 0x7f723d023880>:
+2023-12-28 23:40:26 [ERROR] validator_excel - main line 162: Valdation error at row 2: <built-in method errors of pydantic_core._pydantic_core.ValidationError object at 0x7f723d0236d0>:
+2023-12-28 23:40:26 [INFO] validator_excel - main line 165: IBRDEV-I-0000002:終了しました
+2023-12-28 23:42:20 [INFO] validator_excel - main line 82: IBRDEV-I-0000001:起動しました
+2023-12-28 23:42:20 [INFO] validator_excel - main line 88: IBRDEV-I-0000003:
+2023-12-28 23:42:20 [INFO] validator_excel - main line 144: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-28 23:42:20 [WARNING] validator_excel - main line 159: validate error 検出件数: 2:
+2023-12-28 23:42:20 [ERROR] validator_excel - main line 169: Traceback (most recent call last):
+  File "/developer/library_dev/project_1/src/package/validator_excel/__main__.py", line 162, in main
+    log_msg(f'Valdation error at row {idx + 1}: {error.errors()}', LogLevel.ERROR)
+                                                 ^^^^^^^^^^^^
+AttributeError: 'builtin_function_or_method' object has no attribute 'errors'
+:
+2023-12-28 23:44:03 [INFO] validator_excel - main line 82: IBRDEV-I-0000001:起動しました
+2023-12-28 23:44:03 [INFO] validator_excel - main line 88: IBRDEV-I-0000003:
+2023-12-28 23:44:03 [INFO] validator_excel - main line 144: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-28 23:44:03 [WARNING] validator_excel - main line 159: validate error 検出件数: 2:
+2023-12-28 23:44:03 [ERROR] validator_excel - main line 169: Traceback (most recent call last):
+  File "/developer/library_dev/project_1/src/package/validator_excel/__main__.py", line 162, in main
+    log_msg(f'Valdation error at row {idx + 1}: {error.message}', LogLevel.ERROR)
+                                                 ^^^^^^^^^^^^^
+AttributeError: 'builtin_function_or_method' object has no attribute 'message'
+:
+2023-12-28 23:45:21 [INFO] validator_excel - main line 82: IBRDEV-I-0000001:起動しました
+2023-12-28 23:45:21 [INFO] validator_excel - main line 88: IBRDEV-I-0000003:
+2023-12-28 23:45:21 [INFO] validator_excel - main line 144: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-28 23:45:21 [WARNING] validator_excel - main line 159: validate error 検出件数: 2:
+2023-12-28 23:45:21 [ERROR] validator_excel - main line 162: Valdation error at row 1: <built-in method errors of pydantic_core._pydantic_core.ValidationError object at 0x7ff2d137f880>:
+2023-12-28 23:45:21 [ERROR] validator_excel - main line 162: Valdation error at row 2: <built-in method errors of pydantic_core._pydantic_core.ValidationError object at 0x7ff2d137f6d0>:
+2023-12-28 23:45:21 [INFO] validator_excel - main line 165: IBRDEV-I-0000002:終了しました
+2023-12-28 23:48:30 [INFO] validator_excel - main line 82: IBRDEV-I-0000001:起動しました
+2023-12-28 23:48:30 [INFO] validator_excel - main line 88: IBRDEV-I-0000003:
+2023-12-28 23:48:30 [INFO] validator_excel - main line 144: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-28 23:48:30 [WARNING] validator_excel - main line 159: validate error 検出件数: 2:
+2023-12-28 23:48:30 [ERROR] validator_excel - main line 162: Valdation error at row 1: [{'type': 'string_type', 'loc': ('g',), 'msg': 'Input should be a valid string', 'input': 1, 'url': 'https://errors.pydantic.dev/2.5/v/string_type'}]:
+2023-12-28 23:48:30 [ERROR] validator_excel - main line 162: Valdation error at row 2: [{'type': 'int_type', 'loc': ('d',), 'msg': 'Input should be a valid integer', 'input': 's', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}]:
+2023-12-28 23:48:30 [INFO] validator_excel - main line 165: IBRDEV-I-0000002:終了しました
+2023-12-29 06:46:12 [INFO] validator_excel - main line 82: IBRDEV-I-0000001:起動しました
+2023-12-29 06:46:12 [INFO] validator_excel - main line 88: IBRDEV-I-0000003:
+2023-12-29 06:46:12 [INFO] validator_excel - main line 144: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-29 06:46:12 [WARNING] validator_excel - main line 159: validate error 検出件数: 2:
+2023-12-29 06:46:12 [ERROR] validator_excel - main line 162: Valdation error at row 1: [{'type': 'string_type', 'loc': ('g',), 'msg': 'Input should be a valid string', 'input': 1, 'url': 'https://errors.pydantic.dev/2.5/v/string_type'}]:
+2023-12-29 06:46:12 [ERROR] validator_excel - main line 162: Valdation error at row 2: [{'type': 'int_type', 'loc': ('d',), 'msg': 'Input should be a valid integer', 'input': 's', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}]:
+2023-12-29 06:46:12 [INFO] validator_excel - main line 165: IBRDEV-I-0000002:終了しました
+2023-12-29 10:05:11 [INFO] validator_excel - main line 82: IBRDEV-I-0000001:起動しました
+2023-12-29 10:05:11 [INFO] validator_excel - main line 88: IBRDEV-I-0000003:
+2023-12-29 10:05:30 [INFO] validator_excel - main line 144: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-29 10:05:30 [WARNING] validator_excel - main line 159: validate error 検出件数: 2:
+2023-12-29 10:05:30 [ERROR] validator_excel - main line 162: Valdation error at row 1: [{'type': 'string_type', 'loc': ('g',), 'msg': 'Input should be a valid string', 'input': 1, 'url': 'https://errors.pydantic.dev/2.5/v/string_type'}]:
+2023-12-29 10:05:30 [ERROR] validator_excel - main line 162: Valdation error at row 2: [{'type': 'int_type', 'loc': ('d',), 'msg': 'Input should be a valid integer', 'input': 's', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}]:
+2023-12-29 10:05:30 [INFO] validator_excel - main line 165: IBRDEV-I-0000002:終了しました
+2023-12-29 22:02:39 [INFO] validator_excel - main line 82: IBRDEV-I-0000001:起動しました
+2023-12-29 22:02:39 [INFO] validator_excel - main line 88: IBRDEV-I-0000003:
+2023-12-29 22:03:01 [INFO] validator_excel - main line 144: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-29 22:03:01 [WARNING] validator_excel - main line 159: validate error 検出件数: 2:
+2023-12-29 22:03:01 [ERROR] validator_excel - main line 162: Valdation error at row 1: [{'type': 'string_type', 'loc': ('g',), 'msg': 'Input should be a valid string', 'input': 1, 'url': 'https://errors.pydantic.dev/2.5/v/string_type'}]:
+2023-12-29 22:03:01 [ERROR] validator_excel - main line 162: Valdation error at row 2: [{'type': 'int_type', 'loc': ('d',), 'msg': 'Input should be a valid integer', 'input': 's', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}]:
+2023-12-29 22:03:01 [INFO] validator_excel - main line 165: IBRDEV-I-0000002:終了しました
+2023-12-29 22:10:40 [INFO] validator_excel - main line 82: IBRDEV-I-0000001:起動しました
+2023-12-29 22:10:40 [INFO] validator_excel - main line 88: IBRDEV-I-0000003:
+2023-12-29 22:10:40 [INFO] validator_excel - main line 144: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-29 22:10:40 [WARNING] validator_excel - main line 159: validate error 検出件数: 2:
+2023-12-29 22:10:40 [ERROR] validator_excel - main line 162: Valdation error at row 1: [{'type': 'string_type', 'loc': ('g',), 'msg': 'Input should be a valid string', 'input': 1, 'url': 'https://errors.pydantic.dev/2.5/v/string_type'}]:
+2023-12-29 22:10:40 [ERROR] validator_excel - main line 162: Valdation error at row 2: [{'type': 'int_type', 'loc': ('d',), 'msg': 'Input should be a valid integer', 'input': 's', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}]:
+2023-12-29 22:10:40 [INFO] validator_excel - main line 165: IBRDEV-I-0000002:終了しました
+2023-12-29 22:16:11 [INFO] validator_excel - main line 82: IBRDEV-I-0000001:起動しました
+2023-12-29 22:16:11 [INFO] validator_excel - main line 88: IBRDEV-I-0000003:
+2023-12-29 22:16:11 [INFO] validator_excel - main line 144: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-29 22:16:11 [WARNING] validator_excel - main line 159: validate error 検出件数: 2:
+2023-12-29 22:16:11 [ERROR] validator_excel - main line 162: Valdation error at row 1: [{'type': 'string_type', 'loc': ('g',), 'msg': 'Input should be a valid string', 'input': 1, 'url': 'https://errors.pydantic.dev/2.5/v/string_type'}]:
+2023-12-29 22:16:11 [ERROR] validator_excel - main line 162: Valdation error at row 2: [{'type': 'int_type', 'loc': ('d',), 'msg': 'Input should be a valid integer', 'input': 's', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}]:
+2023-12-29 22:16:11 [INFO] validator_excel - main line 165: IBRDEV-I-0000002:終了しました
+2023-12-29 22:16:48 [INFO] validator_excel - main line 82: IBRDEV-I-0000001:起動しました
+2023-12-29 22:16:48 [INFO] validator_excel - main line 88: IBRDEV-I-0000003:
+2023-12-29 22:16:48 [INFO] validator_excel - main line 144: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-29 22:44:03 [WARNING] validator_excel - main line 159: validate error 検出件数: 2:
+2023-12-29 22:44:27 [ERROR] validator_excel - main line 162: Valdation error at row 1: [{'type': 'string_type', 'loc': ('g',), 'msg': 'Input should be a valid string', 'input': 1, 'url': 'https://errors.pydantic.dev/2.5/v/string_type'}]:
+2023-12-29 22:44:57 [ERROR] validator_excel - main line 162: Valdation error at row 2: [{'type': 'int_type', 'loc': ('d',), 'msg': 'Input should be a valid integer', 'input': 's', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}]:
+2023-12-29 22:45:15 [INFO] validator_excel - main line 165: IBRDEV-I-0000002:終了しました
+2023-12-29 23:10:05 [INFO] validator_excel - main line 82: IBRDEV-I-0000001:起動しました
+2023-12-29 23:10:05 [INFO] validator_excel - main line 88: IBRDEV-I-0000003:
+2023-12-29 23:10:06 [INFO] validator_excel - main line 144: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-29 23:12:17 [INFO] validator_excel_main_class - start line 129: IBRDEV-I-0000001:起動しました
+2023-12-29 23:12:17 [ERROR] validator_excel_main_class - start line 142: Traceback (most recent call last):
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class/__main__.py", line 135, in start
+    _df = self._excel_to_dataframe()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class/__main__.py", line 36, in _excel_to_dataframe
+    _excel_loader = ExcelDataLoader(
+                    ^^^^^^^^^^^^^^^^
+TypeError: ExcelDataLoader.__init__() got an unexpected keyword argument 'skip_rows'
+:
+2023-12-29 23:13:18 [INFO] validator_excel_main_class - start line 129: IBRDEV-I-0000001:起動しました
+2023-12-29 23:13:18 [ERROR] validator_excel_main_class - start line 142: Traceback (most recent call last):
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class/__main__.py", line 135, in start
+    _df = self._excel_to_dataframe()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class/__main__.py", line 36, in _excel_to_dataframe
+    _excel_loader = ExcelDataLoader(
+                    ^^^^^^^^^^^^^^^^
+TypeError: ExcelDataLoader.__init__() got an unexpected keyword argument 'skip_rows'
+:
+2023-12-29 23:15:05 [INFO] validator_excel_main_class - start line 129: IBRDEV-I-0000001:起動しました
+2023-12-29 23:15:05 [ERROR] validator_excel_main_class - start line 142: Traceback (most recent call last):
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class/__main__.py", line 135, in start
+    _df = self._excel_to_dataframe()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class/__main__.py", line 36, in _excel_to_dataframe
+    _excel_loader = ExcelDataLoader(
+                    ^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/project_1/src/lib/common_utils/ibr_excel_reader.py", line 27, in __init__
+    self.file_path = Path(self.file_path)
+                          ^^^^^^^^^^^^^^
+AttributeError: 'ExcelDataLoader' object has no attribute 'file_path'
+:
+2023-12-29 23:17:34 [INFO] validator_excel_main_class - start line 129: IBRDEV-I-0000001:起動しました
+2023-12-29 23:17:34 [ERROR] validator_excel_main_class - start line 142: Traceback (most recent call last):
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class/__main__.py", line 135, in start
+    _df = self._excel_to_dataframe()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class/__main__.py", line 36, in _excel_to_dataframe
+    _excel_loader = ExcelDataLoader(
+                    ^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/project_1/src/lib/common_utils/ibr_excel_reader.py", line 27, in __init__
+    self.file_path = Path(self.file_path)
+                          ^^^^^^^^^^^^^^
+AttributeError: 'ExcelDataLoader' object has no attribute 'file_path'
+:
+2023-12-29 23:19:12 [INFO] validator_excel_main_class - start line 129: IBRDEV-I-0000001:起動しました
+2023-12-29 23:20:05 [ERROR] validator_excel_main_class - start line 142: Traceback (most recent call last):
+  File "/developer/library_dev/project_1/src/lib/common_utils/ibr_excel_reader.py", line 36, in read_excel_one_sheet
+    if self.sheet_name not in target_excel.sheet_name:
+                              ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'ExcelFile' object has no attribute 'sheet_name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class/__main__.py", line 135, in start
+    _df = self._excel_to_dataframe()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class/__main__.py", line 41, in _excel_to_dataframe
+    _df = _excel_loader.read_excel_one_sheet()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/project_1/src/lib/common_utils/ibr_excel_reader.py", line 56, in read_excel_one_sheet
+    except pd.errors.ParseError as e:
+           ^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'pandas.errors' has no attribute 'ParseError'
+:
+2023-12-29 23:28:46 [INFO] validator_excel_main_class - start line 129: IBRDEV-I-0000001:起動しました
+2023-12-29 23:29:29 [ERROR] validator_excel_main_class - start line 142: Traceback (most recent call last):
+  File "/developer/library_dev/project_1/src/lib/common_utils/ibr_excel_reader.py", line 45, in read_excel_one_sheet
+    usecols=self.usecols,
+            ^^^^^^^^^^^^
+AttributeError: 'ExcelDataLoader' object has no attribute 'usecols'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class/__main__.py", line 135, in start
+    _df = self._excel_to_dataframe()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class/__main__.py", line 41, in _excel_to_dataframe
+    _df = _excel_loader.read_excel_one_sheet()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/project_1/src/lib/common_utils/ibr_excel_reader.py", line 56, in read_excel_one_sheet
+    except pd.errors.ParseError as e:
+           ^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'pandas.errors' has no attribute 'ParseError'
+:
+2023-12-29 23:30:12 [INFO] validator_excel_main_class - start line 129: IBRDEV-I-0000001:起動しました
+2023-12-29 23:30:40 [ERROR] validator_excel_main_class - start line 142: Traceback (most recent call last):
+  File "/developer/library_dev/project_1/src/lib/common_utils/ibr_excel_reader.py", line 45, in read_excel_one_sheet
+    usecols=self.usecols,
+            ^^^^^^^^^^^^
+AttributeError: 'ExcelDataLoader' object has no attribute 'usecols'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class/__main__.py", line 135, in start
+    _df = self._excel_to_dataframe()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class/__main__.py", line 41, in _excel_to_dataframe
+    _df = _excel_loader.read_excel_one_sheet()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/project_1/src/lib/common_utils/ibr_excel_reader.py", line 59, in read_excel_one_sheet
+    except pd.PandasError as e:
+           ^^^^^^^^^^^^^^
+AttributeError: module 'pandas' has no attribute 'PandasError'
+:
+2023-12-29 23:32:48 [INFO] validator_excel_main_class - start line 129: IBRDEV-I-0000001:起動しました
+2023-12-29 23:33:17 [ERROR] validator_excel_main_class - start line 142: Traceback (most recent call last):
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class/__main__.py", line 135, in start
+    _df = self._excel_to_dataframe()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class/__main__.py", line 66, in _excel_to_dataframe
+    _df = _df.astype({
+          ^^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandas/core/generic.py", line 6513, in astype
+    res_col = col.astype(dtype=cdt, copy=copy, errors=errors)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandas/core/generic.py", line 6534, in astype
+    new_data = self._mgr.astype(dtype=dtype, copy=copy, errors=errors)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandas/core/internals/managers.py", line 414, in astype
+    return self.apply(
+           ^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandas/core/internals/managers.py", line 354, in apply
+    applied = getattr(b, f)(**kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandas/core/internals/blocks.py", line 616, in astype
+    new_values = astype_array_safe(values, dtype, copy=copy, errors=errors)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandas/core/dtypes/astype.py", line 238, in astype_array_safe
+    new_values = astype_array(values, dtype, copy=copy)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandas/core/dtypes/astype.py", line 183, in astype_array
+    values = _astype_nansafe(values, dtype, copy=copy)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandas/core/dtypes/astype.py", line 134, in _astype_nansafe
+    return arr.astype(dtype, copy=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: 's': Error while type casting for column 'd'
+:
+2023-12-30 09:40:07 [INFO] validator_excel - main line 82: IBRDEV-I-0000001:起動しました
+2023-12-30 09:40:07 [INFO] validator_excel - main line 88: IBRDEV-I-0000003:
+2023-12-30 09:40:07 [INFO] validator_excel - main line 144: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-30 09:40:07 [WARNING] validator_excel - main line 159: validate error 検出件数: 2:
+2023-12-30 09:40:07 [ERROR] validator_excel - main line 162: Valdation error at row 1: [{'type': 'string_type', 'loc': ('g',), 'msg': 'Input should be a valid string', 'input': 1, 'url': 'https://errors.pydantic.dev/2.5/v/string_type'}]:
+2023-12-30 09:40:07 [ERROR] validator_excel - main line 162: Valdation error at row 2: [{'type': 'int_type', 'loc': ('d',), 'msg': 'Input should be a valid integer', 'input': 's', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}]:
+2023-12-30 09:40:07 [INFO] validator_excel - main line 165: IBRDEV-I-0000002:終了しました
+2023-12-30 09:40:16 [INFO] validator_excel_main_class - start line 129: IBRDEV-I-0000001:起動しました
+2023-12-30 09:40:16 [ERROR] validator_excel_main_class - start line 142: Traceback (most recent call last):
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class/__main__.py", line 135, in start
+    _df = self._excel_to_dataframe()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class/__main__.py", line 63, in _excel_to_dataframe
+    _df = _df.dropna(subset=['No'])
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandas/core/frame.py", line 6418, in dropna
+    raise KeyError(np.array(subset)[check].tolist())
+KeyError: ['No']
+:
+2023-12-30 09:40:40 [INFO] validator_excel_main_class - start line 129: IBRDEV-I-0000001:起動しました
+2023-12-30 09:40:40 [ERROR] validator_excel_main_class - start line 142: Traceback (most recent call last):
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class/__main__.py", line 135, in start
+    _df = self._excel_to_dataframe()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class/__main__.py", line 66, in _excel_to_dataframe
+    _df = _df.astype({
+          ^^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandas/core/generic.py", line 6498, in astype
+    raise KeyError(
+KeyError: "Only a column name can be used for the key in a dtype mappings argument. 'No' not found in columns."
+:
+2023-12-30 09:41:05 [INFO] validator_excel_main_class - start line 129: IBRDEV-I-0000001:起動しました
+2023-12-30 09:41:06 [INFO] validator_excel_main_class - _excel_to_dataframe line 90: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-30 09:41:06 [ERROR] validator_excel_main_class - start line 142: Traceback (most recent call last):
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class/__main__.py", line 138, in start
+    self._valdater(_df)
+    ^^^^^^^^^^^^^^
+AttributeError: 'Main' object has no attribute '_valdater'
+:
+2023-12-30 09:41:24 [INFO] validator_excel_main_class - start line 129: IBRDEV-I-0000001:起動しました
+2023-12-30 09:41:24 [INFO] validator_excel_main_class - _excel_to_dataframe line 90: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-30 09:41:24 [WARNING] validator_excel_main_class - _valdate line 118: vakidate error 検出件数: 2:
+2023-12-30 09:41:24 [ERROR] validator_excel_main_class - _valdate line 121: Valdation error at row 1: [{'type': 'string_type', 'loc': ('g',), 'msg': 'Input should be a valid string', 'input': 1, 'url': 'https://errors.pydantic.dev/2.5/v/string_type'}]:
+2023-12-30 09:41:24 [ERROR] validator_excel_main_class - _valdate line 121: Valdation error at row 2: [{'type': 'int_type', 'loc': ('d',), 'msg': 'Input should be a valid integer', 'input': 's', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}]:
+2023-12-30 09:41:24 [INFO] validator_excel_main_class - start line 145: IBRDEV-I-0000002:終了しました
+2023-12-30 09:41:27 [INFO] validator_excel_main_class - start line 129: IBRDEV-I-0000001:起動しました
+2023-12-30 09:41:27 [INFO] validator_excel_main_class - _excel_to_dataframe line 90: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-30 09:41:27 [WARNING] validator_excel_main_class - _valdate line 118: vakidate error 検出件数: 2:
+2023-12-30 09:41:27 [ERROR] validator_excel_main_class - _valdate line 121: Valdation error at row 1: [{'type': 'string_type', 'loc': ('g',), 'msg': 'Input should be a valid string', 'input': 1, 'url': 'https://errors.pydantic.dev/2.5/v/string_type'}]:
+2023-12-30 09:41:27 [ERROR] validator_excel_main_class - _valdate line 121: Valdation error at row 2: [{'type': 'int_type', 'loc': ('d',), 'msg': 'Input should be a valid integer', 'input': 's', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}]:
+2023-12-30 09:41:27 [INFO] validator_excel_main_class - start line 145: IBRDEV-I-0000002:終了しました
+2023-12-30 14:34:08 [INFO] validator_excel_main_class - start line 129: IBRDEV-I-0000001:起動しました
+2023-12-30 14:34:08 [INFO] validator_excel_main_class - _excel_to_dataframe line 90: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-30 14:34:08 [WARNING] validator_excel_main_class - _valdate line 118: vakidate error 検出件数: 2:
+2023-12-30 14:34:08 [ERROR] validator_excel_main_class - _valdate line 121: Valdation error at row 1: [{'type': 'string_type', 'loc': ('g',), 'msg': 'Input should be a valid string', 'input': 1, 'url': 'https://errors.pydantic.dev/2.5/v/string_type'}]:
+2023-12-30 14:34:08 [ERROR] validator_excel_main_class - _valdate line 121: Valdation error at row 2: [{'type': 'int_type', 'loc': ('d',), 'msg': 'Input should be a valid integer', 'input': 's', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}]:
+2023-12-30 14:34:08 [INFO] validator_excel_main_class - start line 145: IBRDEV-I-0000002:終了しました
+2023-12-30 21:44:33 [INFO] validator_excel_main_class - start line 129: IBRDEV-I-0000001:起動しました
+2023-12-30 21:44:33 [INFO] validator_excel_main_class - _excel_to_dataframe line 90: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-30 21:44:33 [WARNING] validator_excel_main_class - _valdate line 118: vakidate error 検出件数: 2:
+2023-12-30 21:44:33 [ERROR] validator_excel_main_class - _valdate line 121: Valdation error at row 1: [{'type': 'string_type', 'loc': ('g',), 'msg': 'Input should be a valid string', 'input': 1, 'url': 'https://errors.pydantic.dev/2.5/v/string_type'}]:
+2023-12-30 21:44:33 [ERROR] validator_excel_main_class - _valdate line 121: Valdation error at row 2: [{'type': 'int_type', 'loc': ('d',), 'msg': 'Input should be a valid integer', 'input': 's', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}]:
+2023-12-30 21:44:33 [INFO] validator_excel_main_class - start line 145: IBRDEV-I-0000002:終了しました
+2023-12-30 21:44:35 [INFO] validator_excel_main_class - start line 129: IBRDEV-I-0000001:起動しました
+2023-12-30 21:44:36 [INFO] validator_excel_main_class - _excel_to_dataframe line 90: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-30 21:44:36 [WARNING] validator_excel_main_class - _valdate line 118: vakidate error 検出件数: 2:
+2023-12-30 21:44:36 [ERROR] validator_excel_main_class - _valdate line 121: Valdation error at row 1: [{'type': 'string_type', 'loc': ('g',), 'msg': 'Input should be a valid string', 'input': 1, 'url': 'https://errors.pydantic.dev/2.5/v/string_type'}]:
+2023-12-30 21:44:36 [ERROR] validator_excel_main_class - _valdate line 121: Valdation error at row 2: [{'type': 'int_type', 'loc': ('d',), 'msg': 'Input should be a valid integer', 'input': 's', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}]:
+2023-12-30 21:44:36 [INFO] validator_excel_main_class - start line 145: IBRDEV-I-0000002:終了しました
+2023-12-30 21:44:39 [INFO] validator_excel - main line 82: IBRDEV-I-0000001:起動しました
+2023-12-30 21:44:39 [INFO] validator_excel - main line 88: IBRDEV-I-0000003:
+2023-12-30 21:44:39 [INFO] validator_excel - main line 144: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-30 21:44:39 [WARNING] validator_excel - main line 159: validate error 検出件数: 2:
+2023-12-30 21:44:39 [ERROR] validator_excel - main line 162: Valdation error at row 1: [{'type': 'string_type', 'loc': ('g',), 'msg': 'Input should be a valid string', 'input': 1, 'url': 'https://errors.pydantic.dev/2.5/v/string_type'}]:
+2023-12-30 21:44:39 [ERROR] validator_excel - main line 162: Valdation error at row 2: [{'type': 'int_type', 'loc': ('d',), 'msg': 'Input should be a valid integer', 'input': 's', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}]:
+2023-12-30 21:44:39 [INFO] validator_excel - main line 165: IBRDEV-I-0000002:終了しました
+2023-12-30 21:44:41 [INFO] validator_excel_main_class - start line 129: IBRDEV-I-0000001:起動しました
+2023-12-30 21:44:41 [INFO] validator_excel_main_class - _excel_to_dataframe line 90: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-30 21:44:41 [WARNING] validator_excel_main_class - _valdate line 118: vakidate error 検出件数: 2:
+2023-12-30 21:44:41 [ERROR] validator_excel_main_class - _valdate line 121: Valdation error at row 1: [{'type': 'string_type', 'loc': ('g',), 'msg': 'Input should be a valid string', 'input': 1, 'url': 'https://errors.pydantic.dev/2.5/v/string_type'}]:
+2023-12-30 21:44:41 [ERROR] validator_excel_main_class - _valdate line 121: Valdation error at row 2: [{'type': 'int_type', 'loc': ('d',), 'msg': 'Input should be a valid integer', 'input': 's', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}]:
+2023-12-30 21:44:41 [INFO] validator_excel_main_class - start line 145: IBRDEV-I-0000002:終了しました
+2023-12-31 14:01:28 [INFO] validator_excel_main_class_pandera - start line 116: IBRDEV-I-0000001:起動しました
+2023-12-31 14:01:28 [INFO] validator_excel_main_class_pandera - _excel_to_dataframe line 90: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-31 14:01:28 [ERROR] validator_excel_main_class_pandera - start line 129: Traceback (most recent call last):
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class_pandera/__main__.py", line 107, in _valdate
+    validated_df = ExcelSampleModel.validate(_df)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandera/api/pandas/model.py", line 306, in validate
+    cls.to_schema().validate(
+    ^^^^^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandera/api/pandas/model.py", line 236, in to_schema
+    cls.__fields__ = cls._collect_fields()
+                     ^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandera/api/pandas/model.py", line 451, in _collect_fields
+    raise SchemaInitError(
+pandera.errors.SchemaInitError: 'No' can only be assigned a 'Field', not a '<class 'pydantic.fields.FieldInfo'>.'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class_pandera/__main__.py", line 125, in start
+    self._valdate(_df)
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class_pandera/__main__.py", line 108, in _valdate
+    except SchemaErrors as e:
+           ^^^^^^^^^^^^
+NameError: name 'SchemaErrors' is not defined
+:
+2023-12-31 14:02:16 [INFO] validator_excel_main_class_pandera - start line 116: IBRDEV-I-0000001:起動しました
+2023-12-31 14:02:16 [INFO] validator_excel_main_class_pandera - _excel_to_dataframe line 90: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-31 14:02:16 [ERROR] validator_excel_main_class_pandera - start line 129: Traceback (most recent call last):
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class_pandera/__main__.py", line 107, in _valdate
+    validated_df = ExcelSampleModel.validate(_df)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandera/api/pandas/model.py", line 306, in validate
+    cls.to_schema().validate(
+    ^^^^^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandera/api/pandas/model.py", line 236, in to_schema
+    cls.__fields__ = cls._collect_fields()
+                     ^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandera/api/pandas/model.py", line 451, in _collect_fields
+    raise SchemaInitError(
+pandera.errors.SchemaInitError: 'No' can only be assigned a 'Field', not a '<class 'pydantic.fields.FieldInfo'>.'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class_pandera/__main__.py", line 125, in start
+    self._valdate(_df)
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class_pandera/__main__.py", line 109, in _valdate
+    self._log_msg(f'Validation failed with the following errors: {e.failure_cases}', LogLevel.ERROR)
+                                                                  ^^^^^^^^^^^^^^^
+AttributeError: 'SchemaInitError' object has no attribute 'failure_cases'
+:
+2023-12-31 14:04:35 [INFO] validator_excel_main_class_pandera - start line 119: IBRDEV-I-0000001:起動しました
+2023-12-31 14:04:35 [INFO] validator_excel_main_class_pandera - _excel_to_dataframe line 91: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-31 14:04:35 [ERROR] validator_excel_main_class_pandera - start line 132: Traceback (most recent call last):
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class_pandera/__main__.py", line 128, in start
+    self._valdate(_df)
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class_pandera/__main__.py", line 108, in _valdate
+    validated_df = ExcelSampleModel.validate(_df)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandera/api/pandas/model.py", line 306, in validate
+    cls.to_schema().validate(
+    ^^^^^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandera/api/pandas/model.py", line 236, in to_schema
+    cls.__fields__ = cls._collect_fields()
+                     ^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandera/api/pandas/model.py", line 451, in _collect_fields
+    raise SchemaInitError(
+pandera.errors.SchemaInitError: 'No' can only be assigned a 'Field', not a '<class 'pydantic.fields.FieldInfo'>.'
+:
+2023-12-31 14:05:49 [INFO] validator_excel_main_class_pandera - start line 119: IBRDEV-I-0000001:起動しました
+2023-12-31 14:05:49 [INFO] validator_excel_main_class_pandera - _excel_to_dataframe line 91: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-31 14:05:49 [ERROR] validator_excel_main_class_pandera - _valdate line 112: Validation failed with the following error: Error while coercing 'd' to type int64: Could not coerce <class 'pandas.core.series.Series'> data_container into type int64:
+   index failure_case
+0      1            s:
+2023-12-31 14:05:49 [INFO] validator_excel_main_class_pandera - start line 135: IBRDEV-I-0000002:終了しました
+2023-12-31 14:13:18 [INFO] validator_excel_main_class_pandera - start line 119: IBRDEV-I-0000001:起動しました
+2023-12-31 14:13:18 [INFO] validator_excel_main_class_pandera - _excel_to_dataframe line 91: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-31 14:13:18 [ERROR] validator_excel_main_class_pandera - _valdate line 112: Validation failed with the following error: expected series 'd' to have type int64, got object:
+2023-12-31 14:13:18 [INFO] validator_excel_main_class_pandera - start line 135: IBRDEV-I-0000002:終了しました
+2023-12-31 14:15:37 [INFO] validator_excel_main_class_pandera - start line 117: IBRDEV-I-0000001:起動しました
+2023-12-31 14:15:37 [INFO] validator_excel_main_class_pandera - _excel_to_dataframe line 92: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-31 14:15:37 [ERROR] validator_excel_main_class_pandera - start line 130: Traceback (most recent call last):
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class_pandera/__main__.py", line 126, in start
+    self._valdate(_df)
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class_pandera/__main__.py", line 109, in _valdate
+    validated_df = ExcelSampleModel.validate(_df)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandera/api/pandas/model.py", line 306, in validate
+    cls.to_schema().validate(
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandera/api/pandas/container.py", line 375, in validate
+    return self._validate(
+           ^^^^^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandera/api/pandas/container.py", line 404, in _validate
+    return self.get_backend(check_obj).validate(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandera/backends/pandas/container.py", line 97, in validate
+    error_handler = self.run_checks_and_handle_errors(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandera/backends/pandas/container.py", line 172, in run_checks_and_handle_errors
+    error_handler.collect_error(
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandera/error_handlers.py", line 38, in collect_error
+    raise schema_error from original_exc
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandera/backends/pandas/container.py", line 192, in run_schema_component_checks
+    result = schema_component.validate(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandera/api/pandas/components.py", line 169, in validate
+    return self.get_backend(check_obj).validate(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandera/backends/pandas/components.py", line 119, in validate
+    validate_column(check_obj, column_name)
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandera/backends/pandas/components.py", line 89, in validate_column
+    error_handler.collect_error(err.reason_code, err)
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandera/error_handlers.py", line 38, in collect_error
+    raise schema_error from original_exc
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandera/backends/pandas/components.py", line 68, in validate_column
+    validated_check_obj = super(ColumnBackend, self).validate(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandera/backends/pandas/array.py", line 69, in validate
+    error_handler = self.run_checks_and_handle_errors(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandera/backends/pandas/array.py", line 150, in run_checks_and_handle_errors
+    error_handler.collect_error(
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandera/error_handlers.py", line 38, in collect_error
+    raise schema_error from original_exc
+pandera.errors.SchemaError: expected series 'd' to have type int64, got object
+:
+2023-12-31 14:19:40 [INFO] validator_excel_main_class_pandera - start line 117: IBRDEV-I-0000001:起動しました
+2023-12-31 14:19:40 [INFO] validator_excel_main_class_pandera - _excel_to_dataframe line 92: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-31 14:19:40 [ERROR] validator_excel_main_class_pandera - start line 130: Traceback (most recent call last):
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class_pandera/__main__.py", line 126, in start
+    self._valdate(_df)
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class_pandera/__main__.py", line 109, in _valdate
+    validated_df = ExcelSampleModel.validate(_df)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandera/api/pandas/model.py", line 306, in validate
+    cls.to_schema().validate(
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandera/api/pandas/container.py", line 375, in validate
+    return self._validate(
+           ^^^^^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandera/api/pandas/container.py", line 404, in _validate
+    return self.get_backend(check_obj).validate(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandera/backends/pandas/container.py", line 97, in validate
+    error_handler = self.run_checks_and_handle_errors(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandera/backends/pandas/container.py", line 172, in run_checks_and_handle_errors
+    error_handler.collect_error(
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandera/error_handlers.py", line 38, in collect_error
+    raise schema_error from original_exc
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandera/backends/pandas/container.py", line 192, in run_schema_component_checks
+    result = schema_component.validate(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandera/api/pandas/components.py", line 169, in validate
+    return self.get_backend(check_obj).validate(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandera/backends/pandas/components.py", line 119, in validate
+    validate_column(check_obj, column_name)
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandera/backends/pandas/components.py", line 89, in validate_column
+    error_handler.collect_error(err.reason_code, err)
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandera/error_handlers.py", line 38, in collect_error
+    raise schema_error from original_exc
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandera/backends/pandas/components.py", line 68, in validate_column
+    validated_check_obj = super(ColumnBackend, self).validate(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandera/backends/pandas/array.py", line 69, in validate
+    error_handler = self.run_checks_and_handle_errors(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandera/backends/pandas/array.py", line 150, in run_checks_and_handle_errors
+    error_handler.collect_error(
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandera/error_handlers.py", line 38, in collect_error
+    raise schema_error from original_exc
+pandera.errors.SchemaError: expected series 'd' to have type int64, got object
+:
+2023-12-31 14:21:20 [INFO] validator_excel_main_class_pandera - start line 118: IBRDEV-I-0000001:起動しました
+2023-12-31 14:21:20 [INFO] validator_excel_main_class_pandera - _excel_to_dataframe line 92: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-31 14:21:20 [ERROR] validator_excel_main_class_pandera - start line 131: Traceback (most recent call last):
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class_pandera/__main__.py", line 127, in start
+    self._valdate(_df)
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class_pandera/__main__.py", line 109, in _valdate
+    validated_df = ExcelSampleModel.validate(_df)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandera/api/pandas/model.py", line 306, in validate
+    cls.to_schema().validate(
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandera/api/pandas/container.py", line 375, in validate
+    return self._validate(
+           ^^^^^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandera/api/pandas/container.py", line 404, in _validate
+    return self.get_backend(check_obj).validate(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandera/backends/pandas/container.py", line 97, in validate
+    error_handler = self.run_checks_and_handle_errors(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandera/backends/pandas/container.py", line 172, in run_checks_and_handle_errors
+    error_handler.collect_error(
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandera/error_handlers.py", line 38, in collect_error
+    raise schema_error from original_exc
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandera/backends/pandas/container.py", line 192, in run_schema_component_checks
+    result = schema_component.validate(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandera/api/pandas/components.py", line 169, in validate
+    return self.get_backend(check_obj).validate(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandera/backends/pandas/components.py", line 119, in validate
+    validate_column(check_obj, column_name)
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandera/backends/pandas/components.py", line 89, in validate_column
+    error_handler.collect_error(err.reason_code, err)
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandera/error_handlers.py", line 38, in collect_error
+    raise schema_error from original_exc
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandera/backends/pandas/components.py", line 68, in validate_column
+    validated_check_obj = super(ColumnBackend, self).validate(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandera/backends/pandas/array.py", line 69, in validate
+    error_handler = self.run_checks_and_handle_errors(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandera/backends/pandas/array.py", line 150, in run_checks_and_handle_errors
+    error_handler.collect_error(
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandera/error_handlers.py", line 38, in collect_error
+    raise schema_error from original_exc
+pandera.errors.SchemaError: expected series 'd' to have type int64, got object
+:
+2023-12-31 14:28:43 [INFO] validator_excel_main_class_pandera - start line 118: IBRDEV-I-0000001:起動しました
+2023-12-31 14:28:43 [INFO] validator_excel_main_class_pandera - _excel_to_dataframe line 92: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-31 14:28:43 [ERROR] validator_excel_main_class_pandera - start line 131: Traceback (most recent call last):
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class_pandera/__main__.py", line 127, in start
+    self._valdate(_df)
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class_pandera/__main__.py", line 109, in _valdate
+    validated_df = ExcelSampleModel.validate(_df)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandera/api/pandas/model.py", line 306, in validate
+    cls.to_schema().validate(
+    ^^^^^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandera/api/pandas/model.py", line 251, in to_schema
+    df_registered_checks = _convert_extras_to_checks(
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandera/api/pandas/model.py", line 123, in _convert_extras_to_checks
+    checks.append(Check.__getattr__(name)(*args, **kwargs))
+                  ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandera/api/base/checks.py", line 105, in __getattr__
+    raise AttributeError(
+AttributeError: '<class 'pandera.api.checks.Check'>' object has no attribute 'lazy'. Make sure any custom checks have been registered using the extensions api.
+:
+2023-12-31 14:32:33 [INFO] validator_excel_main_class_pandera - start line 118: IBRDEV-I-0000001:起動しました
+2023-12-31 14:32:33 [INFO] validator_excel_main_class_pandera - _excel_to_dataframe line 92: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-31 14:32:33 [ERROR] validator_excel_main_class_pandera - start line 131: Traceback (most recent call last):
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class_pandera/__main__.py", line 109, in _valdate
+    validated_df = ExcelSampleModel.validate(_df, lazy=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandera/api/pandas/model.py", line 306, in validate
+    cls.to_schema().validate(
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandera/api/pandas/container.py", line 375, in validate
+    return self._validate(
+           ^^^^^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandera/api/pandas/container.py", line 404, in _validate
+    return self.get_backend(check_obj).validate(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandera/backends/pandas/container.py", line 115, in validate
+    raise SchemaErrors(
+pandera.errors.SchemaErrors: Schema ExcelSampleModel: A total of 3 schema errors were found.
+
+Error Counts
+------------
+- SchemaErrorReason.SCHEMA_COMPONENT_CHECK: 3
+
+Schema Error Summary
+--------------------
+                                       failure_cases  n_failure_cases
+schema_context column check                                          
+Column         d      dtype('int64')        [object]                1
+               g      dtype('str')               [1]                1
+               j      dtype('float64')       [int64]                1
+
+Usage Tip
+---------
+
+Directly inspect all errors by catching the exception:
+
+```
+try:
+    schema.validate(dataframe, lazy=True)
+except SchemaErrors as err:
+    err.failure_cases  # dataframe of schema errors
+    err.data  # invalid dataframe
+```
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class_pandera/__main__.py", line 127, in start
+    self._valdate(_df)
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class_pandera/__main__.py", line 113, in _valdate
+    self._log_msg(f"Validation failed with the following error: {failure_case['error']}", LogLevel.ERROR)
+                                                                 ~~~~~~~~~~~~^^^^^^^^^
+TypeError: string indices must be integers, not 'str'
+:
+2023-12-31 14:36:26 [INFO] validator_excel_main_class_pandera - start line 116: IBRDEV-I-0000001:起動しました
+2023-12-31 14:36:26 [INFO] validator_excel_main_class_pandera - _excel_to_dataframe line 92: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-31 14:36:26 [ERROR] validator_excel_main_class_pandera - _valdate line 112: Validation failed in column 'd' at index None: object:
+2023-12-31 14:36:26 [ERROR] validator_excel_main_class_pandera - _valdate line 112: Validation failed in column 'g' at index 0: 1:
+2023-12-31 14:36:26 [ERROR] validator_excel_main_class_pandera - _valdate line 112: Validation failed in column 'j' at index None: int64:
+2023-12-31 14:36:26 [INFO] validator_excel_main_class_pandera - start line 132: IBRDEV-I-0000002:終了しました
+2023-12-31 14:39:05 [INFO] validator_excel_main_class - start line 129: IBRDEV-I-0000001:起動しました
+2023-12-31 14:39:05 [INFO] validator_excel_main_class - _excel_to_dataframe line 90: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-31 14:39:05 [WARNING] validator_excel_main_class - _valdate line 118: vakidate error 検出件数: 2:
+2023-12-31 14:39:05 [ERROR] validator_excel_main_class - _valdate line 121: Valdation error at row 1: [{'type': 'string_type', 'loc': ('g',), 'msg': 'Input should be a valid string', 'input': 1, 'url': 'https://errors.pydantic.dev/2.5/v/string_type'}]:
+2023-12-31 14:39:05 [ERROR] validator_excel_main_class - _valdate line 121: Valdation error at row 2: [{'type': 'int_type', 'loc': ('d',), 'msg': 'Input should be a valid integer', 'input': 's', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}]:
+2023-12-31 14:39:05 [INFO] validator_excel_main_class - start line 145: IBRDEV-I-0000002:終了しました
+2023-12-31 17:55:01 [INFO] validator_excel_main_class - start line 129: IBRDEV-I-0000001:起動しました
+2023-12-31 17:55:01 [INFO] validator_excel_main_class - _excel_to_dataframe line 90: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-31 17:55:01 [WARNING] validator_excel_main_class - _valdate line 118: vakidate error 検出件数: 2:
+2023-12-31 17:55:01 [ERROR] validator_excel_main_class - _valdate line 121: Valdation error at row 1: {'type': 'string_type', 'loc': ('g',), 'msg': 'Input should be a valid string', 'input': 1, 'url': 'https://errors.pydantic.dev/2.5/v/string_type'}:
+2023-12-31 17:55:01 [ERROR] validator_excel_main_class - _valdate line 121: Valdation error at row 2: {'type': 'int_type', 'loc': ('d',), 'msg': 'Input should be a valid integer', 'input': 's', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}:
+2023-12-31 17:55:01 [INFO] validator_excel_main_class - start line 145: IBRDEV-I-0000002:終了しました
+2023-12-31 17:55:44 [INFO] validator_excel_main_class - start line 129: IBRDEV-I-0000001:起動しました
+2023-12-31 17:55:44 [INFO] validator_excel_main_class - _excel_to_dataframe line 90: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-31 17:55:44 [WARNING] validator_excel_main_class - _valdate line 118: vakidate error 検出件数: 2:
+2023-12-31 17:55:44 [ERROR] validator_excel_main_class - start line 142: Traceback (most recent call last):
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class/__main__.py", line 138, in start
+    self._valdate(_df)
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class/__main__.py", line 121, in _valdate
+    self._log_msg(f'Valdation error at row {idx + 1}: {error[0].type}', LogLevel.ERROR)
+                                                       ^^^^^^^^^^^^^
+AttributeError: 'dict' object has no attribute 'type'
+:
+2023-12-31 17:56:09 [INFO] validator_excel_main_class - start line 129: IBRDEV-I-0000001:起動しました
+2023-12-31 17:56:09 [INFO] validator_excel_main_class - _excel_to_dataframe line 90: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-31 17:56:09 [WARNING] validator_excel_main_class - _valdate line 118: vakidate error 検出件数: 2:
+2023-12-31 17:56:09 [ERROR] validator_excel_main_class - _valdate line 121: Valdation error at row 1: None:
+2023-12-31 17:56:09 [ERROR] validator_excel_main_class - _valdate line 121: Valdation error at row 2: None:
+2023-12-31 17:56:09 [INFO] validator_excel_main_class - start line 145: IBRDEV-I-0000002:終了しました
+2023-12-31 17:57:18 [INFO] validator_excel_main_class - start line 129: IBRDEV-I-0000001:起動しました
+2023-12-31 17:57:18 [INFO] validator_excel_main_class - _excel_to_dataframe line 90: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-31 17:57:18 [WARNING] validator_excel_main_class - _valdate line 118: vakidate error 検出件数: 2:
+2023-12-31 17:57:18 [ERROR] validator_excel_main_class - _valdate line 121: Valdation error at row 1: string_type:
+2023-12-31 17:57:18 [ERROR] validator_excel_main_class - _valdate line 121: Valdation error at row 2: int_type:
+2023-12-31 17:57:18 [INFO] validator_excel_main_class - start line 145: IBRDEV-I-0000002:終了しました
+2023-12-31 17:57:50 [INFO] validator_excel_main_class - start line 129: IBRDEV-I-0000001:起動しました
+2023-12-31 17:57:50 [INFO] validator_excel_main_class - _excel_to_dataframe line 90: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-31 17:57:50 [WARNING] validator_excel_main_class - _valdate line 118: vakidate error 検出件数: 2:
+2023-12-31 17:57:50 [ERROR] validator_excel_main_class - start line 142: Traceback (most recent call last):
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class/__main__.py", line 138, in start
+    self._valdate(_df)
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class/__main__.py", line 121, in _valdate
+    self._log_msg(f'Valdation error at row {idx + 1}: {error[0].get(["type","loc"])}', LogLevel.ERROR)
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: unhashable type: 'list'
+:
+2023-12-31 17:58:02 [INFO] validator_excel_main_class - start line 129: IBRDEV-I-0000001:起動しました
+2023-12-31 17:58:02 [INFO] validator_excel_main_class - _excel_to_dataframe line 90: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-31 17:58:02 [WARNING] validator_excel_main_class - _valdate line 118: vakidate error 検出件数: 2:
+2023-12-31 17:58:02 [ERROR] validator_excel_main_class - _valdate line 121: Valdation error at row 1: string_type:
+2023-12-31 17:58:02 [ERROR] validator_excel_main_class - _valdate line 121: Valdation error at row 2: int_type:
+2023-12-31 17:58:02 [INFO] validator_excel_main_class - start line 145: IBRDEV-I-0000002:終了しました
+2023-12-31 18:00:12 [INFO] validator_excel_main_class - start line 129: IBRDEV-I-0000001:起動しました
+2023-12-31 18:00:12 [INFO] validator_excel_main_class - _excel_to_dataframe line 90: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-31 18:00:12 [WARNING] validator_excel_main_class - _valdate line 118: vakidate error 検出件数: 2:
+2023-12-31 18:00:12 [ERROR] validator_excel_main_class - start line 142: Traceback (most recent call last):
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class/__main__.py", line 138, in start
+    self._valdate(_df)
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class/__main__.py", line 121, in _valdate
+    self._log_msg(f'Valdation error at row {idx + 1}: {error[0].get(["type", "loc"])}', LogLevel.ERROR)
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: unhashable type: 'list'
+:
+2023-12-31 18:01:50 [INFO] validator_excel_main_class - start line 129: IBRDEV-I-0000001:起動しました
+2023-12-31 18:01:50 [INFO] validator_excel_main_class - _excel_to_dataframe line 90: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-31 18:01:50 [WARNING] validator_excel_main_class - _valdate line 118: vakidate error 検出件数: 2:
+2023-12-31 18:01:50 [ERROR] validator_excel_main_class - _valdate line 121: Valdation error at row 1: None:
+2023-12-31 18:01:50 [ERROR] validator_excel_main_class - _valdate line 121: Valdation error at row 2: None:
+2023-12-31 18:01:50 [INFO] validator_excel_main_class - start line 145: IBRDEV-I-0000002:終了しました
+2023-12-31 18:02:22 [INFO] validator_excel_main_class - start line 130: IBRDEV-I-0000001:起動しました
+2023-12-31 18:02:22 [INFO] validator_excel_main_class - _excel_to_dataframe line 90: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-31 18:02:22 [WARNING] validator_excel_main_class - _valdate line 118: vakidate error 検出件数: 2:
+2023-12-31 18:02:22 [ERROR] validator_excel_main_class - _valdate line 121: Valdation error at row 1: [{'type': 'string_type', 'loc': ('g',), 'msg': 'Input should be a valid string', 'input': 1, 'url': 'https://errors.pydantic.dev/2.5/v/string_type'}]:
+2023-12-31 18:02:22 [ERROR] validator_excel_main_class - _valdate line 122: Valdation error at row 1: None:
+2023-12-31 18:02:22 [ERROR] validator_excel_main_class - _valdate line 121: Valdation error at row 2: [{'type': 'int_type', 'loc': ('d',), 'msg': 'Input should be a valid integer', 'input': 's', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}]:
+2023-12-31 18:02:22 [ERROR] validator_excel_main_class - _valdate line 122: Valdation error at row 2: None:
+2023-12-31 18:02:22 [INFO] validator_excel_main_class - start line 146: IBRDEV-I-0000002:終了しました
+2023-12-31 18:05:41 [INFO] validator_excel_main_class - start line 130: IBRDEV-I-0000001:起動しました
+2023-12-31 18:05:41 [INFO] validator_excel_main_class - _excel_to_dataframe line 90: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-31 18:05:41 [WARNING] validator_excel_main_class - _valdate line 118: vakidate error 検出件数: 2:
+2023-12-31 18:05:41 [ERROR] validator_excel_main_class - _valdate line 121: Valdation error at row 1: [{'type': 'string_type', 'loc': ('g',), 'msg': 'Input should be a valid string', 'input': 1, 'url': 'https://errors.pydantic.dev/2.5/v/string_type'}]:
+2023-12-31 18:05:41 [ERROR] validator_excel_main_class - _valdate line 122: Valdation error at row 1: None:
+2023-12-31 18:05:41 [ERROR] validator_excel_main_class - _valdate line 121: Valdation error at row 2: [{'type': 'int_type', 'loc': ('d',), 'msg': 'Input should be a valid integer', 'input': 's', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}]:
+2023-12-31 18:05:41 [ERROR] validator_excel_main_class - _valdate line 122: Valdation error at row 2: None:
+2023-12-31 18:05:41 [INFO] validator_excel_main_class - start line 146: IBRDEV-I-0000002:終了しました
+2023-12-31 18:06:12 [INFO] validator_excel_main_class - start line 131: IBRDEV-I-0000001:起動しました
+2023-12-31 18:06:12 [INFO] validator_excel_main_class - _excel_to_dataframe line 90: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-31 18:06:12 [WARNING] validator_excel_main_class - _valdate line 118: vakidate error 検出件数: 2:
+2023-12-31 18:06:12 [ERROR] validator_excel_main_class - _valdate line 121: Valdation error at row 1: [{'type': 'string_type', 'loc': ('g',), 'msg': 'Input should be a valid string', 'input': 1, 'url': 'https://errors.pydantic.dev/2.5/v/string_type'}]:
+2023-12-31 18:06:12 [ERROR] validator_excel_main_class - _valdate line 122: Valdation error at row 1: None:
+2023-12-31 18:06:12 [ERROR] validator_excel_main_class - _valdate line 123: Valdation error at row 1: None:
+2023-12-31 18:06:12 [ERROR] validator_excel_main_class - _valdate line 121: Valdation error at row 2: [{'type': 'int_type', 'loc': ('d',), 'msg': 'Input should be a valid integer', 'input': 's', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}]:
+2023-12-31 18:06:12 [ERROR] validator_excel_main_class - _valdate line 122: Valdation error at row 2: None:
+2023-12-31 18:06:12 [ERROR] validator_excel_main_class - _valdate line 123: Valdation error at row 2: None:
+2023-12-31 18:06:12 [INFO] validator_excel_main_class - start line 147: IBRDEV-I-0000002:終了しました
+2023-12-31 18:06:28 [INFO] validator_excel_main_class - start line 131: IBRDEV-I-0000001:起動しました
+2023-12-31 18:06:28 [INFO] validator_excel_main_class - _excel_to_dataframe line 90: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-31 18:06:28 [WARNING] validator_excel_main_class - _valdate line 118: vakidate error 検出件数: 2:
+2023-12-31 18:06:28 [ERROR] validator_excel_main_class - _valdate line 121: Valdation error at row 1: [{'type': 'string_type', 'loc': ('g',), 'msg': 'Input should be a valid string', 'input': 1, 'url': 'https://errors.pydantic.dev/2.5/v/string_type'}]:
+2023-12-31 18:06:28 [ERROR] validator_excel_main_class - _valdate line 122: Valdation error at row 1: string_type:
+2023-12-31 18:06:28 [ERROR] validator_excel_main_class - _valdate line 123: Valdation error at row 1: None:
+2023-12-31 18:06:28 [ERROR] validator_excel_main_class - _valdate line 121: Valdation error at row 2: [{'type': 'int_type', 'loc': ('d',), 'msg': 'Input should be a valid integer', 'input': 's', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}]:
+2023-12-31 18:06:28 [ERROR] validator_excel_main_class - _valdate line 122: Valdation error at row 2: int_type:
+2023-12-31 18:06:28 [ERROR] validator_excel_main_class - _valdate line 123: Valdation error at row 2: None:
+2023-12-31 18:06:28 [INFO] validator_excel_main_class - start line 147: IBRDEV-I-0000002:終了しました
+2023-12-31 18:07:14 [INFO] validator_excel_main_class - start line 132: IBRDEV-I-0000001:起動しました
+2023-12-31 18:07:14 [INFO] validator_excel_main_class - _excel_to_dataframe line 90: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-31 18:07:14 [WARNING] validator_excel_main_class - _valdate line 118: vakidate error 検出件数: 2:
+2023-12-31 18:07:14 [ERROR] validator_excel_main_class - _valdate line 121: Valdation error at row 1: [{'type': 'string_type', 'loc': ('g',), 'msg': 'Input should be a valid string', 'input': 1, 'url': 'https://errors.pydantic.dev/2.5/v/string_type'}]:
+2023-12-31 18:07:14 [ERROR] validator_excel_main_class - _valdate line 122: Valdation error at row 1: string_type:
+2023-12-31 18:07:14 [ERROR] validator_excel_main_class - _valdate line 123: Valdation error at row 1: ('g',):
+2023-12-31 18:07:14 [ERROR] validator_excel_main_class - _valdate line 124: Valdation error at row 1: None:
+2023-12-31 18:07:14 [ERROR] validator_excel_main_class - _valdate line 121: Valdation error at row 2: [{'type': 'int_type', 'loc': ('d',), 'msg': 'Input should be a valid integer', 'input': 's', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}]:
+2023-12-31 18:07:14 [ERROR] validator_excel_main_class - _valdate line 122: Valdation error at row 2: int_type:
+2023-12-31 18:07:14 [ERROR] validator_excel_main_class - _valdate line 123: Valdation error at row 2: ('d',):
+2023-12-31 18:07:14 [ERROR] validator_excel_main_class - _valdate line 124: Valdation error at row 2: None:
+2023-12-31 18:07:14 [INFO] validator_excel_main_class - start line 148: IBRDEV-I-0000002:終了しました
+2023-12-31 18:07:22 [INFO] validator_excel_main_class - start line 132: IBRDEV-I-0000001:起動しました
+2023-12-31 18:07:22 [INFO] validator_excel_main_class - _excel_to_dataframe line 90: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-31 18:07:22 [WARNING] validator_excel_main_class - _valdate line 118: vakidate error 検出件数: 2:
+2023-12-31 18:07:22 [ERROR] validator_excel_main_class - _valdate line 121: Valdation error at row 1: [{'type': 'string_type', 'loc': ('g',), 'msg': 'Input should be a valid string', 'input': 1, 'url': 'https://errors.pydantic.dev/2.5/v/string_type'}]:
+2023-12-31 18:07:22 [ERROR] validator_excel_main_class - _valdate line 122: Valdation error at row 1: string_type:
+2023-12-31 18:07:22 [ERROR] validator_excel_main_class - _valdate line 123: Valdation error at row 1: ('g',):
+2023-12-31 18:07:22 [ERROR] validator_excel_main_class - _valdate line 124: Valdation error at row 1: None:
+2023-12-31 18:07:22 [ERROR] validator_excel_main_class - _valdate line 121: Valdation error at row 2: [{'type': 'int_type', 'loc': ('d',), 'msg': 'Input should be a valid integer', 'input': 's', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}]:
+2023-12-31 18:07:22 [ERROR] validator_excel_main_class - _valdate line 122: Valdation error at row 2: int_type:
+2023-12-31 18:07:22 [ERROR] validator_excel_main_class - _valdate line 123: Valdation error at row 2: ('d',):
+2023-12-31 18:07:22 [ERROR] validator_excel_main_class - _valdate line 124: Valdation error at row 2: None:
+2023-12-31 18:07:22 [INFO] validator_excel_main_class - start line 148: IBRDEV-I-0000002:終了しました
+2023-12-31 18:27:33 [INFO] validator_excel_main_class - start line 130: IBRDEV-I-0000001:起動しました
+2023-12-31 18:27:33 [INFO] validator_excel_main_class - _excel_to_dataframe line 90: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-31 18:27:33 [WARNING] validator_excel_main_class - _valdate line 118: vakidate error 検出件数: 2:
+2023-12-31 18:27:33 [ERROR] validator_excel_main_class - _valdate line 122: Validation error at row 1: ['string_type', ('g',), 'Input should be a valid string', 1]:
+2023-12-31 18:27:33 [ERROR] validator_excel_main_class - _valdate line 122: Validation error at row 2: ['int_type', ('d',), 'Input should be a valid integer', 's']:
+2023-12-31 18:27:33 [INFO] validator_excel_main_class - start line 146: IBRDEV-I-0000002:終了しました
+2023-12-31 18:28:57 [INFO] validator_excel_main_class - start line 130: IBRDEV-I-0000001:起動しました
+2023-12-31 18:28:57 [INFO] validator_excel_main_class - _excel_to_dataframe line 90: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-31 18:28:57 [WARNING] validator_excel_main_class - _valdate line 118: vakidate error 検出件数: 2:
+2023-12-31 18:28:57 [ERROR] validator_excel_main_class - _valdate line 122: Validation error at row 1: ['Input should be a valid string', ('g',), 1]:
+2023-12-31 18:28:57 [ERROR] validator_excel_main_class - _valdate line 122: Validation error at row 2: ['Input should be a valid integer', ('d',), 's']:
+2023-12-31 18:28:57 [INFO] validator_excel_main_class - start line 146: IBRDEV-I-0000002:終了しました
+2023-12-31 18:29:28 [INFO] validator_excel_main_class - start line 130: IBRDEV-I-0000001:起動しました
+2023-12-31 18:29:28 [INFO] validator_excel_main_class - _excel_to_dataframe line 90: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-31 18:29:28 [WARNING] validator_excel_main_class - _valdate line 118: vakidate error 検出件数: 2:
+2023-12-31 18:29:28 [ERROR] validator_excel_main_class - _valdate line 122: Validation error at row 1: Input should be a valid string:
+2023-12-31 18:29:28 [ERROR] validator_excel_main_class - _valdate line 122: Validation error at row 2: Input should be a valid integer:
+2023-12-31 18:29:28 [INFO] validator_excel_main_class - start line 146: IBRDEV-I-0000002:終了しました
+2023-12-31 18:29:50 [INFO] validator_excel_main_class - start line 130: IBRDEV-I-0000001:起動しました
+2023-12-31 18:29:50 [INFO] validator_excel_main_class - _excel_to_dataframe line 90: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-31 18:29:50 [WARNING] validator_excel_main_class - _valdate line 118: vakidate error 検出件数: 2:
+2023-12-31 18:29:50 [ERROR] validator_excel_main_class - _valdate line 122: Validation error at row 1: ['Input should be a valid string', ('g',), 1]:
+2023-12-31 18:29:50 [ERROR] validator_excel_main_class - _valdate line 122: Validation error at row 2: ['Input should be a valid integer', ('d',), 's']:
+2023-12-31 18:29:50 [INFO] validator_excel_main_class - start line 146: IBRDEV-I-0000002:終了しました
+2023-12-31 18:31:16 [INFO] validator_excel_main_class - start line 130: IBRDEV-I-0000001:起動しました
+2023-12-31 18:31:16 [INFO] validator_excel_main_class - _excel_to_dataframe line 90: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-31 18:31:16 [WARNING] validator_excel_main_class - _valdate line 118: vakidate error 検出件数: 2:
+2023-12-31 18:31:16 [ERROR] validator_excel_main_class - _valdate line 122: Validation error at row 1: Input should be a valid string, (('g',), 1):
+2023-12-31 18:31:16 [ERROR] validator_excel_main_class - _valdate line 122: Validation error at row 2: Input should be a valid integer, (('d',), 's'):
+2023-12-31 18:31:16 [INFO] validator_excel_main_class - start line 146: IBRDEV-I-0000002:終了しました
+2023-12-31 18:31:33 [INFO] validator_excel_main_class - start line 130: IBRDEV-I-0000001:起動しました
+2023-12-31 18:31:33 [INFO] validator_excel_main_class - _excel_to_dataframe line 90: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-31 18:31:33 [WARNING] validator_excel_main_class - _valdate line 118: vakidate error 検出件数: 2:
+2023-12-31 18:31:33 [ERROR] validator_excel_main_class - _valdate line 122: Validation error at row 1: Input should be a valid string, ('g',), 1:
+2023-12-31 18:31:33 [ERROR] validator_excel_main_class - _valdate line 122: Validation error at row 2: Input should be a valid integer, ('d',), s:
+2023-12-31 18:31:33 [INFO] validator_excel_main_class - start line 146: IBRDEV-I-0000002:終了しました
+2023-12-31 18:32:30 [INFO] validator_excel_main_class - start line 130: IBRDEV-I-0000001:起動しました
+2023-12-31 18:32:30 [INFO] validator_excel_main_class - _excel_to_dataframe line 90: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-31 18:32:30 [WARNING] validator_excel_main_class - _valdate line 118: vakidate error 検出件数: 2:
+2023-12-31 18:32:30 [ERROR] validator_excel_main_class - _valdate line 122: Validation error at (1, ('g',)):  Input should be a valid string, values: 1:
+2023-12-31 18:32:30 [ERROR] validator_excel_main_class - _valdate line 122: Validation error at (2, ('d',)):  Input should be a valid integer, values: s:
+2023-12-31 18:32:30 [INFO] validator_excel_main_class - start line 146: IBRDEV-I-0000002:終了しました
+2023-12-31 18:32:53 [INFO] validator_excel_main_class - start line 130: IBRDEV-I-0000001:起動しました
+2023-12-31 18:32:53 [INFO] validator_excel_main_class - _excel_to_dataframe line 90: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-31 18:32:53 [WARNING] validator_excel_main_class - _valdate line 118: vakidate error 検出件数: 2:
+2023-12-31 18:32:53 [ERROR] validator_excel_main_class - _valdate line 122: Validation error at (1, g):  Input should be a valid string, values: 1:
+2023-12-31 18:32:53 [ERROR] validator_excel_main_class - _valdate line 122: Validation error at (2, d):  Input should be a valid integer, values: s:
+2023-12-31 18:32:53 [INFO] validator_excel_main_class - start line 146: IBRDEV-I-0000002:終了しました
+2023-12-31 19:17:40 [INFO] validator_excel_main_class - start line 134: IBRDEV-I-0000001:起動しました
+2023-12-31 19:17:40 [INFO] validator_excel_main_class - _excel_to_dataframe line 93: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-31 19:17:40 [WARNING] validator_excel_main_class - _valdate line 121: vakidate error 検出件数: 2:
+2023-12-31 19:17:40 [ERROR] validator_excel_main_class - start line 147: Traceback (most recent call last):
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class/__main__.py", line 143, in start
+    self._valdate(_df)
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class/__main__.py", line 123, in _valdate
+    _ = ValidatorLog.validation_errors(validate_errors, ['log', 'msg', 'input'], LogLevel.ERROR)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/project_1/src/lib/common_utils/ibr_excel_reader.py", line 136, in validation_errors
+    self._log_msg(f'No validation errors at row {idx + 1}', log_level)
+    ^^^^^^^^^^^^^
+AttributeError: 'list' object has no attribute '_log_msg'
+:
+2023-12-31 19:19:07 [INFO] validator_excel_main_class - start line 134: IBRDEV-I-0000001:起動しました
+2023-12-31 19:19:07 [INFO] validator_excel_main_class - _excel_to_dataframe line 93: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-31 19:19:07 [WARNING] validator_excel_main_class - _valdate line 121: vakidate error 検出件数: 2:
+2023-12-31 19:19:07 [ERROR] common_utils - validation_errors line 136: No validation errors at row 1:
+2023-12-31 19:19:07 [ERROR] common_utils - validation_errors line 136: No validation errors at row 2:
+2023-12-31 19:19:07 [ERROR] common_utils - validation_errors line 136: No validation errors at row 3:
+2023-12-31 19:19:07 [INFO] validator_excel_main_class - start line 150: IBRDEV-I-0000002:終了しました
+2023-12-31 19:20:50 [INFO] validator_excel_main_class - start line 135: IBRDEV-I-0000001:起動しました
+2023-12-31 19:20:50 [INFO] validator_excel_main_class - _excel_to_dataframe line 93: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-31 19:20:50 [WARNING] validator_excel_main_class - _valdate line 121: vakidate error 検出件数: 2:
+2023-12-31 19:20:50 [ERROR] common_utils - validation_errors line 136: No validation errors at row 1:
+2023-12-31 19:20:50 [ERROR] common_utils - validation_errors line 136: No validation errors at row 2:
+2023-12-31 19:20:50 [ERROR] common_utils - validation_errors line 136: No validation errors at row 3:
+2023-12-31 19:20:50 [INFO] validator_excel_main_class - start line 151: IBRDEV-I-0000002:終了しました
+2023-12-31 19:22:50 [INFO] validator_excel_main_class - start line 135: IBRDEV-I-0000001:起動しました
+2023-12-31 19:22:50 [INFO] validator_excel_main_class - _excel_to_dataframe line 93: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-31 19:22:50 [WARNING] validator_excel_main_class - _valdate line 122: vakidate error 検出件数: 2:
+2023-12-31 19:22:50 [ERROR] validator_excel_main_class - start line 148: Traceback (most recent call last):
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class/__main__.py", line 144, in start
+    self._valdate(_df)
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class/__main__.py", line 123, in _valdate
+    _ = ValidatorLog.validation_errors(validate_errors, LogLevel.ERROR)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: ValidatorLog.validation_errors() missing 1 required positional argument: 'log_level'
+:
+2023-12-31 19:23:52 [INFO] validator_excel_main_class - start line 135: IBRDEV-I-0000001:起動しました
+2023-12-31 19:23:53 [INFO] validator_excel_main_class - _excel_to_dataframe line 93: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-31 19:23:53 [WARNING] validator_excel_main_class - _valdate line 122: vakidate error 検出件数: 2:
+2023-12-31 19:23:53 [ERROR] validator_excel_main_class - start line 148: Traceback (most recent call last):
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class/__main__.py", line 144, in start
+    self._valdate(_df)
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class/__main__.py", line 123, in _valdate
+    _ = ValidatorLog.validation_errors(validate_errors, LogLevel.ERROR)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: ValidatorLog.validation_errors() missing 1 required positional argument: 'log_level'
+:
+2023-12-31 19:25:28 [INFO] validator_excel_main_class - start line 135: IBRDEV-I-0000001:起動しました
+2023-12-31 19:25:28 [INFO] validator_excel_main_class - _excel_to_dataframe line 93: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-31 19:25:28 [WARNING] validator_excel_main_class - _valdate line 122: vakidate error 検出件数: 2:
+2023-12-31 19:25:28 [ERROR] validator_excel_main_class - start line 148: Traceback (most recent call last):
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class/__main__.py", line 144, in start
+    self._valdate(_df)
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class/__main__.py", line 123, in _valdate
+    _ = ValidatorLog.validation_errors(validate_errors, LogLevel.ERROR)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: ValidatorLog.validation_errors() missing 1 required positional argument: 'log_level'
+:
+2023-12-31 19:26:04 [INFO] validator_excel_main_class - start line 135: IBRDEV-I-0000001:起動しました
+2023-12-31 19:26:04 [INFO] validator_excel_main_class - _excel_to_dataframe line 93: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-31 19:26:04 [WARNING] validator_excel_main_class - _valdate line 122: vakidate error 検出件数: 2:
+2023-12-31 19:26:04 [ERROR] validator_excel_main_class - start line 148: Traceback (most recent call last):
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class/__main__.py", line 144, in start
+    self._valdate(_df)
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class/__main__.py", line 123, in _valdate
+    _ = ValidatorLog.validation_errors(validate_errors, log_level=LogLevel.ERROR)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: ValidatorLog.validation_errors() missing 1 required positional argument: 'errors'
+:
+2023-12-31 19:26:17 [INFO] validator_excel_main_class - start line 135: IBRDEV-I-0000001:起動しました
+2023-12-31 19:26:17 [INFO] validator_excel_main_class - _excel_to_dataframe line 93: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-31 19:26:17 [WARNING] validator_excel_main_class - _valdate line 122: vakidate error 検出件数: 2:
+2023-12-31 19:26:17 [ERROR] validator_excel_main_class - start line 148: Traceback (most recent call last):
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class/__main__.py", line 144, in start
+    self._valdate(_df)
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class/__main__.py", line 123, in _valdate
+    _ = ValidatorLog.validation_errors(errors=validate_errors, log_level=LogLevel.ERROR)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: ValidatorLog.validation_errors() missing 1 required positional argument: 'cls'
+:
+2023-12-31 19:26:27 [INFO] validator_excel_main_class - start line 135: IBRDEV-I-0000001:起動しました
+2023-12-31 19:26:27 [INFO] validator_excel_main_class - _excel_to_dataframe line 93: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-31 19:26:27 [WARNING] validator_excel_main_class - _valdate line 122: vakidate error 検出件数: 2:
+2023-12-31 19:26:27 [ERROR] common_utils - validation_errors line 136: No validation errors at row 1:
+2023-12-31 19:26:27 [ERROR] common_utils - validation_errors line 136: No validation errors at row 2:
+2023-12-31 19:26:27 [INFO] validator_excel_main_class - start line 151: IBRDEV-I-0000002:終了しました
+2023-12-31 19:26:29 [INFO] validator_excel_main_class - start line 135: IBRDEV-I-0000001:起動しました
+2023-12-31 19:26:29 [INFO] validator_excel_main_class - _excel_to_dataframe line 93: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-31 19:26:29 [WARNING] validator_excel_main_class - _valdate line 122: vakidate error 検出件数: 2:
+2023-12-31 19:26:29 [ERROR] common_utils - validation_errors line 136: No validation errors at row 1:
+2023-12-31 19:26:29 [ERROR] common_utils - validation_errors line 136: No validation errors at row 2:
+2023-12-31 19:26:29 [INFO] validator_excel_main_class - start line 151: IBRDEV-I-0000002:終了しました
+2023-12-31 19:26:53 [INFO] validator_excel_main_class - start line 135: IBRDEV-I-0000001:起動しました
+2023-12-31 19:26:53 [INFO] validator_excel_main_class - _excel_to_dataframe line 93: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-31 19:26:53 [WARNING] validator_excel_main_class - _valdate line 122: vakidate error 検出件数: 2:
+2023-12-31 19:26:53 [ERROR] validator_excel_main_class - start line 148: Traceback (most recent call last):
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class/__main__.py", line 144, in start
+    self._valdate(_df)
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class/__main__.py", line 123, in _valdate
+    _ = ValidatorLog.validation_errors(errors=validate_errors, log_level=LogLevel.ERROR)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/project_1/src/lib/common_utils/ibr_excel_reader.py", line 145, in validation_errors
+    values = [error_dict.get(key) for key in keys]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/project_1/src/lib/common_utils/ibr_excel_reader.py", line 145, in <listcomp>
+    values = [error_dict.get(key) for key in keys]
+              ^^^^^^^^^^^^^^
+AttributeError: 'int' object has no attribute 'get'
+:
+2023-12-31 19:28:03 [INFO] validator_excel_main_class - start line 135: IBRDEV-I-0000001:起動しました
+2023-12-31 19:28:03 [INFO] validator_excel_main_class - _excel_to_dataframe line 93: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-31 19:28:03 [WARNING] validator_excel_main_class - _valdate line 122: vakidate error 検出件数: 2:
+2023-12-31 19:28:03 [ERROR] validator_excel_main_class - start line 148: Traceback (most recent call last):
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class/__main__.py", line 144, in start
+    self._valdate(_df)
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class/__main__.py", line 123, in _valdate
+    _ = ValidatorLog.validation_errors(errors=validate_errors, log_level=LogLevel.ERROR)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/project_1/src/lib/common_utils/ibr_excel_reader.py", line 145, in validation_errors
+    values = [error_dict.get(key) for key in keys]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/project_1/src/lib/common_utils/ibr_excel_reader.py", line 145, in <listcomp>
+    values = [error_dict.get(key) for key in keys]
+              ^^^^^^^^^^^^^^
+AttributeError: 'int' object has no attribute 'get'
+:
+2023-12-31 19:30:25 [INFO] validator_excel_main_class - start line 135: IBRDEV-I-0000001:起動しました
+2023-12-31 19:30:25 [INFO] validator_excel_main_class - _excel_to_dataframe line 93: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-31 19:30:25 [WARNING] validator_excel_main_class - _valdate line 122: vakidate error 検出件数: 2:
+2023-12-31 19:30:25 [ERROR] common_utils - validation_errors line 150: Validation error at (1, g):  Input should be a valid string, values: 1:
+2023-12-31 19:30:25 [ERROR] common_utils - validation_errors line 150: Validation error at (2, d):  Input should be a valid integer, values: s:
+2023-12-31 19:30:25 [INFO] validator_excel_main_class - start line 151: IBRDEV-I-0000002:終了しました
+2023-12-31 19:30:31 [INFO] validator_excel_main_class - start line 135: IBRDEV-I-0000001:起動しました
+2023-12-31 19:30:31 [INFO] validator_excel_main_class - _excel_to_dataframe line 93: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-31 19:30:31 [WARNING] validator_excel_main_class - _valdate line 122: vakidate error 検出件数: 2:
+2023-12-31 19:30:31 [ERROR] common_utils - validation_errors line 150: Validation error at (1, g):  Input should be a valid string, values: 1:
+2023-12-31 19:30:31 [ERROR] common_utils - validation_errors line 150: Validation error at (2, d):  Input should be a valid integer, values: s:
+2023-12-31 19:30:31 [INFO] validator_excel_main_class - start line 151: IBRDEV-I-0000002:終了しました
+2023-12-31 19:30:45 [INFO] validator_excel_main_class - start line 135: IBRDEV-I-0000001:起動しました
+2023-12-31 19:30:45 [INFO] validator_excel_main_class - _excel_to_dataframe line 93: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-31 19:30:45 [WARNING] validator_excel_main_class - _valdate line 122: vakidate error 検出件数: 2:
+2023-12-31 19:30:45 [ERROR] common_utils - validation_errors line 150: Validation error at (1, g):  Input should be a valid string, values: 1:
+2023-12-31 19:30:45 [ERROR] common_utils - validation_errors line 150: Validation error at (2, d):  Input should be a valid integer, values: s:
+2023-12-31 19:30:45 [INFO] validator_excel_main_class - start line 151: IBRDEV-I-0000002:終了しました
+2023-12-31 19:30:46 [INFO] validator_excel_main_class - start line 135: IBRDEV-I-0000001:起動しました
+2023-12-31 19:30:46 [INFO] validator_excel_main_class - _excel_to_dataframe line 93: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-31 19:30:46 [WARNING] validator_excel_main_class - _valdate line 122: vakidate error 検出件数: 2:
+2023-12-31 19:30:46 [ERROR] common_utils - validation_errors line 150: Validation error at (1, g):  Input should be a valid string, values: 1:
+2023-12-31 19:30:46 [ERROR] common_utils - validation_errors line 150: Validation error at (2, d):  Input should be a valid integer, values: s:
+2023-12-31 19:30:46 [INFO] validator_excel_main_class - start line 151: IBRDEV-I-0000002:終了しました
+2023-12-31 19:31:15 [INFO] validator_excel_main_class - start line 135: IBRDEV-I-0000001:起動しました
+2023-12-31 19:31:15 [INFO] validator_excel_main_class - _excel_to_dataframe line 93: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-31 19:31:15 [WARNING] validator_excel_main_class - _valdate line 122: vakidate error 検出件数: 2:
+2023-12-31 19:31:15 [ERROR] common_utils - validation_errors line 150: Validation error at (1, g):  Input should be a valid string, wrong values: 1:
+2023-12-31 19:31:15 [ERROR] common_utils - validation_errors line 150: Validation error at (2, d):  Input should be a valid integer, wrong values: s:
+2023-12-31 19:31:15 [INFO] validator_excel_main_class - start line 151: IBRDEV-I-0000002:終了しました
+2023-12-31 19:31:58 [INFO] validator_excel_main_class - start line 131: IBRDEV-I-0000001:起動しました
+2023-12-31 19:31:58 [INFO] validator_excel_main_class - _excel_to_dataframe line 93: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-31 19:31:58 [WARNING] validator_excel_main_class - _valdate line 122: vakidate error 検出件数: 2:
+2023-12-31 19:31:58 [ERROR] common_utils - validation_errors line 150: Validation error at (1, g):  Input should be a valid string, wrong values: 1:
+2023-12-31 19:31:58 [ERROR] common_utils - validation_errors line 150: Validation error at (2, d):  Input should be a valid integer, wrong values: s:
+2023-12-31 19:31:58 [INFO] validator_excel_main_class - start line 147: IBRDEV-I-0000002:終了しました
+2023-12-31 19:31:59 [INFO] validator_excel_main_class - start line 131: IBRDEV-I-0000001:起動しました
+2023-12-31 19:31:59 [INFO] validator_excel_main_class - _excel_to_dataframe line 93: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-31 19:31:59 [WARNING] validator_excel_main_class - _valdate line 122: vakidate error 検出件数: 2:
+2023-12-31 19:31:59 [ERROR] common_utils - validation_errors line 150: Validation error at (1, g):  Input should be a valid string, wrong values: 1:
+2023-12-31 19:31:59 [ERROR] common_utils - validation_errors line 150: Validation error at (2, d):  Input should be a valid integer, wrong values: s:
+2023-12-31 19:31:59 [INFO] validator_excel_main_class - start line 147: IBRDEV-I-0000002:終了しました
+2023-12-31 23:00:51 [ERROR] common_utils - parse_toml_file line 27: can not get target files [Errno 2] No such file or directory: 'def/common_config/common_config.toml':
+2023-12-31 23:00:51 [ERROR] common_utils - load line 62: common_config取得に失敗しました: [Errno 2] No such file or directory: 'def/common_config/common_config.toml':
+2023-12-31 23:00:51 [ERROR] common_utils - load line 64: Traceback (most recent call last):
+  File "/developer/library_dev/project_1/src/lib/common_utils/ibr_get_config.py", line 60, in load
+    common_config = TomlParser.parse_toml_file(common_toml_path)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/project_1/src/lib/common_utils/ibr_toml_loader.py", line 24, in parse_toml_file
+    with toml_path.open(mode='r', encoding='utf8') as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/satoshi/.pyenv/versions/3.11.6/lib/python3.11/pathlib.py", line 1044, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'def/common_config/common_config.toml'
+:
+2023-12-31 23:01:33 [INFO] validator_excel_main_class - start line 130: IBRDEV-I-0000001:起動しました
+2023-12-31 23:01:33 [ERROR] common_utils - read_excel_one_sheet line 54: can not get target files [Errno 2] No such file or directory: 'share/receive/input_data_validator.xlsx':
+2023-12-31 23:01:33 [ERROR] validator_excel_main_class - start line 143: Traceback (most recent call last):
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class/__main__.py", line 136, in start
+    _df = self._excel_to_dataframe()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class/__main__.py", line 44, in _excel_to_dataframe
+    _df = _excel_loader.read_excel_one_sheet()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/project_1/src/lib/common_utils/ibr_excel_reader.py", line 41, in read_excel_one_sheet
+    with pd.ExcelFile(self.file_path) as target_excel:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandas/io/excel/_base.py", line 1563, in __init__
+    ext = inspect_excel_format(
+          ^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandas/io/excel/_base.py", line 1419, in inspect_excel_format
+    with get_handle(
+         ^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandas/io/common.py", line 872, in get_handle
+    handle = open(handle, ioargs.mode)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'share/receive/input_data_validator.xlsx'
+:
+2023-12-31 23:02:04 [INFO] validator_excel_main_class - start line 130: IBRDEV-I-0000001:起動しました
+2023-12-31 23:02:04 [INFO] validator_excel_main_class - _excel_to_dataframe line 93: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-31 23:02:04 [WARNING] validator_excel_main_class - _valdate line 122: vakidate error 検出件数: 2:
+2023-12-31 23:02:04 [ERROR] common_utils - validation_errors line 159: Validation error at (1, g):  Input should be a valid string, wrong values: 1:
+2023-12-31 23:02:04 [ERROR] common_utils - validation_errors line 159: Validation error at (2, d):  Input should be a valid integer, wrong values: s:
+2023-12-31 23:02:04 [INFO] validator_excel_main_class - start line 146: IBRDEV-I-0000002:終了しました
+2023-12-31 23:02:06 [INFO] validator_excel_main_class - start line 130: IBRDEV-I-0000001:起動しました
+2023-12-31 23:02:06 [INFO] validator_excel_main_class - _excel_to_dataframe line 93: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-31 23:02:06 [WARNING] validator_excel_main_class - _valdate line 122: vakidate error 検出件数: 2:
+2023-12-31 23:02:06 [ERROR] common_utils - validation_errors line 159: Validation error at (1, g):  Input should be a valid string, wrong values: 1:
+2023-12-31 23:02:06 [ERROR] common_utils - validation_errors line 159: Validation error at (2, d):  Input should be a valid integer, wrong values: s:
+2023-12-31 23:02:06 [INFO] validator_excel_main_class - start line 146: IBRDEV-I-0000002:終了しました
+2023-12-31 23:13:23 [INFO] validator_excel_main_class - start line 130: IBRDEV-I-0000001:起動しました
+2023-12-31 23:13:23 [INFO] validator_excel_main_class - _excel_to_dataframe line 93: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-31 23:13:23 [WARNING] validator_excel_main_class - _valdate line 122: vakidate error 検出件数: 2:
+2023-12-31 23:13:23 [ERROR] common_utils - validation_errors line 159: Validation error at (1, g):  Input should be a valid string, wrong values: 1:
+2023-12-31 23:13:23 [ERROR] common_utils - validation_errors line 159: Validation error at (2, d):  Input should be a valid integer, wrong values: s:
+2023-12-31 23:13:23 [INFO] validator_excel_main_class - start line 146: IBRDEV-I-0000002:終了しました
+2023-12-31 23:30:13 [INFO] validator_excel_main_class - start line 130: IBRDEV-I-0000001:起動しました
+2023-12-31 23:30:13 [INFO] validator_excel_main_class - _excel_to_dataframe line 93: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-31 23:30:13 [WARNING] validator_excel_main_class - _valdate line 122: vakidate error 検出件数: 2:
+2023-12-31 23:30:13 [ERROR] common_utils - logger_validation_errors line 159: Validation error at (1, g):  Input should be a valid string, wrong values: 1:
+2023-12-31 23:30:13 [ERROR] common_utils - logger_validation_errors line 159: Validation error at (2, d):  Input should be a valid integer, wrong values: s:
+2023-12-31 23:30:13 [INFO] validator_excel_main_class - start line 146: IBRDEV-I-0000002:終了しました
+2023-12-31 23:30:39 [INFO] validator_excel_main_class - start line 130: IBRDEV-I-0000001:起動しました
+2023-12-31 23:30:39 [INFO] validator_excel_main_class - _excel_to_dataframe line 93: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-31 23:30:39 [WARNING] validator_excel_main_class - _valdate line 122: vakidate error 検出件数: 2:
+2023-12-31 23:30:39 [ERROR] common_utils - logger_validation_errors line 159: Validation error at (1, g):  Input should be a valid string, wrong values: 1:
+2023-12-31 23:30:39 [ERROR] common_utils - logger_validation_errors line 159: Validation error at (2, d):  Input should be a valid integer, wrong values: s:
+2023-12-31 23:30:39 [INFO] validator_excel_main_class - start line 146: IBRDEV-I-0000002:終了しました
+2023-12-31 23:33:20 [INFO] validator_excel_main_class - start line 130: IBRDEV-I-0000001:起動しました
+2023-12-31 23:33:26 [INFO] validator_excel_main_class - _excel_to_dataframe line 93: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-31 23:34:11 [INFO] validator_excel_main_class - start line 130: IBRDEV-I-0000001:起動しました
+2023-12-31 23:34:12 [INFO] validator_excel_main_class - _excel_to_dataframe line 93: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-31 23:34:12 [WARNING] validator_excel_main_class - _valdate line 122: vakidate error 検出件数: 2:
+2023-12-31 23:34:12 [ERROR] common_utils - logger_validation_errors line 159: Validation error at (1, g):  Input should be a valid string, wrong values: 1:
+2023-12-31 23:34:12 [ERROR] common_utils - logger_validation_errors line 159: Validation error at (2, d):  Input should be a valid integer, wrong values: s:
+2023-12-31 23:34:12 [INFO] validator_excel_main_class - start line 146: IBRDEV-I-0000002:終了しました
+2023-12-31 23:34:22 [INFO] validator_excel_main_class - start line 130: IBRDEV-I-0000001:起動しました
+2023-12-31 23:34:22 [INFO] validator_excel_main_class - _excel_to_dataframe line 93: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2023-12-31 23:34:37 [WARNING] validator_excel_main_class - _valdate line 122: vakidate error 検出件数: 2:
+2023-12-31 23:34:37 [ERROR] common_utils - logger_validation_errors line 159: Validation error at (1, g):  Input should be a valid string, wrong values: 1:
+2023-12-31 23:34:37 [ERROR] common_utils - logger_validation_errors line 159: Validation error at (2, d):  Input should be a valid integer, wrong values: s:
+2023-12-31 23:34:39 [INFO] validator_excel_main_class - start line 146: IBRDEV-I-0000002:終了しました
+2024-01-01 08:12:57 [INFO] validator_excel_main_class - start line 130: IBRDEV-I-0000001:起動しました
+2024-01-01 08:12:57 [INFO] validator_excel_main_class - _excel_to_dataframe line 93: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2024-01-01 08:12:57 [WARNING] validator_excel_main_class - _valdate line 122: vakidate error 検出件数: 2:
+2024-01-01 08:12:57 [ERROR] common_utils - logger_validation_errors line 159: Validation error at (1, g):  Input should be a valid string, wrong values: 1:
+2024-01-01 08:12:57 [ERROR] common_utils - logger_validation_errors line 159: Validation error at (2, d):  Input should be a valid integer, wrong values: s:
+2024-01-01 08:12:57 [INFO] validator_excel_main_class - start line 146: IBRDEV-I-0000002:終了しました
+2024-01-01 08:13:23 [ERROR] common_utils - parse_toml_file line 27: can not get target files [Errno 2] No such file or directory: '/developer/library_dev/project_1/tests/lib/common_utils/package_config.toml':
+2024-01-01 08:13:23 [ERROR] common_utils - load line 73: package_config取得に失敗しました: [Errno 2] No such file or directory: '/developer/library_dev/project_1/tests/lib/common_utils/package_config.toml':
+2024-01-01 08:13:23 [ERROR] common_utils - load line 75: Traceback (most recent call last):
+  File "/developer/library_dev/project_1/src/lib/common_utils/ibr_get_config.py", line 71, in load
+    package_config = TomlParser.parse_toml_file(package_toml_path)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/project_1/src/lib/common_utils/ibr_toml_loader.py", line 24, in parse_toml_file
+    with toml_path.open(mode='r', encoding='utf8') as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/satoshi/.pyenv/versions/3.11.6/lib/python3.11/pathlib.py", line 1044, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/developer/library_dev/project_1/tests/lib/common_utils/package_config.toml'
+:
+2024-01-01 09:15:56 [INFO] test_logger - テストログ
+2024-01-01 09:16:04 [INFO] test_logger - テストログ
+2024-01-01 09:17:35 [INFO] common_utils - test_import_csv_to_row_exists line 29: pytest logger test:
+2024-01-01 09:18:43 [INFO] common_utils - test_import_csv_to_row_exists line 29: pytest logger test:
+2024-01-01 09:18:50 [INFO] common_utils - test_import_csv_to_row_exists line 29: pytest logger test:
+2024-01-01 09:19:23 [INFO] validator_excel_main_class - start line 130: IBRDEV-I-0000001:起動しました
+2024-01-01 09:19:24 [INFO] validator_excel_main_class - _excel_to_dataframe line 93: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2024-01-01 09:19:24 [WARNING] validator_excel_main_class - _valdate line 122: vakidate error 検出件数: 2:
+2024-01-01 09:19:24 [ERROR] common_utils - logger_validation_errors line 159: Validation error at (1, g):  Input should be a valid string, wrong values: 1:
+2024-01-01 09:19:24 [ERROR] common_utils - logger_validation_errors line 159: Validation error at (2, d):  Input should be a valid integer, wrong values: s:
+2024-01-01 09:19:24 [INFO] validator_excel_main_class - start line 146: IBRDEV-I-0000002:終了しました
+2024-01-01 09:22:01 [INFO] common_utils - test_import_csv_to_row_exists line 29: pytest logger test:
+2024-01-01 09:23:08 [INFO] common_utils - test_import_csv_to_row_exists line 29: pytest logger test:
+2024-01-01 09:23:46 [INFO] common_utils - test_import_csv_to_row_exists line 29: pytest logger test:
+2024-01-01 09:24:31 [INFO] common_utils - test_import_csv_to_row_exists line 29: pytest logger test:
+2024-01-01 09:25:44 [INFO] common_utils - test_import_csv_to_row_exists line 29: pytest logger test:
+2024-01-01 09:26:17 [INFO] common_utils - test_import_csv_to_row_exists line 29: pytest logger test:
+2024-01-01 09:59:27 [INFO] validator_excel_main_class - start line 130: IBRDEV-I-0000001:起動しました
+2024-01-01 09:59:27 [INFO] validator_excel_main_class - _excel_to_dataframe line 93: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2024-01-01 09:59:27 [WARNING] validator_excel_main_class - _valdate line 122: vakidate error 検出件数: 2:
+2024-01-01 09:59:27 [ERROR] common_utils - logger_validation_errors line 159: Validation error at (1, g):  Input should be a valid string, wrong values: 1:
+2024-01-01 09:59:27 [ERROR] common_utils - logger_validation_errors line 159: Validation error at (2, d):  Input should be a valid integer, wrong values: s:
+2024-01-01 09:59:27 [INFO] validator_excel_main_class - start line 146: IBRDEV-I-0000002:終了しました
+2024-01-01 10:07:33 [INFO] validator_excel_main_class - start line 129: IBRDEV-I-0000001:起動しました
+2024-01-01 10:07:33 [INFO] validator_excel_main_class - _excel_to_dataframe line 92: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2024-01-01 10:07:33 [WARNING] validator_excel_main_class - _valdate line 121: vakidate error 検出件数: 2:
+2024-01-01 10:07:33 [ERROR] common_utils - logger_validation_errors line 156: Validation error at (1, g):  Input should be a valid string, wrong values: 1:
+2024-01-01 10:07:33 [ERROR] common_utils - logger_validation_errors line 156: Validation error at (2, d):  Input should be a valid integer, wrong values: s:
+2024-01-01 10:07:33 [INFO] validator_excel_main_class - start line 145: IBRDEV-I-0000002:終了しました
+2024-01-01 10:15:21 [INFO] validator_excel_main_class - start line 133: IBRDEV-I-0000001:起動しました
+2024-01-01 10:15:21 [ERROR] validator_excel_main_class - start line 146: Traceback (most recent call last):
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class/__main__.py", line 139, in start
+    _df = self._excel_to_dataframe()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class/__main__.py", line 69, in _excel_to_dataframe
+    _df = _df.dropna(subset=['No'])
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandas/core/frame.py", line 6418, in dropna
+    raise KeyError(np.array(subset)[check].tolist())
+KeyError: ['No']
+:
+2024-01-01 10:17:18 [INFO] validator_excel_main_class - start line 134: IBRDEV-I-0000001:起動しました
+2024-01-01 10:17:18 [INFO] validator_excel_main_class - _excel_to_dataframe line 97: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2024-01-01 10:17:18 [WARNING] validator_excel_main_class - _valdate line 126: vakidate error 検出件数: 2:
+2024-01-01 10:17:18 [ERROR] common_utils - logger_validation_errors line 156: Validation error at (1, g):  Input should be a valid string, wrong values: 1:
+2024-01-01 10:17:18 [ERROR] common_utils - logger_validation_errors line 156: Validation error at (2, d):  Input should be a valid integer, wrong values: s:
+2024-01-01 10:17:18 [INFO] validator_excel_main_class - start line 150: IBRDEV-I-0000002:終了しました
+2024-01-01 10:17:20 [INFO] validator_excel_main_class - start line 134: IBRDEV-I-0000001:起動しました
+2024-01-01 10:17:21 [INFO] validator_excel_main_class - _excel_to_dataframe line 97: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2024-01-01 10:17:21 [WARNING] validator_excel_main_class - _valdate line 126: vakidate error 検出件数: 2:
+2024-01-01 10:17:21 [ERROR] common_utils - logger_validation_errors line 156: Validation error at (1, g):  Input should be a valid string, wrong values: 1:
+2024-01-01 10:17:21 [ERROR] common_utils - logger_validation_errors line 156: Validation error at (2, d):  Input should be a valid integer, wrong values: s:
+2024-01-01 10:17:21 [INFO] validator_excel_main_class - start line 150: IBRDEV-I-0000002:終了しました
+2024-01-01 10:18:55 [ERROR] common_utils - parse_toml_file line 34: Traceback (most recent call last):
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/toml/decoder.py", line 511, in loads
+    ret = decoder.load_line(line, currentlevel, multikey,
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/toml/decoder.py", line 778, in load_line
+    value, vtype = self.load_value(pair[1], strictly_valid)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/toml/decoder.py", line 849, in load_value
+    raise ValueError("Found tokens after a closed " +
+ValueError: Found tokens after a closed string. Invalid TOML.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/developer/library_dev/project_1/src/lib/common_utils/ibr_toml_loader.py", line 25, in parse_toml_file
+    toml_obj = toml.load(f)
+               ^^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/toml/decoder.py", line 156, in load
+    return loads(f.read(), _dict, decoder)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/toml/decoder.py", line 514, in loads
+    raise TomlDecodeError(str(err), original, pos)
+toml.decoder.TomlDecodeError: Found tokens after a closed string. Invalid TOML. (line 34 column 1 char 802)
+:
+2024-01-01 10:18:55 [ERROR] common_utils - load line 78: package_config取得に失敗しました: Found tokens after a closed string. Invalid TOML. (line 34 column 1 char 802):
+2024-01-01 10:18:55 [ERROR] common_utils - load line 80: Traceback (most recent call last):
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/toml/decoder.py", line 511, in loads
+    ret = decoder.load_line(line, currentlevel, multikey,
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/toml/decoder.py", line 778, in load_line
+    value, vtype = self.load_value(pair[1], strictly_valid)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/toml/decoder.py", line 849, in load_value
+    raise ValueError("Found tokens after a closed " +
+ValueError: Found tokens after a closed string. Invalid TOML.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/developer/library_dev/project_1/src/lib/common_utils/ibr_get_config.py", line 76, in load
+    package_config = TomlParser.parse_toml_file(package_toml_path)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/project_1/src/lib/common_utils/ibr_toml_loader.py", line 25, in parse_toml_file
+    toml_obj = toml.load(f)
+               ^^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/toml/decoder.py", line 156, in load
+    return loads(f.read(), _dict, decoder)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/toml/decoder.py", line 514, in loads
+    raise TomlDecodeError(str(err), original, pos)
+toml.decoder.TomlDecodeError: Found tokens after a closed string. Invalid TOML. (line 34 column 1 char 802)
+:
+2024-01-01 10:19:03 [INFO] validator_excel_main_class - start line 134: IBRDEV-I-0000001:起動しました
+2024-01-01 10:19:03 [ERROR] validator_excel_main_class - start line 147: Traceback (most recent call last):
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class/__main__.py", line 140, in start
+    _df = self._excel_to_dataframe()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class/__main__.py", line 70, in _excel_to_dataframe
+    _df = _df.dropna(subset=['No'])
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandas/core/frame.py", line 6418, in dropna
+    raise KeyError(np.array(subset)[check].tolist())
+KeyError: ['No']
+:
+2024-01-01 10:20:01 [INFO] validator_excel_main_class - start line 134: IBRDEV-I-0000001:起動しました
+2024-01-01 10:20:01 [ERROR] validator_excel_main_class - start line 147: Traceback (most recent call last):
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class/__main__.py", line 140, in start
+    _df = self._excel_to_dataframe()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/project_1/src/package/validator_excel_main_class/__main__.py", line 70, in _excel_to_dataframe
+    _df = _df.dropna(subset=['No'])
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/.venv/lib/python3.11/site-packages/pandas/core/frame.py", line 6418, in dropna
+    raise KeyError(np.array(subset)[check].tolist())
+KeyError: ['No']
+:
+2024-01-01 10:22:36 [INFO] validator_excel_main_class - start line 132: IBRDEV-I-0000001:起動しました
+2024-01-01 10:22:36 [INFO] validator_excel_main_class - _excel_to_dataframe line 95: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2024-01-01 10:22:36 [WARNING] validator_excel_main_class - _valdate line 124: vakidate error 検出件数: 2:
+2024-01-01 10:22:36 [ERROR] common_utils - logger_validation_errors line 156: Validation error at (1, g):  Input should be a valid string, wrong values: 1:
+2024-01-01 10:22:36 [ERROR] common_utils - logger_validation_errors line 156: Validation error at (2, d):  Input should be a valid integer, wrong values: s:
+2024-01-01 10:22:36 [INFO] validator_excel_main_class - start line 148: IBRDEV-I-0000002:終了しました
+2024-01-01 10:22:38 [INFO] validator_excel_main_class - start line 132: IBRDEV-I-0000001:起動しました
+2024-01-01 10:22:38 [INFO] validator_excel_main_class - _excel_to_dataframe line 95: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2024-01-01 10:22:38 [WARNING] validator_excel_main_class - _valdate line 124: vakidate error 検出件数: 2:
+2024-01-01 10:22:38 [ERROR] common_utils - logger_validation_errors line 156: Validation error at (1, g):  Input should be a valid string, wrong values: 1:
+2024-01-01 10:22:38 [ERROR] common_utils - logger_validation_errors line 156: Validation error at (2, d):  Input should be a valid integer, wrong values: s:
+2024-01-01 10:22:38 [INFO] validator_excel_main_class - start line 148: IBRDEV-I-0000002:終了しました
+2024-01-01 10:25:55 [INFO] validator_excel_main_class - start line 135: IBRDEV-I-0000001:起動しました
+2024-01-01 10:25:55 [INFO] validator_excel_main_class - _excel_to_dataframe line 96: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2024-01-01 10:25:55 [WARNING] validator_excel_main_class - _valdate line 125: 検証対象ファイル: src/share/receive/input_data_validator.xlsx:
+2024-01-01 10:25:55 [WARNING] validator_excel_main_class - _valdate line 126: 検証対象Sheet: Sheet1:
+2024-01-01 10:25:55 [WARNING] validator_excel_main_class - _valdate line 127: vakidate error 検出件数: 2:
+2024-01-01 10:25:55 [ERROR] common_utils - logger_validation_errors line 156: Validation error at (1, g):  Input should be a valid string, wrong values: 1:
+2024-01-01 10:25:55 [ERROR] common_utils - logger_validation_errors line 156: Validation error at (2, d):  Input should be a valid integer, wrong values: s:
+2024-01-01 10:25:55 [INFO] validator_excel_main_class - start line 151: IBRDEV-I-0000002:終了しました
+2024-01-01 10:26:27 [INFO] validator_excel_main_class - start line 135: IBRDEV-I-0000001:起動しました
+2024-01-01 10:26:28 [INFO] validator_excel_main_class - _excel_to_dataframe line 96: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2024-01-01 10:26:28 [INFO] validator_excel_main_class - _valdate line 125: 検証対象ファイル: src/share/receive/input_data_validator.xlsx:
+2024-01-01 10:26:28 [INFO] validator_excel_main_class - _valdate line 126: 検証対象Sheet: Sheet1:
+2024-01-01 10:26:28 [WARNING] validator_excel_main_class - _valdate line 127: vakidate error 検出件数: 2:
+2024-01-01 10:26:28 [ERROR] common_utils - logger_validation_errors line 156: Validation error at (1, g):  Input should be a valid string, wrong values: 1:
+2024-01-01 10:26:28 [ERROR] common_utils - logger_validation_errors line 156: Validation error at (2, d):  Input should be a valid integer, wrong values: s:
+2024-01-01 10:26:28 [INFO] validator_excel_main_class - start line 151: IBRDEV-I-0000002:終了しました
+2024-01-02 06:51:09 [INFO] validator_excel_main_class - start line 137: IBRDEV-I-0000001:起動しました
+2024-01-02 06:51:09 [INFO] validator_excel_main_class - _excel_to_dataframe line 98: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2024-01-02 06:51:09 [INFO] validator_excel_main_class - _valdate line 127: 検証対象ファイル: src/share/receive/input_data_validator.xlsx:
+2024-01-02 06:51:09 [INFO] validator_excel_main_class - _valdate line 128: 検証対象Sheet: Sheet1:
+2024-01-02 06:51:09 [WARNING] validator_excel_main_class - _valdate line 129: vakidate error 検出件数: 2:
+2024-01-02 06:51:09 [ERROR] common_utils - logger_validation_errors line 156: Validation error at (1, g):  Input should be a valid string, wrong values: 1:
+2024-01-02 06:51:09 [ERROR] common_utils - logger_validation_errors line 156: Validation error at (2, d):  Input should be a valid integer, wrong values: s:
+2024-01-02 06:51:09 [INFO] validator_excel_main_class - start line 153: IBRDEV-I-0000002:終了しました
+2024-01-02 06:51:14 [INFO] validator_excel_main_class - start line 137: IBRDEV-I-0000001:起動しました
+2024-01-02 06:51:14 [INFO] validator_excel_main_class - _excel_to_dataframe line 98: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2024-01-02 06:51:14 [INFO] validator_excel_main_class - _valdate line 127: 検証対象ファイル: src/share/receive/input_data_validator.xlsx:
+2024-01-02 06:51:14 [INFO] validator_excel_main_class - _valdate line 128: 検証対象Sheet: Sheet1:
+2024-01-02 06:51:14 [WARNING] validator_excel_main_class - _valdate line 129: vakidate error 検出件数: 2:
+2024-01-02 06:51:14 [ERROR] common_utils - logger_validation_errors line 156: Validation error at (1, g):  Input should be a valid string, wrong values: 1:
+2024-01-02 06:51:14 [ERROR] common_utils - logger_validation_errors line 156: Validation error at (2, d):  Input should be a valid integer, wrong values: s:
+2024-01-02 06:51:14 [INFO] validator_excel_main_class - start line 153: IBRDEV-I-0000002:終了しました
+2024-01-02 06:51:58 [INFO] validator_excel_main_class - start line 137: IBRDEV-I-0000001:起動しました
+2024-01-02 06:51:58 [INFO] validator_excel_main_class - _excel_to_dataframe line 98: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2024-01-02 06:51:58 [INFO] validator_excel_main_class - _valdate line 127: 検証対象ファイル: src/share/receive/input_data_validator.xlsx:
+2024-01-02 06:51:58 [INFO] validator_excel_main_class - _valdate line 128: 検証対象Sheet: Sheet1:
+2024-01-02 06:51:58 [WARNING] validator_excel_main_class - _valdate line 129: vakidate error 検出件数: 2:
+2024-01-02 06:51:58 [ERROR] common_utils - logger_validation_errors line 156: Validation error at (1, g):  Input should be a valid string, wrong values: 1:
+2024-01-02 06:51:58 [ERROR] common_utils - logger_validation_errors line 156: Validation error at (2, d):  Input should be a valid integer, wrong values: s:
+2024-01-02 06:51:58 [INFO] validator_excel_main_class - start line 153: IBRDEV-I-0000002:終了しました
+2024-01-02 06:55:02 [INFO] validator_excel_main_class - start line 137: IBRDEV-I-0000001:起動しました
+2024-01-02 06:55:02 [INFO] validator_excel_main_class - _excel_to_dataframe line 98: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2024-01-02 06:55:02 [INFO] validator_excel_main_class - _valdate line 127: 検証対象ファイル: src/share/receive/input_data_validator.xlsx:
+2024-01-02 06:55:02 [INFO] validator_excel_main_class - _valdate line 128: 検証対象Sheet: Sheet1:
+2024-01-02 06:55:02 [WARNING] validator_excel_main_class - _valdate line 129: vakidate error 検出件数: 2:
+2024-01-02 06:55:02 [ERROR] common_utils - logger_validation_errors line 156: Validation error at (1, g):  Input should be a valid string, wrong values: 1:
+2024-01-02 06:55:02 [ERROR] common_utils - logger_validation_errors line 156: Validation error at (2, d):  Input should be a valid integer, wrong values: s:
+2024-01-02 06:55:02 [INFO] validator_excel_main_class - start line 153: IBRDEV-I-0000002:終了しました
+2024-01-02 07:03:12 [INFO] validator_excel_main_class - start line 137: IBRDEV-I-0000001:起動しました
+2024-01-02 07:03:12 [INFO] validator_excel_main_class - _excel_to_dataframe line 98: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2024-01-02 07:03:12 [INFO] validator_excel_main_class - _valdate line 127: 検証対象ファイル: src/share/receive/input_data_validator.xlsx:
+2024-01-02 07:03:12 [INFO] validator_excel_main_class - _valdate line 128: 検証対象Sheet: Sheet1:
+2024-01-02 07:03:12 [WARNING] validator_excel_main_class - _valdate line 129: vakidate error 検出件数: 2:
+2024-01-02 07:03:12 [ERROR] common_utils - logger_validation_errors line 156: Validation error at (1, g):  Input should be a valid string, wrong values: 1:
+2024-01-02 07:03:12 [ERROR] common_utils - logger_validation_errors line 156: Validation error at (2, d):  Input should be a valid integer, wrong values: s:
+2024-01-02 07:03:12 [INFO] validator_excel_main_class - start line 153: IBRDEV-I-0000002:終了しました
+2024-01-02 07:12:43 [INFO] validator_excel_main_class - start line 137: IBRDEV-I-0000001:起動しました
+2024-01-02 07:12:43 [DEBUG] common_utils - tabulate_dataframe line 50: |    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2024-01-02 07:12:43 [INFO] validator_excel_main_class - _excel_to_dataframe line 98: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2024-01-02 07:12:43 [INFO] validator_excel_main_class - _valdate line 127: 検証対象ファイル: src/share/receive/input_data_validator.xlsx:
+2024-01-02 07:12:43 [INFO] validator_excel_main_class - _valdate line 128: 検証対象Sheet: Sheet1:
+2024-01-02 07:12:43 [WARNING] validator_excel_main_class - _valdate line 129: vakidate error 検出件数: 2:
+2024-01-02 07:12:43 [ERROR] common_utils - logger_validation_errors line 156: Validation error at (1, g):  Input should be a valid string, wrong values: 1:
+2024-01-02 07:12:43 [ERROR] common_utils - logger_validation_errors line 156: Validation error at (2, d):  Input should be a valid integer, wrong values: s:
+2024-01-02 07:12:43 [INFO] validator_excel_main_class - start line 153: IBRDEV-I-0000002:終了しました
+2024-01-02 07:26:33 [INFO] validator_excel_main_class - start line 137: IBRDEV-I-0000001:起動しました
+2024-01-02 07:26:33 [DEBUG] common_utils - tabulate_dataframe line 51: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2024-01-02 07:26:33 [INFO] validator_excel_main_class - _excel_to_dataframe line 98: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2024-01-02 07:26:33 [INFO] validator_excel_main_class - _valdate line 127: 検証対象ファイル: src/share/receive/input_data_validator.xlsx:
+2024-01-02 07:26:33 [INFO] validator_excel_main_class - _valdate line 128: 検証対象Sheet: Sheet1:
+2024-01-02 07:26:33 [WARNING] validator_excel_main_class - _valdate line 129: vakidate error 検出件数: 2:
+2024-01-02 07:26:33 [ERROR] common_utils - logger_validation_errors line 156: Validation error at (1, g):  Input should be a valid string, wrong values: 1:
+2024-01-02 07:26:33 [ERROR] common_utils - logger_validation_errors line 156: Validation error at (2, d):  Input should be a valid integer, wrong values: s:
+2024-01-02 07:26:33 [INFO] validator_excel_main_class - start line 153: IBRDEV-I-0000002:終了しました
+2024-01-02 07:49:03 [INFO] validator_excel_main_class - start line 137: IBRDEV-I-0000001:起動しました
+2024-01-02 07:49:03 [DEBUG] common_utils - tabulate_dataframe line 51: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2024-01-02 07:49:03 [INFO] validator_excel_main_class - _excel_to_dataframe line 98: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | int64  |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2024-01-02 07:49:03 [INFO] validator_excel_main_class - _valdate line 127: 検証対象ファイル: src/share/receive/input_data_validator.xlsx:
+2024-01-02 07:49:03 [INFO] validator_excel_main_class - _valdate line 128: 検証対象Sheet: Sheet1:
+2024-01-02 07:49:03 [WARNING] validator_excel_main_class - _valdate line 129: vakidate error 検出件数: 2:
+2024-01-02 07:49:03 [ERROR] common_utils - logger_validation_errors line 156: Validation error at (1, g):  Input should be a valid string, wrong values: 1:
+2024-01-02 07:49:03 [ERROR] common_utils - logger_validation_errors line 156: Validation error at (2, d):  Input should be a valid integer, wrong values: s:
+2024-01-02 07:49:03 [INFO] validator_excel_main_class - start line 153: IBRDEV-I-0000002:終了しました

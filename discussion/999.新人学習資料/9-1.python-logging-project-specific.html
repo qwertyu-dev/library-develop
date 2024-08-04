@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pythonロギング：プロジェクト固有の実装を含む完全版学習資料</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; padding: 20px; max-width: 800px; margin: 0 auto; }
+        h1, h2, h3 { color: #333; }
+        pre { background-color: #f4f4f4; padding: 10px; border-radius: 5px; overflow-x: auto; }
+        .quiz { background-color: #e7f3fe; padding: 15px; border-radius: 5px; margin-top: 20px; }
+        .quiz-question { margin-bottom: 20px; }
+        .options { margin-left: 20px; }
+        button { background-color: #4CAF50; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background-color: #45a049; }
+        #result { margin-top: 20px; font-weight: bold; }
+        .note { background-color: #ffffd9; padding: 10px; border-left: 5px solid #ffeb3b; margin: 15px 0; }
+    </style>
+</head>
+<body>
+    <h1>9. ロギング</h1>
+
+    <h2>9.1 loggingモジュールの基本</h2>
+    <p>loggingモジュールは、アプリケーションのイベントを記録するための柔軟な枠組みを提供します。</p>
+    <pre>
+import logging
+
+# 基本的なログ設定
+logging.basicConfig(level=logging.INFO)
+
+# ログメッセージの出力
+logging.debug("これはデバッグメッセージです")
+logging.info("これは情報メッセージです")
+logging.warning("これは警告メッセージです")
+logging.error("これはエラーメッセージです")
+logging.critical("これは重大なエラーメッセージです")
+    </pre>
+
+    <h2>9.2 プロジェクト固有のロギング実装</h2>
+    <p>このプロジェクトでは、__init__処理でConfigオブジェクトからloggerオブジェクトを受け取り、ログ出力を行います。</p>
+    <pre>
+from config import Config
+
+class MyClass:
+    def __init__(self, config: Config):
+        self.logger = config.get_logger()
+        self.logger.info("MyClassのインスタンスが初期化されました")
+
+    def some_method(self):
+        self.logger.debug("some_methodが呼び出されました")
+        # メソッドの処理
+        self.logger.info("some_methodの処理が完了しました")
+
+# 使用例
+config = Config()
+my_instance = MyClass(config)
+my_instance.some_method()
+    </pre>
+
+    <h2>9.3 ログレベルとフォーマッティング</h2>
+    <p>ログレベルは重要度に応じて設定でき、ログのフォーマットをカスタマイズできます。</p>
+    <pre>
+import logging
+
+# ログフォーマットとレベルの設定
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+
+logger = logging.getLogger(__name__)
+
+logger.debug("デバッグメッセージ")
+logger.info("情報メッセージ")
+logger.warning("警告メッセージ")
+    </pre>
+
+    <h2>9.4 ファイルへのログ出力</h2>
+    <p>ログをファイルに出力することで、後でログを分析したり、長期的に保存したりできます。</p>
+    <pre>
+import logging
+
+# ファイルへのログ出力設定
+logging.basicConfig(
+    filename='app.log',
+    filemode='w',
+    level=logging.DEBUG,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+
+logging.debug("これはファイルに書き込まれます")
+    </pre>
+
+    <div class="note">
+        <h3>プロジェクトでのロギング活用のポイント</h3>
+        <ul>
+            <li>Configオブジェクトを通じてloggerを取得し、一貫したロギング設定を維持する</li>
+            <li>適切なログレベルを使用し、重要な情報を確実に記録する</li>
+            <li>機密情報をログに記録しないよう注意する</li>
+            <li>ログローテーションを設定し、ログファイルのサイズ管理を行う</li>
+            <li>構造化ログを使用し、ログの解析を容易にする</li>
+            <li>例外発生時は、スタックトレースを含めてログに記録する</li>
+        </ul>
+    </div>
+
+    <h2>クイズ: Pythonロギング</h2>
+    <div class="quiz">
+        <form id="quizForm">
+            <div class="quiz-question">
+                <p>1. このプロジェクトで、loggerオブジェクトを取得する正しい方法は何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q1" value="a" required> a) logging.getLogger(__name__)<br>
+                    <input type="radio" name="q1" value="b"> b) config.get_logger()<br>
+                    <input type="radio" name="q1" value="c"> c) Logger.getInstance()<br>
+                    <input type="radio" name="q1" value="d"> d) new Logger()
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>2. ログレベルの重要度が低い順に並べた正しい順序は？</p>
+                <div class="options">
+                    <input type="radio" name="q2" value="a" required> a) DEBUG, INFO, WARNING, ERROR, CRITICAL<br>
+                    <input type="radio" name="q2" value="b"> b) INFO, DEBUG, WARNING, ERROR, CRITICAL<br>
+                    <input type="radio" name="q2" value="c"> c) DEBUG, WARNING, INFO, ERROR, CRITICAL<br>
+                    <input type="radio" name="q2" value="d"> d) INFO, DEBUG, ERROR, WARNING, CRITICAL
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>3. プロジェクトのクラスで、loggerを初期化する適切なタイミングは？</p>
+                <div class="options">
+                    <input type="radio" name="q3" value="a" required> a) クラスの__init__メソッド内<br>
+                    <input type="radio" name="q3" value="b"> b) クラスの最初のメソッドが呼ばれたとき<br>
+                    <input type="radio" name="q3" value="c"> c) クラス定義の直後<br>
+                    <input type="radio" name="q3" value="d"> d) ログが最初に必要になったとき
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>4. ログメッセージのフォーマットで、タイムスタンプを表す書式指定子は何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q4" value="a" required> a) %time<br>
+                    <input type="radio" name="q4" value="b"> b) %t<br>
+                    <input type="radio" name="q4" value="c"> c) %asctime<br>
+                    <input type="radio" name="q4" value="d"> d) %timestamp
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>5. プロジェクトで使用するConfigオブジェクトの主な役割は何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q5" value="a" required> a) データベース接続の管理<br>
+                    <input type="radio" name="q5" value="b"> b) ロギング設定の一元管理<br>
+                    <input type="radio" name="q5" value="c"> c) ユーザー認証の処理<br>
+                    <input type="radio" name="q5" value="d"> d) ファイルシステムの操作
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>6. プロジェクトのクラスメソッド内でログを出力する正しい方法は？</p>
+                <div class="options">
+                    <input type="radio" name="q6" value="a" required> a) logging.info("メッセージ")<br>
+                    <input type="radio" name="q6" value="b"> b) self.logger.info("メッセージ")<br>
+                    <input type="radio" name="q6" value="c"> c) Logger.log("メッセージ")<br>
+                    <input type="radio" name="q6" value="d"> d) print("ログ: メッセージ")
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>7. ロガーにハンドラーを追加するメソッドは何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q7" value="a" required> a) logger.setHandler()<br>
+                    <input type="radio" name="q7" value="b"> b) logger.addHandler()<br>
+                    <input type="radio" name="q7" value="c"> c) logger.pushHandler()<br>
+                    <input type="radio" name="q7" value="d"> d) logger.attachHandler()
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>8. プロジェクトで、異なるモジュール間でログ設定を一貫させる最適な方法は？</p>
+                <div class="options">
+                    <input type="radio" name="q8" value="a" required> a) 各モジュールで個別にロガーを設定する<br>
+                    <input type="radio" name="q8" value="b"> b) グローバル変数としてロガーを定義する<br>
+                    <input type="radio" name="q8" value="c"> c) Configオブジェクトを通じてロガーを取得する<br>
+                    <input type="radio" name="q8" value="d"> d) ロギングを使用せず、printステートメントを使用する
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>9. ロガーの階層構造において、子ロガーは親ロガーの設定をどのように扱いますか？</p>
+                <div class="options">
+                    <input type="radio" name="q9" value="a" required> a) 常に無視する<br>
+                    <input type="radio" name="q9" value="b"> b) 継承する<br>
+                    <input type="radio" name="q9" value="c"> c) 上書きする<br>
+                    <input type="radio" name="q9" value="d"> d) 複製する
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>10. プロジェクトで、機密情報のログ記録を防ぐ最良の方法は？</p>
+                <div class="options">
+                    <input type="radio" name="q10" value="a" required> a) すべてのログ出力を無効にする<br>
+                    <input type="radio" name="q10" value="b"> b) ログレベルをCRITICALに設定する<br>
+                    <input type="radio" name="q10" value="c"> c) 機密情報を含むかチェックしてからログを記録する<br>
+                    <input type="radio" name="q10" value="d"> d) ログファイルを暗号化する
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>11. ログローテーションを実現するためのハンドラークラスは何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q11" value="a" required> a) RotatingFileHandler<br>
+                    <input type="radio" name="q11" value="b"> b) CircularFileHandler<br>
+                    <input type="radio" name="q11" value="c"> c) RollingFileHandler<br>
+                    <input type="radio" name="q11" value="d"> d) CyclicFileHandler
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>12. プロジェクトで例外が発生した場合、適切なログレベルは何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q12" value="a" required> a) DEBUG<br>
+                    <input type="radio" name="q12" value="b"> b) INFO<br>
+                    <input type="radio" name="q12" value="c"> c) WARNING<br>
+                    <input type="radio" name="q12" value="d"> d) ERROR または CRITICAL
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>13. ログメッセージのフォーマットで、ログを出力した関数名を表す書式指定子は何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q13" value="a" required> a) %function<br>
+                    <input type="radio" name="q13" value="b"> b) %method<br>
+                    <input type="radio" name="q13" value

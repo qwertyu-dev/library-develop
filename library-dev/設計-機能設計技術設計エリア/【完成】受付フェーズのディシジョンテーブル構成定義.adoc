@@ -1,0 +1,180 @@
+= ディシジョンテーブル仕様定義
+== はじめに
+=== 目的
+本文書は、受付フェーズにおけるディシジョンテーブルの仕様を定義することを目的としています。このディシジョンテーブルは、入力データに基づいて適切なFacadeを選択し、データ処理の流れを制御するために使用されます。
+
+=== 適用範囲
+本仕様は、銀行の組織情報管理システムの受付フェーズで使用されるディシジョンテーブルに適用されます。具体的には、人事異動や組織変更に関する申請データの処理方法を決定するために使用されます。
+
+== 受付フェーズにおけるディシジョンテーブルの概要
+
+=== 定義
+ディシジョンテーブルとは、入力条件と対応するアクション（この場合はFacade）を表形式で定義したものです。複雑な条件分岐をシンプルに表現し、ビジネスルールの可視化と管理を容易にします。複雑でネストが深くなりやすい実装を回避するためディシジョンテーブルにより条件判定制御をシンプルにするとともに、制御の全体像を鳥瞰的に把握することができるようになります。
+
+=== 役割と機能
+- 入力データの属性に基づいて、適切なFacadeを選択します
+- ビジネスルールを外部化し、プログラムロジックとの分離を実現します
+- ルールの追加、変更、削除を容易にし、システムの柔軟性と保守性を向上させます
+
+== テーブル構造
+
+=== フォーマット
+ディシジョンテーブルは以下の形式で定義されます：
+
+[cols="1,2", options="header", width="60%"]
+|===
+|項目 |説明
+|ファイル形式 |Microsoft Excel (.xlsx)
+|シート名 |DecisionTable
+|構造 |1行目: ヘッダー(カラム名)
+
+2行目以降: 各ルールを表す行
+|更新頻度 |必要に応じて(定期的なレビューを推奨)
+|===
+
+[IMPORTANT]
+====
+Excelで一旦定義はしますが詳細設計フェーズで方針を見直す可能性があります +
+リスクと保守性のバランスを考察の上方針を再考してください
+====
+
+カラム構成：
+
+[cols="1,2,5", options="header"]
+|===
+|カラム順 |カラム名 |役割
+|1 |判定結果 |条件に合致した場合に適用するFacade名を指定
+|2 |application_info |申請情報（1:人事、2:国企、3:関連ダミー課Grあり、4:関連ダミー課Grなし）
+|3 |application_type |申請の種類（新設/変更/廃止）
+|4 |target_org |対象組織レベル（部店/課/エリア/拠点内営業部）
+|5 |branch_code |部店コード
+|6 |section_gr_code |課Grコード
+|7 |parent_branch_code |親部店コード
+|8 |bpr_target_flag |BPR対象/対象外フラグ
+|9 |area_code |エリアコード
+|10 |resident_branch_code |常駐部店コード
+|===
+
+各カラムには、具体的な値、'any'（任意の値を許容）、または条件判定関数ラベル(()を付与しない関数名)を記入します。 +
+ディシジョンテーブルサンプルを参照してください。
+
+=== カラム定義
+- 第1カラム: 判定結果（適用するFacade名）
+- 第2カラム以降: 条件カラム（application_info, application_type, target_org, branch_code, section_gr_code, parent_branch_code, bpr_target_flag, area_code, resident_branch_code）
+
+=== データ型
+- 判定結果: 文字列（Facadeクラス名）
+- 条件カラム: 文字列または整数
+
+== 条件定義
+
+=== 条件の種類
+- 具体的な値: 0, 1など
+- 複数の値(OR条件): カンマ区切りで記述(例: 1,2,3)
+- 任意の値：'any'と記述
+- 条件判定関数: 関数名を記述(例: is_4digits, is_empty)
+
+=== 条件の記述方法
+- 具体的な値: そのまま記述(例: 1)
+- 複数の値: カンマ区切りで記述(例: 1,2,3)
+- 任意の値: 'any'と記述
+- 条件判定関数: 関数名をそのまま記述(例: is_4digits)
+
+=== 条件判定関数
+- システムに実装された条件判定関数を使用可能
+- 関数は引数としてセルの値を受け取り、真偽値を返す必要がある
+
+== 判定結果
+
+=== Facade名の指定方法
+- 判定結果カラムに、適用するFacadeクラスの完全修飾名を記述
+- クラス名のみを記述し、実行時に適切な名前空間を前置することも可能
+
+=== デフォルトケースの扱い
+- 全ての条件にマッチしない場合のデフォルトFacadeを、テーブルの最後の行に定義
+- デフォルトFacadeは、全ての条件カラムを'any'とすることで実現
+
+== 評価ロジック
+
+=== 条件の評価順序
+- テーブルの上から順に評価を行う
+- 最初にすべての条件を満たした行の判定結果（Facade）を採用する
+
+=== 複数条件の取り扱い
+- 1つの行に記述された全ての条件をAND条件として評価
+- OR条件は、カンマ区切りの値として1つのセル内に記述
+
+== メンテナンスと更新
+
+=== テーブルの更新プロセス
+1. Excelファイルを開き、必要な変更を加える
+2. 変更内容をレビュー
+3. 承認後、新しいバージョンとして保存
+4. システムに新しいバージョンを適用
+
+=== バージョン管理
+- ファイル名に日付やバージョン番号を含める(例: decision_table_v1.2_20240723.xlsx)
+- 変更履歴をExcelファイル内の別シートに記録
+
+== UMLによるフロー説明
+
+=== ディシジョンテーブル評価プロセス
+[plantuml]
+----
+@startuml
+start
+:入力データを受け取る;
+:ディシジョンテーブルを読み込む;
+:テーブルの先頭行から評価開始;
+while (全ての行を評価したか?) is (No)
+    if (行の全条件が満たされているか?) then (Yes)
+    :対応するFacadeを選択;
+    stop
+    else (No)
+    :次の行に移動;
+    endif
+endwhile (Yes)
+:デフォルトFacadeを選択;
+stop
+@enduml
+----
+
+=== Facade選択と適用フロー
+[plantuml]
+----
+@startuml
+actor User
+participant "EditorFactory" as Factory
+participant "DecisionTable" as Table
+participant "Facade" as Facade
+
+User -> Factory: データ行を渡す
+activate Factory
+Factory -> Table: 条件評価
+activate Table
+Table --> Factory: Facade名を返す
+deactivate Table
+Factory -> Factory: Facade名からクラスを取得
+Factory -> Facade: インスタンス生成
+activate Facade
+Facade --> Factory: Facadeインスタンス
+Factory --> User: Facadeインスタンスを返す
+deactivate Factory
+User -> Facade: edit_dataframe()を呼び出す
+Facade --> User: 編集されたデータを返す
+deactivate Facade
+@enduml
+----
+
+== サンプルディシジョンテーブル
+
+[cols="1,1,1,1,1,1,1,1,1,1", options="header"]
+|===
+|判定結果 |application_info |application_type |target_org |branch_code |section_gr_code |parent_branch_code |bpr_target_flag |area_code |resident_branch_code
+|DataFrameEditor1 |1 |新設 |部店 |is_5digits |any |\****** |1 |any |any
+|DataFrameEditor2 |1 |変更 |課 |is_5digits |is_5digits |is_5digits |0 |any |any
+|DataFrameEditor3 |2 |新設 |エリア |is_5digits |any |is_5digits |1 |is_5digits |is_5digits
+|DataFrameEditor4 |2 |廃止 |部店 |is_5digits |any |\****** |any |any |any
+|DataFrameEditor5 |3 |変更 |課 |is_5digits |is_5digits |is_5digits |1 |any |any
+|DataFrameEditorDefault |any |any |any |any |any |any |any |any |any
+|===

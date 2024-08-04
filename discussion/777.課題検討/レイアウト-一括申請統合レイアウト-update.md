@@ -1,0 +1,25 @@
+| No | Column名称(日本語) | column_name(python) | 属性 | 桁数/文字数 | Column説明(概略) |
+|----|-------------------|---------------------|------|-------------|------------------|
+| 1 | ULID | ulid | str | 26 | ファイル取り込み時に設定される一意の識別子 |
+| 2 | 申請情報 | application_info | str | 1 | 1:人事、2:国企、3:関連ダミー課Grあり、4:関連ダミー課Grなし |
+| 3 | 種類 | application_type | str | - | 新設/変更/廃止の申請種類 |
+| 4 | 対象 | target_org | str | - | 部店/課/エリア/拠点内営業部の対象組織レベル |
+| 5 | 部門コード | division_code_jinji | str | 3 | 人事システムの部門コード |
+| 6 | 親部店コード | parent_branch_code | str | 5 | 親部店のコード。ない場合は"*****" |
+| 7 | 部店コード | branch_code | str | 5 | 対象部店のコード |
+| 8 | 部店名称 | branch_name | str | 78 | 対象部店の名称 |
+| 9 | 課Grコード | section_gr_code | str | 5 | 対象課のコード。エリアの場合は転記後ブランク |
+| 10 | 課Gr名称 | section_gr_name | str | 48 | 対象課の名称。エリアの場合は転記後ブランク |
+| 11 | 課名称(英語) | section_name_en | str | 75 | 課の英語名称（使用されない） |
+| 12 | 常駐部店コード | resident_branch_code | str | 5 | エリアの場合の常駐部店コード |
+| 13 | 常駐部店名称 | resident_branch_name | str | 48 | エリアの場合の常駐部店名称 |
+| 14 | 共通認証受渡し予定日 | aaa_transfer_date | str | 8 | 共通認証システムへの受渡予定日 |
+| 15 | 拠点内営業部コード | internal_sales_dept_code | str | 5 | 拠点内営業部のコード（使用されない） |
+| 16 | 拠点内営業部名称 | internal_sales_dept_name | str | 78 | 拠点内営業部の名称（使用されない） |
+| 17 | エリアコード | area_code | str | 5 | エリアの場合のコード |
+| 18 | エリア名称 | area_name | str | 48 | エリアの場合の名称 |
+| 19 | 備考 | remarks | str | 100 | 自由記述の備考欄 |
+| 20 | 部店名称(カナ) | branch_name_kana | str | 48 | 部店名称のカナ表記（受付処理時に補記） |
+| 21 | 課名称(カナ) | section_name_kana | str | 12 | 課名称のカナ表記（関連会社用） |
+| 22 | 課名称(略称) | section_name_abbr | str | 10 | 課名称の略称（関連会社用） |
+| 23 | BPR対象/対象外フラグ | bpr_target_flag | str | 1 | BPRシステムの対象/対象外を示すフラグ |

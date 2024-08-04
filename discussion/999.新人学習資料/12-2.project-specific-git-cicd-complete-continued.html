@@ -1,0 +1,108 @@
+<p>13. プロジェクトのGitワークフローにおいて、開発者が作業を開始する際のコマンドは？</p>
+                <div class="options">
+                    <input type="radio" name="q13" value="a" required> a) git checkout -b dev-new-feature main<br>
+                    <input type="radio" name="q13" value="b"> b) git checkout -b dev-new-feature feature-xxx<br>
+                    <input type="radio" name="q13" value="c"> c) git branch dev-new-feature<br>
+                    <input type="radio" name="q13" value="d"> d) git clone dev-new-feature
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>14. プロジェクトのCI/CDパイプラインにおいて、ステージング環境へのデプロイはどのブランチで実行されますか？</p>
+                <div class="options">
+                    <input type="radio" name="q14" value="a" required> a) main<br>
+                    <input type="radio" name="q14" value="b"> b) dev-xxx<br>
+                    <input type="radio" name="q14" value="c"> c) feature-xxx<br>
+                    <input type="radio" name="q14" value="d"> d) 全てのブランチ
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>15. プロジェクトのGitワークフローにおいて、feature-xxxブランチはどのように作成されますか？</p>
+                <div class="options">
+                    <input type="radio" name="q15" value="a" required> a) 自動的に作成される<br>
+                    <input type="radio" name="q15" value="b"> b) 開発者が必要に応じて作成する<br>
+                    <input type="radio" name="q15" value="c"> c) 開発計画者が計画に基づいて作成する<br>
+                    <input type="radio" name="q15" value="d"> d) CI/CDシステムが定期的に作成する
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>16. プロジェクトのCI/CDパイプラインで使用されているビルドツールは何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q16" value="a" required> a) make<br>
+                    <input type="radio" name="q16" value="b"> b) gradle<br>
+                    <input type="radio" name="q16" value="c"> c) maven<br>
+                    <input type="radio" name="q16" value="d"> d) Pythonのビルトインコンパイラ（py_compile）
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>17. プロジェクトの開発フローにおいて、mainブランチへのマージはどのように行われますか？</p>
+                <div class="options">
+                    <input type="radio" name="q17" value="a" required> a) 開発者が直接マージする<br>
+                    <input type="radio" name="q17" value="b"> b) CI/CDシステムが自動的にマージする<br>
+                    <input type="radio" name="q17" value="c"> c) feature-xxxブランチの完了後、検討してマージする<br>
+                    <input type="radio" name="q17" value="d"> d) 定期的なスケジュールでマージする
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>18. プロジェクトのGitワークフローにおいて、dev-xxxブランチの命名規則として正しいのは？</p>
+                <div class="options">
+                    <input type="radio" name="q18" value="a" required> a) dev-機能名<br>
+                    <input type="radio" name="q18" value="b"> b) dev-開発者名<br>
+                    <input type="radio" name="q18" value="c"> c) dev-日付<br>
+                    <input type="radio" name="q18" value="d"> d) dev-バージョン番号
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>19. プロジェクトのCI/CDパイプラインにおいて、テストが失敗した場合の処理は？</p>
+                <div class="options">
+                    <input type="radio" name="q19" value="a" required> a) パイプラインが停止する<br>
+                    <input type="radio" name="q19" value="b"> b) 警告を出して続行する<br>
+                    <input type="radio" name="q19" value="c"> c) 自動的に前のバージョンにロールバックする<br>
+                    <input type="radio" name="q19" value="d"> d) テストをスキップして次のステージに進む
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>20. プロジェクトの開発フローにおいて、hotfixが必要な場合、どのように対応しますか？</p>
+                <div class="options">
+                    <input type="radio" name="q20" value="a" required> a) mainから直接ブランチを切って修正する<br>
+                    <input type="radio" name="q20" value="b"> b) 最新のfeature-xxxブランチから修正する<br>
+                    <input type="radio" name="q20" value="c"> c) 新しいfeature-xxxブランチを作成して対応する<br>
+                    <input type="radio" name="q20" value="d"> d) dev-xxxブランチで直接修正する
+                </div>
+            </div>
+
+            <button type="submit">採点する</button>
+        </form>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        document.getElementById('quizForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            let score = 0;
+            const answers = {
+                q1: 'b', q2: 'c', q3: 'c', q4: 'c', q5: 'd',
+                q6: 'b', q7: 'd', q8: 'c', q9: 'b', q10: 'c',
+                q11: 'c', q12: 'b', q13: 'b', q14: 'c', q15: 'c',
+                q16: 'd', q17: 'c', q18: 'a', q19: 'a', q20: 'c'
+            };
+
+            for (let q in answers) {
+                const selected = document.querySelector(`input[name="${q}"]:checked`);
+                if (selected && selected.value === answers[q]) {
+                    score++;
+                }
+            }
+
+            const resultDiv = document.getElementById('result');
+            resultDiv.textContent = `あなたのスコアは ${score} / 20 です。`;
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<div class="quiz-question">
+                <p>14. 次のコードの出力は何ですか？<br>
+                    def factorial(n):<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;return 1 if n == 0 else n * factorial(n-1)<br>
+                    print(factorial(4))</p>
+                <div class="options">
+                    <input type="radio" name="q14" value="a" required> a) 24<br>
+                    <input type="radio" name="q14" value="b"> b) 12<br>
+                    <input type="radio" name="q14" value="c"> c) 64<br>
+                    <input type="radio" name="q14" value="d"> d) エラー（最大再帰深度超過）
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>15. Pythonで関数をファーストクラスオブジェクトとして扱えるということは、何ができることを意味しますか？</p>
+                <div class="options">
+                    <input type="radio" name="q15" value="a" required> a) 関数を変数に代入できる<br>
+                    <input type="radio" name="q15" value="b"> b) 関数を引数として渡せる<br>
+                    <input type="radio" name="q15" value="c"> c) 関数を戻り値として返せる<br>
+                    <input type="radio" name="q15" value="d"> d) 上記すべて
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>16. 次のコードの出力は何ですか？<br>
+                    def outer():<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;x = "local"<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;def inner():<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nonlocal x<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x = "nonlocal"<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print("inner:", x)<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;inner()<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;print("outer:", x)<br>
+                    outer()</p>
+                <div class="options">
+                    <input type="radio" name="q16" value="a" required> a) inner: nonlocal<br>&nbsp;&nbsp;&nbsp;outer: local<br>
+                    <input type="radio" name="q16" value="b"> b) inner: nonlocal<br>&nbsp;&nbsp;&nbsp;outer: nonlocal<br>
+                    <input type="radio" name="q16" value="c"> c) inner: local<br>&nbsp;&nbsp;&nbsp;outer: local<br>
+                    <input type="radio" name="q16" value="d"> d) エラー
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>17. Pythonのモジュール検索パスに新しいディレクトリを追加するために使用できるモジュールは？</p>
+                <div class="options">
+                    <input type="radio" name="q17" value="a" required> a) os<br>
+                    <input type="radio" name="q17" value="b"> b) sys<br>
+                    <input type="radio" name="q17" value="c"> c) path<br>
+                    <input type="radio" name="q17" value="d"> d) import
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>18. 次のコードの出力は何ですか？<br>
+                    def add(a, b):<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;return a + b<br>
+                    def multiply(a, b):<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;return a * b<br>
+                    def apply(func, x, y):<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;return func(x, y)<br>
+                    print(apply(add, 2, 3), apply(multiply, 2, 3))</p>
+                <div class="options">
+                    <input type="radio" name="q18" value="a" required> a) 5 6<br>
+                    <input type="radio" name="q18" value="b"> b) 2 3<br>
+                    <input type="radio" name="q18" value="c"> c) 5 5<br>
+                    <input type="radio" name="q18" value="d"> d) エラー
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>19. Pythonで関数内の関数（内部関数）を定義する主な利点は何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q19" value="a" required> a) コードの再利用性を高める<br>
+                    <input type="radio" name="q19" value="b"> b) 名前空間の汚染を防ぐ<br>
+                    <input type="radio" name="q19" value="c"> c) クロージャを作成できる<br>
+                    <input type="radio" name="q19" value="d"> d) 上記すべて
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>20. 次のコードの出力は何ですか？<br>
+                    import math<br>
+                    def hypotenuse(a, b):<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;return math.sqrt(a**2 + b**2)<br>
+                    print(hypotenuse(3, 4))</p>
+                <div class="options">
+                    <input type="radio" name="q20" value="a" required> a) 5.0<br>
+                    <input type="radio" name="q20" value="b"> b) 7.0<br>
+                    <input type="radio" name="q20" value="c"> c) 25.0<br>
+                    <input type="radio" name="q20" value="d"> d) エラー
+                </div>
+            </div>
+
+            <button type="submit">採点する</button>
+        </form>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        document.getElementById('quizForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            let score = 0;
+            const answers = {
+                q1: 'b', q2: 'a', q3: 'a', q4: 'a', q5: 'b',
+                q6: 'a', q7: 'a', q8: 'c', q9: 'c', q10: 'b',
+                q11: 'a', q12: 'b', q13: 'a', q14: 'a', q15: 'd',
+                q16: 'b', q17: 'b', q18: 'a', q19: 'd', q20: 'a'
+            };
+
+            for (let q in answers) {
+                const selected = document.querySelector(`input[name="${q}"]:checked`);
+                if (selected && selected.value === answers[q]) {
+                    score++;
+                }
+            }
+
+            const resultDiv = document.getElementById('result');
+            resultDiv.textContent = `あなたのスコアは ${score} / 20 です。`;
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+= データフレーム編集フレームワーク詳細設計書
+
+== 全体説明
+
+提示されたコードは、データフレームの編集を行うためのフレームワークを実装しています。このフレームワークは、列単位の編集を行うための`ColumnEditor`クラスと、データフレーム全体の編集を行うための`DataFrameEditor`クラス、およびディシジョンテーブルに基づいて適切な`DataFrameEditor`を選択するための`EditorFactory`クラスから構成されています。
+
+`ColumnEditor`クラスは、単一の列に対する編集操作を定義するための抽象基底クラスです。具体的な編集操作は、`Column1Editor`から`Column7Editor`までのサブクラスで実装されます。これらのサブクラスは、与えられた値に対して特定の編集ルールを適用し、編集後の値を返します。
+
+`DataFrameEditor`クラスは、データフレーム全体の編集を行うためのクラスです。`DataFrameEditor`クラスは、列名と`ColumnEditor`のインスタンスを対応付けるための`column_editors`ディクショナリを持ちます。`edit_dataframe`メソッドでは、データフレームのコピーを作成し、`column_editors`に登録された各列に対応する`ColumnEditor`を適用して、編集後のデータフレームを返します。`DataFrameEditor1`から`DataFrameEditor10`までのサブクラスは、特定の列に対する編集操作を定義するために使用されます。
+
+`EditorFactory`クラスは、ディシジョンテーブルに基づいて適切な`DataFrameEditor`を選択するためのクラスです。ディシジョンテーブルは、特定の条件に基づいて適用する`DataFrameEditor`を決定するために使用されます。`evaluate_conditions`メソッドでは、与えられた行に対してディシジョンテーブルの条件を評価し、適用する`DataFrameEditor`の名前を返します。`create_editor`メソッドでは、`evaluate_conditions`メソッドで返された`DataFrameEditor`の名前を使用して、対応する`DataFrameEditor`のインスタンスを作成します。
+
+このフレームワークでは、ディシジョンテーブルとデータサンプルをExcelファイルから読み込み、`EditorFactory`を使用して適切な`DataFrameEditor`を選択し、データフレームの編集を行います。編集後のデータフレームは、`process_row`関数を使用して行ごとに処理されます。
+
+このコードは、データフレームの編集を柔軟かつ拡張可能な方法で行うためのフレームワークを提供します。新しい編集ルールを追加するには、`ColumnEditor`のサブクラスを作成し、`DataFrameEditor`のサブクラスでそれらを組み合わせるだけです。ディシジョンテーブルを変更することで、異なる条件に基づいて適切な`DataFrameEditor`を選択することができます。
+
+== ColumnEditorクラス
+
+`ColumnEditor`クラスは、単一の列に対する編集操作を定義するための抽象基底クラスです。このクラスには、`edit`メソッドが定義されています。`edit`メソッドは、任意の型の値を受け取り、編集後の値を返します。`ColumnEditor`クラスは、具体的な編集操作を実装するためのサブクラスによって拡張されることを意図しています。
+
+`Column1Editor`から`Column7Editor`までのサブクラスは、`ColumnEditor`クラスを拡張し、特定の編集ルールを実装しています。これらのサブクラスでは、`edit`メソッドをオーバーライドし、与えられた値に対して特定の条件に基づいて編集操作を行います。例えば、`Column1Editor`クラスでは、値が1の場合は10に変換し、それ以外の場合は値をそのまま返します。
+
+各サブクラスでは、型ヒントを使用して、`edit`メソッドの引数と戻り値の型を指定しています。これにより、コードの可読性と保守性が向上します。また、`pd.isna`関数を使用して、値がNaNであるかどうかを確認し、`isinstance`関数を使用して、値の型をチェックしています。これにより、エラーを防ぎ、ロバストなコードを実現しています。
+
+`ColumnEditor`クラスとそのサブクラスは、データフレームの個々の列に対する編集操作を定義するために使用されます。これらのクラスは、`DataFrameEditor`クラスと組み合わせて使用され、データフレーム全体の編集を行います。
+
+== DataFrameEditorクラス
+
+`DataFrameEditor`クラスは、データフレーム全体の編集を行うためのクラスです。このクラスには、`column_editors`というディクショナリが定義されています。`column_editors`ディクショナリは、列名と`ColumnEditor`のインスタンスを対応付けるために使用されます。
+
+`DataFrameEditor`クラスには、`edit_dataframe`メソッドが定義されています。`edit_dataframe`メソッドは、データフレームを受け取り、編集後のデータフレームを返します。このメソッドでは、まず、データフレームのコピーを作成します。次に、`column_editors`ディクショナリに登録された各列に対して、対応する`ColumnEditor`の`edit`メソッドを適用します。編集後の値は、データフレームのコピーに反映されます。最後に、編集後のデータフレームを返します。
+
+`DataFrameEditor1`から`DataFrameEditor10`までのサブクラスは、`DataFrameEditor`クラスを拡張し、特定の列に対する編集操作を定義しています。これらのサブクラスでは、`column_editors`ディクショナリを初期化し、対応する`ColumnEditor`のインスタンスを登録します。
+
+`DataFrameEditor`クラスとそのサブクラスは、データフレーム全体の編集を行うために使用されます。これらのクラスは、`EditorFactory`クラスと組み合わせて使用され、ディシジョンテーブルに基づいて適切な`DataFrameEditor`を選択します。
+
+== EditorFactoryクラス
+
+`EditorFactory`クラスは、ディシジョンテーブルに基づいて適切な`DataFrameEditor`を選択するためのクラスです。このクラスは、`decision_table`という属性を持ち、ディシジョンテーブルを表すデータフレームを保持します。
+
+`EditorFactory`クラスには、`evaluate_conditions`メソッドと`create_editor`メソッドが定義されています。`evaluate_conditions`メソッドは、与えられた行に対してディシジョンテーブルの条件を評価し、適用する`DataFrameEditor`の名前を返します。このメソッドでは、ディシジョンテーブルの各行に対して、行のすべての列の条件が満たされるかどうかを確認します。条件が満たされる行が見つかった場合、その行の「判定結果」列の値を返します。条件が満たされる行が見つからない場合は、デフォルトの`DataFrameEditor`の名前を返します。
+
+`create_editor`メソッドは、`evaluate_conditions`メソッドで返された`DataFrameEditor`の名前を使用して、対応する`DataFrameEditor`のインスタンスを作成します。このメソッドでは、`globals`関数を使用して、文字列として表現されたクラス名からクラスオブジェクトを取得し、そのクラスのインスタンスを作成して返します。
+
+`EditorFactory`クラスは、データフレームの編集を行う際に使用されます。まず、ディシジョンテーブルとデータサンプルをExcelファイルから読み込みます。次に、`EditorFactory`のインスタンスを作成し、データサンプルの各行に対して`process_row`関数を適用します。`process_row`関数内では、`EditorFactory`の`create_editor`メソッドを呼び出して適切な`DataFrameEditor`を取得し、その`DataFrameEditor`を使用してデータフレームの編集を行います。
+
+`EditorFactory`クラスは、ディシジョンテーブルに基づいて適切な`DataFrameEditor`を選択するための仕組みを提供します。これにより、異なる条件に基づいて異なる編集操作を適用することができます。また、新しい`DataFrameEditor`を追加する際にも、`EditorFactory`クラスを変更する必要がないため、拡張性に優れています。

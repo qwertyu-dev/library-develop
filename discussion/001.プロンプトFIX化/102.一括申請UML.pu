@@ -1,0 +1,136 @@
+<umls_一括申請>
+
+コンポーネント図:
+
+[plantuml]
+----
+@startuml
+package "一括申請" {
+  [申請フォーム] as ApplicationForm
+  [バリデーション] as Validation
+  [整合性チェック] as ConsistencyCheck
+  [DataFrameへの変換] as DataFrameConversion
+  [一意キーの付与] as UniqueKeyAssignment
+  [申請一覧テーブルへの永続化] as PersistenceToApplicationList
+  
+  ApplicationForm --> Validation
+  ApplicationForm --> ConsistencyCheck
+  ApplicationForm --> DataFrameConversion
+  DataFrameConversion --> UniqueKeyAssignment
+  UniqueKeyAssignment --> PersistenceToApplicationList
+}
+@enduml
+----
+
+シーケンス図:
+
+[plantuml]
+----
+@startuml
+actor User
+participant ApplicationForm
+participant Validation
+participant ConsistencyCheck
+participant DataFrameConversion
+participant UniqueKeyAssignment
+participant PersistenceToApplicationList
+
+User -> ApplicationForm: Excelファイルの提出
+activate ApplicationForm
+
+ApplicationForm -> Validation: バリデーション実行
+activate Validation
+Validation --> ApplicationForm: バリデーション結果
+deactivate Validation
+
+ApplicationForm -> ConsistencyCheck: 整合性チェック実行
+activate ConsistencyCheck
+ConsistencyCheck --> ApplicationForm: 整合性チェック結果
+deactivate ConsistencyCheck
+
+ApplicationForm -> DataFrameConversion: DataFrameへの変換
+activate DataFrameConversion
+DataFrameConversion -> UniqueKeyAssignment: 一意キーの付与
+activate UniqueKeyAssignment
+UniqueKeyAssignment --> DataFrameConversion: 一意キー付与済みデータ
+deactivate UniqueKeyAssignment
+DataFrameConversion --> ApplicationForm: 変換済みデータ
+deactivate DataFrameConversion
+
+ApplicationForm -> PersistenceToApplicationList: 申請一覧テーブルへの永続化
+activate PersistenceToApplicationList
+PersistenceToApplicationList --> ApplicationForm: 永続化完了通知
+deactivate PersistenceToApplicationList
+
+ApplicationForm --> User: 処理完了通知
+deactivate ApplicationForm
+@enduml
+----
+
+アクティビティ図:
+
+[plantuml]
+----
+@startuml
+start
+:Excelファイルの読み込み;
+
+fork
+  :バリデーションの実行;
+fork again
+  :整合性チェックの実行;
+end fork
+
+:DataFrameへの変換;
+
+:一意キーの付与;
+
+:申請一覧テーブルへの永続化;
+
+stop
+@enduml
+----
+
+クラス図:
+
+[plantuml]
+----
+@startuml
+class ApplicationForm {
+  +readExcelFile()
+  +validate()
+  +checkConsistency()
+  +convertToDataFrame()
+  +assignUniqueKey()
+  +persistToApplicationList()
+}
+
+class Validation {
+  +validate()
+}
+
+class ConsistencyCheck {
+  +checkConsistency()
+}
+
+class DataFrameConversion {
+  +convertToDataFrame()
+}
+
+class UniqueKeyAssignment {
+  +assignUniqueKey()
+}
+
+class PersistenceToApplicationList {
+  +persistToApplicationList()
+}
+
+ApplicationForm --> Validation
+ApplicationForm --> ConsistencyCheck
+ApplicationForm --> DataFrameConversion
+ApplicationForm --> UniqueKeyAssignment
+ApplicationForm --> PersistenceToApplicationList
+@enduml
+----
+
+</umls_一括申請>

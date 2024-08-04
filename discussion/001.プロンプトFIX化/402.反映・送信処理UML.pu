@@ -1,0 +1,145 @@
+<umls_反映・送信>
+コンポーネント図:
+[plantuml]
+----
+@startuml
+skinparam componentStyle uml2
+
+package "反映・送信" {
+  [反映処理] as Deployment
+  [一括処理] as Batch
+  [送信処理] as Send
+  
+  database "リファレンスDB" as RefDB
+  database "ダミー課Gr情報" as DummyGr
+  database "物理コピー" as Physical
+
+  Deployment -> RefDB
+  Deployment -> DummyGr
+  Batch -> RefDB
+  Send -> RefDB
+  Send -> DummyGr
+  Send -> Physical
+}
+@enduml
+----
+
+シーケンス図:
+[plantuml]
+----
+@startuml
+actor User
+
+box "反映・送信"
+  participant "反映処理" as Deployment
+  participant "一括処理" as Batch
+  participant "送信処理" as Send
+  participant "リファレンスDB" as RefDB
+  participant "ダミー課Gr情報" as DummyGr
+end box
+
+User -> Deployment: DB更新情報明細を受領
+activate Deployment
+Deployment -> RefDB: リファレンスDBを更新
+Deployment -> DummyGr: ダミー課Grテーブルを作成
+Deployment --> User: 反映完了通知
+deactivate Deployment
+
+User -> Batch: 一括処理依頼
+activate Batch
+Batch -> RefDB: 休職・本部詰の部署情報を作成・削除
+Batch --> User: 一括処理完了通知  
+deactivate Batch
+
+User -> Send: 送信依頼
+activate Send
+Send -> RefDB: リファレンスDBから情報取得
+Send -> DummyGr: ダミー課Grテーブルから情報取得 
+Send -> Send: CSVファイル作成
+Send -> Send: バリデーションチェック
+Send -> User: 各関連システムへ送信
+Send -> Send: 部店新規・廃止時にメール送信
+Send -> RefDB: テーブル更新前に物理コピーを作成
+Send --> User: 送信完了通知
+deactivate Send
+@enduml
+----
+
+アクティビティ図:
+[plantuml]
+----
+@startuml
+start
+:DB更新情報明細を受領;
+
+fork
+  :反映処理;
+  :リファレンスDBを更新;
+  :ダミー課Grテーブルを作成;
+fork again
+  :一括処理;
+  :休職・本部詰の部署情報を作成・削除;
+fork again
+  :送信処理;
+  :リファレンスDBから情報取得;
+  :ダミー課Grテーブルから情報取得;
+  :CSVファイル作成;
+  :バリデーションチェック;
+  :各関連システムへ送信;
+  if (部店新規・廃止?) then (はい)
+    :メール送信;
+  else (いいえ)
+  endif
+  :テーブル更新前に物理コピーを作成;
+end fork
+
+stop
+@enduml
+----
+
+クラス図:
+[plantuml]
+----
+@startuml
+class Deployment {
+  processDeployment()
+  updateReferenceDB()
+  createDummyGrTable()
+}
+
+class Batch {
+  processBatch()
+  manageDormantAndSecondedDept()
+}
+
+class Send {
+  processSend()
+  getReferenceData()
+  getDummyGrData()
+  createCSVFile()
+  validateData()
+  sendToRelatedSystems()
+  sendEmail()
+  createPhysicalCopy()
+}
+
+class ReferenceDB {
+  data
+  update()
+  read()
+  copy()
+}
+
+class DummyGrInfo {
+  data
+  read()
+}
+
+Deployment --> ReferenceDB
+Deployment --> DummyGrInfo
+Batch --> ReferenceDB
+Send --> ReferenceDB
+Send --> DummyGrInfo
+@enduml
+----
+</umls_反映・送信>

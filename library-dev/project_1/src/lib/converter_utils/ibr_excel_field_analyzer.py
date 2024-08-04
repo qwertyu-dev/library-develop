@@ -1,0 +1,124 @@
+"""Excel一括申請シートのCell分析Utilty
+
+一括申請によるExcelに対する個別の部品を定義する
+
+"""
+import re
+
+
+class RemarksParser:
+    """備考欄の文字列を解析し、営業部署、エリアグループ、その他の情報を抽出するクラス。
+
+    業務要件:
+    - 備考欄の形式:
+        - 各項目は異なる行に記載される。
+        - 項目の例:
+            - 営業部傘下の課の所属営業部
+            - 部店・課Grの復活
+            - 名称変更, 部門変更・エリアコード変更
+            - エリア情報ファイルの共通認証受渡し初日
+            - エリア課Gr情報
+    - 営業部傘下の課の所属営業部:
+        - 「○○支店営業部」または「○○支店第○営業部」の形式で記載される。
+    - エリア課Gr情報:
+        - 英数字5桁 + 全角または半角スペース + Grを含む文字列 + (設立日) の形式で記載される。
+    - 「変更」「廃止」「共通認証」を含む行は読み飛ばし、その他の情報として扱う。
+    """
+    def __init__(self):
+        self.result: dict[str, dict[str, str]] = {
+            "request_type": "",
+            "sales_department": {
+                "department_name": "",
+                "branch_name": "",
+            },
+            "area_group": {
+                "group_code": "",
+                "group_name": "",
+                "established_date": "",
+            },
+            "other_info": "",
+        }
+
+    def parse(self, remarks_text: str) -> dict[str, dict[str, str]]:
+        """備考欄の文字列を解析し、営業部署、エリアグループ、その他の情報を抽出する。
+
+        Args:
+            remarks_text (str): 備考欄の文字列。
+
+        Returns:
+            Dict[str, Dict[str, str]]: 解析結果を格納した辞書。
+                - "request_type": 申請の種類("営業部傘下", "エリア", "その他")
+                - "sales_department": 営業部署の情報を格納した辞書。
+                    - "department_name": 営業部署名。
+                    - "branch_name": 支店名。
+                - "area_group": エリアグループの情報を格納した辞書。
+                    - "group_code": エリアグループコード。
+                    - "group_name": エリアグループ名。
+                    - "established_date": 設立日。
+                - "other_info": その他の情報。
+        """
+        lines = [self._remove_leading_dot(line) for line in remarks_text.split("\n")]
+        for line in lines:
+            if any(keyword in line for keyword in ["変更", "廃止", "共通認証"]):
+                self.result["other_info"] += line + "\n"
+                continue
+
+            if self.result["request_type"] == "":
+                if "営業" in line:
+                    self._process_sales_department(line)
+                    continue
+
+                if "Gr" in line:
+                    self._process_area_group(line)
+                    continue
+
+            self.result["other_info"] += line + "\n"
+
+        self.result["other_info"] = self.result["other_info"].strip()
+        if self.result["request_type"] == "":
+            self.result["request_type"] = "その他"
+        return self.result
+
+    def _remove_leading_dot(self, line: str) -> str:
+        """行頭の全角ドット・を削除する。
+
+        Args:
+            line (str): 処理対象の行。
+
+        Returns:
+            str: 行頭のドットを削除した行。
+        """
+        return re.sub(r"^・", "", line)
+
+    def _process_sales_department(self, line: str) -> None:
+        """営業部署の情報を処理し、解析結果に追加する。
+
+        Args:
+            line (str): 処理対象の行。
+        """
+        self.result["request_type"] = "営業部傘下"
+        # 支店名と営業部署名を取得するための正規表現。
+        # (.+支店): 支店名。漢字、ひらがな、カタカナ、英数字を含む任意の文字列の後に「支店」が続く。
+        # (?:営業部|第[一二三四五六七八九十]+営業部): 営業部署名。「営業部」または「第」に続く漢数字と「営業部」。
+        match = re.match(r"(.+支店)(?:営業部|第[一二三四五六七八九十]+営業部)", line)
+        if match:
+            self.result["sales_department"]["branch_name"] = match.group(1)
+            self.result["sales_department"]["department_name"] = line
+
+    def _process_area_group(self, line: str) -> None:
+        """エリアグループの情報を処理し、解析結果に追加する。
+
+        Args:
+            line (str): 処理対象の行。
+        """
+        self.result["request_type"] = "エリア"
+        # エリアグループコード、エリアグループ名、設立日を取得するための正規表現。
+        # (\w{5}): エリアグループコード。英数字5文字。
+        # [ \u3000]: 半角または全角スペース。
+        # (\w+Gr): エリアグループ名。英数字の後に「Gr」が続く。
+        # \s*(\(.*?\))?: 設立日。括弧内の任意の文字列。括弧は任意。
+        match = re.search(r"(\w{5})[ \u3000](\w+Gr)\s*(\(.*?\))?", line)
+        if match:
+            self.result["area_group"]["group_code"] = match.group(1)
+            self.result["area_group"]["group_name"] = match.group(2)
+            self.result["area_group"]["established_date"] = match.group(3)[1:-1] if match.group(3) else ""

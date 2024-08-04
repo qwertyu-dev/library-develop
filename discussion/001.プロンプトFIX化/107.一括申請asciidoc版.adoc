@@ -1,0 +1,265 @@
+<asciidoc_一括申請>
+= 一括申請
+
+== 1. 要件定義
+=== 1.1. 要求分析
+一括申請は、人事部、国際事務企画部、関連会社の3部署から提出される申請フォーム(Excelファイル)を受領し、システムで処理可能な形式に変換する機能である。移植に伴い、申請フォームの項目見直しや統一レイアウトへの変換、単一責務化、編集処理の後続フェーズへの委譲、Validation/整合性チェックの引き受けを行う。
+
+=== 1.2. 移植での改善方針
+- 一括利用申請ファイルの項目見直し
+- 一括利用申請ファイル取り込み後の統一レイアウトへの変換
+- 単一責務化
+- 編集処理の後続フェーズへの委譲
+- Validation/整合性チェックの引き受け
+
+== 2. 機能定義
+=== 2.1. 機能概要
+一括申請は、3部署から提出される申請フォーム(Excelファイル)を受領し、システムで処理可能な形式に変換する機能である。申請フォームの読み込み、バリデーション、整合性チェック、統一フォーマットへの変換、一意キーの付与、申請一覧テーブルへの永続化を行う。
+
+一括申請の処理フローは以下の通りである。
+
+1. 申請フォーム(Excelファイル)の受領
+2. 申請フォームのバリデーション
+3. 申請フォームの整合性チェック
+4. 申請フォームのDataFrameへの変換
+5. 申請明細への一意キーの付与
+6. 申請一覧テーブルへの永続化
+
+=== 2.2. 入力データ
+一括申請で受領する申請フォーム(Excelファイル)は以下の3種類である。
+
+- 人事部からの申請フォーム(「人事」フォーム)
+- 国際事務企画部からの申請フォーム(「国企」フォーム)
+- 関連会社からの申請フォーム(「関連」フォーム)
+
+各申請フォームの入力項目と制約条件は別紙「申請フォーム項目定義」に記載する。
+
+=== 2.3. 処理詳細
+==== 2.3.1. 申請データの受領
+申請フォーム(Excelファイル)からデータを読み込む。Excelファイルは、各部署から定められた様式で提出される。読み込み時には、シート名や項目名が指定の様式通りであることを確認する。
+
+==== 2.3.2. バリデーション
+読み込んだ申請データに対し、項目単体のバリデーションを行う。バリデーション内容は以下の通り。
+
+- 必須項目のチェック
+- 項目の型チェック(文字列、整数、日付等)
+- 項目値の範囲チェック(コード値の妥当性等)
+
+==== 2.3.3. 整合性チェック 
+申請データの項目間の整合性チェックと、マスタデータとの整合性チェックを行う。整合性チェック内容は以下の通り。
+
+- 申請データ内の項目間の整合性チェック(部店コードと部店名の整合性等)
+- マスタデータとの整合性チェック(申請された部店コードのマスタ存在チェック等)
+
+==== 2.3.4. DataFrameへの変換
+バリデーション、整合性チェックが完了した申請データを、pandas DataFrameオブジェクトに変換する。変換時には、3種類の申請フォームを統一フォーマットに変換する。統一フォーマットは別紙「申請一覧項目定義」を参照。
+
+==== 2.3.5. 一意キーの付与
+統一フォーマットに変換したDataFrameの各レコードに対し、一意となるキーを付与する。一意キーは、「部店コード」「課グループコード」「申請日付」「連番」を組み合わせた値とする。
+
+==== 2.3.6. 申請一覧テーブルへの永続化
+一意キーを付与したDataFrameをpickle形式でファイル出力し、申請一覧テーブルとして永続化する。pickle形式を採用することで、DataFrameオブジェクトを直接保存・復元できるようにする。
+
+=== 2.4. エラー処理
+- バリデーションエラー発生時は、エラー内容をログ出力し、対象レコードを除外して処理を継続する。
+- 整合性チェックエラー発生時は、エラー内容をログ出力し、対象レコードを除外して処理を継続する。 
+- DataFrame変換エラー発生時は、エラー内容をログ出力し、処理を中断する。
+- 永続化処理エラー発生時は、エラー内容をログ出力し、処理を中断する。
+
+=== 2.5. 内部インターフェース
+申請一覧テーブルは以下の情報を保持する。
+
+- 一意キー
+- 部店コード
+- 課グループコード
+- 申請内容(新規、変更、廃止)
+- 申請日付
+- 申請情報(統一フォーマットの項目)
+
+申請一覧テーブルは、以下の機能で参照される。
+
+- 受付処理
+- パターン編集処理
+
+=== 2.6. 外部インターフェース
+申請フォーム(Excelファイル)は、以下の手段で入手する。
+
+- 人事部からのメール添付
+- 国際事務企画部からの共有フォルダアップロード
+- 関連会社からのメール添付
+
+エラー発生時は、以下の手段で通知する。
+
+- 処理結果をメールで通知(宛先は別途定義)
+- 処理結果を管理用Webサイトに表示
+
+== 3. システムデザイン
+=== 3.1. 処理フロー
+
+[plantuml]
+----
+@startuml
+start
+:Excelファイルの読み込み;
+
+fork
+  :バリデーションの実行;
+fork again
+  :整合性チェックの実行; 
+end fork
+
+:DataFrameへの変換;
+
+:一意キーの付与;
+
+:申請一覧テーブルへの永続化;
+
+stop
+@enduml
+----
+
+=== 3.2. コンポーネント構成
+
+[plantuml]
+----
+@startuml
+package "一括申請" {
+  [申請フォーム] as ApplicationForm
+  [バリデーション] as Validation
+  [整合性チェック] as ConsistencyCheck
+  [DataFrameへの変換] as DataFrameConversion
+  [一意キーの付与] as UniqueKeyAssignment
+  [申請一覧テーブルへの永続化] as PersistenceToApplicationList
+  
+  ApplicationForm --> Validation
+  ApplicationForm --> ConsistencyCheck
+  ApplicationForm --> DataFrameConversion
+  DataFrameConversion --> UniqueKeyAssignment
+  UniqueKeyAssignment --> PersistenceToApplicationList
+}
+@enduml
+----
+
+=== 3.3. シーケンス
+
+[plantuml]
+----
+@startuml
+actor User
+participant ApplicationForm
+participant Validation
+participant ConsistencyCheck
+participant DataFrameConversion
+participant UniqueKeyAssignment 
+participant PersistenceToApplicationList
+
+User -> ApplicationForm: Excelファイルの提出
+activate ApplicationForm
+
+ApplicationForm -> Validation: バリデーション実行
+activate Validation
+Validation --> ApplicationForm: バリデーション結果
+deactivate Validation
+
+ApplicationForm -> ConsistencyCheck: 整合性チェック実行
+activate ConsistencyCheck
+ConsistencyCheck --> ApplicationForm: 整合性チェック結果
+deactivate ConsistencyCheck
+
+ApplicationForm -> DataFrameConversion: DataFrameへの変換
+activate DataFrameConversion
+DataFrameConversion -> UniqueKeyAssignment: 一意キーの付与
+activate UniqueKeyAssignment
+UniqueKeyAssignment --> DataFrameConversion: 一意キー付与済みデータ
+deactivate UniqueKeyAssignment
+DataFrameConversion --> ApplicationForm: 変換済みデータ
+deactivate DataFrameConversion
+
+ApplicationForm -> PersistenceToApplicationList: 申請一覧テーブルへの永続化
+activate PersistenceToApplicationList
+PersistenceToApplicationList --> ApplicationForm: 永続化完了通知
+deactivate PersistenceToApplicationList
+
+ApplicationForm --> User: 処理完了通知
+deactivate ApplicationForm
+@enduml
+----
+
+=== 3.4. クラス構成
+
+[cols="1,3", options="header"]
+|===
+| クラス名 | 役割
+| ApplicationForm | 申請フォーム(Excelファイル)の読み込み、バリデーション、整合性チェック、DataFrameへの変換、一意キー付与、永続化を行うクラス
+| Validation | 申請データの項目単体のバリデーションを行うクラス
+| ConsistencyCheck | 申請データの整合性チェックを行うクラス
+| DataFrameConversion | 申請データをDataFrameに変換するクラス
+| UniqueKeyAssignment | DataFrameの各レコードに一意キーを付与するクラス
+| PersistenceToApplicationList | 一意キー付与済みのDataFrameをpickle形式で永続化するクラス
+|===
+
+== 4. 入出力データ
+=== 4.1. 入力
+- Excelファイル(3部署からの申請データ)
+
+=== 4.2. 出力
+- pickleファイル(処理後の永続化データ)
+
+== 5. 例外設計
+例外一覧を以下に示す。
+
+[cols="1,1,1,1", options="header"]
+|===
+| 管理番号 | 発生事象 | 原因 | 対処指針
+| E001 | バリデーションエラー | 申請データの型不正 | ログ出力、該当レコード除外
+| E002 | バリデーションエラー | 申請データの必須項目欠落 | ログ出力、該当レコード除外
+| E003 | 整合性チェックエラー | 申請データの項目間不整合 | ログ出力、該当レコード除外
+| E004 | 整合性チェックエラー | 申請データのマスタ不整合 | ログ出力、該当レコード除外
+| E005 | DataFrame変換エラー | 申請データの形式不正 | ログ出力、処理中断
+| E006 | 永続化処理エラー | ファイル入出力エラー | ログ出力、処理中断
+|===
+
+== 6. ロギング設計
+- ファイル取り込み記録
+  - 取り込み日時
+  - ファイル名
+  - ファイルサイズ
+  - 取り込み件数
+
+- Validation/整合性チェックエラーの位置特定情報
+  - Excelファイル名
+  - シート名
+  - 行番号
+  - 列番号
+  - エラー項目名
+  - エラー値
+  - 想定データ型
+  - 想定値範囲
+
+== 7. セキュリティ要件
+- 特になし
+
+== 8. 運用記述
+=== 8.1. 環境
+- リグレ環境での実施
+
+=== 8.2. データの取扱
+- 申請データの非保管
+  - 一括申請処理後、申請フォーム(Excelファイル)は削除する。
+- 処理結果データのリポジトリ管理
+  - 一括申請処理で生成されたpickleファイルはリポジトリで管理する。
+
+=== 8.3. 実行スケジュール
+- Jenkinsによる自動スケジュール設定
+  - 平日の午前9時に自動実行するようJenkinsにジョブを設定する。
+- 日次実行
+  - 一括申請処理は日次で実行する。
+- マニュアル対応でのJenkins実行
+  - 自動実行とは別に、任意のタイミングでJenkinsジョブを実行できるようにする。
+
+== 9. 別紙
+- 申請フォーム項目定義
+- 申請一覧項目定義 
+- Validation及び整合性チェックの一覧
+
+</asciidoc_一括申請>

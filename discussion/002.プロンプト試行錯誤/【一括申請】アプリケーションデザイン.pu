@@ -1,0 +1,83 @@
+@startuml
+skinparam componentStyle uml2
+
+package "ファイル受信・一時保存層" {
+  [ExcelFileReceiver]
+}
+
+package "データ検証層" {
+  [DataValidator]
+}
+
+package "データ変換層" {
+  [DataConverter]
+}
+
+package "結果保存層" {
+  [ResultStorage]
+}
+
+package "運用管理層" {
+  [OperationManager]
+}
+
+[ExcelFileReceiver] --> [DataValidator]
+[DataValidator] --> [DataConverter]
+[DataConverter] --> [ResultStorage]
+[OperationManager] --> [ExcelFileReceiver]
+[OperationManager] --> [DataValidator]
+[OperationManager] --> [DataConverter]
+[OperationManager] --> [ResultStorage]
+@enduml
+
+@startuml
+actor User
+participant ExcelFileReceiver
+participant DataValidator
+participant DataConverter
+participant ResultStorage
+
+User -> ExcelFileReceiver: Excelファイル受信
+activate ExcelFileReceiver
+ExcelFileReceiver -> ExcelFileReceiver: 一時ストレージに保存
+ExcelFileReceiver -> DataValidator: データ検証依頼
+activate DataValidator
+DataValidator -> DataValidator: データのバリデーション
+DataValidator -> DataValidator: 整合性チェック
+DataValidator --> ExcelFileReceiver: 検証結果
+deactivate DataValidator
+ExcelFileReceiver -> DataConverter: データ変換依頼
+activate DataConverter
+DataConverter -> DataConverter: 統一レイアウトへの変換
+DataConverter -> DataConverter: pickle形式での出力
+DataConverter -> ResultStorage: 変換結果保存依頼
+activate ResultStorage
+ResultStorage -> ResultStorage: 変換結果のEC2ストレージへの保存
+ResultStorage --> DataConverter: 保存完了通知
+deactivate ResultStorage
+DataConverter --> ExcelFileReceiver: 変換完了通知
+deactivate DataConverter
+ExcelFileReceiver --> User: 処理完了通知
+deactivate ExcelFileReceiver
+@enduml
+
+@startuml
+start
+:Excelファイル受信;
+:一時ストレージに保存;
+if (データのバリデーション) then (OK)
+  if (整合性チェック) then (OK)
+    :統一レイアウトへの変換;
+    :pickle形式での出力;
+    :変換結果のEC2ストレージへの保存;
+  else (NG)
+    :エラー報告書の生成;
+    stop
+  endif
+else (NG)
+  :エラー報告書の生成;
+  stop
+endif
+:処理完了通知;
+stop
+@enduml

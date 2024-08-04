@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gitコミットメッセージ：チーム開発における思いやり</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; padding: 20px; max-width: 800px; margin: 0 auto; }
+        h1, h2, h3 { color: #333; }
+        pre { background-color: #f4f4f4; padding: 10px; border-radius: 5px; overflow-x: auto; }
+        .quiz { background-color: #e7f3fe; padding: 15px; border-radius: 5px; margin-top: 20px; }
+        .quiz-question { margin-bottom: 20px; }
+        .options { margin-left: 20px; }
+        button { background-color: #4CAF50; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background-color: #45a049; }
+        #result { margin-top: 20px; font-weight: bold; }
+        .note { background-color: #ffffd9; padding: 10px; border-left: 5px solid #ffeb3b; margin: 15px 0; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+    <h1>Gitコミットメッセージ：チーム開発における思いやり</h1>
+
+    <h2>1. コミットメッセージの重要性</h2>
+    <p>適切なコミットメッセージは、チーム開発において非常に重要な役割を果たします。以下がその理由です：</p>
+    <ul>
+        <li>変更の履歴を明確に記録し、将来の理解を助ける</li>
+        <li>コードレビューを効率化し、レビュアーの負担を軽減する</li>
+        <li>バグの原因特定や機能追跡を容易にする</li>
+        <li>チームメンバー間のコミュニケーションを促進する</li>
+        <li>プロジェクトの全体的な品質と保守性を向上させる</li>
+    </ul>
+
+    <h2>2. コミットメッセージの基本ルール</h2>
+    <table>
+        <tr>
+            <th>ルール</th>
+            <th>説明</th>
+        </tr>
+        <tr>
+            <td>簡潔で明確な主題行</td>
+            <td>50文字以内で変更の要約を記述</td>
+        </tr>
+        <tr>
+            <td>空行で本文と区切る</td>
+            <td>主題行の後に空行を入れる</td>
+        </tr>
+        <tr>
+            <td>詳細な説明を本文に記述</td>
+            <td>必要に応じて、変更の理由や詳細を記述</td>
+        </tr>
+        <tr>
+            <td>現在形で記述</td>
+            <td>"Fix bug"ではなく"Fixes bug"と記述</td>
+        </tr>
+        <tr>
+            <td>命令形で記述</td>
+            <td>"Added feature"ではなく"Add feature"と記述</td>
+        </tr>
+    </table>
+
+    <h2>3. 効果的なコミットメッセージの構造</h2>
+    <pre>
+&lt;主題行&gt;：変更の簡潔な説明（50文字以内）
+
+&lt;本文&gt;：より詳細な説明（必要な場合）
+- なぜこの変更が必要だったのか
+- どのような問題を解決したのか
+- この変更による影響
+
+&lt;フッター&gt;：関連するIssue番号やBreaking Changesの情報（必要な場合）
+    </pre>
+
+    <h2>4. サンプルコード：コミットメッセージチェックスクリプト</h2>
+    <pre>
+#!/bin/bash
+
+commit_msg_file=$1
+commit_msg=$(cat "$commit_msg_file")
+
+# 主題行の長さをチェック
+subject=$(echo "$commit_msg" | head -n 1)
+if [ ${#subject} -gt 50 ]; then
+    echo "Error: Subject line is too long (max 50 characters)"
+    exit 1
+fi
+
+# 主題行が命令形で始まっているかチェック
+if ! echo "$subject" | grep -qE "^(Add|Fix|Update|Remove|Refactor|Document)"; then
+    echo "Error: Subject line should start with a verb in imperative mood"
+    exit 1
+fi
+
+# 本文の各行の長さをチェック
+body=$(echo "$commit_msg" | sed '1d')
+while read -r line; do
+    if [ ${#line} -gt 72 ]; then
+        echo "Error: Body line is too long (max 72 characters)"
+        exit 1
+    fi
+done <<< "$body"
+
+echo "Commit message is valid!"
+exit 0
+    </pre>
+
+    <h2>5. チーム開発における思いやりとしてのコミットメッセージ</h2>
+    <p>適切なコミットメッセージを書くことは、チームメンバーへの思いやりを示す重要な方法です：</p>
+    <ul>
+        <li>他の開発者の時間と労力を節約する</li>
+        <li>将来の自分を含む、コードを読む人々への配慮を示す</li>
+        <li>プロジェクトの歴史と意思決定プロセスを明確に記録する</li>
+        <li>チーム全体の生産性と効率を向上させる</li>
+        <li>新しいチームメンバーのオンボーディングを容易にする</li>
+    </ul>
+
+    <h2>クイズ: Git基礎知識とコミットメッセージ</h2>
+    <div class="quiz">
+        <form id="quizForm">
+            <!-- Git基礎知識クイズ（問題1-10） -->
+            <div class="quiz-question">
+                <p>1. Gitのリポジトリを新規作成するコマンドは？</p>
+                <div class="options">
+                    <input type="radio" name="q1" value="a" required> a) git create<br>
+                    <input type="radio" name="q1" value="b"> b) git init<br>
+                    <input type="radio" name="q1" value="c"> c) git start<br>
+                    <input type="radio" name="q1" value="d"> d) git new
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>2. 変更をステージングエリアに追加するコマンドは？</p>
+                <div class="options">
+                    <input type="radio" name="q2" value="a" required> a) git stage<br>
+                    <input type="radio" name="q2" value="b"> b) git commit<br>
+                    <input type="radio" name="q2" value="c"> c) git add<br>
+                    <input type="radio" name="q2" value="d"> d) git update
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>3. リモートリポジトリから最新の変更を取得するコマンドは？</p>
+                <div class="options">
+                    <input type="radio" name="q3" value="a" required> a) git pull<br>
+                    <input type="radio" name="q3" value="b"> b) git fetch<br>
+                    <input type="radio" name="q3" value="c"> c) git clone<br>
+                    <input type="radio" name="q3" value="d"> d) git download
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>4. 新しいブランチを作成し、そのブランチに切り替えるコマンドは？</p>
+                <div class="options">
+                    <input type="radio" name="q4" value="a" required> a) git branch new-branch<br>
+                    <input type="radio" name="q4" value="b"> b) git checkout -b new-branch<br>
+                    <input type="radio" name="q4" value="c"> c) git create -b new-branch<br>
+                    <input type="radio" name="q4" value="d"> d) git switch new-branch
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>5. コミットの履歴を表示するコマンドは？</p>
+                <div class="options">
+                    <input type="radio" name="q5" value="a" required> a) git history<br>
+                    <input type="radio" name="q5" value="b"> b) git log<br>
+                    <input type="radio" name="q5" value="c"> c) git show<br>
+                    <input type="radio" name="q5" value="d"> d) git commits
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>6. 直前のコミットを修正するコマンドは？</p>
+                <div class="options">
+                    <input type="radio" name="q6" value="a" required> a) git commit --amend<br>
+                    <input type="radio" name="q6" value="b"> b) git fix<br>
+                    <input type="radio" name="q6" value="c"> c) git update<br>
+                    <input type="radio" name="q6" value="d"> d) git modify
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>7. ブランチをマージするコマンドは？</p>
+                <div class="options">
+                    <input type="radio" name="q7" value="a" required> a) git join<br>
+                    <input type="radio" name="q7" value="b"> b) git combine<br>
+                    <input type="radio" name="q7" value="c"> c) git merge<br>
+                    <input type="radio" name="q7" value="d"> d) git unite
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>8. リモートリポジトリにプッシュする前に、ローカルの変更を確認するコマンドは？</p>
+                <div class="options">
+                    <input type="radio" name="q8" value="a" required> a) git check<br>
+                    <input type="radio" name="q8" value="b"> b) git status<br>
+                    <input type="radio" name="q8" value="c"> c) git diff<br>
+                    <input type="radio" name="q8" value="d"> d) git review
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>9. 特定のコミットの変更内容を確認するコマンドは？</p>
+                <div class="options">
+                    <input type="radio" name="q9" value="a" required> a) git view<br>
+                    <input type="radio" name="q9" value="b"> b) git show<br>
+                    <input type="radio" name="q9" value="c"> c) git display<br>
+                    <input type="radio" name="q9" value="d"> d) git inspect
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>10. 変更を一時的に保存するコマンドは？</p>
+                <div class="options">
+                    <input type="radio" name="q10" value="a" required> a) git save<br>
+                    <input type="radio" name="q10" value="b"> b) git stash<br>
+                    <input type="radio" name="q10" value="c"> c) git store<br>
+                    <input type="radio" name="q10" value="d"> d) git keep
+                </div>
+            </div>
+
+            <!-- コミットメッセージ評価クイズ（問題11-30） -->
+            <div class="quiz-question">
+                <p>11. 次のコミットメッセージを評価してください：</p>
+                <pre>Fixed bug</pre>
+                <div class="options">
+                    <input type="radio" name="q11" value="a" required> a) 適切<br>
+                    <input type="radio" name="q11" value="b"> b) 改善の余地あり（具体性に欠ける）<br>
+                    <input type="radio" name="q11" value="c"> c) 不適切（命令形でない、具体性に欠ける）
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>12. 次のコミットメッセージを評価してください：</p>
+                <pre>feat: Add user authentication feature
+
+- Implement JWT-based authentication
+- Add login and registration endpoints
+- Create user model and migration
+- Update tests to cover new functionality
+
+Closes #123</pre>
+                <div class="options">
+                    <input type="radio" name="q12" value="a" required> a) 適切<br>
+                    <input type="radio" name="q12" value="b"> b) 改善の余地あり<br>
+                    <input type="radio" name="q12" value="c"> c) 不適切
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>13. 次のコミットメッセージを評価してください：</p>
+                <pre>Updated stuff</pre>
+                <div class="options">
+                    <input type="radio" name="q13" value="a" required> a) 適切<br>
+                    <input type="radio" name="q13" value="b"> b) 改善

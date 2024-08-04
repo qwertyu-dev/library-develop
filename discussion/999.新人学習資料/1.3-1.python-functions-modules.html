@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python関数とモジュール：完全版学習資料</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; padding: 20px; max-width: 800px; margin: 0 auto; }
+        h1, h2, h3 { color: #333; }
+        pre { background-color: #f4f4f4; padding: 10px; border-radius: 5px; overflow-x: auto; }
+        .quiz { background-color: #e7f3fe; padding: 15px; border-radius: 5px; margin-top: 20px; }
+        .quiz-question { margin-bottom: 20px; }
+        .options { margin-left: 20px; }
+        button { background-color: #4CAF50; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background-color: #45a049; }
+        #result { margin-top: 20px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>1.3 関数とモジュール</h1>
+
+    <h2>関数</h2>
+    <p>関数は、特定のタスクを実行する再利用可能なコードブロックです。</p>
+
+    <h3>関数の定義と呼び出し</h3>
+    <pre>
+# 基本的な関数の定義
+def greet(name):
+    return f"こんにちは、{name}さん！"
+
+# 関数の呼び出し
+message = greet("太郎")
+print(message)  # 出力: こんにちは、太郎さん！
+
+# デフォルト引数
+def power(base, exponent=2):
+    return base ** exponent
+
+print(power(3))     # 出力: 9
+print(power(3, 3))  # 出力: 27
+
+# 可変長引数
+def sum_all(*args):
+    return sum(args)
+
+print(sum_all(1, 2, 3, 4))  # 出力: 10
+
+# キーワード可変長引数
+def print_info(**kwargs):
+    for key, value in kwargs.items():
+        print(f"{key}: {value}")
+
+print_info(name="Alice", age=30, city="New York")
+    </pre>
+
+    <h3>ラムダ関数</h3>
+    <p>ラムダ関数は、小さな無名関数を作成するための方法です。</p>
+    <pre>
+# ラムダ関数の例
+square = lambda x: x ** 2
+print(square(5))  # 出力: 25
+
+# リスト内の各要素に対してラムダ関数を適用
+numbers = [1, 2, 3, 4, 5]
+squared_numbers = list(map(lambda x: x ** 2, numbers))
+print(squared_numbers)  # 出力: [1, 4, 9, 16, 25]
+    </pre>
+
+    <h2>モジュール</h2>
+    <p>モジュールは、関連する関数、クラス、変数をグループ化したPythonファイルです。</p>
+
+    <h3>モジュールのインポートと使用</h3>
+    <pre>
+# 標準ライブラリのモジュールのインポート
+import math
+
+print(math.pi)  # 出力: 3.141592653589793
+
+# モジュールの一部をインポート
+from random import randint
+
+print(randint(1, 10))  # 1から10までのランダムな整数を出力
+
+# モジュールに別名をつける
+import datetime as dt
+
+now = dt.datetime.now()
+print(now)  # 現在の日時を出力
+    </pre>
+
+    <h3>カスタムモジュールの作成と使用</h3>
+    <p>例: mymodule.py というファイルを作成し、以下の内容を記述</p>
+    <pre>
+# mymodule.py の内容
+def greeting(name):
+    return f"Hello, {name}!"
+
+PI = 3.14159
+
+class Circle:
+    def __init__(self, radius):
+        self.radius = radius
+
+    def area(self):
+        return PI * self.radius ** 2
+    </pre>
+
+    <p>このモジュールを使用する例：</p>
+    <pre>
+# mymodule.py を使用する
+import mymodule
+
+print(mymodule.greeting("Alice"))  # 出力: Hello, Alice!
+print(mymodule.PI)  # 出力: 3.14159
+
+circle = mymodule.Circle(5)
+print(circle.area())  # 出力: 78.53975
+    </pre>
+
+    <h2>クイズ: Python関数とモジュール</h2>
+    <div class="quiz">
+        <form id="quizForm">
+            <div class="quiz-question">
+                <p>1. 関数を定義するために使用するキーワードは何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q1" value="a" required> a) function<br>
+                    <input type="radio" name="q1" value="b"> b) def<br>
+                    <input type="radio" name="q1" value="c"> c) define<br>
+                    <input type="radio" name="q1" value="d"> d) func
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>2. 次の関数呼び出しの出力は何ですか？<br>
+                   def greet(name="Guest"):<br>
+                   &nbsp;&nbsp;&nbsp;&nbsp;return f"Hello, {name}!"<br>
+                   print(greet())</p>
+                <div class="options">
+                    <input type="radio" name="q2" value="a" required> a) Hello, Guest!<br>
+                    <input type="radio" name="q2" value="b"> b) Hello, None!<br>
+                    <input type="radio" name="q2" value="c"> c) エラー<br>
+                    <input type="radio" name="q2" value="d"> d) Hello, !
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>3. ラムダ関数の正しい構文は次のうちどれですか？</p>
+                <div class="options">
+                    <input type="radio" name="q3" value="a" required> a) lambda x: x * 2<br>
+                    <input type="radio" name="q3" value="b"> b) lambda(x) = x * 2<br>
+                    <input type="radio" name="q3" value="c"> c) lambda x -> x * 2<br>
+                    <input type="radio" name="q3" value="d"> d) lambda: x * 2
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>4. モジュール全体をインポートする正しい方法は次のうちどれですか？</p>
+                <div class="options">
+                    <input type="radio" name="q4" value="a" required> a) import module<br>
+                    <input type="radio" name="q4" value="b"> b) from module import *<br>
+                    <input type="radio" name="q4" value="c"> c) include module<br>
+                    <input type="radio" name="q4" value="d"> d) using module
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>5. 次のコードの出力は何ですか？<br>
+                   def multiply(a, b=2):<br>
+                   &nbsp;&nbsp;&nbsp;&nbsp;return a * b<br>
+                   print(multiply(3))</p>
+                <div class="options">
+                    <input type="radio" name="q5" value="a" required> a) 3<br>
+                    <input type="radio" name="q5" value="b"> b) 6<br>
+                    <input type="radio" name="q5" value="c"> c) 9<br>
+                    <input type="radio" name="q5" value="d"> d) エラー
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>6. 可変長引数を受け取る関数を定義する際に使用する記号は何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q6" value="a" required> a) *<br>
+                    <input type="radio" name="q6" value="b"> b) **<br>
+                    <input type="radio" name="q6" value="c"> c) &<br>
+                    <input type="radio" name="q6" value="d"> d) ...
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>7. モジュールの一部の関数のみをインポートする正しい方法は次のうちどれですか？</p>
+                <div class="options">
+                    <input type="radio" name="q7" value="a" required> a) from module import function1, function2<br>
+                    <input type="radio" name="q7" value="b"> b) import module.function1, module.function2<br>
+                    <input type="radio" name="q7" value="c"> c) include function1, function2 from module<br>
+                    <input type="radio" name="q7" value="d"> d) import (function1, function2) from module
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>8. 次のコードの出力は何ですか？<br>
+                   def outer(x):<br>
+                   &nbsp;&nbsp;&nbsp;&nbsp;def inner(y):<br>
+                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return x + y<br>
+                   &nbsp;&nbsp;&nbsp;&nbsp;return inner<br>
+                   f = outer(10)<br>
+                   print(f(5))</p>
+                <div class="options">
+                    <input type="radio" name="q8" value="a" required> a) 10<br>
+                    <input type="radio" name="q8" value="b"> b) 5<br>
+                    <input type="radio" name="q8" value="c"> c) 15<br>
+                    <input type="radio" name="q8" value="d"> d) エラー
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>9. Pythonで関数のドキュメンテーション文字列（docstring）を定義する正しい方法は？</p>
+                <div class="options">
+                    <input type="radio" name="q9" value="a" required> a) # コメントを使用する<br>
+                    <input type="radio" name="q9" value="b"> b) /* */ で囲む<br>
+                    <input type="radio" name="q9" value="c"> c) 三重引用符（"""）で囲む<br>
+                    <input type="radio" name="q9" value="d"> d) @doc デコレータを使用する
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>10. 次のコードの出力は何ですか？<br>
+                    def func(x, y, z=3):<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;return x + y + z<br>
+                    print(func(1, 2))</p>
+                <div class="options">
+                    <input type="radio" name="q10" value="a" required> a) 3<br>
+                    <input type="radio" name="q10" value="b"> b) 6<br>
+                    <input type="radio" name="q10" value="c"> c) 9<br>
+                    <input type="radio" name="q10" value="d"> d) エラー
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>11. モジュールに別名をつけてインポートする正しい方法は次のうちどれですか？</p>
+                <div class="options">
+                    <input type="radio" name="q11" value="a" required> a) import module as alias<br>
+                    <input type="radio" name="q11" value="b"> b) from module import as alias<br>
+                    <input type="radio" name="q11" value="c"> c) import alias for module<br>
+                    <input type="radio" name="q11" value="d"> d) alias = import module
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>12. 次のコードの出力は何ですか？<br>
+                    def make_multiplier(n):<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;return lambda x: x * n<br>
+                    times3 = make_multiplier(3)<br>
+                    print(times3(4))</p>
+                <div class="options">
+                    <input type="radio" name="q12" value="a" required> a) 7<br>
+                    <input type="radio" name="q12" value="b"> b) 12<br>
+                    <input type="radio" name="q12" value="c"> c) 3<br>
+                    <input type="radio" name="q12" value="d"> d) エラー
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>13. Pythonで関数内の変数のスコープを全体（グローバル）に変更するキーワードは何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q13" value="a" required> a) global<br>
+                    <input type="radio" name="q13" value="b"> b) public<br>
+                    <input type="radio" name="q13" value="c"> c) extern<br>
+                    <input type="radio" name="q13" value="d"> d) nonlocal
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>14. 次のコード

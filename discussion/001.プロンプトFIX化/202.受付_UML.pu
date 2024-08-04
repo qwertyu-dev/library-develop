@@ -1,0 +1,101 @@
+<umls_受付>
+
+コンポーネント図:
+[plantuml]
+----
+@startuml
+package "受付" {
+  [main] - [Factory]
+  [Factory] - [Facade]
+  [Facade] - [編集部品]
+  database "申請一覧テーブル" as AIT
+  database "変更情報テーブル" as CIT
+  database "人事異動リファレンスDB" as HDB
+  [main] --> AIT
+  [main] --> CIT
+  [Facade] --> HDB
+}
+@enduml
+----
+
+シーケンス図:
+[plantuml]
+----
+@startuml
+actor User
+participant main
+participant Factory
+participant Facade
+participant 編集部品
+database 申請一覧テーブル
+database 変更情報テーブル
+database 人事異動リファレンスDB
+
+User -> main: 申請一覧データ受領
+main -> 申請一覧テーブル: データ読み込み
+main -> Factory: 変更情報明細処理
+Factory -> Facade: パターンマッチング
+Facade -> 編集部品: データ編集
+編集部品 -> 人事異動リファレンスDB: データ取得
+編集部品 -> Facade: 編集結果返却 
+Facade -> Factory: 編集結果返却
+Factory -> main: 変更情報返却
+main -> 変更情報テーブル: データ永続化
+@enduml
+----
+
+アクティビティ図:
+[plantuml]
+----
+@startuml
+start
+:申請一覧データ受領;
+:申請一覧テーブルからデータ読み込み;
+:変更情報明細の処理;
+  fork
+    :Factory条件判定によるパターンマッチング;
+    :Facadeによるデータ編集処理呼び出し;
+    :編集部品によるデータ編集;
+      :人事異動リファレンスDBからデータ取得;
+      :編集処理実行;
+    :編集結果の返却;
+  fork again
+    :異例ケース判定;
+    :異例ケース用Facadeによるデータ編集処理呼び出し;
+    :編集部品によるデータ編集;
+      :人事異動リファレンスDBからデータ取得;
+      :編集処理実行;    
+    :編集結果の返却;
+  end fork
+:変更情報テーブルへのデータ永続化;
+stop
+@enduml
+----
+
+クラス図:
+[plantuml]
+----
+@startuml
+class main {
+  + process()
+}
+
+class Factory {
+  + create_facade(data: dict): Facade
+}
+
+class Facade {
+  + edit(data: dict)
+}
+
+class EditPart {
+  + edit(data: dict) 
+}
+
+main -> Factory
+Factory -> Facade
+Facade o-- EditPart
+@enduml
+----
+
+</umls_受付>

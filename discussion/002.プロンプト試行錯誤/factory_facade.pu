@@ -1,0 +1,26 @@
+@startuml
+class Client {
+    - factory: Factory
+    + run()
+}
+
+class Factory {
+    - facade: Facade
+    + createFacade(): Facade
+}
+
+class Facade {
+    - editComponent: EditComponent
+    + method1()
+    + method2()
+    + method3()
+}
+
+class EditComponent {
+    + operation()
+}
+
+Client -- Factory: Uses
+Factory -- Facade: Creates
+Facade -- EditComponent: Uses
+@enduml

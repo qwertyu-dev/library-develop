@@ -1,0 +1,129 @@
+<div class="quiz-question">
+                <p>11. デコレータを使用せずに、関数をデコレートする方法は何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q11" value="a" required> a) decorated_func = decorator(func)<br>
+                    <input type="radio" name="q11" value="b"> b) decorated_func = func.decorate(decorator)<br>
+                    <input type="radio" name="q11" value="c"> c) decorated_func = func + decorator<br>
+                    <input type="radio" name="q11" value="d"> d) decorated_func = func.apply(decorator)
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>12. コンテキストマネージャーを作成するための contextlib モジュールの関数は何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q12" value="a" required> a) make_context<br>
+                    <input type="radio" name="q12" value="b"> b) context_wrapper<br>
+                    <input type="radio" name="q12" value="c"> c) contextmanager<br>
+                    <input type="radio" name="q12" value="d"> d) create_context
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>13. ジェネレータ関数内で値を送信するためのメソッドは何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q13" value="a" required> a) next()<br>
+                    <input type="radio" name="q13" value="b"> b) send()<br>
+                    <input type="radio" name="q13" value="c"> c) yield()<br>
+                    <input type="radio" name="q13" value="d"> d) push()
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>14. クラスメソッドを定義するデコレータは何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q14" value="a" required> a) @staticmethod<br>
+                    <input type="radio" name="q14" value="b"> b) @classmethod<br>
+                    <input type="radio" name="q14" value="c"> c) @instancemethod<br>
+                    <input type="radio" name="q14" value="d"> d) @method
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>15. ジェネレータ式とリスト内包表記の主な違いは何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q15" value="a" required> a) 構文の違い<br>
+                    <input type="radio" name="q15" value="b"> b) メモリ使用量の違い<br>
+                    <input type="radio" name="q15" value="c"> c) 実行速度の違い<br>
+                    <input type="radio" name="q15" value="d"> d) 返り値の型の違い
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>16. デコレータチェーン（複数のデコレータ）を適用する正しい順序は？</p>
+                <div class="options">
+                    <input type="radio" name="q16" value="a" required> a) 上から下の順<br>
+                    <input type="radio" name="q16" value="b"> b) 下から上の順<br>
+                    <input type="radio" name="q16" value="c"> c) 任意の順序<br>
+                    <input type="radio" name="q16" value="d"> d) アルファベット順
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>17. コンテキストマネージャーの __exit__ メソッドが受け取る3つの引数は何を表していますか？</p>
+                <div class="options">
+                    <input type="radio" name="q17" value="a" required> a) 例外の型、値、トレースバック<br>
+                    <input type="radio" name="q17" value="b"> b) ファイル名、行番号、エラーメッセージ<br>
+                    <input type="radio" name="q17" value="c"> c) クラス名、メソッド名、エラーコード<br>
+                    <input type="radio" name="q17" value="d"> d) モジュール名、関数名、変数名
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>18. イテレータを手動で進める際に使用する関数は何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q18" value="a" required> a) advance()<br>
+                    <input type="radio" name="q18" value="b"> b) next()<br>
+                    <input type="radio" name="q18" value="c"> c) forward()<br>
+                    <input type="radio" name="q18" value="d"> d) iterate()
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>19. プロパティを定義するデコレータは何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q19" value="a" required> a) @property<br>
+                    <input type="radio" name="q19" value="b"> b) @attribute<br>
+                    <input type="radio" name="q19" value="c"> c) @getter<br>
+                    <input type="radio" name="q19" value="d"> d) @variable
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>20. ジェネレータ関数を一時停止し、後で再開する方法は何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q20" value="a" required> a) pause() と resume()<br>
+                    <input type="radio" name="q20" value="b"> b) stop() と start()<br>
+                    <input type="radio" name="q20" value="c"> c) yield と next()<br>
+                    <input type="radio" name="q20" value="d"> d) halt() と continue()
+                </div>
+            </div>
+
+            <button type="submit">採点する</button>
+        </form>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        document.getElementById('quizForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            let score = 0;
+            const answers = {
+                q1: 'b', q2: 'b', q3: 'b', q4: 'b', q5: 'a',
+                q6: 'b', q7: 'a', q8: 'a', q9: 'a', q10: 'b',
+                q11: 'a', q12: 'c', q13: 'b', q14: 'b', q15: 'b',
+                q16: 'a', q17: 'a', q18: 'b', q19: 'a', q20: 'c'
+            };
+
+            for (let q in answers) {
+                const selected = document.querySelector(`input[name="${q}"]:checked`);
+                if (selected && selected.value === answers[q]) {
+                    score++;
+                }
+            }
+
+            const resultDiv = document.getElementById('result');
+            resultDiv.textContent = `あなたのスコアは ${score} / 20 です。`;
+        });
+    </script>
+</body>
+</html>

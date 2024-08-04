@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pythonパフォーマンス最適化：完全版学習資料</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; padding: 20px; max-width: 800px; margin: 0 auto; }
+        h1, h2, h3 { color: #333; }
+        pre { background-color: #f4f4f4; padding: 10px; border-radius: 5px; overflow-x: auto; }
+        .quiz { background-color: #e7f3fe; padding: 15px; border-radius: 5px; margin-top: 20px; }
+        .quiz-question { margin-bottom: 20px; }
+        .options { margin-left: 20px; }
+        button { background-color: #4CAF50; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background-color: #45a049; }
+        #result { margin-top: 20px; font-weight: bold; }
+        .note { background-color: #ffffd9; padding: 10px; border-left: 5px solid #ffeb3b; margin: 15px 0; }
+    </style>
+</head>
+<body>
+    <h1>11. パフォーマンス最適化</h1>
+
+    <h2>11.1 プロファイリングツールの使用</h2>
+    <p>プロファイリングは、プログラムの実行時間や資源使用状況を分析するプロセスです。Pythonには、cProfileやline_profilerなどのツールがあります。</p>
+    <pre>
+import cProfile
+
+def fibonacci(n):
+    if n < 2:
+        return n
+    return fibonacci(n-1) + fibonacci(n-2)
+
+# プロファイリングの実行
+cProfile.run('fibonacci(30)')
+    </pre>
+
+    <h2>11.2 コードの最適化テクニック</h2>
+    <p>Pythonコードを最適化するためのいくつかの一般的なテクニックを紹介します。</p>
+
+    <h3>11.2.1 適切なデータ構造の使用</h3>
+    <pre>
+# 非効率的な方法
+numbers = []
+for i in range(1000000):
+    numbers.append(i)
+
+# 効率的な方法
+numbers = list(range(1000000))
+    </pre>
+
+    <h3>11.2.2 ループの最適化</h3>
+    <pre>
+# 非効率的な方法
+result = []
+for i in range(1000000):
+    if i % 2 == 0:
+        result.append(i)
+
+# 効率的な方法（リスト内包表記）
+result = [i for i in range(1000000) if i % 2 == 0]
+    </pre>
+
+    <h3>11.2.3 ローカル変数の使用</h3>
+    <pre>
+import math
+
+# 非効率的な方法
+def calculate_areas(radii):
+    return [math.pi * r**2 for r in radii]
+
+# 効率的な方法
+def calculate_areas(radii):
+    pi = math.pi
+    return [pi * r**2 for r in radii]
+    </pre>
+
+    <h2>11.3 メモリ使用の最適化</h2>
+    <p>メモリ使用を最適化することで、プログラムの全体的なパフォーマンスを向上させることができます。</p>
+    <pre>
+# ジェネレータの使用
+def number_generator(n):
+    for i in range(n):
+        yield i
+
+# 大きなリストを作成する代わりにジェネレータを使用
+for num in number_generator(1000000):
+    # 処理
+    pass
+    </pre>
+
+    <div class="note">
+        <h3>プロジェクトでのパフォーマンス最適化のポイント</h3>
+        <ul>
+            <li>最適化の前に必ずプロファイリングを行い、ボトルネックを特定する</li>
+            <li>読みやすさと保守性を犠牲にしない範囲で最適化を行う</li>
+            <li>Pythonの組み込み関数や標準ライブラリを活用する</li>
+            <li>大規模なデータセットを扱う場合は、メモリ使用に特に注意を払う</li>
+            <li>必要に応じて、パフォーマンスクリティカルな部分をCythonやC拡張で実装することを検討する</li>
+        </ul>
+    </div>
+
+    <h2>クイズ: Pythonパフォーマンス最適化</h2>
+    <div class="quiz">
+        <form id="quizForm">
+            <div class="quiz-question">
+                <p>1. Pythonの標準プロファイリングツールは何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q1" value="a" required> a) pyprof<br>
+                    <input type="radio" name="q1" value="b"> b) cProfile<br>
+                    <input type="radio" name="q1" value="c"> c) profilepy<br>
+                    <input type="radio" name="q1" value="d"> d) pyperf
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>2. 大量のデータを扱う際、メモリ使用を最適化するのに適したPythonの機能は？</p>
+                <div class="options">
+                    <input type="radio" name="q2" value="a" required> a) リスト<br>
+                    <input type="radio" name="q2" value="b"> b) タプル<br>
+                    <input type="radio" name="q2" value="c"> c) ジェネレータ<br>
+                    <input type="radio" name="q2" value="d"> d) セット
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>3. Pythonでループを最適化する一般的な方法は？</p>
+                <div class="options">
+                    <input type="radio" name="q3" value="a" required> a) forループの代わりにwhileループを使用する<br>
+                    <input type="radio" name="q3" value="b"> b) リスト内包表記を使用する<br>
+                    <input type="radio" name="q3" value="c"> c) ループ内でprint文を使用する<br>
+                    <input type="radio" name="q3" value="d"> d) ループ内で例外処理を使用する
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>4. Pythonで文字列連結を最適化する最良の方法は？</p>
+                <div class="options">
+                    <input type="radio" name="q4" value="a" required> a) + 演算子を使用する<br>
+                    <input type="radio" name="q4" value="b"> b) join()メソッドを使用する<br>
+                    <input type="radio" name="q4" value="c"> c) forループ内で連結する<br>
+                    <input type="radio" name="q4" value="d"> d) 文字列のリストを作成し、最後に連結する
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>5. Pythonで辞書のキーの存在をチェックする最も効率的な方法は？</p>
+                <div class="options">
+                    <input type="radio" name="q5" value="a" required> a) if key in dictionary:<br>
+                    <input type="radio" name="q5" value="b"> b) if dictionary.has_key(key):<br>
+                    <input type="radio" name="q5" value="c"> c) if key in dictionary.keys():<br>
+                    <input type="radio" name="q5" value="d"> d) if dictionary.get(key) is not None:
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>6. Pythonでグローバル変数の代わりに何を使用すると、一般的にパフォーマンスが向上しますか？</p>
+                <div class="options">
+                    <input type="radio" name="q6" value="a" required> a) クラス変数<br>
+                    <input type="radio" name="q6" value="b"> b) ローカル変数<br>
+                    <input type="radio" name="q6" value="c"> c) インスタンス変数<br>
+                    <input type="radio" name="q6" value="d"> d) 定数
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>7. Pythonで大量のデータを処理する際、メモリ使用量を減らすのに役立つモジュールは？</p>
+                <div class="options">
+                    <input type="radio" name="q7" value="a" required> a) numpy<br>
+                    <input type="radio" name="q7" value="b"> b) pandas<br>
+                    <input type="radio" name="q7" value="c"> c) itertools<br>
+                    <input type="radio" name="q7" value="d"> d) collections
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>8. Pythonでリストの要素を逆順にする最も効率的な方法は？</p>
+                <div class="options">
+                    <input type="radio" name="q8" value="a" required> a) list.sort(reverse=True)<br>
+                    <input type="radio" name="q8" value="b"> b) reversed(list)<br>
+                    <input type="radio" name="q8" value="c"> c) list[::-1]<br>
+                    <input type="radio" name="q8" value="d"> d) list.reverse()
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>9. Pythonで関数呼び出しのオーバーヘッドを減らす方法は？</p>
+                <div class="options">
+                    <input type="radio" name="q9" value="a" required> a) 関数をインライン化する<br>
+                    <input type="radio" name="q9" value="b"> b) 関数をクラスメソッドにする<br>
+                    <input type="radio" name="q9" value="c"> c) 関数を静的メソッドにする<br>
+                    <input type="radio" name="q9" value="d"> d) 関数をラムダ式に変換する
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>10. Pythonで大きな配列の演算を高速化するのに適したライブラリは？</p>
+                <div class="options">
+                    <input type="radio" name="q10" value="a" required> a) math<br>
+                    <input type="radio" name="q10" value="b"> b) numpy<br>
+                    <input type="radio" name="q10" value="c"> c) statistics<br>
+                    <input type="radio" name="q10" value="d"> d) array
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>11. Pythonでコードの特定の部分の実行時間を測定するのに適した関数は？</p>
+                <div class="options">
+                    <input type="radio" name="q11" value="a" required> a) time.time()<br>
+                    <input type="radio" name="q11" value="b"> b) time.clock()<br>
+                    <input type="radio" name="q11" value="c"> c) time.perf_counter()<br>
+                    <input type="radio" name="q11" value="d"> d) time.process_time()
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>12. Pythonで不要なオブジェクトをメモリから解放する方法は？</p>
+                <div class="options">
+                    <input type="radio" name="q12" value="a" required> a) del オブジェクト<br>
+                    <input type="radio" name="q12" value="b"> b) free(オブジェクト)<br>
+                    <input type="radio" name="q12" value="c"> c) オブジェクト.dispose()<br>
+                    <input type="radio" name="q12" value="d"> d) gc.collect()
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>13. Pythonでリストの要素に対して同じ操作を繰り返し適用する場合、最も効率的な方法は？</p>
+                <div class="options">
+                    <input type="radio" name="q13" value="a" required> a) forループを使用する<br>
+                    <input type="radio" name="q13" value="b"> b) whileループを使用する<br>
+                    <input type="radio" name="q13" value="c"> c) map()関数を使用する<br>
+                    <input type="radio" name="q13" value="d"> d) リスト内包表記を使用する
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>14. Pythonで大量のデータを含むファイルを効率的に読み込む方法は？</p>
+                <div class="options">
+                    <input type="radio" name="q14" value="

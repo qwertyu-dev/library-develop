@@ -1,0 +1,115 @@
+@startuml
+object ColumnEditor
+object Column1Editor
+object Column2Editor
+object Column3Editor
+object Column4Editor
+object Column5Editor
+object Column6Editor
+object Column7Editor
+object DataFrameEditor
+object DataFrameEditor1
+object DataFrameEditor2
+object DataFrameEditor3
+object DataFrameEditor4
+object DataFrameEditor5
+object DataFrameEditor6
+object DataFrameEditor7
+object DataFrameEditor8
+object DataFrameEditor9
+object DataFrameEditor10
+object DataFrameEditorDefault
+object EditorFactory
+@enduml
+
+@startuml
+abstract class ColumnEditor {
+  + edit(value: Any) -> Any
+}
+
+class Column1Editor extends ColumnEditor {
+  + edit(value: int | float) -> int | float
+}
+
+class Column2Editor extends ColumnEditor {
+  + edit(value: int | float) -> int | float
+}
+
+class Column3Editor extends ColumnEditor {
+  + edit(value: int | float) -> int | float
+}
+
+class Column4Editor extends ColumnEditor {
+  + edit(value: int | float) -> int | float
+}
+
+class Column5Editor extends ColumnEditor {
+  + edit(value: int | float) -> int | float
+}
+
+class Column6Editor extends ColumnEditor {
+  + edit(value: int | float) -> int | float
+}
+
+class Column7Editor extends ColumnEditor {
+  + edit(value: Any) -> str
+}
+
+class DataFrameEditor {
+  + column_editors: dict[str, ColumnEditor]
+  + edit_dataframe(df: pd.DataFrame) -> pd.DataFrame
+}
+
+class DataFrameEditor1 extends DataFrameEditor
+class DataFrameEditor2 extends DataFrameEditor
+class DataFrameEditor3 extends DataFrameEditor
+class DataFrameEditor4 extends DataFrameEditor
+class DataFrameEditor5 extends DataFrameEditor
+class DataFrameEditor6 extends DataFrameEditor
+class DataFrameEditor7 extends DataFrameEditor
+class DataFrameEditor8 extends DataFrameEditor
+class DataFrameEditor9 extends DataFrameEditor
+class DataFrameEditor10 extends DataFrameEditor
+class DataFrameEditorDefault extends DataFrameEditor
+
+class EditorFactory {
+  - decision_table: pd.DataFrame
+  + evaluate_conditions(row)
+  + create_editor(row)
+}
+@enduml
+
+
+@startuml
+component "ColumnEditor" as CE
+component "DataFrameEditor" as DFE
+component "EditorFactory" as EF
+
+DFE --> CE
+EF --> DFE
+@enduml
+
+@startuml
+participant Main
+participant EditorFactory as EF
+participant DataFrameEditor as DFE
+participant ColumnEditor as CE
+
+Main -> EF : create_editor(row)
+activate EF
+EF -> EF : evaluate_conditions(row)
+EF -> EF : globals()[editor_class_name]
+EF --> Main : editor
+deactivate EF
+
+Main -> DFE : edit_dataframe(pd.DataFrame([row]))
+activate DFE
+DFE -> CE : edit(value)
+activate CE
+CE --> DFE : edited_value
+deactivate CE
+DFE --> Main : edited_row
+deactivate DFE
+@enduml
+
+

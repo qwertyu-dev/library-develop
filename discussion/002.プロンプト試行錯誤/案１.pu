@@ -1,0 +1,88 @@
+@startuml
+left to right direction
+
+package "既存システム" {
+  [文書回付システム] as DRS
+  [運用管理システム] as OMS
+}
+
+package "AWS EC2" {
+  package "新システム" {
+    [Excelアップロードモジュール] as EUM
+    [データ検証モジュール] as DVM
+    [フォーマット変換モジュール] as FCM
+    [データ永続化モジュール] as DPM
+    
+    EUM --> DVM
+    DVM --> FCM
+    FCM --> DPM
+  }
+  
+  database "ストレージ" {
+    [一時保存] as TempStorage
+    [変換結果] as ConvertedStorage
+  }
+  
+  DRS --> EUM
+  EUM --> TempStorage
+  DPM --> ConvertedStorage
+}
+
+OMS --> [運用機能サービス] as OFS
+
+@enduml
+
+@startuml
+left to right direction
+
+actor 申請者 as Applicant
+actor 管理者 as Admin
+
+rectangle "既存システム" {
+  usecase "Excelファイルアップロード" as UC1
+  usecase "運用管理" as UC2
+}
+
+rectangle "新システム" {
+  usecase "データ検証" as UC3
+  usecase "フォーマット変換" as UC4
+  usecase "データ永続化" as UC5
+}
+
+Applicant --> UC1
+Admin --> UC2
+UC1 ..> UC3 : <<include>>
+UC3 ..> UC4 : <<include>>
+UC4 ..> UC5 : <<include>>
+UC2 ..> UC5 : <<extend>>
+
+@enduml
+
+@startuml
+class Excelアップロードモジュール {
+  + uploadExcelFile(file: File): void
+}
+
+class データ検証モジュール {
+  + validateData(data: Data): ValidationResult
+}
+
+class フォーマット変換モジュール {
+  + convertFormat(data: Data): ConvertedData
+}
+
+class データ永続化モジュール {
+  + saveData(data: ConvertedData): void
+}
+
+class 文書回付システム {
+  + receiveExcelFile(file: File): void
+}
+
+
+Excelアップロードモジュール --> データ検証モジュール
+データ検証モジュール --> フォーマット変換モジュール
+フォーマット変換モジュール --> データ永続化モジュール
+文書回付システム --> Excelアップロードモジュール
+
+@enduml

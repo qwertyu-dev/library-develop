@@ -1,0 +1,953 @@
+2024-06-30 21:08:36 [ERROR] common_utils - parse_toml_file line 55: can not get target files [Errno 2] No such file or directory: '/developer/library_dev/.venv/lib/python3.11/site-packages/_pytest/package_config.toml':
+2024-06-30 21:08:36 [ERROR] common_utils - load line 139: package_config取得に失敗しました: [Errno 2] No such file or directory: '/developer/library_dev/.venv/lib/python3.11/site-packages/_pytest/package_config.toml':
+2024-06-30 21:08:36 [ERROR] common_utils - load line 141: Traceback (most recent call last):
+  File "/developer/library_dev/project_1/src/lib/common_utils/ibr_get_config.py", line 137, in load
+    package_config = TomlParser.parse_toml_file(package_toml_path)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/developer/library_dev/project_1/src/lib/common_utils/ibr_toml_loader.py", line 52, in parse_toml_file
+    with toml_path.open(mode='r', encoding='utf8') as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/satoshi/.pyenv/versions/3.11.6/lib/python3.11/pathlib.py", line 1044, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/developer/library_dev/.venv/lib/python3.11/site-packages/_pytest/package_config.toml'
+:
+2024-06-30 21:09:18 [DEBUG] converter_utils - <module> line 41: Config(env='local', common_config={'logger_path': {'LOGGER_DEF_FILE': 'tests/def/mfaUtilsLoggingHelper/logging_TimedRotate.json', 'LOGGER_MSG_FILE': 'tests/def/mfaUtilsLoggingHelper/config_MessageList.toml'}, 'input_file_path': {'UPDATE_EXCEL_PATH': 'tests/share/receive'}, 'output_file_path': {'SEND_REFFERENCE_MASTER_PATH': 'tests/share/receive'}}, package_config={'test': {'local_test': 'tests'}}, log_message=<bound method LoggerPackage.log_message of <src.lib.common_utils.ibr_logger_package.LoggerPackage object at 0x7f12d84fbf50>>):
+2024-06-30 21:09:18 [INFO] converter_utils - test_remarks_parser line 155: 八重洲通支店営業部:
+2024-06-30 21:09:18 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': '営業部傘下', 'sales_department': {'department_name': '八重洲通支店営業部', 'branch_name': '八重洲通支店'}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': ''}:
+2024-06-30 21:09:18 [INFO] converter_utils - test_remarks_parser line 155: 笹島支店第一営業部:
+2024-06-30 21:09:18 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': '営業部傘下', 'sales_department': {'department_name': '笹島支店第一営業部', 'branch_name': '笹島支店'}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': ''}:
+2024-06-30 21:09:18 [INFO] converter_utils - test_remarks_parser line 155: 41002 東日本第一Gr:
+2024-06-30 21:09:18 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': 'エリア', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '41002', 'group_name': '東日本第一Gr', 'established_date': ''}, 'other_info': ''}:
+2024-06-30 21:09:18 [INFO] converter_utils - test_remarks_parser line 155: 41012　グローバル財務戦略Gr (4/1新設):
+2024-06-30 21:09:18 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': 'エリア', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '41012', 'group_name': 'グローバル財務戦略Gr', 'established_date': '4/1新設'}, 'other_info': ''}:
+2024-06-30 21:09:18 [INFO] converter_utils - test_remarks_parser line 155: C1:法人・リテール部門、C1:法人・リテール部門より変更:
+2024-06-30 21:09:18 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': 'その他', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': 'C1:法人・リテール部門、C1:法人・リテール部門より変更'}:
+2024-06-30 21:09:18 [INFO] converter_utils - test_remarks_parser line 155: 2022.12.11廃止済みの課復活:
+2024-06-30 21:09:18 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': 'その他', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': '2022.12.11廃止済みの課復活'}:
+2024-06-30 21:10:42 [DEBUG] converter_utils - <module> line 41: Config(env='local', common_config={'logger_path': {'LOGGER_DEF_FILE': 'tests/def/mfaUtilsLoggingHelper/logging_TimedRotate.json', 'LOGGER_MSG_FILE': 'tests/def/mfaUtilsLoggingHelper/config_MessageList.toml'}, 'input_file_path': {'UPDATE_EXCEL_PATH': 'tests/share/receive'}, 'output_file_path': {'SEND_REFFERENCE_MASTER_PATH': 'tests/share/receive'}}, package_config={'test': {'local_test': 'tests'}}, log_message=<bound method LoggerPackage.log_message of <src.lib.common_utils.ibr_logger_package.LoggerPackage object at 0x7f25e90d4c90>>):
+2024-06-30 21:10:42 [INFO] converter_utils - test_remarks_parser line 155: 八重洲通支店営業部:
+2024-06-30 21:10:42 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': '営業部傘下', 'sales_department': {'department_name': '八重洲通支店営業部', 'branch_name': '八重洲通支店'}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': ''}:
+2024-06-30 21:10:42 [INFO] converter_utils - test_remarks_parser line 155: 笹島支店第一営業部:
+2024-06-30 21:10:42 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': '営業部傘下', 'sales_department': {'department_name': '笹島支店第一営業部', 'branch_name': '笹島支店'}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': ''}:
+2024-06-30 21:10:42 [INFO] converter_utils - test_remarks_parser line 155: 41002 東日本第一Gr:
+2024-06-30 21:10:42 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': 'エリア', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '41002', 'group_name': '東日本第一Gr', 'established_date': ''}, 'other_info': ''}:
+2024-06-30 21:10:42 [INFO] converter_utils - test_remarks_parser line 155: 41012　グローバル財務戦略Gr (4/1新設):
+2024-06-30 21:10:42 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': 'エリア', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '41012', 'group_name': 'グローバル財務戦略Gr', 'established_date': '4/1新設'}, 'other_info': ''}:
+2024-06-30 21:10:42 [INFO] converter_utils - test_remarks_parser line 155: C1:法人・リテール部門、C1:法人・リテール部門より変更:
+2024-06-30 21:10:42 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': 'その他', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': 'C1:法人・リテール部門、C1:法人・リテール部門より変更'}:
+2024-06-30 21:10:42 [INFO] converter_utils - test_remarks_parser line 155: 2022.12.11廃止済みの課復活:
+2024-06-30 21:10:42 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': 'その他', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': '2022.12.11廃止済みの課復活'}:
+2024-06-30 21:18:24 [DEBUG] converter_utils - <module> line 41: Config(env='local', common_config={'logger_path': {'LOGGER_DEF_FILE': 'tests/def/mfaUtilsLoggingHelper/logging_TimedRotate.json', 'LOGGER_MSG_FILE': 'tests/def/mfaUtilsLoggingHelper/config_MessageList.toml'}, 'input_file_path': {'UPDATE_EXCEL_PATH': 'tests/share/receive'}, 'output_file_path': {'SEND_REFFERENCE_MASTER_PATH': 'tests/share/receive'}}, package_config={'test': {'local_test': 'tests'}}, log_message=<bound method LoggerPackage.log_message of <src.lib.common_utils.ibr_logger_package.LoggerPackage object at 0x7fa7fb2d8290>>):
+2024-06-30 21:18:24 [INFO] converter_utils - test_remarks_parser line 155: 八重洲通支店営業部:
+2024-06-30 21:18:24 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': '営業部傘下', 'sales_department': {'department_name': '八重洲通支店営業部', 'branch_name': '八重洲通支店'}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': ''}:
+2024-06-30 21:18:24 [INFO] converter_utils - test_remarks_parser line 155: 笹島支店第一営業部:
+2024-06-30 21:18:24 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': '営業部傘下', 'sales_department': {'department_name': '笹島支店第一営業部', 'branch_name': '笹島支店'}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': ''}:
+2024-06-30 21:18:24 [INFO] converter_utils - test_remarks_parser line 155: 41002 東日本第一Gr:
+2024-06-30 21:18:24 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': 'エリア', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '41002', 'group_name': '東日本第一Gr', 'established_date': ''}, 'other_info': ''}:
+2024-06-30 21:18:24 [INFO] converter_utils - test_remarks_parser line 155: 41012　グローバル財務戦略Gr (4/1新設):
+2024-06-30 21:18:24 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': 'エリア', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '41012', 'group_name': 'グローバル財務戦略Gr', 'established_date': '4/1新設'}, 'other_info': ''}:
+2024-06-30 21:18:24 [INFO] converter_utils - test_remarks_parser line 155: C1:法人・リテール部門、C1:法人・リテール部門より変更:
+2024-06-30 21:18:24 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': 'その他', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': 'C1:法人・リテール部門、C1:法人・リテール部門より変更'}:
+2024-06-30 21:18:24 [INFO] converter_utils - test_remarks_parser line 155: 2022.12.11廃止済みの課復活:
+2024-06-30 21:18:24 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': 'その他', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': '2022.12.11廃止済みの課復活'}:
+2024-06-30 21:34:48 [DEBUG] converter_utils - <module> line 41: Config(env='local', common_config={'logger_path': {'LOGGER_DEF_FILE': 'tests/def/mfaUtilsLoggingHelper/logging_TimedRotate.json', 'LOGGER_MSG_FILE': 'tests/def/mfaUtilsLoggingHelper/config_MessageList.toml'}, 'input_file_path': {'UPDATE_EXCEL_PATH': 'tests/share/receive'}, 'output_file_path': {'SEND_REFFERENCE_MASTER_PATH': 'tests/share/receive'}}, package_config={'test': {'local_test': 'tests'}}, log_message=<bound method LoggerPackage.log_message of <src.lib.common_utils.ibr_logger_package.LoggerPackage object at 0x7f34c6cbcdd0>>):
+2024-06-30 21:34:48 [INFO] converter_utils - test_remarks_parser line 155: 八重洲通支店営業部:
+2024-06-30 21:34:48 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': '営業部傘下', 'sales_department': {'department_name': '八重洲通支店営業部', 'branch_name': '八重洲通支店'}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': ''}:
+2024-06-30 21:34:48 [INFO] converter_utils - test_remarks_parser line 155: 笹島支店第一営業部:
+2024-06-30 21:34:48 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': '営業部傘下', 'sales_department': {'department_name': '笹島支店第一営業部', 'branch_name': '笹島支店'}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': ''}:
+2024-06-30 21:34:48 [INFO] converter_utils - test_remarks_parser line 155: 41002 東日本第一Gr:
+2024-06-30 21:34:48 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': 'エリア', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '41002', 'group_name': '東日本第一Gr', 'established_date': ''}, 'other_info': ''}:
+2024-06-30 21:34:48 [INFO] converter_utils - test_remarks_parser line 155: 41012　グローバル財務戦略Gr (4/1新設):
+2024-06-30 21:34:48 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': 'エリア', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '41012', 'group_name': 'グローバル財務戦略Gr', 'established_date': '4/1新設'}, 'other_info': ''}:
+2024-06-30 21:34:48 [INFO] converter_utils - test_remarks_parser line 155: C1:法人・リテール部門、C1:法人・リテール部門より変更:
+2024-06-30 21:34:48 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': 'その他', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': 'C1:法人・リテール部門、C1:法人・リテール部門より変更'}:
+2024-06-30 21:34:48 [INFO] converter_utils - test_remarks_parser line 155: 2022.12.11廃止済みの課復活:
+2024-06-30 21:34:48 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': 'その他', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': '2022.12.11廃止済みの課復活'}:
+2024-06-30 21:40:21 [DEBUG] converter_utils - <module> line 41: Config(env='local', common_config={'logger_path': {'LOGGER_DEF_FILE': 'tests/def/mfaUtilsLoggingHelper/logging_TimedRotate.json', 'LOGGER_MSG_FILE': 'tests/def/mfaUtilsLoggingHelper/config_MessageList.toml'}, 'input_file_path': {'UPDATE_EXCEL_PATH': 'tests/share/receive'}, 'output_file_path': {'SEND_REFFERENCE_MASTER_PATH': 'tests/share/receive'}}, package_config={'test': {'local_test': 'tests'}}, log_message=<bound method LoggerPackage.log_message of <src.lib.common_utils.ibr_logger_package.LoggerPackage object at 0x7f9a0d8292d0>>):
+2024-06-30 21:40:21 [INFO] converter_utils - test_remarks_parser line 155: 八重洲通支店営業部:
+2024-06-30 21:40:21 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': '営業部傘下', 'sales_department': {'department_name': '八重洲通支店営業部', 'branch_name': '八重洲通支店'}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': ''}:
+2024-06-30 21:40:21 [INFO] converter_utils - test_remarks_parser line 155: 笹島支店第一営業部:
+2024-06-30 21:40:21 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': '営業部傘下', 'sales_department': {'department_name': '笹島支店第一営業部', 'branch_name': '笹島支店'}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': ''}:
+2024-06-30 21:40:21 [INFO] converter_utils - test_remarks_parser line 155: 41002 東日本第一Gr:
+2024-06-30 21:40:21 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': 'エリア', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '41002', 'group_name': '東日本第一Gr', 'established_date': ''}, 'other_info': ''}:
+2024-06-30 21:40:21 [INFO] converter_utils - test_remarks_parser line 155: 41012　グローバル財務戦略Gr (4/1新設):
+2024-06-30 21:40:21 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': 'エリア', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '41012', 'group_name': 'グローバル財務戦略Gr', 'established_date': '4/1新設'}, 'other_info': ''}:
+2024-06-30 21:40:21 [INFO] converter_utils - test_remarks_parser line 155: C1:法人・リテール部門、C1:法人・リテール部門より変更:
+2024-06-30 21:40:21 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': 'その他', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': 'C1:法人・リテール部門、C1:法人・リテール部門より変更'}:
+2024-06-30 21:40:21 [INFO] converter_utils - test_remarks_parser line 155: 2022.12.11廃止済みの課復活:
+2024-06-30 21:40:21 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': 'その他', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': '2022.12.11廃止済みの課復活'}:
+2024-06-30 21:41:55 [DEBUG] converter_utils - <module> line 41: Config(env='local', common_config={'logger_path': {'LOGGER_DEF_FILE': 'tests/def/mfaUtilsLoggingHelper/logging_TimedRotate.json', 'LOGGER_MSG_FILE': 'tests/def/mfaUtilsLoggingHelper/config_MessageList.toml'}, 'input_file_path': {'UPDATE_EXCEL_PATH': 'tests/share/receive'}, 'output_file_path': {'SEND_REFFERENCE_MASTER_PATH': 'tests/share/receive'}}, package_config={'test': {'local_test': 'tests'}}, log_message=<bound method LoggerPackage.log_message of <src.lib.common_utils.ibr_logger_package.LoggerPackage object at 0x7f1a1589f510>>):
+2024-06-30 21:41:55 [INFO] converter_utils - test_remarks_parser line 155: 八重洲通支店営業部:
+2024-06-30 21:41:55 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': '営業部傘下', 'sales_department': {'department_name': '八重洲通支店営業部', 'branch_name': '八重洲通支店'}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': ''}:
+2024-06-30 21:41:55 [INFO] converter_utils - test_remarks_parser line 155: 笹島支店第一営業部:
+2024-06-30 21:41:55 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': '営業部傘下', 'sales_department': {'department_name': '笹島支店第一営業部', 'branch_name': '笹島支店'}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': ''}:
+2024-06-30 21:41:55 [INFO] converter_utils - test_remarks_parser line 155: 41002 東日本第一Gr:
+2024-06-30 21:41:55 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': 'エリア', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '41002', 'group_name': '東日本第一Gr', 'established_date': ''}, 'other_info': ''}:
+2024-06-30 21:41:55 [INFO] converter_utils - test_remarks_parser line 155: 41012　グローバル財務戦略Gr (4/1新設):
+2024-06-30 21:41:55 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': 'エリア', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '41012', 'group_name': 'グローバル財務戦略Gr', 'established_date': '4/1新設'}, 'other_info': ''}:
+2024-06-30 21:41:55 [INFO] converter_utils - test_remarks_parser line 155: C1:法人・リテール部門、C1:法人・リテール部門より変更:
+2024-06-30 21:41:55 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': 'その他', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': 'C1:法人・リテール部門、C1:法人・リテール部門より変更'}:
+2024-06-30 21:41:55 [INFO] converter_utils - test_remarks_parser line 155: 2022.12.11廃止済みの課復活:
+2024-06-30 21:41:55 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': 'その他', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': '2022.12.11廃止済みの課復活'}:
+2024-06-30 21:44:35 [DEBUG] common_utils - <module> line 40: Config(env='local', common_config={'logger_path': {'LOGGER_DEF_FILE': 'tests/def/mfaUtilsLoggingHelper/logging_TimedRotate.json', 'LOGGER_MSG_FILE': 'tests/def/mfaUtilsLoggingHelper/config_MessageList.toml'}, 'input_file_path': {'UPDATE_EXCEL_PATH': 'tests/share/receive'}, 'output_file_path': {'SEND_REFFERENCE_MASTER_PATH': 'tests/share/receive'}}, package_config={'test': {'local_test': 'test'}}, log_message=<bound method LoggerPackage.log_message of <src.lib.common_utils.ibr_logger_package.LoggerPackage object at 0x7f0370118b10>>):
+2024-06-30 21:44:35 [DEBUG] common_utils - test_convert_with_no_timezone_to_jst_UT_C0_str_only line 84: 
+        - テスト関数: test_convert_with_no_timezone_to_jst_UT_C0_str_format, test_convert_with_no_timezone_to_jst_UT_C0_str_only, test_convert_with_no_timezone_to_jst_UT_C1_str_format_match_irregular, test_convert_with_no_timezone_to_jst_UT_C1_str_format_not_match, test_convert_with_no_timezone_to_jst_UT_C2_format_None, test_convert_with_no_timezone_to_jst_UT_C2_str_format_None
+        - テスト定義:
+                - テストカテゴリ: C0
+                - テスト区分: 正常系/UT
+                - 時間文字列に対してformat指定しない
+        :
+2024-06-30 21:44:35 [DEBUG] common_utils - test_convert_with_no_timezone_to_jst_UT_C0_str_only line 92: expected: 2024-01-03 09:00:00+09:00:
+2024-06-30 21:44:35 [DEBUG] common_utils - test_convert_with_no_timezone_to_jst_UT_C0_str_only line 93: result: 2024-01-03 09:00:00+09:00:
+2024-06-30 21:44:35 [DEBUG] common_utils - test_convert_with_no_timezone_to_jst_UT_C0_str_format line 110: 
+        - テスト関数: test_convert_with_no_timezone_to_jst_UT_C0_str_format, test_convert_with_no_timezone_to_jst_UT_C0_str_only, test_convert_with_no_timezone_to_jst_UT_C1_str_format_match_irregular, test_convert_with_no_timezone_to_jst_UT_C1_str_format_not_match, test_convert_with_no_timezone_to_jst_UT_C2_format_None, test_convert_with_no_timezone_to_jst_UT_C2_str_format_None
+        - テスト定義:
+                - テストカテゴリ: C0
+                - テスト区分: 正常系/UT
+                - 時間文字列に対してformat指定する
+        :
+2024-06-30 21:44:35 [DEBUG] common_utils - test_convert_with_no_timezone_to_jst_UT_C0_str_format line 119: expected: 2024-01-03 09:00:00+09:00:
+2024-06-30 21:44:35 [DEBUG] common_utils - test_convert_with_no_timezone_to_jst_UT_C0_str_format line 120: result: 2024-01-03 09:00:00+09:00:
+2024-06-30 21:44:35 [DEBUG] common_utils - test_convert_with_no_timezone_to_jst_UT_C1_str_format_match_irregular line 137: 
+        - テスト関数: test_convert_with_no_timezone_to_jst_UT_C0_str_format, test_convert_with_no_timezone_to_jst_UT_C0_str_only, test_convert_with_no_timezone_to_jst_UT_C1_str_format_match_irregular, test_convert_with_no_timezone_to_jst_UT_C1_str_format_not_match, test_convert_with_no_timezone_to_jst_UT_C2_format_None, test_convert_with_no_timezone_to_jst_UT_C2_str_format_None
+        - テスト定義:
+                - テストカテゴリ: C0
+                - テスト区分: 正常系/UT
+                - 時間文字列に対してformatフォーマットが一致するがやや不自然
+        :
+2024-06-30 21:44:35 [DEBUG] common_utils - test_convert_with_no_timezone_to_jst_UT_C1_str_format_match_irregular line 146: expected: 2024-01-03 09:00:00+09:00:
+2024-06-30 21:44:35 [DEBUG] common_utils - test_convert_with_no_timezone_to_jst_UT_C1_str_format_match_irregular line 147: result: 2024-01-03 09:00:00+09:00:
+2024-06-30 21:44:35 [DEBUG] common_utils - test_convert_with_no_timezone_to_jst_UT_C1_str_format_not_match line 168: 
+        - テスト関数: test_convert_with_no_timezone_to_jst_UT_C0_str_format, test_convert_with_no_timezone_to_jst_UT_C0_str_only, test_convert_with_no_timezone_to_jst_UT_C1_str_format_match_irregular, test_convert_with_no_timezone_to_jst_UT_C1_str_format_not_match, test_convert_with_no_timezone_to_jst_UT_C2_format_None, test_convert_with_no_timezone_to_jst_UT_C2_str_format_None
+        - テスト定義:
+                - テストカテゴリ: C0
+                - テスト区分: 正常系/UT
+                - 時間文字列に対してformatフォーマットが一致するが一致しない
+        :
+2024-06-30 21:44:35 [ERROR] common_utils - convert_with_no_timezone_to_jst line 64: Traceback (most recent call last):
+  File "/developer/library_dev/project_1/src/lib/common_utils/ibr_date_helper.py", line 61, in convert_with_no_timezone_to_jst
+    return datetime.strptime(date_str, date_format).replace(tzinfo=UTC).astimezone(JST)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/satoshi/.pyenv/versions/3.11.6/lib/python3.11/_strptime.py", line 568, in _strptime_datetime
+    tt, fraction, gmtoff_fraction = _strptime(data_string, format)
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/satoshi/.pyenv/versions/3.11.6/lib/python3.11/_strptime.py", line 349, in _strptime
+    raise ValueError("time data %r does not match format %r" %
+ValueError: time data '2024/01/03 00:00:00' does not match format '%Y-%m-%d %H:%M:%S'
+:
+2024-06-30 21:44:35 [DEBUG] common_utils - test_convert_with_no_timezone_to_jst_UT_C2_str_format_None line 205: 
+        - テスト関数: test_convert_with_no_timezone_to_jst_UT_C0_str_format, test_convert_with_no_timezone_to_jst_UT_C0_str_only, test_convert_with_no_timezone_to_jst_UT_C1_str_format_match_irregular, test_convert_with_no_timezone_to_jst_UT_C1_str_format_not_match, test_convert_with_no_timezone_to_jst_UT_C2_format_None, test_convert_with_no_timezone_to_jst_UT_C2_str_format_None
+        - テスト定義:
+                - テストカテゴリ: C0
+                - テスト区分: 正常系/UT
+                - 時間文字列に対しNone
+        :
+2024-06-30 21:44:35 [ERROR] common_utils - convert_with_no_timezone_to_jst line 64: Traceback (most recent call last):
+  File "/developer/library_dev/project_1/src/lib/common_utils/ibr_date_helper.py", line 61, in convert_with_no_timezone_to_jst
+    return datetime.strptime(date_str, date_format).replace(tzinfo=UTC).astimezone(JST)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: strptime() argument 1 must be str, not None
+:
+2024-06-30 21:44:35 [DEBUG] common_utils - test_convert_with_no_timezone_to_jst_UT_C2_format_None line 241: 
+        - テスト関数: test_convert_with_no_timezone_to_jst_UT_C0_str_format, test_convert_with_no_timezone_to_jst_UT_C0_str_only, test_convert_with_no_timezone_to_jst_UT_C1_str_format_match_irregular, test_convert_with_no_timezone_to_jst_UT_C1_str_format_not_match, test_convert_with_no_timezone_to_jst_UT_C2_format_None, test_convert_with_no_timezone_to_jst_UT_C2_str_format_None
+        - テスト定義:
+                - テストカテゴリ: C0
+                - テスト区分: 正常系/UT
+                - formatにNone
+        :
+2024-06-30 21:44:35 [ERROR] common_utils - convert_with_no_timezone_to_jst line 64: Traceback (most recent call last):
+  File "/developer/library_dev/project_1/src/lib/common_utils/ibr_date_helper.py", line 61, in convert_with_no_timezone_to_jst
+    return datetime.strptime(date_str, date_format).replace(tzinfo=UTC).astimezone(JST)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: strptime() argument 2 must be str, not None
+:
+2024-06-30 21:44:35 [DEBUG] common_utils - test_convert_with_timezone_to_jst_UT_C0_str_only line 286: 
+        - テスト関数: test_convert_with_timezone_to_jst_UT_C0_str_only, test_convert_with_timezone_to_jst_UT_C1_non_tz_str_format_not_match, test_convert_with_timezone_to_jst_UT_C1_str_format_not_match, test_convert_with_timezone_to_jst_UT_C2_format_None, test_convert_with_timezone_to_jst_UT_C2_target_str_None
+        - テスト定義:
+                - テストカテゴリ: C0
+                - テスト区分: 正常系/UT
+                - 時間文字列に対してformat指定しない
+        :
+2024-06-30 21:44:35 [DEBUG] common_utils - test_convert_with_timezone_to_jst_UT_C0_str_only line 294: expected: 2024-01-03 09:00:00+09:00:
+2024-06-30 21:44:35 [DEBUG] common_utils - test_convert_with_timezone_to_jst_UT_C0_str_only line 295: result: 2024-01-03 09:00:00+09:00:
+2024-06-30 21:44:35 [DEBUG] common_utils - test_convert_with_timezone_to_jst_UT_C1_str_format_not_match line 316: 
+        - テスト関数: test_convert_with_timezone_to_jst_UT_C0_str_only, test_convert_with_timezone_to_jst_UT_C1_non_tz_str_format_not_match, test_convert_with_timezone_to_jst_UT_C1_str_format_not_match, test_convert_with_timezone_to_jst_UT_C2_format_None, test_convert_with_timezone_to_jst_UT_C2_target_str_None
+        - テスト定義:
+                - テストカテゴリ: C1
+                - テスト区分: 正常系/UT
+                - 時間文字列に対してformatフォーマットが一致するが一致しない
+        :
+2024-06-30 21:44:35 [ERROR] common_utils - convert_with_timezone_to_jst line 104: Traceback (most recent call last):
+  File "/developer/library_dev/project_1/src/lib/common_utils/ibr_date_helper.py", line 101, in convert_with_timezone_to_jst
+    return datetime.strptime(date_str, date_format).astimezone(JST)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/satoshi/.pyenv/versions/3.11.6/lib/python3.11/_strptime.py", line 568, in _strptime_datetime
+    tt, fraction, gmtoff_fraction = _strptime(data_string, format)
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/satoshi/.pyenv/versions/3.11.6/lib/python3.11/_strptime.py", line 349, in _strptime
+    raise ValueError("time data %r does not match format %r" %
+ValueError: time data '2024/01/03 00:00:00+0000' does not match format '%Y-%m-%d %H:%M:%S%z'
+:
+2024-06-30 21:44:35 [DEBUG] common_utils - test_convert_with_timezone_to_jst_UT_C1_non_tz_str_format_not_match line 353: 
+        - テスト関数: test_convert_with_timezone_to_jst_UT_C0_str_only, test_convert_with_timezone_to_jst_UT_C1_non_tz_str_format_not_match, test_convert_with_timezone_to_jst_UT_C1_str_format_not_match, test_convert_with_timezone_to_jst_UT_C2_format_None, test_convert_with_timezone_to_jst_UT_C2_target_str_None
+        - テスト定義:
+                - テストカテゴリ: C1
+                - テスト区分: 正常系/UT
+                - 時間文字列(tzなし)に対してformatフォーマットが一致するが一致しない
+        :
+2024-06-30 21:44:35 [ERROR] common_utils - convert_with_timezone_to_jst line 104: Traceback (most recent call last):
+  File "/developer/library_dev/project_1/src/lib/common_utils/ibr_date_helper.py", line 101, in convert_with_timezone_to_jst
+    return datetime.strptime(date_str, date_format).astimezone(JST)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/satoshi/.pyenv/versions/3.11.6/lib/python3.11/_strptime.py", line 568, in _strptime_datetime
+    tt, fraction, gmtoff_fraction = _strptime(data_string, format)
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/satoshi/.pyenv/versions/3.11.6/lib/python3.11/_strptime.py", line 349, in _strptime
+    raise ValueError("time data %r does not match format %r" %
+ValueError: time data '2024/01/03 00:00:00' does not match format '%Y-%m-%d %H:%M:%S%z'
+:
+2024-06-30 21:44:35 [DEBUG] common_utils - test_convert_with_timezone_to_jst_UT_C2_target_str_None line 390: 
+        - テスト関数: test_convert_with_timezone_to_jst_UT_C0_str_only, test_convert_with_timezone_to_jst_UT_C1_non_tz_str_format_not_match, test_convert_with_timezone_to_jst_UT_C1_str_format_not_match, test_convert_with_timezone_to_jst_UT_C2_format_None, test_convert_with_timezone_to_jst_UT_C2_target_str_None
+        - テスト定義:
+                - テストカテゴリ: C0
+                - テスト区分: 正常系/UT
+                - 時間文字列に対しNone
+        :
+2024-06-30 21:44:35 [ERROR] common_utils - convert_with_timezone_to_jst line 104: Traceback (most recent call last):
+  File "/developer/library_dev/project_1/src/lib/common_utils/ibr_date_helper.py", line 101, in convert_with_timezone_to_jst
+    return datetime.strptime(date_str, date_format).astimezone(JST)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: strptime() argument 1 must be str, not None
+:
+2024-06-30 21:44:35 [DEBUG] common_utils - test_convert_with_timezone_to_jst_UT_C2_format_None line 426: 
+        - テスト関数: test_convert_with_timezone_to_jst_UT_C0_str_only, test_convert_with_timezone_to_jst_UT_C1_non_tz_str_format_not_match, test_convert_with_timezone_to_jst_UT_C1_str_format_not_match, test_convert_with_timezone_to_jst_UT_C2_format_None, test_convert_with_timezone_to_jst_UT_C2_target_str_None
+        - テスト定義:
+                - テストカテゴリ: C0
+                - テスト区分: 正常系/UT
+                - formatにNone
+        :
+2024-06-30 21:44:35 [ERROR] common_utils - convert_with_timezone_to_jst line 104: Traceback (most recent call last):
+  File "/developer/library_dev/project_1/src/lib/common_utils/ibr_date_helper.py", line 101, in convert_with_timezone_to_jst
+    return datetime.strptime(date_str, date_format).astimezone(JST)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: strptime() argument 2 must be str, not None
+:
+2024-06-30 21:44:35 [DEBUG] common_utils - test_convert_unixtime_to_jst_UT_C0_digits10 line 475: 
+        - テスト関数: test_convert_unixtime_to_jst_UT_C0_digits0, test_convert_unixtime_to_jst_UT_C0_digits10, test_convert_unixtime_to_jst_UT_C0_digits13, test_convert_unixtime_to_jst_UT_C0_digits16, test_convert_unixtime_to_jst_UT_C0_raise_exception, test_convert_unixtime_to_jst_UT_C0_unixtime_none
+        - テスト定義:
+                - テストカテゴリ: C0
+                - テスト区分: 正常系/UT
+                - 時間文字列に対してformat指定しない
+        :
+2024-06-30 21:44:35 [INFO] common_utils - convert_unixtime_to_jst line 155: unixtime: 1615860122:
+2024-06-30 21:44:35 [DEBUG] common_utils - test_convert_unixtime_to_jst_UT_C0_digits10 line 483: expected: 2021-03-16 11:02:02+09:00:
+2024-06-30 21:44:35 [DEBUG] common_utils - test_convert_unixtime_to_jst_UT_C0_digits10 line 484: result: 2021-03-16 11:02:02+09:00:
+2024-06-30 21:44:35 [DEBUG] common_utils - test_convert_unixtime_to_jst_UT_C0_digits13 line 501: 
+        - テスト関数: test_convert_unixtime_to_jst_UT_C0_digits0, test_convert_unixtime_to_jst_UT_C0_digits10, test_convert_unixtime_to_jst_UT_C0_digits13, test_convert_unixtime_to_jst_UT_C0_digits16, test_convert_unixtime_to_jst_UT_C0_raise_exception, test_convert_unixtime_to_jst_UT_C0_unixtime_none
+        - テスト定義:
+                - テストカテゴリ: C0
+                - テスト区分: 正常系/UT
+                - 時間文字列に対してformat指定しない
+        :
+2024-06-30 21:44:35 [INFO] common_utils - convert_unixtime_to_jst line 155: unixtime: 1615860122:
+2024-06-30 21:44:35 [DEBUG] common_utils - test_convert_unixtime_to_jst_UT_C0_digits13 line 509: expected: 2021-03-16 11:02:02+09:00:
+2024-06-30 21:44:35 [DEBUG] common_utils - test_convert_unixtime_to_jst_UT_C0_digits13 line 510: result: 2021-03-16 11:02:02+09:00:
+2024-06-30 21:44:35 [DEBUG] common_utils - test_convert_unixtime_to_jst_UT_C0_digits16 line 527: 
+        - テスト関数: test_convert_unixtime_to_jst_UT_C0_digits0, test_convert_unixtime_to_jst_UT_C0_digits10, test_convert_unixtime_to_jst_UT_C0_digits13, test_convert_unixtime_to_jst_UT_C0_digits16, test_convert_unixtime_to_jst_UT_C0_raise_exception, test_convert_unixtime_to_jst_UT_C0_unixtime_none
+        - テスト定義:
+                - テストカテゴリ: C0
+                - テスト区分: 正常系/UT
+                - 時間文字列に対してformat指定しない
+        :
+2024-06-30 21:44:35 [INFO] common_utils - convert_unixtime_to_jst line 155: unixtime: 1615860122:
+2024-06-30 21:44:35 [DEBUG] common_utils - test_convert_unixtime_to_jst_UT_C0_digits16 line 535: expected: 2021-03-16 11:02:02+09:00:
+2024-06-30 21:44:35 [DEBUG] common_utils - test_convert_unixtime_to_jst_UT_C0_digits16 line 536: result: 2021-03-16 11:02:02+09:00:
+2024-06-30 21:44:35 [DEBUG] common_utils - test_convert_unixtime_to_jst_UT_C0_digits0 line 557: 
+        - テスト関数: test_convert_unixtime_to_jst_UT_C0_digits0, test_convert_unixtime_to_jst_UT_C0_digits10, test_convert_unixtime_to_jst_UT_C0_digits13, test_convert_unixtime_to_jst_UT_C0_digits16, test_convert_unixtime_to_jst_UT_C0_raise_exception, test_convert_unixtime_to_jst_UT_C0_unixtime_none
+        - テスト定義:
+                - テストカテゴリ: C0
+                - テスト区分: 正常系/UT
+                - 時間文字列に対してformat指定しない
+        :
+2024-06-30 21:44:35 [ERROR] common_utils - convert_unixtime_to_jst line 151: unixtime_strは10/13/16桁のいずれかでなければなりません: 1桁:
+2024-06-30 21:44:35 [DEBUG] common_utils - test_convert_unixtime_to_jst_UT_C0_raise_exception line 593: 
+        - テスト関数: test_convert_unixtime_to_jst_UT_C0_digits0, test_convert_unixtime_to_jst_UT_C0_digits10, test_convert_unixtime_to_jst_UT_C0_digits13, test_convert_unixtime_to_jst_UT_C0_digits16, test_convert_unixtime_to_jst_UT_C0_raise_exception, test_convert_unixtime_to_jst_UT_C0_unixtime_none
+        - テスト定義:
+                - テストカテゴリ: C0
+                - テスト区分: 正常系/UT
+                - 時間文字列に対してformat指定しない
+        :
+2024-06-30 21:44:35 [ERROR] common_utils - convert_unixtime_to_jst line 159: Traceback (most recent call last):
+  File "/developer/library_dev/project_1/src/lib/common_utils/ibr_date_helper.py", line 156, in convert_unixtime_to_jst
+    return _fromtimestamp_wrapper(unixtime, tz=UTC).astimezone(JST)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/satoshi/.pyenv/versions/3.11.6/lib/python3.11/unittest/mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/satoshi/.pyenv/versions/3.11.6/lib/python3.11/unittest/mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/satoshi/.pyenv/versions/3.11.6/lib/python3.11/unittest/mock.py", line 1183, in _execute_mock_call
+    raise effect
+Exception
+:
+2024-06-30 21:44:35 [DEBUG] common_utils - test_convert_unixtime_to_jst_UT_C0_unixtime_none line 625: 
+        - テスト関数: test_convert_unixtime_to_jst_UT_C0_digits0, test_convert_unixtime_to_jst_UT_C0_digits10, test_convert_unixtime_to_jst_UT_C0_digits13, test_convert_unixtime_to_jst_UT_C0_digits16, test_convert_unixtime_to_jst_UT_C0_raise_exception, test_convert_unixtime_to_jst_UT_C0_unixtime_none
+        - テスト定義:
+                - テストカテゴリ: C0
+                - テスト区分: 正常系/UT
+                - 時間文字列に対してformat指定しない
+        :
+2024-06-30 21:44:35 [DEBUG] common_utils - test_load_calendar_file_UT_C0_normal line 659: 
+        - テスト関数: test_load_calendar_file_UT_C0_normal, test_load_calendar_file_UT_C1_file_not_found, test_load_calendar_file_UT_C1_invalid_format
+        - テスト定義:
+                - テストカテゴリ: C0
+                - テスト区分: 正常系/UT
+                - 指定したカレンダファイルのロード及び内容の妥当性検証
+        :
+2024-06-30 21:44:35 [DEBUG] common_utils - test_load_calendar_file_UT_C1_file_not_found line 688: 
+        - テスト関数: test_load_calendar_file_UT_C0_normal, test_load_calendar_file_UT_C1_file_not_found, test_load_calendar_file_UT_C1_invalid_format
+        - テスト定義:
+                - テストカテゴリ: C1
+                - テスト区分: 異常系/UT
+                - 指定した銀行カレンダーファイルが存在しない
+        :
+2024-06-30 21:44:35 [DEBUG] common_utils - test_load_calendar_file_UT_C1_invalid_format line 707: 
+        - テスト関数: test_load_calendar_file_UT_C0_normal, test_load_calendar_file_UT_C1_file_not_found, test_load_calendar_file_UT_C1_invalid_format
+        - テスト定義:
+                - テストカテゴリ: C1
+                - テスト区分: 異常系/UT
+                - カレンダーフォーマットに不備あり
+        :
+2024-06-30 21:44:35 [DEBUG] common_utils - test_convert_date_to_string_UT_C0_datetime line 740: 
+        - テスト関数: test_convert_date_to_string_UT_C0_datetime, test_convert_date_to_string_UT_C0_string, test_convert_date_to_string_UT_C1_invalid_string, test_convert_date_to_string_UT_C1_invalid_type
+        - テスト定義:
+                - テストカテゴリ: C0
+                - テスト区分: 正常系/UT
+                - datetime型で日付パラメータ指定
+        :
+2024-06-30 21:44:35 [DEBUG] common_utils - test_convert_date_to_string_UT_C0_string line 764: 
+        - テスト関数: test_convert_date_to_string_UT_C0_datetime, test_convert_date_to_string_UT_C0_string, test_convert_date_to_string_UT_C1_invalid_string, test_convert_date_to_string_UT_C1_invalid_type
+        - テスト定義:
+                - テストカテゴリ: C0
+                - テスト区分: 正常系/UT
+                - str型で日付パラメータ指定
+        :
+2024-06-30 21:44:35 [DEBUG] common_utils - test_convert_date_to_string_UT_C1_invalid_string line 788: 
+        - テスト関数: test_convert_date_to_string_UT_C0_datetime, test_convert_date_to_string_UT_C0_string, test_convert_date_to_string_UT_C1_invalid_string, test_convert_date_to_string_UT_C1_invalid_type
+        - テスト定義:
+                - テストカテゴリ: C1
+                - テスト区分: 異常系/UT
+                - 指定フォーマット以外で日付文字列指定
+        :
+2024-06-30 21:44:35 [DEBUG] common_utils - test_convert_date_to_string_UT_C1_invalid_type line 807: 
+        - テスト関数: test_convert_date_to_string_UT_C0_datetime, test_convert_date_to_string_UT_C0_string, test_convert_date_to_string_UT_C1_invalid_string, test_convert_date_to_string_UT_C1_invalid_type
+        - テスト定義:
+                - テストカテゴリ: C1
+                - テスト区分: 異常系/UT
+                - datetimeでもstrでもない型で指定
+        :
+2024-06-30 21:44:35 [DEBUG] common_utils - test_is_bank_business_day_UT_C0_operation_day line 840: 
+        - テスト関数: test_is_bank_business_day_UT_C0_closed_day, test_is_bank_business_day_UT_C0_operation_day, test_is_bank_business_day_UT_C0_unknown_day, test_is_bank_business_day_UT_C1_file_not_found, test_is_bank_business_day_UT_C1_invalid_date_format, test_is_bank_business_day_UT_C1_invalid_date_type
+        - テスト定義:
+                - テストカテゴリ: C0
+                - テスト区分: 正常系/UT
+                - 銀行カレンダー上で営業日定義をパラメータ指定する
+        :
+2024-06-30 21:44:35 [DEBUG] common_utils - test_is_bank_business_day_UT_C0_closed_day line 869: 
+        - テスト関数: test_is_bank_business_day_UT_C0_closed_day, test_is_bank_business_day_UT_C0_operation_day, test_is_bank_business_day_UT_C0_unknown_day, test_is_bank_business_day_UT_C1_file_not_found, test_is_bank_business_day_UT_C1_invalid_date_format, test_is_bank_business_day_UT_C1_invalid_date_type
+        - テスト定義:
+                - テストカテゴリ: C0
+                - テスト区分: 正常系/UT
+                - 銀行カレンダー上で休業日定義をパラメータ指定する
+        :
+2024-06-30 21:44:35 [DEBUG] common_utils - test_is_bank_business_day_UT_C0_unknown_day line 898: 
+        - テスト関数: test_is_bank_business_day_UT_C0_closed_day, test_is_bank_business_day_UT_C0_operation_day, test_is_bank_business_day_UT_C0_unknown_day, test_is_bank_business_day_UT_C1_file_not_found, test_is_bank_business_day_UT_C1_invalid_date_format, test_is_bank_business_day_UT_C1_invalid_date_type
+        - テスト定義:
+                - テストカテゴリ: C0
+                - テスト区分: 正常系/UT
+                - 銀行カレンダー上にない日付を指定する
+        :
+2024-06-30 21:44:35 [DEBUG] common_utils - test_is_bank_business_day_UT_C1_file_not_found line 927: 
+        - テスト関数: test_is_bank_business_day_UT_C0_closed_day, test_is_bank_business_day_UT_C0_operation_day, test_is_bank_business_day_UT_C0_unknown_day, test_is_bank_business_day_UT_C1_file_not_found, test_is_bank_business_day_UT_C1_invalid_date_format, test_is_bank_business_day_UT_C1_invalid_date_type
+        - テスト定義:
+                - テストカテゴリ: C1
+                - テスト区分: 異常系/UT
+                - 存在しない銀行カレンダーを指定する
+        :
+2024-06-30 21:44:35 [INFO] common_utils - is_bank_business_day line 242: 銀行カレンダーファイルが見つかりません: /tmp/pytest-of-satoshi/pytest-2/test_is_bank_business_day_UT_C3/nonexistent.txt:
+2024-06-30 21:44:35 [DEBUG] common_utils - test_is_bank_business_day_UT_C1_invalid_date_format line 947: 
+        - テスト関数: test_is_bank_business_day_UT_C0_closed_day, test_is_bank_business_day_UT_C0_operation_day, test_is_bank_business_day_UT_C0_unknown_day, test_is_bank_business_day_UT_C1_file_not_found, test_is_bank_business_day_UT_C1_invalid_date_format, test_is_bank_business_day_UT_C1_invalid_date_type
+        - テスト定義:
+                - テストカテゴリ: C1
+                - テスト区分: 異常系/UT
+                - 許容されていないカレンダーフォーマットで指定する
+        :
+2024-06-30 21:44:35 [INFO] common_utils - is_bank_business_day line 248: time data '2024-01-01' does not match format '%Y/%m/%d':
+2024-06-30 21:44:35 [DEBUG] common_utils - test_is_bank_business_day_UT_C1_invalid_date_type line 971: 
+        - テスト関数: test_is_bank_business_day_UT_C0_closed_day, test_is_bank_business_day_UT_C0_operation_day, test_is_bank_business_day_UT_C0_unknown_day, test_is_bank_business_day_UT_C1_file_not_found, test_is_bank_business_day_UT_C1_invalid_date_format, test_is_bank_business_day_UT_C1_invalid_date_type
+        - テスト定義:
+                - テストカテゴリ: C1
+                - テスト区分: 異常系/UT
+                - 許容されていない型を指定する
+        :
+2024-06-30 21:44:35 [INFO] common_utils - is_bank_business_day line 248: 日付は文字列もしくはdatetime型でなければなりません: <class 'int'>:
+2024-06-30 21:45:40 [DEBUG] common_utils - <module> line 40: Config(env='local', common_config={'logger_path': {'LOGGER_DEF_FILE': 'tests/def/mfaUtilsLoggingHelper/logging_TimedRotate.json', 'LOGGER_MSG_FILE': 'tests/def/mfaUtilsLoggingHelper/config_MessageList.toml'}, 'input_file_path': {'UPDATE_EXCEL_PATH': 'tests/share/receive'}, 'output_file_path': {'SEND_REFFERENCE_MASTER_PATH': 'tests/share/receive'}}, package_config={'test': {'local_test': 'test'}}, log_message=<bound method LoggerPackage.log_message of <src.lib.common_utils.ibr_logger_package.LoggerPackage object at 0x7f43f8d30250>>):
+2024-06-30 21:45:40 [DEBUG] common_utils - test_convert_with_no_timezone_to_jst_UT_C0_str_only line 84: 
+        - テスト関数: test_convert_with_no_timezone_to_jst_UT_C0_str_format, test_convert_with_no_timezone_to_jst_UT_C0_str_only, test_convert_with_no_timezone_to_jst_UT_C1_str_format_match_irregular, test_convert_with_no_timezone_to_jst_UT_C1_str_format_not_match, test_convert_with_no_timezone_to_jst_UT_C2_format_None, test_convert_with_no_timezone_to_jst_UT_C2_str_format_None
+        - テスト定義:
+                - テストカテゴリ: C0
+                - テスト区分: 正常系/UT
+                - 時間文字列に対してformat指定しない
+        :
+2024-06-30 21:45:40 [DEBUG] common_utils - test_convert_with_no_timezone_to_jst_UT_C0_str_only line 92: expected: 2024-01-03 09:00:00+09:00:
+2024-06-30 21:45:40 [DEBUG] common_utils - test_convert_with_no_timezone_to_jst_UT_C0_str_only line 93: result: 2024-01-03 09:00:00+09:00:
+2024-06-30 21:45:40 [DEBUG] common_utils - test_convert_with_no_timezone_to_jst_UT_C0_str_format line 110: 
+        - テスト関数: test_convert_with_no_timezone_to_jst_UT_C0_str_format, test_convert_with_no_timezone_to_jst_UT_C0_str_only, test_convert_with_no_timezone_to_jst_UT_C1_str_format_match_irregular, test_convert_with_no_timezone_to_jst_UT_C1_str_format_not_match, test_convert_with_no_timezone_to_jst_UT_C2_format_None, test_convert_with_no_timezone_to_jst_UT_C2_str_format_None
+        - テスト定義:
+                - テストカテゴリ: C0
+                - テスト区分: 正常系/UT
+                - 時間文字列に対してformat指定する
+        :
+2024-06-30 21:45:40 [DEBUG] common_utils - test_convert_with_no_timezone_to_jst_UT_C0_str_format line 119: expected: 2024-01-03 09:00:00+09:00:
+2024-06-30 21:45:40 [DEBUG] common_utils - test_convert_with_no_timezone_to_jst_UT_C0_str_format line 120: result: 2024-01-03 09:00:00+09:00:
+2024-06-30 21:45:40 [DEBUG] common_utils - test_convert_with_no_timezone_to_jst_UT_C1_str_format_match_irregular line 137: 
+        - テスト関数: test_convert_with_no_timezone_to_jst_UT_C0_str_format, test_convert_with_no_timezone_to_jst_UT_C0_str_only, test_convert_with_no_timezone_to_jst_UT_C1_str_format_match_irregular, test_convert_with_no_timezone_to_jst_UT_C1_str_format_not_match, test_convert_with_no_timezone_to_jst_UT_C2_format_None, test_convert_with_no_timezone_to_jst_UT_C2_str_format_None
+        - テスト定義:
+                - テストカテゴリ: C0
+                - テスト区分: 正常系/UT
+                - 時間文字列に対してformatフォーマットが一致するがやや不自然
+        :
+2024-06-30 21:45:40 [DEBUG] common_utils - test_convert_with_no_timezone_to_jst_UT_C1_str_format_match_irregular line 146: expected: 2024-01-03 09:00:00+09:00:
+2024-06-30 21:45:40 [DEBUG] common_utils - test_convert_with_no_timezone_to_jst_UT_C1_str_format_match_irregular line 147: result: 2024-01-03 09:00:00+09:00:
+2024-06-30 21:45:40 [DEBUG] common_utils - test_convert_with_no_timezone_to_jst_UT_C1_str_format_not_match line 168: 
+        - テスト関数: test_convert_with_no_timezone_to_jst_UT_C0_str_format, test_convert_with_no_timezone_to_jst_UT_C0_str_only, test_convert_with_no_timezone_to_jst_UT_C1_str_format_match_irregular, test_convert_with_no_timezone_to_jst_UT_C1_str_format_not_match, test_convert_with_no_timezone_to_jst_UT_C2_format_None, test_convert_with_no_timezone_to_jst_UT_C2_str_format_None
+        - テスト定義:
+                - テストカテゴリ: C0
+                - テスト区分: 正常系/UT
+                - 時間文字列に対してformatフォーマットが一致するが一致しない
+        :
+2024-06-30 21:45:40 [ERROR] common_utils - convert_with_no_timezone_to_jst line 64: Traceback (most recent call last):
+  File "/developer/library_dev/project_1/src/lib/common_utils/ibr_date_helper.py", line 61, in convert_with_no_timezone_to_jst
+    return datetime.strptime(date_str, date_format).replace(tzinfo=UTC).astimezone(JST)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/satoshi/.pyenv/versions/3.11.6/lib/python3.11/_strptime.py", line 568, in _strptime_datetime
+    tt, fraction, gmtoff_fraction = _strptime(data_string, format)
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/satoshi/.pyenv/versions/3.11.6/lib/python3.11/_strptime.py", line 349, in _strptime
+    raise ValueError("time data %r does not match format %r" %
+ValueError: time data '2024/01/03 00:00:00' does not match format '%Y-%m-%d %H:%M:%S'
+:
+2024-06-30 21:45:40 [DEBUG] common_utils - test_convert_with_no_timezone_to_jst_UT_C2_str_format_None line 205: 
+        - テスト関数: test_convert_with_no_timezone_to_jst_UT_C0_str_format, test_convert_with_no_timezone_to_jst_UT_C0_str_only, test_convert_with_no_timezone_to_jst_UT_C1_str_format_match_irregular, test_convert_with_no_timezone_to_jst_UT_C1_str_format_not_match, test_convert_with_no_timezone_to_jst_UT_C2_format_None, test_convert_with_no_timezone_to_jst_UT_C2_str_format_None
+        - テスト定義:
+                - テストカテゴリ: C0
+                - テスト区分: 正常系/UT
+                - 時間文字列に対しNone
+        :
+2024-06-30 21:45:40 [ERROR] common_utils - convert_with_no_timezone_to_jst line 64: Traceback (most recent call last):
+  File "/developer/library_dev/project_1/src/lib/common_utils/ibr_date_helper.py", line 61, in convert_with_no_timezone_to_jst
+    return datetime.strptime(date_str, date_format).replace(tzinfo=UTC).astimezone(JST)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: strptime() argument 1 must be str, not None
+:
+2024-06-30 21:45:40 [DEBUG] common_utils - test_convert_with_no_timezone_to_jst_UT_C2_format_None line 241: 
+        - テスト関数: test_convert_with_no_timezone_to_jst_UT_C0_str_format, test_convert_with_no_timezone_to_jst_UT_C0_str_only, test_convert_with_no_timezone_to_jst_UT_C1_str_format_match_irregular, test_convert_with_no_timezone_to_jst_UT_C1_str_format_not_match, test_convert_with_no_timezone_to_jst_UT_C2_format_None, test_convert_with_no_timezone_to_jst_UT_C2_str_format_None
+        - テスト定義:
+                - テストカテゴリ: C0
+                - テスト区分: 正常系/UT
+                - formatにNone
+        :
+2024-06-30 21:45:40 [ERROR] common_utils - convert_with_no_timezone_to_jst line 64: Traceback (most recent call last):
+  File "/developer/library_dev/project_1/src/lib/common_utils/ibr_date_helper.py", line 61, in convert_with_no_timezone_to_jst
+    return datetime.strptime(date_str, date_format).replace(tzinfo=UTC).astimezone(JST)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: strptime() argument 2 must be str, not None
+:
+2024-06-30 21:45:40 [DEBUG] common_utils - test_convert_with_timezone_to_jst_UT_C0_str_only line 286: 
+        - テスト関数: test_convert_with_timezone_to_jst_UT_C0_str_only, test_convert_with_timezone_to_jst_UT_C1_non_tz_str_format_not_match, test_convert_with_timezone_to_jst_UT_C1_str_format_not_match, test_convert_with_timezone_to_jst_UT_C2_format_None, test_convert_with_timezone_to_jst_UT_C2_target_str_None
+        - テスト定義:
+                - テストカテゴリ: C0
+                - テスト区分: 正常系/UT
+                - 時間文字列に対してformat指定しない
+        :
+2024-06-30 21:45:40 [DEBUG] common_utils - test_convert_with_timezone_to_jst_UT_C0_str_only line 294: expected: 2024-01-03 09:00:00+09:00:
+2024-06-30 21:45:40 [DEBUG] common_utils - test_convert_with_timezone_to_jst_UT_C0_str_only line 295: result: 2024-01-03 09:00:00+09:00:
+2024-06-30 21:45:40 [DEBUG] common_utils - test_convert_with_timezone_to_jst_UT_C1_str_format_not_match line 316: 
+        - テスト関数: test_convert_with_timezone_to_jst_UT_C0_str_only, test_convert_with_timezone_to_jst_UT_C1_non_tz_str_format_not_match, test_convert_with_timezone_to_jst_UT_C1_str_format_not_match, test_convert_with_timezone_to_jst_UT_C2_format_None, test_convert_with_timezone_to_jst_UT_C2_target_str_None
+        - テスト定義:
+                - テストカテゴリ: C1
+                - テスト区分: 正常系/UT
+                - 時間文字列に対してformatフォーマットが一致するが一致しない
+        :
+2024-06-30 21:45:40 [ERROR] common_utils - convert_with_timezone_to_jst line 104: Traceback (most recent call last):
+  File "/developer/library_dev/project_1/src/lib/common_utils/ibr_date_helper.py", line 101, in convert_with_timezone_to_jst
+    return datetime.strptime(date_str, date_format).astimezone(JST)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/satoshi/.pyenv/versions/3.11.6/lib/python3.11/_strptime.py", line 568, in _strptime_datetime
+    tt, fraction, gmtoff_fraction = _strptime(data_string, format)
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/satoshi/.pyenv/versions/3.11.6/lib/python3.11/_strptime.py", line 349, in _strptime
+    raise ValueError("time data %r does not match format %r" %
+ValueError: time data '2024/01/03 00:00:00+0000' does not match format '%Y-%m-%d %H:%M:%S%z'
+:
+2024-06-30 21:45:40 [DEBUG] common_utils - test_convert_with_timezone_to_jst_UT_C1_non_tz_str_format_not_match line 353: 
+        - テスト関数: test_convert_with_timezone_to_jst_UT_C0_str_only, test_convert_with_timezone_to_jst_UT_C1_non_tz_str_format_not_match, test_convert_with_timezone_to_jst_UT_C1_str_format_not_match, test_convert_with_timezone_to_jst_UT_C2_format_None, test_convert_with_timezone_to_jst_UT_C2_target_str_None
+        - テスト定義:
+                - テストカテゴリ: C1
+                - テスト区分: 正常系/UT
+                - 時間文字列(tzなし)に対してformatフォーマットが一致するが一致しない
+        :
+2024-06-30 21:45:40 [ERROR] common_utils - convert_with_timezone_to_jst line 104: Traceback (most recent call last):
+  File "/developer/library_dev/project_1/src/lib/common_utils/ibr_date_helper.py", line 101, in convert_with_timezone_to_jst
+    return datetime.strptime(date_str, date_format).astimezone(JST)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/satoshi/.pyenv/versions/3.11.6/lib/python3.11/_strptime.py", line 568, in _strptime_datetime
+    tt, fraction, gmtoff_fraction = _strptime(data_string, format)
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/satoshi/.pyenv/versions/3.11.6/lib/python3.11/_strptime.py", line 349, in _strptime
+    raise ValueError("time data %r does not match format %r" %
+ValueError: time data '2024/01/03 00:00:00' does not match format '%Y-%m-%d %H:%M:%S%z'
+:
+2024-06-30 21:45:40 [DEBUG] common_utils - test_convert_with_timezone_to_jst_UT_C2_target_str_None line 390: 
+        - テスト関数: test_convert_with_timezone_to_jst_UT_C0_str_only, test_convert_with_timezone_to_jst_UT_C1_non_tz_str_format_not_match, test_convert_with_timezone_to_jst_UT_C1_str_format_not_match, test_convert_with_timezone_to_jst_UT_C2_format_None, test_convert_with_timezone_to_jst_UT_C2_target_str_None
+        - テスト定義:
+                - テストカテゴリ: C0
+                - テスト区分: 正常系/UT
+                - 時間文字列に対しNone
+        :
+2024-06-30 21:45:40 [ERROR] common_utils - convert_with_timezone_to_jst line 104: Traceback (most recent call last):
+  File "/developer/library_dev/project_1/src/lib/common_utils/ibr_date_helper.py", line 101, in convert_with_timezone_to_jst
+    return datetime.strptime(date_str, date_format).astimezone(JST)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: strptime() argument 1 must be str, not None
+:
+2024-06-30 21:45:40 [DEBUG] common_utils - test_convert_with_timezone_to_jst_UT_C2_format_None line 426: 
+        - テスト関数: test_convert_with_timezone_to_jst_UT_C0_str_only, test_convert_with_timezone_to_jst_UT_C1_non_tz_str_format_not_match, test_convert_with_timezone_to_jst_UT_C1_str_format_not_match, test_convert_with_timezone_to_jst_UT_C2_format_None, test_convert_with_timezone_to_jst_UT_C2_target_str_None
+        - テスト定義:
+                - テストカテゴリ: C0
+                - テスト区分: 正常系/UT
+                - formatにNone
+        :
+2024-06-30 21:45:40 [ERROR] common_utils - convert_with_timezone_to_jst line 104: Traceback (most recent call last):
+  File "/developer/library_dev/project_1/src/lib/common_utils/ibr_date_helper.py", line 101, in convert_with_timezone_to_jst
+    return datetime.strptime(date_str, date_format).astimezone(JST)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: strptime() argument 2 must be str, not None
+:
+2024-06-30 21:45:40 [DEBUG] common_utils - test_convert_unixtime_to_jst_UT_C0_digits10 line 475: 
+        - テスト関数: test_convert_unixtime_to_jst_UT_C0_digits0, test_convert_unixtime_to_jst_UT_C0_digits10, test_convert_unixtime_to_jst_UT_C0_digits13, test_convert_unixtime_to_jst_UT_C0_digits16, test_convert_unixtime_to_jst_UT_C0_raise_exception, test_convert_unixtime_to_jst_UT_C0_unixtime_none
+        - テスト定義:
+                - テストカテゴリ: C0
+                - テスト区分: 正常系/UT
+                - 時間文字列に対してformat指定しない
+        :
+2024-06-30 21:45:40 [INFO] common_utils - convert_unixtime_to_jst line 155: unixtime: 1615860122:
+2024-06-30 21:45:40 [DEBUG] common_utils - test_convert_unixtime_to_jst_UT_C0_digits10 line 483: expected: 2021-03-16 11:02:02+09:00:
+2024-06-30 21:45:40 [DEBUG] common_utils - test_convert_unixtime_to_jst_UT_C0_digits10 line 484: result: 2021-03-16 11:02:02+09:00:
+2024-06-30 21:45:40 [DEBUG] common_utils - test_convert_unixtime_to_jst_UT_C0_digits13 line 501: 
+        - テスト関数: test_convert_unixtime_to_jst_UT_C0_digits0, test_convert_unixtime_to_jst_UT_C0_digits10, test_convert_unixtime_to_jst_UT_C0_digits13, test_convert_unixtime_to_jst_UT_C0_digits16, test_convert_unixtime_to_jst_UT_C0_raise_exception, test_convert_unixtime_to_jst_UT_C0_unixtime_none
+        - テスト定義:
+                - テストカテゴリ: C0
+                - テスト区分: 正常系/UT
+                - 時間文字列に対してformat指定しない
+        :
+2024-06-30 21:45:40 [INFO] common_utils - convert_unixtime_to_jst line 155: unixtime: 1615860122:
+2024-06-30 21:45:40 [DEBUG] common_utils - test_convert_unixtime_to_jst_UT_C0_digits13 line 509: expected: 2021-03-16 11:02:02+09:00:
+2024-06-30 21:45:40 [DEBUG] common_utils - test_convert_unixtime_to_jst_UT_C0_digits13 line 510: result: 2021-03-16 11:02:02+09:00:
+2024-06-30 21:45:40 [DEBUG] common_utils - test_convert_unixtime_to_jst_UT_C0_digits16 line 527: 
+        - テスト関数: test_convert_unixtime_to_jst_UT_C0_digits0, test_convert_unixtime_to_jst_UT_C0_digits10, test_convert_unixtime_to_jst_UT_C0_digits13, test_convert_unixtime_to_jst_UT_C0_digits16, test_convert_unixtime_to_jst_UT_C0_raise_exception, test_convert_unixtime_to_jst_UT_C0_unixtime_none
+        - テスト定義:
+                - テストカテゴリ: C0
+                - テスト区分: 正常系/UT
+                - 時間文字列に対してformat指定しない
+        :
+2024-06-30 21:45:40 [INFO] common_utils - convert_unixtime_to_jst line 155: unixtime: 1615860122:
+2024-06-30 21:45:40 [DEBUG] common_utils - test_convert_unixtime_to_jst_UT_C0_digits16 line 535: expected: 2021-03-16 11:02:02+09:00:
+2024-06-30 21:45:40 [DEBUG] common_utils - test_convert_unixtime_to_jst_UT_C0_digits16 line 536: result: 2021-03-16 11:02:02+09:00:
+2024-06-30 21:45:40 [DEBUG] common_utils - test_convert_unixtime_to_jst_UT_C0_digits0 line 557: 
+        - テスト関数: test_convert_unixtime_to_jst_UT_C0_digits0, test_convert_unixtime_to_jst_UT_C0_digits10, test_convert_unixtime_to_jst_UT_C0_digits13, test_convert_unixtime_to_jst_UT_C0_digits16, test_convert_unixtime_to_jst_UT_C0_raise_exception, test_convert_unixtime_to_jst_UT_C0_unixtime_none
+        - テスト定義:
+                - テストカテゴリ: C0
+                - テスト区分: 正常系/UT
+                - 時間文字列に対してformat指定しない
+        :
+2024-06-30 21:45:40 [ERROR] common_utils - convert_unixtime_to_jst line 151: unixtime_strは10/13/16桁のいずれかでなければなりません: 1桁:
+2024-06-30 21:45:40 [DEBUG] common_utils - test_convert_unixtime_to_jst_UT_C0_raise_exception line 593: 
+        - テスト関数: test_convert_unixtime_to_jst_UT_C0_digits0, test_convert_unixtime_to_jst_UT_C0_digits10, test_convert_unixtime_to_jst_UT_C0_digits13, test_convert_unixtime_to_jst_UT_C0_digits16, test_convert_unixtime_to_jst_UT_C0_raise_exception, test_convert_unixtime_to_jst_UT_C0_unixtime_none
+        - テスト定義:
+                - テストカテゴリ: C0
+                - テスト区分: 正常系/UT
+                - 時間文字列に対してformat指定しない
+        :
+2024-06-30 21:45:40 [ERROR] common_utils - convert_unixtime_to_jst line 159: Traceback (most recent call last):
+  File "/developer/library_dev/project_1/src/lib/common_utils/ibr_date_helper.py", line 156, in convert_unixtime_to_jst
+    return _fromtimestamp_wrapper(unixtime, tz=UTC).astimezone(JST)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/satoshi/.pyenv/versions/3.11.6/lib/python3.11/unittest/mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/satoshi/.pyenv/versions/3.11.6/lib/python3.11/unittest/mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/satoshi/.pyenv/versions/3.11.6/lib/python3.11/unittest/mock.py", line 1183, in _execute_mock_call
+    raise effect
+Exception
+:
+2024-06-30 21:45:40 [DEBUG] common_utils - test_convert_unixtime_to_jst_UT_C0_unixtime_none line 625: 
+        - テスト関数: test_convert_unixtime_to_jst_UT_C0_digits0, test_convert_unixtime_to_jst_UT_C0_digits10, test_convert_unixtime_to_jst_UT_C0_digits13, test_convert_unixtime_to_jst_UT_C0_digits16, test_convert_unixtime_to_jst_UT_C0_raise_exception, test_convert_unixtime_to_jst_UT_C0_unixtime_none
+        - テスト定義:
+                - テストカテゴリ: C0
+                - テスト区分: 正常系/UT
+                - 時間文字列に対してformat指定しない
+        :
+2024-06-30 21:45:40 [DEBUG] common_utils - test_load_calendar_file_UT_C0_normal line 659: 
+        - テスト関数: test_load_calendar_file_UT_C0_normal, test_load_calendar_file_UT_C1_file_not_found, test_load_calendar_file_UT_C1_invalid_format
+        - テスト定義:
+                - テストカテゴリ: C0
+                - テスト区分: 正常系/UT
+                - 指定したカレンダファイルのロード及び内容の妥当性検証
+        :
+2024-06-30 21:45:40 [DEBUG] common_utils - test_load_calendar_file_UT_C1_file_not_found line 688: 
+        - テスト関数: test_load_calendar_file_UT_C0_normal, test_load_calendar_file_UT_C1_file_not_found, test_load_calendar_file_UT_C1_invalid_format
+        - テスト定義:
+                - テストカテゴリ: C1
+                - テスト区分: 異常系/UT
+                - 指定した銀行カレンダーファイルが存在しない
+        :
+2024-06-30 21:45:40 [DEBUG] common_utils - test_load_calendar_file_UT_C1_invalid_format line 707: 
+        - テスト関数: test_load_calendar_file_UT_C0_normal, test_load_calendar_file_UT_C1_file_not_found, test_load_calendar_file_UT_C1_invalid_format
+        - テスト定義:
+                - テストカテゴリ: C1
+                - テスト区分: 異常系/UT
+                - カレンダーフォーマットに不備あり
+        :
+2024-06-30 21:45:40 [DEBUG] common_utils - test_convert_date_to_string_UT_C0_datetime line 740: 
+        - テスト関数: test_convert_date_to_string_UT_C0_datetime, test_convert_date_to_string_UT_C0_string, test_convert_date_to_string_UT_C1_invalid_string, test_convert_date_to_string_UT_C1_invalid_type
+        - テスト定義:
+                - テストカテゴリ: C0
+                - テスト区分: 正常系/UT
+                - datetime型で日付パラメータ指定
+        :
+2024-06-30 21:45:40 [DEBUG] common_utils - test_convert_date_to_string_UT_C0_string line 764: 
+        - テスト関数: test_convert_date_to_string_UT_C0_datetime, test_convert_date_to_string_UT_C0_string, test_convert_date_to_string_UT_C1_invalid_string, test_convert_date_to_string_UT_C1_invalid_type
+        - テスト定義:
+                - テストカテゴリ: C0
+                - テスト区分: 正常系/UT
+                - str型で日付パラメータ指定
+        :
+2024-06-30 21:45:40 [DEBUG] common_utils - test_convert_date_to_string_UT_C1_invalid_string line 788: 
+        - テスト関数: test_convert_date_to_string_UT_C0_datetime, test_convert_date_to_string_UT_C0_string, test_convert_date_to_string_UT_C1_invalid_string, test_convert_date_to_string_UT_C1_invalid_type
+        - テスト定義:
+                - テストカテゴリ: C1
+                - テスト区分: 異常系/UT
+                - 指定フォーマット以外で日付文字列指定
+        :
+2024-06-30 21:45:40 [DEBUG] common_utils - test_convert_date_to_string_UT_C1_invalid_type line 807: 
+        - テスト関数: test_convert_date_to_string_UT_C0_datetime, test_convert_date_to_string_UT_C0_string, test_convert_date_to_string_UT_C1_invalid_string, test_convert_date_to_string_UT_C1_invalid_type
+        - テスト定義:
+                - テストカテゴリ: C1
+                - テスト区分: 異常系/UT
+                - datetimeでもstrでもない型で指定
+        :
+2024-06-30 21:45:40 [DEBUG] common_utils - test_is_bank_business_day_UT_C0_operation_day line 840: 
+        - テスト関数: test_is_bank_business_day_UT_C0_closed_day, test_is_bank_business_day_UT_C0_operation_day, test_is_bank_business_day_UT_C0_unknown_day, test_is_bank_business_day_UT_C1_file_not_found, test_is_bank_business_day_UT_C1_invalid_date_format, test_is_bank_business_day_UT_C1_invalid_date_type
+        - テスト定義:
+                - テストカテゴリ: C0
+                - テスト区分: 正常系/UT
+                - 銀行カレンダー上で営業日定義をパラメータ指定する
+        :
+2024-06-30 21:45:40 [DEBUG] common_utils - test_is_bank_business_day_UT_C0_closed_day line 869: 
+        - テスト関数: test_is_bank_business_day_UT_C0_closed_day, test_is_bank_business_day_UT_C0_operation_day, test_is_bank_business_day_UT_C0_unknown_day, test_is_bank_business_day_UT_C1_file_not_found, test_is_bank_business_day_UT_C1_invalid_date_format, test_is_bank_business_day_UT_C1_invalid_date_type
+        - テスト定義:
+                - テストカテゴリ: C0
+                - テスト区分: 正常系/UT
+                - 銀行カレンダー上で休業日定義をパラメータ指定する
+        :
+2024-06-30 21:45:40 [DEBUG] common_utils - test_is_bank_business_day_UT_C0_unknown_day line 898: 
+        - テスト関数: test_is_bank_business_day_UT_C0_closed_day, test_is_bank_business_day_UT_C0_operation_day, test_is_bank_business_day_UT_C0_unknown_day, test_is_bank_business_day_UT_C1_file_not_found, test_is_bank_business_day_UT_C1_invalid_date_format, test_is_bank_business_day_UT_C1_invalid_date_type
+        - テスト定義:
+                - テストカテゴリ: C0
+                - テスト区分: 正常系/UT
+                - 銀行カレンダー上にない日付を指定する
+        :
+2024-06-30 21:45:40 [DEBUG] common_utils - test_is_bank_business_day_UT_C1_file_not_found line 927: 
+        - テスト関数: test_is_bank_business_day_UT_C0_closed_day, test_is_bank_business_day_UT_C0_operation_day, test_is_bank_business_day_UT_C0_unknown_day, test_is_bank_business_day_UT_C1_file_not_found, test_is_bank_business_day_UT_C1_invalid_date_format, test_is_bank_business_day_UT_C1_invalid_date_type
+        - テスト定義:
+                - テストカテゴリ: C1
+                - テスト区分: 異常系/UT
+                - 存在しない銀行カレンダーを指定する
+        :
+2024-06-30 21:45:40 [INFO] common_utils - is_bank_business_day line 242: 銀行カレンダーファイルが見つかりません: /tmp/pytest-of-satoshi/pytest-3/test_is_bank_business_day_UT_C3/nonexistent.txt:
+2024-06-30 21:45:40 [DEBUG] common_utils - test_is_bank_business_day_UT_C1_invalid_date_format line 947: 
+        - テスト関数: test_is_bank_business_day_UT_C0_closed_day, test_is_bank_business_day_UT_C0_operation_day, test_is_bank_business_day_UT_C0_unknown_day, test_is_bank_business_day_UT_C1_file_not_found, test_is_bank_business_day_UT_C1_invalid_date_format, test_is_bank_business_day_UT_C1_invalid_date_type
+        - テスト定義:
+                - テストカテゴリ: C1
+                - テスト区分: 異常系/UT
+                - 許容されていないカレンダーフォーマットで指定する
+        :
+2024-06-30 21:45:40 [INFO] common_utils - is_bank_business_day line 248: time data '2024-01-01' does not match format '%Y/%m/%d':
+2024-06-30 21:45:40 [DEBUG] common_utils - test_is_bank_business_day_UT_C1_invalid_date_type line 971: 
+        - テスト関数: test_is_bank_business_day_UT_C0_closed_day, test_is_bank_business_day_UT_C0_operation_day, test_is_bank_business_day_UT_C0_unknown_day, test_is_bank_business_day_UT_C1_file_not_found, test_is_bank_business_day_UT_C1_invalid_date_format, test_is_bank_business_day_UT_C1_invalid_date_type
+        - テスト定義:
+                - テストカテゴリ: C1
+                - テスト区分: 異常系/UT
+                - 許容されていない型を指定する
+        :
+2024-06-30 21:45:40 [INFO] common_utils - is_bank_business_day line 248: 日付は文字列もしくはdatetime型でなければなりません: <class 'int'>:
+2024-06-30 21:45:42 [DEBUG] converter_utils - <module> line 41: Config(env='local', common_config={'logger_path': {'LOGGER_DEF_FILE': 'tests/def/mfaUtilsLoggingHelper/logging_TimedRotate.json', 'LOGGER_MSG_FILE': 'tests/def/mfaUtilsLoggingHelper/config_MessageList.toml'}, 'input_file_path': {'UPDATE_EXCEL_PATH': 'tests/share/receive'}, 'output_file_path': {'SEND_REFFERENCE_MASTER_PATH': 'tests/share/receive'}}, package_config={'test': {'local_test': 'tests'}}, log_message=<bound method LoggerPackage.log_message of <src.lib.common_utils.ibr_logger_package.LoggerPackage object at 0x7f8f9ea0b410>>):
+2024-06-30 21:45:42 [INFO] converter_utils - test_remarks_parser line 155: 八重洲通支店営業部:
+2024-06-30 21:45:42 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': '営業部傘下', 'sales_department': {'department_name': '八重洲通支店営業部', 'branch_name': '八重洲通支店'}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': ''}:
+2024-06-30 21:45:42 [INFO] converter_utils - test_remarks_parser line 155: 笹島支店第一営業部:
+2024-06-30 21:45:42 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': '営業部傘下', 'sales_department': {'department_name': '笹島支店第一営業部', 'branch_name': '笹島支店'}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': ''}:
+2024-06-30 21:45:42 [INFO] converter_utils - test_remarks_parser line 155: 41002 東日本第一Gr:
+2024-06-30 21:45:42 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': 'エリア', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '41002', 'group_name': '東日本第一Gr', 'established_date': ''}, 'other_info': ''}:
+2024-06-30 21:45:42 [INFO] converter_utils - test_remarks_parser line 155: 41012　グローバル財務戦略Gr (4/1新設):
+2024-06-30 21:45:42 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': 'エリア', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '41012', 'group_name': 'グローバル財務戦略Gr', 'established_date': '4/1新設'}, 'other_info': ''}:
+2024-06-30 21:45:42 [INFO] converter_utils - test_remarks_parser line 155: C1:法人・リテール部門、C1:法人・リテール部門より変更:
+2024-06-30 21:45:42 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': 'その他', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': 'C1:法人・リテール部門、C1:法人・リテール部門より変更'}:
+2024-06-30 21:45:42 [INFO] converter_utils - test_remarks_parser line 155: 2022.12.11廃止済みの課復活:
+2024-06-30 21:45:42 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': 'その他', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': '2022.12.11廃止済みの課復活'}:
+2024-06-30 21:48:16 [DEBUG] converter_utils - <module> line 41: Config(env='local', common_config={'logger_path': {'LOGGER_DEF_FILE': 'tests/def/mfaUtilsLoggingHelper/logging_TimedRotate.json', 'LOGGER_MSG_FILE': 'tests/def/mfaUtilsLoggingHelper/config_MessageList.toml'}, 'input_file_path': {'UPDATE_EXCEL_PATH': 'tests/share/receive'}, 'output_file_path': {'SEND_REFFERENCE_MASTER_PATH': 'tests/share/receive'}}, package_config={'test': {'local_test': 'tests'}}, log_message=<bound method LoggerPackage.log_message of <src.lib.common_utils.ibr_logger_package.LoggerPackage object at 0x7fa2c8ba1a50>>):
+2024-06-30 21:48:16 [INFO] converter_utils - test_remarks_parser line 155: 八重洲通支店営業部:
+2024-06-30 21:48:16 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': '営業部傘下', 'sales_department': {'department_name': '八重洲通支店営業部', 'branch_name': '八重洲通支店'}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': ''}:
+2024-06-30 21:48:16 [INFO] converter_utils - test_remarks_parser line 155: 笹島支店第一営業部:
+2024-06-30 21:48:16 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': '営業部傘下', 'sales_department': {'department_name': '笹島支店第一営業部', 'branch_name': '笹島支店'}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': ''}:
+2024-06-30 21:48:16 [INFO] converter_utils - test_remarks_parser line 155: 41002 東日本第一Gr:
+2024-06-30 21:48:16 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': 'エリア', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '41002', 'group_name': '東日本第一Gr', 'established_date': ''}, 'other_info': ''}:
+2024-06-30 21:48:16 [INFO] converter_utils - test_remarks_parser line 155: 41012　グローバル財務戦略Gr (4/1新設):
+2024-06-30 21:48:16 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': 'エリア', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '41012', 'group_name': 'グローバル財務戦略Gr', 'established_date': '4/1新設'}, 'other_info': ''}:
+2024-06-30 21:48:16 [INFO] converter_utils - test_remarks_parser line 155: C1:法人・リテール部門、C1:法人・リテール部門より変更:
+2024-06-30 21:48:16 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': 'その他', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': 'C1:法人・リテール部門、C1:法人・リテール部門より変更'}:
+2024-06-30 21:48:16 [INFO] converter_utils - test_remarks_parser line 155: 2022.12.11廃止済みの課復活:
+2024-06-30 21:48:16 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': 'その他', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': '2022.12.11廃止済みの課復活'}:
+2024-06-30 21:51:10 [DEBUG] converter_utils - <module> line 41: Config(env='local', common_config={'logger_path': {'LOGGER_DEF_FILE': 'tests/def/mfaUtilsLoggingHelper/logging_TimedRotate.json', 'LOGGER_MSG_FILE': 'tests/def/mfaUtilsLoggingHelper/config_MessageList.toml'}, 'input_file_path': {'UPDATE_EXCEL_PATH': 'tests/share/receive'}, 'output_file_path': {'SEND_REFFERENCE_MASTER_PATH': 'tests/share/receive'}}, package_config={'test': {'local_test': 'tests'}}, log_message=<bound method LoggerPackage.log_message of <src.lib.common_utils.ibr_logger_package.LoggerPackage object at 0x7f735996ff10>>):
+2024-06-30 21:51:10 [INFO] converter_utils - test_remarks_parser line 155: 八重洲通支店営業部:
+2024-06-30 21:51:10 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': '営業部傘下', 'sales_department': {'department_name': '八重洲通支店営業部', 'branch_name': '八重洲通支店'}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': ''}:
+2024-06-30 21:51:10 [INFO] converter_utils - test_remarks_parser line 155: 笹島支店第一営業部:
+2024-06-30 21:51:10 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': '営業部傘下', 'sales_department': {'department_name': '笹島支店第一営業部', 'branch_name': '笹島支店'}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': ''}:
+2024-06-30 21:51:10 [INFO] converter_utils - test_remarks_parser line 155: 41002 東日本第一Gr:
+2024-06-30 21:51:10 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': 'エリア', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '41002', 'group_name': '東日本第一Gr', 'established_date': ''}, 'other_info': ''}:
+2024-06-30 21:51:10 [INFO] converter_utils - test_remarks_parser line 155: 41012　グローバル財務戦略Gr (4/1新設):
+2024-06-30 21:51:10 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': 'エリア', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '41012', 'group_name': 'グローバル財務戦略Gr', 'established_date': '4/1新設'}, 'other_info': ''}:
+2024-06-30 21:51:10 [INFO] converter_utils - test_remarks_parser line 155: C1:法人・リテール部門、C1:法人・リテール部門より変更:
+2024-06-30 21:51:10 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': 'その他', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': 'C1:法人・リテール部門、C1:法人・リテール部門より変更'}:
+2024-06-30 21:51:10 [INFO] converter_utils - test_remarks_parser line 155: 2022.12.11廃止済みの課復活:
+2024-06-30 21:51:10 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': 'その他', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': '2022.12.11廃止済みの課復活'}:
+2024-06-30 21:53:54 [DEBUG] converter_utils - <module> line 41: Config(env='local', common_config={'logger_path': {'LOGGER_DEF_FILE': 'tests/def/mfaUtilsLoggingHelper/logging_TimedRotate.json', 'LOGGER_MSG_FILE': 'tests/def/mfaUtilsLoggingHelper/config_MessageList.toml'}, 'input_file_path': {'UPDATE_EXCEL_PATH': 'tests/share/receive'}, 'output_file_path': {'SEND_REFFERENCE_MASTER_PATH': 'tests/share/receive'}}, package_config={'test': {'local_test': 'tests'}}, log_message=<bound method LoggerPackage.log_message of <src.lib.common_utils.ibr_logger_package.LoggerPackage object at 0x7f1059b7b810>>):
+2024-06-30 21:53:54 [INFO] converter_utils - test_remarks_parser line 155: 八重洲通支店営業部:
+2024-06-30 21:53:54 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': '営業部傘下', 'sales_department': {'department_name': '八重洲通支店営業部', 'branch_name': '八重洲通支店'}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': ''}:
+2024-06-30 21:53:54 [INFO] converter_utils - test_remarks_parser line 155: 笹島支店第一営業部:
+2024-06-30 21:53:54 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': '営業部傘下', 'sales_department': {'department_name': '笹島支店第一営業部', 'branch_name': '笹島支店'}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': ''}:
+2024-06-30 21:53:54 [INFO] converter_utils - test_remarks_parser line 155: 41002 東日本第一Gr:
+2024-06-30 21:53:54 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': 'エリア', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '41002', 'group_name': '東日本第一Gr', 'established_date': ''}, 'other_info': ''}:
+2024-06-30 21:53:54 [INFO] converter_utils - test_remarks_parser line 155: 41012　グローバル財務戦略Gr (4/1新設):
+2024-06-30 21:53:54 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': 'エリア', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '41012', 'group_name': 'グローバル財務戦略Gr', 'established_date': '4/1新設'}, 'other_info': ''}:
+2024-06-30 21:53:54 [INFO] converter_utils - test_remarks_parser line 155: C1:法人・リテール部門、C1:法人・リテール部門より変更:
+2024-06-30 21:53:54 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': 'その他', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': 'C1:法人・リテール部門、C1:法人・リテール部門より変更'}:
+2024-06-30 21:53:54 [INFO] converter_utils - test_remarks_parser line 155: 2022.12.11廃止済みの課復活:
+2024-06-30 21:53:54 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': 'その他', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': '2022.12.11廃止済みの課復活'}:
+2024-06-30 21:54:58 [DEBUG] converter_utils - <module> line 41: Config(env='local', common_config={'logger_path': {'LOGGER_DEF_FILE': 'tests/def/mfaUtilsLoggingHelper/logging_TimedRotate.json', 'LOGGER_MSG_FILE': 'tests/def/mfaUtilsLoggingHelper/config_MessageList.toml'}, 'input_file_path': {'UPDATE_EXCEL_PATH': 'tests/share/receive'}, 'output_file_path': {'SEND_REFFERENCE_MASTER_PATH': 'tests/share/receive'}}, package_config={'test': {'local_test': 'tests'}}, log_message=<bound method LoggerPackage.log_message of <src.lib.common_utils.ibr_logger_package.LoggerPackage object at 0x7f364d2d8c50>>):
+2024-06-30 21:54:58 [INFO] converter_utils - test_remarks_parser line 155: 八重洲通支店営業部:
+2024-06-30 21:54:58 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': '営業部傘下', 'sales_department': {'department_name': '八重洲通支店営業部', 'branch_name': '八重洲通支店'}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': ''}:
+2024-06-30 21:54:58 [INFO] converter_utils - test_remarks_parser line 155: 笹島支店第一営業部:
+2024-06-30 21:54:58 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': '営業部傘下', 'sales_department': {'department_name': '笹島支店第一営業部', 'branch_name': '笹島支店'}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': ''}:
+2024-06-30 21:54:58 [INFO] converter_utils - test_remarks_parser line 155: 41002 東日本第一Gr:
+2024-06-30 21:54:58 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': 'エリア', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '41002', 'group_name': '東日本第一Gr', 'established_date': ''}, 'other_info': ''}:
+2024-06-30 21:54:58 [INFO] converter_utils - test_remarks_parser line 155: 41012　グローバル財務戦略Gr (4/1新設):
+2024-06-30 21:54:58 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': 'エリア', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '41012', 'group_name': 'グローバル財務戦略Gr', 'established_date': '4/1新設'}, 'other_info': ''}:
+2024-06-30 21:54:58 [INFO] converter_utils - test_remarks_parser line 155: C1:法人・リテール部門、C1:法人・リテール部門より変更:
+2024-06-30 21:54:58 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': 'その他', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': 'C1:法人・リテール部門、C1:法人・リテール部門より変更'}:
+2024-06-30 21:54:58 [INFO] converter_utils - test_remarks_parser line 155: 2022.12.11廃止済みの課復活:
+2024-06-30 21:54:58 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': 'その他', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': '2022.12.11廃止済みの課復活'}:
+2024-06-30 21:55:39 [DEBUG] converter_utils - <module> line 41: Config(env='local', common_config={'logger_path': {'LOGGER_DEF_FILE': 'tests/def/mfaUtilsLoggingHelper/logging_TimedRotate.json', 'LOGGER_MSG_FILE': 'tests/def/mfaUtilsLoggingHelper/config_MessageList.toml'}, 'input_file_path': {'UPDATE_EXCEL_PATH': 'tests/share/receive'}, 'output_file_path': {'SEND_REFFERENCE_MASTER_PATH': 'tests/share/receive'}}, package_config={'test': {'local_test': 'tests'}}, log_message=<bound method LoggerPackage.log_message of <src.lib.common_utils.ibr_logger_package.LoggerPackage object at 0x7fc1fa7b4d90>>):
+2024-06-30 21:55:39 [INFO] converter_utils - test_remarks_parser line 155: 八重洲通支店営業部:
+2024-06-30 21:55:39 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': '営業部傘下', 'sales_department': {'department_name': '八重洲通支店営業部', 'branch_name': '八重洲通支店'}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': ''}:
+2024-06-30 21:55:39 [INFO] converter_utils - test_remarks_parser line 155: 笹島支店第一営業部:
+2024-06-30 21:55:39 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': '営業部傘下', 'sales_department': {'department_name': '笹島支店第一営業部', 'branch_name': '笹島支店'}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': ''}:
+2024-06-30 21:55:39 [INFO] converter_utils - test_remarks_parser line 155: 41002 東日本第一Gr:
+2024-06-30 21:55:39 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': 'エリア', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '41002', 'group_name': '東日本第一Gr', 'established_date': ''}, 'other_info': ''}:
+2024-06-30 21:55:39 [INFO] converter_utils - test_remarks_parser line 155: 41012　グローバル財務戦略Gr (4/1新設):
+2024-06-30 21:55:39 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': 'エリア', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '41012', 'group_name': 'グローバル財務戦略Gr', 'established_date': '4/1新設'}, 'other_info': ''}:
+2024-06-30 21:55:39 [INFO] converter_utils - test_remarks_parser line 155: C1:法人・リテール部門、C1:法人・リテール部門より変更:
+2024-06-30 21:55:39 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': 'その他', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': 'C1:法人・リテール部門、C1:法人・リテール部門より変更'}:
+2024-06-30 21:55:39 [INFO] converter_utils - test_remarks_parser line 155: 2022.12.11廃止済みの課復活:
+2024-06-30 21:55:39 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': 'その他', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': '2022.12.11廃止済みの課復活'}:
+2024-06-30 21:58:13 [DEBUG] converter_utils - <module> line 41: Config(env='local', common_config={'logger_path': {'LOGGER_DEF_FILE': 'tests/def/mfaUtilsLoggingHelper/logging_TimedRotate.json', 'LOGGER_MSG_FILE': 'tests/def/mfaUtilsLoggingHelper/config_MessageList.toml'}, 'input_file_path': {'UPDATE_EXCEL_PATH': 'tests/share/receive'}, 'output_file_path': {'SEND_REFFERENCE_MASTER_PATH': 'tests/share/receive'}}, package_config={'test': {'local_test': 'tests'}}, log_message=<bound method LoggerPackage.log_message of <src.lib.common_utils.ibr_logger_package.LoggerPackage object at 0x7f243c64f790>>):
+2024-06-30 21:58:13 [INFO] converter_utils - test_remarks_parser line 155: 八重洲通支店営業部:
+2024-06-30 21:58:13 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': '営業部傘下', 'sales_department': {'department_name': '八重洲通支店営業部', 'branch_name': '八重洲通支店'}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': ''}:
+2024-06-30 21:58:13 [INFO] converter_utils - test_remarks_parser line 155: 笹島支店第一営業部:
+2024-06-30 21:58:13 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': '営業部傘下', 'sales_department': {'department_name': '笹島支店第一営業部', 'branch_name': '笹島支店'}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': ''}:
+2024-06-30 21:58:13 [INFO] converter_utils - test_remarks_parser line 155: 41002 東日本第一Gr:
+2024-06-30 21:58:13 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': 'エリア', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '41002', 'group_name': '東日本第一Gr', 'established_date': ''}, 'other_info': ''}:
+2024-06-30 21:58:13 [INFO] converter_utils - test_remarks_parser line 155: 41012　グローバル財務戦略Gr (4/1新設):
+2024-06-30 21:58:13 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': 'エリア', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '41012', 'group_name': 'グローバル財務戦略Gr', 'established_date': '4/1新設'}, 'other_info': ''}:
+2024-06-30 21:58:13 [INFO] converter_utils - test_remarks_parser line 155: C1:法人・リテール部門、C1:法人・リテール部門より変更:
+2024-06-30 21:58:13 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': 'その他', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': 'C1:法人・リテール部門、C1:法人・リテール部門より変更'}:
+2024-06-30 21:58:13 [INFO] converter_utils - test_remarks_parser line 155: 2022.12.11廃止済みの課復活:
+2024-06-30 21:58:13 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': 'その他', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': '2022.12.11廃止済みの課復活'}:
+2024-06-30 21:59:37 [DEBUG] converter_utils - <module> line 41: Config(env='local', common_config={'logger_path': {'LOGGER_DEF_FILE': 'tests/def/mfaUtilsLoggingHelper/logging_TimedRotate.json', 'LOGGER_MSG_FILE': 'tests/def/mfaUtilsLoggingHelper/config_MessageList.toml'}, 'input_file_path': {'UPDATE_EXCEL_PATH': 'tests/share/receive'}, 'output_file_path': {'SEND_REFFERENCE_MASTER_PATH': 'tests/share/receive'}}, package_config={'test': {'local_test': 'tests'}}, log_message=<bound method LoggerPackage.log_message of <src.lib.common_utils.ibr_logger_package.LoggerPackage object at 0x7f4391179010>>):
+2024-06-30 21:59:37 [INFO] converter_utils - test_remarks_parser line 155: 八重洲通支店営業部:
+2024-06-30 21:59:37 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': '営業部傘下', 'sales_department': {'department_name': '八重洲通支店営業部', 'branch_name': '八重洲通支店'}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': ''}:
+2024-06-30 21:59:37 [INFO] converter_utils - test_remarks_parser line 155: 笹島支店第一営業部:
+2024-06-30 21:59:37 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': '営業部傘下', 'sales_department': {'department_name': '笹島支店第一営業部', 'branch_name': '笹島支店'}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': ''}:
+2024-06-30 21:59:37 [INFO] converter_utils - test_remarks_parser line 155: 41002 東日本第一Gr:
+2024-06-30 21:59:37 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': 'エリア', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '41002', 'group_name': '東日本第一Gr', 'established_date': ''}, 'other_info': ''}:
+2024-06-30 21:59:37 [INFO] converter_utils - test_remarks_parser line 155: 41012　グローバル財務戦略Gr (4/1新設):
+2024-06-30 21:59:37 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': 'エリア', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '41012', 'group_name': 'グローバル財務戦略Gr', 'established_date': '4/1新設'}, 'other_info': ''}:
+2024-06-30 21:59:37 [INFO] converter_utils - test_remarks_parser line 155: C1:法人・リテール部門、C1:法人・リテール部門より変更:
+2024-06-30 21:59:37 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': 'その他', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': 'C1:法人・リテール部門、C1:法人・リテール部門より変更'}:
+2024-06-30 21:59:37 [INFO] converter_utils - test_remarks_parser line 155: 2022.12.11廃止済みの課復活:
+2024-06-30 21:59:37 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': 'その他', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': '2022.12.11廃止済みの課復活'}:
+2024-06-30 22:10:37 [DEBUG] converter_utils - <module> line 41: Config(env='local', common_config={'logger_path': {'LOGGER_DEF_FILE': 'tests/def/mfaUtilsLoggingHelper/logging_TimedRotate.json', 'LOGGER_MSG_FILE': 'tests/def/mfaUtilsLoggingHelper/config_MessageList.toml'}, 'input_file_path': {'UPDATE_EXCEL_PATH': 'tests/share/receive'}, 'output_file_path': {'SEND_REFFERENCE_MASTER_PATH': 'tests/share/receive'}}, package_config={'test': {'local_test': 'tests'}}, log_message=<bound method LoggerPackage.log_message of <src.lib.common_utils.ibr_logger_package.LoggerPackage object at 0x7f6c002e4a50>>):
+2024-06-30 22:10:37 [INFO] converter_utils - test_remarks_parser line 155: 八重洲通支店営業部:
+2024-06-30 22:10:37 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': '営業部傘下', 'sales_department': {'department_name': '八重洲通支店営業部', 'branch_name': '八重洲通支店'}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': ''}:
+2024-06-30 22:10:37 [INFO] converter_utils - test_remarks_parser line 155: 笹島支店第一営業部:
+2024-06-30 22:10:37 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': '営業部傘下', 'sales_department': {'department_name': '笹島支店第一営業部', 'branch_name': '笹島支店'}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': ''}:
+2024-06-30 22:10:37 [INFO] converter_utils - test_remarks_parser line 155: 41002 東日本第一Gr:
+2024-06-30 22:10:37 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': 'エリア', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '41002', 'group_name': '東日本第一Gr', 'established_date': ''}, 'other_info': ''}:
+2024-06-30 22:10:37 [INFO] converter_utils - test_remarks_parser line 155: 41012　グローバル財務戦略Gr (4/1新設):
+2024-06-30 22:10:37 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': 'エリア', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '41012', 'group_name': 'グローバル財務戦略Gr', 'established_date': '4/1新設'}, 'other_info': ''}:
+2024-06-30 22:10:37 [INFO] converter_utils - test_remarks_parser line 155: C1:法人・リテール部門、C1:法人・リテール部門より変更:
+2024-06-30 22:10:37 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': 'その他', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': 'C1:法人・リテール部門、C1:法人・リテール部門より変更'}:
+2024-06-30 22:10:37 [INFO] converter_utils - test_remarks_parser line 155: 2022.12.11廃止済みの課復活:
+2024-06-30 22:10:37 [INFO] converter_utils - test_remarks_parser line 156: {'request_type': 'その他', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': '2022.12.11廃止済みの課復活'}:
+2024-06-30 23:49:44 [DEBUG] converter_utils - <module> line 41: Config(env='local', common_config={'logger_path': {'LOGGER_DEF_FILE': 'tests/def/mfaUtilsLoggingHelper/logging_TimedRotate.json', 'LOGGER_MSG_FILE': 'tests/def/mfaUtilsLoggingHelper/config_MessageList.toml'}, 'input_file_path': {'UPDATE_EXCEL_PATH': 'tests/share/receive'}, 'output_file_path': {'SEND_REFFERENCE_MASTER_PATH': 'tests/share/receive'}}, package_config={'test': {'local_test': 'tests'}}, log_message=<bound method LoggerPackage.log_message of <src.lib.common_utils.ibr_logger_package.LoggerPackage object at 0x7f61df6b6d90>>):
+2024-06-30 23:49:44 [DEBUG] converter_utils - test_parse_UT_C0_Normal_all line 161: 
+        - テスト関数: test_parse_UT_C0_Normal_all
+        - テスト定義:
+                - テストカテゴリ: C0
+                - テスト区分: 正常系/UT
+        :
+2024-06-30 23:49:44 [INFO] converter_utils - test_parse_UT_C0_Normal_all line 166: 八重洲通支店営業部:
+2024-06-30 23:49:44 [INFO] converter_utils - test_parse_UT_C0_Normal_all line 167: {'request_type': '営業部傘下', 'sales_department': {'department_name': '八重洲通支店営業部', 'branch_name': '八重洲通支店'}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': ''}:
+2024-06-30 23:49:44 [DEBUG] converter_utils - test_parse_UT_C0_Normal_all line 161: 
+        - テスト関数: test_parse_UT_C0_Normal_all
+        - テスト定義:
+                - テストカテゴリ: C0
+                - テスト区分: 正常系/UT
+        :
+2024-06-30 23:49:44 [INFO] converter_utils - test_parse_UT_C0_Normal_all line 166: 笹島支店第一営業部:
+2024-06-30 23:49:44 [INFO] converter_utils - test_parse_UT_C0_Normal_all line 167: {'request_type': '営業部傘下', 'sales_department': {'department_name': '笹島支店第一営業部', 'branch_name': '笹島支店'}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': ''}:
+2024-06-30 23:49:44 [DEBUG] converter_utils - test_parse_UT_C0_Normal_all line 161: 
+        - テスト関数: test_parse_UT_C0_Normal_all
+        - テスト定義:
+                - テストカテゴリ: C0
+                - テスト区分: 正常系/UT
+        :
+2024-06-30 23:49:44 [INFO] converter_utils - test_parse_UT_C0_Normal_all line 166: 41002 東日本第一Gr:
+2024-06-30 23:49:44 [INFO] converter_utils - test_parse_UT_C0_Normal_all line 167: {'request_type': 'エリア', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '41002', 'group_name': '東日本第一Gr', 'established_date': ''}, 'other_info': ''}:
+2024-06-30 23:49:44 [DEBUG] converter_utils - test_parse_UT_C0_Normal_all line 161: 
+        - テスト関数: test_parse_UT_C0_Normal_all
+        - テスト定義:
+                - テストカテゴリ: C0
+                - テスト区分: 正常系/UT
+        :
+2024-06-30 23:49:44 [INFO] converter_utils - test_parse_UT_C0_Normal_all line 166: 41012　グローバル財務戦略Gr (4/1新設):
+2024-06-30 23:49:44 [INFO] converter_utils - test_parse_UT_C0_Normal_all line 167: {'request_type': 'エリア', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '41012', 'group_name': 'グローバル財務戦略Gr', 'established_date': '4/1新設'}, 'other_info': ''}:
+2024-06-30 23:49:44 [DEBUG] converter_utils - test_parse_UT_C0_Normal_all line 161: 
+        - テスト関数: test_parse_UT_C0_Normal_all
+        - テスト定義:
+                - テストカテゴリ: C0
+                - テスト区分: 正常系/UT
+        :
+2024-06-30 23:49:44 [INFO] converter_utils - test_parse_UT_C0_Normal_all line 166: C1:法人・リテール部門、C1:法人・リテール部門より変更:
+2024-06-30 23:49:44 [INFO] converter_utils - test_parse_UT_C0_Normal_all line 167: {'request_type': 'その他', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': 'C1:法人・リテール部門、C1:法人・リテール部門より変更'}:
+2024-06-30 23:49:44 [DEBUG] converter_utils - test_parse_UT_C0_Normal_all line 161: 
+        - テスト関数: test_parse_UT_C0_Normal_all
+        - テスト定義:
+                - テストカテゴリ: C0
+                - テスト区分: 正常系/UT
+        :
+2024-06-30 23:49:44 [INFO] converter_utils - test_parse_UT_C0_Normal_all line 166: 2022.12.11廃止済みの課復活:
+2024-06-30 23:49:44 [INFO] converter_utils - test_parse_UT_C0_Normal_all line 167: {'request_type': 'その他', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': '2022.12.11廃止済みの課復活'}:
+2024-06-30 23:49:44 [DEBUG] converter_utils - test_init_C0_basic_instance_creation line 219: 
+        - テスト関数: test_init_C0_basic_instance_creation:
+2024-06-30 23:49:44 [DEBUG] converter_utils - test_init_C0_basic_instance_creation line 221: Result dictionary: {'request_type': '', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': ''}:
+2024-06-30 23:49:50 [DEBUG] converter_utils - <module> line 41: Config(env='local', common_config={'logger_path': {'LOGGER_DEF_FILE': 'tests/def/mfaUtilsLoggingHelper/logging_TimedRotate.json', 'LOGGER_MSG_FILE': 'tests/def/mfaUtilsLoggingHelper/config_MessageList.toml'}, 'input_file_path': {'UPDATE_EXCEL_PATH': 'tests/share/receive'}, 'output_file_path': {'SEND_REFFERENCE_MASTER_PATH': 'tests/share/receive'}}, package_config={'test': {'local_test': 'tests'}}, log_message=<bound method LoggerPackage.log_message of <src.lib.common_utils.ibr_logger_package.LoggerPackage object at 0x7f627d6f6390>>):
+2024-06-30 23:49:50 [DEBUG] converter_utils - test_parse_UT_C0_Normal_all line 161: 
+        - テスト関数: test_parse_UT_C0_Normal_all
+        - テスト定義:
+                - テストカテゴリ: C0
+                - テスト区分: 正常系/UT
+        :
+2024-06-30 23:49:50 [INFO] converter_utils - test_parse_UT_C0_Normal_all line 166: 八重洲通支店営業部:
+2024-06-30 23:49:50 [INFO] converter_utils - test_parse_UT_C0_Normal_all line 167: {'request_type': '営業部傘下', 'sales_department': {'department_name': '八重洲通支店営業部', 'branch_name': '八重洲通支店'}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': ''}:
+2024-06-30 23:49:50 [DEBUG] converter_utils - test_parse_UT_C0_Normal_all line 161: 
+        - テスト関数: test_parse_UT_C0_Normal_all
+        - テスト定義:
+                - テストカテゴリ: C0
+                - テスト区分: 正常系/UT
+        :
+2024-06-30 23:49:50 [INFO] converter_utils - test_parse_UT_C0_Normal_all line 166: 笹島支店第一営業部:
+2024-06-30 23:49:50 [INFO] converter_utils - test_parse_UT_C0_Normal_all line 167: {'request_type': '営業部傘下', 'sales_department': {'department_name': '笹島支店第一営業部', 'branch_name': '笹島支店'}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': ''}:
+2024-06-30 23:49:50 [DEBUG] converter_utils - test_parse_UT_C0_Normal_all line 161: 
+        - テスト関数: test_parse_UT_C0_Normal_all
+        - テスト定義:
+                - テストカテゴリ: C0
+                - テスト区分: 正常系/UT
+        :
+2024-06-30 23:49:50 [INFO] converter_utils - test_parse_UT_C0_Normal_all line 166: 41002 東日本第一Gr:
+2024-06-30 23:49:50 [INFO] converter_utils - test_parse_UT_C0_Normal_all line 167: {'request_type': 'エリア', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '41002', 'group_name': '東日本第一Gr', 'established_date': ''}, 'other_info': ''}:
+2024-06-30 23:49:50 [DEBUG] converter_utils - test_parse_UT_C0_Normal_all line 161: 
+        - テスト関数: test_parse_UT_C0_Normal_all
+        - テスト定義:
+                - テストカテゴリ: C0
+                - テスト区分: 正常系/UT
+        :
+2024-06-30 23:49:50 [INFO] converter_utils - test_parse_UT_C0_Normal_all line 166: 41012　グローバル財務戦略Gr (4/1新設):
+2024-06-30 23:49:50 [INFO] converter_utils - test_parse_UT_C0_Normal_all line 167: {'request_type': 'エリア', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '41012', 'group_name': 'グローバル財務戦略Gr', 'established_date': '4/1新設'}, 'other_info': ''}:
+2024-06-30 23:49:50 [DEBUG] converter_utils - test_parse_UT_C0_Normal_all line 161: 
+        - テスト関数: test_parse_UT_C0_Normal_all
+        - テスト定義:
+                - テストカテゴリ: C0
+                - テスト区分: 正常系/UT
+        :
+2024-06-30 23:49:50 [INFO] converter_utils - test_parse_UT_C0_Normal_all line 166: C1:法人・リテール部門、C1:法人・リテール部門より変更:
+2024-06-30 23:49:50 [INFO] converter_utils - test_parse_UT_C0_Normal_all line 167: {'request_type': 'その他', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': 'C1:法人・リテール部門、C1:法人・リテール部門より変更'}:
+2024-06-30 23:49:50 [DEBUG] converter_utils - test_parse_UT_C0_Normal_all line 161: 
+        - テスト関数: test_parse_UT_C0_Normal_all
+        - テスト定義:
+                - テストカテゴリ: C0
+                - テスト区分: 正常系/UT
+        :
+2024-06-30 23:49:50 [INFO] converter_utils - test_parse_UT_C0_Normal_all line 166: 2022.12.11廃止済みの課復活:
+2024-06-30 23:49:50 [INFO] converter_utils - test_parse_UT_C0_Normal_all line 167: {'request_type': 'その他', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': '2022.12.11廃止済みの課復活'}:
+2024-06-30 23:49:50 [DEBUG] converter_utils - test_init_C0_basic_instance_creation line 219: 
+        - テスト関数: test_init_C0_basic_instance_creation:
+2024-06-30 23:49:50 [DEBUG] converter_utils - test_init_C0_basic_instance_creation line 221: Result dictionary: {'request_type': '', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': ''}:
+2024-06-30 23:56:45 [DEBUG] converter_utils - <module> line 41: Config(env='local', common_config={'logger_path': {'LOGGER_DEF_FILE': 'tests/def/mfaUtilsLoggingHelper/logging_TimedRotate.json', 'LOGGER_MSG_FILE': 'tests/def/mfaUtilsLoggingHelper/config_MessageList.toml'}, 'input_file_path': {'UPDATE_EXCEL_PATH': 'tests/share/receive'}, 'output_file_path': {'SEND_REFFERENCE_MASTER_PATH': 'tests/share/receive'}}, package_config={'test': {'local_test': 'tests'}}, log_message=<bound method LoggerPackage.log_message of <src.lib.common_utils.ibr_logger_package.LoggerPackage object at 0x7f8e941dd090>>):
+2024-06-30 23:56:45 [DEBUG] converter_utils - test_parse_UT_C0_normal_case line 184: 
+        - テスト関数: test_parse_UT_C0_normal_case:
+2024-06-30 23:56:45 [DEBUG] converter_utils - test_parse_UT_C0_normal_case line 192: Input text: 八重洲通支店営業部:
+2024-06-30 23:56:45 [DEBUG] converter_utils - test_parse_UT_C0_normal_case line 193: Expected result: {'request_type': '営業部傘下', 'sales_department': {'department_name': '八重洲通支店営業部', 'branch_name': '八重洲通支店'}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': ''}:
+2024-06-30 23:56:45 [DEBUG] converter_utils - test_parse_UT_C0_normal_case line 194: Actual result: {'request_type': '営業部傘下', 'sales_department': {'department_name': '八重洲通支店営業部', 'branch_name': '八重洲通支店'}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': ''}:
+2024-06-30 23:56:45 [DEBUG] converter_utils - test_parse_UT_C0_normal_case line 184: 
+        - テスト関数: test_parse_UT_C0_normal_case:
+2024-06-30 23:56:45 [DEBUG] converter_utils - test_parse_UT_C0_normal_case line 192: Input text: 笹島支店第一営業部:
+2024-06-30 23:56:45 [DEBUG] converter_utils - test_parse_UT_C0_normal_case line 193: Expected result: {'request_type': '営業部傘下', 'sales_department': {'department_name': '笹島支店第一営業部', 'branch_name': '笹島支店'}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': ''}:
+2024-06-30 23:56:45 [DEBUG] converter_utils - test_parse_UT_C0_normal_case line 194: Actual result: {'request_type': '営業部傘下', 'sales_department': {'department_name': '笹島支店第一営業部', 'branch_name': '笹島支店'}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': ''}:
+2024-06-30 23:56:45 [DEBUG] converter_utils - test_parse_UT_C0_normal_case line 184: 
+        - テスト関数: test_parse_UT_C0_normal_case:
+2024-06-30 23:56:45 [DEBUG] converter_utils - test_parse_UT_C0_normal_case line 192: Input text: 41002 東日本第一Gr:
+2024-06-30 23:56:45 [DEBUG] converter_utils - test_parse_UT_C0_normal_case line 193: Expected result: {'request_type': 'エリア', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '41002', 'group_name': '東日本第一Gr', 'established_date': ''}, 'other_info': ''}:
+2024-06-30 23:56:45 [DEBUG] converter_utils - test_parse_UT_C0_normal_case line 194: Actual result: {'request_type': 'エリア', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '41002', 'group_name': '東日本第一Gr', 'established_date': ''}, 'other_info': ''}:
+2024-06-30 23:56:45 [DEBUG] converter_utils - test_parse_UT_C0_normal_case line 184: 
+        - テスト関数: test_parse_UT_C0_normal_case:
+2024-06-30 23:56:45 [DEBUG] converter_utils - test_parse_UT_C0_normal_case line 192: Input text: 41012　グローバル財務戦略Gr (4/1新設):
+2024-06-30 23:56:45 [DEBUG] converter_utils - test_parse_UT_C0_normal_case line 193: Expected result: {'request_type': 'エリア', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '41012', 'group_name': 'グローバル財務戦略Gr', 'established_date': '4/1新設'}, 'other_info': ''}:
+2024-06-30 23:56:45 [DEBUG] converter_utils - test_parse_UT_C0_normal_case line 194: Actual result: {'request_type': 'エリア', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '41012', 'group_name': 'グローバル財務戦略Gr', 'established_date': '4/1新設'}, 'other_info': ''}:
+2024-06-30 23:56:45 [DEBUG] converter_utils - test_parse_UT_C0_normal_case line 184: 
+        - テスト関数: test_parse_UT_C0_normal_case:
+2024-06-30 23:56:45 [DEBUG] converter_utils - test_parse_UT_C0_normal_case line 192: Input text: C1:法人・リテール部門、C1:法人・リテール部門より変更:
+2024-06-30 23:56:45 [DEBUG] converter_utils - test_parse_UT_C0_normal_case line 193: Expected result: {'request_type': 'その他', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': 'C1:法人・リテール部門、C1:法人・リテール部門より変更'}:
+2024-06-30 23:56:45 [DEBUG] converter_utils - test_parse_UT_C0_normal_case line 194: Actual result: {'request_type': 'その他', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': 'C1:法人・リテール部門、C1:法人・リテール部門より変更'}:
+2024-06-30 23:56:45 [DEBUG] converter_utils - test_parse_UT_C0_normal_case line 184: 
+        - テスト関数: test_parse_UT_C0_normal_case:
+2024-06-30 23:56:45 [DEBUG] converter_utils - test_parse_UT_C0_normal_case line 192: Input text: 2022.12.11廃止済みの課復活:
+2024-06-30 23:56:45 [DEBUG] converter_utils - test_parse_UT_C0_normal_case line 193: Expected result: {'request_type': 'その他', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': '2022.12.11廃止済みの課復活'}:
+2024-06-30 23:56:45 [DEBUG] converter_utils - test_parse_UT_C0_normal_case line 194: Actual result: {'request_type': 'その他', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': '2022.12.11廃止済みの課復活'}:
+2024-06-30 23:56:45 [DEBUG] converter_utils - test_init_C0_basic_instance_creation line 377: 
+        - テスト関数: test_init_C0_basic_instance_creation:
+2024-06-30 23:56:45 [DEBUG] converter_utils - test_init_C0_basic_instance_creation line 379: Result dictionary: {'request_type': '', 'sales_department': {'department_name': '', 'branch_name': ''}, 'area_group': {'group_code': '', 'group_name': '', 'established_date': ''}, 'other_info': ''}:

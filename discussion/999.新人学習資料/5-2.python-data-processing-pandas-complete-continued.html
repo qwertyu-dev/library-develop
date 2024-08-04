@@ -1,0 +1,133 @@
+<input type="radio" name="q10" value="d"> d) summary()
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>11. DataFrameの特定の列の値を置換するメソッドは？</p>
+                <div class="options">
+                    <input type="radio" name="q11" value="a" required> a) substitute()<br>
+                    <input type="radio" name="q11" value="b"> b) replace()<br>
+                    <input type="radio" name="q11" value="c"> c) change()<br>
+                    <input type="radio" name="q11" value="d"> d) modify()
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>12. DataFrameをCSVファイルに保存するメソッドは？</p>
+                <div class="options">
+                    <input type="radio" name="q12" value="a" required> a) save_csv()<br>
+                    <input type="radio" name="q12" value="b"> b) to_csv()<br>
+                    <input type="radio" name="q12" value="c"> c) write_csv()<br>
+                    <input type="radio" name="q12" value="d"> d) export_csv()
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>13. DataFrameの行と列を入れ替えるメソッドは？</p>
+                <div class="options">
+                    <input type="radio" name="q13" value="a" required> a) swap()<br>
+                    <input type="radio" name="q13" value="b"> b) transpose()<br>
+                    <input type="radio" name="q13" value="c"> c) flip()<br>
+                    <input type="radio" name="q13" value="d"> d) rotate()
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>14. DataFrameの重複行を削除するメソッドは？</p>
+                <div class="options">
+                    <input type="radio" name="q14" value="a" required> a) remove_duplicates()<br>
+                    <input type="radio" name="q14" value="b"> b) drop_duplicates()<br>
+                    <input type="radio" name="q14" value="c"> c) delete_duplicates()<br>
+                    <input type="radio" name="q14" value="d"> d) clean_duplicates()
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>15. DataFrameのデータ型を確認するための属性は？</p>
+                <div class="options">
+                    <input type="radio" name="q15" value="a" required> a) types<br>
+                    <input type="radio" name="q15" value="b"> b) dtypes<br>
+                    <input type="radio" name="q15" value="c"> c) data_types<br>
+                    <input type="radio" name="q15" value="d"> d) column_types
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>16. ilocを使用して、DataFrameの2行目から4行目までを選択する正しい方法は？</p>
+                <div class="options">
+                    <input type="radio" name="q16" value="a" required> a) df.iloc[2:4]<br>
+                    <input type="radio" name="q16" value="b"> b) df.iloc[1:4]<br>
+                    <input type="radio" name="q16" value="c"> c) df.iloc[2:5]<br>
+                    <input type="radio" name="q16" value="d"> d) df.iloc[1:3]
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>17. DataFrameの全ての数値を2倍にするapply処理の正しい方法は？</p>
+                <div class="options">
+                    <input type="radio" name="q17" value="a" required> a) df.apply(lambda x: x * 2)<br>
+                    <input type="radio" name="q17" value="b"> b) df.apply(lambda x: x + x)<br>
+                    <input type="radio" name="q17" value="c"> c) df.apply(lambda x: 2x)<br>
+                    <input type="radio" name="q17" value="d"> d) df.apply(lambda x: x ** 2)
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>18. lambdaを使用して、DataFrameの'A'列の値が5より大きい場合に1、それ以外は0を返す新しい列'B'を作成する正しい方法は？</p>
+                <div class="options">
+                    <input type="radio" name="q18" value="a" required> a) df['B'] = df['A'].apply(lambda x: 1 if x > 5 else 0)<br>
+                    <input type="radio" name="q18" value="b"> b) df['B'] = df['A'].apply(lambda x: x > 5)<br>
+                    <input type="radio" name="q18" value="c"> c) df['B'] = df['A'].map(lambda x: 1 if x > 5 else 0)<br>
+                    <input type="radio" name="q18" value="d"> d) df['B'] = df['A'].transform(lambda x: 1 if x > 5 else 0)
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>19. ilocを使用して、DataFrameの最初の3行と最初の2列を選択する正しい方法は？</p>
+                <div class="options">
+                    <input type="radio" name="q19" value="a" required> a) df.iloc[:3, :2]<br>
+                    <input type="radio" name="q19" value="b"> b) df.iloc[0:3, 0:2]<br>
+                    <input type="radio" name="q19" value="c"> c) df.iloc[1:3, 1:2]<br>
+                    <input type="radio" name="q19" value="d"> d) df.iloc[0:2, 0:3]
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>20. applyとlambdaを組み合わせて、DataFrameの各行の'A'列と'B'列の和を計算し、新しい'C'列を作成する正しい方法は？</p>
+                <div class="options">
+                    <input type="radio" name="q20" value="a" required> a) df['C'] = df.apply(lambda row: row['A'] + row['B'], axis=1)<br>
+                    <input type="radio" name="q20" value="b"> b) df['C'] = df.apply(lambda x: x['A'] + x['B'])<br>
+                    <input type="radio" name="q20" value="c"> c) df['C'] = df.apply(lambda row: sum(row['A', 'B']), axis=1)<br>
+                    <input type="radio" name="q20" value="d"> d) df['C'] = df.apply(lambda x: x.A + x.B, axis=0)
+                </div>
+            </div>
+
+            <button type="submit">採点する</button>
+        </form>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        document.getElementById('quizForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            let score = 0;
+            const answers = {
+                q1: 'b', q2: 'a', q3: 'c', q4: 'b', q5: 'c',
+                q6: 'c', q7: 'b', q8: 'b', q9: 'b', q10: 'c',
+                q11: 'b', q12: 'b', q13: 'b', q14: 'b', q15: 'b',
+                q16: 'b', q17: 'a', q18: 'a', q19: 'a', q20: 'a'
+            };
+
+            for (let q in answers) {
+                const selected = document.querySelector(`input[name="${q}"]:checked`);
+                if (selected && selected.value === answers[q]) {
+                    score++;
+                }
+            }
+
+            const resultDiv = document.getElementById('result');
+            resultDiv.textContent = `あなたのスコアは ${score} / 20 です。`;
+        });
+    </script>
+</body>
+</html>

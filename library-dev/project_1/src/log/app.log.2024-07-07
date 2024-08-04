@@ -1,0 +1,1436 @@
+2024-07-07 17:13:57 [INFO] validator_excel_main_class-1 - start line 134: IBRDEV-I-0000001:起動しました
+2024-07-07 17:13:57 [DEBUG] common_utils - tabulate_dataframe line 67: 
+|    |   NO | あ   | い   |   う | え   | お   |   か | き   |   く |   け |   こ |
+|---:|-----:|:-----|:-----|-----:|:-----|:-----|-----:|:-----|-----:|-----:|-----:|
+|  0 |    1 | a    | d    |    1 | 4    | あ   |   10 | 1    |   13 |   16 |   19 |
+|  1 |    2 | b    | e    |    2 | s    | 8    |   11 | h    |   14 |   17 |   20 |
+|  2 |    3 | c    | f    |    3 | 6    | 9    |   12 | I    |   15 |   18 |   21 |:
+2024-07-07 17:13:57 [DEBUG] common_utils - read_excel_one_sheet line 99: 
+Sheet_name: Sheet1
+|    |   NO | あ   | い   |   う | え   | お   |   か | き   |   く |   け |   こ |
+|---:|-----:|:-----|:-----|-----:|:-----|:-----|-----:|:-----|-----:|-----:|-----:|
+|  0 |    1 | a    | d    |    1 | 4    | あ   |   10 | 1    |   13 |   16 |   19 |
+|  1 |    2 | b    | e    |    2 | s    | 8    |   11 | h    |   14 |   17 |   20 |
+|  2 |    3 | c    | f    |    3 | 6    | 9    |   12 | I    |   15 |   18 |   21 |:
+2024-07-07 17:13:57 [DEBUG] common_utils - tabulate_dataframe line 67: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | object |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2024-07-07 17:13:57 [INFO] validator_excel_main_class-1 - _excel_to_dataframe line 94: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | object |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2024-07-07 17:13:57 [INFO] validator_excel_main_class-1 - _valdate line 123: 検証対象ファイル: src/share/receive/input_data_validator.xlsx:
+2024-07-07 17:13:57 [INFO] validator_excel_main_class-1 - _valdate line 124: 検証対象Sheet: Sheet1:
+2024-07-07 17:13:57 [WARNING] validator_excel_main_class-1 - _valdate line 125: validate error 検出件数: 2:
+2024-07-07 17:13:57 [DEBUG] validator_excel_main_class-1 - _valdate line 126: validate error list: [(0, [{'type': 'int_type', 'loc': ('e',), 'msg': 'Input should be a valid integer', 'input': 'あ', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}, {'type': 'string_type', 'loc': ('g',), 'msg': 'Input should be a valid string', 'input': 1, 'url': 'https://errors.pydantic.dev/2.5/v/string_type'}]), (1, [{'type': 'int_type', 'loc': ('d',), 'msg': 'Input should be a valid integer', 'input': 's', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}])]:
+2024-07-07 17:13:57 [DEBUG] common_utils - logger_validation_errors line 260: errors: [(0, [{'type': 'int_type', 'loc': ('e',), 'msg': 'Input should be a valid integer', 'input': 'あ', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}, {'type': 'string_type', 'loc': ('g',), 'msg': 'Input should be a valid string', 'input': 1, 'url': 'https://errors.pydantic.dev/2.5/v/string_type'}]), (1, [{'type': 'int_type', 'loc': ('d',), 'msg': 'Input should be a valid integer', 'input': 's', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}])]:
+2024-07-07 17:13:57 [DEBUG] common_utils - logger_validation_errors line 267: error_dict: {'type': 'int_type', 'loc': ('e',), 'msg': 'Input should be a valid integer', 'input': 'あ', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}:
+2024-07-07 17:13:57 [DEBUG] common_utils - logger_validation_errors line 277: values: ['Input should be a valid integer', ('e',), 'あ']:
+2024-07-07 17:13:57 [ERROR] common_utils - logger_validation_errors line 287: Validation error at (1, e):  Input should be a valid integer, wrong values: あ:
+2024-07-07 17:13:57 [DEBUG] common_utils - logger_validation_errors line 267: error_dict: {'type': 'string_type', 'loc': ('g',), 'msg': 'Input should be a valid string', 'input': 1, 'url': 'https://errors.pydantic.dev/2.5/v/string_type'}:
+2024-07-07 17:13:57 [DEBUG] common_utils - logger_validation_errors line 277: values: ['Input should be a valid string', ('g',), 1]:
+2024-07-07 17:13:57 [ERROR] common_utils - logger_validation_errors line 287: Validation error at (1, g):  Input should be a valid string, wrong values: 1:
+2024-07-07 17:13:57 [DEBUG] common_utils - logger_validation_errors line 267: error_dict: {'type': 'int_type', 'loc': ('d',), 'msg': 'Input should be a valid integer', 'input': 's', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}:
+2024-07-07 17:13:57 [DEBUG] common_utils - logger_validation_errors line 277: values: ['Input should be a valid integer', ('d',), 's']:
+2024-07-07 17:13:57 [ERROR] common_utils - logger_validation_errors line 287: Validation error at (2, d):  Input should be a valid integer, wrong values: s:
+2024-07-07 17:13:57 [INFO] validator_excel_main_class-1 - start line 150: IBRDEV-I-0000002:正常終了しました
+2024-07-07 17:14:00 [INFO] validator_excel_main_class-2 - start line 154: IBRDEV-I-0000001:起動しました
+2024-07-07 17:14:00 [DEBUG] common_utils - tabulate_dataframe line 67: 
+|    |   NO | あ   | い   |   う | え   | お   |   か | き   |   く |   け |   こ |
+|---:|-----:|:-----|:-----|-----:|:-----|:-----|-----:|:-----|-----:|-----:|-----:|
+|  0 |    1 | a    | d    |    1 | 4    | あ   |   10 | 1    |   13 |   16 |   19 |
+|  1 |    2 | b    | e    |    2 | s    | 8    |   11 | h    |   14 |   17 |   20 |
+|  2 |    3 | c    | f    |    3 | 6    | 9    |   12 | I    |   15 |   18 |   21 |:
+2024-07-07 17:14:00 [DEBUG] common_utils - read_excel_one_sheet line 99: 
+Sheet_name: Sheet1
+|    |   NO | あ   | い   |   う | え   | お   |   か | き   |   く |   け |   こ |
+|---:|-----:|:-----|:-----|-----:|:-----|:-----|-----:|:-----|-----:|-----:|-----:|
+|  0 |    1 | a    | d    |    1 | 4    | あ   |   10 | 1    |   13 |   16 |   19 |
+|  1 |    2 | b    | e    |    2 | s    | 8    |   11 | h    |   14 |   17 |   20 |
+|  2 |    3 | c    | f    |    3 | 6    | 9    |   12 | I    |   15 |   18 |   21 |:
+2024-07-07 17:14:00 [DEBUG] common_utils - tabulate_dataframe line 67: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | object |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2024-07-07 17:14:00 [CRITICAL] validator_excel_main_class-2 - start line 170: Unexpected error: 'ExcelDataLoader' object has no attribute 'log_msg':
+2024-07-07 17:14:00 [INFO] validator_excel_main_class-2 - start line 173: IBRDEV-I-0000002:正常終了しました
+2024-07-07 17:15:26 [INFO] validator_excel_main_class-2 - start line 154: IBRDEV-I-0000001:起動しました
+2024-07-07 17:15:27 [DEBUG] common_utils - tabulate_dataframe line 67: 
+|    |   NO | あ   | い   |   う | え   | お   |   か | き   |   く |   け |   こ |
+|---:|-----:|:-----|:-----|-----:|:-----|:-----|-----:|:-----|-----:|-----:|-----:|
+|  0 |    1 | a    | d    |    1 | 4    | あ   |   10 | 1    |   13 |   16 |   19 |
+|  1 |    2 | b    | e    |    2 | s    | 8    |   11 | h    |   14 |   17 |   20 |
+|  2 |    3 | c    | f    |    3 | 6    | 9    |   12 | I    |   15 |   18 |   21 |:
+2024-07-07 17:15:27 [DEBUG] common_utils - read_excel_one_sheet line 99: 
+Sheet_name: Sheet1
+|    |   NO | あ   | い   |   う | え   | お   |   か | き   |   く |   け |   こ |
+|---:|-----:|:-----|:-----|-----:|:-----|:-----|-----:|:-----|-----:|-----:|-----:|
+|  0 |    1 | a    | d    |    1 | 4    | あ   |   10 | 1    |   13 |   16 |   19 |
+|  1 |    2 | b    | e    |    2 | s    | 8    |   11 | h    |   14 |   17 |   20 |
+|  2 |    3 | c    | f    |    3 | 6    | 9    |   12 | I    |   15 |   18 |   21 |:
+2024-07-07 17:15:27 [DEBUG] common_utils - tabulate_dataframe line 67: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | object |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2024-07-07 17:15:27 [CRITICAL] validator_excel_main_class-2 - start line 170: Unexpected error: 'ExcelProcessor' object has no attribute 'log_msg':
+2024-07-07 17:15:27 [INFO] validator_excel_main_class-2 - start line 173: IBRDEV-I-0000002:正常終了しました
+2024-07-07 17:24:14 [INFO] validator_excel_main_class-2 - start line 157: IBRDEV-I-0000001:起動しました
+2024-07-07 17:24:14 [DEBUG] common_utils - tabulate_dataframe line 67: 
+|    |   NO | あ   | い   |   う | え   | お   |   か | き   |   く |   け |   こ |
+|---:|-----:|:-----|:-----|-----:|:-----|:-----|-----:|:-----|-----:|-----:|-----:|
+|  0 |    1 | a    | d    |    1 | 4    | あ   |   10 | 1    |   13 |   16 |   19 |
+|  1 |    2 | b    | e    |    2 | s    | 8    |   11 | h    |   14 |   17 |   20 |
+|  2 |    3 | c    | f    |    3 | 6    | 9    |   12 | I    |   15 |   18 |   21 |:
+2024-07-07 17:24:14 [DEBUG] common_utils - read_excel_one_sheet line 99: 
+Sheet_name: Sheet1
+|    |   NO | あ   | い   |   う | え   | お   |   か | き   |   く |   け |   こ |
+|---:|-----:|:-----|:-----|-----:|:-----|:-----|-----:|:-----|-----:|-----:|-----:|
+|  0 |    1 | a    | d    |    1 | 4    | あ   |   10 | 1    |   13 |   16 |   19 |
+|  1 |    2 | b    | e    |    2 | s    | 8    |   11 | h    |   14 |   17 |   20 |
+|  2 |    3 | c    | f    |    3 | 6    | 9    |   12 | I    |   15 |   18 |   21 |:
+2024-07-07 17:24:14 [DEBUG] common_utils - tabulate_dataframe line 67: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | object |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2024-07-07 17:24:14 [INFO] validator_excel_main_class-2 - _log_dataframe_info line 89: DataFrame info:
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | object |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2024-07-07 17:24:14 [DEBUG] common_utils - logger_validation_errors line 260: errors: [(0, [{'type': 'int_type', 'loc': ('e',), 'msg': 'Input should be a valid integer', 'input': 'あ', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}, {'type': 'string_type', 'loc': ('g',), 'msg': 'Input should be a valid string', 'input': 1, 'url': 'https://errors.pydantic.dev/2.5/v/string_type'}]), (1, [{'type': 'int_type', 'loc': ('d',), 'msg': 'Input should be a valid integer', 'input': 's', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}])]:
+2024-07-07 17:24:14 [DEBUG] common_utils - logger_validation_errors line 267: error_dict: {'type': 'int_type', 'loc': ('e',), 'msg': 'Input should be a valid integer', 'input': 'あ', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}:
+2024-07-07 17:24:14 [DEBUG] common_utils - logger_validation_errors line 277: values: ['Input should be a valid integer', ('e',), 'あ']:
+2024-07-07 17:24:14 [ERROR] common_utils - logger_validation_errors line 287: Validation error at (1, e):  Input should be a valid integer, wrong values: あ:
+2024-07-07 17:24:14 [DEBUG] common_utils - logger_validation_errors line 267: error_dict: {'type': 'string_type', 'loc': ('g',), 'msg': 'Input should be a valid string', 'input': 1, 'url': 'https://errors.pydantic.dev/2.5/v/string_type'}:
+2024-07-07 17:24:14 [DEBUG] common_utils - logger_validation_errors line 277: values: ['Input should be a valid string', ('g',), 1]:
+2024-07-07 17:24:14 [ERROR] common_utils - logger_validation_errors line 287: Validation error at (1, g):  Input should be a valid string, wrong values: 1:
+2024-07-07 17:24:14 [DEBUG] common_utils - logger_validation_errors line 267: error_dict: {'type': 'int_type', 'loc': ('d',), 'msg': 'Input should be a valid integer', 'input': 's', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}:
+2024-07-07 17:24:14 [DEBUG] common_utils - logger_validation_errors line 277: values: ['Input should be a valid integer', ('d',), 's']:
+2024-07-07 17:24:14 [ERROR] common_utils - logger_validation_errors line 287: Validation error at (2, d):  Input should be a valid integer, wrong values: s:
+2024-07-07 17:24:14 [WARNING] validator_excel_main_class-2 - start line 164: Process completed with 2 validation errors:
+2024-07-07 17:24:14 [INFO] validator_excel_main_class-2 - start line 176: IBRDEV-I-0000002:正常終了しました
+2024-07-07 17:24:15 [INFO] validator_excel_main_class-2 - start line 157: IBRDEV-I-0000001:起動しました
+2024-07-07 17:24:15 [DEBUG] common_utils - tabulate_dataframe line 67: 
+|    |   NO | あ   | い   |   う | え   | お   |   か | き   |   く |   け |   こ |
+|---:|-----:|:-----|:-----|-----:|:-----|:-----|-----:|:-----|-----:|-----:|-----:|
+|  0 |    1 | a    | d    |    1 | 4    | あ   |   10 | 1    |   13 |   16 |   19 |
+|  1 |    2 | b    | e    |    2 | s    | 8    |   11 | h    |   14 |   17 |   20 |
+|  2 |    3 | c    | f    |    3 | 6    | 9    |   12 | I    |   15 |   18 |   21 |:
+2024-07-07 17:24:15 [DEBUG] common_utils - read_excel_one_sheet line 99: 
+Sheet_name: Sheet1
+|    |   NO | あ   | い   |   う | え   | お   |   か | き   |   く |   け |   こ |
+|---:|-----:|:-----|:-----|-----:|:-----|:-----|-----:|:-----|-----:|-----:|-----:|
+|  0 |    1 | a    | d    |    1 | 4    | あ   |   10 | 1    |   13 |   16 |   19 |
+|  1 |    2 | b    | e    |    2 | s    | 8    |   11 | h    |   14 |   17 |   20 |
+|  2 |    3 | c    | f    |    3 | 6    | 9    |   12 | I    |   15 |   18 |   21 |:
+2024-07-07 17:24:15 [DEBUG] common_utils - tabulate_dataframe line 67: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | object |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2024-07-07 17:24:15 [INFO] validator_excel_main_class-2 - _log_dataframe_info line 89: DataFrame info:
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | object |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2024-07-07 17:24:15 [DEBUG] common_utils - logger_validation_errors line 260: errors: [(0, [{'type': 'int_type', 'loc': ('e',), 'msg': 'Input should be a valid integer', 'input': 'あ', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}, {'type': 'string_type', 'loc': ('g',), 'msg': 'Input should be a valid string', 'input': 1, 'url': 'https://errors.pydantic.dev/2.5/v/string_type'}]), (1, [{'type': 'int_type', 'loc': ('d',), 'msg': 'Input should be a valid integer', 'input': 's', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}])]:
+2024-07-07 17:24:15 [DEBUG] common_utils - logger_validation_errors line 267: error_dict: {'type': 'int_type', 'loc': ('e',), 'msg': 'Input should be a valid integer', 'input': 'あ', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}:
+2024-07-07 17:24:15 [DEBUG] common_utils - logger_validation_errors line 277: values: ['Input should be a valid integer', ('e',), 'あ']:
+2024-07-07 17:24:15 [ERROR] common_utils - logger_validation_errors line 287: Validation error at (1, e):  Input should be a valid integer, wrong values: あ:
+2024-07-07 17:24:15 [DEBUG] common_utils - logger_validation_errors line 267: error_dict: {'type': 'string_type', 'loc': ('g',), 'msg': 'Input should be a valid string', 'input': 1, 'url': 'https://errors.pydantic.dev/2.5/v/string_type'}:
+2024-07-07 17:24:15 [DEBUG] common_utils - logger_validation_errors line 277: values: ['Input should be a valid string', ('g',), 1]:
+2024-07-07 17:24:15 [ERROR] common_utils - logger_validation_errors line 287: Validation error at (1, g):  Input should be a valid string, wrong values: 1:
+2024-07-07 17:24:15 [DEBUG] common_utils - logger_validation_errors line 267: error_dict: {'type': 'int_type', 'loc': ('d',), 'msg': 'Input should be a valid integer', 'input': 's', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}:
+2024-07-07 17:24:15 [DEBUG] common_utils - logger_validation_errors line 277: values: ['Input should be a valid integer', ('d',), 's']:
+2024-07-07 17:24:15 [ERROR] common_utils - logger_validation_errors line 287: Validation error at (2, d):  Input should be a valid integer, wrong values: s:
+2024-07-07 17:24:15 [WARNING] validator_excel_main_class-2 - start line 164: Process completed with 2 validation errors:
+2024-07-07 17:24:15 [INFO] validator_excel_main_class-2 - start line 176: IBRDEV-I-0000002:正常終了しました
+2024-07-07 17:24:25 [INFO] validator_excel_main_class-2 - start line 157: IBRDEV-I-0000001:起動しました
+2024-07-07 17:24:26 [DEBUG] common_utils - tabulate_dataframe line 67: 
+|    |   NO | あ   | い   |   う | え   | お   |   か | き   |   く |   け |   こ |
+|---:|-----:|:-----|:-----|-----:|:-----|:-----|-----:|:-----|-----:|-----:|-----:|
+|  0 |    1 | a    | d    |    1 | 4    | あ   |   10 | 1    |   13 |   16 |   19 |
+|  1 |    2 | b    | e    |    2 | s    | 8    |   11 | h    |   14 |   17 |   20 |
+|  2 |    3 | c    | f    |    3 | 6    | 9    |   12 | I    |   15 |   18 |   21 |:
+2024-07-07 17:24:26 [DEBUG] common_utils - read_excel_one_sheet line 99: 
+Sheet_name: Sheet1
+|    |   NO | あ   | い   |   う | え   | お   |   か | き   |   く |   け |   こ |
+|---:|-----:|:-----|:-----|-----:|:-----|:-----|-----:|:-----|-----:|-----:|-----:|
+|  0 |    1 | a    | d    |    1 | 4    | あ   |   10 | 1    |   13 |   16 |   19 |
+|  1 |    2 | b    | e    |    2 | s    | 8    |   11 | h    |   14 |   17 |   20 |
+|  2 |    3 | c    | f    |    3 | 6    | 9    |   12 | I    |   15 |   18 |   21 |:
+2024-07-07 17:24:26 [DEBUG] common_utils - tabulate_dataframe line 67: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | object |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2024-07-07 17:24:26 [INFO] validator_excel_main_class-2 - _log_dataframe_info line 89: DataFrame info:
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | object |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2024-07-07 17:24:26 [DEBUG] common_utils - logger_validation_errors line 260: errors: [(0, [{'type': 'int_type', 'loc': ('e',), 'msg': 'Input should be a valid integer', 'input': 'あ', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}, {'type': 'string_type', 'loc': ('g',), 'msg': 'Input should be a valid string', 'input': 1, 'url': 'https://errors.pydantic.dev/2.5/v/string_type'}]), (1, [{'type': 'int_type', 'loc': ('d',), 'msg': 'Input should be a valid integer', 'input': 's', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}])]:
+2024-07-07 17:24:26 [DEBUG] common_utils - logger_validation_errors line 267: error_dict: {'type': 'int_type', 'loc': ('e',), 'msg': 'Input should be a valid integer', 'input': 'あ', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}:
+2024-07-07 17:24:26 [DEBUG] common_utils - logger_validation_errors line 277: values: ['Input should be a valid integer', ('e',), 'あ']:
+2024-07-07 17:24:26 [ERROR] common_utils - logger_validation_errors line 287: Validation error at (1, e):  Input should be a valid integer, wrong values: あ:
+2024-07-07 17:24:26 [DEBUG] common_utils - logger_validation_errors line 267: error_dict: {'type': 'string_type', 'loc': ('g',), 'msg': 'Input should be a valid string', 'input': 1, 'url': 'https://errors.pydantic.dev/2.5/v/string_type'}:
+2024-07-07 17:24:26 [DEBUG] common_utils - logger_validation_errors line 277: values: ['Input should be a valid string', ('g',), 1]:
+2024-07-07 17:24:26 [ERROR] common_utils - logger_validation_errors line 287: Validation error at (1, g):  Input should be a valid string, wrong values: 1:
+2024-07-07 17:24:26 [DEBUG] common_utils - logger_validation_errors line 267: error_dict: {'type': 'int_type', 'loc': ('d',), 'msg': 'Input should be a valid integer', 'input': 's', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}:
+2024-07-07 17:24:26 [DEBUG] common_utils - logger_validation_errors line 277: values: ['Input should be a valid integer', ('d',), 's']:
+2024-07-07 17:24:26 [ERROR] common_utils - logger_validation_errors line 287: Validation error at (2, d):  Input should be a valid integer, wrong values: s:
+2024-07-07 17:24:26 [WARNING] validator_excel_main_class-2 - start line 164: Process completed with 2 validation errors:
+2024-07-07 17:24:26 [INFO] validator_excel_main_class-2 - start line 176: IBRDEV-I-0000002:正常終了しました
+2024-07-07 17:25:20 [INFO] validator_excel_main_class-2 - start line 157: IBRDEV-I-0000001:起動しました
+2024-07-07 17:25:20 [DEBUG] common_utils - tabulate_dataframe line 67: 
+|    |   NO | あ   | い   |   う | え   | お   |   か | き   |   く |   け |   こ |
+|---:|-----:|:-----|:-----|-----:|:-----|:-----|-----:|:-----|-----:|-----:|-----:|
+|  0 |    1 | a    | d    |    1 | 4    | あ   |   10 | 1    |   13 |   16 |   19 |
+|  1 |    2 | b    | e    |    2 | s    | 8    |   11 | h    |   14 |   17 |   20 |
+|  2 |    3 | c    | f    |    3 | 6    | 9    |   12 | I    |   15 |   18 |   21 |:
+2024-07-07 17:25:20 [DEBUG] common_utils - read_excel_one_sheet line 99: 
+Sheet_name: Sheet1
+|    |   NO | あ   | い   |   う | え   | お   |   か | き   |   く |   け |   こ |
+|---:|-----:|:-----|:-----|-----:|:-----|:-----|-----:|:-----|-----:|-----:|-----:|
+|  0 |    1 | a    | d    |    1 | 4    | あ   |   10 | 1    |   13 |   16 |   19 |
+|  1 |    2 | b    | e    |    2 | s    | 8    |   11 | h    |   14 |   17 |   20 |
+|  2 |    3 | c    | f    |    3 | 6    | 9    |   12 | I    |   15 |   18 |   21 |:
+2024-07-07 17:25:20 [DEBUG] common_utils - tabulate_dataframe line 67: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | object |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2024-07-07 17:25:20 [INFO] validator_excel_main_class-2 - _log_dataframe_info line 89: DataFrame info:
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | object |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2024-07-07 17:25:20 [DEBUG] common_utils - logger_validation_errors line 260: errors: [(0, [{'type': 'int_type', 'loc': ('e',), 'msg': 'Input should be a valid integer', 'input': 'あ', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}, {'type': 'string_type', 'loc': ('g',), 'msg': 'Input should be a valid string', 'input': 1, 'url': 'https://errors.pydantic.dev/2.5/v/string_type'}]), (1, [{'type': 'int_type', 'loc': ('d',), 'msg': 'Input should be a valid integer', 'input': 's', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}])]:
+2024-07-07 17:25:20 [DEBUG] common_utils - logger_validation_errors line 267: error_dict: {'type': 'int_type', 'loc': ('e',), 'msg': 'Input should be a valid integer', 'input': 'あ', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}:
+2024-07-07 17:25:20 [DEBUG] common_utils - logger_validation_errors line 277: values: ['Input should be a valid integer', ('e',), 'あ']:
+2024-07-07 17:25:20 [ERROR] common_utils - logger_validation_errors line 287: Validation error at (1, e):  Input should be a valid integer, wrong values: あ:
+2024-07-07 17:25:20 [DEBUG] common_utils - logger_validation_errors line 267: error_dict: {'type': 'string_type', 'loc': ('g',), 'msg': 'Input should be a valid string', 'input': 1, 'url': 'https://errors.pydantic.dev/2.5/v/string_type'}:
+2024-07-07 17:25:20 [DEBUG] common_utils - logger_validation_errors line 277: values: ['Input should be a valid string', ('g',), 1]:
+2024-07-07 17:25:20 [ERROR] common_utils - logger_validation_errors line 287: Validation error at (1, g):  Input should be a valid string, wrong values: 1:
+2024-07-07 17:25:20 [DEBUG] common_utils - logger_validation_errors line 267: error_dict: {'type': 'int_type', 'loc': ('d',), 'msg': 'Input should be a valid integer', 'input': 's', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}:
+2024-07-07 17:25:20 [DEBUG] common_utils - logger_validation_errors line 277: values: ['Input should be a valid integer', ('d',), 's']:
+2024-07-07 17:25:20 [ERROR] common_utils - logger_validation_errors line 287: Validation error at (2, d):  Input should be a valid integer, wrong values: s:
+2024-07-07 17:25:20 [WARNING] validator_excel_main_class-2 - start line 164: Process completed with 2 validation errors:
+2024-07-07 17:25:20 [INFO] validator_excel_main_class-2 - start line 176: IBRDEV-I-0000002:正常終了しました
+2024-07-07 17:27:20 [INFO] validator_excel_main_class-2 - start line 150: IBRDEV-I-0000001:起動しました
+2024-07-07 17:27:20 [DEBUG] common_utils - tabulate_dataframe line 67: 
+|    |   NO | あ   | い   |   う | え   | お   |   か | き   |   く |   け |   こ |
+|---:|-----:|:-----|:-----|-----:|:-----|:-----|-----:|:-----|-----:|-----:|-----:|
+|  0 |    1 | a    | d    |    1 | 4    | あ   |   10 | 1    |   13 |   16 |   19 |
+|  1 |    2 | b    | e    |    2 | s    | 8    |   11 | h    |   14 |   17 |   20 |
+|  2 |    3 | c    | f    |    3 | 6    | 9    |   12 | I    |   15 |   18 |   21 |:
+2024-07-07 17:27:20 [DEBUG] common_utils - read_excel_one_sheet line 99: 
+Sheet_name: Sheet1
+|    |   NO | あ   | い   |   う | え   | お   |   か | き   |   く |   け |   こ |
+|---:|-----:|:-----|:-----|-----:|:-----|:-----|-----:|:-----|-----:|-----:|-----:|
+|  0 |    1 | a    | d    |    1 | 4    | あ   |   10 | 1    |   13 |   16 |   19 |
+|  1 |    2 | b    | e    |    2 | s    | 8    |   11 | h    |   14 |   17 |   20 |
+|  2 |    3 | c    | f    |    3 | 6    | 9    |   12 | I    |   15 |   18 |   21 |:
+2024-07-07 17:27:20 [DEBUG] common_utils - logger_validation_errors line 260: errors: [(0, [{'type': 'int_type', 'loc': ('e',), 'msg': 'Input should be a valid integer', 'input': 'あ', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}, {'type': 'string_type', 'loc': ('g',), 'msg': 'Input should be a valid string', 'input': 1, 'url': 'https://errors.pydantic.dev/2.5/v/string_type'}]), (1, [{'type': 'int_type', 'loc': ('d',), 'msg': 'Input should be a valid integer', 'input': 's', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}])]:
+2024-07-07 17:27:20 [DEBUG] common_utils - logger_validation_errors line 267: error_dict: {'type': 'int_type', 'loc': ('e',), 'msg': 'Input should be a valid integer', 'input': 'あ', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}:
+2024-07-07 17:27:20 [DEBUG] common_utils - logger_validation_errors line 277: values: ['Input should be a valid integer', ('e',), 'あ']:
+2024-07-07 17:27:20 [ERROR] common_utils - logger_validation_errors line 287: Validation error at (1, e):  Input should be a valid integer, wrong values: あ:
+2024-07-07 17:27:20 [DEBUG] common_utils - logger_validation_errors line 267: error_dict: {'type': 'string_type', 'loc': ('g',), 'msg': 'Input should be a valid string', 'input': 1, 'url': 'https://errors.pydantic.dev/2.5/v/string_type'}:
+2024-07-07 17:27:20 [DEBUG] common_utils - logger_validation_errors line 277: values: ['Input should be a valid string', ('g',), 1]:
+2024-07-07 17:27:20 [ERROR] common_utils - logger_validation_errors line 287: Validation error at (1, g):  Input should be a valid string, wrong values: 1:
+2024-07-07 17:27:20 [DEBUG] common_utils - logger_validation_errors line 267: error_dict: {'type': 'int_type', 'loc': ('d',), 'msg': 'Input should be a valid integer', 'input': 's', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}:
+2024-07-07 17:27:20 [DEBUG] common_utils - logger_validation_errors line 277: values: ['Input should be a valid integer', ('d',), 's']:
+2024-07-07 17:27:20 [ERROR] common_utils - logger_validation_errors line 287: Validation error at (2, d):  Input should be a valid integer, wrong values: s:
+2024-07-07 17:27:20 [WARNING] validator_excel_main_class-2 - start line 157: Process completed with 2 validation errors:
+2024-07-07 17:27:20 [INFO] validator_excel_main_class-2 - start line 169: IBRDEV-I-0000002:正常終了しました
+2024-07-07 17:50:02 [INFO] validator_excel_main_class-2 - start line 138: IBRDEV-I-0000001:起動しました
+2024-07-07 17:50:02 [DEBUG] common_utils - tabulate_dataframe line 67: 
+|    |   NO | あ   | い   |   う | え   | お   |   か | き   |   く |   け |   こ |
+|---:|-----:|:-----|:-----|-----:|:-----|:-----|-----:|:-----|-----:|-----:|-----:|
+|  0 |    1 | a    | d    |    1 | 4    | あ   |   10 | 1    |   13 |   16 |   19 |
+|  1 |    2 | b    | e    |    2 | s    | 8    |   11 | h    |   14 |   17 |   20 |
+|  2 |    3 | c    | f    |    3 | 6    | 9    |   12 | I    |   15 |   18 |   21 |:
+2024-07-07 17:50:02 [DEBUG] common_utils - read_excel_one_sheet line 99: 
+Sheet_name: Sheet1
+|    |   NO | あ   | い   |   う | え   | お   |   か | き   |   く |   け |   こ |
+|---:|-----:|:-----|:-----|-----:|:-----|:-----|-----:|:-----|-----:|-----:|-----:|
+|  0 |    1 | a    | d    |    1 | 4    | あ   |   10 | 1    |   13 |   16 |   19 |
+|  1 |    2 | b    | e    |    2 | s    | 8    |   11 | h    |   14 |   17 |   20 |
+|  2 |    3 | c    | f    |    3 | 6    | 9    |   12 | I    |   15 |   18 |   21 |:
+2024-07-07 17:50:02 [DEBUG] common_utils - tabulate_dataframe line 67: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | object |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2024-07-07 17:50:02 [INFO] validator_excel_main_class-2 - _log_dataframe_info line 87: DataFrame info:
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | object |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2024-07-07 17:50:02 [WARNING] validator_utils - log_errors line 31: Validation error at row 0: {'type': 'int_type', 'loc': ('e',), 'msg': 'Input should be a valid integer', 'input': 'あ', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}:
+2024-07-07 17:50:02 [WARNING] validator_utils - log_errors line 31: Validation error at row 0: {'type': 'string_type', 'loc': ('g',), 'msg': 'Input should be a valid string', 'input': 1, 'url': 'https://errors.pydantic.dev/2.5/v/string_type'}:
+2024-07-07 17:50:02 [WARNING] validator_utils - log_errors line 31: Validation error at row 1: {'type': 'int_type', 'loc': ('d',), 'msg': 'Input should be a valid integer', 'input': 's', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}:
+2024-07-07 17:50:02 [INFO] validator_excel_main_class-2 - start line 147: Process completed successfully:
+2024-07-07 17:50:02 [INFO] validator_excel_main_class-2 - start line 157: IBRDEV-I-0000002:正常終了しました
+2024-07-07 17:50:05 [INFO] validator_excel_main_class-2 - start line 138: IBRDEV-I-0000001:起動しました
+2024-07-07 17:50:05 [DEBUG] common_utils - tabulate_dataframe line 67: 
+|    |   NO | あ   | い   |   う | え   | お   |   か | き   |   く |   け |   こ |
+|---:|-----:|:-----|:-----|-----:|:-----|:-----|-----:|:-----|-----:|-----:|-----:|
+|  0 |    1 | a    | d    |    1 | 4    | あ   |   10 | 1    |   13 |   16 |   19 |
+|  1 |    2 | b    | e    |    2 | s    | 8    |   11 | h    |   14 |   17 |   20 |
+|  2 |    3 | c    | f    |    3 | 6    | 9    |   12 | I    |   15 |   18 |   21 |:
+2024-07-07 17:50:05 [DEBUG] common_utils - read_excel_one_sheet line 99: 
+Sheet_name: Sheet1
+|    |   NO | あ   | い   |   う | え   | お   |   か | き   |   く |   け |   こ |
+|---:|-----:|:-----|:-----|-----:|:-----|:-----|-----:|:-----|-----:|-----:|-----:|
+|  0 |    1 | a    | d    |    1 | 4    | あ   |   10 | 1    |   13 |   16 |   19 |
+|  1 |    2 | b    | e    |    2 | s    | 8    |   11 | h    |   14 |   17 |   20 |
+|  2 |    3 | c    | f    |    3 | 6    | 9    |   12 | I    |   15 |   18 |   21 |:
+2024-07-07 17:50:05 [DEBUG] common_utils - tabulate_dataframe line 67: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | object |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2024-07-07 17:50:05 [INFO] validator_excel_main_class-2 - _log_dataframe_info line 87: DataFrame info:
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | object |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2024-07-07 17:50:05 [WARNING] validator_utils - log_errors line 31: Validation error at row 0: {'type': 'int_type', 'loc': ('e',), 'msg': 'Input should be a valid integer', 'input': 'あ', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}:
+2024-07-07 17:50:05 [WARNING] validator_utils - log_errors line 31: Validation error at row 0: {'type': 'string_type', 'loc': ('g',), 'msg': 'Input should be a valid string', 'input': 1, 'url': 'https://errors.pydantic.dev/2.5/v/string_type'}:
+2024-07-07 17:50:05 [WARNING] validator_utils - log_errors line 31: Validation error at row 1: {'type': 'int_type', 'loc': ('d',), 'msg': 'Input should be a valid integer', 'input': 's', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}:
+2024-07-07 17:50:05 [INFO] validator_excel_main_class-2 - start line 147: Process completed successfully:
+2024-07-07 17:50:05 [INFO] validator_excel_main_class-2 - start line 157: IBRDEV-I-0000002:正常終了しました
+2024-07-07 17:54:53 [INFO] validator_excel_main_class-2 - start line 153: IBRDEV-I-0000001:起動しました
+2024-07-07 17:54:53 [DEBUG] common_utils - tabulate_dataframe line 67: 
+|    |   NO | あ   | い   |   う | え   | お   |   か | き   |   く |   け |   こ |
+|---:|-----:|:-----|:-----|-----:|:-----|:-----|-----:|:-----|-----:|-----:|-----:|
+|  0 |    1 | a    | d    |    1 | 4    | あ   |   10 | 1    |   13 |   16 |   19 |
+|  1 |    2 | b    | e    |    2 | s    | 8    |   11 | h    |   14 |   17 |   20 |
+|  2 |    3 | c    | f    |    3 | 6    | 9    |   12 | I    |   15 |   18 |   21 |:
+2024-07-07 17:54:53 [DEBUG] common_utils - read_excel_one_sheet line 99: 
+Sheet_name: Sheet1
+|    |   NO | あ   | い   |   う | え   | お   |   か | き   |   く |   け |   こ |
+|---:|-----:|:-----|:-----|-----:|:-----|:-----|-----:|:-----|-----:|-----:|-----:|
+|  0 |    1 | a    | d    |    1 | 4    | あ   |   10 | 1    |   13 |   16 |   19 |
+|  1 |    2 | b    | e    |    2 | s    | 8    |   11 | h    |   14 |   17 |   20 |
+|  2 |    3 | c    | f    |    3 | 6    | 9    |   12 | I    |   15 |   18 |   21 |:
+2024-07-07 17:54:53 [DEBUG] common_utils - tabulate_dataframe line 67: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | object |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2024-07-07 17:54:53 [INFO] validator_excel_main_class-2 - _log_dataframe_info line 85: DataFrame info:
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | object |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2024-07-07 17:54:53 [WARNING] validator_utils - log_errors line 31: Validation error at row 0: {'type': 'int_type', 'loc': ('e',), 'msg': 'Input should be a valid integer', 'input': 'あ', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}:
+2024-07-07 17:54:53 [WARNING] validator_utils - log_errors line 31: Validation error at row 0: {'type': 'string_type', 'loc': ('g',), 'msg': 'Input should be a valid string', 'input': 1, 'url': 'https://errors.pydantic.dev/2.5/v/string_type'}:
+2024-07-07 17:54:53 [WARNING] validator_utils - log_errors line 31: Validation error at row 1: {'type': 'int_type', 'loc': ('d',), 'msg': 'Input should be a valid integer', 'input': 's', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}:
+2024-07-07 17:54:53 [WARNING] validator_excel_main_class-2 - start line 159: Process completed with 2 validation errors:
+2024-07-07 17:54:53 [INFO] validator_excel_main_class-2 - start line 169: IBRDEV-I-0000002:正常終了しました
+2024-07-07 17:54:55 [INFO] validator_excel_main_class-2 - start line 153: IBRDEV-I-0000001:起動しました
+2024-07-07 17:54:55 [DEBUG] common_utils - tabulate_dataframe line 67: 
+|    |   NO | あ   | い   |   う | え   | お   |   か | き   |   く |   け |   こ |
+|---:|-----:|:-----|:-----|-----:|:-----|:-----|-----:|:-----|-----:|-----:|-----:|
+|  0 |    1 | a    | d    |    1 | 4    | あ   |   10 | 1    |   13 |   16 |   19 |
+|  1 |    2 | b    | e    |    2 | s    | 8    |   11 | h    |   14 |   17 |   20 |
+|  2 |    3 | c    | f    |    3 | 6    | 9    |   12 | I    |   15 |   18 |   21 |:
+2024-07-07 17:54:55 [DEBUG] common_utils - read_excel_one_sheet line 99: 
+Sheet_name: Sheet1
+|    |   NO | あ   | い   |   う | え   | お   |   か | き   |   く |   け |   こ |
+|---:|-----:|:-----|:-----|-----:|:-----|:-----|-----:|:-----|-----:|-----:|-----:|
+|  0 |    1 | a    | d    |    1 | 4    | あ   |   10 | 1    |   13 |   16 |   19 |
+|  1 |    2 | b    | e    |    2 | s    | 8    |   11 | h    |   14 |   17 |   20 |
+|  2 |    3 | c    | f    |    3 | 6    | 9    |   12 | I    |   15 |   18 |   21 |:
+2024-07-07 17:54:55 [DEBUG] common_utils - tabulate_dataframe line 67: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | object |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2024-07-07 17:54:55 [INFO] validator_excel_main_class-2 - _log_dataframe_info line 85: DataFrame info:
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | object |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2024-07-07 17:54:55 [WARNING] validator_utils - log_errors line 31: Validation error at row 0: {'type': 'int_type', 'loc': ('e',), 'msg': 'Input should be a valid integer', 'input': 'あ', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}:
+2024-07-07 17:54:55 [WARNING] validator_utils - log_errors line 31: Validation error at row 0: {'type': 'string_type', 'loc': ('g',), 'msg': 'Input should be a valid string', 'input': 1, 'url': 'https://errors.pydantic.dev/2.5/v/string_type'}:
+2024-07-07 17:54:55 [WARNING] validator_utils - log_errors line 31: Validation error at row 1: {'type': 'int_type', 'loc': ('d',), 'msg': 'Input should be a valid integer', 'input': 's', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}:
+2024-07-07 17:54:55 [WARNING] validator_excel_main_class-2 - start line 159: Process completed with 2 validation errors:
+2024-07-07 17:54:55 [INFO] validator_excel_main_class-2 - start line 169: IBRDEV-I-0000002:正常終了しました
+2024-07-07 17:54:56 [INFO] validator_excel_main_class-2 - start line 153: IBRDEV-I-0000001:起動しました
+2024-07-07 17:54:56 [DEBUG] common_utils - tabulate_dataframe line 67: 
+|    |   NO | あ   | い   |   う | え   | お   |   か | き   |   く |   け |   こ |
+|---:|-----:|:-----|:-----|-----:|:-----|:-----|-----:|:-----|-----:|-----:|-----:|
+|  0 |    1 | a    | d    |    1 | 4    | あ   |   10 | 1    |   13 |   16 |   19 |
+|  1 |    2 | b    | e    |    2 | s    | 8    |   11 | h    |   14 |   17 |   20 |
+|  2 |    3 | c    | f    |    3 | 6    | 9    |   12 | I    |   15 |   18 |   21 |:
+2024-07-07 17:54:56 [DEBUG] common_utils - read_excel_one_sheet line 99: 
+Sheet_name: Sheet1
+|    |   NO | あ   | い   |   う | え   | お   |   か | き   |   く |   け |   こ |
+|---:|-----:|:-----|:-----|-----:|:-----|:-----|-----:|:-----|-----:|-----:|-----:|
+|  0 |    1 | a    | d    |    1 | 4    | あ   |   10 | 1    |   13 |   16 |   19 |
+|  1 |    2 | b    | e    |    2 | s    | 8    |   11 | h    |   14 |   17 |   20 |
+|  2 |    3 | c    | f    |    3 | 6    | 9    |   12 | I    |   15 |   18 |   21 |:
+2024-07-07 17:54:56 [DEBUG] common_utils - tabulate_dataframe line 67: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | object |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2024-07-07 17:54:56 [INFO] validator_excel_main_class-2 - _log_dataframe_info line 85: DataFrame info:
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | object |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2024-07-07 17:54:56 [WARNING] validator_utils - log_errors line 31: Validation error at row 0: {'type': 'int_type', 'loc': ('e',), 'msg': 'Input should be a valid integer', 'input': 'あ', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}:
+2024-07-07 17:54:56 [WARNING] validator_utils - log_errors line 31: Validation error at row 0: {'type': 'string_type', 'loc': ('g',), 'msg': 'Input should be a valid string', 'input': 1, 'url': 'https://errors.pydantic.dev/2.5/v/string_type'}:
+2024-07-07 17:54:56 [WARNING] validator_utils - log_errors line 31: Validation error at row 1: {'type': 'int_type', 'loc': ('d',), 'msg': 'Input should be a valid integer', 'input': 's', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}:
+2024-07-07 17:54:56 [WARNING] validator_excel_main_class-2 - start line 159: Process completed with 2 validation errors:
+2024-07-07 17:54:56 [INFO] validator_excel_main_class-2 - start line 169: IBRDEV-I-0000002:正常終了しました
+2024-07-07 18:14:17 [INFO] validator_excel_main_class-2 - start line 155: IBRDEV-I-0000001:起動しました
+2024-07-07 18:14:17 [DEBUG] common_utils - tabulate_dataframe line 67: 
+|    |   NO | あ   | い   |   う | え   | お   |   か | き   |   く |   け |   こ |
+|---:|-----:|:-----|:-----|-----:|:-----|:-----|-----:|:-----|-----:|-----:|-----:|
+|  0 |    1 | a    | d    |    1 | 4    | あ   |   10 | 1    |   13 |   16 |   19 |
+|  1 |    2 | b    | e    |    2 | s    | 8    |   11 | h    |   14 |   17 |   20 |
+|  2 |    3 | c    | f    |    3 | 6    | 9    |   12 | I    |   15 |   18 |   21 |:
+2024-07-07 18:14:17 [DEBUG] common_utils - read_excel_one_sheet line 99: 
+Sheet_name: Sheet1
+|    |   NO | あ   | い   |   う | え   | お   |   か | き   |   く |   け |   こ |
+|---:|-----:|:-----|:-----|-----:|:-----|:-----|-----:|:-----|-----:|-----:|-----:|
+|  0 |    1 | a    | d    |    1 | 4    | あ   |   10 | 1    |   13 |   16 |   19 |
+|  1 |    2 | b    | e    |    2 | s    | 8    |   11 | h    |   14 |   17 |   20 |
+|  2 |    3 | c    | f    |    3 | 6    | 9    |   12 | I    |   15 |   18 |   21 |:
+2024-07-07 18:14:17 [DEBUG] common_utils - tabulate_dataframe line 67: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | object |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2024-07-07 18:14:17 [INFO] validator_excel_main_class-2 - _log_dataframe_info line 85: DataFrame info:
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | object |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2024-07-07 18:14:17 [WARNING] validator_utils - log_errors line 31: Validation error at row 0: {'type': 'int_type', 'loc': ('e',), 'msg': 'Input should be a valid integer', 'input': 'あ', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}:
+2024-07-07 18:14:17 [WARNING] validator_utils - log_errors line 31: Validation error at row 0: {'type': 'string_type', 'loc': ('g',), 'msg': 'Input should be a valid string', 'input': 1, 'url': 'https://errors.pydantic.dev/2.5/v/string_type'}:
+2024-07-07 18:14:17 [WARNING] validator_utils - log_errors line 31: Validation error at row 1: {'type': 'int_type', 'loc': ('d',), 'msg': 'Input should be a valid integer', 'input': 's', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}:
+2024-07-07 18:14:17 [WARNING] validator_excel_main_class-2 - start line 161: Process completed with 2 validation errors:
+2024-07-07 18:14:17 [INFO] validator_excel_main_class-2 - start line 171: IBRDEV-I-0000002:正常終了しました
+2024-07-07 18:17:20 [INFO] validator_excel_main_class-2 - start line 155: IBRDEV-I-0000001:起動しました
+2024-07-07 18:17:20 [DEBUG] common_utils - tabulate_dataframe line 67: 
+|    |   NO | あ   | い   |   う | え   | お   |   か | き   |   く |   け |   こ |
+|---:|-----:|:-----|:-----|-----:|:-----|:-----|-----:|:-----|-----:|-----:|-----:|
+|  0 |    1 | a    | d    |    1 | 4    | あ   |   10 | 1    |   13 |   16 |   19 |
+|  1 |    2 | b    | e    |    2 | s    | 8    |   11 | h    |   14 |   17 |   20 |
+|  2 |    3 | c    | f    |    3 | 6    | 9    |   12 | I    |   15 |   18 |   21 |:
+2024-07-07 18:17:20 [DEBUG] common_utils - read_excel_one_sheet line 99: 
+Sheet_name: Sheet1
+|    |   NO | あ   | い   |   う | え   | お   |   か | き   |   く |   け |   こ |
+|---:|-----:|:-----|:-----|-----:|:-----|:-----|-----:|:-----|-----:|-----:|-----:|
+|  0 |    1 | a    | d    |    1 | 4    | あ   |   10 | 1    |   13 |   16 |   19 |
+|  1 |    2 | b    | e    |    2 | s    | 8    |   11 | h    |   14 |   17 |   20 |
+|  2 |    3 | c    | f    |    3 | 6    | 9    |   12 | I    |   15 |   18 |   21 |:
+2024-07-07 18:17:21 [DEBUG] common_utils - tabulate_dataframe line 67: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | object |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2024-07-07 18:17:21 [INFO] validator_excel_main_class-2 - _log_dataframe_info line 85: DataFrame info:
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | object |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2024-07-07 18:17:21 [WARNING] validator_utils - log_errors line 31: Validation error at row 0: {'type': 'int_type', 'loc': ('e',), 'msg': 'Input should be a valid integer', 'input': 'あ', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}:
+2024-07-07 18:17:21 [WARNING] validator_utils - log_errors line 31: Validation error at row 0: {'type': 'string_type', 'loc': ('g',), 'msg': 'Input should be a valid string', 'input': 1, 'url': 'https://errors.pydantic.dev/2.5/v/string_type'}:
+2024-07-07 18:17:21 [WARNING] validator_utils - log_errors line 31: Validation error at row 1: {'type': 'int_type', 'loc': ('d',), 'msg': 'Input should be a valid integer', 'input': 's', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}:
+2024-07-07 18:17:21 [WARNING] validator_excel_main_class-2 - start line 161: Process completed with 2 validation errors:
+2024-07-07 18:17:21 [INFO] validator_excel_main_class-2 - start line 171: IBRDEV-I-0000002:正常終了しました
+2024-07-07 18:20:21 [INFO] validator_excel_main_class-2 - start line 155: IBRDEV-I-0000001:起動しました
+2024-07-07 18:20:21 [DEBUG] common_utils - tabulate_dataframe line 67: 
+|    |   NO | あ   | い   |   う | え   | お   |   か | き   |   く |   け |   こ |
+|---:|-----:|:-----|:-----|-----:|:-----|:-----|-----:|:-----|-----:|-----:|-----:|
+|  0 |    1 | a    | d    |    1 | 4    | あ   |   10 | 1    |   13 |   16 |   19 |
+|  1 |    2 | b    | e    |    2 | s    | 8    |   11 | h    |   14 |   17 |   20 |
+|  2 |    3 | c    | f    |    3 | 6    | 9    |   12 | I    |   15 |   18 |   21 |:
+2024-07-07 18:20:21 [DEBUG] common_utils - read_excel_one_sheet line 99: 
+Sheet_name: Sheet1
+|    |   NO | あ   | い   |   う | え   | お   |   か | き   |   く |   け |   こ |
+|---:|-----:|:-----|:-----|-----:|:-----|:-----|-----:|:-----|-----:|-----:|-----:|
+|  0 |    1 | a    | d    |    1 | 4    | あ   |   10 | 1    |   13 |   16 |   19 |
+|  1 |    2 | b    | e    |    2 | s    | 8    |   11 | h    |   14 |   17 |   20 |
+|  2 |    3 | c    | f    |    3 | 6    | 9    |   12 | I    |   15 |   18 |   21 |:
+2024-07-07 18:20:21 [DEBUG] common_utils - tabulate_dataframe line 67: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | object |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2024-07-07 18:20:21 [INFO] validator_excel_main_class-2 - _log_dataframe_info line 85: DataFrame info:
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | object |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2024-07-07 18:20:21 [WARNING] validator_utils - log_errors line 31: Validation error at row 0: {'type': 'int_type', 'loc': ('e',), 'msg': 'Input should be a valid integer', 'input': 'あ', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}:
+2024-07-07 18:20:21 [WARNING] validator_utils - log_errors line 31: Validation error at row 0: {'type': 'string_type', 'loc': ('g',), 'msg': 'Input should be a valid string', 'input': 1, 'url': 'https://errors.pydantic.dev/2.5/v/string_type'}:
+2024-07-07 18:20:21 [WARNING] validator_utils - log_errors line 31: Validation error at row 1: {'type': 'int_type', 'loc': ('d',), 'msg': 'Input should be a valid integer', 'input': 's', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}:
+2024-07-07 18:20:21 [WARNING] validator_excel_main_class-2 - start line 161: Process completed with 2 validation errors:
+2024-07-07 18:20:21 [INFO] validator_excel_main_class-2 - start line 171: IBRDEV-I-0000002:正常終了しました
+2024-07-07 18:23:06 [INFO] validator_excel_main_class-1 - start line 134: IBRDEV-I-0000001:起動しました
+2024-07-07 18:23:06 [DEBUG] common_utils - tabulate_dataframe line 67: 
+|    |   NO | あ   | い   |   う | え   | お   |   か | き   |   く |   け |   こ |
+|---:|-----:|:-----|:-----|-----:|:-----|:-----|-----:|:-----|-----:|-----:|-----:|
+|  0 |    1 | a    | d    |    1 | 4    | あ   |   10 | 1    |   13 |   16 |   19 |
+|  1 |    2 | b    | e    |    2 | s    | 8    |   11 | h    |   14 |   17 |   20 |
+|  2 |    3 | c    | f    |    3 | 6    | 9    |   12 | I    |   15 |   18 |   21 |:
+2024-07-07 18:23:06 [DEBUG] common_utils - read_excel_one_sheet line 99: 
+Sheet_name: Sheet1
+|    |   NO | あ   | い   |   う | え   | お   |   か | き   |   く |   け |   こ |
+|---:|-----:|:-----|:-----|-----:|:-----|:-----|-----:|:-----|-----:|-----:|-----:|
+|  0 |    1 | a    | d    |    1 | 4    | あ   |   10 | 1    |   13 |   16 |   19 |
+|  1 |    2 | b    | e    |    2 | s    | 8    |   11 | h    |   14 |   17 |   20 |
+|  2 |    3 | c    | f    |    3 | 6    | 9    |   12 | I    |   15 |   18 |   21 |:
+2024-07-07 18:23:06 [DEBUG] common_utils - tabulate_dataframe line 67: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | object |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2024-07-07 18:23:06 [INFO] validator_excel_main_class-1 - _excel_to_dataframe line 94: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | object |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2024-07-07 18:23:06 [INFO] validator_excel_main_class-1 - _valdate line 123: 検証対象ファイル: src/share/receive/input_data_validator.xlsx:
+2024-07-07 18:23:06 [INFO] validator_excel_main_class-1 - _valdate line 124: 検証対象Sheet: Sheet1:
+2024-07-07 18:23:06 [WARNING] validator_excel_main_class-1 - _valdate line 125: validate error 検出件数: 2:
+2024-07-07 18:23:06 [DEBUG] validator_excel_main_class-1 - _valdate line 126: validate error list: [(0, [{'type': 'int_type', 'loc': ('e',), 'msg': 'Input should be a valid integer', 'input': 'あ', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}, {'type': 'string_type', 'loc': ('g',), 'msg': 'Input should be a valid string', 'input': 1, 'url': 'https://errors.pydantic.dev/2.5/v/string_type'}]), (1, [{'type': 'int_type', 'loc': ('d',), 'msg': 'Input should be a valid integer', 'input': 's', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}])]:
+2024-07-07 18:23:06 [DEBUG] common_utils - logger_validation_errors line 260: errors: [(0, [{'type': 'int_type', 'loc': ('e',), 'msg': 'Input should be a valid integer', 'input': 'あ', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}, {'type': 'string_type', 'loc': ('g',), 'msg': 'Input should be a valid string', 'input': 1, 'url': 'https://errors.pydantic.dev/2.5/v/string_type'}]), (1, [{'type': 'int_type', 'loc': ('d',), 'msg': 'Input should be a valid integer', 'input': 's', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}])]:
+2024-07-07 18:23:06 [DEBUG] common_utils - logger_validation_errors line 267: error_dict: {'type': 'int_type', 'loc': ('e',), 'msg': 'Input should be a valid integer', 'input': 'あ', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}:
+2024-07-07 18:23:06 [DEBUG] common_utils - logger_validation_errors line 277: values: ['Input should be a valid integer', ('e',), 'あ']:
+2024-07-07 18:23:06 [ERROR] common_utils - logger_validation_errors line 287: Validation error at (1, e):  Input should be a valid integer, wrong values: あ:
+2024-07-07 18:23:06 [DEBUG] common_utils - logger_validation_errors line 267: error_dict: {'type': 'string_type', 'loc': ('g',), 'msg': 'Input should be a valid string', 'input': 1, 'url': 'https://errors.pydantic.dev/2.5/v/string_type'}:
+2024-07-07 18:23:06 [DEBUG] common_utils - logger_validation_errors line 277: values: ['Input should be a valid string', ('g',), 1]:
+2024-07-07 18:23:06 [ERROR] common_utils - logger_validation_errors line 287: Validation error at (1, g):  Input should be a valid string, wrong values: 1:
+2024-07-07 18:23:06 [DEBUG] common_utils - logger_validation_errors line 267: error_dict: {'type': 'int_type', 'loc': ('d',), 'msg': 'Input should be a valid integer', 'input': 's', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}:
+2024-07-07 18:23:06 [DEBUG] common_utils - logger_validation_errors line 277: values: ['Input should be a valid integer', ('d',), 's']:
+2024-07-07 18:23:06 [ERROR] common_utils - logger_validation_errors line 287: Validation error at (2, d):  Input should be a valid integer, wrong values: s:
+2024-07-07 18:23:06 [INFO] validator_excel_main_class-1 - start line 150: IBRDEV-I-0000002:正常終了しました
+2024-07-07 18:23:09 [INFO] validator_excel_main_class-2 - start line 155: IBRDEV-I-0000001:起動しました
+2024-07-07 18:23:09 [DEBUG] common_utils - tabulate_dataframe line 67: 
+|    |   NO | あ   | い   |   う | え   | お   |   か | き   |   く |   け |   こ |
+|---:|-----:|:-----|:-----|-----:|:-----|:-----|-----:|:-----|-----:|-----:|-----:|
+|  0 |    1 | a    | d    |    1 | 4    | あ   |   10 | 1    |   13 |   16 |   19 |
+|  1 |    2 | b    | e    |    2 | s    | 8    |   11 | h    |   14 |   17 |   20 |
+|  2 |    3 | c    | f    |    3 | 6    | 9    |   12 | I    |   15 |   18 |   21 |:
+2024-07-07 18:23:09 [DEBUG] common_utils - read_excel_one_sheet line 99: 
+Sheet_name: Sheet1
+|    |   NO | あ   | い   |   う | え   | お   |   か | き   |   く |   け |   こ |
+|---:|-----:|:-----|:-----|-----:|:-----|:-----|-----:|:-----|-----:|-----:|-----:|
+|  0 |    1 | a    | d    |    1 | 4    | あ   |   10 | 1    |   13 |   16 |   19 |
+|  1 |    2 | b    | e    |    2 | s    | 8    |   11 | h    |   14 |   17 |   20 |
+|  2 |    3 | c    | f    |    3 | 6    | 9    |   12 | I    |   15 |   18 |   21 |:
+2024-07-07 18:23:09 [DEBUG] common_utils - tabulate_dataframe line 67: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | object |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2024-07-07 18:23:09 [INFO] validator_excel_main_class-2 - _log_dataframe_info line 85: DataFrame info:
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | object |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2024-07-07 18:23:09 [WARNING] validator_utils - log_errors line 31: Validation error at row 0: {'type': 'int_type', 'loc': ('e',), 'msg': 'Input should be a valid integer', 'input': 'あ', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}:
+2024-07-07 18:23:09 [WARNING] validator_utils - log_errors line 31: Validation error at row 0: {'type': 'string_type', 'loc': ('g',), 'msg': 'Input should be a valid string', 'input': 1, 'url': 'https://errors.pydantic.dev/2.5/v/string_type'}:
+2024-07-07 18:23:09 [WARNING] validator_utils - log_errors line 31: Validation error at row 1: {'type': 'int_type', 'loc': ('d',), 'msg': 'Input should be a valid integer', 'input': 's', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}:
+2024-07-07 18:23:09 [WARNING] validator_excel_main_class-2 - start line 161: Process completed with 2 validation errors:
+2024-07-07 18:23:09 [INFO] validator_excel_main_class-2 - start line 171: IBRDEV-I-0000002:正常終了しました
+2024-07-07 18:27:17 [INFO] validator_excel_main_class-2 - start line 155: IBRDEV-I-0000001:起動しました
+2024-07-07 18:27:17 [DEBUG] common_utils - tabulate_dataframe line 67: 
+|    |   NO | あ   | い   |   う | え   | お   |   か | き   |   く |   け |   こ |
+|---:|-----:|:-----|:-----|-----:|:-----|:-----|-----:|:-----|-----:|-----:|-----:|
+|  0 |    1 | a    | d    |    1 | 4    | あ   |   10 | 1    |   13 |   16 |   19 |
+|  1 |    2 | b    | e    |    2 | s    | 8    |   11 | h    |   14 |   17 |   20 |
+|  2 |    3 | c    | f    |    3 | 6    | 9    |   12 | I    |   15 |   18 |   21 |:
+2024-07-07 18:27:17 [DEBUG] common_utils - read_excel_one_sheet line 99: 
+Sheet_name: Sheet1
+|    |   NO | あ   | い   |   う | え   | お   |   か | き   |   く |   け |   こ |
+|---:|-----:|:-----|:-----|-----:|:-----|:-----|-----:|:-----|-----:|-----:|-----:|
+|  0 |    1 | a    | d    |    1 | 4    | あ   |   10 | 1    |   13 |   16 |   19 |
+|  1 |    2 | b    | e    |    2 | s    | 8    |   11 | h    |   14 |   17 |   20 |
+|  2 |    3 | c    | f    |    3 | 6    | 9    |   12 | I    |   15 |   18 |   21 |:
+2024-07-07 18:27:17 [DEBUG] common_utils - tabulate_dataframe line 67: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | object |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2024-07-07 18:27:17 [INFO] validator_excel_main_class-2 - _log_dataframe_info line 85: DataFrame info:
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | object |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2024-07-07 18:27:17 [WARNING] validator_utils - log_errors line 31: Validation error at row 0: {'type': 'int_type', 'loc': ('e',), 'msg': 'Input should be a valid integer', 'input': 'あ', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}:
+2024-07-07 18:27:17 [WARNING] validator_utils - log_errors line 31: Validation error at row 0: {'type': 'string_type', 'loc': ('g',), 'msg': 'Input should be a valid string', 'input': 1, 'url': 'https://errors.pydantic.dev/2.5/v/string_type'}:
+2024-07-07 18:27:17 [WARNING] validator_utils - log_errors line 31: Validation error at row 1: {'type': 'int_type', 'loc': ('d',), 'msg': 'Input should be a valid integer', 'input': 's', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}:
+2024-07-07 18:27:17 [WARNING] validator_excel_main_class-2 - start line 161: Process completed with 2 validation errors:
+2024-07-07 18:27:17 [INFO] validator_excel_main_class-2 - start line 171: IBRDEV-I-0000002:正常終了しました
+2024-07-07 18:27:19 [INFO] validator_excel_main_class-2 - start line 155: IBRDEV-I-0000001:起動しました
+2024-07-07 18:27:19 [DEBUG] common_utils - tabulate_dataframe line 67: 
+|    |   NO | あ   | い   |   う | え   | お   |   か | き   |   く |   け |   こ |
+|---:|-----:|:-----|:-----|-----:|:-----|:-----|-----:|:-----|-----:|-----:|-----:|
+|  0 |    1 | a    | d    |    1 | 4    | あ   |   10 | 1    |   13 |   16 |   19 |
+|  1 |    2 | b    | e    |    2 | s    | 8    |   11 | h    |   14 |   17 |   20 |
+|  2 |    3 | c    | f    |    3 | 6    | 9    |   12 | I    |   15 |   18 |   21 |:
+2024-07-07 18:27:19 [DEBUG] common_utils - read_excel_one_sheet line 99: 
+Sheet_name: Sheet1
+|    |   NO | あ   | い   |   う | え   | お   |   か | き   |   く |   け |   こ |
+|---:|-----:|:-----|:-----|-----:|:-----|:-----|-----:|:-----|-----:|-----:|-----:|
+|  0 |    1 | a    | d    |    1 | 4    | あ   |   10 | 1    |   13 |   16 |   19 |
+|  1 |    2 | b    | e    |    2 | s    | 8    |   11 | h    |   14 |   17 |   20 |
+|  2 |    3 | c    | f    |    3 | 6    | 9    |   12 | I    |   15 |   18 |   21 |:
+2024-07-07 18:27:19 [DEBUG] common_utils - tabulate_dataframe line 67: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | object |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2024-07-07 18:27:19 [INFO] validator_excel_main_class-2 - _log_dataframe_info line 85: DataFrame info:
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | object |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2024-07-07 18:27:19 [WARNING] validator_utils - log_errors line 31: Validation error at row 0: {'type': 'int_type', 'loc': ('e',), 'msg': 'Input should be a valid integer', 'input': 'あ', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}:
+2024-07-07 18:27:19 [WARNING] validator_utils - log_errors line 31: Validation error at row 0: {'type': 'string_type', 'loc': ('g',), 'msg': 'Input should be a valid string', 'input': 1, 'url': 'https://errors.pydantic.dev/2.5/v/string_type'}:
+2024-07-07 18:27:19 [WARNING] validator_utils - log_errors line 31: Validation error at row 1: {'type': 'int_type', 'loc': ('d',), 'msg': 'Input should be a valid integer', 'input': 's', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}:
+2024-07-07 18:27:19 [WARNING] validator_excel_main_class-2 - start line 161: Process completed with 2 validation errors:
+2024-07-07 18:27:19 [INFO] validator_excel_main_class-2 - start line 171: IBRDEV-I-0000002:正常終了しました
+2024-07-07 18:27:20 [INFO] validator_excel_main_class-2 - start line 155: IBRDEV-I-0000001:起動しました
+2024-07-07 18:27:20 [DEBUG] common_utils - tabulate_dataframe line 67: 
+|    |   NO | あ   | い   |   う | え   | お   |   か | き   |   く |   け |   こ |
+|---:|-----:|:-----|:-----|-----:|:-----|:-----|-----:|:-----|-----:|-----:|-----:|
+|  0 |    1 | a    | d    |    1 | 4    | あ   |   10 | 1    |   13 |   16 |   19 |
+|  1 |    2 | b    | e    |    2 | s    | 8    |   11 | h    |   14 |   17 |   20 |
+|  2 |    3 | c    | f    |    3 | 6    | 9    |   12 | I    |   15 |   18 |   21 |:
+2024-07-07 18:27:20 [DEBUG] common_utils - read_excel_one_sheet line 99: 
+Sheet_name: Sheet1
+|    |   NO | あ   | い   |   う | え   | お   |   か | き   |   く |   け |   こ |
+|---:|-----:|:-----|:-----|-----:|:-----|:-----|-----:|:-----|-----:|-----:|-----:|
+|  0 |    1 | a    | d    |    1 | 4    | あ   |   10 | 1    |   13 |   16 |   19 |
+|  1 |    2 | b    | e    |    2 | s    | 8    |   11 | h    |   14 |   17 |   20 |
+|  2 |    3 | c    | f    |    3 | 6    | 9    |   12 | I    |   15 |   18 |   21 |:
+2024-07-07 18:27:20 [DEBUG] common_utils - tabulate_dataframe line 67: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | object |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2024-07-07 18:27:20 [INFO] validator_excel_main_class-2 - _log_dataframe_info line 85: DataFrame info:
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | object |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2024-07-07 18:27:20 [WARNING] validator_utils - log_errors line 31: Validation error at row 0: {'type': 'int_type', 'loc': ('e',), 'msg': 'Input should be a valid integer', 'input': 'あ', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}:
+2024-07-07 18:27:20 [WARNING] validator_utils - log_errors line 31: Validation error at row 0: {'type': 'string_type', 'loc': ('g',), 'msg': 'Input should be a valid string', 'input': 1, 'url': 'https://errors.pydantic.dev/2.5/v/string_type'}:
+2024-07-07 18:27:20 [WARNING] validator_utils - log_errors line 31: Validation error at row 1: {'type': 'int_type', 'loc': ('d',), 'msg': 'Input should be a valid integer', 'input': 's', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}:
+2024-07-07 18:27:20 [WARNING] validator_excel_main_class-2 - start line 161: Process completed with 2 validation errors:
+2024-07-07 18:27:20 [INFO] validator_excel_main_class-2 - start line 171: IBRDEV-I-0000002:正常終了しました
+2024-07-07 18:27:21 [INFO] validator_excel_main_class-2 - start line 155: IBRDEV-I-0000001:起動しました
+2024-07-07 18:27:21 [DEBUG] common_utils - tabulate_dataframe line 67: 
+|    |   NO | あ   | い   |   う | え   | お   |   か | き   |   く |   け |   こ |
+|---:|-----:|:-----|:-----|-----:|:-----|:-----|-----:|:-----|-----:|-----:|-----:|
+|  0 |    1 | a    | d    |    1 | 4    | あ   |   10 | 1    |   13 |   16 |   19 |
+|  1 |    2 | b    | e    |    2 | s    | 8    |   11 | h    |   14 |   17 |   20 |
+|  2 |    3 | c    | f    |    3 | 6    | 9    |   12 | I    |   15 |   18 |   21 |:
+2024-07-07 18:27:21 [DEBUG] common_utils - read_excel_one_sheet line 99: 
+Sheet_name: Sheet1
+|    |   NO | あ   | い   |   う | え   | お   |   か | き   |   く |   け |   こ |
+|---:|-----:|:-----|:-----|-----:|:-----|:-----|-----:|:-----|-----:|-----:|-----:|
+|  0 |    1 | a    | d    |    1 | 4    | あ   |   10 | 1    |   13 |   16 |   19 |
+|  1 |    2 | b    | e    |    2 | s    | 8    |   11 | h    |   14 |   17 |   20 |
+|  2 |    3 | c    | f    |    3 | 6    | 9    |   12 | I    |   15 |   18 |   21 |:
+2024-07-07 18:27:21 [DEBUG] common_utils - tabulate_dataframe line 67: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | object |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2024-07-07 18:27:21 [INFO] validator_excel_main_class-2 - _log_dataframe_info line 85: DataFrame info:
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | object |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2024-07-07 18:27:21 [WARNING] validator_utils - log_errors line 31: Validation error at row 0: {'type': 'int_type', 'loc': ('e',), 'msg': 'Input should be a valid integer', 'input': 'あ', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}:
+2024-07-07 18:27:21 [WARNING] validator_utils - log_errors line 31: Validation error at row 0: {'type': 'string_type', 'loc': ('g',), 'msg': 'Input should be a valid string', 'input': 1, 'url': 'https://errors.pydantic.dev/2.5/v/string_type'}:
+2024-07-07 18:27:21 [WARNING] validator_utils - log_errors line 31: Validation error at row 1: {'type': 'int_type', 'loc': ('d',), 'msg': 'Input should be a valid integer', 'input': 's', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}:
+2024-07-07 18:27:21 [WARNING] validator_excel_main_class-2 - start line 161: Process completed with 2 validation errors:
+2024-07-07 18:27:21 [INFO] validator_excel_main_class-2 - start line 171: IBRDEV-I-0000002:正常終了しました
+2024-07-07 18:27:57 [INFO] validator_excel_main_class-2 - start line 155: IBRDEV-I-0000001:起動しました
+2024-07-07 18:27:58 [DEBUG] common_utils - tabulate_dataframe line 67: 
+|    |   NO | あ   | い   |   う | え   | お   |   か | き   |   く |   け |   こ |
+|---:|-----:|:-----|:-----|-----:|:-----|:-----|-----:|:-----|-----:|-----:|-----:|
+|  0 |    1 | a    | d    |    1 | 4    | あ   |   10 | 1    |   13 |   16 |   19 |
+|  1 |    2 | b    | e    |    2 | s    | 8    |   11 | h    |   14 |   17 |   20 |
+|  2 |    3 | c    | f    |    3 | 6    | 9    |   12 | I    |   15 |   18 |   21 |:
+2024-07-07 18:27:58 [DEBUG] common_utils - read_excel_one_sheet line 99: 
+Sheet_name: Sheet1
+|    |   NO | あ   | い   |   う | え   | お   |   か | き   |   く |   け |   こ |
+|---:|-----:|:-----|:-----|-----:|:-----|:-----|-----:|:-----|-----:|-----:|-----:|
+|  0 |    1 | a    | d    |    1 | 4    | あ   |   10 | 1    |   13 |   16 |   19 |
+|  1 |    2 | b    | e    |    2 | s    | 8    |   11 | h    |   14 |   17 |   20 |
+|  2 |    3 | c    | f    |    3 | 6    | 9    |   12 | I    |   15 |   18 |   21 |:
+2024-07-07 18:27:58 [DEBUG] common_utils - tabulate_dataframe line 67: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | object |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2024-07-07 18:27:58 [INFO] validator_excel_main_class-2 - _log_dataframe_info line 85: DataFrame info:
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | object |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2024-07-07 18:27:58 [WARNING] validator_utils - log_errors line 31: Validation error at row 0: {'type': 'int_type', 'loc': ('e',), 'msg': 'Input should be a valid integer', 'input': 'あ', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}:
+2024-07-07 18:27:58 [WARNING] validator_utils - log_errors line 31: Validation error at row 0: {'type': 'string_type', 'loc': ('g',), 'msg': 'Input should be a valid string', 'input': 1, 'url': 'https://errors.pydantic.dev/2.5/v/string_type'}:
+2024-07-07 18:27:58 [WARNING] validator_utils - log_errors line 31: Validation error at row 1: {'type': 'int_type', 'loc': ('d',), 'msg': 'Input should be a valid integer', 'input': 's', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}:
+2024-07-07 18:27:58 [WARNING] validator_excel_main_class-2 - start line 161: Process completed with 2 validation errors:
+2024-07-07 18:27:58 [INFO] validator_excel_main_class-2 - start line 171: IBRDEV-I-0000002:正常終了しました
+2024-07-07 18:46:54 [INFO] validator_excel_main_class-2 - start line 155: IBRDEV-I-0000001:起動しました
+2024-07-07 18:46:54 [DEBUG] common_utils - tabulate_dataframe line 67: 
+|    |   NO | あ   | い   |   う | え   | お   |   か | き   |   く |   け |   こ |
+|---:|-----:|:-----|:-----|-----:|:-----|:-----|-----:|:-----|-----:|-----:|-----:|
+|  0 |    1 | a    | d    |    1 | 4    | あ   |   10 | 1    |   13 |   16 |   19 |
+|  1 |    2 | b    | e    |    2 | s    | 8    |   11 | h    |   14 |   17 |   20 |
+|  2 |    3 | c    | f    |    3 | 6    | 9    |   12 | I    |   15 |   18 |   21 |:
+2024-07-07 18:46:54 [DEBUG] common_utils - read_excel_one_sheet line 99: 
+Sheet_name: Sheet1
+|    |   NO | あ   | い   |   う | え   | お   |   か | き   |   く |   け |   こ |
+|---:|-----:|:-----|:-----|-----:|:-----|:-----|-----:|:-----|-----:|-----:|-----:|
+|  0 |    1 | a    | d    |    1 | 4    | あ   |   10 | 1    |   13 |   16 |   19 |
+|  1 |    2 | b    | e    |    2 | s    | 8    |   11 | h    |   14 |   17 |   20 |
+|  2 |    3 | c    | f    |    3 | 6    | 9    |   12 | I    |   15 |   18 |   21 |:
+2024-07-07 18:46:54 [DEBUG] common_utils - tabulate_dataframe line 67: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | NO        | int64  |
+|  1 | あ        | object |
+|  2 | い        | object |
+|  3 | う        | int64  |
+|  4 | え        | object |
+|  5 | お        | object |
+|  6 | か        | int64  |
+|  7 | き        | object |
+|  8 | く        | int64  |
+|  9 | け        | int64  |
+| 10 | こ        | int64  |:
+2024-07-07 18:46:54 [INFO] validator_excel_main_class-2 - _log_dataframe_info line 85: DataFrame info:
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | NO        | int64  |
+|  1 | あ        | object |
+|  2 | い        | object |
+|  3 | う        | int64  |
+|  4 | え        | object |
+|  5 | お        | object |
+|  6 | か        | int64  |
+|  7 | き        | object |
+|  8 | く        | int64  |
+|  9 | け        | int64  |
+| 10 | こ        | int64  |:
+2024-07-07 18:46:54 [WARNING] validator_utils - log_errors line 31: Validation error at row 0: {'type': 'missing', 'loc': ('No',), 'msg': 'Field required', 'input': {'NO': 1, 'あ': 'a', 'い': 'd', 'う': 1, 'え': 4, 'お': 'あ', 'か': 10, 'き': 1, 'く': 13, 'け': 16, 'こ': 19}, 'url': 'https://errors.pydantic.dev/2.5/v/missing'}:
+2024-07-07 18:46:54 [WARNING] validator_utils - log_errors line 31: Validation error at row 0: {'type': 'missing', 'loc': ('a',), 'msg': 'Field required', 'input': {'NO': 1, 'あ': 'a', 'い': 'd', 'う': 1, 'え': 4, 'お': 'あ', 'か': 10, 'き': 1, 'く': 13, 'け': 16, 'こ': 19}, 'url': 'https://errors.pydantic.dev/2.5/v/missing'}:
+2024-07-07 18:46:54 [WARNING] validator_utils - log_errors line 31: Validation error at row 0: {'type': 'missing', 'loc': ('b',), 'msg': 'Field required', 'input': {'NO': 1, 'あ': 'a', 'い': 'd', 'う': 1, 'え': 4, 'お': 'あ', 'か': 10, 'き': 1, 'く': 13, 'け': 16, 'こ': 19}, 'url': 'https://errors.pydantic.dev/2.5/v/missing'}:
+2024-07-07 18:46:54 [WARNING] validator_utils - log_errors line 31: Validation error at row 0: {'type': 'missing', 'loc': ('c',), 'msg': 'Field required', 'input': {'NO': 1, 'あ': 'a', 'い': 'd', 'う': 1, 'え': 4, 'お': 'あ', 'か': 10, 'き': 1, 'く': 13, 'け': 16, 'こ': 19}, 'url': 'https://errors.pydantic.dev/2.5/v/missing'}:
+2024-07-07 18:46:54 [WARNING] validator_utils - log_errors line 31: Validation error at row 0: {'type': 'missing', 'loc': ('d',), 'msg': 'Field required', 'input': {'NO': 1, 'あ': 'a', 'い': 'd', 'う': 1, 'え': 4, 'お': 'あ', 'か': 10, 'き': 1, 'く': 13, 'け': 16, 'こ': 19}, 'url': 'https://errors.pydantic.dev/2.5/v/missing'}:
+2024-07-07 18:46:54 [WARNING] validator_utils - log_errors line 31: Validation error at row 0: {'type': 'missing', 'loc': ('e',), 'msg': 'Field required', 'input': {'NO': 1, 'あ': 'a', 'い': 'd', 'う': 1, 'え': 4, 'お': 'あ', 'か': 10, 'き': 1, 'く': 13, 'け': 16, 'こ': 19}, 'url': 'https://errors.pydantic.dev/2.5/v/missing'}:
+2024-07-07 18:46:54 [WARNING] validator_utils - log_errors line 31: Validation error at row 0: {'type': 'missing', 'loc': ('f',), 'msg': 'Field required', 'input': {'NO': 1, 'あ': 'a', 'い': 'd', 'う': 1, 'え': 4, 'お': 'あ', 'か': 10, 'き': 1, 'く': 13, 'け': 16, 'こ': 19}, 'url': 'https://errors.pydantic.dev/2.5/v/missing'}:
+2024-07-07 18:46:54 [WARNING] validator_utils - log_errors line 31: Validation error at row 0: {'type': 'missing', 'loc': ('g',), 'msg': 'Field required', 'input': {'NO': 1, 'あ': 'a', 'い': 'd', 'う': 1, 'え': 4, 'お': 'あ', 'か': 10, 'き': 1, 'く': 13, 'け': 16, 'こ': 19}, 'url': 'https://errors.pydantic.dev/2.5/v/missing'}:
+2024-07-07 18:46:54 [WARNING] validator_utils - log_errors line 31: Validation error at row 0: {'type': 'missing', 'loc': ('h',), 'msg': 'Field required', 'input': {'NO': 1, 'あ': 'a', 'い': 'd', 'う': 1, 'え': 4, 'お': 'あ', 'か': 10, 'き': 1, 'く': 13, 'け': 16, 'こ': 19}, 'url': 'https://errors.pydantic.dev/2.5/v/missing'}:
+2024-07-07 18:46:54 [WARNING] validator_utils - log_errors line 31: Validation error at row 0: {'type': 'missing', 'loc': ('i',), 'msg': 'Field required', 'input': {'NO': 1, 'あ': 'a', 'い': 'd', 'う': 1, 'え': 4, 'お': 'あ', 'か': 10, 'き': 1, 'く': 13, 'け': 16, 'こ': 19}, 'url': 'https://errors.pydantic.dev/2.5/v/missing'}:
+2024-07-07 18:46:54 [WARNING] validator_utils - log_errors line 31: Validation error at row 0: {'type': 'missing', 'loc': ('j',), 'msg': 'Field required', 'input': {'NO': 1, 'あ': 'a', 'い': 'd', 'う': 1, 'え': 4, 'お': 'あ', 'か': 10, 'き': 1, 'く': 13, 'け': 16, 'こ': 19}, 'url': 'https://errors.pydantic.dev/2.5/v/missing'}:
+2024-07-07 18:46:54 [WARNING] validator_utils - log_errors line 31: Validation error at row 1: {'type': 'missing', 'loc': ('No',), 'msg': 'Field required', 'input': {'NO': 2, 'あ': 'b', 'い': 'e', 'う': 2, 'え': 's', 'お': 8, 'か': 11, 'き': 'h', 'く': 14, 'け': 17, 'こ': 20}, 'url': 'https://errors.pydantic.dev/2.5/v/missing'}:
+2024-07-07 18:46:54 [WARNING] validator_utils - log_errors line 31: Validation error at row 1: {'type': 'missing', 'loc': ('a',), 'msg': 'Field required', 'input': {'NO': 2, 'あ': 'b', 'い': 'e', 'う': 2, 'え': 's', 'お': 8, 'か': 11, 'き': 'h', 'く': 14, 'け': 17, 'こ': 20}, 'url': 'https://errors.pydantic.dev/2.5/v/missing'}:
+2024-07-07 18:46:54 [WARNING] validator_utils - log_errors line 31: Validation error at row 1: {'type': 'missing', 'loc': ('b',), 'msg': 'Field required', 'input': {'NO': 2, 'あ': 'b', 'い': 'e', 'う': 2, 'え': 's', 'お': 8, 'か': 11, 'き': 'h', 'く': 14, 'け': 17, 'こ': 20}, 'url': 'https://errors.pydantic.dev/2.5/v/missing'}:
+2024-07-07 18:46:54 [WARNING] validator_utils - log_errors line 31: Validation error at row 1: {'type': 'missing', 'loc': ('c',), 'msg': 'Field required', 'input': {'NO': 2, 'あ': 'b', 'い': 'e', 'う': 2, 'え': 's', 'お': 8, 'か': 11, 'き': 'h', 'く': 14, 'け': 17, 'こ': 20}, 'url': 'https://errors.pydantic.dev/2.5/v/missing'}:
+2024-07-07 18:46:54 [WARNING] validator_utils - log_errors line 31: Validation error at row 1: {'type': 'missing', 'loc': ('d',), 'msg': 'Field required', 'input': {'NO': 2, 'あ': 'b', 'い': 'e', 'う': 2, 'え': 's', 'お': 8, 'か': 11, 'き': 'h', 'く': 14, 'け': 17, 'こ': 20}, 'url': 'https://errors.pydantic.dev/2.5/v/missing'}:
+2024-07-07 18:46:54 [WARNING] validator_utils - log_errors line 31: Validation error at row 1: {'type': 'missing', 'loc': ('e',), 'msg': 'Field required', 'input': {'NO': 2, 'あ': 'b', 'い': 'e', 'う': 2, 'え': 's', 'お': 8, 'か': 11, 'き': 'h', 'く': 14, 'け': 17, 'こ': 20}, 'url': 'https://errors.pydantic.dev/2.5/v/missing'}:
+2024-07-07 18:46:54 [WARNING] validator_utils - log_errors line 31: Validation error at row 1: {'type': 'missing', 'loc': ('f',), 'msg': 'Field required', 'input': {'NO': 2, 'あ': 'b', 'い': 'e', 'う': 2, 'え': 's', 'お': 8, 'か': 11, 'き': 'h', 'く': 14, 'け': 17, 'こ': 20}, 'url': 'https://errors.pydantic.dev/2.5/v/missing'}:
+2024-07-07 18:46:54 [WARNING] validator_utils - log_errors line 31: Validation error at row 1: {'type': 'missing', 'loc': ('g',), 'msg': 'Field required', 'input': {'NO': 2, 'あ': 'b', 'い': 'e', 'う': 2, 'え': 's', 'お': 8, 'か': 11, 'き': 'h', 'く': 14, 'け': 17, 'こ': 20}, 'url': 'https://errors.pydantic.dev/2.5/v/missing'}:
+2024-07-07 18:46:54 [WARNING] validator_utils - log_errors line 31: Validation error at row 1: {'type': 'missing', 'loc': ('h',), 'msg': 'Field required', 'input': {'NO': 2, 'あ': 'b', 'い': 'e', 'う': 2, 'え': 's', 'お': 8, 'か': 11, 'き': 'h', 'く': 14, 'け': 17, 'こ': 20}, 'url': 'https://errors.pydantic.dev/2.5/v/missing'}:
+2024-07-07 18:46:54 [WARNING] validator_utils - log_errors line 31: Validation error at row 1: {'type': 'missing', 'loc': ('i',), 'msg': 'Field required', 'input': {'NO': 2, 'あ': 'b', 'い': 'e', 'う': 2, 'え': 's', 'お': 8, 'か': 11, 'き': 'h', 'く': 14, 'け': 17, 'こ': 20}, 'url': 'https://errors.pydantic.dev/2.5/v/missing'}:
+2024-07-07 18:46:54 [WARNING] validator_utils - log_errors line 31: Validation error at row 1: {'type': 'missing', 'loc': ('j',), 'msg': 'Field required', 'input': {'NO': 2, 'あ': 'b', 'い': 'e', 'う': 2, 'え': 's', 'お': 8, 'か': 11, 'き': 'h', 'く': 14, 'け': 17, 'こ': 20}, 'url': 'https://errors.pydantic.dev/2.5/v/missing'}:
+2024-07-07 18:46:54 [WARNING] validator_utils - log_errors line 31: Validation error at row 2: {'type': 'missing', 'loc': ('No',), 'msg': 'Field required', 'input': {'NO': 3, 'あ': 'c', 'い': 'f', 'う': 3, 'え': 6, 'お': 9, 'か': 12, 'き': 'I', 'く': 15, 'け': 18, 'こ': 21}, 'url': 'https://errors.pydantic.dev/2.5/v/missing'}:
+2024-07-07 18:46:54 [WARNING] validator_utils - log_errors line 31: Validation error at row 2: {'type': 'missing', 'loc': ('a',), 'msg': 'Field required', 'input': {'NO': 3, 'あ': 'c', 'い': 'f', 'う': 3, 'え': 6, 'お': 9, 'か': 12, 'き': 'I', 'く': 15, 'け': 18, 'こ': 21}, 'url': 'https://errors.pydantic.dev/2.5/v/missing'}:
+2024-07-07 18:46:54 [WARNING] validator_utils - log_errors line 31: Validation error at row 2: {'type': 'missing', 'loc': ('b',), 'msg': 'Field required', 'input': {'NO': 3, 'あ': 'c', 'い': 'f', 'う': 3, 'え': 6, 'お': 9, 'か': 12, 'き': 'I', 'く': 15, 'け': 18, 'こ': 21}, 'url': 'https://errors.pydantic.dev/2.5/v/missing'}:
+2024-07-07 18:46:54 [WARNING] validator_utils - log_errors line 31: Validation error at row 2: {'type': 'missing', 'loc': ('c',), 'msg': 'Field required', 'input': {'NO': 3, 'あ': 'c', 'い': 'f', 'う': 3, 'え': 6, 'お': 9, 'か': 12, 'き': 'I', 'く': 15, 'け': 18, 'こ': 21}, 'url': 'https://errors.pydantic.dev/2.5/v/missing'}:
+2024-07-07 18:46:54 [WARNING] validator_utils - log_errors line 31: Validation error at row 2: {'type': 'missing', 'loc': ('d',), 'msg': 'Field required', 'input': {'NO': 3, 'あ': 'c', 'い': 'f', 'う': 3, 'え': 6, 'お': 9, 'か': 12, 'き': 'I', 'く': 15, 'け': 18, 'こ': 21}, 'url': 'https://errors.pydantic.dev/2.5/v/missing'}:
+2024-07-07 18:46:54 [WARNING] validator_utils - log_errors line 31: Validation error at row 2: {'type': 'missing', 'loc': ('e',), 'msg': 'Field required', 'input': {'NO': 3, 'あ': 'c', 'い': 'f', 'う': 3, 'え': 6, 'お': 9, 'か': 12, 'き': 'I', 'く': 15, 'け': 18, 'こ': 21}, 'url': 'https://errors.pydantic.dev/2.5/v/missing'}:
+2024-07-07 18:46:54 [WARNING] validator_utils - log_errors line 31: Validation error at row 2: {'type': 'missing', 'loc': ('f',), 'msg': 'Field required', 'input': {'NO': 3, 'あ': 'c', 'い': 'f', 'う': 3, 'え': 6, 'お': 9, 'か': 12, 'き': 'I', 'く': 15, 'け': 18, 'こ': 21}, 'url': 'https://errors.pydantic.dev/2.5/v/missing'}:
+2024-07-07 18:46:54 [WARNING] validator_utils - log_errors line 31: Validation error at row 2: {'type': 'missing', 'loc': ('g',), 'msg': 'Field required', 'input': {'NO': 3, 'あ': 'c', 'い': 'f', 'う': 3, 'え': 6, 'お': 9, 'か': 12, 'き': 'I', 'く': 15, 'け': 18, 'こ': 21}, 'url': 'https://errors.pydantic.dev/2.5/v/missing'}:
+2024-07-07 18:46:54 [WARNING] validator_utils - log_errors line 31: Validation error at row 2: {'type': 'missing', 'loc': ('h',), 'msg': 'Field required', 'input': {'NO': 3, 'あ': 'c', 'い': 'f', 'う': 3, 'え': 6, 'お': 9, 'か': 12, 'き': 'I', 'く': 15, 'け': 18, 'こ': 21}, 'url': 'https://errors.pydantic.dev/2.5/v/missing'}:
+2024-07-07 18:46:54 [WARNING] validator_utils - log_errors line 31: Validation error at row 2: {'type': 'missing', 'loc': ('i',), 'msg': 'Field required', 'input': {'NO': 3, 'あ': 'c', 'い': 'f', 'う': 3, 'え': 6, 'お': 9, 'か': 12, 'き': 'I', 'く': 15, 'け': 18, 'こ': 21}, 'url': 'https://errors.pydantic.dev/2.5/v/missing'}:
+2024-07-07 18:46:54 [WARNING] validator_utils - log_errors line 31: Validation error at row 2: {'type': 'missing', 'loc': ('j',), 'msg': 'Field required', 'input': {'NO': 3, 'あ': 'c', 'い': 'f', 'う': 3, 'え': 6, 'お': 9, 'か': 12, 'き': 'I', 'く': 15, 'け': 18, 'こ': 21}, 'url': 'https://errors.pydantic.dev/2.5/v/missing'}:
+2024-07-07 18:46:54 [WARNING] validator_excel_main_class-2 - start line 161: Process completed with 3 validation errors:
+2024-07-07 18:46:54 [INFO] validator_excel_main_class-2 - start line 171: IBRDEV-I-0000002:正常終了しました
+2024-07-07 18:47:20 [INFO] validator_excel_main_class-2 - start line 155: IBRDEV-I-0000001:起動しました
+2024-07-07 18:47:21 [DEBUG] common_utils - tabulate_dataframe line 67: 
+|    |   NO | あ   | い   |   う | え   | お   |   か | き   |   く |   け |   こ |
+|---:|-----:|:-----|:-----|-----:|:-----|:-----|-----:|:-----|-----:|-----:|-----:|
+|  0 |    1 | a    | d    |    1 | 4    | あ   |   10 | 1    |   13 |   16 |   19 |
+|  1 |    2 | b    | e    |    2 | s    | 8    |   11 | h    |   14 |   17 |   20 |
+|  2 |    3 | c    | f    |    3 | 6    | 9    |   12 | I    |   15 |   18 |   21 |:
+2024-07-07 18:47:21 [DEBUG] common_utils - read_excel_one_sheet line 99: 
+Sheet_name: Sheet1
+|    |   NO | あ   | い   |   う | え   | お   |   か | き   |   く |   け |   こ |
+|---:|-----:|:-----|:-----|-----:|:-----|:-----|-----:|:-----|-----:|-----:|-----:|
+|  0 |    1 | a    | d    |    1 | 4    | あ   |   10 | 1    |   13 |   16 |   19 |
+|  1 |    2 | b    | e    |    2 | s    | 8    |   11 | h    |   14 |   17 |   20 |
+|  2 |    3 | c    | f    |    3 | 6    | 9    |   12 | I    |   15 |   18 |   21 |:
+2024-07-07 18:47:21 [DEBUG] common_utils - tabulate_dataframe line 67: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | object |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2024-07-07 18:47:21 [INFO] validator_excel_main_class-2 - _log_dataframe_info line 85: DataFrame info:
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | object |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2024-07-07 18:47:21 [WARNING] validator_utils - log_errors line 31: Validation error at row 0: {'type': 'int_type', 'loc': ('e',), 'msg': 'Input should be a valid integer', 'input': 'あ', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}:
+2024-07-07 18:47:21 [WARNING] validator_utils - log_errors line 31: Validation error at row 0: {'type': 'string_type', 'loc': ('g',), 'msg': 'Input should be a valid string', 'input': 1, 'url': 'https://errors.pydantic.dev/2.5/v/string_type'}:
+2024-07-07 18:47:21 [WARNING] validator_utils - log_errors line 31: Validation error at row 1: {'type': 'int_type', 'loc': ('d',), 'msg': 'Input should be a valid integer', 'input': 's', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}:
+2024-07-07 18:47:21 [WARNING] validator_excel_main_class-2 - start line 161: Process completed with 2 validation errors:
+2024-07-07 18:47:21 [INFO] validator_excel_main_class-2 - start line 171: IBRDEV-I-0000002:正常終了しました
+2024-07-07 18:47:22 [INFO] validator_excel_main_class-2 - start line 155: IBRDEV-I-0000001:起動しました
+2024-07-07 18:47:22 [DEBUG] common_utils - tabulate_dataframe line 67: 
+|    |   NO | あ   | い   |   う | え   | お   |   か | き   |   く |   け |   こ |
+|---:|-----:|:-----|:-----|-----:|:-----|:-----|-----:|:-----|-----:|-----:|-----:|
+|  0 |    1 | a    | d    |    1 | 4    | あ   |   10 | 1    |   13 |   16 |   19 |
+|  1 |    2 | b    | e    |    2 | s    | 8    |   11 | h    |   14 |   17 |   20 |
+|  2 |    3 | c    | f    |    3 | 6    | 9    |   12 | I    |   15 |   18 |   21 |:
+2024-07-07 18:47:22 [DEBUG] common_utils - read_excel_one_sheet line 99: 
+Sheet_name: Sheet1
+|    |   NO | あ   | い   |   う | え   | お   |   か | き   |   く |   け |   こ |
+|---:|-----:|:-----|:-----|-----:|:-----|:-----|-----:|:-----|-----:|-----:|-----:|
+|  0 |    1 | a    | d    |    1 | 4    | あ   |   10 | 1    |   13 |   16 |   19 |
+|  1 |    2 | b    | e    |    2 | s    | 8    |   11 | h    |   14 |   17 |   20 |
+|  2 |    3 | c    | f    |    3 | 6    | 9    |   12 | I    |   15 |   18 |   21 |:
+2024-07-07 18:47:22 [DEBUG] common_utils - tabulate_dataframe line 67: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | object |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2024-07-07 18:47:22 [INFO] validator_excel_main_class-2 - _log_dataframe_info line 85: DataFrame info:
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | No        | int64  |
+|  1 | a         | object |
+|  2 | b         | object |
+|  3 | c         | int64  |
+|  4 | d         | object |
+|  5 | e         | object |
+|  6 | f         | int64  |
+|  7 | g         | object |
+|  8 | h         | int64  |
+|  9 | i         | int64  |
+| 10 | j         | int64  |:
+2024-07-07 18:47:22 [WARNING] validator_utils - log_errors line 31: Validation error at row 0: {'type': 'int_type', 'loc': ('e',), 'msg': 'Input should be a valid integer', 'input': 'あ', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}:
+2024-07-07 18:47:22 [WARNING] validator_utils - log_errors line 31: Validation error at row 0: {'type': 'string_type', 'loc': ('g',), 'msg': 'Input should be a valid string', 'input': 1, 'url': 'https://errors.pydantic.dev/2.5/v/string_type'}:
+2024-07-07 18:47:22 [WARNING] validator_utils - log_errors line 31: Validation error at row 1: {'type': 'int_type', 'loc': ('d',), 'msg': 'Input should be a valid integer', 'input': 's', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}:
+2024-07-07 18:47:22 [WARNING] validator_excel_main_class-2 - start line 161: Process completed with 2 validation errors:
+2024-07-07 18:47:22 [INFO] validator_excel_main_class-2 - start line 171: IBRDEV-I-0000002:正常終了しました
+2024-07-07 18:59:46 [INFO] validator_excel_main_class-2 - start line 158: IBRDEV-I-0000001:起動しました
+2024-07-07 18:59:46 [DEBUG] common_utils - tabulate_dataframe line 67: 
+|    |   NO | あ   | い   |   う | え   | お   |   か | き   |   く |   け |   こ |
+|---:|-----:|:-----|:-----|-----:|:-----|:-----|-----:|:-----|-----:|-----:|-----:|
+|  0 |    1 | a    | d    |    1 | 4    | あ   |   10 | 1    |   13 |   16 |   19 |
+|  1 |    2 | b    | e    |    2 | s    | 8    |   11 | h    |   14 |   17 |   20 |
+|  2 |    3 | c    | f    |    3 | 6    | 9    |   12 | I    |   15 |   18 |   21 |:
+2024-07-07 18:59:46 [DEBUG] common_utils - read_excel_one_sheet line 99: 
+Sheet_name: Sheet1
+|    |   NO | あ   | い   |   う | え   | お   |   か | き   |   く |   け |   こ |
+|---:|-----:|:-----|:-----|-----:|:-----|:-----|-----:|:-----|-----:|-----:|-----:|
+|  0 |    1 | a    | d    |    1 | 4    | あ   |   10 | 1    |   13 |   16 |   19 |
+|  1 |    2 | b    | e    |    2 | s    | 8    |   11 | h    |   14 |   17 |   20 |
+|  2 |    3 | c    | f    |    3 | 6    | 9    |   12 | I    |   15 |   18 |   21 |:
+2024-07-07 18:59:46 [DEBUG] common_utils - tabulate_dataframe line 67: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | NO        | int64  |
+|  1 | あ        | object |
+|  2 | い        | object |
+|  3 | う        | int64  |
+|  4 | え        | object |
+|  5 | お        | object |
+|  6 | か        | int64  |
+|  7 | き        | object |
+|  8 | く        | int64  |
+|  9 | け        | int64  |
+| 10 | こ        | int64  |:
+2024-07-07 18:59:46 [INFO] validator_excel_main_class-2 - _log_dataframe_info line 88: DataFrame info:
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | NO        | int64  |
+|  1 | あ        | object |
+|  2 | い        | object |
+|  3 | う        | int64  |
+|  4 | え        | object |
+|  5 | お        | object |
+|  6 | か        | int64  |
+|  7 | き        | object |
+|  8 | く        | int64  |
+|  9 | け        | int64  |
+| 10 | こ        | int64  |:
+2024-07-07 18:59:46 [WARNING] validator_utils - log_errors line 31: Validation error at row 0: {'type': 'missing', 'loc': ('No',), 'msg': 'Field required', 'input': {'NO': 1, 'あ': 'a', 'い': 'd', 'う': 1, 'え': 4, 'お': 'あ', 'か': 10, 'き': 1, 'く': 13, 'け': 16, 'こ': 19}, 'url': 'https://errors.pydantic.dev/2.5/v/missing'}:
+2024-07-07 18:59:46 [WARNING] validator_utils - log_errors line 31: Validation error at row 0: {'type': 'int_type', 'loc': ('お',), 'msg': 'Input should be a valid integer', 'input': 'あ', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}:
+2024-07-07 18:59:46 [WARNING] validator_utils - log_errors line 31: Validation error at row 0: {'type': 'string_type', 'loc': ('き',), 'msg': 'Input should be a valid string', 'input': 1, 'url': 'https://errors.pydantic.dev/2.5/v/string_type'}:
+2024-07-07 18:59:46 [WARNING] validator_utils - log_errors line 31: Validation error at row 1: {'type': 'missing', 'loc': ('No',), 'msg': 'Field required', 'input': {'NO': 2, 'あ': 'b', 'い': 'e', 'う': 2, 'え': 's', 'お': 8, 'か': 11, 'き': 'h', 'く': 14, 'け': 17, 'こ': 20}, 'url': 'https://errors.pydantic.dev/2.5/v/missing'}:
+2024-07-07 18:59:46 [WARNING] validator_utils - log_errors line 31: Validation error at row 1: {'type': 'int_type', 'loc': ('え',), 'msg': 'Input should be a valid integer', 'input': 's', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}:
+2024-07-07 18:59:46 [WARNING] validator_utils - log_errors line 31: Validation error at row 2: {'type': 'missing', 'loc': ('No',), 'msg': 'Field required', 'input': {'NO': 3, 'あ': 'c', 'い': 'f', 'う': 3, 'え': 6, 'お': 9, 'か': 12, 'き': 'I', 'く': 15, 'け': 18, 'こ': 21}, 'url': 'https://errors.pydantic.dev/2.5/v/missing'}:
+2024-07-07 18:59:46 [WARNING] validator_excel_main_class-2 - start line 164: Process completed with 3 validation errors:
+2024-07-07 18:59:46 [INFO] validator_excel_main_class-2 - start line 174: IBRDEV-I-0000002:正常終了しました
+2024-07-07 19:02:06 [INFO] validator_excel_main_class-2 - start line 158: IBRDEV-I-0000001:起動しました
+2024-07-07 19:02:06 [DEBUG] common_utils - tabulate_dataframe line 67: 
+|    |   NO | あ   | い   |   う | え   | お   |   か | き   |   く |   け |   こ |
+|---:|-----:|:-----|:-----|-----:|:-----|:-----|-----:|:-----|-----:|-----:|-----:|
+|  0 |    1 | a    | d    |    1 | 4    | あ   |   10 | 1    |   13 |   16 |   19 |
+|  1 |    2 | b    | e    |    2 | s    | 8    |   11 | h    |   14 |   17 |   20 |
+|  2 |    3 | c    | f    |    3 | 6    | 9    |   12 | I    |   15 |   18 |   21 |:
+2024-07-07 19:02:06 [DEBUG] common_utils - read_excel_one_sheet line 99: 
+Sheet_name: Sheet1
+|    |   NO | あ   | い   |   う | え   | お   |   か | き   |   く |   け |   こ |
+|---:|-----:|:-----|:-----|-----:|:-----|:-----|-----:|:-----|-----:|-----:|-----:|
+|  0 |    1 | a    | d    |    1 | 4    | あ   |   10 | 1    |   13 |   16 |   19 |
+|  1 |    2 | b    | e    |    2 | s    | 8    |   11 | h    |   14 |   17 |   20 |
+|  2 |    3 | c    | f    |    3 | 6    | 9    |   12 | I    |   15 |   18 |   21 |:
+2024-07-07 19:02:06 [DEBUG] common_utils - tabulate_dataframe line 67: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | NO        | int64  |
+|  1 | あ        | object |
+|  2 | い        | object |
+|  3 | う        | int64  |
+|  4 | え        | object |
+|  5 | お        | object |
+|  6 | か        | int64  |
+|  7 | き        | object |
+|  8 | く        | int64  |
+|  9 | け        | int64  |
+| 10 | こ        | int64  |:
+2024-07-07 19:02:06 [INFO] validator_excel_main_class-2 - _log_dataframe_info line 88: DataFrame info:
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | NO        | int64  |
+|  1 | あ        | object |
+|  2 | い        | object |
+|  3 | う        | int64  |
+|  4 | え        | object |
+|  5 | お        | object |
+|  6 | か        | int64  |
+|  7 | き        | object |
+|  8 | く        | int64  |
+|  9 | け        | int64  |
+| 10 | こ        | int64  |:
+2024-07-07 19:02:06 [WARNING] validator_utils - log_errors line 31: Validation error at row 0: {'type': 'int_type', 'loc': ('お',), 'msg': 'Input should be a valid integer', 'input': 'あ', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}:
+2024-07-07 19:02:06 [WARNING] validator_utils - log_errors line 31: Validation error at row 0: {'type': 'string_type', 'loc': ('き',), 'msg': 'Input should be a valid string', 'input': 1, 'url': 'https://errors.pydantic.dev/2.5/v/string_type'}:
+2024-07-07 19:02:06 [WARNING] validator_utils - log_errors line 31: Validation error at row 1: {'type': 'int_type', 'loc': ('え',), 'msg': 'Input should be a valid integer', 'input': 's', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}:
+2024-07-07 19:02:06 [WARNING] validator_excel_main_class-2 - start line 164: Process completed with 2 validation errors:
+2024-07-07 19:02:06 [INFO] validator_excel_main_class-2 - start line 174: IBRDEV-I-0000002:正常終了しました
+2024-07-07 19:34:17 [INFO] validator_excel_main_class-2 - start line 158: IBRDEV-I-0000001:起動しました
+2024-07-07 19:34:17 [DEBUG] common_utils - tabulate_dataframe line 67: 
+|    |   NO | あ   | い   |   う | え   | お   |   か | き   |   く |   け |   こ |
+|---:|-----:|:-----|:-----|-----:|:-----|:-----|-----:|:-----|-----:|-----:|-----:|
+|  0 |    1 | a    | d    |    1 | 4    | あ   |   10 | 1    |   13 |   16 |   19 |
+|  1 |    2 | b    | e    |    2 | s    | 8    |   11 | h    |   14 |   17 |   20 |
+|  2 |    3 | c    | f    |    3 | 6    | 9    |   12 | I    |   15 |   18 |   21 |:
+2024-07-07 19:34:17 [DEBUG] common_utils - read_excel_one_sheet line 99: 
+Sheet_name: Sheet1
+|    |   NO | あ   | い   |   う | え   | お   |   か | き   |   く |   け |   こ |
+|---:|-----:|:-----|:-----|-----:|:-----|:-----|-----:|:-----|-----:|-----:|-----:|
+|  0 |    1 | a    | d    |    1 | 4    | あ   |   10 | 1    |   13 |   16 |   19 |
+|  1 |    2 | b    | e    |    2 | s    | 8    |   11 | h    |   14 |   17 |   20 |
+|  2 |    3 | c    | f    |    3 | 6    | 9    |   12 | I    |   15 |   18 |   21 |:
+2024-07-07 19:34:17 [DEBUG] common_utils - tabulate_dataframe line 67: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | NO        | int64  |
+|  1 | あ        | object |
+|  2 | い        | object |
+|  3 | う        | int64  |
+|  4 | え        | object |
+|  5 | お        | object |
+|  6 | か        | int64  |
+|  7 | き        | object |
+|  8 | く        | int64  |
+|  9 | け        | int64  |
+| 10 | こ        | int64  |:
+2024-07-07 19:34:17 [INFO] validator_excel_main_class-2 - _log_dataframe_info line 88: DataFrame info:
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | NO        | int64  |
+|  1 | あ        | object |
+|  2 | い        | object |
+|  3 | う        | int64  |
+|  4 | え        | object |
+|  5 | お        | object |
+|  6 | か        | int64  |
+|  7 | き        | object |
+|  8 | く        | int64  |
+|  9 | け        | int64  |
+| 10 | こ        | int64  |:
+2024-07-07 19:34:17 [WARNING] validator_utils - log_errors line 31: Validation error at row 0: {'type': 'int_type', 'loc': ('お',), 'msg': 'Input should be a valid integer', 'input': 'あ', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}:
+2024-07-07 19:34:17 [WARNING] validator_utils - log_errors line 31: Validation error at row 0: {'type': 'string_type', 'loc': ('き',), 'msg': 'Input should be a valid string', 'input': 1, 'url': 'https://errors.pydantic.dev/2.5/v/string_type'}:
+2024-07-07 19:34:17 [WARNING] validator_utils - log_errors line 31: Validation error at row 1: {'type': 'int_type', 'loc': ('え',), 'msg': 'Input should be a valid integer', 'input': 's', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}:
+2024-07-07 19:34:17 [WARNING] validator_excel_main_class-2 - start line 164: Process completed with 2 validation errors:
+2024-07-07 19:34:17 [INFO] validator_excel_main_class-2 - start line 174: IBRDEV-I-0000002:正常終了しました
+2024-07-07 19:36:34 [INFO] validator_excel_main_class-2 - start line 158: IBRDEV-I-0000001:起動しました
+2024-07-07 19:36:34 [DEBUG] common_utils - tabulate_dataframe line 67: 
+|    |   NO | あ   | い   |   う | え   | お   |   か | き   |   く |   け |   こ |
+|---:|-----:|:-----|:-----|-----:|:-----|:-----|-----:|:-----|-----:|-----:|-----:|
+|  0 |    1 | a    | d    |    1 | 4    | あ   |   10 | 1    |   13 |   16 |   19 |
+|  1 |    2 | b    | e    |    2 | s    | 8    |   11 | h    |   14 |   17 |   20 |
+|  2 |    3 | c    | f    |    3 | 6    | 9    |   12 | I    |   15 |   18 |   21 |:
+2024-07-07 19:36:34 [DEBUG] common_utils - read_excel_one_sheet line 99: 
+Sheet_name: Sheet1
+|    |   NO | あ   | い   |   う | え   | お   |   か | き   |   く |   け |   こ |
+|---:|-----:|:-----|:-----|-----:|:-----|:-----|-----:|:-----|-----:|-----:|-----:|
+|  0 |    1 | a    | d    |    1 | 4    | あ   |   10 | 1    |   13 |   16 |   19 |
+|  1 |    2 | b    | e    |    2 | s    | 8    |   11 | h    |   14 |   17 |   20 |
+|  2 |    3 | c    | f    |    3 | 6    | 9    |   12 | I    |   15 |   18 |   21 |:
+2024-07-07 19:36:34 [DEBUG] common_utils - tabulate_dataframe line 67: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | NO        | int64  |
+|  1 | あ        | object |
+|  2 | い        | object |
+|  3 | う        | int64  |
+|  4 | え        | object |
+|  5 | お        | object |
+|  6 | か        | int64  |
+|  7 | き        | object |
+|  8 | く        | int64  |
+|  9 | け        | int64  |
+| 10 | こ        | int64  |:
+2024-07-07 19:36:34 [INFO] validator_excel_main_class-2 - _log_dataframe_info line 88: DataFrame info:
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | NO        | int64  |
+|  1 | あ        | object |
+|  2 | い        | object |
+|  3 | う        | int64  |
+|  4 | え        | object |
+|  5 | お        | object |
+|  6 | か        | int64  |
+|  7 | き        | object |
+|  8 | く        | int64  |
+|  9 | け        | int64  |
+| 10 | こ        | int64  |:
+2024-07-07 19:36:34 [WARNING] validator_utils - log_errors line 31: Validation error at row 0: {'type': 'int_type', 'loc': ('お',), 'msg': 'Input should be a valid integer', 'input': 'あ', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}:
+2024-07-07 19:36:34 [WARNING] validator_utils - log_errors line 31: Validation error at row 0: {'type': 'string_type', 'loc': ('き',), 'msg': 'Input should be a valid string', 'input': 1, 'url': 'https://errors.pydantic.dev/2.5/v/string_type'}:
+2024-07-07 19:36:34 [WARNING] validator_utils - log_errors line 31: Validation error at row 1: {'type': 'int_type', 'loc': ('え',), 'msg': 'Input should be a valid integer', 'input': 's', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}:
+2024-07-07 19:36:34 [WARNING] validator_excel_main_class-2 - start line 164: Process completed with 2 validation errors:
+2024-07-07 19:36:34 [INFO] validator_excel_main_class-2 - start line 174: IBRDEV-I-0000002:正常終了しました

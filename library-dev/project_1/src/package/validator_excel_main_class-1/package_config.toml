@@ -1,0 +1,37 @@
+#############################
+# 本番定義 production
+#############################
+# リファレンス更新明細ファイル
+[production]
+[production.excel_definition]
+UPDATE_RECORD_JINJI = ''
+UPDATE_RECORD_JINJI_SHEET_NAME = ''          # TODO 然るべき名前に変更する
+
+#############################
+# リグレ定義 regression
+#############################
+# リファレンス更新明細ファイル
+[regression]
+[regression.excel_definition]
+UPDATE_RECORD_JINJI = ''
+UPDATE_RECORD_JINJI_SHEET_NAME = ''          # TODO 然るべき名前に変更する
+
+#############################
+# 開発定義 develop
+#############################
+# リファレンス更新明細ファイル
+[develop]
+[develop.excel_definition]
+UPDATE_RECORD_JINJI = ''
+UPDATE_RECORD_JINJI_SHEET_NAME = ''          # TODO 然るべき名前に変更する
+
+#############################
+# local定義 local
+#############################
+# リファレンス更新明細ファイル
+[local]
+[local.excel_definition]
+UPDATE_RECORD_JINJI = 'input_data_validator.xlsx'  # TODO 然るべき名前に変更する
+UPDATE_RECORD_JINJI_SHEET_NAME = 'Sheet1'          # TODO 然るべき名前に変更する
+
+

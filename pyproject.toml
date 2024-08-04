@@ -1,0 +1,134 @@
+[tool.poetry]
+name = "poetry-test"
+version = "0.1.0"
+description = ""
+authors = ["AAAA <AAAA@AAAA.net>"]
+readme = "README.md"
+packages = [{include = "poetry_test"}]
+
+[tool.poetry.dependencies]
+python = "3.11.6"
+requests = "^2.31.0"
+numpy = "^1.26.2"
+pandas = "^2.1.4"
+pydantic = "^2.5.2"
+ruff = "^0.1.7"
+logger = "^1.4"
+logging = "^0.4.9.6"
+pytest = "^7.4.3"
+pytest-mock = "^3.12.0"
+tabulate = "^0.9.0"
+unittest = "^0.0"
+toml = "^0.10.2"
+openpyxl = "^3.1.2"
+pandera = "^0.18.0"
+PyYAML = "^6.0.1"
+jaconv = "^0.3.4"
+pykakasi = "^2.2.1"
+kanjize = "^1.5.0"
+ulid-py = "^1.1.0"
+
+[tool.poetry.group.dev.dependencies]
+ipykernel = "^6.27.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+################################################################
+# ruff
+################################################################
+[tool.ruff]
+target-version = "py311"  # 以前バージョンをベースの誤検出回避
+
+# Exclude a variety of commonly ignored directories.
+exclude = [".venv", "venv"]
+
+# jupyter
+extend-include = ["*.ipynb"]
+
+# black用の設定
+include = ["*.py"]
+line-length = 119
+
+# 全てのルールを設定し,適合しないパターンを除外する方式とする 
+select = [
+    "ALL", 
+]
+ignore = [
+    "Q000",    # Single Quoteを認める
+    "E501",    # line too long, handled by black
+    "PLR0913", # too many arguments 
+    "ANN001",  # self annotation
+    "ANN101",  # self annotation
+    "ANN102",  # cls annotation
+    "ANN204",  # __init__ annotation
+    "D415",    # 
+    "D107",    # 
+    "G004",    #
+    "PT003",   # デフォルトでも宣言する
+    "S101",    # pytestでassert使用 
+    "RUF010",  # カスタムロガー出力MSGでf-string/変数使用を許容
+    "BLE001",  # blind-except は許容する
+    "SLF001",  # 内部メソッドと定義して呼び出し 
+    "TRY002",  # exceptionに対して独自のエラーClass作成は必須でない 
+    "S301",    # pickleのloadは許容
+    "ERA001",  # コメントにコードと思われるものは許容 
+
+#    "B008", # do not perform function calls in argument defaults
+#    "C901", # too complex
+#    "B904", # raise from err
+#    "D400", # 
+#    "TRY003", # 
+#    "TRY200", # 
+#    "EM102", # 
+]
+
+#######################################################
+# ファイル単位のルール適用除外
+#######################################################
+[tool.ruff.per-file-ignores]
+# testコードに対する例外適用
+"[T|t]est_*.py" = [
+    # at least this three should be fine in tests:
+    "S101", # assertを許可する,テストの根幹
+    "ARG", # Unused function args -> fixtures nevertheless are functionally relevant...
+    "FBT", # Don't care about booleans as positional arguments in tests, e.g. via @pytest.mark.parametrize()
+    # format関連
+    "N801",   # CascadingStyleは適用外,実運用にそぐわず
+    "N802",   # CascadingStyleは適用外,実運用にそぐわず 
+    "D102",   # DocStringの代わりにtest_docとしてテスト説明文字列とする運用
+    "D103",   # DocStringの代わりにtest_docとしてテスト説明文字列とする運用
+    "ANN201", # 関数名の途中に大文字を許容,イベントを表す際に回避不能 
+    "PT011",  # test処理で出力MSGとマッチする、テストで完全一致MSGを定義するのは困難
+    "B017",  # test処理で出力MSGとマッチする、テストで完全一致MSGを定義するのは困難
+]
+
+[tool.ruff.format]
+quote-style = "single"
+indent-style = "space"
+docstring-code-format = true
+docstring-code-line-length = 80
+
+[tool.ruff.pydocstyle]
+convention = "google"
+
+
+# isort用の設定
+[tool.ruff.isort]
+combine-as-imports = true
+known-first-party = ["musubi_restapi"]
+section-order = ["future", "standard-library", "third-party", "first-party", "local-folder"]
+split-on-trailing-comma = true
+
+# for pytest
+[tool.pytest.ini_options]
+addopts = "-v --capture=no -s --disable-warnings"
+console_output_style = "classic"
+pythonpath = "project_1/src"  # -m 起動方式に対応/Debugger設定
+testpaths = ["tests"]
+
+# enf
+env = [
+    "PYTHONIOENCODING=utf-8",
+]

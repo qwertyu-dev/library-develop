@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pythonテスト駆動開発（pytest）：完全版学習資料</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; padding: 20px; max-width: 800px; margin: 0 auto; }
+        h1, h2, h3 { color: #333; }
+        pre { background-color: #f4f4f4; padding: 10px; border-radius: 5px; overflow-x: auto; }
+        .quiz { background-color: #e7f3fe; padding: 15px; border-radius: 5px; margin-top: 20px; }
+        .quiz-question { margin-bottom: 20px; }
+        .options { margin-left: 20px; }
+        button { background-color: #4CAF50; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background-color: #45a049; }
+        #result { margin-top: 20px; font-weight: bold; }
+        .note { background-color: #ffffd9; padding: 10px; border-left: 5px solid #ffeb3b; margin: 15px 0; }
+    </style>
+</head>
+<body>
+    <h1>7. テスト駆動開発（pytest）</h1>
+
+    <h2>7.1 テストの基本概念</h2>
+    <p>テスト駆動開発（TDD）は、テストを先に書いてから実装を行う開発手法です。pytestは、Pythonのテストフレームワークの1つで、シンプルで強力な機能を提供します。</p>
+
+    <h2>7.2 pytestの基本的な使用方法</h2>
+    <p>pytestでは、test_で始まる関数がテスト関数として認識されます。</p>
+    <pre>
+# test_example.py
+def add(a, b):
+    return a + b
+
+def test_add():
+    assert add(2, 3) == 5
+    assert add(-1, 1) == 0
+    assert add(0, 0) == 0
+
+# コマンドラインで実行: pytest test_example.py
+    </pre>
+
+    <h2>7.3 フィクスチャとパラメータ化テスト</h2>
+    <p>フィクスチャはテストの前提条件を設定し、パラメータ化テストは同じテストを異なる入力で実行します。</p>
+    <pre>
+import pytest
+
+@pytest.fixture
+def sample_data():
+    return [1, 2, 3, 4, 5]
+
+def test_sum(sample_data):
+    assert sum(sample_data) == 15
+
+@pytest.mark.parametrize("test_input,expected", [
+    ("3+5", 8),
+    ("2+4", 6),
+    ("6*9", 54),
+])
+def test_eval(test_input, expected):
+    assert eval(test_input) == expected
+    </pre>
+
+    <h2>7.4 モックとパッチ</h2>
+    <p>モックは外部依存を模倣し、パッチは既存の関数や属性を一時的に置き換えます。</p>
+    <pre>
+from unittest.mock import patch
+
+def get_data_from_api():
+    # 実際のAPI呼び出しをここで行う
+    pass
+
+def process_data():
+    data = get_data_from_api()
+    return len(data)
+
+def test_process_data():
+    with patch('__main__.get_data_from_api') as mock_get:
+        mock_get.return_value = [1, 2, 3]
+        assert process_data() == 3
+    </pre>
+
+    <div class="note">
+        <h3>プロジェクトでのpytestの活用ポイント</h3>
+        <ul>
+            <li>ユニットテスト: 個々の関数やメソッドの動作を確認</li>
+            <li>統合テスト: 複数のコンポーネントの連携を確認</li>
+            <li>パラメータ化テスト: 多様なインプットでの動作を効率的にテスト</li>
+            <li>モックを使用した外部依存のテスト: API呼び出しやデータベース操作など</li>
+            <li>カバレッジレポート: テストの網羅性を確認</li>
+        </ul>
+    </div>
+
+    <h2>クイズ: Pythonテスト駆動開発（pytest）</h2>
+    <div class="quiz">
+        <form id="quizForm">
+            <div class="quiz-question">
+                <p>1. pytestでテスト関数として認識される関数名の接頭辞は何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q1" value="a" required> a) check_<br>
+                    <input type="radio" name="q1" value="b"> b) test_<br>
+                    <input type="radio" name="q1" value="c"> c) assert_<br>
+                    <input type="radio" name="q1" value="d"> d) verify_
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>2. pytestでアサーションを行う際に使用する主要なキーワードは何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q2" value="a" required> a) check<br>
+                    <input type="radio" name="q2" value="b"> b) expect<br>
+                    <input type="radio" name="q2" value="c"> c) assert<br>
+                    <input type="radio" name="q2" value="d"> d) verify
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>3. pytestでフィクスチャを定義するデコレータは何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q3" value="a" required> a) @fixture<br>
+                    <input type="radio" name="q3" value="b"> b) @pytest.fixture<br>
+                    <input type="radio" name="q3" value="c"> c) @setup<br>
+                    <input type="radio" name="q3" value="d"> d) @pytest.setup
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>4. パラメータ化テストを定義するデコレータは何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q4" value="a" required> a) @pytest.parameterize<br>
+                    <input type="radio" name="q4" value="b"> b) @pytest.parameters<br>
+                    <input type="radio" name="q4" value="c"> c) @pytest.mark.parametrize<br>
+                    <input type="radio" name="q4" value="d"> d) @pytest.mark.parameters
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>5. pytestでモックオブジェクトを作成するために一般的に使用されるモジュールは何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q5" value="a" required> a) pytest.mock<br>
+                    <input type="radio" name="q5" value="b"> b) unittest.mock<br>
+                    <input type="radio" name="q5" value="c"> c) pytest.mocker<br>
+                    <input type="radio" name="q5" value="d"> d) mock
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>6. pytestで例外のテストを行う方法として正しいものは何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q6" value="a" required> a) pytest.raises(Exception)<br>
+                    <input type="radio" name="q6" value="b"> b) with pytest.raises(Exception):<br>
+                    <input type="radio" name="q6" value="c"> c) @pytest.exception(Exception)<br>
+                    <input type="radio" name="q6" value="d"> d) try: ... except Exception: assert True
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>7. pytestでテストをスキップするデコレータは何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q7" value="a" required> a) @pytest.skip<br>
+                    <input type="radio" name="q7" value="b"> b) @pytest.mark.skip<br>
+                    <input type="radio" name="q7" value="c"> c) @skip<br>
+                    <input type="radio" name="q7" value="d"> d) @pytest.pass
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>8. pytestで特定の警告をテストする方法は何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q8" value="a" required> a) pytest.warn()<br>
+                    <input type="radio" name="q8" value="b"> b) with pytest.warns():<br>
+                    <input type="radio" name="q8" value="c"> c) @pytest.warning<br>
+                    <input type="radio" name="q8" value="d"> d) assert_warns()
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>9. pytestでテストの実行順序を制御するマーカーは何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q9" value="a" required> a) @pytest.mark.order<br>
+                    <input type="radio" name="q9" value="b"> b) @pytest.order<br>
+                    <input type="radio" name="q9" value="c"> c) @pytest.mark.run_order<br>
+                    <input type="radio" name="q9" value="d"> d) @pytest.sequence
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>10. pytestでテストカバレッジレポートを生成するコマンドラインオプションは何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q10" value="a" required> a) --coverage<br>
+                    <input type="radio" name="q10" value="b"> b) --cov<br>
+                    <input type="radio" name="q10" value="c"> c) --report<br>
+                    <input type="radio" name="q10" value="d"> d) --test-cov
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>11. pytestでフィクスチャの範囲（スコープ）を指定するパラメータは何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q11" value="a" required> a) range<br>
+                    <input type="radio" name="q11" value="b"> b) scope<br>
+                    <input type="radio" name="q11" value="c"> c) level<br>
+                    <input type="radio" name="q11" value="d"> d) extent
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>12. pytestで特定のテストだけを実行する方法は何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q12" value="a" required> a) pytest test_file.py::test_function<br>
+                    <input type="radio" name="q12" value="b"> b) pytest -f test_function test_file.py<br>
+                    <input type="radio" name="q12" value="c"> c) pytest --only test_function<br>
+                    <input type="radio" name="q12" value="d"> d) pytest test_file.py -t test_function
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>13. pytestでテスト関数の前後に実行される特別な関数の名前は何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q13" value="a" required> a) setup() と teardown()<br>
+                    <input type="radio" name="q13" value="b"> b) before() と after()<br>
+                    <input type="radio" name="q13" value="c"> c) setup_method() と teardown_method()<br>
+                    <input type="radio" name="q13" value="d"> d) pytest_setup() と pytest_teardown()
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>14. pytestでモックオブジェクトの呼び出し回数を確認するメソッドは何ですか？</p>
+                <div class="options>
+                    <input type="radio" name="q14" value="a" required> a) assert_called()<br>
+                    <input type="radio" name="q14" value="b"> b) assert_called_once()<br>
+                    <input type="radio" name="q14" value="c"> c) verify_called()<br>
+                    <input type="radio" name="q14" value="d"> d) check_call_count()
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>15. pytestで一時的なディレクトリを作成するフィクスチャは何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q15" value="a

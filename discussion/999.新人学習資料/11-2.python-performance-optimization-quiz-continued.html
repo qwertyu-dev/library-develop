@@ -1,0 +1,96 @@
+<input type="radio" name="q14" value="a" required> a) file.read()を使用する<br>
+                    <input type="radio" name="q14" value="b"> b) file.readlines()を使用する<br>
+                    <input type="radio" name="q14" value="c"> c) for line in file: を使用する<br>
+                    <input type="radio" name="q14" value="d"> d) pandas.read_csv()を使用する
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>15. Pythonで大量の小さな文字列を連結する最も効率的な方法は？</p>
+                <div class="options">
+                    <input type="radio" name="q15" value="a" required> a) +演算子を使用する<br>
+                    <input type="radio" name="q15" value="b"> b) ''.join()を使用する<br>
+                    <input type="radio" name="q15" value="c"> c) stringバッファを使用する<br>
+                    <input type="radio" name="q15" value="d"> d) format()メソッドを使用する
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>16. Pythonでコードのボトルネックを特定するのに最適なツールは？</p>
+                <div class="options">
+                    <input type="radio" name="q16" value="a" required> a) デバッガ<br>
+                    <input type="radio" name="q16" value="b"> b) プロファイラ<br>
+                    <input type="radio" name="q16" value="c"> c) ロガー<br>
+                    <input type="radio" name="q16" value="d"> d) 例外ハンドラ
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>17. Pythonで大きな数値計算を高速化する方法として最適なものは？</p>
+                <div class="options">
+                    <input type="radio" name="q17" value="a" required> a) リスト内包表記を使用する<br>
+                    <input type="radio" name="q17" value="b"> b) NumPyを使用する<br>
+                    <input type="radio" name="q17" value="c"> c) マルチスレッディングを使用する<br>
+                    <input type="radio" name="q17" value="d"> d) 再帰を使用する
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>18. Pythonでメモリ使用量を減らすために使用できるデータ型は？</p>
+                <div class="options">
+                    <input type="radio" name="q18" value="a" required> a) set<br>
+                    <input type="radio" name="q18" value="b"> b) list<br>
+                    <input type="radio" name="q18" value="c"> c) tuple<br>
+                    <input type="radio" name="q18" value="d"> d) dict
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>19. Pythonで大量のオブジェクトを効率的に比較するために使用できる関数は？</p>
+                <div class="options">
+                    <input type="radio" name="q19" value="a" required> a) cmp()<br>
+                    <input type="radio" name="q19" value="b"> b) sort()<br>
+                    <input type="radio" name="q19" value="c"> c) max()<br>
+                    <input type="radio" name="q19" value="d"> d) bisect()
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>20. Pythonでコードの実行速度を上げるために、最後に検討すべき方法は？</p>
+                <div class="options">
+                    <input type="radio" name="q20" value="a" required> a) アルゴリズムの改善<br>
+                    <input type="radio" name="q20" value="b"> b) データ構造の最適化<br>
+                    <input type="radio" name="q20" value="c"> c) Cython使用<br>
+                    <input type="radio" name="q20" value="d"> d) 別の言語で書き直す
+                </div>
+            </div>
+
+            <button type="submit">採点する</button>
+        </form>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        document.getElementById('quizForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            let score = 0;
+            const answers = {
+                q1: 'b', q2: 'c', q3: 'b', q4: 'b', q5: 'a',
+                q6: 'b', q7: 'c', q8: 'c', q9: 'a', q10: 'b',
+                q11: 'c', q12: 'a', q13: 'c', q14: 'c', q15: 'b',
+                q16: 'b', q17: 'b', q18: 'c', q19: 'd', q20: 'd'
+            };
+
+            for (let q in answers) {
+                const selected = document.querySelector(`input[name="${q}"]:checked`);
+                if (selected && selected.value === answers[q]) {
+                    score++;
+                }
+            }
+
+            const resultDiv = document.getElementById('result');
+            resultDiv.textContent = `あなたのスコアは ${score} / 20 です。`;
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python制御構造：完全版学習資料</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; padding: 20px; max-width: 800px; margin: 0 auto; }
+        h1, h2, h3 { color: #333; }
+        pre { background-color: #f4f4f4; padding: 10px; border-radius: 5px; overflow-x: auto; }
+        .quiz { background-color: #e7f3fe; padding: 15px; border-radius: 5px; margin-top: 20px; }
+        .quiz-question { margin-bottom: 20px; }
+        .options { margin-left: 20px; }
+        button { background-color: #4CAF50; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background-color: #45a049; }
+        #result { margin-top: 20px; font-weight: bold; }
+        .important-note { background-color: #ffe6e6; padding: 10px; border-left: 5px solid #ff9999; margin: 15px 0; }
+    </style>
+</head>
+<body>
+    <h1>1.2 制御構造</h1>
+
+    <h2>1. 条件文（if, elif, else）</h2>
+    <p>条件文は、特定の条件が真か偽かに基づいてコードブロックを実行するために使用されます。</p>
+    <pre>
+# if-elif-else の例
+x = 10
+if x > 15:
+    print("xは15より大きい")
+elif x > 5:
+    print("xは5より大きく15以下")
+else:
+    print("xは5以下")
+
+# 三項演算子の例
+y = 20
+result = "yは10より大きい" if y > 10 else "yは10以下"
+print(result)
+    </pre>
+
+    <h2>2. ループ（for, while）</h2>
+    <p>ループは、コードブロックを繰り返し実行するために使用されます。</p>
+    
+    <h3>for ループ</h3>
+    <pre>
+# リストを使用したforループ
+fruits = ["apple", "banana", "cherry"]
+for fruit in fruits:
+    print(fruit)
+
+# range()を使用したforループ
+for i in range(5):
+    print(i)
+
+# 辞書を使用したforループ
+person = {"name": "Alice", "age": 30, "city": "New York"}
+for key, value in person.items():
+    print(f"{key}: {value}")
+
+# リスト内包表記
+squares = [x**2 for x in range(5)]
+print(squares)
+    </pre>
+
+    <h3>while ループ</h3>
+    <pre>
+# whileループの例
+count = 0
+while count < 5:
+    print(count)
+    count += 1
+
+# break と continue の使用
+numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+for num in numbers:
+    if num % 2 == 0:
+        continue  # 偶数をスキップ
+    if num > 7:
+        break  # 7より大きい数字で停止
+    print(num)
+    </pre>
+
+    <h2>3. 例外処理（try, except, finally）</h2>
+    <p>例外処理は、プログラムの実行中に発生する可能性のあるエラーを管理するために使用されます。</p>
+    <pre>
+# 一般的な例外処理の例
+try:
+    x = 10 / 0
+except ZeroDivisionError:
+    print("0で割ることはできません")
+except Exception as e:
+    print(f"その他のエラー: {e}")
+else:
+    print("エラーは発生しませんでした")
+finally:
+    print("この処理は常に実行されます")
+
+# 複数の例外を一度に処理
+try:
+    value = int(input("数字を入力してください: "))
+    result = 10 / value
+except (ValueError, ZeroDivisionError) as e:
+    print(f"エラーが発生しました: {e}")
+    </pre>
+
+    <div class="important-note">
+        <h3>プロジェクト固有の例外処理方針</h3>
+        <p>このプロジェクトでは、部品レイヤーにおいて以下の例外処理方針を採用します：</p>
+        <ul>
+            <li>部品レイヤーでは、原則として例外をキャッチせず、呼び出し元に例外を委ねます。</li>
+            <li>これにより、上位レイヤーで適切な例外処理とエラーハンドリングが可能になります。</li>
+            <li>ただし、リソースのクリーンアップなど、必要最小限の処理は行います。</li>
+        </ul>
+    </div>
+
+    <pre>
+# プロジェクトの部品レイヤーでの例外処理の例
+def component_function():
+    try:
+        # 何らかの処理
+        result = perform_operation()
+        return result
+    except Exception as e:
+        # 最小限のログ記録や必要なクリーンアップ
+        cleanup_resources()
+        # 例外を再発生させて呼び出し元に委ねる
+        raise
+
+# 上位レイヤーでの例外処理の例
+def higher_level_function():
+    try:
+        result = component_function()
+        process_result(result)
+    except SpecificError as e:
+        handle_specific_error(e)
+    except Exception as e:
+        handle_general_error(e)
+    </pre>
+
+    <h2>クイズ: Python制御構造</h2>
+    <div class="quiz">
+        <form id="quizForm">
+            <div class="quiz-question">
+                <p>1. 次のうち、正しい if 文の構文はどれですか？</p>
+                <div class="options">
+                    <input type="radio" name="q1" value="a" required> a) if (condition):<br>
+                    <input type="radio" name="q1" value="b"> b) if condition:<br>
+                    <input type="radio" name="q1" value="c"> c) if: condition<br>
+                    <input type="radio" name="q1" value="d"> d) if condition then:
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>2. else if の代わりに使用される Python のキーワードは何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q2" value="a" required> a) elseif<br>
+                    <input type="radio" name="q2" value="b"> b) elif<br>
+                    <input type="radio" name="q2" value="c"> c) else if<br>
+                    <input type="radio" name="q2" value="d"> d) otherwise
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>3. for ループで、リストの要素を逆順に反復処理するための正しい方法は？</p>
+                <div class="options">
+                    <input type="radio" name="q3" value="a" required> a) for i in list.reverse():<br>
+                    <input type="radio" name="q3" value="b"> b) for i in reversed(list):<br>
+                    <input type="radio" name="q3" value="c"> c) for i in list[::-1]:<br>
+                    <input type="radio" name="q3" value="d"> d) b と c の両方
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>4. while ループを途中で抜け出すために使用するキーワードは？</p>
+                <div class="options">
+                    <input type="radio" name="q4" value="a" required> a) exit<br>
+                    <input type="radio" name="q4" value="b"> b) stop<br>
+                    <input type="radio" name="q4" value="c"> c) break<br>
+                    <input type="radio" name="q4" value="d"> d) continue
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>5. try-except ブロックの目的は何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q5" value="a" required> a) コードの速度を上げる<br>
+                    <input type="radio" name="q5" value="b"> b) エラーを無視する<br>
+                    <input type="radio" name="q5" value="c"> c) エラーを検出し処理する<br>
+                    <input type="radio" name="q5" value="d"> d) デバッグを容易にする
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>6. 次のコードの出力は何ですか？<br>
+                   x = 5<br>
+                   if x > 3:<br>
+                   &nbsp;&nbsp;&nbsp;&nbsp;print("A")<br>
+                   elif x > 4:<br>
+                   &nbsp;&nbsp;&nbsp;&nbsp;print("B")<br>
+                   else:<br>
+                   &nbsp;&nbsp;&nbsp;&nbsp;print("C")</p>
+                <div class="options">
+                    <input type="radio" name="q6" value="a" required> a) A<br>
+                    <input type="radio" name="q6" value="b"> b) B<br>
+                    <input type="radio" name="q6" value="c"> c) C<br>
+                    <input type="radio" name="q6" value="d"> d) AB
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>7. for ループで range(5) を使用した場合、反復される数値は？</p>
+                <div class="options">
+                    <input type="radio" name="q7" value="a" required> a) 0, 1, 2, 3, 4<br>
+                    <input type="radio" name="q7" value="b"> b) 1, 2, 3, 4, 5<br>
+                    <input type="radio" name="q7" value="c"> c) 0, 1, 2, 3, 4, 5<br>
+                    <input type="radio" name="q7" value="d"> d) 1, 2, 3, 4
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>8. while ループの条件がいつも True の場合、何が起こりますか？</p>
+                <div class="options">
+                    <input type="radio" name="q8" value="a" required> a) ループは一度も実行されない<br>
+                    <input type="radio" name="q8" value="b"> b) ループは一度だけ実行される<br>
+                    <input type="radio" name="q8" value="c"> c) 無限ループになる<br>
+                    <input type="radio" name="q8" value="d"> d) エラーが発生する
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>9. try-except ブロックで、すべての例外をキャッチするために使用する例外の名前は？</p>
+                <div class="options">
+                    <input type="radio" name="q9" value="a" required> a) All<br>
+                    <input type="radio" name="q9" value="b"> b) Exception<br>
+                    <input type="radio" name="q9" value="c"> c) Error<br>
+                    <input type="radio" name="q9" value="d"> d) AnyException
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>10. 次のコードの出力は何ですか？<br>
+                    for i in range(3):<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;print(i)<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;if i == 1:<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break<br>
+                    else:<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;print("Done")</p>
+                <div class="options">
+                    <input type="radio" name="q10" value="a" required> a) 0 1 Done<br>
+                    <input type="radio" name="q10" value="b"> b) 0 1<br>
+                    <input type="radio" name="q10" value="c"> c) 0 1 2 Done<br>
+                    <input type="radio" name="q10" value="d"> d) 0 1 2
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>11. continue ステートメントの目的は何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q11" value="a" required> a) ループを終了する<br>
+                    <input type="radio" name="q11" value="b"> b) 次の反復にスキップする<br>
+                    <input type="radio" name="q11" value="c"> c) プログラムを終了する<br>
+                    <input type="radio" name="q11" value="d"> d) 条件をスキップする
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>12. 次のコードの出力は何ですか？<br>
+                    x = 10<br>
+                    y = 20<br>
+                    print("A" if x > y else "B")</p>
+                <div class="options">
+<input type="radio" name="q12" value="a" required> a) A<br>
+    <input type="radio" name="q12" value="b"> b) B<br>
+    <input type="radio" name="q12" value="c"> c) AB<br>
+    <input type="radio" name="q12" value="d"> d) エラー
+</div>
+</div>
+
+<div class="quiz-question">
+<p>13. finally ブロックはどのような場合に実行されますか？</p>
+<div class="options">
+    <input type="radio" name="q13" value="a" required> a) 例外が発生した場合のみ<br>
+    <input type="radio" name="q13" value="b"> b) 例外が発生しなかった場合のみ<br>
+    <input type="radio" name="q13" value="c"> c) 常に実行される<br>
+    <input type="radio" name="q13" value="d"> d) try ブロックが正常に終了した場合のみ
+</div>
+</div>
+
+<div class="quiz-question">
+<p>14. 次のうち、有効な for ループの構文はどれですか？</p>
+<div class="options">
+    <input type="radio" name="q14" value="a" required> a) for (i = 0; i < 5; i++):<br>
+    <input type="radio" name="q14" value="b"> b) for i in range(5):<br>
+    <input type="radio" name="q14" value="c"> c) for (i in range(5)):<br>
+    <input type="radio" name="q14" value="d"> d) for i = 0 to 4:
+</div>
+</div>
+
+<div class="quiz-question">
+<p>15. 次のコードの出力は何ですか？<br>
+    try:<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;print(1/0)<br>
+    except ZeroDivisionError:<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;print("A")<br>
+    except Exception:<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;print("B")<br>
+    else:<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;print("C")<br>
+    finally:<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;print("D")</p>
+<div class="options">
+    <input type="radio" name="q15" value="a" required> a) A D<br>
+    <input type="radio" name="q15" value="b"> b) B D<br>
+    <input type="radio" name="q15" value="c"> c) C D<br>
+    <input type="radio" name="q15" value="d"> d) A B D
+</div>
+</div>
+
+<div class="quiz-question">
+<p>16. Python で switch-case 文の代わりに使用される一般的な構造は？</p>
+<div class="options">
+    <input type="radio" name="q16" value="a" required> a) if-elif-else チェーン<br>
+    <input type="radio" name="q16" value="b"> b) match-case 文（Python 3.10以降）<br>
+    <input type="radio" name="q16" value="c"> c) switch-when 文<br>
+    <input type="radio" name="q16" value="d"> d) a と b の両方
+</div>
+</div>
+
+<div class="quiz-question">
+<p>17. 次のコードの出力は何ですか？<br>
+    i = 0<br>
+    while i < 3:<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;i += 1<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;print(i, end=' ')</p>
+<div class="options">
+    <input type="radio" name="q17" value="a" required> a) 0 1 2<br>
+    <input type="radio" name="q17" value="b"> b) 1 2 3<br>
+    <input type="radio" name="q17" value="c"> c) 1 2 3 4<br>
+    <input type="radio" name="q17" value="d"> d) 0 1 2 3
+</div>
+</div>
+
+<div class="quiz-question">
+<p>18. for ループで辞書をイテレートする場合、デフォルトで何がイテレートされますか？</p>
+<div class="options">
+    <input type="radio" name="q18" value="a" required> a) キー<br>
+    <input type="radio" name="q18" value="b"> b) 値<br>
+    <input type="radio" name="q18" value="c"> c) キーと値のペア<br>
+    <input type="radio" name="q18" value="d"> d) インデックス
+</div>
+</div>
+
+<div class="quiz-question">
+<p>19. このプロジェクトの部品レイヤーにおける例外処理の正しい方針は何ですか？</p>
+<div class="options">
+    <input type="radio" name="q19" value="a" required> a) すべての例外をキャッチして処理する<br>
+    <input type="radio" name="q19" value="b"> b) 例外を無視する<br>
+    <input type="radio" name="q19" value="c"> c) 例外をキャッチせず、呼び出し元に委ねる<br>
+    <input type="radio" name="q19" value="d"> d) すべての例外をログに記録して抑制する
+</div>
+</div>
+
+<div class="quiz-question">
+<p>20. 次のコードの出力は何ですか？<br>
+    numbers = [1, 2, 3, 4, 5]<br>
+    result = [num * 2 for num in numbers if num % 2 == 0]<br>
+    print(result)</p>
+<div class="options">
+    <input type="radio" name="q20" value="a" required> a) [2, 4, 6, 8, 10]<br>
+    <input type="radio" name="q20" value="b"> b) [4, 8]<br>
+    <input type="radio" name="q20" value="c"> c) [2, 6, 10]<br>
+    <input type="radio" name="q20" value="d"> d) [1, 2, 3, 4, 5]
+</div>
+</div>
+
+<button type="submit">採点する</button>
+</form>
+<div id="result"></div>
+</div>
+
+<script>
+document.getElementById('quizForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    let score = 0;
+    const answers = {
+        q1: 'b', q2: 'b', q3: 'd', q4: 'c', q5: 'c',
+        q6: 'a', q7: 'a', q8: 'c', q9: 'b', q10: 'b',
+        q11: 'b', q12: 'b', q13: 'c', q14: 'b', q15: 'a',
+        q16: 'd', q17: 'b', q18: 'a', q19: 'c', q20: 'b'
+    };
+
+    for (let q in answers) {
+        const selected = document.querySelector(`input[name="${q}"]:checked`);
+        if (selected && selected.value === answers[q]) {
+            score++;
+        }
+    }
+
+    const resultDiv = document.getElementById('result');
+    resultDiv.textContent = `あなたのスコアは ${score} / 20 です。`;
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pythonデータ処理（pandas）：完全版学習資料</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; padding: 20px; max-width: 800px; margin: 0 auto; }
+        h1, h2, h3 { color: #333; }
+        pre { background-color: #f4f4f4; padding: 10px; border-radius: 5px; overflow-x: auto; }
+        .quiz { background-color: #e7f3fe; padding: 15px; border-radius: 5px; margin-top: 20px; }
+        .quiz-question { margin-bottom: 20px; }
+        .options { margin-left: 20px; }
+        button { background-color: #4CAF50; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background-color: #45a049; }
+        #result { margin-top: 20px; font-weight: bold; }
+        .note { background-color: #ffffd9; padding: 10px; border-left: 5px solid #ffeb3b; margin: 15px 0; }
+    </style>
+</head>
+<body>
+    <h1>5. データ処理（pandas）</h1>
+
+    <h2>5.1 pandas基礎</h2>
+    <p>pandasは、Pythonでデータ分析を行うための強力なライブラリです。主要な機能はDataFrameとSeriesです。</p>
+    <pre>
+import pandas as pd
+import numpy as np
+
+# DataFrameの作成
+df = pd.DataFrame({
+    'A': [1, 2, 3, 4, 5],
+    'B': ['a', 'b', 'c', 'd', 'e'],
+    'C': [1.1, 2.2, 3.3, 4.4, 5.5]
+})
+
+print(df)
+    </pre>
+
+    <h2>5.2 データの選択とフィルタリング</h2>
+    <p>DataFrameから特定のデータを選択したりフィルタリングしたりする方法を学びます。</p>
+    <pre>
+# 列の選択
+print(df['A'])
+print(df[['A', 'B']])
+
+# 行の選択
+print(df.loc[0])
+print(df.iloc[1:3])
+
+# 条件によるフィルタリング
+print(df[df['A'] > 2])
+    </pre>
+
+    <h2>5.3 グループ化と集計</h2>
+    <p>データをグループ化し、集計操作を行う方法を学びます。</p>
+    <pre>
+# サンプルデータの作成
+df = pd.DataFrame({
+    'category': ['A', 'B', 'A', 'B', 'A', 'B'],
+    'value': [10, 20, 30, 40, 50, 60]
+})
+
+# グループ化と集計
+grouped = df.groupby('category')
+print(grouped.mean())
+print(grouped.agg(['mean', 'sum', 'count']))
+    </pre>
+
+    <h2>5.4 マージとジョイン</h2>
+    <p>複数のDataFrameを結合する方法を学びます。</p>
+    <pre>
+# サンプルDataFrameの作成
+df1 = pd.DataFrame({'key': ['A', 'B', 'C'], 'value': [1, 2, 3]})
+df2 = pd.DataFrame({'key': ['A', 'B', 'D'], 'value': [4, 5, 6]})
+
+# マージ
+merged = pd.merge(df1, df2, on='key', how='outer')
+print(merged)
+
+# 連結
+concatenated = pd.concat([df1, df2])
+print(concatenated)
+    </pre>
+
+    <h2>5.5 ピボットテーブル</h2>
+    <p>データを再構成してピボットテーブルを作成する方法を学びます。</p>
+    <pre>
+# サンプルデータの作成
+df = pd.DataFrame({
+    'A': ['foo', 'foo', 'foo', 'bar', 'bar', 'bar'],
+    'B': ['one', 'two', 'one', 'two', 'one', 'two'],
+    'C': [1, 2, 3, 4, 5, 6],
+    'D': [10, 20, 30, 40, 50, 60]
+})
+
+# ピボットテーブルの作成
+pivot = df.pivot_table(values=['C', 'D'], index=['A'], columns=['B'])
+print(pivot)
+    </pre>
+
+    <h2>5.6 ilocを使用した条件抽出と編集</h2>
+    <p>ilocを使用して、インデックスベースで行や列を選択し、条件に基づいて編集を行います。</p>
+    <pre>
+# サンプルデータの作成
+df = pd.DataFrame({
+    'A': [1, 2, 3, 4, 5],
+    'B': [10, 20, 30, 40, 50],
+    'C': [100, 200, 300, 400, 500]
+})
+
+# ilocを使用した条件抽出
+condition = df['A'] > 2
+selected_rows = df.iloc[condition.values]
+print("条件抽出結果:")
+print(selected_rows)
+
+# 条件に該当する行にのみ編集を適用
+df.iloc[condition.values, df.columns.get_loc('B')] *= 2
+print("\n編集後のDataFrame:")
+print(df)
+    </pre>
+
+    <h2>5.7 applyを使用したベクトル処理</h2>
+    <p>applyメソッドを使用して、DataFrameの行または列に関数を適用します。</p>
+    <pre>
+# 列ごとの処理
+df['D'] = df.apply(lambda row: row['A'] * row['B'], axis=1)
+
+# 行ごとの処理
+def row_sum(row):
+    return row.sum()
+
+df['Row_Sum'] = df.apply(row_sum, axis=1)
+
+print("applyを使用した処理後のDataFrame:")
+print(df)
+    </pre>
+
+    <h2>5.8 lambdaを使用した処理</h2>
+    <p>lambdaを使用して簡単な関数を定義し、applyと組み合わせて使用します。</p>
+    <pre>
+# lambdaを使用した単純な処理
+df['E'] = df['A'].apply(lambda x: x ** 2)
+
+# lambdaとapplyの組み合わせ
+df['F'] = df.apply(lambda row: row['A'] + row['B'] if row['A'] > 3 else row['B'], axis=1)
+
+print("lambdaを使用した処理後のDataFrame:")
+print(df)
+    </pre>
+
+    <div class="note">
+        <h3>プロジェクトでの活用</h3>
+        <p>これらの操作は、プロジェクトで頻繁に使用される予定です。特に以下の点に注意してください：</p>
+        <ul>
+            <li>ilocを使用した条件抽出は、特定の条件に合致するデータのみを効率的に処理する際に重要です。</li>
+            <li>applyを使用したベクトル処理は、大量のデータに対して同じ操作を適用する際に有用です。</li>
+            <li>lambdaを使用した処理は、簡単な関数を即座に定義し適用する際に便利です。</li>
+        </ul>
+        <p>これらの技術を組み合わせることで、複雑なデータ処理タスクを効率的に実行できます。</p>
+    </div>
+
+    <h2>クイズ: Pythonデータ処理（pandas）</h2>
+    <div class="quiz">
+        <form id="quizForm">
+            <div class="quiz-question">
+                <p>1. pandasの主要なデータ構造は何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q1" value="a" required> a) List と Tuple<br>
+                    <input type="radio" name="q1" value="b"> b) DataFrame と Series<br>
+                    <input type="radio" name="q1" value="c"> c) Dictionary と Array<br>
+                    <input type="radio" name="q1" value="d"> d) Matrix と Vector
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>2. DataFrameから特定の列を選択するための正しい構文は？</p>
+                <div class="options">
+                    <input type="radio" name="q2" value="a" required> a) df['column_name']<br>
+                    <input type="radio" name="q2" value="b"> b) df.column_name<br>
+                    <input type="radio" name="q2" value="c"> c) df.get('column_name')<br>
+                    <input type="radio" name="q2" value="d"> d) df('column_name')
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>3. DataFrameの行を選択するために使用されるメソッドは？</p>
+                <div class="options">
+                    <input type="radio" name="q3" value="a" required> a) select()<br>
+                    <input type="radio" name="q3" value="b"> b) filter()<br>
+                    <input type="radio" name="q3" value="c"> c) loc[]<br>
+                    <input type="radio" name="q3" value="d"> d) get_row()
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>4. DataFrameをグループ化するために使用するメソッドは？</p>
+                <div class="options">
+                    <input type="radio" name="q4" value="a" required> a) group()<br>
+                    <input type="radio" name="q4" value="b"> b) groupby()<br>
+                    <input type="radio" name="q4" value="c"> c) aggregate()<br>
+                    <input type="radio" name="q4" value="d"> d) cluster()
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>5. 2つのDataFrameを結合するために使用されるメソッドは？</p>
+                <div class="options">
+                    <input type="radio" name="q5" value="a" required> a) join()<br>
+                    <input type="radio" name="q5" value="b"> b) combine()<br>
+                    <input type="radio" name="q5" value="c"> c) merge()<br>
+                    <input type="radio" name="q5" value="d"> d) unite()
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>6. DataFrameでピボットテーブルを作成するメソッドは？</p>
+                <div class="options">
+                    <input type="radio" name="q6" value="a" required> a) create_pivot()<br>
+                    <input type="radio" name="q6" value="b"> b) pivot()<br>
+                    <input type="radio" name="q6" value="c"> c) pivot_table()<br>
+                    <input type="radio" name="q6" value="d"> d) make_pivot()
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>7. DataFrameの欠損値を表すpandasの特殊な値は？</p>
+                <div class="options">
+                    <input type="radio" name="q7" value="a" required> a) None<br>
+                    <input type="radio" name="q7" value="b"> b) NaN<br>
+                    <input type="radio" name="q7" value="c"> c) null<br>
+                    <input type="radio" name="q7" value="d"> d) missing
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>8. DataFrameの特定の条件に基づいてデータをフィルタリングする正しい方法は？</p>
+                <div class="options">
+                    <input type="radio" name="q8" value="a" required> a) df.filter(condition)<br>
+                    <input type="radio" name="q8" value="b"> b) df[df['column'] > value]<br>
+                    <input type="radio" name="q8" value="c"> c) df.where('column' > value)<br>
+                    <input type="radio" name="q8" value="d"> d) df.select(condition)
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>9. DataFrameの列名を変更するメソッドは？</p>
+                <div class="options">
+                    <input type="radio" name="q9" value="a" required> a) change_names()<br>
+                    <input type="radio" name="q9" value="b"> b) rename()<br>
+                    <input type="radio" name="q9" value="c"> c) alter_columns()<br>
+                    <input type="radio" name="q9" value="d"> d) modify_names()
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>10. DataFrameの基本的な統計情報を取得するメソッドは？</p>
+                <div class="options">
+                    <input type="radio" name="q10" value="a" required> a) statistics()<br>
+                    <input type="radio" name="q10" value="b"> b) info()<br>
+                    <input type="radio" name="q10" value="c"> c) describe()<br>
+                    <input type="radio

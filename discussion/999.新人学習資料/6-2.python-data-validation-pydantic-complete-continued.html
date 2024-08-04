@@ -1,0 +1,145 @@
+<input type="radio" name="q9" value="b"> b) List(int)<br>
+                    <input type="radio" name="q9" value="c"> c) List&lt;int&gt;<br>
+                    <input type="radio" name="q9" value="d"> d) List[of int]
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>10. pydanticモデルのフィールドにデフォルト値を設定する正しい方法は何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q10" value="a" required> a) field: int = 0<br>
+                    <input type="radio" name="q10" value="b"> b) field: int = Field(default=0)<br>
+                    <input type="radio" name="q10" value="c"> c) field: int = Field(0)<br>
+                    <input type="radio" name="q10" value="d"> d) 上記全て
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>11. pydanticで正規表現を使用してフィールドを検証する正しい方法は何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q11" value="a" required> a) Field(regex=r'^[A-Z]+$')<br>
+                    <input type="radio" name="q11" value="b"> b) Field(pattern=r'^[A-Z]+$')<br>
+                    <input type="radio" name="q11" value="c"> c) Field(re=r'^[A-Z]+$')<br>
+                    <input type="radio" name="q11" value="d"> d) @field_validator('field', regex=r'^[A-Z]+$')
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>12. pydanticでモデルのフィールドを読み取り専用にする方法は何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q12" value="a" required> a) Field(readonly=True)<br>
+                    <input type="radio" name="q12" value="b"> b) Field(const=True)<br>
+                    <input type="radio" name="q12" value="c"> c) Field(immutable=True)<br>
+                    <input type="radio" name="q12" value="d"> d) Field(frozen=True)
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>13. pydanticでモデルのフィールドを除外する方法は何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q13" value="a" required> a) Field(exclude=True)<br>
+                    <input type="radio" name="q13" value="b"> b) Field(hidden=True)<br>
+                    <input type="radio" name="q13" value="c"> c) Field(include=False)<br>
+                    <input type="radio" name="q13" value="d"> d) Field(ignore=True)
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>14. pydanticでモデルの継承を行う正しい方法は何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q14" value="a" required> a) class ChildModel(ParentModel)<br>
+                    <input type="radio" name="q14" value="b"> b) class ChildModel(BaseModel, ParentModel)<br>
+                    <input type="radio" name="q14" value="c"> c) class ChildModel(inherit=ParentModel)<br>
+                    <input type="radio" name="q14" value="d"> d) class ChildModel(extends=ParentModel)
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>15. 一括申請データのバリデーションで、申請件数の上限を設定するには、どのバリデータを使用すべきですか？</p>
+                <div class="options">
+                    <input type="radio" name="q15" value="a" required> a) @field_validator<br>
+                    <input type="radio" name="q15" value="b"> b) @model_validator<br>
+                    <input type="radio" name="q15" value="c"> c) @root_validator<br>
+                    <input type="radio" name="q15" value="d"> d) @list_validator
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>16. 外部システムと連携してデータを検証する際、どのようなエラーハンドリングが必要ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q16" value="a" required> a) 外部システムのエラーを無視する<br>
+                    <input type="radio" name="q16" value="b"> b) 外部システムのエラーを適切にキャッチし、ユーザーフレンドリーなメッセージを返す<br>
+                    <input type="radio" name="q16" value="c"> c) 外部システムのエラーが発生した場合、常にデータを有効とみなす<br>
+                    <input type="radio" name="q16" value="d"> d) 外部システムのエラーが発生した場合、アプリケーションを終了する
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>17. CSVファイルから読み込んだデータを検証する際、日付フィールドをどのように処理すべきですか？</p>
+                <div class="options">
+                    <input type="radio" name="q17" value="a" required> a) 文字列として扱い、バリデーションしない<br>
+                    <input type="radio" name="q17" value="b"> b) datetime型に変換し、適切なバリデーションを行う<br>
+                    <input type="radio" name="q17" value="c"> c) 整数型（UNIX時間）に変換してから処理する<br>
+                    <input type="radio" name="q17" value="d"> d) 日付フィールドは無視する
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>18. 人による修正が入る可能性があるデータの出力値チェックで、特に注意すべき点は何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q18" value="a" required> a) データ型の厳密なチェック<br>
+                    <input type="radio" name="q18" value="b"> b) 値の範囲や形式の妥当性チェック<br>
+                    <input type="radio" name="q18" value="c"> c) 他のフィールドとの整合性チェック<br>
+                    <input type="radio" name="q18" value="d"> d) 上記すべて
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>19. pydanticでネストされたモデルを定義する正しい方法は何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q19" value="a" required> a) child: ChildModel<br>
+                    <input type="radio" name="q19" value="b"> b) child: dict<br>
+                    <input type="radio" name="q19" value="c"> c) child: nested(ChildModel)<br>
+                    <input type="radio" name="q19" value="d"> d) child: Field(ChildModel)
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>20. pydanticで複数の条件を組み合わせたバリデーションを行う最適な方法は何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q20" value="a" required> a) 複数の@field_validatorを使用する<br>
+                    <input type="radio" name="q20" value="b"> b) @model_validatorを使用し、複数の条件をチェックする<br>
+                    <input type="radio" name="q20" value="c"> c) カスタムFieldタイプを作成する<br>
+                    <input type="radio" name="q20" value="d"> d) 外部ライブラリを使用する
+                </div>
+            </div>
+
+            <button type="submit">採点する</button>
+        </form>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        document.getElementById('quizForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            let score = 0;
+            const answers = {
+                q1: 'b', q2: 'c', q3: 'b', q4: 'a', q5: 'c',
+                q6: 'd', q7: 'b', q8: 'a', q9: 'a', q10: 'd',
+                q11: 'b', q12: 'b', q13: 'a', q14: 'a', q15: 'a',
+                q16: 'b', q17: 'b', q18: 'd', q19: 'a', q20: 'b'
+            };
+
+            for (let q in answers) {
+                const selected = document.querySelector(`input[name="${q}"]:checked`);
+                if (selected && selected.value === answers[q]) {
+                    score++;
+                }
+            }
+
+            const resultDiv = document.getElementById('result');
+            resultDiv.textContent = `あなたのスコアは ${score} / 20 です。`;
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>コード品質メトリクス：完全版学習資料</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; padding: 20px; max-width: 800px; margin: 0 auto; }
+        h1, h2, h3 { color: #333; }
+        pre { background-color: #f4f4f4; padding: 10px; border-radius: 5px; overflow-x: auto; }
+        .quiz { background-color: #e7f3fe; padding: 15px; border-radius: 5px; margin-top: 20px; }
+        .quiz-question { margin-bottom: 20px; }
+        .options { margin-left: 20px; }
+        button { background-color: #4CAF50; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background-color: #45a049; }
+        #result { margin-top: 20px; font-weight: bold; }
+        .note { background-color: #ffffd9; padding: 10px; border-left: 5px solid #ffeb3b; margin: 15px 0; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+    <h1>コード品質メトリクス</h1>
+
+    <h2>1. コード品質メトリクスの重要性</h2>
+    <p>コード品質メトリクスは、ソフトウェアの品質、保守性、および潜在的な問題点を客観的に測定するための指標です。これらのメトリクスを定期的に監視し、設定された閾値内に維持することで、コードの腐敗を防ぎ、長期的なプロジェクトの健全性を保つことができます。</p>
+
+    <h2>2. 主要なコード品質メトリクスと閾値</h2>
+    <table>
+        <tr>
+            <th>メトリクス</th>
+            <th>説明</th>
+            <th>推奨閾値</th>
+        </tr>
+        <tr>
+            <td>循環的複雑度 (Cyclomatic Complexity)</td>
+            <td>コード内の分岐の複雑さを測定</td>
+            <td>10以下</td>
+        </tr>
+        <tr>
+            <td>コードの重複 (Code Duplication)</td>
+            <td>重複しているコードの割合</td>
+            <td>5%以下</td>
+        </tr>
+        <tr>
+            <td>コメント率 (Comment Ratio)</td>
+            <td>コード行数に対するコメント行数の割合</td>
+            <td>15-30%</td>
+        </tr>
+        <tr>
+            <td>メソッドの行数 (Method Lines of Code)</td>
+            <td>1つのメソッド内のコード行数</td>
+            <td>50行以下</td>
+        </tr>
+        <tr>
+            <td>クラスの行数 (Class Lines of Code)</td>
+            <td>1つのクラス内のコード行数</td>
+            <td>500行以下</td>
+        </tr>
+        <tr>
+            <td>コードカバレッジ (Code Coverage)</td>
+            <td>テストでカバーされているコードの割合</td>
+            <td>80%以上</td>
+        </tr>
+    </table>
+
+    <h2>3. メトリクスの測定と監視</h2>
+    <p>以下のツールを使用して、定期的にコード品質メトリクスを測定し、監視することができます：</p>
+    <ul>
+        <li>SonarQube: 総合的なコード品質分析ツール</li>
+        <li>PyLint: Pythonコード向けの静的解析ツール</li>
+        <li>Coverage.py: Pythonコードのテストカバレッジ測定ツール</li>
+    </ul>
+
+    <h2>4. メトリクス改善のベストプラクティス</h2>
+    <ul>
+        <li>定期的なコードレビューの実施</li>
+        <li>継続的インテグレーション（CI）パイプラインへのメトリクスチェックの組み込み</li>
+        <li>リファクタリングの定期的な実施</li>
+        <li>単体テストの作成と維持</li>
+        <li>コーディング規約の厳守</li>
+    </ul>
+
+    <div class="note">
+        <h3>重要ポイント</h3>
+        <ul>
+            <li>メトリクスは指針であり、コンテキストを考慮して解釈することが重要</li>
+            <li>閾値を超えた場合は、即座に対応策を検討し実施する</li>
+            <li>チーム全体でメトリクスの重要性を理解し、品質維持に努める</li>
+            <li>新しい機能の追加と同時に、既存コードの品質向上も行う</li>
+        </ul>
+    </div>
+
+    <h2>サンプルコード: 循環的複雑度の改善</h2>
+    <pre>
+# 改善前（循環的複雑度が高い）
+def complex_function(a, b, c):
+    if a > 0:
+        if b > 0:
+            if c > 0:
+                return a + b + c
+            else:
+                return a + b
+        else:
+            if c > 0:
+                return a + c
+            else:
+                return a
+    else:
+        if b > 0:
+            if c > 0:
+                return b + c
+            else:
+                return b
+        else:
+            if c > 0:
+                return c
+            else:
+                return 0
+
+# 改善後（循環的複雑度を低減）
+def improved_function(a, b, c):
+    result = 0
+    if a > 0:
+        result += a
+    if b > 0:
+        result += b
+    if c > 0:
+        result += c
+    return result
+    </pre>
+
+    <h2>クイズ: コード品質メトリクス</h2>
+    <div class="quiz">
+        <form id="quizForm">
+            <div class="quiz-question">
+                <p>1. 循環的複雑度の推奨閾値は？</p>
+                <div class="options">
+                    <input type="radio" name="q1" value="a" required> a) 5以下<br>
+                    <input type="radio" name="q1" value="b"> b) 10以下<br>
+                    <input type="radio" name="q1" value="c"> c) 15以下<br>
+                    <input type="radio" name="q1" value="d"> d) 20以下
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>2. コードの重複率の推奨閾値は？</p>
+                <div class="options">
+                    <input type="radio" name="q2" value="a" required> a) 1%以下<br>
+                    <input type="radio" name="q2" value="b"> b) 3%以下<br>
+                    <input type="radio" name="q2" value="c"> c) 5%以下<br>
+                    <input type="radio" name="q2" value="d"> d) 10%以下
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>3. メソッドの推奨最大行数は？</p>
+                <div class="options">
+                    <input type="radio" name="q3" value="a" required> a) 20行<br>
+                    <input type="radio" name="q3" value="b"> b) 30行<br>
+                    <input type="radio" name="q3" value="c"> c) 40行<br>
+                    <input type="radio" name="q3" value="d"> d) 50行
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>4. コードカバレッジの推奨閾値は？</p>
+                <div class="options">
+                    <input type="radio" name="q4" value="a" required> a) 60%以上<br>
+                    <input type="radio" name="q4" value="b"> b) 70%以上<br>
+                    <input type="radio" name="q4" value="c"> c) 80%以上<br>
+                    <input type="radio" name="q4" value="d"> d) 90%以上
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>5. Pythonコードの静的解析に適したツールは？</p>
+                <div class="options">
+                    <input type="radio" name="q5" value="a" required> a) ESLint<br>
+                    <input type="radio" name="q5" value="b"> b) PyLint<br>
+                    <input type="radio" name="q5" value="c"> c) JSHint<br>
+                    <input type="radio" name="q5" value="d"> d) RuboCop
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>6. コメント率の適切な範囲は？</p>
+                <div class="options">
+                    <input type="radio" name="q6" value="a" required> a) 5-10%<br>
+                    <input type="radio" name="q6" value="b"> b) 10-20%<br>
+                    <input type="radio" name="q6" value="c"> c) 15-30%<br>
+                    <input type="radio" name="q6" value="d"> d) 30-50%
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>7. クラスの推奨最大行数は？</p>
+                <div class="options">
+                    <input type="radio" name="q7" value="a" required> a) 200行<br>
+                    <input type="radio" name="q7" value="b"> b) 300行<br>
+                    <input type="radio" name="q7" value="c"> c) 400行<br>
+                    <input type="radio" name="q7" value="d"> d) 500行
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>8. 循環的複雑度を下げるための一般的な方法は？</p>
+                <div class="options">
+                    <input type="radio" name="q8" value="a" required> a) if文を増やす<br>
+                    <input type="radio" name="q8" value="b"> b) ネストを深くする<br>
+                    <input type="radio" name="q8" value="c"> c) 条件分岐を単純化する<br>
+                    <input type="radio" name="q8" value="d"> d) 関数の行数を増やす
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>9. コード品質メトリクスを監視する最適なタイミングは？</p>
+                <div class="options">
+                    <input type="radio" name="q9" value="a" required> a) プロジェクト終了時<br>
+                    <input type="radio" name="q9" value="b"> b) 週に1回<br>
+                    <input type="radio" name="q9" value="c"> c) 毎日のビルド時<br>
+                    <input type="radio" name="q9" value="d"> d) 月に1回
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>10. コードの重複を減らすための効果的な方法は？</p>
+                <div class="options">
+                    <input type="radio" name="q10" value="a" required> a) 同じコードを複数の場所にコピーする<br>
+                    <input type="radio" name="q10" value="b"> b) 関数やクラスを適切に抽象化する<br>
+                    <input type="radio" name="q10" value="c"> c) 全てのコードを1つの大きな関数にまとめる<br>
+                    <input type="radio" name="q10" value="d"> d) コメントを増やす
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>11. テストカバレッジを測定するPythonツールは？</p>
+                <div class="options">
+                    <input type="radio" name="q11" value="a" required> a) PyTest<br>
+                    <input type="radio" name="q11" value="b"> b) Coverage.py<br>
+                    <input type="radio" name="q11" value="c"> c) UnitTest<br>
+                    <input type="radio" name="q11" value="d"> d) DocTest
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>12. コード品質メトリクスの主な目的は？</p>
+                <div class="options">
+                    <input type="radio" name="q12" value="a" required> a) プログラマーのランク付け<br>
+                    <input type="radio" name="q12" value="b"> b) コードの実行速度の向上<br>
+                    <input type="radio" name="q

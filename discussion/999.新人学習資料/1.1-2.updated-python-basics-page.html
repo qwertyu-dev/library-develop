@@ -1,0 +1,109 @@
+<div class="quiz-question">
+                <p>13. 浮動小数点数 3.14 を整数に変換するPythonコードはどれですか？</p>
+                <div class="quiz-options" data-question="q13">
+                    <div class="quiz-option">a) int(3.14)</div>
+                    <div class="quiz-option">b) integer(3.14)</div>
+                    <div class="quiz-option">c) round(3.14)</div>
+                    <div class="quiz-option">d) Math.floor(3.14)</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p>14. Pythonで複素数の虚部を表すために使用される文字は何ですか？</p>
+                <div class="quiz-options" data-question="q14">
+                    <div class="quiz-option">a) i</div>
+                    <div class="quiz-option">b) j</div>
+                    <div class="quiz-option">c) c</div>
+                    <div class="quiz-option">d) x</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p>15. 辞書から存在しないキーを安全に取得するためのメソッドは何ですか？</p>
+                <div class="quiz-options" data-question="q15">
+                    <div class="quiz-option">a) fetch()</div>
+                    <div class="quiz-option">b) retrieve()</div>
+                    <div class="quiz-option">c) get()</div>
+                    <div class="quiz-option">d) search()</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p>16. セットに新しい要素を追加するためのメソッドは何ですか？</p>
+                <div class="quiz-options" data-question="q16">
+                    <div class="quiz-option">a) append()</div>
+                    <div class="quiz-option">b) insert()</div>
+                    <div class="quiz-option">c) add()</div>
+                    <div class="quiz-option">d) push()</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p>17. 変数の型を確認するために使用する関数は何ですか？</p>
+                <div class="quiz-options" data-question="q17">
+                    <div class="quiz-option">a) typeof()</div>
+                    <div class="quiz-option">b) type()</div>
+                    <div class="quiz-option">c) instanceof()</div>
+                    <div class="quiz-option">d) checktype()</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p>18. Pythonのブール型で真を表す値は何ですか？</p>
+                <div class="quiz-options" data-question="q18">
+                    <div class="quiz-option">a) true</div>
+                    <div class="quiz-option">b) True</div>
+                    <div class="quiz-option">c) 1</div>
+                    <div class="quiz-option">d) yes</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p>19. リストから最後の要素を削除し、その値を返すメソッドは何ですか？</p>
+                <div class="quiz-options" data-question="q19">
+                    <div class="quiz-option">a) remove()</div>
+                    <div class="quiz-option">b) delete()</div>
+                    <div class="quiz-option">c) pop()</div>
+                    <div class="quiz-option">d) slice()</div>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <p>20. Pythonで 'None' は何を表しますか？</p>
+                <div class="quiz-options" data-question="q20">
+                    <div class="quiz-option">a) 0</div>
+                    <div class="quiz-option">b) 空の文字列</div>
+                    <div class="quiz-option">c) False</div>
+                    <div class="quiz-option">d) 値がないこと</div>
+                </div>
+            </div>
+            <button type="submit">採点する</button>
+        </form>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.quiz-option').forEach(option => {
+            option.addEventListener('click', function() {
+                const questionDiv = this.closest('.quiz-options');
+                questionDiv.querySelectorAll('.quiz-option').forEach(opt => opt.classList.remove('selected'));
+                this.classList.add('selected');
+            });
+        });
+
+        document.getElementById('quizForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            let score = 0;
+            const answers = {
+                q1: 'a', q2: 'd', q3: 'b', q4: 'c', q5: 'c',
+                q6: 'b,d', q7: 'a', q8: 'c', q9: 'b', q10: 'b',
+                q11: 'b', q12: 'c', q13: 'a', q14: 'b', q15: 'c',
+                q16: 'c', q17: 'b', q18: 'b', q19: 'c', q20: 'd'
+            };
+
+            for (let q in answers) {
+                const selected = document.querySelector(`.quiz-options[data-question="${q}"] .selected`);
+                if (selected && selected.textContent.charAt(0) === answers[q]) {
+                    score++;
+                }
+            }
+
+            const resultDiv = document.getElementById('result');
+            resultDiv.textContent = `あなたのスコアは ${score} / 20 です。`;
+        });
+    </script>
+</body>
+</html>

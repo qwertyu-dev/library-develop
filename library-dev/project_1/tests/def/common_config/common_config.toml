@@ -1,0 +1,61 @@
+##############################
+# 本番定義 production
+##############################
+[production]
+[production.logger_path]
+LOGGER_DEF_FILE = 'tests/def/mfaUtilsLoggingHelper/logging_TimedRotate.json'
+LOGGER_MSG_FILE = 'tests/def/mfaUtilsLoggingHelper/config_MessageList.toml'
+
+# input/output data path
+[production.input_file_path]
+UPDATE_EXCEL_PATH = 'tests/share/receive'
+
+[production.output_file_path]
+SEND_REFFERENCE_MASTER_PATH = 'tests/share/receive'
+
+##############################
+# リグレ定義 regression
+##############################
+[regression]
+[regression.logger_path]
+LOGGER_DEF_FILE = 'tests/def/mfaUtilsLoggingHelper/logging_TimedRotate.json'
+LOGGER_MSG_FILE = 'tests/def/mfaUtilsLoggingHelper/config_MessageList.toml'
+
+# input/output data path
+[regression.input_file_path]
+UPDATE_EXCEL_PATH = 'tests/share/receive'
+
+[regression.output_file_path]
+SEND_REFFERENCE_MASTER_PATH = 'tests/share/receive'
+
+
+##############################
+# 開発機定義 develop
+##############################
+[develop]
+[develop.logger_path]
+LOGGER_DEF_FILE = 'tests/def/mfaUtilsLoggingHelper/logging_TimedRotate.json'
+LOGGER_MSG_FILE = 'tests/def/mfaUtilsLoggingHelper/config_MessageList.toml'
+
+# input/output data path
+[develop.input_file_path]
+UPDATE_EXCEL_PATH = 'tests/share/receive'
+
+[develop.output_file_path]
+SEND_REFFERENCE_MASTER_PATH = 'tests/share/receive'
+
+
+##############################
+# local定義 local
+##############################
+[local]
+[local.logger_path]
+LOGGER_DEF_FILE = 'tests/def/mfaUtilsLoggingHelper/logging_TimedRotate.json'
+LOGGER_MSG_FILE = 'tests/def/mfaUtilsLoggingHelper/config_MessageList.toml'
+
+# input/output data path
+[local.input_file_path]
+UPDATE_EXCEL_PATH = 'tests/share/receive'
+
+[local.output_file_path]
+SEND_REFFERENCE_MASTER_PATH = 'tests/share/receive'

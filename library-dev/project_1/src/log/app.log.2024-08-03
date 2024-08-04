@@ -1,0 +1,2940 @@
+2024-08-03 08:09:18 [DEBUG] converter_utils - <module> line 11: Config(env='local', common_config={'logger_path': {'LOGGER_DEF_FILE': 'src/def/mfaUtilsLoggingHelper/logging_TimedRotate.json', 'LOGGER_MSG_FILE': 'src/def/mfaUtilsLoggingHelper/config_MessageList.toml'}, 'input_file_path': {'UPDATE_EXCEL_PATH': 'src/share/receive'}, 'output_file_path': {'SEND_REFFERENCE_MASTER_PATH': 'src/share/receive'}}, package_config={'test': {'local_test': 'tests'}}, log_message=<bound method LoggerPackage.log_message of <src.lib.common_utils.ibr_logger_package.LoggerPackage object at 0x7f44526de250>>):
+2024-08-03 08:09:18 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:09:18 [INFO] converter_utils - test_individual_requirement_C0 line 68: 
+テスト内容:
+        - テストカテゴリ: C0
+        - テスト区分: 正常系
+        - テストシナリオ: 個別要件リストに含まれる部署名の処理
+        :
+2024-08-03 08:09:18 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:09:18 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:09:18 [INFO] converter_utils - test_full_match_exception_C0 line 77: 
+テスト内容:
+        - テストカテゴリ: C0
+        - テスト区分: 正常系
+        - テストシナリオ: 全体マッチの例外ケースに含まれる部署名の処理
+        :
+2024-08-03 08:09:18 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:09:18 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:09:18 [INFO] converter_utils - test_department_with_location_C0 line 86: 
+テスト内容:
+        - テストカテゴリ: C0
+        - テスト区分: 正常系
+        - テストシナリオ: 「〜部(拠点名)」パターンの部署名の処理
+        :
+2024-08-03 08:09:18 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:09:18 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:09:18 [INFO] converter_utils - test_department_with_brackets_C0 line 95: 
+テスト内容:
+        - テストカテゴリ: C0
+        - テスト区分: 正常系
+        - テストシナリオ: 括弧を含む部署名の処理
+        :
+2024-08-03 08:09:18 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:09:18 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:09:18 [INFO] converter_utils - test_department_ending_with_bu_C0 line 104: 
+テスト内容:
+        - テストカテゴリ: C0
+        - テスト区分: 正常系
+        - テストシナリオ: 「部」で終わる部署名の処理
+        :
+2024-08-03 08:09:18 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:09:18 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:09:18 [INFO] converter_utils - test_department_with_specific_patterns_C0 line 113: 
+テスト内容:
+        - テストカテゴリ: C0
+        - テスト区分: 正常系
+        - テストシナリオ: 特定パターンを含む部署名の処理
+        :
+2024-08-03 08:09:18 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:09:18 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:09:18 [INFO] converter_utils - test_partial_match_exception_C0 line 122: 
+テスト内容:
+        - テストカテゴリ: C0
+        - テスト区分: 正常系
+        - テストシナリオ: 部分マッチの例外を含む部署名の処理
+        :
+2024-08-03 08:09:18 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:09:18 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:09:18 [INFO] converter_utils - test_department_with_spaces_C0 line 131: 
+テスト内容:
+        - テストカテゴリ: C0
+        - テスト区分: 正常系
+        - テストシナリオ: 前後にスペースがある部署名の処理
+        :
+2024-08-03 08:09:18 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:09:18 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:09:18 [INFO] converter_utils - test_individual_requirement_true_C1 line 141: 
+テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 正常系
+        - テストシナリオ: 個別要件リストに含まれる部署名(True パス)
+        :
+2024-08-03 08:09:18 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:09:18 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:09:18 [INFO] converter_utils - test_individual_requirement_false_C1 line 150: 
+テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 正常系
+        - テストシナリオ: 個別要件リストに含まれない部署名(False パス)
+        :
+2024-08-03 08:09:18 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:09:18 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:09:18 [INFO] converter_utils - test_full_match_exception_true_C1 line 159: 
+テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 正常系
+        - テストシナリオ: 全体マッチの例外ケースに含まれる部署名(True パス)
+        :
+2024-08-03 08:09:18 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:09:18 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:09:18 [INFO] converter_utils - test_full_match_exception_false_C1 line 168: 
+テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 正常系
+        - テストシナリオ: 全体マッチの例外ケースに含まれない部署名(False パス)
+        :
+2024-08-03 08:09:18 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:09:18 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:09:18 [INFO] converter_utils - test_department_with_location_true_C1 line 177: 
+テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 正常系
+        - テストシナリオ: 「〜部(拠点名)」パターンに一致する部署名(True パス)
+        :
+2024-08-03 08:09:18 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:09:18 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:09:18 [INFO] converter_utils - test_department_with_location_false_C1 line 186: 
+テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 正常系
+        - テストシナリオ: 「〜部(拠点名)」パターンに一致しない部署名(False パス)
+        :
+2024-08-03 08:09:18 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:09:18 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:09:18 [INFO] converter_utils - test_department_ending_with_bu_true_C1 line 195: 
+テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 正常系
+        - テストシナリオ: 「部」で終わる部署名(True パス)
+        :
+2024-08-03 08:09:18 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:09:18 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:09:18 [INFO] converter_utils - test_department_not_ending_with_bu_C1 line 204: 
+テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 正常系
+        - テストシナリオ: 「部」で終わらない部署名(False パス)
+        :
+2024-08-03 08:09:18 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:09:18 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:09:18 [INFO] converter_utils - test_partial_match_exception_true_C1 line 213: 
+テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 正常系
+        - テストシナリオ: 部分マッチの例外を含む部署名(True パス)
+        :
+2024-08-03 08:09:18 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:09:18 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:09:18 [INFO] converter_utils - test_partial_match_exception_false_C1 line 222: 
+テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 正常系
+        - テストシナリオ: 部分マッチの例外を含まない部署名(False パス)
+        :
+2024-08-03 08:09:18 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:09:18 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:09:18 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 複数の例外パターンを含む複雑な部署名
+        :
+2024-08-03 08:09:18 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: さいたま本部春日部部クレヨン課, 期待出力: さいたま本部 春日部部 クレヨン課, シナリオ: 複数の例外パターンを含む複雑な部署名:
+2024-08-03 08:09:18 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:09:18 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:09:18 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 個別要件リストに該当する部署名
+        :
+2024-08-03 08:09:18 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 営業本部業務部, 期待出力: 営業本部業務部, シナリオ: 個別要件リストに該当する部署名:
+2024-08-03 08:09:18 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:09:18 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:09:18 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 個別要件リストに該当する長い部署名
+        :
+2024-08-03 08:09:18 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 内部監査部業務監査グループ第三ユニット, 期待出力: 内部監査部業務監査グループ第三ユニット, シナリオ: 個別要件リストに該当する長い部署名:
+2024-08-03 08:09:18 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:09:18 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:09:18 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 括弧付きの部門名
+        :
+2024-08-03 08:09:18 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: トランザクション監視部門(東京本部), 期待出力: トランザクション監視部門(東京本部), シナリオ: 括弧付きの部門名:
+2024-08-03 08:09:18 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:09:18 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:09:18 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 一般的な部署名の組み合わせ
+        :
+2024-08-03 08:09:18 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: aaa本部bbbb部xxxx課, 期待出力: aaa本部 bbbb部 xxxx課, シナリオ: 一般的な部署名の組み合わせ:
+2024-08-03 08:09:18 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:09:18 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:09:18 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 複数の部分マッチ例外を含む部署名
+        :
+2024-08-03 08:09:18 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 中部春日部東部西部, 期待出力: 中部春日部東部西部, シナリオ: 複数の部分マッチ例外を含む部署名:
+2024-08-03 08:09:18 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:09:18 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:09:18 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 複数の「部」を含む部署名
+        :
+2024-08-03 08:09:18 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: システム統括部システム企画課, 期待出力: システム統括部 システム企画課, シナリオ: 複数の「部」を含む部署名:
+2024-08-03 08:09:18 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:09:18 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:09:18 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 特殊文字と「部門」を含む部署名
+        :
+2024-08-03 08:09:18 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 法人・リテールリスク統括部部門検査室, 期待出力: 法人・リテールリスク統括部 部門検査室, シナリオ: 特殊文字と「部門」を含む部署名:
+2024-08-03 08:09:18 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:09:18 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:09:18 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 括弧と特殊文字を含む部署名
+        :
+2024-08-03 08:09:18 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 園田寮(69101)人事部·大, 期待出力: 園田寮(69101)人事部·大, シナリオ: 括弧と特殊文字を含む部署名:
+2024-08-03 08:09:18 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:09:18 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:09:18 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 括弧と特殊文字を含む部署名(研修所)
+        :
+2024-08-03 08:09:18 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 天満研修所(69101)人事部·大, 期待出力: 天満研修所(69101)人事部·大, シナリオ: 括弧と特殊文字を含む部署名(研修所):
+2024-08-03 08:09:18 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:09:18 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:09:18 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 括弧と特殊文字を含む部署名(寮)
+        :
+2024-08-03 08:09:18 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 浜甲子園寮(69101)人事部·大, 期待出力: 浜甲子園寮(69101)人事部·大, シナリオ: 括弧と特殊文字を含む部署名(寮):
+2024-08-03 08:09:18 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:09:18 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:09:18 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 括弧と特殊文字を含む部署名(西寮)
+        :
+2024-08-03 08:09:18 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 茨木西寮(69101)人事部·大, 期待出力: 茨木西寮(69101)人事部·大, シナリオ: 括弧と特殊文字を含む部署名(西寮):
+2024-08-03 08:09:18 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:09:18 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:09:18 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 数字、括弧、特殊文字を含む部署名
+        :
+2024-08-03 08:09:18 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 京町堀5(69101)人事部·大, 期待出力: 京町堀5(69101)人事部·大, シナリオ: 数字、括弧、特殊文字を含む部署名:
+2024-08-03 08:09:18 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:09:18 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:09:18 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 一般的な部署名
+        :
+2024-08-03 08:09:18 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 総務部総務課, 期待出力: 総務部 総務課, シナリオ: 一般的な部署名:
+2024-08-03 08:09:18 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:09:18 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:09:18 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 全体マッチの例外ケースに該当する部署名
+        :
+2024-08-03 08:09:18 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 本部審議役, 期待出力: 本部審議役, シナリオ: 全体マッチの例外ケースに該当する部署名:
+2024-08-03 08:09:18 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:09:18 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:09:18 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 括弧付きの海外部門名
+        :
+2024-08-03 08:09:18 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: トランザクション監視部門(天津), 期待出力: トランザクション監視部門(天津), シナリオ: 括弧付きの海外部門名:
+2024-08-03 08:09:18 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:09:18 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:09:18 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 「部門」で始まる部署名
+        :
+2024-08-03 08:09:18 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 部門検査室, 期待出力: 部門検査室, シナリオ: 「部門」で始まる部署名:
+2024-08-03 08:09:18 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:09:18 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:09:18 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 「部門」で始まり括弧付きの部署名
+        :
+2024-08-03 08:09:18 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 部門検査室(大阪), 期待出力: 部門検査室(大阪), シナリオ: 「部門」で始まり括弧付きの部署名:
+2024-08-03 08:09:18 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:09:18 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:09:18 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 特殊文字を含む部署名
+        :
+2024-08-03 08:09:18 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 〜部(拠点名), 期待出力: 〜部(拠点名), シナリオ: 特殊文字を含む部署名:
+2024-08-03 08:09:18 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:09:18 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:09:18 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 「部」が連続する部署名
+        :
+2024-08-03 08:09:18 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: テスト部部テスト課, 期待出力: テスト部部 テスト課, シナリオ: 「部」が連続する部署名:
+2024-08-03 08:09:18 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:09:18 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:09:18 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 「部門」で終わる部署名
+        :
+2024-08-03 08:09:18 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: テスト部門, 期待出力: テスト部門, シナリオ: 「部門」で終わる部署名:
+2024-08-03 08:09:18 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:09:18 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:09:18 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 「部」と「部門」を含む複雑な部署名
+        :
+2024-08-03 08:09:18 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: リテールリスク統括部部門管理部, 期待出力: リテールリスク統括部 部門管理部, シナリオ: 「部」と「部門」を含む複雑な部署名:
+2024-08-03 08:09:18 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:09:18 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:09:18 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 途中に「部」があり最後に「部」を含む部署名
+        :
+2024-08-03 08:09:18 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 営業本部ナゴヤ営業第一本部, 期待出力: 営業本部 ナゴヤ営業第一本部, シナリオ: 途中に「部」があり最後に「部」を含む部署名:
+2024-08-03 08:09:18 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:09:18 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:09:18 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: ナゴヤ部署かつ最後が部で終わらない部署名
+        :
+2024-08-03 08:09:18 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 営業本部ナゴヤ営業第一本部第一Gr, 期待出力: 営業本部 ナゴヤ営業第一本部 第一Gr, シナリオ: ナゴヤ部署かつ最後が部で終わらない部署名:
+2024-08-03 08:09:18 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:09:18 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:09:18 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 空文字列(エッジケース)
+        :
+2024-08-03 08:09:18 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: , 期待出力: , シナリオ: 空文字列(エッジケース):
+2024-08-03 08:09:18 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:06 [DEBUG] converter_utils - <module> line 11: Config(env='local', common_config={'logger_path': {'LOGGER_DEF_FILE': 'src/def/mfaUtilsLoggingHelper/logging_TimedRotate.json', 'LOGGER_MSG_FILE': 'src/def/mfaUtilsLoggingHelper/config_MessageList.toml'}, 'input_file_path': {'UPDATE_EXCEL_PATH': 'src/share/receive'}, 'output_file_path': {'SEND_REFFERENCE_MASTER_PATH': 'src/share/receive'}}, package_config={'test': {'local_test': 'tests'}}, log_message=<bound method LoggerPackage.log_message of <src.lib.common_utils.ibr_logger_package.LoggerPackage object at 0x7f9ebe6f1910>>):
+2024-08-03 08:12:06 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:06 [INFO] converter_utils - test_individual_requirement_C0 line 68: 
+テスト内容:
+        - テストカテゴリ: C0
+        - テスト区分: 正常系
+        - テストシナリオ: 個別要件リストに含まれる部署名の処理
+        :
+2024-08-03 08:12:06 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:06 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:06 [INFO] converter_utils - test_full_match_exception_C0 line 77: 
+テスト内容:
+        - テストカテゴリ: C0
+        - テスト区分: 正常系
+        - テストシナリオ: 全体マッチの例外ケースに含まれる部署名の処理
+        :
+2024-08-03 08:12:06 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:06 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:06 [INFO] converter_utils - test_department_with_location_C0 line 86: 
+テスト内容:
+        - テストカテゴリ: C0
+        - テスト区分: 正常系
+        - テストシナリオ: 「〜部(拠点名)」パターンの部署名の処理
+        :
+2024-08-03 08:12:06 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:06 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:06 [INFO] converter_utils - test_department_with_brackets_C0 line 95: 
+テスト内容:
+        - テストカテゴリ: C0
+        - テスト区分: 正常系
+        - テストシナリオ: 括弧を含む部署名の処理
+        :
+2024-08-03 08:12:06 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:06 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:06 [INFO] converter_utils - test_department_ending_with_bu_C0 line 104: 
+テスト内容:
+        - テストカテゴリ: C0
+        - テスト区分: 正常系
+        - テストシナリオ: 「部」で終わる部署名の処理
+        :
+2024-08-03 08:12:06 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:06 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:06 [INFO] converter_utils - test_department_with_specific_patterns_C0 line 113: 
+テスト内容:
+        - テストカテゴリ: C0
+        - テスト区分: 正常系
+        - テストシナリオ: 特定パターンを含む部署名の処理
+        :
+2024-08-03 08:12:06 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:06 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:06 [INFO] converter_utils - test_partial_match_exception_C0 line 122: 
+テスト内容:
+        - テストカテゴリ: C0
+        - テスト区分: 正常系
+        - テストシナリオ: 部分マッチの例外を含む部署名の処理
+        :
+2024-08-03 08:12:06 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:06 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:06 [INFO] converter_utils - test_department_with_spaces_C0 line 131: 
+テスト内容:
+        - テストカテゴリ: C0
+        - テスト区分: 正常系
+        - テストシナリオ: 前後にスペースがある部署名の処理
+        :
+2024-08-03 08:12:06 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:06 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:06 [INFO] converter_utils - test_individual_requirement_true_C1 line 141: 
+テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 正常系
+        - テストシナリオ: 個別要件リストに含まれる部署名(True パス)
+        :
+2024-08-03 08:12:06 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:06 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:06 [INFO] converter_utils - test_individual_requirement_false_C1 line 150: 
+テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 正常系
+        - テストシナリオ: 個別要件リストに含まれない部署名(False パス)
+        :
+2024-08-03 08:12:06 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:06 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:06 [INFO] converter_utils - test_full_match_exception_true_C1 line 159: 
+テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 正常系
+        - テストシナリオ: 全体マッチの例外ケースに含まれる部署名(True パス)
+        :
+2024-08-03 08:12:06 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:06 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:06 [INFO] converter_utils - test_full_match_exception_false_C1 line 168: 
+テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 正常系
+        - テストシナリオ: 全体マッチの例外ケースに含まれない部署名(False パス)
+        :
+2024-08-03 08:12:06 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:06 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:06 [INFO] converter_utils - test_department_with_location_true_C1 line 177: 
+テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 正常系
+        - テストシナリオ: 「〜部(拠点名)」パターンに一致する部署名(True パス)
+        :
+2024-08-03 08:12:06 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:06 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:06 [INFO] converter_utils - test_department_with_location_false_C1 line 186: 
+テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 正常系
+        - テストシナリオ: 「〜部(拠点名)」パターンに一致しない部署名(False パス)
+        :
+2024-08-03 08:12:06 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:06 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:06 [INFO] converter_utils - test_department_ending_with_bu_true_C1 line 195: 
+テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 正常系
+        - テストシナリオ: 「部」で終わる部署名(True パス)
+        :
+2024-08-03 08:12:06 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:06 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:06 [INFO] converter_utils - test_department_not_ending_with_bu_C1 line 204: 
+テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 正常系
+        - テストシナリオ: 「部」で終わらない部署名(False パス)
+        :
+2024-08-03 08:12:06 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:06 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:06 [INFO] converter_utils - test_partial_match_exception_true_C1 line 213: 
+テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 正常系
+        - テストシナリオ: 部分マッチの例外を含む部署名(True パス)
+        :
+2024-08-03 08:12:06 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:06 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:06 [INFO] converter_utils - test_partial_match_exception_false_C1 line 222: 
+テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 正常系
+        - テストシナリオ: 部分マッチの例外を含まない部署名(False パス)
+        :
+2024-08-03 08:12:06 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:06 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:06 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 複数の例外パターンを含む複雑な部署名
+        :
+2024-08-03 08:12:06 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: さいたま本部春日部部クレヨン課, 期待出力: さいたま本部 春日部部 クレヨン課, シナリオ: 複数の例外パターンを含む複雑な部署名:
+2024-08-03 08:12:06 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:06 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:06 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 個別要件リストに該当する部署名
+        :
+2024-08-03 08:12:06 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 営業本部業務部, 期待出力: 営業本部業務部, シナリオ: 個別要件リストに該当する部署名:
+2024-08-03 08:12:06 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:06 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:06 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 個別要件リストに該当する長い部署名
+        :
+2024-08-03 08:12:06 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 内部監査部業務監査グループ第三ユニット, 期待出力: 内部監査部業務監査グループ第三ユニット, シナリオ: 個別要件リストに該当する長い部署名:
+2024-08-03 08:12:06 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:06 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:06 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 括弧付きの部門名
+        :
+2024-08-03 08:12:06 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: トランザクション監視部門(東京本部), 期待出力: トランザクション監視部門(東京本部), シナリオ: 括弧付きの部門名:
+2024-08-03 08:12:06 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:06 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:06 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 一般的な部署名の組み合わせ
+        :
+2024-08-03 08:12:06 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: aaa本部bbbb部xxxx課, 期待出力: aaa本部 bbbb部 xxxx課, シナリオ: 一般的な部署名の組み合わせ:
+2024-08-03 08:12:06 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:06 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:06 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 複数の部分マッチ例外を含む部署名
+        :
+2024-08-03 08:12:06 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 中部春日部東部西部, 期待出力: 中部春日部東部西部, シナリオ: 複数の部分マッチ例外を含む部署名:
+2024-08-03 08:12:06 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:06 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:06 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 複数の「部」を含む部署名
+        :
+2024-08-03 08:12:06 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: システム統括部システム企画課, 期待出力: システム統括部 システム企画課, シナリオ: 複数の「部」を含む部署名:
+2024-08-03 08:12:06 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:06 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:06 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 特殊文字と「部門」を含む部署名
+        :
+2024-08-03 08:12:06 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 法人・リテールリスク統括部部門検査室, 期待出力: 法人・リテールリスク統括部 部門検査室, シナリオ: 特殊文字と「部門」を含む部署名:
+2024-08-03 08:12:06 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:06 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:06 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 括弧と特殊文字を含む部署名
+        :
+2024-08-03 08:12:06 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 園田寮(69101)人事部·大, 期待出力: 園田寮(69101)人事部·大, シナリオ: 括弧と特殊文字を含む部署名:
+2024-08-03 08:12:06 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:06 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:06 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 括弧と特殊文字を含む部署名(研修所)
+        :
+2024-08-03 08:12:06 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 天満研修所(69101)人事部·大, 期待出力: 天満研修所(69101)人事部·大, シナリオ: 括弧と特殊文字を含む部署名(研修所):
+2024-08-03 08:12:06 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:06 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:06 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 括弧と特殊文字を含む部署名(寮)
+        :
+2024-08-03 08:12:06 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 浜甲子園寮(69101)人事部·大, 期待出力: 浜甲子園寮(69101)人事部·大, シナリオ: 括弧と特殊文字を含む部署名(寮):
+2024-08-03 08:12:06 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:06 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:06 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 括弧と特殊文字を含む部署名(西寮)
+        :
+2024-08-03 08:12:06 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 茨木西寮(69101)人事部·大, 期待出力: 茨木西寮(69101)人事部·大, シナリオ: 括弧と特殊文字を含む部署名(西寮):
+2024-08-03 08:12:06 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:06 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:06 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 数字、括弧、特殊文字を含む部署名
+        :
+2024-08-03 08:12:06 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 京町堀5(69101)人事部·大, 期待出力: 京町堀5(69101)人事部·大, シナリオ: 数字、括弧、特殊文字を含む部署名:
+2024-08-03 08:12:06 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:06 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:06 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 一般的な部署名
+        :
+2024-08-03 08:12:06 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 総務部総務課, 期待出力: 総務部 総務課, シナリオ: 一般的な部署名:
+2024-08-03 08:12:06 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:06 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:06 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 全体マッチの例外ケースに該当する部署名
+        :
+2024-08-03 08:12:06 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 本部審議役, 期待出力: 本部審議役, シナリオ: 全体マッチの例外ケースに該当する部署名:
+2024-08-03 08:12:06 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:06 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:06 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 括弧付きの海外部門名
+        :
+2024-08-03 08:12:06 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: トランザクション監視部門(天津), 期待出力: トランザクション監視部門(天津), シナリオ: 括弧付きの海外部門名:
+2024-08-03 08:12:06 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:06 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:06 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 「部門」で始まる部署名
+        :
+2024-08-03 08:12:06 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 部門検査室, 期待出力: 部門検査室, シナリオ: 「部門」で始まる部署名:
+2024-08-03 08:12:06 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:06 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:06 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 「部門」で始まり括弧付きの部署名
+        :
+2024-08-03 08:12:06 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 部門検査室(大阪), 期待出力: 部門検査室(大阪), シナリオ: 「部門」で始まり括弧付きの部署名:
+2024-08-03 08:12:06 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:06 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:06 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 特殊文字を含む部署名
+        :
+2024-08-03 08:12:06 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 〜部(拠点名), 期待出力: 〜部(拠点名), シナリオ: 特殊文字を含む部署名:
+2024-08-03 08:12:06 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:06 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:06 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 「部」が連続する部署名
+        :
+2024-08-03 08:12:06 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: テスト部部テスト課, 期待出力: テスト部部 テスト課, シナリオ: 「部」が連続する部署名:
+2024-08-03 08:12:06 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:06 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:06 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 「部門」で終わる部署名
+        :
+2024-08-03 08:12:06 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: テスト部門, 期待出力: テスト部門, シナリオ: 「部門」で終わる部署名:
+2024-08-03 08:12:06 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:06 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:06 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 「部」と「部門」を含む複雑な部署名
+        :
+2024-08-03 08:12:06 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: リテールリスク統括部部門管理部, 期待出力: リテールリスク統括部 部門管理部, シナリオ: 「部」と「部門」を含む複雑な部署名:
+2024-08-03 08:12:06 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:06 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:06 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 途中に「部」があり最後に「部」を含む部署名
+        :
+2024-08-03 08:12:06 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 営業本部ナゴヤ営業第一本部, 期待出力: 営業本部 ナゴヤ営業第一本部, シナリオ: 途中に「部」があり最後に「部」を含む部署名:
+2024-08-03 08:12:06 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:06 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:06 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: ナゴヤ部署かつ最後が部で終わらない部署名
+        :
+2024-08-03 08:12:06 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 営業本部ナゴヤ営業第一本部第一Gr, 期待出力: 営業本部 ナゴヤ営業第一本部 第一Gr, シナリオ: ナゴヤ部署かつ最後が部で終わらない部署名:
+2024-08-03 08:12:06 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:06 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:06 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 空文字列(エッジケース)
+        :
+2024-08-03 08:12:06 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: , 期待出力: , シナリオ: 空文字列(エッジケース):
+2024-08-03 08:12:06 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:59 [DEBUG] converter_utils - <module> line 11: Config(env='local', common_config={'logger_path': {'LOGGER_DEF_FILE': 'src/def/mfaUtilsLoggingHelper/logging_TimedRotate.json', 'LOGGER_MSG_FILE': 'src/def/mfaUtilsLoggingHelper/config_MessageList.toml'}, 'input_file_path': {'UPDATE_EXCEL_PATH': 'src/share/receive'}, 'output_file_path': {'SEND_REFFERENCE_MASTER_PATH': 'src/share/receive'}}, package_config={'test': {'local_test': 'tests'}}, log_message=<bound method LoggerPackage.log_message of <src.lib.common_utils.ibr_logger_package.LoggerPackage object at 0x7f92f9641950>>):
+2024-08-03 08:12:59 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:59 [INFO] converter_utils - test_individual_requirement_C0 line 68: 
+テスト内容:
+        - テストカテゴリ: C0
+        - テスト区分: 正常系
+        - テストシナリオ: 個別要件リストに含まれる部署名の処理
+        :
+2024-08-03 08:12:59 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:59 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:59 [INFO] converter_utils - test_full_match_exception_C0 line 77: 
+テスト内容:
+        - テストカテゴリ: C0
+        - テスト区分: 正常系
+        - テストシナリオ: 全体マッチの例外ケースに含まれる部署名の処理
+        :
+2024-08-03 08:12:59 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:59 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:59 [INFO] converter_utils - test_department_with_location_C0 line 86: 
+テスト内容:
+        - テストカテゴリ: C0
+        - テスト区分: 正常系
+        - テストシナリオ: 「〜部(拠点名)」パターンの部署名の処理
+        :
+2024-08-03 08:12:59 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:59 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:59 [INFO] converter_utils - test_department_with_brackets_C0 line 95: 
+テスト内容:
+        - テストカテゴリ: C0
+        - テスト区分: 正常系
+        - テストシナリオ: 括弧を含む部署名の処理
+        :
+2024-08-03 08:12:59 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:59 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:59 [INFO] converter_utils - test_department_ending_with_bu_C0 line 104: 
+テスト内容:
+        - テストカテゴリ: C0
+        - テスト区分: 正常系
+        - テストシナリオ: 「部」で終わる部署名の処理
+        :
+2024-08-03 08:12:59 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:59 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:59 [INFO] converter_utils - test_department_with_specific_patterns_C0 line 113: 
+テスト内容:
+        - テストカテゴリ: C0
+        - テスト区分: 正常系
+        - テストシナリオ: 特定パターンを含む部署名の処理
+        :
+2024-08-03 08:12:59 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:59 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:59 [INFO] converter_utils - test_partial_match_exception_C0 line 122: 
+テスト内容:
+        - テストカテゴリ: C0
+        - テスト区分: 正常系
+        - テストシナリオ: 部分マッチの例外を含む部署名の処理
+        :
+2024-08-03 08:12:59 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:59 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:59 [INFO] converter_utils - test_department_with_spaces_C0 line 131: 
+テスト内容:
+        - テストカテゴリ: C0
+        - テスト区分: 正常系
+        - テストシナリオ: 前後にスペースがある部署名の処理
+        :
+2024-08-03 08:12:59 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:59 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:59 [INFO] converter_utils - test_individual_requirement_true_C1 line 141: 
+テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 正常系
+        - テストシナリオ: 個別要件リストに含まれる部署名(True パス)
+        :
+2024-08-03 08:12:59 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:59 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:59 [INFO] converter_utils - test_individual_requirement_false_C1 line 150: 
+テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 正常系
+        - テストシナリオ: 個別要件リストに含まれない部署名(False パス)
+        :
+2024-08-03 08:12:59 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:59 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:59 [INFO] converter_utils - test_full_match_exception_true_C1 line 159: 
+テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 正常系
+        - テストシナリオ: 全体マッチの例外ケースに含まれる部署名(True パス)
+        :
+2024-08-03 08:12:59 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:59 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:59 [INFO] converter_utils - test_full_match_exception_false_C1 line 168: 
+テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 正常系
+        - テストシナリオ: 全体マッチの例外ケースに含まれない部署名(False パス)
+        :
+2024-08-03 08:12:59 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:59 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:59 [INFO] converter_utils - test_department_with_location_true_C1 line 177: 
+テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 正常系
+        - テストシナリオ: 「〜部(拠点名)」パターンに一致する部署名(True パス)
+        :
+2024-08-03 08:12:59 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:59 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:59 [INFO] converter_utils - test_department_with_location_false_C1 line 186: 
+テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 正常系
+        - テストシナリオ: 「〜部(拠点名)」パターンに一致しない部署名(False パス)
+        :
+2024-08-03 08:12:59 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:59 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:59 [INFO] converter_utils - test_department_ending_with_bu_true_C1 line 195: 
+テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 正常系
+        - テストシナリオ: 「部」で終わる部署名(True パス)
+        :
+2024-08-03 08:12:59 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:59 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:59 [INFO] converter_utils - test_department_not_ending_with_bu_C1 line 204: 
+テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 正常系
+        - テストシナリオ: 「部」で終わらない部署名(False パス)
+        :
+2024-08-03 08:12:59 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:59 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:59 [INFO] converter_utils - test_partial_match_exception_true_C1 line 213: 
+テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 正常系
+        - テストシナリオ: 部分マッチの例外を含む部署名(True パス)
+        :
+2024-08-03 08:12:59 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:59 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:59 [INFO] converter_utils - test_partial_match_exception_false_C1 line 222: 
+テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 正常系
+        - テストシナリオ: 部分マッチの例外を含まない部署名(False パス)
+        :
+2024-08-03 08:12:59 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:59 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:59 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 複数の例外パターンを含む複雑な部署名
+        :
+2024-08-03 08:12:59 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: さいたま本部春日部部クレヨン課, 期待出力: さいたま本部 春日部部 クレヨン課, シナリオ: 複数の例外パターンを含む複雑な部署名:
+2024-08-03 08:12:59 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:59 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:59 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 個別要件リストに該当する部署名
+        :
+2024-08-03 08:12:59 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 営業本部業務部, 期待出力: 営業本部業務部, シナリオ: 個別要件リストに該当する部署名:
+2024-08-03 08:12:59 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:59 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:59 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 個別要件リストに該当する長い部署名
+        :
+2024-08-03 08:12:59 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 内部監査部業務監査グループ第三ユニット, 期待出力: 内部監査部業務監査グループ第三ユニット, シナリオ: 個別要件リストに該当する長い部署名:
+2024-08-03 08:12:59 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:59 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:59 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 括弧付きの部門名
+        :
+2024-08-03 08:12:59 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: トランザクション監視部門(東京本部), 期待出力: トランザクション監視部門(東京本部), シナリオ: 括弧付きの部門名:
+2024-08-03 08:12:59 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:59 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:59 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 一般的な部署名の組み合わせ
+        :
+2024-08-03 08:12:59 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: aaa本部bbbb部xxxx課, 期待出力: aaa本部 bbbb部 xxxx課, シナリオ: 一般的な部署名の組み合わせ:
+2024-08-03 08:12:59 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:59 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:59 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 複数の部分マッチ例外を含む部署名
+        :
+2024-08-03 08:12:59 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 中部春日部東部西部, 期待出力: 中部春日部東部西部, シナリオ: 複数の部分マッチ例外を含む部署名:
+2024-08-03 08:12:59 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:59 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:59 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 複数の「部」を含む部署名
+        :
+2024-08-03 08:12:59 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: システム統括部システム企画課, 期待出力: システム統括部 システム企画課, シナリオ: 複数の「部」を含む部署名:
+2024-08-03 08:12:59 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:59 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:59 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 特殊文字と「部門」を含む部署名
+        :
+2024-08-03 08:12:59 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 法人・リテールリスク統括部部門検査室, 期待出力: 法人・リテールリスク統括部 部門検査室, シナリオ: 特殊文字と「部門」を含む部署名:
+2024-08-03 08:12:59 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:59 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:59 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 括弧と特殊文字を含む部署名
+        :
+2024-08-03 08:12:59 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 園田寮(69101)人事部·大, 期待出力: 園田寮(69101)人事部·大, シナリオ: 括弧と特殊文字を含む部署名:
+2024-08-03 08:12:59 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:59 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:59 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 括弧と特殊文字を含む部署名(研修所)
+        :
+2024-08-03 08:12:59 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 天満研修所(69101)人事部·大, 期待出力: 天満研修所(69101)人事部·大, シナリオ: 括弧と特殊文字を含む部署名(研修所):
+2024-08-03 08:12:59 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:59 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:59 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 括弧と特殊文字を含む部署名(寮)
+        :
+2024-08-03 08:12:59 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 浜甲子園寮(69101)人事部·大, 期待出力: 浜甲子園寮(69101)人事部·大, シナリオ: 括弧と特殊文字を含む部署名(寮):
+2024-08-03 08:12:59 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:59 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:59 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 括弧と特殊文字を含む部署名(西寮)
+        :
+2024-08-03 08:12:59 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 茨木西寮(69101)人事部·大, 期待出力: 茨木西寮(69101)人事部·大, シナリオ: 括弧と特殊文字を含む部署名(西寮):
+2024-08-03 08:12:59 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:59 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:59 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 数字、括弧、特殊文字を含む部署名
+        :
+2024-08-03 08:12:59 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 京町堀5(69101)人事部·大, 期待出力: 京町堀5(69101)人事部·大, シナリオ: 数字、括弧、特殊文字を含む部署名:
+2024-08-03 08:12:59 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:59 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:59 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 一般的な部署名
+        :
+2024-08-03 08:12:59 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 総務部総務課, 期待出力: 総務部 総務課, シナリオ: 一般的な部署名:
+2024-08-03 08:12:59 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:59 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:59 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 全体マッチの例外ケースに該当する部署名
+        :
+2024-08-03 08:12:59 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 本部審議役, 期待出力: 本部審議役, シナリオ: 全体マッチの例外ケースに該当する部署名:
+2024-08-03 08:12:59 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:59 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:59 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 括弧付きの海外部門名
+        :
+2024-08-03 08:12:59 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: トランザクション監視部門(天津), 期待出力: トランザクション監視部門(天津), シナリオ: 括弧付きの海外部門名:
+2024-08-03 08:12:59 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:59 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:59 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 「部門」で始まる部署名
+        :
+2024-08-03 08:12:59 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 部門検査室, 期待出力: 部門検査室, シナリオ: 「部門」で始まる部署名:
+2024-08-03 08:12:59 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:59 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:59 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 「部門」で始まり括弧付きの部署名
+        :
+2024-08-03 08:12:59 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 部門検査室(大阪), 期待出力: 部門検査室(大阪), シナリオ: 「部門」で始まり括弧付きの部署名:
+2024-08-03 08:12:59 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:59 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:59 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 特殊文字を含む部署名
+        :
+2024-08-03 08:12:59 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 〜部(拠点名), 期待出力: 〜部(拠点名), シナリオ: 特殊文字を含む部署名:
+2024-08-03 08:12:59 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:59 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:59 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 「部」が連続する部署名
+        :
+2024-08-03 08:12:59 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: テスト部部テスト課, 期待出力: テスト部部 テスト課, シナリオ: 「部」が連続する部署名:
+2024-08-03 08:12:59 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:59 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:59 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 「部門」で終わる部署名
+        :
+2024-08-03 08:12:59 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: テスト部門, 期待出力: テスト部門, シナリオ: 「部門」で終わる部署名:
+2024-08-03 08:12:59 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:59 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:59 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 「部」と「部門」を含む複雑な部署名
+        :
+2024-08-03 08:12:59 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: リテールリスク統括部部門管理部, 期待出力: リテールリスク統括部 部門管理部, シナリオ: 「部」と「部門」を含む複雑な部署名:
+2024-08-03 08:12:59 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:59 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:59 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 途中に「部」があり最後に「部」を含む部署名
+        :
+2024-08-03 08:12:59 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 営業本部ナゴヤ営業第一本部, 期待出力: 営業本部 ナゴヤ営業第一本部, シナリオ: 途中に「部」があり最後に「部」を含む部署名:
+2024-08-03 08:12:59 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:59 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:59 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: ナゴヤ部署かつ最後が部で終わらない部署名
+        :
+2024-08-03 08:12:59 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 営業本部ナゴヤ営業第一本部第一Gr, 期待出力: 営業本部 ナゴヤ営業第一本部 第一Gr, シナリオ: ナゴヤ部署かつ最後が部で終わらない部署名:
+2024-08-03 08:12:59 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:12:59 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:12:59 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 空文字列(エッジケース)
+        :
+2024-08-03 08:12:59 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: , 期待出力: , シナリオ: 空文字列(エッジケース):
+2024-08-03 08:12:59 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:13:53 [DEBUG] converter_utils - <module> line 11: Config(env='local', common_config={'logger_path': {'LOGGER_DEF_FILE': 'src/def/mfaUtilsLoggingHelper/logging_TimedRotate.json', 'LOGGER_MSG_FILE': 'src/def/mfaUtilsLoggingHelper/config_MessageList.toml'}, 'input_file_path': {'UPDATE_EXCEL_PATH': 'src/share/receive'}, 'output_file_path': {'SEND_REFFERENCE_MASTER_PATH': 'src/share/receive'}}, package_config={'test': {'local_test': 'tests'}}, log_message=<bound method LoggerPackage.log_message of <src.lib.common_utils.ibr_logger_package.LoggerPackage object at 0x7f1799b9e0d0>>):
+2024-08-03 08:13:53 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:13:53 [INFO] converter_utils - test_individual_requirement_C0 line 68: 
+テスト内容:
+        - テストカテゴリ: C0
+        - テスト区分: 正常系
+        - テストシナリオ: 個別要件リストに含まれる部署名の処理
+        :
+2024-08-03 08:13:53 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:13:53 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:13:53 [INFO] converter_utils - test_full_match_exception_C0 line 77: 
+テスト内容:
+        - テストカテゴリ: C0
+        - テスト区分: 正常系
+        - テストシナリオ: 全体マッチの例外ケースに含まれる部署名の処理
+        :
+2024-08-03 08:13:53 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:13:53 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:13:53 [INFO] converter_utils - test_department_with_location_C0 line 86: 
+テスト内容:
+        - テストカテゴリ: C0
+        - テスト区分: 正常系
+        - テストシナリオ: 「〜部(拠点名)」パターンの部署名の処理
+        :
+2024-08-03 08:13:53 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:13:53 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:13:53 [INFO] converter_utils - test_department_with_brackets_C0 line 95: 
+テスト内容:
+        - テストカテゴリ: C0
+        - テスト区分: 正常系
+        - テストシナリオ: 括弧を含む部署名の処理
+        :
+2024-08-03 08:13:53 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:13:53 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:13:53 [INFO] converter_utils - test_department_ending_with_bu_C0 line 104: 
+テスト内容:
+        - テストカテゴリ: C0
+        - テスト区分: 正常系
+        - テストシナリオ: 「部」で終わる部署名の処理
+        :
+2024-08-03 08:13:53 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:13:53 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:13:53 [INFO] converter_utils - test_department_with_specific_patterns_C0 line 113: 
+テスト内容:
+        - テストカテゴリ: C0
+        - テスト区分: 正常系
+        - テストシナリオ: 特定パターンを含む部署名の処理
+        :
+2024-08-03 08:13:53 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:13:53 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:13:53 [INFO] converter_utils - test_partial_match_exception_C0 line 122: 
+テスト内容:
+        - テストカテゴリ: C0
+        - テスト区分: 正常系
+        - テストシナリオ: 部分マッチの例外を含む部署名の処理
+        :
+2024-08-03 08:13:53 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:13:53 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:13:53 [INFO] converter_utils - test_department_with_spaces_C0 line 131: 
+テスト内容:
+        - テストカテゴリ: C0
+        - テスト区分: 正常系
+        - テストシナリオ: 前後にスペースがある部署名の処理
+        :
+2024-08-03 08:13:53 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:13:53 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:13:53 [INFO] converter_utils - test_individual_requirement_true_C1 line 141: 
+テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 正常系
+        - テストシナリオ: 個別要件リストに含まれる部署名(True パス)
+        :
+2024-08-03 08:13:53 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:13:53 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:13:53 [INFO] converter_utils - test_individual_requirement_false_C1 line 150: 
+テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 正常系
+        - テストシナリオ: 個別要件リストに含まれない部署名(False パス)
+        :
+2024-08-03 08:13:53 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:13:53 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:13:53 [INFO] converter_utils - test_full_match_exception_true_C1 line 159: 
+テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 正常系
+        - テストシナリオ: 全体マッチの例外ケースに含まれる部署名(True パス)
+        :
+2024-08-03 08:13:53 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:13:53 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:13:53 [INFO] converter_utils - test_full_match_exception_false_C1 line 168: 
+テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 正常系
+        - テストシナリオ: 全体マッチの例外ケースに含まれない部署名(False パス)
+        :
+2024-08-03 08:13:53 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:13:53 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:13:53 [INFO] converter_utils - test_department_with_location_true_C1 line 177: 
+テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 正常系
+        - テストシナリオ: 「〜部(拠点名)」パターンに一致する部署名(True パス)
+        :
+2024-08-03 08:13:53 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:13:53 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:13:53 [INFO] converter_utils - test_department_with_location_false_C1 line 186: 
+テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 正常系
+        - テストシナリオ: 「〜部(拠点名)」パターンに一致しない部署名(False パス)
+        :
+2024-08-03 08:13:53 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:13:53 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:13:53 [INFO] converter_utils - test_department_ending_with_bu_true_C1 line 195: 
+テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 正常系
+        - テストシナリオ: 「部」で終わる部署名(True パス)
+        :
+2024-08-03 08:13:53 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:13:53 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:13:53 [INFO] converter_utils - test_department_not_ending_with_bu_C1 line 204: 
+テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 正常系
+        - テストシナリオ: 「部」で終わらない部署名(False パス)
+        :
+2024-08-03 08:13:53 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:13:53 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:13:53 [INFO] converter_utils - test_partial_match_exception_true_C1 line 213: 
+テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 正常系
+        - テストシナリオ: 部分マッチの例外を含む部署名(True パス)
+        :
+2024-08-03 08:13:53 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:13:53 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:13:53 [INFO] converter_utils - test_partial_match_exception_false_C1 line 222: 
+テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 正常系
+        - テストシナリオ: 部分マッチの例外を含まない部署名(False パス)
+        :
+2024-08-03 08:13:53 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:13:53 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:13:53 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 複数の例外パターンを含む複雑な部署名
+        :
+2024-08-03 08:13:53 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: さいたま本部春日部部クレヨン課, 期待出力: さいたま本部 春日部部 クレヨン課, シナリオ: 複数の例外パターンを含む複雑な部署名:
+2024-08-03 08:13:53 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:13:53 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:13:53 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 個別要件リストに該当する部署名
+        :
+2024-08-03 08:13:53 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 営業本部業務部, 期待出力: 営業本部業務部, シナリオ: 個別要件リストに該当する部署名:
+2024-08-03 08:13:53 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:13:53 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:13:53 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 個別要件リストに該当する長い部署名
+        :
+2024-08-03 08:13:53 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 内部監査部業務監査グループ第三ユニット, 期待出力: 内部監査部業務監査グループ第三ユニット, シナリオ: 個別要件リストに該当する長い部署名:
+2024-08-03 08:13:53 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:13:53 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:13:53 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 括弧付きの部門名
+        :
+2024-08-03 08:13:53 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: トランザクション監視部門(東京本部), 期待出力: トランザクション監視部門(東京本部), シナリオ: 括弧付きの部門名:
+2024-08-03 08:13:53 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:13:53 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:13:53 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 一般的な部署名の組み合わせ
+        :
+2024-08-03 08:13:53 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: aaa本部bbbb部xxxx課, 期待出力: aaa本部 bbbb部 xxxx課, シナリオ: 一般的な部署名の組み合わせ:
+2024-08-03 08:13:53 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:13:53 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:13:53 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 複数の部分マッチ例外を含む部署名
+        :
+2024-08-03 08:13:53 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 中部春日部東部西部, 期待出力: 中部春日部東部西部, シナリオ: 複数の部分マッチ例外を含む部署名:
+2024-08-03 08:13:53 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:13:53 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:13:53 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 複数の「部」を含む部署名
+        :
+2024-08-03 08:13:53 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: システム統括部システム企画課, 期待出力: システム統括部 システム企画課, シナリオ: 複数の「部」を含む部署名:
+2024-08-03 08:13:53 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:13:53 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:13:53 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 特殊文字と「部門」を含む部署名
+        :
+2024-08-03 08:13:53 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 法人・リテールリスク統括部部門検査室, 期待出力: 法人・リテールリスク統括部 部門検査室, シナリオ: 特殊文字と「部門」を含む部署名:
+2024-08-03 08:13:53 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:13:53 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:13:53 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 括弧と特殊文字を含む部署名
+        :
+2024-08-03 08:13:53 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 園田寮(69101)人事部·大, 期待出力: 園田寮(69101)人事部·大, シナリオ: 括弧と特殊文字を含む部署名:
+2024-08-03 08:13:53 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:13:53 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:13:53 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 括弧と特殊文字を含む部署名(研修所)
+        :
+2024-08-03 08:13:53 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 天満研修所(69101)人事部·大, 期待出力: 天満研修所(69101)人事部·大, シナリオ: 括弧と特殊文字を含む部署名(研修所):
+2024-08-03 08:13:53 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:13:53 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:13:53 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 括弧と特殊文字を含む部署名(寮)
+        :
+2024-08-03 08:13:53 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 浜甲子園寮(69101)人事部·大, 期待出力: 浜甲子園寮(69101)人事部·大, シナリオ: 括弧と特殊文字を含む部署名(寮):
+2024-08-03 08:13:53 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:13:53 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:13:53 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 括弧と特殊文字を含む部署名(西寮)
+        :
+2024-08-03 08:13:53 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 茨木西寮(69101)人事部·大, 期待出力: 茨木西寮(69101)人事部·大, シナリオ: 括弧と特殊文字を含む部署名(西寮):
+2024-08-03 08:13:53 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:13:53 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:13:53 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 数字、括弧、特殊文字を含む部署名
+        :
+2024-08-03 08:13:53 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 京町堀5(69101)人事部·大, 期待出力: 京町堀5(69101)人事部·大, シナリオ: 数字、括弧、特殊文字を含む部署名:
+2024-08-03 08:13:53 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:13:53 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:13:53 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 一般的な部署名
+        :
+2024-08-03 08:13:53 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 総務部総務課, 期待出力: 総務部 総務課, シナリオ: 一般的な部署名:
+2024-08-03 08:13:53 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:13:53 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:13:53 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 全体マッチの例外ケースに該当する部署名
+        :
+2024-08-03 08:13:53 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 本部審議役, 期待出力: 本部審議役, シナリオ: 全体マッチの例外ケースに該当する部署名:
+2024-08-03 08:13:53 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:13:53 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:13:53 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 括弧付きの海外部門名
+        :
+2024-08-03 08:13:53 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: トランザクション監視部門(天津), 期待出力: トランザクション監視部門(天津), シナリオ: 括弧付きの海外部門名:
+2024-08-03 08:13:53 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:13:53 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:13:53 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 「部門」で始まる部署名
+        :
+2024-08-03 08:13:53 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 部門検査室, 期待出力: 部門検査室, シナリオ: 「部門」で始まる部署名:
+2024-08-03 08:13:53 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:13:53 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:13:53 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 「部門」で始まり括弧付きの部署名
+        :
+2024-08-03 08:13:53 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 部門検査室(大阪), 期待出力: 部門検査室(大阪), シナリオ: 「部門」で始まり括弧付きの部署名:
+2024-08-03 08:13:53 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:13:53 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:13:53 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 特殊文字を含む部署名
+        :
+2024-08-03 08:13:53 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 〜部(拠点名), 期待出力: 〜部(拠点名), シナリオ: 特殊文字を含む部署名:
+2024-08-03 08:13:53 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:13:53 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:13:53 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 「部」が連続する部署名
+        :
+2024-08-03 08:13:53 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: テスト部部テスト課, 期待出力: テスト部部 テスト課, シナリオ: 「部」が連続する部署名:
+2024-08-03 08:13:53 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:13:53 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:13:53 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 「部門」で終わる部署名
+        :
+2024-08-03 08:13:53 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: テスト部門, 期待出力: テスト部門, シナリオ: 「部門」で終わる部署名:
+2024-08-03 08:13:53 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:13:53 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:13:53 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 「部」と「部門」を含む複雑な部署名
+        :
+2024-08-03 08:13:53 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: リテールリスク統括部部門管理部, 期待出力: リテールリスク統括部 部門管理部, シナリオ: 「部」と「部門」を含む複雑な部署名:
+2024-08-03 08:13:53 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:13:53 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:13:53 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 途中に「部」があり最後に「部」を含む部署名
+        :
+2024-08-03 08:13:53 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 営業本部ナゴヤ営業第一本部, 期待出力: 営業本部 ナゴヤ営業第一本部, シナリオ: 途中に「部」があり最後に「部」を含む部署名:
+2024-08-03 08:13:53 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:13:53 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:13:53 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: ナゴヤ部署かつ最後が部で終わらない部署名
+        :
+2024-08-03 08:13:53 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 営業本部ナゴヤ営業第一本部第一Gr, 期待出力: 営業本部 ナゴヤ営業第一本部 第一Gr, シナリオ: ナゴヤ部署かつ最後が部で終わらない部署名:
+2024-08-03 08:13:53 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:13:53 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:13:53 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 空文字列(エッジケース)
+        :
+2024-08-03 08:13:53 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: , 期待出力: , シナリオ: 空文字列(エッジケース):
+2024-08-03 08:13:53 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:15:20 [DEBUG] converter_utils - <module> line 11: Config(env='local', common_config={'logger_path': {'LOGGER_DEF_FILE': 'src/def/mfaUtilsLoggingHelper/logging_TimedRotate.json', 'LOGGER_MSG_FILE': 'src/def/mfaUtilsLoggingHelper/config_MessageList.toml'}, 'input_file_path': {'UPDATE_EXCEL_PATH': 'src/share/receive'}, 'output_file_path': {'SEND_REFFERENCE_MASTER_PATH': 'src/share/receive'}}, package_config={'test': {'local_test': 'tests'}}, log_message=<bound method LoggerPackage.log_message of <src.lib.common_utils.ibr_logger_package.LoggerPackage object at 0x7f9ea6de5850>>):
+2024-08-03 08:15:20 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:15:20 [INFO] converter_utils - test_individual_requirement_C0 line 68: 
+テスト内容:
+        - テストカテゴリ: C0
+        - テスト区分: 正常系
+        - テストシナリオ: 個別要件リストに含まれる部署名の処理
+        :
+2024-08-03 08:15:20 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:15:20 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:15:20 [INFO] converter_utils - test_full_match_exception_C0 line 77: 
+テスト内容:
+        - テストカテゴリ: C0
+        - テスト区分: 正常系
+        - テストシナリオ: 全体マッチの例外ケースに含まれる部署名の処理
+        :
+2024-08-03 08:15:20 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:15:20 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:15:20 [INFO] converter_utils - test_department_with_location_C0 line 86: 
+テスト内容:
+        - テストカテゴリ: C0
+        - テスト区分: 正常系
+        - テストシナリオ: 「〜部(拠点名)」パターンの部署名の処理
+        :
+2024-08-03 08:15:20 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:15:20 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:15:20 [INFO] converter_utils - test_department_with_brackets_C0 line 95: 
+テスト内容:
+        - テストカテゴリ: C0
+        - テスト区分: 正常系
+        - テストシナリオ: 括弧を含む部署名の処理
+        :
+2024-08-03 08:15:20 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:15:20 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:15:20 [INFO] converter_utils - test_department_ending_with_bu_C0 line 104: 
+テスト内容:
+        - テストカテゴリ: C0
+        - テスト区分: 正常系
+        - テストシナリオ: 「部」で終わる部署名の処理
+        :
+2024-08-03 08:15:20 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:15:20 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:15:20 [INFO] converter_utils - test_department_with_specific_patterns_C0 line 113: 
+テスト内容:
+        - テストカテゴリ: C0
+        - テスト区分: 正常系
+        - テストシナリオ: 特定パターンを含む部署名の処理
+        :
+2024-08-03 08:15:20 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:15:20 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:15:20 [INFO] converter_utils - test_partial_match_exception_C0 line 122: 
+テスト内容:
+        - テストカテゴリ: C0
+        - テスト区分: 正常系
+        - テストシナリオ: 部分マッチの例外を含む部署名の処理
+        :
+2024-08-03 08:15:20 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:15:20 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:15:20 [INFO] converter_utils - test_department_with_spaces_C0 line 131: 
+テスト内容:
+        - テストカテゴリ: C0
+        - テスト区分: 正常系
+        - テストシナリオ: 前後にスペースがある部署名の処理
+        :
+2024-08-03 08:15:20 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:15:20 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:15:20 [INFO] converter_utils - test_individual_requirement_true_C1 line 141: 
+テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 正常系
+        - テストシナリオ: 個別要件リストに含まれる部署名(True パス)
+        :
+2024-08-03 08:15:20 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:15:20 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:15:20 [INFO] converter_utils - test_individual_requirement_false_C1 line 150: 
+テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 正常系
+        - テストシナリオ: 個別要件リストに含まれない部署名(False パス)
+        :
+2024-08-03 08:15:20 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:15:20 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:15:20 [INFO] converter_utils - test_full_match_exception_true_C1 line 159: 
+テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 正常系
+        - テストシナリオ: 全体マッチの例外ケースに含まれる部署名(True パス)
+        :
+2024-08-03 08:15:20 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:15:20 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:15:20 [INFO] converter_utils - test_full_match_exception_false_C1 line 168: 
+テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 正常系
+        - テストシナリオ: 全体マッチの例外ケースに含まれない部署名(False パス)
+        :
+2024-08-03 08:15:20 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:15:20 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:15:20 [INFO] converter_utils - test_department_with_location_true_C1 line 177: 
+テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 正常系
+        - テストシナリオ: 「〜部(拠点名)」パターンに一致する部署名(True パス)
+        :
+2024-08-03 08:15:20 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:15:20 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:15:20 [INFO] converter_utils - test_department_with_location_false_C1 line 186: 
+テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 正常系
+        - テストシナリオ: 「〜部(拠点名)」パターンに一致しない部署名(False パス)
+        :
+2024-08-03 08:15:20 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:15:20 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:15:20 [INFO] converter_utils - test_department_ending_with_bu_true_C1 line 195: 
+テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 正常系
+        - テストシナリオ: 「部」で終わる部署名(True パス)
+        :
+2024-08-03 08:15:20 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:15:20 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:15:20 [INFO] converter_utils - test_department_not_ending_with_bu_C1 line 204: 
+テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 正常系
+        - テストシナリオ: 「部」で終わらない部署名(False パス)
+        :
+2024-08-03 08:15:20 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:15:20 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:15:20 [INFO] converter_utils - test_partial_match_exception_true_C1 line 213: 
+テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 正常系
+        - テストシナリオ: 部分マッチの例外を含む部署名(True パス)
+        :
+2024-08-03 08:15:20 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:15:20 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:15:20 [INFO] converter_utils - test_partial_match_exception_false_C1 line 222: 
+テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 正常系
+        - テストシナリオ: 部分マッチの例外を含まない部署名(False パス)
+        :
+2024-08-03 08:15:20 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:15:20 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:15:20 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 複数の例外パターンを含む複雑な部署名
+        :
+2024-08-03 08:15:20 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: さいたま本部春日部部クレヨン課, 期待出力: さいたま本部 春日部部 クレヨン課, シナリオ: 複数の例外パターンを含む複雑な部署名:
+2024-08-03 08:15:20 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:15:20 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:15:20 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 個別要件リストに該当する部署名
+        :
+2024-08-03 08:15:20 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 営業本部業務部, 期待出力: 営業本部業務部, シナリオ: 個別要件リストに該当する部署名:
+2024-08-03 08:15:20 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:15:20 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:15:20 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 個別要件リストに該当する長い部署名
+        :
+2024-08-03 08:15:20 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 内部監査部業務監査グループ第三ユニット, 期待出力: 内部監査部業務監査グループ第三ユニット, シナリオ: 個別要件リストに該当する長い部署名:
+2024-08-03 08:15:20 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:15:20 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:15:20 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 括弧付きの部門名
+        :
+2024-08-03 08:15:20 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: トランザクション監視部門(東京本部), 期待出力: トランザクション監視部門(東京本部), シナリオ: 括弧付きの部門名:
+2024-08-03 08:15:20 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:15:20 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:15:20 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 一般的な部署名の組み合わせ
+        :
+2024-08-03 08:15:20 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: aaa本部bbbb部xxxx課, 期待出力: aaa本部 bbbb部 xxxx課, シナリオ: 一般的な部署名の組み合わせ:
+2024-08-03 08:15:20 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:15:20 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:15:20 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 複数の部分マッチ例外を含む部署名
+        :
+2024-08-03 08:15:20 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 中部春日部東部西部, 期待出力: 中部春日部東部西部, シナリオ: 複数の部分マッチ例外を含む部署名:
+2024-08-03 08:15:20 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:15:20 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:15:20 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 複数の「部」を含む部署名
+        :
+2024-08-03 08:15:20 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: システム統括部システム企画課, 期待出力: システム統括部 システム企画課, シナリオ: 複数の「部」を含む部署名:
+2024-08-03 08:15:20 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:15:20 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:15:20 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 特殊文字と「部門」を含む部署名
+        :
+2024-08-03 08:15:20 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 法人・リテールリスク統括部部門検査室, 期待出力: 法人・リテールリスク統括部 部門検査室, シナリオ: 特殊文字と「部門」を含む部署名:
+2024-08-03 08:15:20 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:15:20 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:15:20 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 括弧と特殊文字を含む部署名
+        :
+2024-08-03 08:15:20 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 園田寮(69101)人事部·大, 期待出力: 園田寮(69101)人事部·大, シナリオ: 括弧と特殊文字を含む部署名:
+2024-08-03 08:15:20 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:15:20 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:15:20 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 括弧と特殊文字を含む部署名(研修所)
+        :
+2024-08-03 08:15:20 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 天満研修所(69101)人事部·大, 期待出力: 天満研修所(69101)人事部·大, シナリオ: 括弧と特殊文字を含む部署名(研修所):
+2024-08-03 08:15:20 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:15:20 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:15:20 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 括弧と特殊文字を含む部署名(寮)
+        :
+2024-08-03 08:15:20 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 浜甲子園寮(69101)人事部·大, 期待出力: 浜甲子園寮(69101)人事部·大, シナリオ: 括弧と特殊文字を含む部署名(寮):
+2024-08-03 08:15:20 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:15:20 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:15:20 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 括弧と特殊文字を含む部署名(西寮)
+        :
+2024-08-03 08:15:20 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 茨木西寮(69101)人事部·大, 期待出力: 茨木西寮(69101)人事部·大, シナリオ: 括弧と特殊文字を含む部署名(西寮):
+2024-08-03 08:15:20 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:15:20 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:15:20 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 数字、括弧、特殊文字を含む部署名
+        :
+2024-08-03 08:15:20 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 京町堀5(69101)人事部·大, 期待出力: 京町堀5(69101)人事部·大, シナリオ: 数字、括弧、特殊文字を含む部署名:
+2024-08-03 08:15:20 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:15:20 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:15:20 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 一般的な部署名
+        :
+2024-08-03 08:15:20 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 総務部総務課, 期待出力: 総務部 総務課, シナリオ: 一般的な部署名:
+2024-08-03 08:15:20 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:15:20 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:15:20 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 全体マッチの例外ケースに該当する部署名
+        :
+2024-08-03 08:15:20 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 本部審議役, 期待出力: 本部審議役, シナリオ: 全体マッチの例外ケースに該当する部署名:
+2024-08-03 08:15:20 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:15:20 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:15:20 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 括弧付きの海外部門名
+        :
+2024-08-03 08:15:20 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: トランザクション監視部門(天津), 期待出力: トランザクション監視部門(天津), シナリオ: 括弧付きの海外部門名:
+2024-08-03 08:15:20 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:15:20 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:15:20 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 「部門」で始まる部署名
+        :
+2024-08-03 08:15:20 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 部門検査室, 期待出力: 部門検査室, シナリオ: 「部門」で始まる部署名:
+2024-08-03 08:15:20 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:15:20 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:15:20 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 「部門」で始まり括弧付きの部署名
+        :
+2024-08-03 08:15:20 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 部門検査室(大阪), 期待出力: 部門検査室(大阪), シナリオ: 「部門」で始まり括弧付きの部署名:
+2024-08-03 08:15:20 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:15:20 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:15:20 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 特殊文字を含む部署名
+        :
+2024-08-03 08:15:20 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 〜部(拠点名), 期待出力: 〜部(拠点名), シナリオ: 特殊文字を含む部署名:
+2024-08-03 08:15:20 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:15:20 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:15:20 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 「部」が連続する部署名
+        :
+2024-08-03 08:15:20 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: テスト部部テスト課, 期待出力: テスト部部 テスト課, シナリオ: 「部」が連続する部署名:
+2024-08-03 08:15:20 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:15:20 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:15:20 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 「部門」で終わる部署名
+        :
+2024-08-03 08:15:20 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: テスト部門, 期待出力: テスト部門, シナリオ: 「部門」で終わる部署名:
+2024-08-03 08:15:20 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:15:20 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:15:20 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 「部」と「部門」を含む複雑な部署名
+        :
+2024-08-03 08:15:20 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: リテールリスク統括部部門管理部, 期待出力: リテールリスク統括部 部門管理部, シナリオ: 「部」と「部門」を含む複雑な部署名:
+2024-08-03 08:15:20 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:15:20 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:15:20 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 途中に「部」があり最後に「部」を含む部署名
+        :
+2024-08-03 08:15:20 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 営業本部ナゴヤ営業第一本部, 期待出力: 営業本部 ナゴヤ営業第一本部, シナリオ: 途中に「部」があり最後に「部」を含む部署名:
+2024-08-03 08:15:20 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:15:20 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:15:20 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: ナゴヤ部署かつ最後が部で終わらない部署名
+        :
+2024-08-03 08:15:20 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 営業本部ナゴヤ営業第一本部第一Gr, 期待出力: 営業本部 ナゴヤ営業第一本部 第一Gr, シナリオ: ナゴヤ部署かつ最後が部で終わらない部署名:
+2024-08-03 08:15:20 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:15:20 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:15:20 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 空文字列(エッジケース)
+        :
+2024-08-03 08:15:20 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: , 期待出力: , シナリオ: 空文字列(エッジケース):
+2024-08-03 08:15:20 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:16:23 [DEBUG] converter_utils - <module> line 11: Config(env='local', common_config={'logger_path': {'LOGGER_DEF_FILE': 'src/def/mfaUtilsLoggingHelper/logging_TimedRotate.json', 'LOGGER_MSG_FILE': 'src/def/mfaUtilsLoggingHelper/config_MessageList.toml'}, 'input_file_path': {'UPDATE_EXCEL_PATH': 'src/share/receive'}, 'output_file_path': {'SEND_REFFERENCE_MASTER_PATH': 'src/share/receive'}}, package_config={'test': {'local_test': 'tests'}}, log_message=<bound method LoggerPackage.log_message of <src.lib.common_utils.ibr_logger_package.LoggerPackage object at 0x7fac8e229590>>):
+2024-08-03 08:16:23 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:16:23 [INFO] converter_utils - test_individual_requirement_C0 line 68: 
+テスト内容:
+        - テストカテゴリ: C0
+        - テスト区分: 正常系
+        - テストシナリオ: 個別要件リストに含まれる部署名の処理
+        :
+2024-08-03 08:16:23 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:16:23 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:16:23 [INFO] converter_utils - test_full_match_exception_C0 line 77: 
+テスト内容:
+        - テストカテゴリ: C0
+        - テスト区分: 正常系
+        - テストシナリオ: 全体マッチの例外ケースに含まれる部署名の処理
+        :
+2024-08-03 08:16:23 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:16:23 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:16:23 [INFO] converter_utils - test_department_with_location_C0 line 86: 
+テスト内容:
+        - テストカテゴリ: C0
+        - テスト区分: 正常系
+        - テストシナリオ: 「〜部(拠点名)」パターンの部署名の処理
+        :
+2024-08-03 08:16:23 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:16:23 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:16:23 [INFO] converter_utils - test_department_with_brackets_C0 line 95: 
+テスト内容:
+        - テストカテゴリ: C0
+        - テスト区分: 正常系
+        - テストシナリオ: 括弧を含む部署名の処理
+        :
+2024-08-03 08:16:23 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:16:23 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:16:23 [INFO] converter_utils - test_department_ending_with_bu_C0 line 104: 
+テスト内容:
+        - テストカテゴリ: C0
+        - テスト区分: 正常系
+        - テストシナリオ: 「部」で終わる部署名の処理
+        :
+2024-08-03 08:16:23 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:16:23 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:16:23 [INFO] converter_utils - test_department_with_specific_patterns_C0 line 113: 
+テスト内容:
+        - テストカテゴリ: C0
+        - テスト区分: 正常系
+        - テストシナリオ: 特定パターンを含む部署名の処理
+        :
+2024-08-03 08:16:23 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:16:23 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:16:23 [INFO] converter_utils - test_partial_match_exception_C0 line 122: 
+テスト内容:
+        - テストカテゴリ: C0
+        - テスト区分: 正常系
+        - テストシナリオ: 部分マッチの例外を含む部署名の処理
+        :
+2024-08-03 08:16:23 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:16:23 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:16:23 [INFO] converter_utils - test_department_with_spaces_C0 line 131: 
+テスト内容:
+        - テストカテゴリ: C0
+        - テスト区分: 正常系
+        - テストシナリオ: 前後にスペースがある部署名の処理
+        :
+2024-08-03 08:16:23 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:16:23 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:16:23 [INFO] converter_utils - test_individual_requirement_true_C1 line 141: 
+テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 正常系
+        - テストシナリオ: 個別要件リストに含まれる部署名(True パス)
+        :
+2024-08-03 08:16:23 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:16:23 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:16:23 [INFO] converter_utils - test_individual_requirement_false_C1 line 150: 
+テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 正常系
+        - テストシナリオ: 個別要件リストに含まれない部署名(False パス)
+        :
+2024-08-03 08:16:23 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:16:23 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:16:23 [INFO] converter_utils - test_full_match_exception_true_C1 line 159: 
+テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 正常系
+        - テストシナリオ: 全体マッチの例外ケースに含まれる部署名(True パス)
+        :
+2024-08-03 08:16:23 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:16:23 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:16:23 [INFO] converter_utils - test_full_match_exception_false_C1 line 168: 
+テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 正常系
+        - テストシナリオ: 全体マッチの例外ケースに含まれない部署名(False パス)
+        :
+2024-08-03 08:16:23 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:16:23 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:16:23 [INFO] converter_utils - test_department_with_location_true_C1 line 177: 
+テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 正常系
+        - テストシナリオ: 「〜部(拠点名)」パターンに一致する部署名(True パス)
+        :
+2024-08-03 08:16:23 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:16:23 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:16:23 [INFO] converter_utils - test_department_with_location_false_C1 line 186: 
+テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 正常系
+        - テストシナリオ: 「〜部(拠点名)」パターンに一致しない部署名(False パス)
+        :
+2024-08-03 08:16:23 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:16:23 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:16:23 [INFO] converter_utils - test_department_ending_with_bu_true_C1 line 195: 
+テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 正常系
+        - テストシナリオ: 「部」で終わる部署名(True パス)
+        :
+2024-08-03 08:16:23 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:16:23 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:16:23 [INFO] converter_utils - test_department_not_ending_with_bu_C1 line 204: 
+テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 正常系
+        - テストシナリオ: 「部」で終わらない部署名(False パス)
+        :
+2024-08-03 08:16:23 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:16:23 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:16:23 [INFO] converter_utils - test_partial_match_exception_true_C1 line 213: 
+テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 正常系
+        - テストシナリオ: 部分マッチの例外を含む部署名(True パス)
+        :
+2024-08-03 08:16:23 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:16:23 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:16:23 [INFO] converter_utils - test_partial_match_exception_false_C1 line 222: 
+テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 正常系
+        - テストシナリオ: 部分マッチの例外を含まない部署名(False パス)
+        :
+2024-08-03 08:16:23 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:16:23 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:16:23 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 複数の例外パターンを含む複雑な部署名
+        :
+2024-08-03 08:16:23 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: さいたま本部春日部部クレヨン課, 期待出力: さいたま本部 春日部部 クレヨン課, シナリオ: 複数の例外パターンを含む複雑な部署名:
+2024-08-03 08:16:23 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:16:23 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:16:23 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 個別要件リストに該当する部署名
+        :
+2024-08-03 08:16:23 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 営業本部業務部, 期待出力: 営業本部業務部, シナリオ: 個別要件リストに該当する部署名:
+2024-08-03 08:16:23 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:16:23 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:16:23 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 個別要件リストに該当する長い部署名
+        :
+2024-08-03 08:16:23 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 内部監査部業務監査グループ第三ユニット, 期待出力: 内部監査部業務監査グループ第三ユニット, シナリオ: 個別要件リストに該当する長い部署名:
+2024-08-03 08:16:23 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:16:23 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:16:23 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 括弧付きの部門名
+        :
+2024-08-03 08:16:23 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: トランザクション監視部門(東京本部), 期待出力: トランザクション監視部門(東京本部), シナリオ: 括弧付きの部門名:
+2024-08-03 08:16:23 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:16:23 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:16:23 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 一般的な部署名の組み合わせ
+        :
+2024-08-03 08:16:23 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: aaa本部bbbb部xxxx課, 期待出力: aaa本部 bbbb部 xxxx課, シナリオ: 一般的な部署名の組み合わせ:
+2024-08-03 08:16:23 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:16:23 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:16:23 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 複数の部分マッチ例外を含む部署名
+        :
+2024-08-03 08:16:23 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 中部春日部東部西部, 期待出力: 中部春日部東部西部, シナリオ: 複数の部分マッチ例外を含む部署名:
+2024-08-03 08:16:23 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:16:23 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:16:23 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 複数の「部」を含む部署名
+        :
+2024-08-03 08:16:23 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: システム統括部システム企画課, 期待出力: システム統括部 システム企画課, シナリオ: 複数の「部」を含む部署名:
+2024-08-03 08:16:23 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:16:23 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:16:23 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 特殊文字と「部門」を含む部署名
+        :
+2024-08-03 08:16:23 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 法人・リテールリスク統括部部門検査室, 期待出力: 法人・リテールリスク統括部 部門検査室, シナリオ: 特殊文字と「部門」を含む部署名:
+2024-08-03 08:16:23 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:16:23 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:16:23 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 括弧と特殊文字を含む部署名
+        :
+2024-08-03 08:16:23 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 園田寮(69101)人事部·大, 期待出力: 園田寮(69101)人事部·大, シナリオ: 括弧と特殊文字を含む部署名:
+2024-08-03 08:16:23 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:16:23 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:16:23 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 括弧と特殊文字を含む部署名(研修所)
+        :
+2024-08-03 08:16:23 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 天満研修所(69101)人事部·大, 期待出力: 天満研修所(69101)人事部·大, シナリオ: 括弧と特殊文字を含む部署名(研修所):
+2024-08-03 08:16:23 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:16:23 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:16:23 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 括弧と特殊文字を含む部署名(寮)
+        :
+2024-08-03 08:16:23 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 浜甲子園寮(69101)人事部·大, 期待出力: 浜甲子園寮(69101)人事部·大, シナリオ: 括弧と特殊文字を含む部署名(寮):
+2024-08-03 08:16:23 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:16:23 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:16:23 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 括弧と特殊文字を含む部署名(西寮)
+        :
+2024-08-03 08:16:23 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 茨木西寮(69101)人事部·大, 期待出力: 茨木西寮(69101)人事部·大, シナリオ: 括弧と特殊文字を含む部署名(西寮):
+2024-08-03 08:16:23 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:16:23 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:16:23 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 数字、括弧、特殊文字を含む部署名
+        :
+2024-08-03 08:16:23 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 京町堀5(69101)人事部·大, 期待出力: 京町堀5(69101)人事部·大, シナリオ: 数字、括弧、特殊文字を含む部署名:
+2024-08-03 08:16:23 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:16:23 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:16:23 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 一般的な部署名
+        :
+2024-08-03 08:16:23 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 総務部総務課, 期待出力: 総務部 総務課, シナリオ: 一般的な部署名:
+2024-08-03 08:16:23 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:16:23 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:16:23 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 全体マッチの例外ケースに該当する部署名
+        :
+2024-08-03 08:16:23 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 本部審議役, 期待出力: 本部審議役, シナリオ: 全体マッチの例外ケースに該当する部署名:
+2024-08-03 08:16:23 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:16:23 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:16:23 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 括弧付きの海外部門名
+        :
+2024-08-03 08:16:23 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: トランザクション監視部門(天津), 期待出力: トランザクション監視部門(天津), シナリオ: 括弧付きの海外部門名:
+2024-08-03 08:16:23 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:16:23 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:16:23 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 「部門」で始まる部署名
+        :
+2024-08-03 08:16:23 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 部門検査室, 期待出力: 部門検査室, シナリオ: 「部門」で始まる部署名:
+2024-08-03 08:16:23 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:16:23 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:16:23 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 「部門」で始まり括弧付きの部署名
+        :
+2024-08-03 08:16:23 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 部門検査室(大阪), 期待出力: 部門検査室(大阪), シナリオ: 「部門」で始まり括弧付きの部署名:
+2024-08-03 08:16:23 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:16:23 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:16:23 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 特殊文字を含む部署名
+        :
+2024-08-03 08:16:23 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 〜部(拠点名), 期待出力: 〜部(拠点名), シナリオ: 特殊文字を含む部署名:
+2024-08-03 08:16:23 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:16:23 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:16:23 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 「部」が連続する部署名
+        :
+2024-08-03 08:16:23 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: テスト部部テスト課, 期待出力: テスト部部 テスト課, シナリオ: 「部」が連続する部署名:
+2024-08-03 08:16:23 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:16:23 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:16:23 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 「部門」で終わる部署名
+        :
+2024-08-03 08:16:23 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: テスト部門, 期待出力: テスト部門, シナリオ: 「部門」で終わる部署名:
+2024-08-03 08:16:23 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:16:23 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:16:23 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 「部」と「部門」を含む複雑な部署名
+        :
+2024-08-03 08:16:23 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: リテールリスク統括部部門管理部, 期待出力: リテールリスク統括部 部門管理部, シナリオ: 「部」と「部門」を含む複雑な部署名:
+2024-08-03 08:16:23 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:16:23 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:16:23 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 途中に「部」があり最後に「部」を含む部署名
+        :
+2024-08-03 08:16:23 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 営業本部ナゴヤ営業第一本部, 期待出力: 営業本部 ナゴヤ営業第一本部, シナリオ: 途中に「部」があり最後に「部」を含む部署名:
+2024-08-03 08:16:23 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:16:23 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:16:23 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: ナゴヤ部署かつ最後が部で終わらない部署名
+        :
+2024-08-03 08:16:23 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: 営業本部ナゴヤ営業第一本部第一Gr, 期待出力: 営業本部 ナゴヤ営業第一本部 第一Gr, シナリオ: ナゴヤ部署かつ最後が部で終わらない部署名:
+2024-08-03 08:16:23 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 08:16:23 [INFO] converter_utils - setup_method line 56: test start:
+2024-08-03 08:16:23 [INFO] converter_utils - test_format_department_name_C2 line 259: 
+テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 空文字列(エッジケース)
+        :
+2024-08-03 08:16:23 [INFO] converter_utils - test_format_department_name_C2 line 260: 
+テスト: 入力: , 期待出力: , シナリオ: 空文字列(エッジケース):
+2024-08-03 08:16:23 [INFO] converter_utils - teardown_method line 59: test end
+--------------------------------------------------------------------------------
+:
+2024-08-03 09:04:24 [INFO] validator_excel_main_class-2 - start line 136: IBRDEV-I-0000001:起動しました
+2024-08-03 09:04:25 [DEBUG] common_utils - tabulate_dataframe line 67: 
+|    |   NO | あ   | い   |   う | え   | お   |   か | き   |   く |   け |   こ |
+|---:|-----:|:-----|:-----|-----:|:-----|:-----|-----:|:-----|-----:|-----:|-----:|
+|  0 |    1 | a    | d    |    1 | 4    | あ   |   10 | 1    |   13 |   16 |   19 |
+|  1 |    2 | b    | e    |    2 | s    | 8    |   11 | h    |   14 |   17 |   20 |
+|  2 |    3 | c    | f    |    3 | 6    | 9    |   12 | I    |   15 |   18 |   21 |:
+2024-08-03 09:04:25 [DEBUG] common_utils - read_excel_one_sheet line 99: 
+Sheet_name: Sheet1
+|    |   NO | あ   | い   |   う | え   | お   |   か | き   |   く |   け |   こ |
+|---:|-----:|:-----|:-----|-----:|:-----|:-----|-----:|:-----|-----:|-----:|-----:|
+|  0 |    1 | a    | d    |    1 | 4    | あ   |   10 | 1    |   13 |   16 |   19 |
+|  1 |    2 | b    | e    |    2 | s    | 8    |   11 | h    |   14 |   17 |   20 |
+|  2 |    3 | c    | f    |    3 | 6    | 9    |   12 | I    |   15 |   18 |   21 |:
+2024-08-03 09:04:25 [DEBUG] common_utils - tabulate_dataframe line 67: 
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | NO        | int64  |
+|  1 | あ        | object |
+|  2 | い        | object |
+|  3 | う        | int64  |
+|  4 | え        | object |
+|  5 | お        | object |
+|  6 | か        | int64  |
+|  7 | き        | object |
+|  8 | く        | int64  |
+|  9 | け        | int64  |
+| 10 | こ        | int64  |:
+2024-08-03 09:04:25 [INFO] validator_excel_main_class-2 - _log_dataframe_info line 66: DataFrame info:
+|    | Columns   | Type   |
+|---:|:----------|:-------|
+|  0 | NO        | int64  |
+|  1 | あ        | object |
+|  2 | い        | object |
+|  3 | う        | int64  |
+|  4 | え        | object |
+|  5 | お        | object |
+|  6 | か        | int64  |
+|  7 | き        | object |
+|  8 | く        | int64  |
+|  9 | け        | int64  |
+| 10 | こ        | int64  |:
+2024-08-03 09:04:25 [WARNING] validator_utils - log_errors line 31: Validation error at row 0: {'type': 'int_type', 'loc': ('お',), 'msg': 'Input should be a valid integer', 'input': 'あ', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}:
+2024-08-03 09:04:25 [WARNING] validator_utils - log_errors line 31: Validation error at row 0: {'type': 'string_type', 'loc': ('き',), 'msg': 'Input should be a valid string', 'input': 1, 'url': 'https://errors.pydantic.dev/2.5/v/string_type'}:
+2024-08-03 09:04:25 [WARNING] validator_utils - log_errors line 31: Validation error at row 1: {'type': 'int_type', 'loc': ('え',), 'msg': 'Input should be a valid integer', 'input': 's', 'url': 'https://errors.pydantic.dev/2.5/v/int_type'}:
+2024-08-03 09:04:25 [WARNING] validator_excel_main_class-2 - start line 142: Process completed with 2 validation errors:
+2024-08-03 09:04:25 [INFO] validator_excel_main_class-2 - start line 152: IBRDEV-I-0000002:正常終了しました
+2024-08-03 09:07:09 [INFO] validator_excel_main_class-2 - start line 136: IBRDEV-I-0000001:起動しました
+2024-08-03 09:08:03 [DEBUG] common_utils - tabulate_dataframe line 67: 
+|    |   NO | あ   | い   |   う | え   | お   |   か | き   |   く |   け |   こ |
+|---:|-----:|:-----|:-----|-----:|:-----|:-----|-----:|:-----|-----:|-----:|-----:|
+|  0 |    1 | a    | d    |    1 | 4    | あ   |   10 | 1    |   13 |   16 |   19 |
+|  1 |    2 | b    | e    |    2 | s    | 8    |   11 | h    |   14 |   17 |   20 |
+|  2 |    3 | c    | f    |    3 | 6    | 9    |   12 | I    |   15 |   18 |   21 |:

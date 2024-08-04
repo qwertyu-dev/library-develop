@@ -1,0 +1,65 @@
+<input type="radio" name="q17" value="b"> b) 'r+'<br>
+                    <input type="radio" name="q17" value="c"> c) 'w+'<br>
+                    <input type="radio" name="q17" value="d"> d) 'a+'
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>18. CSVファイルの各行を辞書として書き込むためのクラスは何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q18" value="a" required> a) csv.Writer<br>
+                    <input type="radio" name="q18" value="b"> b) csv.DictWriter<br>
+                    <input type="radio" name="q18" value="c"> c) csv.write_dict<br>
+                    <input type="radio" name="q18" value="d"> d) csv.WriteDict
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>19. JSONデータを整形して出力する際に使用する json モジュールの関数は何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q19" value="a" required> a) json.pretty()<br>
+                    <input type="radio" name="q19" value="b"> b) json.beautify()<br>
+                    <input type="radio" name="q19" value="c"> c) json.pprint()<br>
+                    <input type="radio" name="q19" value="d"> d) json.dumps()
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>20. ファイルの特定の位置にシークするメソッドは何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q20" value="a" required> a) move()<br>
+                    <input type="radio" name="q20" value="b"> b) jump()<br>
+                    <input type="radio" name="q20" value="c"> c) seek()<br>
+                    <input type="radio" name="q20" value="d"> d) position()
+                </div>
+            </div>
+
+            <button type="submit">採点する</button>
+        </form>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        document.getElementById('quizForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            let score = 0;
+            const answers = {
+                q1: 'b', q2: 'b', q3: 'b', q4: 'a', q5: 'c',
+                q6: 'c', q7: 'b', q8: 'b', q9: 'a', q10: 'b',
+                q11: 'c', q12: 'b', q13: 'a', q14: 'b', q15: 'b',
+                q16: 'c', q17: 'b', q18: 'b', q19: 'd', q20: 'c'
+            };
+
+            for (let q in answers) {
+                const selected = document.querySelector(`input[name="${q}"]:checked`);
+                if (selected && selected.value === answers[q]) {
+                    score++;
+                }
+            }
+
+            const resultDiv = document.getElementById('result');
+            resultDiv.textContent = `あなたのスコアは ${score} / 20 です。`;
+        });
+    </script>
+</body>
+</html>

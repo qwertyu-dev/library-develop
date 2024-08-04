@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pythonオブジェクト指向プログラミング：完全版学習資料</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; padding: 20px; max-width: 800px; margin: 0 auto; }
+        h1, h2, h3 { color: #333; }
+        pre { background-color: #f4f4f4; padding: 10px; border-radius: 5px; overflow-x: auto; }
+        .quiz { background-color: #e7f3fe; padding: 15px; border-radius: 5px; margin-top: 20px; }
+        .quiz-question { margin-bottom: 20px; }
+        .options { margin-left: 20px; }
+        button { background-color: #4CAF50; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background-color: #45a049; }
+        #result { margin-top: 20px; font-weight: bold; }
+        .note { background-color: #ffffd9; padding: 10px; border-left: 5px solid #ffeb3b; margin: 15px 0; }
+    </style>
+</head>
+<body>
+    <h1>2. オブジェクト指向プログラミング</h1>
+
+    <h2>2.1 クラスとオブジェクト</h2>
+    <p>クラスはオブジェクトの設計図であり、オブジェクトはクラスのインスタンスです。</p>
+    <pre>
+class Dog:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def bark(self):
+        return f"{self.name}が吠えます：ワン！"
+
+# オブジェクトの作成と使用
+my_dog = Dog("ポチ", 3)
+print(my_dog.name)  # 出力: ポチ
+print(my_dog.bark())  # 出力: ポチが吠えます：ワン！
+    </pre>
+
+    <h2>2.2 継承とポリモーフィズム</h2>
+    <p>継承は既存のクラスから新しいクラスを作成する方法です。ポリモーフィズムは、同じインターフェースを持つ異なるクラスのオブジェクトを同じ方法で扱える機能です。</p>
+    <pre>
+class Animal:
+    def speak(self):
+        pass
+
+class Dog(Animal):
+    def speak(self):
+        return "ワン！"
+
+class Cat(Animal):
+    def speak(self):
+        return "ニャー！"
+
+def animal_sound(animal):
+    return animal.speak()
+
+dog = Dog()
+cat = Cat()
+
+print(animal_sound(dog))  # 出力: ワン！
+print(animal_sound(cat))  # 出力: ニャー！
+    </pre>
+
+    <h2>2.3 特殊メソッド</h2>
+    <p>特殊メソッド（マジックメソッド）は、Pythonの特定の構文や操作をクラスに対して定義するための方法です。</p>
+    <pre>
+class Book:
+    def __init__(self, title, author, pages):
+        self.title = title
+        self.author = author
+        self.pages = pages
+
+    def __str__(self):
+        return f"{self.title} by {self.author}"
+
+    def __len__(self):
+        return self.pages
+
+book = Book("Python入門", "山田太郎", 200)
+print(str(book))  # 出力: Python入門 by 山田太郎
+print(len(book))  # 出力: 200
+    </pre>
+
+    <h2>2.4 ポリモーフィズムとコマンドパターン</h2>
+    <div class="note">
+        <strong>プロジェクト固有の注意点：</strong>
+        <p>このプロジェクトでは、コマンドパターンを採用しており、ポリモーフィズムを活用して異なる種類のコマンドを統一的に扱っています。これにより、新しい機能や操作を追加する際の柔軟性と拡張性が向上します。</p>
+    </div>
+    <pre>
+from abc import ABC, abstractmethod
+
+class Command(ABC):
+    @abstractmethod
+    def execute(self):
+        pass
+
+class SaveCommand(Command):
+    def __init__(self, document):
+        self.document = document
+
+    def execute(self):
+        self.document.save()
+
+class PrintCommand(Command):
+    def __init__(self, document):
+        self.document = document
+
+    def execute(self):
+        self.document.print()
+
+class Document:
+    def save(self):
+        print("ドキュメントを保存しました")
+
+    def print(self):
+        print("ドキュメントを印刷しました")
+
+class CommandExecutor:
+    def execute_command(self, command):
+        command.execute()
+
+# 使用例
+document = Document()
+save_command = SaveCommand(document)
+print_command = PrintCommand(document)
+
+executor = CommandExecutor()
+executor.execute_command(save_command)  # 出力: ドキュメントを保存しました
+executor.execute_command(print_command)  # 出力: ドキュメントを印刷しました
+    </pre>
+
+    <h2>クイズ: Pythonオブジェクト指向プログラミング</h2>
+    <div class="quiz">
+        <form id="quizForm">
+            <div class="quiz-question">
+                <p>1. Pythonでクラスを定義するキーワードは何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q1" value="a" required> a) def<br>
+                    <input type="radio" name="q1" value="b"> b) class<br>
+                    <input type="radio" name="q1" value="c"> c) object<br>
+                    <input type="radio" name="q1" value="d"> d) struct
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>2. クラスの初期化メソッドの名前は何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q2" value="a" required> a) __init__<br>
+                    <input type="radio" name="q2" value="b"> b) __main__<br>
+                    <input type="radio" name="q2" value="c"> c) __new__<br>
+                    <input type="radio" name="q2" value="d"> d) __start__
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>3. クラスメソッドの第一引数として通常使用される名前は何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q3" value="a" required> a) this<br>
+                    <input type="radio" name="q3" value="b"> b) self<br>
+                    <input type="radio" name="q3" value="c"> c) me<br>
+                    <input type="radio" name="q3" value="d"> d) instance
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>4. 継承を使用する際、親クラスを指定する正しい構文は？</p>
+                <div class="options">
+                    <input type="radio" name="q4" value="a" required> a) class Child extends Parent:<br>
+                    <input type="radio" name="q4" value="b"> b) class Child(Parent):<br>
+                    <input type="radio" name="q4" value="c"> c) class Child : Parent<br>
+                    <input type="radio" name="q4" value="d"> d) class Child inherits Parent:
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>5. オブジェクトの文字列表現を返す特殊メソッドの名前は？</p>
+                <div class="options">
+                    <input type="radio" name="q5" value="a" required> a) __repr__<br>
+                    <input type="radio" name="q5" value="b"> b) __str__<br>
+                    <input type="radio" name="q5" value="c"> c) __print__<br>
+                    <input type="radio" name="q5" value="d"> d) to_string
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>6. 次のコードの出力は何ですか？<br>
+                   class A:<br>
+                   &nbsp;&nbsp;&nbsp;&nbsp;def __init__(self):<br>
+                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.x = 1<br>
+                   class B(A):<br>
+                   &nbsp;&nbsp;&nbsp;&nbsp;def __init__(self):<br>
+                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;super().__init__()<br>
+                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.x += 1<br>
+                   b = B()<br>
+                   print(b.x)</p>
+                <div class="options">
+                    <input type="radio" name="q6" value="a" required> a) 1<br>
+                    <input type="radio" name="q6" value="b"> b) 2<br>
+                    <input type="radio" name="q6" value="c"> c) 3<br>
+                    <input type="radio" name="q6" value="d"> d) エラー
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>7. クラスメソッドを定義するデコレータは何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q7" value="a" required> a) @classmethod<br>
+                    <input type="radio" name="q7" value="b"> b) @staticmethod<br>
+                    <input type="radio" name="q7" value="c"> c) @method<br>
+                    <input type="radio" name="q7" value="d"> d) @instancemethod
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>8. ポリモーフィズムの主な利点は何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q8" value="a" required> a) コードの再利用性<br>
+                    <input type="radio" name="q8" value="b"> b) データの隠蔽<br>
+                    <input type="radio" name="q8" value="c"> c) 柔軟性と拡張性<br>
+                    <input type="radio" name="q8" value="d"> d) 高速な実行
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>9. Pythonで多重継承は可能ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q9" value="a" required> a) はい<br>
+                    <input type="radio" name="q9" value="b"> b) いいえ<br>
+                    <input type="radio" name="q9" value="c"> c) 特定の条件下でのみ<br>
+                    <input type="radio" name="q9" value="d"> d) バージョンによって異なる
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>10. オブジェクトの属性にアクセスしようとして存在しない場合に呼び出される特殊メソッドは？</p>
+                <div class="options">
+                    <input type="radio" name="q10" value="a" required> a) __getattr__<br>
+                    <input type="radio" name="q10" value="b"> b) __setattr__<br>
+                    <input type="radio" name="q10" value="c"> c) __hasattr__<br>
+                    <input type="radio" name="q10" value="d"> d) __attr__
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>11. 抽象基底クラスを定義するために使用するモジュールは？</p>
+                <div class="options">
+                    <input type="radio" name="q11" value="a" required> a) abstract<br>
+                    <input type="radio" name="q11" value="b"> b) abc<br>
+                    <input type="radio" name="q11" value="c"> c) base<br>
+                    <input type="radio" name="q11" value="d"> d) interface
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>12. クラス変数とインスタンス変数の違いは何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q12" value="a" required> a) クラス変数はすべてのインスタンスで共有される<br>
+                    <input type="radio" name="q12" value="b"> b) インスタンス変数は静的である<br>
+                    <input type="radio" name="q12" value="c"> c) クラス変数は各インスタンスで独立している<br>
+                    <input type="radio" name="q12" value="d"> d) 違いはない
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>13. プロパティを定義するデコレータは何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q13" value="a" required> a) @property<br>
+                    <input type="radio" name="q13" value="

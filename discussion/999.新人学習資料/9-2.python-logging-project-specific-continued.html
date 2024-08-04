@@ -1,0 +1,104 @@
+<input type="radio" name="q13" value="c"> c) %funcName<br>
+    <input type="radio" name="q13" value="d"> d) %caller
+</div>
+</div>
+
+<div class="quiz-question">
+    <p>14. プロジェクトでログファイルのサイズを管理する最適な方法は？</p>
+    <div class="options">
+        <input type="radio" name="q14" value="a" required> a) 定期的に手動でログファイルを削除する<br>
+        <input type="radio" name="q14" value="b"> b) ログローテーションを設定する<br>
+        <input type="radio" name="q14" value="c"> c) ログレベルを上げてログ量を減らす<br>
+        <input type="radio" name="q14" value="d"> d) 大容量のストレージを用意する
+    </div>
+</div>
+
+<div class="quiz-question">
+    <p>15. プロジェクトで構造化ログを使用する主な利点は何ですか？</p>
+    <div class="options">
+        <input type="radio" name="q15" value="a" required> a) ログファイルのサイズが小さくなる<br>
+        <input type="radio" name="q15" value="b"> b) ログの解析が容易になる<br>
+        <input type="radio" name="q15" value="c"> c) ログの出力速度が向上する<br>
+        <input type="radio" name="q15" value="d"> d) セキュリティが向上する
+    </div>
+</div>
+
+<div class="quiz-question">
+    <p>16. プロジェクトでのデバッグ時、一時的にログレベルを変更する最適な方法は？</p>
+    <div class="options">
+        <input type="radio" name="q16" value="a" required> a) ソースコード内のログレベルを直接変更する<br>
+        <input type="radio" name="q16" value="b"> b) 環境変数を使用してログレベルを制御する<br>
+        <input type="radio" name="q16" value="c"> c) すべてのログステートメントをコメントアウトする<br>
+        <input type="radio" name="q16" value="d"> d) 新しいロガーインスタンスを作成する
+    </div>
+</div>
+
+<div class="quiz-question">
+    <p>17. プロジェクトで複数のモジュールからログを集約する最適な方法は？</p>
+    <div class="options">
+        <input type="radio" name="q17" value="a" required> a) 各モジュールで別々のログファイルを使用する<br>
+        <input type="radio" name="q17" value="b"> b) すべてのログを標準出力に出力する<br>
+        <input type="radio" name="q17" value="c"> c) ルートロガーを設定し、子ロガーで利用する<br>
+        <input type="radio" name="q17" value="d"> d) ログを出力せず、デバッガーを使用する
+    </div>
+</div>
+
+<div class="quiz-question">
+    <p>18. プロジェクトでのパフォーマンスクリティカルな部分でのロギングの最適な扱い方は？</p>
+    <div class="options">
+        <input type="radio" name="q18" value="a" required> a) ロギングを完全に無効にする<br>
+        <input type="radio" name="q18" value="b"> b) 非同期ロギングを使用する<br>
+        <input type="radio" name="q18" value="c"> c) ログレベルを最小限に抑える<br>
+        <input type="radio" name="q18" value="d"> b と c の両方
+    </div>
+</div>
+
+<div class="quiz-question">
+    <p>19. プロジェクトで例外をログに記録する際、スタックトレースを含めるべき状況は？</p>
+    <div class="options">
+        <input type="radio" name="q19" value="a" required> a) すべての例外<br>
+        <input type="radio" name="q19" value="b"> b) エラーレベル以上の例外のみ<br>
+        <input type="radio" name="q19" value="c"> c) 開発環境でのみ<br>
+        <input type="radio" name="q19" value="d"> d) スタックトレースは含めるべきでない
+    </div>
+</div>
+
+<div class="quiz-question">
+    <p>20. プロジェクトでのログ分析を容易にするために、各ログエントリに含めるべき情報は？</p>
+    <div class="options">
+        <input type="radio" name="q20" value="a" required> a) タイムスタンプのみ<br>
+        <input type="radio" name="q20" value="b"> b) タイムスタンプとログレベル<br>
+        <input type="radio" name="q20" value="c"> c) タイムスタンプ、ログレベル、モジュール名<br>
+        <input type="radio" name="q20" value="d"> d) タイムスタンプ、ログレベル、モジュール名、行番号、スレッドID
+    </div>
+</div>
+
+<button type="submit">採点する</button>
+</form>
+<div id="result"></div>
+</div>
+
+<script>
+document.getElementById('quizForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    let score = 0;
+    const answers = {
+        q1: 'b', q2: 'a', q3: 'a', q4: 'c', q5: 'b',
+        q6: 'b', q7: 'b', q8: 'c', q9: 'b', q10: 'c',
+        q11: 'a', q12: 'd', q13: 'c', q14: 'b', q15: 'b',
+        q16: 'b', q17: 'c', q18: 'd', q19: 'b', q20: 'd'
+    };
+
+    for (let q in answers) {
+        const selected = document.querySelector(`input[name="${q}"]:checked`);
+        if (selected && selected.value === answers[q]) {
+            score++;
+        }
+    }
+
+    const resultDiv = document.getElementById('result');
+    resultDiv.textContent = `あなたのスコアは ${score} / 20 です。`;
+});
+</script>
+</body>
+</html>

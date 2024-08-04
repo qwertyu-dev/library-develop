@@ -1,0 +1,98 @@
+<p>14. asyncioで非同期ジェネレータを定義するために使用するキーワードの組み合わせは？</p>
+            <div class="options">
+                <input type="radio" name="q14" value="a" required> a) async と yield<br>
+                <input type="radio" name="q14" value="b"> b) await と yield<br>
+                <input type="radio" name="q14" value="c"> c) async と await<br>
+                <input type="radio" name="q14" value="d"> d) async と generate
+            </div>
+        </div>
+
+        <div class="quiz-question">
+            <p>15. プロジェクトで大量のI/O操作を行う場合、どのアプローチが最適ですか？</p>
+            <div class="options">
+                <input type="radio" name="q15" value="a" required> a) マルチスレッディング<br>
+                <input type="radio" name="q15" value="b"> b) マルチプロセシング<br>
+                <input type="radio" name="q15" value="c"> c) 非同期プログラミング（asyncio）<br>
+                <input type="radio" name="q15" value="d"> d) 単一スレッドの逐次処理
+            </div>
+        </div>
+
+        <div class="quiz-question">
+            <p>16. asyncioで複数の非同期関数を同時に開始し、最初に完了したものの結果を取得する関数は？</p>
+            <div class="options">
+                <input type="radio" name="q16" value="a" required> a) asyncio.gather()<br>
+                <input type="radio" name="q16" value="b"> b) asyncio.wait()<br>
+                <input type="radio" name="q16" value="c"> c) asyncio.as_completed()<br>
+                <input type="radio" name="q16" value="d"> d) asyncio.first_completed()
+            </div>
+        </div>
+
+        <div class="quiz-question">
+            <p>17. スレッドセーフなカウンターを実装するために最適なPythonのデータ構造は？</p>
+            <div class="options">
+                <input type="radio" name="q17" value="a" required> a) int<br>
+                <input type="radio" name="q17" value="b"> b) list<br>
+                <input type="radio" name="q17" value="c"> c) threading.Lock<br>
+                <input type="radio" name="q17" value="d"> d) multiprocessing.Value
+            </div>
+        </div>
+
+        <div class="quiz-question">
+            <p>18. asyncioでタイムアウトを設定するための関数は？</p>
+            <div class="options">
+                <input type="radio" name="q18" value="a" required> a) asyncio.timeout()<br>
+                <input type="radio" name="q18" value="b"> b) asyncio.wait_for()<br>
+                <input type="radio" name="q18" value="c"> c) asyncio.set_timeout()<br>
+                <input type="radio" name="q18" value="d"> d) asyncio.time_limit()
+            </div>
+        </div>
+
+        <div class="quiz-question">
+            <p>19. プロジェクトで並行処理を実装する際、最も注意すべき点は？</p>
+            <div class="options">
+                <input type="radio" name="q19" value="a" required> a) パフォーマンスの最大化<br>
+                <input type="radio" name="q19" value="b"> b) コードの簡潔さ<br>
+                <input type="radio" name="q19" value="c"> c) スレッドセーフティとデータの整合性<br>
+                <input type="radio" name="q19" value="d"> d) メモリ使用量の最小化
+            </div>
+        </div>
+
+        <div class="quiz-question">
+            <p>20. asyncioを使用する際、ブロッキング操作を非同期コードで使用するとどうなりますか？</p>
+            <div class="options">
+                <input type="radio" name="q20" value="a" required> a) エラーが発生する<br>
+                <input type="radio" name="q20" value="b"> b) 警告が表示される<br>
+                <input type="radio" name="q20" value="c"> c) イベントループがブロックされる<br>
+                <input type="radio" name="q20" value="d"> d) 自動的に非同期操作に変換される
+            </div>
+        </div>
+
+        <button type="submit">採点する</button>
+    </form>
+    <div id="result"></div>
+</div>
+
+<script>
+    document.getElementById('quizForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        let score = 0;
+        const answers = {
+            q1: 'b', q2: 'a', q3: 'd', q4: 'a', q5: 'b',
+            q6: 'd', q7: 'b', q8: 'b', q9: 'c', q10: 'b',
+            q11: 'd', q12: 'b', q13: 'b', q14: 'a', q15: 'c',
+            q16: 'c', q17: 'd', q18: 'b', q19: 'c', q20: 'c'
+        };
+
+        for (let q in answers) {
+            const selected = document.querySelector(`input[name="${q}"]:checked`);
+            if (selected && selected.value === answers[q]) {
+                score++;
+            }
+        }
+
+        const resultDiv = document.getElementById('result');
+        resultDiv.textContent = `あなたのスコアは ${score} / 20 です。`;
+    });
+</script>
+</body>
+</html>

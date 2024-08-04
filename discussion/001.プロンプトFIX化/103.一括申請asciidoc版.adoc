@@ -1,0 +1,318 @@
+= 一括申請機能設計書
+
+== 1. 要件定義
+=== 1.1. 要求分析
+本システムは、会社の部署情報（部署コード、部署名など）が入っているデータを保持し、それに対する変更申請を管理するシステムである。データライフサイクルは、一括申請、受付、パターン処理、反映・送信の4フェーズで構成される。一括申請フェーズでは、申請部署から、Excelによる部署情報更新データの提供があり、主だったデータ更新には「新設・変更・廃止」の3パターンがある。その他にもその条件下で様々な項目情報が提示される。申請データにはValidation／整合性チェックが必要であり、申請データのフォーマットは部署ごとにバラバラであるため、システム処理効率化のためチェック処理の後にフォーマット統一変換を行う。
+
+=== 1.2. 移植での改善方針
+* 一括利用申請ファイルの項目見直しを行う。
+* 一括利用申請ファイル取り込み後、統一レイアウトへ変換する。
+* 単一責務化を図る。
+* 編集処理を後続フェーズの受付処理やパターン処理に委譲する。
+* 受付処理で行われているValidation/整合性チェックを一括申請フェーズで引き受ける。
+
+=== 1.3. 機能概要
+==== 1.3.1. 目的
+本機能の目的は、申請部署から提供されるExcelによる部署情報更新データを取り込み、Validation／整合性チェックを行った上で、統一フォーマットへ変換し、後続処理で利用可能な形式で出力することである。
+
+==== 1.3.2. 適用範囲
+本機能は、一括申請フェーズにおける処理を対象とする。
+
+==== 1.3.3. 用語定義
+* 一括申請：申請部署から、Excelによる部署情報更新データの提供を受け、システムへ一括で取り込む処理。
+* Validation：申請データの項目単体の型や範囲などの妥当性をチェックする処理。
+* 整合性チェック：申請データの項目間の整合性や、他テーブルデータとの整合性をチェックする処理。
+
+== 2. 機能定義
+=== 2.1. 機能要件
+==== 2.1.1. 一括利用申請ファイル受領
+申請部署から、Excelによる部署情報更新データの提供を受ける。
+
+==== 2.1.2. 一括利用申請ファイル取り込み
+===== 2.1.2.1. Excelデータ入力
+====== 2.1.2.1.1. 入力フォーマット
+申請部署ごとに異なるExcelフォーマットでデータが提供される。
+
+====== 2.1.2.1.2. 入力項目
+申請データには、部署コード、部署名、新設・変更・廃止の区分など、様々な項目情報が含まれる。
+
+==== 2.1.3. データ精査に必要なテーブルデータの読み込み
+申請データの整合性チェックを行うため、他テーブルデータを読み込む。
+
+==== 2.1.4. データ精査実施
+===== 2.1.4.1. Validationチェック
+====== 2.1.4.1.1. 項目単体の型チェック
+申請データの各項目について、期待されるデータ型で入力されているかをチェックする。
+
+====== 2.1.4.1.2. 項目単体の範囲チェック
+申請データの各項目について、定義された範囲内の値で入力されているかをチェックする。
+
+===== 2.1.4.2. 整合性チェック
+====== 2.1.4.2.1. 別項目との連携チェック
+申請データの項目間の整合性をチェックする。
+
+====== 2.1.4.2.2. 他テーブルデータ保有値とのチェック
+申請データと、他テーブルデータとの整合性をチェックする。
+
+==== 2.1.5. エラー検出
+Validationチェックや整合性チェックでエラーが検出された場合、エラー情報を出力する。
+
+==== 2.1.6. 統一レイアウトへの変換
+申請部署ごとに異なるExcelフォーマットを、システム処理効率化のため、統一フォーマットへ変換する。
+
+==== 2.1.7. 統一レイアウトにデータマッピング
+申請データを、統一レイアウトの各項目へマッピングする。マッピング定義は別紙に記載する。
+
+==== 2.1.8. 取り込み後データの出力
+統一フォーマットへ変換されたデータを、後続処理で利用可能な形式（pickleファイル）で出力する。
+
+=== 2.2. 処理フロー図
+以下に、一括申請フェーズの処理フロー図をPlantUML形式で示す。
+
+[plantuml]
+----
+@startuml
+start
+:一括利用申請ファイル受領;
+:一括利用申請ファイル取り込み;
+:データ精査に必要なテーブルデータの読み込み;
+:Validationチェック;
+if (チェックOK?) then (yes)
+  :整合性チェック;
+  if (チェックOK?) then (yes)
+    :統一レイアウトへの変換;
+    :統一レイアウトにデータマッピング;
+    :取り込み後データの出力;
+  else (no)
+    :エラー検出;
+    stop
+  endif
+else (no)
+  :エラー検出;
+  stop
+endif
+stop
+@enduml
+----
+
+== 3. 内部設計
+=== 3.1. モジュール構成
+一括申請フェーズの処理は、以下のモジュールで構成する。
+
+* ExcelDataImport: 一括利用申請ファイルの取り込み処理を行う。
+* DataValidation: 申請データのValidationチェックを行う。
+* DataConsistencyCheck: 申請データの整合性チェックを行う。
+* DataFormatConversion: 申請データを統一レイアウトへ変換する。
+* DataMapping: 申請データを統一レイアウトの項目へマッピングする。
+* DataOutput: 取り込み後データの出力処理を行う。
+
+=== 3.2. クラス設計
+==== 3.2.1. クラス図
+以下に、一括申請フェーズのクラス図をPlantUML形式で示す。
+
+[plantuml]
+----
+@startuml
+class ExcelDataImport {
+  + importData(file: str): DataFrame
+}
+
+class DataValidation {
+  + validateData(data: DataFrame): bool
+}
+
+class DataConsistencyCheck {
+  + checkConsistency(data: DataFrame): bool
+}
+
+class DataFormatConversion {
+  + convertFormat(data: DataFrame): DataFrame
+}
+
+class DataMapping {
+  + mapData(data: DataFrame): DataFrame
+}
+
+class DataOutput {
+  + outputData(data: DataFrame): None
+}
+
+ExcelDataImport --> DataValidation
+ExcelDataImport --> DataConsistencyCheck
+ExcelDataImport --> DataFormatConversion
+DataFormatConversion --> DataMapping
+DataMapping --> DataOutput
+@enduml
+----
+
+==== 3.2.2. クラス定義
+* ExcelDataImport
+** importData(file: str): DataFrame
+*** 一括利用申請ファイルを読み込み、DataFrameに変換する。
+* DataValidation
+** validateData(data: DataFrame): bool
+*** 申請データのValidationチェックを行う。
+* DataConsistencyCheck
+** checkConsistency(data: DataFrame): bool
+*** 申請データの整合性チェックを行う。
+* DataFormatConversion
+** convertFormat(data: DataFrame): DataFrame
+*** 申請データを統一レイアウトへ変換する。
+* DataMapping
+** mapData(data: DataFrame): DataFrame
+*** 申請データを統一レイアウトの項目へマッピングする。
+* DataOutput
+** outputData(data: DataFrame): None
+*** 取り込み後データをpickleファイルとして出力する。
+
+=== 3.3. シーケンス図
+以下に、一括申請フェーズのシーケンス図をPlantUML形式で示す。
+
+[plantuml]
+----
+@startuml
+actor User
+participant ExcelDataImport
+participant DataValidation
+participant DataConsistencyCheck
+participant DataFormatConversion
+participant DataMapping
+participant DataOutput
+
+User -> ExcelDataImport: 一括利用申請ファイル
+ExcelDataImport -> DataValidation: 申請データ
+DataValidation -> DataConsistencyCheck: Validationチェック済データ
+DataConsistencyCheck -> DataFormatConversion: 整合性チェック済データ
+DataFormatConversion -> DataMapping: 統一レイアウトデータ
+DataMapping -> DataOutput: マッピング済データ
+DataOutput -> User: pickleファイル
+@enduml
+----
+
+=== 3.4. アクティビティ図
+以下に、一括申請フェーズのアクティビティ図をPlantUML形式で示す。
+
+[plantuml]
+----
+@startuml
+start
+:一括利用申請ファイル受領;
+:一括利用申請ファイル取り込み;
+:データ精査に必要なテーブルデータの読み込み;
+:Validationチェック;
+if (チェックOK?) then (yes)
+  :整合性チェック;
+  if (チェックOK?) then (yes)
+    :統一レイアウトへの変換;
+    :統一レイアウトにデータマッピング;
+    :取り込み後データの出力;
+  else (no)
+    :エラー検出;
+    stop
+  endif
+else (no)
+  :エラー検出;
+  stop
+endif
+stop
+@enduml
+----
+
+=== 3.5. データフロー図
+以下に、一括申請フェーズのデータフロー図をPlantUML形式で示す。
+
+[plantuml]
+----
+@startuml
+actor User
+node "一括申請" {
+  component ExcelDataImport
+  component DataValidation
+  component DataConsistencyCheck
+  component DataFormatConversion
+  component DataMapping
+  component DataOutput
+  
+  User --> ExcelDataImport: 一括利用申請ファイル
+  ExcelDataImport --> DataValidation: 申請データ
+  DataValidation --> DataConsistencyCheck: Validationチェック済データ
+  DataConsistencyCheck --> DataFormatConversion: 整合性チェック済データ
+  DataFormatConversion --> DataMapping: 統一レイアウトデータ
+  DataMapping --> DataOutput: マッピング済データ
+  DataOutput --> User: pickleファイル
+}
+@enduml
+----
+
+== 4. 入出力データ
+=== 4.1. 入力データ
+==== 4.1.1. Excelファイル
+申請部署から提供される部署情報更新データのExcelファイル。
+
+=== 4.2. 出力データ
+==== 4.2.1. pickleファイル
+統一レイアウトへ変換・マッピングされた後の申請データのpickleファイル。
+
+== 5. 外部インターフェース
+=== 5.1. 入力インターフェース
+==== 5.1.1. Excelファイルフォーマット
+申請部署ごとに異なるExcelファイルのフォーマット。
+
+=== 5.2. 出力インターフェース
+==== 5.2.1. pickle化されたデータフォーマット
+統一レイアウトへ変換・マッピングされた後の申請データのpickle化されたデータフォーマット。
+
+== 6. 例外設計
+=== 6.1. 例外一覧
+==== 6.1.1. 管理番号
+例外の管理番号。
+
+==== 6.1.2. 発生事象定義
+例外が発生する事象の定義。
+
+==== 6.1.3. 原因定義
+例外が発生する原因の定義。
+
+==== 6.1.4. 対処指針
+例外発生時の対処指針。
+
+== 7. ロギング設計
+=== 7.1. 取り込み記録
+一括利用申請ファイルの取り込み記録。ファイル名、取り込み日時などを記録する。
+
+=== 7.2. エラー位置特定情報
+Validationチェックや整合性チェックでエラーが検出された場合のエラー位置特定情報。Excelファイル名、シート名、行番号、列番号、期待されるデータ型や値などを記録する。
+
+== 8. 設計上の制約事項
+=== 8.1. 使用言語・フレームワーク
+Python、pandas、openpyxlなどを使用する。
+
+=== 8.2. 外部ライブラリ
+必要に応じて、外部ライブラリを使用する。
+
+== 9. セキュリティ要件
+申請データに含まれる情報の機密性に応じて、アクセス制御を行う。
+
+== 10. 運用記述
+=== 10.1. 実施環境
+本番環境での実施を想定する。
+
+=== 10.2. データの取扱
+申請データは、本番環境のデータベースに格納する。
+
+=== 10.3. 実行スケジュール
+月次での実行を想定する。
+
+=== 10.4. マニュアル対応
+利用者向けのマニュアルを作成する。
+
+== 11. 残課題
+=== 11.1. 未解決な問題
+特になし。
+
+=== 11.2. 今後の拡張可能性
+申請データの項目追加や、チェック処理の拡充などが考えられる。
+
+== 12. 別紙
+=== 12.1. マッピング定義
+申請データの項目と、統一レイアウトの項目とのマッピング定義。

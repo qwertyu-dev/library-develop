@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pythonファイル操作とI/O：完全版学習資料</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; padding: 20px; max-width: 800px; margin: 0 auto; }
+        h1, h2, h3 { color: #333; }
+        pre { background-color: #f4f4f4; padding: 10px; border-radius: 5px; overflow-x: auto; }
+        .quiz { background-color: #e7f3fe; padding: 15px; border-radius: 5px; margin-top: 20px; }
+        .quiz-question { margin-bottom: 20px; }
+        .options { margin-left: 20px; }
+        button { background-color: #4CAF50; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background-color: #45a049; }
+        #result { margin-top: 20px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>3. ファイル操作とI/O</h1>
+
+    <h2>3.1 ファイルの読み書き</h2>
+    <p>Pythonでは、open()関数を使用してファイルを開き、読み書きを行います。</p>
+    <pre>
+# ファイルの書き込み
+with open('example.txt', 'w') as f:
+    f.write('Hello, World!\n')
+    f.write('This is a test file.\n')
+
+# ファイルの読み込み
+with open('example.txt', 'r') as f:
+    content = f.read()
+    print(content)
+
+# 1行ずつ読み込み
+with open('example.txt', 'r') as f:
+    for line in f:
+        print(line.strip())
+    </pre>
+
+    <h2>3.2 CSVファイルの操作</h2>
+    <p>CSVファイルの読み書きには、csvモジュールを使用します。</p>
+    <pre>
+import csv
+
+# CSVファイルの書き込み
+data = [
+    ['Name', 'Age', 'City'],
+    ['Alice', '30', 'New York'],
+    ['Bob', '25', 'London'],
+    ['Charlie', '35', 'Tokyo']
+]
+
+with open('people.csv', 'w', newline='') as file:
+    writer = csv.writer(file)
+    writer.writerows(data)
+
+# CSVファイルの読み込み
+with open('people.csv', 'r') as file:
+    reader = csv.reader(file)
+    for row in reader:
+        print(', '.join(row))
+    </pre>
+
+    <h2>3.3 JSON形式の扱い</h2>
+    <p>JSONデータの読み書きには、jsonモジュールを使用します。</p>
+    <pre>
+import json
+
+# JSONデータの作成と書き込み
+data = {
+    'name': 'John Doe',
+    'age': 30,
+    'city': 'New York',
+    'interests': ['programming', 'reading', 'traveling']
+}
+
+with open('person.json', 'w') as file:
+    json.dump(data, file, indent=4)
+
+# JSONファイルの読み込み
+with open('person.json', 'r') as file:
+    loaded_data = json.load(file)
+    print(loaded_data)
+    </pre>
+
+    <h2>クイズ: Pythonファイル操作とI/O</h2>
+    <div class="quiz">
+        <form id="quizForm">
+            <div class="quiz-question">
+                <p>1. ファイルを書き込みモードで開くために使用するモードは何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q1" value="a" required> a) 'r'<br>
+                    <input type="radio" name="q1" value="b"> b) 'w'<br>
+                    <input type="radio" name="q1" value="c"> c) 'a'<br>
+                    <input type="radio" name="q1" value="d"> d) 'x'
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>2. ファイルを閉じることを保証する最も推奨される方法は何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q2" value="a" required> a) try-finally ブロック<br>
+                    <input type="radio" name="q2" value="b"> b) with ステートメント<br>
+                    <input type="radio" name="q2" value="c"> c) close() メソッドを明示的に呼び出す<br>
+                    <input type="radio" name="q2" value="d"> d) del キーワードを使用する
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>3. ファイルから1行ずつ読み込むためのメソッドは何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q3" value="a" required> a) read()<br>
+                    <input type="radio" name="q3" value="b"> b) readline()<br>
+                    <input type="radio" name="q3" value="c"> c) readlines()<br>
+                    <input type="radio" name="q3" value="d"> d) next()
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>4. CSVファイルを読み込むために使用するモジュールは何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q4" value="a" required> a) csv<br>
+                    <input type="radio" name="q4" value="b"> b) pandas<br>
+                    <input type="radio" name="q4" value="c"> c) numpy<br>
+                    <input type="radio" name="q4" value="d"> d) excel
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>5. JSONデータをPythonオブジェクトに変換するメソッドは何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q5" value="a" required> a) json.load()<br>
+                    <input type="radio" name="q5" value="b"> b) json.dumps()<br>
+                    <input type="radio" name="q5" value="c"> c) json.loads()<br>
+                    <input type="radio" name="q5" value="d"> d) json.dump()
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>6. ファイルを追加モードで開くために使用するモードは何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q6" value="a" required> a) 'r+'<br>
+                    <input type="radio" name="q6" value="b"> b) 'w+'<br>
+                    <input type="radio" name="q6" value="c"> c) 'a'<br>
+                    <input type="radio" name="q6" value="d"> d) 'x+'
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>7. CSVファイルから辞書のリストとしてデータを読み込むための csv モジュールの関数は何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q7" value="a" required> a) csv.reader()<br>
+                    <input type="radio" name="q7" value="b"> b) csv.DictReader()<br>
+                    <input type="radio" name="q7" value="c"> c) csv.read_dict()<br>
+                    <input type="radio" name="q7" value="d"> d) csv.dict_reader()
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>8. Pythonオブジェクトを JSON 文字列に変換するメソッドは何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q8" value="a" required> a) json.load()<br>
+                    <input type="radio" name="q8" value="b"> b) json.dumps()<br>
+                    <input type="radio" name="q8" value="c"> c) json.loads()<br>
+                    <input type="radio" name="q8" value="d"> d) json.dump()
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>9. ファイルの現在の位置を取得するメソッドは何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q9" value="a" required> a) tell()<br>
+                    <input type="radio" name="q9" value="b"> b) seek()<br>
+                    <input type="radio" name="q9" value="c"> c) position()<br>
+                    <input type="radio" name="q9" value="d"> d) locate()
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>10. バイナリモードでファイルを開くために使用する文字は何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q10" value="a" required> a) 't'<br>
+                    <input type="radio" name="q10" value="b"> b) 'b'<br>
+                    <input type="radio" name="q10" value="c"> c) 'bin'<br>
+                    <input type="radio" name="q10" value="d"> d) 'bytes'
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>11. ファイルオブジェクトをイテレートすると、何が返されますか？</p>
+                <div class="options">
+                    <input type="radio" name="q11" value="a" required> a) バイト<br>
+                    <input type="radio" name="q11" value="b"> b) 文字<br>
+                    <input type="radio" name="q11" value="c"> c) 行<br>
+                    <input type="radio" name="q11" value="d"> d) 単語
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>12. CSVファイルに書き込む際、新しい行が自動的に追加されないようにするパラメータは何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q12" value="a" required> a) no_newline=True<br>
+                    <input type="radio" name="q12" value="b"> b) newline=''<br>
+                    <input type="radio" name="q12" value="c"> c) auto_newline=False<br>
+                    <input type="radio" name="q12" value="d"> d) skip_newline=True
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>13. JSON データを読み込む際に、数値を文字列として保持するパラメータは何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q13" value="a" required> a) parse_float=str<br>
+                    <input type="radio" name="q13" value="b"> b) keep_numbers_as_string=True<br>
+                    <input type="radio" name="q13" value="c"> c) string_numbers=True<br>
+                    <input type="radio" name="q13" value="d"> d) no_parse_float=True
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>14. ファイルの内容を一度に全て読み込むメソッドは何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q14" value="a" required> a) readall()<br>
+                    <input type="radio" name="q14" value="b"> b) read()<br>
+                    <input type="radio" name="q14" value="c"> c) readlines()<br>
+                    <input type="radio" name="q14" value="d"> d) load()
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>15. CSVファイルの区切り文字を指定するパラメータは何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q15" value="a" required> a) sep<br>
+                    <input type="radio" name="q15" value="b"> b) delimiter<br>
+                    <input type="radio" name="q15" value="c"> c) separator<br>
+                    <input type="radio" name="q15" value="d"> d) split
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>16. JSON データをファイルに書き込む際、読みやすく整形するパラメータは何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q16" value="a" required> a) pretty=True<br>
+                    <input type="radio" name="q16" value="b"> b) format=True<br>
+                    <input type="radio" name="q16" value="c"> c) indent=4<br>
+                    <input type="radio" name="q16" value="d"> d) beautify=True
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>17. ファイルを読み書き両用モードで開くモードは何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q17" value="a" required> a) 'rw'<br>

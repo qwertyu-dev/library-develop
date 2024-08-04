@@ -1,0 +1,357 @@
+#############################
+# 本番定義 production
+#############################
+# excelのcolumn(日本語)をpython変数へマッピングする定義
+[production]
+[production.excel_definition_mapping_jinji]
+'報告日' = 'report_date'
+'no' =  'application_number'
+'有効日付' = 'effective_date'
+'種類' = 'application_type'
+'対象' = 'target_org'
+'部門コード' = 'business_unit_code'
+'親部店コード' = 'parent_branch_code'
+'部店コード' = 'branch_code'
+'部店名称' = 'branch_name'
+'部店名称(英語)' = 'branch_name_en'
+'課/エリアコード' = 'section_area_code'
+'課/エリア名称' = 'section_area_name'
+'課/エリア名称(英語)' = 'section_area_name_en'
+'常駐部店コード' = 'resident_branch_code'
+'常駐部店名称' = 'resident_branch_name'
+'純新規店の組織情報受渡し予定日(開店日基準)' = 'new_org_info_transfer_date'
+'共通認証受渡し予定日(人事データ反映基準)' = 'aaa_transfer_date'
+'備考' = 'remarks'
+
+[production.excel_definition_mapping_kokuki]
+'報告日' = 'report_date'
+'no' = 'application_number'
+'登録予定日(yyyy/mm/dd)' = 'effective_date'
+'種類(新規変更廃止)' = 'application_type'
+'対象(課・エリア/中間階層)' = 'target_org'
+'部店店番' = 'branch_code'
+'部店名称 日本語' = 'branch_name_ja'
+'部店名称 英語' = 'branch_name_en'
+'中間階層コード' = 'intermediate_level_code'
+'中間階層名称:日本語' = 'intermediate_level_name_ja'
+'中間階層名称:英語' = 'intermediate_level_name_en'
+'中間階層略称:日本語' = 'intermediate_level_abbr_ja'
+'中間階層略称:英語' = 'intermediate_level_abbr_en'
+'課・エリアコード' = 'section_area_code'
+'課・エリア名称:日本語' = 'section_area_name_ja'
+'課・エリア名称:英語' = 'section_area_name_en'
+'課・エリア略称:日本語' = 'section_area_abbr_ja'
+'課・エリア略称:英語' = 'section_area_abbr_en'
+'共通認証受渡予定日' = 'aaa_transfer_date'
+'変更種別・詳細旧名称・略語' = 'change_details'
+
+[production.excel_definition_mapping_kanren]
+'種類' = 'application_type'
+'部門コード' = 'business_unit_code'
+'親部店コード' = 'parent_branch_code'
+'部店コード' = 'branch_code'
+'部店名称' = 'branch_name'
+'課Grコード' = 'section_gr_code'
+'課Gr名称' = 'section_gr_name'
+'課名称(英語)' = 'section_name_en'
+'共通認証受渡し予定日' = 'aaa_transfer_date'
+'部店カナ' = 'branch_name_kana'
+'課Gr名称(カナ)' = 'section_gr_name_kana'
+'課Gr名称(略称)' = 'section_gr_name_abbr'
+'BPR対象/対象外フラグ' = 'bpr_target_flag'
+
+# 一括申請データを統合レイアウトへ変換定義,column順定義 
+[production.layout]
+unified_layout = [
+'ulid',
+'applicant_info',
+'application_type',
+'target_org',
+'business_unit_code',
+'parent_branch_code',
+'branch_code',
+'branch_name',
+'section_gr_code',
+'section_gr_name',
+'section_name_en',
+'resident_branch_code',
+'resident_branch_name',
+'aaa_transfer_date',
+'sales_department_code_within_loc',
+'sales_department_name_within_loc', 'area_code',
+'area_name',
+'remarks',
+'branch_name_kana',
+'section_gr_name_kana',
+'section_gr_name_abbr',
+'bpr_target_flag',
+]
+
+#############################
+# リグレ定義 regression
+#############################
+# excelのcolumn(日本語)をpython変数へマッピングする定義
+[regression]
+[regression.excel_definition_mapping_jinji]
+'報告日' = 'report_date'
+'no' =  'application_number'
+'有効日付' = 'effective_date'
+'種類' = 'application_type'
+'対象' = 'target_org'
+'部門コード' = 'business_unit_code'
+'親部店コード' = 'parent_branch_code'
+'部店コード' = 'branch_code'
+'部店名称' = 'branch_name'
+'部店名称(英語)' = 'branch_name_en'
+'課/エリアコード' = 'section_area_code'
+'課/エリア名称' = 'section_area_name'
+'課/エリア名称(英語)' = 'section_area_name_en'
+'常駐部店コード' = 'resident_branch_code'
+'常駐部店名称' = 'resident_branch_name'
+'純新規店の組織情報受渡し予定日(開店日基準)' = 'new_org_info_transfer_date'
+'共通認証受渡し予定日(人事データ反映基準)' = 'aaa_transfer_date'
+'備考' = 'remarks'
+
+[regression.excel_definition_mapping_kokuki]
+'報告日' = 'report_date'
+'no' = 'application_number'
+'登録予定日(yyyy/mm/dd)' = 'effective_date'
+'種類(新規変更廃止)' = 'application_type'
+'対象(課・エリア/中間階層)' = 'target_org'
+'部店店番' = 'branch_code'
+'部店名称 日本語' = 'branch_name_ja'
+'部店名称 英語' = 'branch_name_en'
+'中間階層コード' = 'intermediate_level_code'
+'中間階層名称:日本語' = 'intermediate_level_name_ja'
+'中間階層名称:英語' = 'intermediate_level_name_en'
+'中間階層略称:日本語' = 'intermediate_level_abbr_ja'
+'中間階層略称:英語' = 'intermediate_level_abbr_en'
+'課・エリアコード' = 'section_area_code'
+'課・エリア名称:日本語' = 'section_area_name_ja'
+'課・エリア名称:英語' = 'section_area_name_en'
+'課・エリア略称:日本語' = 'section_area_abbr_ja'
+'課・エリア略称:英語' = 'section_area_abbr_en'
+'共通認証受渡予定日' = 'aaa_transfer_date'
+'変更種別・詳細旧名称・略語' = 'change_details'
+
+[regression.excel_definition_mapping_kanren]
+'種類' = 'application_type'
+'部門コード' = 'business_unit_code'
+'親部店コード' = 'parent_branch_code'
+'部店コード' = 'branch_code'
+'部店名称' = 'branch_name'
+'課Grコード' = 'section_gr_code'
+'課Gr名称' = 'section_gr_name'
+'課名称(英語)' = 'section_name_en'
+'共通認証受渡し予定日' = 'aaa_transfer_date'
+'部店カナ' = 'branch_name_kana'
+'課Gr名称(カナ)' = 'section_gr_name_kana'
+'課Gr名称(略称)' = 'section_gr_name_abbr'
+'BPR対象/対象外フラグ' = 'bpr_target_flag'
+
+# 一括申請データを統合レイアウトへ変換定義,column順定義 
+[regression.layout]
+unified_layout = [
+'ulid',
+'applicant_info',
+'application_type',
+'target_org',
+'business_unit_code',
+'parent_branch_code',
+'branch_code',
+'branch_name',
+'section_gr_code',
+'section_gr_name',
+'section_name_en',
+'resident_branch_code',
+'resident_branch_name',
+'aaa_transfer_date',
+'sales_department_code_within_loc',
+'sales_department_name_within_loc', 'area_code',
+'area_name',
+'remarks',
+'branch_name_kana',
+'section_gr_name_kana',
+'section_gr_name_abbr',
+'bpr_target_flag',
+]
+
+
+#############################
+# 開発定義 develop
+#############################
+# excelのcolumn(日本語)をpython変数へマッピングする定義
+[develop]
+[develop.excel_definition_mapping_jinji]
+'報告日' = 'report_date'
+'no' =  'application_number'
+'有効日付' = 'effective_date'
+'種類' = 'application_type'
+'対象' = 'target_org'
+'部門コード' = 'business_unit_code'
+'親部店コード' = 'parent_branch_code'
+'部店コード' = 'branch_code'
+'部店名称' = 'branch_name'
+'部店名称(英語)' = 'branch_name_en'
+'課/エリアコード' = 'section_area_code'
+'課/エリア名称' = 'section_area_name'
+'課/エリア名称(英語)' = 'section_area_name_en'
+'常駐部店コード' = 'resident_branch_code'
+'常駐部店名称' = 'resident_branch_name'
+'純新規店の組織情報受渡し予定日(開店日基準)' = 'new_org_info_transfer_date'
+'共通認証受渡し予定日(人事データ反映基準)' = 'aaa_transfer_date'
+'備考' = 'remarks'
+
+[develop.excel_definition_mapping_kokuki]
+'報告日' = 'report_date'
+'no' = 'application_number'
+'登録予定日(yyyy/mm/dd)' = 'effective_date'
+'種類(新規変更廃止)' = 'application_type'
+'対象(課・エリア/中間階層)' = 'target_org'
+'部店店番' = 'branch_code'
+'部店名称 日本語' = 'branch_name_ja'
+'部店名称 英語' = 'branch_name_en'
+'中間階層コード' = 'intermediate_level_code'
+'中間階層名称:日本語' = 'intermediate_level_name_ja'
+'中間階層名称:英語' = 'intermediate_level_name_en'
+'中間階層略称:日本語' = 'intermediate_level_abbr_ja'
+'中間階層略称:英語' = 'intermediate_level_abbr_en'
+'課・エリアコード' = 'section_area_code'
+'課・エリア名称:日本語' = 'section_area_name_ja'
+'課・エリア名称:英語' = 'section_area_name_en'
+'課・エリア略称:日本語' = 'section_area_abbr_ja'
+'課・エリア略称:英語' = 'section_area_abbr_en'
+'共通認証受渡予定日' = 'aaa_transfer_date'
+'変更種別・詳細旧名称・略語' = 'change_details'
+
+[develop.excel_definition_mapping_kanren]
+'種類' = 'application_type'
+'部門コード' = 'business_unit_code'
+'親部店コード' = 'parent_branch_code'
+'部店コード' = 'branch_code'
+'部店名称' = 'branch_name'
+'課Grコード' = 'section_gr_code'
+'課Gr名称' = 'section_gr_name'
+'課名称(英語)' = 'section_name_en'
+'共通認証受渡し予定日' = 'aaa_transfer_date'
+'部店カナ' = 'branch_name_kana'
+'課Gr名称(カナ)' = 'section_gr_name_kana'
+'課Gr名称(略称)' = 'section_gr_name_abbr'
+'BPR対象/対象外フラグ' = 'bpr_target_flag'
+
+# 一括申請データを統合レイアウトへ変換定義,column順定義 
+[develop.layout]
+unified_layout = [
+'ulid',
+'applicant_info',
+'application_type',
+'target_org',
+'business_unit_code',
+'parent_branch_code',
+'branch_code',
+'branch_name',
+'section_gr_code',
+'section_gr_name',
+'section_name_en',
+'resident_branch_code',
+'resident_branch_name',
+'aaa_transfer_date',
+'sales_department_code_within_loc',
+'sales_department_name_within_loc', 'area_code',
+'area_name',
+'remarks',
+'branch_name_kana',
+'section_gr_name_kana',
+'section_gr_name_abbr',
+'bpr_target_flag',
+]
+
+
+#############################
+# local定義 local
+#############################
+# excelのcolumn(日本語)をpython変数へマッピングする定義
+[local]
+[local.excel_definition_mapping_jinji]
+'報告日' = 'report_date'
+'no' =  'application_number'
+'有効日付' = 'effective_date'
+'種類' = 'application_type'
+'対象' = 'target_org'
+'部門コード' = 'business_unit_code'
+'親部店コード' = 'parent_branch_code'
+'部店コード' = 'branch_code'
+'部店名称' = 'branch_name'
+'部店名称(英語)' = 'branch_name_en'
+'課/エリアコード' = 'section_area_code'
+'課/エリア名称' = 'section_area_name'
+'課/エリア名称(英語)' = 'section_area_name_en'
+'常駐部店コード' = 'resident_branch_code'
+'常駐部店名称' = 'resident_branch_name'
+'純新規店の組織情報受渡し予定日(開店日基準)' = 'new_org_info_transfer_date'
+'共通認証受渡し予定日(人事データ反映基準)' = 'aaa_transfer_date'
+'備考' = 'remarks'
+
+[local.excel_definition_mapping_kokuki]
+'報告日' = 'report_date'
+'no' = 'application_number'
+'登録予定日(yyyy/mm/dd)' = 'effective_date'
+'種類(新規変更廃止)' = 'application_type'
+'対象(課・エリア/中間階層)' = 'target_org'
+'部店店番' = 'branch_code'
+'部店名称 日本語' = 'branch_name_ja'
+'部店名称 英語' = 'branch_name_en'
+'中間階層コード' = 'intermediate_level_code'
+'中間階層名称:日本語' = 'intermediate_level_name_ja'
+'中間階層名称:英語' = 'intermediate_level_name_en'
+'中間階層略称:日本語' = 'intermediate_level_abbr_ja'
+'中間階層略称:英語' = 'intermediate_level_abbr_en'
+'課・エリアコード' = 'section_area_code'
+'課・エリア名称:日本語' = 'section_area_name_ja'
+'課・エリア名称:英語' = 'section_area_name_en'
+'課・エリア略称:日本語' = 'section_area_abbr_ja'
+'課・エリア略称:英語' = 'section_area_abbr_en'
+'共通認証受渡予定日' = 'aaa_transfer_date'
+'変更種別・詳細旧名称・略語' = 'change_details'
+
+[local.excel_definition_mapping_kanren]
+'種類' = 'application_type'
+'部門コード' = 'business_unit_code'
+'親部店コード' = 'parent_branch_code'
+'部店コード' = 'branch_code'
+'部店名称' = 'branch_name'
+'課Grコード' = 'section_gr_code'
+'課Gr名称' = 'section_gr_name'
+'課名称(英語)' = 'section_name_en'
+'共通認証受渡し予定日' = 'aaa_transfer_date'
+'部店カナ' = 'branch_name_kana'
+'課Gr名称(カナ)' = 'section_gr_name_kana'
+'課Gr名称(略称)' = 'section_gr_name_abbr'
+'BPR対象/対象外フラグ' = 'bpr_target_flag'
+
+# 一括申請データを統合レイアウトへ変換定義,column順定義 
+[local.layout]
+unified_layout = [
+'ulid',
+'applicant_info',
+'application_type',
+'target_org',
+'business_unit_code',
+'parent_branch_code',
+'branch_code',
+'branch_name',
+'section_gr_code',
+'section_gr_name',
+'section_name_en',
+'resident_branch_code',
+'resident_branch_name',
+'aaa_transfer_date',
+'sales_department_code_within_loc',
+'sales_department_name_within_loc', 'area_code',
+'area_name',
+'remarks',
+'branch_name_kana',
+'section_gr_name_kana',
+'section_gr_name_abbr',
+'bpr_target_flag',
+]

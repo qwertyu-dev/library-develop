@@ -1,0 +1,24 @@
+@startuml
+title 一括申請機能 フロー図
+
+start
+
+:申請受付処理;
+if (Validation OK?) then (yes)
+  :一括申請処理へ申請データを渡す;
+  :一括申請処理;
+  if (処理成功?) then (yes)
+    :処理結果を統一レイアウトで出力;
+    :pythonのpickle形式で出力;
+  else (no)
+    :エラーログ出力;
+    :申請者へフィードバック;
+    :申請データを修正;
+  endif
+else (no)
+  :申請データを修正;
+endif
+
+stop
+
+@enduml

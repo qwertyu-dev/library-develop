@@ -1,0 +1,119 @@
+# Claude3の使い方改善
+
+##チャットタイトルを日本語表示する
+### チャットのタイトルは日本語で記載してください
+
+## チャットの結果をExportする
+### Claude Exporter/Chrome拡張機能
+
+## MEGAPROMPT　ー＞meta promptと違う？
+
+おそらくやり取りのテンプレートと思われる
+テンプレートのテンプレを生成するような取り組み
+
+機能設計（中核４機能）は同様にテンプレートに従って
+生成するよう誘導すれば良い→実際にやっている
+
+
+## Response:
+<XML document>
+
+```
+<# Role
+
+* You are: AutoGPT designed to automate user's work.
+* Skills:
+  * Analyzing, Writing, Coding
+  * Executing tasks automatically
+* Note: Perform all tasks directly and automatically without asking.
+
+# Requirements
+
+## If it's a small question
+
+* Directly answer it deeply.
+
+## If it's a big project
+
+1. Key Analysis (Only once at the beginning)
+   * Use multi-level unordered lists for detailed analysis. """
+     * Key Analysis
+       * Example Topic
+         * Subtopic ... """
+2. Project Structure (For Coder Projects, For Thesis or Book Projects)
+   * Provide a project directory structure in code for coding projects.
+   * Give an outline for thesis or book projects.
+3. Step-by-Step Execution (Take one small step at a time)
+   * Write detailed code or a detailed chapter section.
+4. Automatic Continuation (Start the next step automatically)
+
+# Basic Output Requirements:
+
+* Structured output content.
+* Use markdown format for clarity (e.g., code blocks, bold, > quotes, unordered lists).
+* Provide \*\*\*detailed, accurate, and in-depth\*\*\* content for code or written work.
+
+# For Code
+
+* Important: only one step at a time.
+* Automatically Continue the task if the user responds 'Continue'. />
+
+</XML document>
+```
+
+---
+
+# Claude3事例
+
+## Claudeの頭をよくするプロンプト
+
+## ゴールシークプロンプト
+## 曖昧なプロンプトを示す→ゴールへのプロセスを示す
+## その後に「成果物」を打つ
+
+## その後に「サンプルコード」を打つ→これはオリジナルの手法
+
+Goal=<<Pythonの勉強方法>>
+F(Archieve goal for Using step-back question)=A to
+Z=∫F(step)=Result lang:ja
+
+Goal=<<Pythonのpydanticライブラリの学び方>>
+F(Archieve goal for Using step-back question)=A to
+Z=∫F(step)=Result lang:ja
+
+Goal=<<PythonでFactory/Facade/部品構成実装の学び方>>
+F(Archieve goal for Using step-back question)=A to
+Z=∫F(step)=Result lang:ja
+
+
+## 議事録から参加者の思考を探る
+議事録→XXさんの考えをまとめてください
+参加者の視点や思考を探ることができる
+
+## 論文を２ch風に解説してもらう
+2chのスレッドで、専門家が素人に教えている形式で出力してください
+
+## 段階的に考えてみましょう
+
+
+## 追加でひと押し
+「もっと具体的に書いてください」
+「批判的な立場で反対意見を述べてください」
+「さらに深堀してください」
+
+## 文書を校正してもらう
+アップロードした文書について
+誤字や脱字のある単語や表現を表にまとめて修正案を出してください、行数の提示もお願いします
+
+## 文書表形式化
+
+## 文書横断チェック
+
+## 整合性チェック
+
+## 穴埋め問題で人間が気づけないアイデア出し
+
+
+
+
+

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pythonデザインパターン：完全版学習資料</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; padding: 20px; max-width: 800px; margin: 0 auto; }
+        h1, h2, h3 { color: #333; }
+        pre { background-color: #f4f4f4; padding: 10px; border-radius: 5px; overflow-x: auto; }
+        .quiz { background-color: #e7f3fe; padding: 15px; border-radius: 5px; margin-top: 20px; }
+        .quiz-question { margin-bottom: 20px; }
+        .options { margin-left: 20px; }
+        button { background-color: #4CAF50; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background-color: #45a049; }
+        #result { margin-top: 20px; font-weight: bold; }
+        .note { background-color: #ffffd9; padding: 10px; border-left: 5px solid #ffeb3b; margin: 15px 0; }
+    </style>
+</head>
+<body>
+    <h1>4. デザインパターン</h1>
+
+    <h2>4.1 Factoryパターン</h2>
+    <p>Factoryパターンは、オブジェクトの作成ロジックを隠蔽し、クライアントコードから分離するためのパターンです。</p>
+    <pre>
+from abc import ABC, abstractmethod
+
+class Product(ABC):
+    @abstractmethod
+    def operation(self):
+        pass
+
+class ConcreteProductA(Product):
+    def operation(self):
+        return "ConcreteProductA"
+
+class ConcreteProductB(Product):
+    def operation(self):
+        return "ConcreteProductB"
+
+class Creator(ABC):
+    @abstractmethod
+    def factory_method(self):
+        pass
+
+    def some_operation(self):
+        product = self.factory_method()
+        result = f"Creator: The same creator's code has just worked with {product.operation()}"
+        return result
+
+class ConcreteCreatorA(Creator):
+    def factory_method(self):
+        return ConcreteProductA()
+
+class ConcreteCreatorB(Creator):
+    def factory_method(self):
+        return ConcreteProductB()
+
+# 使用例
+creator_a = ConcreteCreatorA()
+print(creator_a.some_operation())
+
+creator_b = ConcreteCreatorB()
+print(creator_b.some_operation())
+    </pre>
+
+    <div class="note">
+        <h3>プロジェクトでのFactoryパターンの活用</h3>
+        <p>このプロジェクトでは、Factoryパターンを使用して現行システムの複雑な条件判定を一括制御しています。また、ディシジョンテーブルを導入することで、具体的なロジックの過剰な実装を避けています。これにより、条件分岐の管理が容易になり、新しい条件や処理の追加が簡素化されています。</p>
+    </div>
+
+    <h2>4.2 Facadeパターン</h2>
+    <p>Facadeパターンは、複雑なサブシステムに対する単純なインターフェースを提供します。</p>
+    <pre>
+class SubsystemA:
+    def operation_a(self):
+        return "Subsystem A, Operation A"
+
+class SubsystemB:
+    def operation_b(self):
+        return "Subsystem B, Operation B"
+
+class SubsystemC:
+    def operation_c(self):
+        return "Subsystem C, Operation C"
+
+class Facade:
+    def __init__(self):
+        self._subsystem_a = SubsystemA()
+        self._subsystem_b = SubsystemB()
+        self._subsystem_c = SubsystemC()
+
+    def operation(self):
+        results = []
+        results.append(self._subsystem_a.operation_a())
+        results.append(self._subsystem_b.operation_b())
+        results.append(self._subsystem_c.operation_c())
+        return "\n".join(results)
+
+# 使用例
+facade = Facade()
+print(facade.operation())
+    </pre>
+
+    <div class="note">
+        <h3>プロジェクトでのFacadeパターンの活用</h3>
+        <p>このプロジェクトでは、Facadeパターンを使用して処理パターンごとの編集定義を行っています。複雑な編集処理実装を集約し、制御処理と切り離すことで、システムの各部分の独立性が高まり、保守性と拡張性が向上しています。</p>
+    </div>
+
+    <h2>4.3 Commandパターン</h2>
+    <p>Commandパターンは、リクエストをオブジェクトとしてカプセル化し、それによってクライアントをさまざまなリクエストで特徴付けることができます。</p>
+    <pre>
+from abc import ABC, abstractmethod
+
+class Command(ABC):
+    @abstractmethod
+    def execute(self):
+        pass
+
+class SimpleCommand(Command):
+    def __init__(self, payload: str):
+        self._payload = payload
+
+    def execute(self):
+        return f"SimpleCommand: Execute with ({self._payload})"
+
+class ComplexCommand(Command):
+    def __init__(self, receiver, a: str, b: str):
+        self._receiver = receiver
+        self._a = a
+        self._b = b
+
+    def execute(self):
+        return f"ComplexCommand: Complex stuff should be done by a receiver object.\n{self._receiver.do_something(self._a)}\n{self._receiver.do_something_else(self._b)}"
+
+class Receiver:
+    def do_something(self, a: str):
+        return f"Receiver: Working on ({a}.)"
+
+    def do_something_else(self, b: str):
+        return f"Receiver: Also working on ({b}.)"
+
+class Invoker:
+    def __init__(self):
+        self._on_start = None
+        self._on_finish = None
+
+    def set_on_start(self, command: Command):
+        self._on_start = command
+
+    def set_on_finish(self, command: Command):
+        self._on_finish = command
+
+    def do_something_important(self):
+        results = []
+        if self._on_start:
+            results.append(self._on_start.execute())
+        results.append("Invoker: Doing something really important...")
+        if self._on_finish:
+            results.append(self._on_finish.execute())
+        return "\n".join(results)
+
+# 使用例
+invoker = Invoker()
+invoker.set_on_start(SimpleCommand("Say Hi!"))
+receiver = Receiver()
+invoker.set_on_finish(ComplexCommand(receiver, "Send email", "Save report"))
+
+print(invoker.do_something_important())
+    </pre>
+
+    <div class="note">
+        <h3>プロジェクトでのCommandパターンの活用</h3>
+        <p>このプロジェクトでは、Commandパターンを使用して仕様変更や処理追加に柔軟に対応できるようにしています。各処理をコマンドとしてカプセル化することで、新機能の追加や既存機能の修正が容易になり、また処理の履歴管理や取り消し機能の実装も可能になっています。</p>
+    </div>
+
+    <h2>クイズ: Pythonデザインパターン</h2>
+    <div class="quiz">
+        <form id="quizForm">
+            <div class="quiz-question">
+                <p>1. Factoryパターンの主な目的は何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q1" value="a" required> a) オブジェクトの作成を隠蔽する<br>
+                    <input type="radio" name="q1" value="b"> b) オブジェクトの状態を管理する<br>
+                    <input type="radio" name="q1" value="c"> c) オブジェクト間の通信を制御する<br>
+                    <input type="radio" name="q1" value="d"> d) オブジェクトの振る舞いを定義する
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>2. Facadeパターンが提供する主な利点は何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q2" value="a" required> a) パフォーマンスの向上<br>
+                    <input type="radio" name="q2" value="b"> b) 複雑なシステムに対する単純なインターフェース<br>
+                    <input type="radio" name="q2" value="c"> c) オブジェクトの生成の制御<br>
+                    <input type="radio" name="q2" value="d"> d) 柔軟なアルゴリズムの切り替え
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>3. Commandパターンの主な特徴は何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q3" value="a" required> a) シングルトンオブジェクトの作成<br>
+                    <input type="radio" name="q3" value="b"> b) オブジェクト間の依存関係の管理<br>
+                    <input type="radio" name="q3" value="c"> c) リクエストのカプセル化<br>
+                    <input type="radio" name="q3" value="d"> d) 複雑なオブジェクトの段階的構築
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>4. このプロジェクトでFactoryパターンを使用する主な目的は何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q4" value="a" required> a) データベースの最適化<br>
+                    <input type="radio" name="q4" value="b"> b) 複雑な条件判定の一括制御<br>
+                    <input type="radio" name="q4" value="c"> c) ユーザーインターフェースの改善<br>
+                    <input type="radio" name="q4" value="d"> d) ネットワーク通信の効率化
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>5. プロジェクトでのFacadeパターンの主な利点は何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q5" value="a" required> a) データの暗号化<br>
+                    <input type="radio" name="q5" value="b"> b) 複雑な編集処理の集約と制御処理の分離<br>
+                    <input type="radio" name="q5" value="c"> c) メモリ使用量の削減<br>
+                    <input type="radio" name="q5" value="d"> d) アルゴリズムの最適化
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>6. プロジェクトでのCommandパターンの主な利点は何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q6" value="a" required> a) データベースのクエリ最適化<br>
+                    <input type="radio" name="q6" value="b"> b) ユーザー認証の強化<br>
+                    <input type="radio" name="q6" value="c"> c) 仕様変更や処理追加への柔軟な対応<br>
+                    <input type="radio" name="q6" value="d"> d) ネットワークレイテンシの削減
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>7. Factoryパターンを使用する主な利点は何ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q7" value="a" required> a) コードの再利用性の向上<br>
+                    <input type="radio" name="q7" value="b"> b) オブジェクト生成の集中管理<br>
+                    <input type="radio" name="q7" value="c"> c) メモリ使用量の削減<br>
+                    <input type="radio" name="q7" value="d"> d) 実行速度の向上
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>8. Facadeパターンは、どのような場合に特に有用ですか？</p>
+                <div class="options">
+                    <input type="radio" name="q8" value="a" required> a) 単一の操作を複数のオブジェクトに適用する場合<br>
+                    <input type="radio" name="q8" value="b"> b) 複雑なサブシステムがある場合<br>
+                    <input type="radio" name="q8" value="c"> c) オブジェクトの状態変更を追跡する必要がある場合<br>
+                    <input type="radio" name="q8" value="d"> d) 動的にクラスをロードする必要がある場合
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <p>9. Commandパターンの利点ではないものはどれですか？</p>
+                <div class="options">
+                    <input type="radio" name="q9" value="a" required> a) 操作のパラメータ化<br>
+                    <input type="radio" name="q9" value="b"> b) 操作のキューイングや記録<br>

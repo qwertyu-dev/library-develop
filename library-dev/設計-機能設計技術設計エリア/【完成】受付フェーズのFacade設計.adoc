@@ -1,0 +1,569 @@
+= DataFrame編集のためのFacade設計
+
+== 概要
+
+=== 設計の目的と背景
+
+本設計は、複雑なDataFrame編集処理を効率的に管理し、拡張性と保守性を高めることを目的としています。 +
+ビジネス要件の変更に柔軟に対応し、新しい編集ルールを容易に追加できるシステムを構築することが主な目標です。
+
+背景：
+
+* データ処理の要件が頻繁に変更される
+* 複数の部門で異なる編集ルールが存在する 
+* 将来的な拡張性が求められている
+
+=== 主要コンポーネントの概観
+
+システムは以下の主要コンポーネントで構成されています：
+
+* ColumnEditor: 個別の列編集ロジックを実装
+* DataFrameEditor (Facade): 複数のColumnEditorを組み合わせてDataFrame全体の編集を管理
+* EditorFactory: 条件に基づいて適切なDataFrameEditorを生成
+* ディシジョンテーブル: EditorFactoryの判断基準を提供
+
+[IMPORTANT]
+====
+編集部品での例外発生はFacadeに対して伝搬するのみの役割になります。 +
+編集部品で発生した例外はFacadeで適切に捉えてエラー制御を行う必要があります。
+====
+
+[plantuml]
+....
+@startuml
+interface ColumnEditor {
+    +edit(value: Any): Any
+}
+interface DataFrameEditor {
+    +edit_dataframe(df: DataFrame): DataFrame
+}
+class EditorFactory {
+    -decision_table: DataFrame
+    +create_editor(row: Series): DataFrameEditor
+}
+
+ColumnEditor <|.. ConcreteColumnEditor
+DataFrameEditor <|.. ConcreteDataFrameEditor
+ConcreteDataFrameEditor o-- ColumnEditor
+EditorFactory ..> DataFrameEditor : creates
+@enduml
+....
+
+== 基本構造
+
+=== ColumnEditor
+
+==== 基底クラスの定義
+
+ColumnEditorは、個別の列編集ロジックを実装するための基底インターフェースです。
+
+[source,python]
+----
+from typing import Any
+
+class ColumnEditor:
+    def edit(self, value: Any) -> Any:
+        raise NotImplementedError("Subclasses must implement the 'edit' method.")
+----
+
+==== 具体的なColumnEditorの実装例
+
+以下は、文字列を大文字に変換するColumnEditorの例です。
+
+[source,python]
+----
+class UpperCaseEditor(ColumnEditor):
+    def edit(self, value: Any) -> Any:
+        return value.upper() if isinstance(value, str) else value
+----
+
+=== DataFrameEditor（Facade）
+
+==== 基底クラスの定義
+
+DataFrameEditorは、複数のColumnEditorを組み合わせてDataFrame全体の編集を管理するFacadeとして機能します。
+
+[source,python]
+----
+import pandas as pd
+from typing import Dict
+
+class DataFrameEditor:
+    def __init__(self):
+        self.column_editors: Dict[str, ColumnEditor] = {}
+
+    def edit_dataframe(self, df: pd.DataFrame) -> pd.DataFrame:
+        edited_df = df.copy()
+        for column, editor in self.column_editors.items():
+            if column in df.columns:
+                edited_df[column] = edited_df[column].apply(editor.edit)
+        return edited_df
+----
+
+==== 具体的なDataFrameEditorの実装例
+
+特定の列を大文字に変換するDataFrameEditorの例：
+
+[source,python]
+----
+class UpperCaseDataFrameEditor(DataFrameEditor):
+    def __init__(self):
+        super().__init__()
+        self.column_editors = {
+            'name': UpperCaseEditor(),
+            'city': UpperCaseEditor()
+        }
+----
+
+==== デフォルトDataFrameEditorの実装
+
+編集を行わないデフォルトのDataFrameEditor：
+
+[source,python]
+----
+class DefaultDataFrameEditor(DataFrameEditor):
+    def edit_dataframe(self, df: pd.DataFrame) -> pd.DataFrame:
+        return df
+----
+
+=== EditorFactory
+
+==== ファクトリクラスの設計
+
+EditorFactoryは、条件に基づいて適切なDataFrameEditorを生成します。
+
+[source,python]
+----
+class EditorFactory:
+    def __init__(self, decision_table: pd.DataFrame):
+        self.decision_table = decision_table
+
+    def create_editor(self, row: pd.Series) -> DataFrameEditor:
+        editor_class = self.evaluate_conditions(row)
+        return editor_class()
+
+    def evaluate_conditions(self, row: pd.Series) -> type:
+        # ディシジョンテーブルに基づいて適切なEditorクラスを決定するロジック
+        pass
+----
+
+==== ディシジョンテーブルの統合
+
+ディシジョンテーブルは、条件と対応するEditorクラスのマッピングを提供します。
+CSVやExcelファイルとして外部で管理し、EditorFactoryに読み込ませることで、
+ビジネスルールの変更に柔軟に対応できます。
+
+== データフロー
+
+=== 入力データの形式と検証
+
+入力データは pandas.DataFrame 形式で提供されます。
+データの検証は以下の手順で行います：
+
+1. 必須列の存在確認
+2. データ型の検証
+3. 値の範囲チェック（必要に応じて）
+
+=== 編集プロセスの流れ
+
+[plantuml]
+....
+@startuml
+start
+:編集対象DataFrameのEdit処理を開始;
+:Facadeで定義した各Column編集実体のDataFrameEditorを生成;
+:DataFrameEditorでDataFrameを編集;
+:編集後のDataFrameを返す;
+stop
+@enduml
+....
+
+=== 出力データの形式と検証
+
+出力データも pandas.DataFrame 形式です。
+編集後のデータに対して以下の検証を行います：
+
+. 列の追加・削除が意図通りに行われたことの確認
+. データ型の変更が正しく適用されたことの確認
+. 編集結果の整合性チェック
+
+== 拡張性と保守性
+
+=== 新しいColumnEditorの追加手順
+
+1. ColumnEditorクラスを継承した新しいクラスを作成
+2. editメソッドをオーバーライドして、新しい編集ロジックを実装
+3. 必要に応じて、新しいColumnEditorを使用するDataFrameEditorを作成
+
+=== 新しいDataFrameEditorの追加手順
+
+1. DataFrameEditorクラスを継承した新しいクラスを作成
+2. __init__メソッドで必要なColumnEditorをself.column_editorsに追加
+3. 必要に応じて、edit_dataframeメソッドをオーバーライドしてカスタムロジックを実装
+
+=== ディシジョンテーブルの更新プロセス
+
+1. 外部ファイル（CSVやExcel）でディシジョンテーブルを管理
+2. 新しい条件やEditorクラスを追加する際は、ファイルを更新
+3. アプリケーション起動時または定期的にディシジョンテーブルを再読み込み
+
+=== 共通ユーティリティ関数の設計と使用
+
+頻繁に使用される操作は、共通ユーティリティ関数として実装します：
+
+[source,python]
+----
+def safe_upper(value: Any) -> Any:
+    return value.upper() if isinstance(value, str) else value
+
+def safe_lower(value: Any) -> Any:
+    return value.lower() if isinstance(value, str) else value
+
+def safe_strip(value: Any) -> Any:
+    return value.strip() if isinstance(value, str) else value
+----
+
+これらの関数は、各ColumnEditorで再利用できます。
+
+== エラー処理とロギング
+
+=== ColumnEditorレベルでのエラー処理
+
+各ColumnEditorでは、想定外の入力に対して適切にエラーハンドリングを行います：
+
+[source,python]
+----
+import logging
+
+class SafeUpperCaseEditor(ColumnEditor):
+    def edit(self, value: Any) -> Any:
+        try:
+            return value.upper() if isinstance(value, str) else value
+        except AttributeError:
+            logging.warning(f"Cannot convert {value} to uppercase")
+            return value
+----
+
+=== DataFrameEditorレベルでのエラー処理
+
+DataFrameEditorでは、個別の列処理でのエラーが全体の処理を中断しないようにします：
+
+[source,python]
+----
+class RobustDataFrameEditor(DataFrameEditor):
+    def edit_dataframe(self, df: pd.DataFrame) -> pd.DataFrame:
+        edited_df = df.copy()
+        for column, editor in self.column_editors.items():
+            if column in df.columns:
+                try:
+                    edited_df[column] = edited_df[column].apply(editor.edit)
+                except Exception as e:
+                    logging.error(f"Error processing column {column}: {str(e)}")
+        return edited_df
+----
+
+=== ファクトリレベルでのエラー処理
+
+EditorFactoryでは、適切なEditorが見つからない場合にデフォルトEditorを使用します：
+
+[source,python]
+----
+class EditorFactory:
+    # ... 前述のコード ...
+
+    def create_editor(self, row: pd.Series) -> DataFrameEditor:
+        try:
+            editor_class = self.evaluate_conditions(row)
+            return editor_class()
+        except ValueError:
+            logging.warning("No matching editor found, using default")
+            return DefaultDataFrameEditor()
+----
+
+=== ログ戦略とデバッグ情報の出力
+
+* logging モジュールを使用して、異なるログレベル（DEBUG, INFO, WARNING, ERROR, CRITICAL）を適切に使い分ける
+* ログにはタイムスタンプ、ログレベル、モジュール名、メッセージを含める
+* 重要な操作（例：新しいEditorの生成、大規模なDataFrame編集の開始/終了）はINFOレベルでログ出力
+* エラーや警告は、それぞれERRORとWARNINGレベルで出力し、詳細な情報を含める
+
+== 実装ガイドライン
+
+=== コーディング規約
+
+* PEP 8に準拠したコードスタイルを使用
+* 型ヒントを積極的に活用し、mypy等の静的型チェッカーを使用
+* docstringを使用して、クラスやメソッドの目的、パラメータ、戻り値を文書化
+
+=== ドキュメンテーション要件
+
+* 各モジュール、クラス、メソッドにdocstringを付与
+* 複雑なロジックには適切なインラインコメントを追加
+* READMEファイルにシステムの概要、セットアップ手順、基本的な使用例を記載
+
+=== コードレビューのチェックリスト
+
+* 型ヒントが適切に使用されているか
+* エラーハンドリングが適切に実装されているか
+* ログ出力が適切な場所で行われているか
+* 命名規則が一貫しているか
+* テストが十分にカバーされているか
+* パフォーマンスに影響を与える可能性のある処理がないか
+
+== サンプル実装 
+
+=== 基本的な使用シナリオ
+
+[source,python]
+----
+import pandas as pd
+from editor_factory import EditorFactory
+from dataframe_editors import UpperCaseDataFrameEditor
+
+# サンプルデータ
+data = pd.DataFrame({
+    'name': ['John', 'Alice', 'Bob'],
+    'city': ['New York', 'London', 'Paris'],
+    'age': [30, 25, 35]
+})
+
+# ディシジョンテーブルの作成（簡略化）
+decision_table = pd.DataFrame({
+    'condition': ['default'],
+    'editor_class': ['UpperCaseDataFrameEditor']
+})
+
+# EditorFactoryの初期化
+factory = EditorFactory(decision_table)
+
+# Editorの生成と適用
+editor = factory.create_editor(data.iloc[0])
+result = editor.edit_dataframe(data)
+
+print(result)
+----
+
+=== 複雑な編集ロジックの実装例
+
+複数の条件に基づいて値を変更するColumnEditorの例：
+
+[source,python]
+----
+class ComplexAgeEditor(ColumnEditor):
+    def edit(self, value: Any) -> Any:
+        if not isinstance(value, (int, float)):
+            return value
+        if value < 18:
+            return 'Minor'
+        elif 18 <= value < 65:
+            return 'Adult'
+        else:
+            return 'Senior'
+
+class ComplexDataFrameEditor(DataFrameEditor):
+    def __init__(self):
+        super().__init__()
+        self.column_editors = {
+            'name': UpperCaseEditor(),
+            'city': UpperCaseEditor(),
+            'age': ComplexAgeEditor()
+        }
+----
+
+=== カスタムColumnEditorの作成と統合
+
+新しい要件に基づくカスタムColumnEditorの作成と統合:
+
+[source,python]
+----
+import re
+
+class EmailDomainEditor(ColumnEditor):
+    def edit(self, value: Any) -> Any:
+        if not isinstance(value, str):
+            return value
+        match = re.search(r'@[\w.]+', value)
+        if match:
+            return match.group()[1:]  # '@'を除いたドメイン部分を返す
+        return value
+
+class CustomDataFrameEditor(DataFrameEditor):
+    def __init__(self):
+        super().__init__()
+        self.column_editors = {
+            'name': UpperCaseEditor(),
+            'email': EmailDomainEditor(),
+            'age': ComplexAgeEditor()
+        }
+
+# 使用例
+data = pd.DataFrame({
+    'name': ['John Doe', 'Jane Smith'],
+    'email': ['john@example.com', 'jane@company.org'],
+    'age': [30, 25]
+})
+
+custom_editor = CustomDataFrameEditor()
+result = custom_editor.edit_dataframe(data)
+print(result)
+----
+
+このカスタムColumnEditorの統合により、以下のような結果が得られます：
+
+- 'name'列：大文字に変換
+- 'email'列：ドメイン部分のみ抽出
+- 'age'列：年齢カテゴリに変換
+
+=== ディシジョンテーブルの効果的な設計
+
+ディシジョンテーブルは、条件に基づいて適切なDataFrameEditorを選択するための重要な要素です。以下は効果的なディシジョンテーブルの例です:
+
+[source,python]
+----
+decision_table = pd.DataFrame({
+    'condition_column': ['age', 'age', 'email', 'default'],
+    'condition_value': ['<18', '>=65', 'contains(@)', ''],
+    'editor_class': ['MinorDataFrameEditor', 'SeniorDataFrameEditor', 'EmailDataFrameEditor', 'DefaultDataFrameEditor']
+})
+
+class EnhancedEditorFactory:
+    def __init__(self, decision_table: pd.DataFrame):
+        self.decision_table = decision_table
+
+    def create_editor(self, row: pd.Series) -> DataFrameEditor:
+        for _, condition in self.decision_table.iterrows():
+            if self._check_condition(row, condition):
+                return globals()[condition['editor_class']]()
+        return DefaultDataFrameEditor()
+
+    def _check_condition(self, row: pd.Series, condition: pd.Series) -> bool:
+        if condition['condition_column'] == 'default':
+            return True
+        column = condition['condition_column']
+        value = condition['condition_value']
+        if column not in row:
+            return False
+        if value.startswith('<'):
+            return row[column] < float(value[1:])
+        if value.startswith('>='):
+            return row[column] >= float(value[2:])
+        if value.startswith('contains('):
+            return value[9:-1] in str(row[column])
+        return str(row[column]) == value
+
+# 使用例
+factory = EnhancedEditorFactory(decision_table)
+editor = factory.create_editor(data.iloc[0])
+result = editor.edit_dataframe(data)
+----
+
+このアプローチにより、ビジネスルールの変更に柔軟に対応でき、新しい条件や編集ロジックを容易に追加することができます。
+
+== サンプル実装
+
+=== ColumnEditorの実装例
+
+[source,python]
+----
+from typing import Any
+
+class ColumnEditor:
+    def edit(self, value: Any) -> Any:
+        raise NotImplementedError("Subclasses must implement the 'edit' method.")
+
+class UpperCaseEditor(ColumnEditor):
+    def edit(self, value: Any) -> Any:
+        return value.upper() if isinstance(value, str) else value
+
+class NumericRangeEditor(ColumnEditor):
+    def __init__(self, min_value: float, max_value: float):
+        self.min_value = min_value
+        self.max_value = max_value
+
+    def edit(self, value: Any) -> Any:
+        if isinstance(value, (int, float)):
+            return max(min(value, self.max_value), self.min_value)
+        return value
+----
+
+=== DataFrameEditorの実装例
+
+[source,python]
+----
+import pandas as pd
+from typing import Dict
+
+class DataFrameEditor:
+    def __init__(self):
+        self.column_editors: Dict[str, ColumnEditor] = {}
+
+    def edit_dataframe(self, df: pd.DataFrame) -> pd.DataFrame:
+        edited_df = df.copy()
+        for column, editor in self.column_editors.items():
+            if column in df.columns:
+                edited_df[column] = edited_df[column].apply(editor.edit)
+        return edited_df
+
+class CustomDataFrameEditor(DataFrameEditor):
+    def __init__(self):
+        super().__init__()
+        self.column_editors = {
+            'name': UpperCaseEditor(),
+            'age': NumericRangeEditor(0, 120),
+            'email': EmailDomainEditor()
+        }
+----
+
+=== EditorFactoryの実装例
+
+[source,python]
+----
+class EditorFactory:
+    def __init__(self, decision_table: pd.DataFrame):
+        self.decision_table = decision_table
+
+    def create_editor(self, row: pd.Series) -> DataFrameEditor:
+        for _, condition in self.decision_table.iterrows():
+            if self._check_condition(row, condition):
+                editor_class = globals()[condition['editor_class']]
+                return editor_class()
+        return DefaultDataFrameEditor()
+
+    def _check_condition(self, row: pd.Series, condition: pd.Series) -> bool:
+        # 条件チェックのロジック（前述の実装を参照）
+        pass
+----
+
+=== 全体実装例
+
+[source,python]
+----
+import pandas as pd
+from editor_factory import EditorFactory
+from dataframe_editors import CustomDataFrameEditor, DefaultDataFrameEditor
+
+# サンプルデータ
+data = pd.DataFrame({
+    'name': ['John Doe', 'Jane Smith'],
+    'email': ['john@example.com', 'jane@company.org'],
+    'age': [30, 25]
+})
+
+# ディシジョンテーブルの作成
+decision_table = pd.DataFrame({
+    'condition_column': ['age', 'email', 'default'],
+    'condition_value': ['>=18', 'contains(@)', ''],
+    'editor_class': ['CustomDataFrameEditor', 'CustomDataFrameEditor', 'DefaultDataFrameEditor']
+})
+
+# EditorFactoryの初期化
+factory = EditorFactory(decision_table)
+
+# Editorの生成と適用
+editor = factory.create_editor(data.iloc[0])
+result = editor.edit_dataframe(data)
+
+print(result)
+----
+
+この統合例では、条件に基づいて適切なDataFrameEditorが選択され、データフレームに適用されます。結果として、名前が大文字に変換され、メールアドレスのドメインが抽出され、年齢が有効範囲内に調整されたデータフレームが得られます。
