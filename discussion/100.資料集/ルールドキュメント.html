@@ -1,0 +1,10084 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN"><html><head><meta HTTP-EQUIV="Content-Type" Content="text/html; charset=UTF-8"><style>@media print {
+    form#docsForm {
+        display: none
+    }
+    .notPrintable {
+        display: none
+    }
+    a {
+        text-decoration: none
+    }
+}
+/* book.css */
+body {
+    font-family: 'Arial', 'Verdana', sans-serif;
+    font-size: 11px;
+    margin: 10px;
+    color: #585858;
+}
+
+pre {
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas',
+        'source-code-pro', monospace;
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+
+strong {
+    font-size: 12px;
+    font-weight: bold;
+}
+/* dtue.css */
+body {
+    font-family: 'Arial', 'Verdana', sans-serif;
+    font-size: 11px;
+    margin: 10px;
+    color: #585858;
+}
+
+pre {
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas',
+        'source-code-pro', monospace;
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+
+h1, h3, strong {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.runninghead {
+    display: none
+}
+
+.product {
+    display: none;
+}
+
+.footer {
+    display: none;
+}
+
+.paragraph {
+    line-height: 150%;
+    text-align: justify;
+}
+
+.paragraph>font {
+    color: #5858FF !important;
+}
+
+.syntax {
+    background-color: #F9F9F9;
+    padding: 10px;
+    overflow: auto;
+}
+/* */
+ol>li {
+    padding: 2px;
+}</style></head>
+<body>
+<span id="top"/>
+<img alt="Parasoft ロゴ" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPoAAAAqCAYAAACa0kYSAAAACXBIWXMAAAsSAAALEgHS3X78AAANnElEQVR4nO1d601bSRSerPi/XrkA38gFxKkAp4JAAYjEDQAVJK4AaICHXEBMBZgKcApAuS4ArbeCXQ06w47HM3O+M3MuQVE+KUoC9zGv837cN+Y3fuOVYThoesaYUTCq9mHVtlojHQ4a+/xe+POHVbv4Fc/Dm/5k9skYcwhev3y8ODipfWl/MrsVXH7yeHGwlL5jOGhOI4clhzs7v4dVO5e+S/rOh1X7QfBMyVoZmocliPnDql0L782N46sxZpe7TjK34PljOof27yZxmZ2PJcQb6fyIebizzu2RPW/Xxpgr5B009i/oWDLvNMIzi+J6hxZ13MHDc5C8b4vrgvgkvPdpTMNBYzf2/GHVfpW8bDho7DoeF4419cxewd646y+Hg+bKGDOtlYQ0jtqDnHq2XbdLcJ52HHv0x85vTnuVlcLDQWPPwqngPIzoz5fhoPnwsGo5QTNWoKFlwZlFMf2jg4f+dNDhKV2wHm3wPR1wFEcdzLuWu9uDc08HvQYwAyPphl5rCfa+gkj2uHUfDhrLRC4Lz4O955bU/BxYTQfAqiMit1juCG8Y9yezf0l9WtLgrDr/2uyalOonwYg2+QOnvnlqIQR7Pah2amhaPZJ+bYX9iZp2MIh4vik86nvqF2Ru1DK5HmkDOZNEQ93uisjX9qxJCd1hQ1XpT2aGCL+lhV8QA1CzEQvGp4ERqaycX2JPuFEjWiMOA6V5WHwbDpq3UrudtAENxuk/80lSKj0uuo5KdrPD2DKmmApPc+mKSDXwNOZSQo/B2TV7boH7k9maXmQdRPMSp1oh3ik+63g4aKYMgXRivyo7ZpzWcSa8T12aC+1lDqkzdar0fIfDxLs09mipzNR9WNpTJXQfC0+6L3+CdNf2XCYJhCSHqsTzoD2PQwmhk3ot1Y6y2gr5T2rVaYc2xoBJC9Feu9TzNLTHZUfedkN0WE3oLQ3SEXT7glI7B23C280QSBdOOJFTSwDpYSqZGyeptYjcZKT5SzpGNSTxSnldfBSp7pawz1+pA+4JIIHMPSfOIcAYoptM0mlPPsonKcCtH8Kspt6/dxHpYtcHccpJHYwCIKbAGYXNWrMZZvwY+EO2HHGkhXAMzWoB+24d6J5bhkmlfse9q6WYfA5Xmd8h+3pFzGILzq8gJvTHiwOpjffSQKTWubfJdj4/mE1OEV1Ocqwr7VDOz7AMY/0UStIizlxIrWhuxBg5BmaTVDacn6SeW+Y8Hw6aExrbUYJZIozkxGd2lhgoJl+ydtx5m4M5GdFrKAkrS+gPq/Yz9/BfMY6OqFLPKh8dohxHjYKReG1GrUSBZG+FOK98p48cweQScP7M/A5hwtPcL+1+EeG8TawBp2FZuz6231GJmAMQXze58B8IRGNgsUOHHFXDIYdafzJzqpZTO5rHi4O/vEv8mGQszDL3Dq2UYNiFiThw/hG+wzAhtbmCc4VT12IHE9kfJKUzF1KbM9I8N29WpUaz+BJOuBGgMRSnOEeA7HFtfj53DiD62Hm8OGgVBvMMIvK/Iz8fO7vet+/7k1nM43hX4QPgFqZkrjHiyIXUrplxZNVyUnE5xNaHvQ9I5zSMNL+pCLmx5kjhcx0Qf8lN4uclIVn2npoiGU2NoVh1709mTX8yO7Z/+z+nMFqMmFIHP7a5RRsOEshd5Gc5dXNrPExIrSViym0SZ98iGxxbo4/MPSyTY0Jq60qJyM27NraOFN2kCI97d0kMvZZxIecZk+ixHxLxNqFUtVI5UmFkbeKT/mTml/0tIvbrx4TDYUsFrZDmpQQitYNyTjgN1RBRcTe0DPIZcBINWdfs3Ox7h4Pi6CXL4Cht9ayw8o7T5nLz5+6NjUfFfs6g9DxvISXRUyGKj0TA/k4fU/77vafOxtSj1KDDxa9ZHLHNBFaIPatHQEiNC6UgKFFxTwEJENNmngGE1FJqr4/cWiL7Y8/Q38NB8y/9sUU5p5y2BoZVo/MHi5fCc4MUTtU64hANBXbGxTBKeK/vEmEXS6xTJ4nJTje0OA05/FL54uFAa9QdZGHC5yN2nc+MchJvCdrARXF7HyT5DJkde8AzEbU7F1Jra2r1vTFI1XMndFwqcipUhRB6am8QBhRqnohaY6sgc76ctwyhcu+ANd+URH+XeEnqwde+um3t9MeLA9u95r3b3FQKLDkD/d/VcEHRwoB11mtHvIDEQ6V5cpz0Dm4ermDjCxEncuiQJgo5J5uGplJrs1rCSTEjxJlWQ+jhvbWZi9kIA3gO4PXMqe5bEyFi9YnFSYnogOn6c6Gjo8g+BxfmeZx0/aUwHMNVqYnj8RF0kfO85uLTQJWaxtw06h1SanxN6A5hEuG9tYVTHJGqxuhThP60kORgC3FNh8bGwvcfLw72GefZGbDB/qRLbXRkYRqr8lJ7ph+g2u5Lspz0DyVmlw5FKU4qpflC0qUmExbK+ggE2DCfFKRfSViytp6CWwtEY4D3ZMtGJ8+6QxMu0OPFwZV37TfuQFup3p/MpuTJH1MabXiP40xrUuVLgBCItOXPwkuV5arUNFRbo1xia8iDnZXGQJWadG4preeKmGVtGC0cK7L3OcIqSUqpZcjcOWczPCUx+phEHyX+HUOPmktG0Z/M9vqT2SV1EvlBqnLMmeUmXWPDaROICdTdnBNO3L0l4yXWlOjTMG88gWzOPscoUJBWUd1cNLJGxRlqYFJKLI+iFrWqu4hWYoTucxKkF1ZOnR1FwnEx298RSQ2ha5emXnnSnAupaeaYaxH6GVJMATgYVYjcgZjG51p7PbDTRfUNAUps4eqzBkRnVGP0nERHJmQz5O77k9lG2iup6jEp20vY/stKj7tm/fYykDxcfbMKMYDSRRtc48cSJpY9N0Tsb4ngXa3FQnh4/XcgLbZThFXire/UEddFsUwsjr5ho9uYeBgaozi5X9o5Mv/b9y1J+ZyUGEcmW1zxpUwgdgzPDSEBiddSjDf8eQnXR+bhtB+u5BNdk5wTzq7Bp4K5Ic4tVzW4wSTJ+3/J3S98X+5cIUwiNMu4exal/e3RMUmdvRuEHuatey/deCg52GLJD45JXHsOnC8B85gnFv57RXcaNXWX7FqfsXEhtaawZ1ys5RKb9OIOECXM5N7LEhsQUuusn3sKVtoPB80uVxseEB+SLJRCSdpsF4VTPhAhIXpHKNFjBJPqARbLZ999vDjY4GQk/a3HcwGE4UpRYzO5XIDUhw66Ougx5sH5RHxGyNm4yJp00fhRA3BtOJi+mkp9FXvrwcIpcW17AO4cwOW8Dgihp+yRuwihxxxtc6TQo7J5JOI0DBNGWi5ltePGjzFwB88/dKz2Yw9l6kAUNn5EwVUD1sKfe402h8xfqrbH7pFCvSpux1Wq0f9jBDPyYutrT72eky3lfw8LmmAQq+eAdJBFbCbRJ5YInTR+jAEskpBucJNR8bqcW60pxTFuqWqcOpdcWe+6wD43NdEj8ByIE492SCpzITLXBWbhusOQnf6+0K6WNO//wLQPRhrol3yksbTxI4owJCSyy+wBBMpFo2ZXh40foxB8mcatOycIqjPswPfENFHO475VQiyEun1uanvGvZLWziWVRwi6lubhhrJaDlgZ5yPFAFU/BgnAfhLqFkw0QT68IFWNY8SDMDpJubVDLU3UVOEl0dUHHJIQqu0I1BfmpSUegZMUKYdobv4pFfilnXCNK5QaDhr3SeKll5DkegIcIR7tAoZ3ZLu8eiHTY7BqMSbRq2r+ASDtqWKfhnIaSkMNQjau6YzQyfZ3tcTv6O8uHFuqOcEELqS2BL3ekvl2ISkar27drsNXIKSG9BCUxvDDtOqn/xd2qgnz7hE1dkTNLCTv2UqCAjWSrkNrMSJ3n4W+okanpzTXfcfcVAidpLRrVtGlNzeGLgiE4/b7XHgDiHOHjITb4Fgm1JJZaz/G75gdJ833OYkpmZvyF2fWYRjW7kNFa6scYhmBL9H1VXSe6dPTRxRVcs7FO1qrb86nVkzoXv+4l1ZxQ6jmBAMhtbk0hpnA87grJIWkTfUSCKmhHXIk0KTC84SjizNhpDhL7HHXXV+ROYQM/5DStcdE4GfU1s0S+KELsRYTOiW/2D+fKXfdqeq7BWprEQoXhgPnhNMqR/VRkoZphExsBcwNzWuXvFerqnDryzQebhQJPdekQ63jS+HzY+/oUQTGfUfhT9Ko1rQuTyFWFdWdvO9LPxxBGXG+jY6EM6Qo7X8eBRBS0+ibFgPnZ0gdIAnBtYxHW9LKGWkb7ZJ1NNKT18FHP0Jo1bkb366NoOvU16J2WF62XktjnFK33nfu/HfmjPPaToUto0ekWmigpk9YDD9DmpsKP4PkYCHfCNP8tHXjHbwabBQZxUCH+qSgGCbE55Tq/Vo+vxRZhzti4N9Ja7Na2S1FN0ZuPi/+7TXl2Lu4/3kKYEhNUo6KpKg6Iij5/BLc6pcIjnPCadbU+5gW1p47FTpL5A6Vde52fd4zDTZUtccExBoDmTM9Enru/VNievvuuhePoysjbFYZQsJURsz1S6ETrgU2fk1qF3ddTqWWHK7U+KWxaW7d3TUupHdGJtEhcJhdnB3pWrsBqnxbkGaGtMC263oDdtDpAXOuVd2550c1SlvRSCG2Ixqn04Kex/OmcmC/8RtiJD6fvNb2+JOWFtP6LGNT+97gq4cx5j+0xzv/zG/AmwAAAABJRU5ErkJggg=="/>
+<br/><br/>
+
+<h1>Table of content</h1>
+<ol>
+<li><a href="#CODSTA.BP.ABCL">CODSTA.BP.ABCL - ラベル付きの break または continue を避ける</a></li><li><a href="#CODSTA.BP.AMRO">CODSTA.BP.AMRO - Object を返すメソッドを宣言しない</a></li><li><a href="#CODSTA.BP.ARM">CODSTA.BP.ARM - リフレクション メソッドを使用しない</a></li><li><a href="#CODSTA.BP.ARN">CODSTA.BP.ARN - 配列および特定の型に対して null を返すのを避ける</a></li><li><a href="#CODSTA.BP.AULS">CODSTA.BP.AULS - ラベルを使用してはいけない</a></li><li><a href="#CODSTA.BP.AUML">CODSTA.BP.AUML - 複数のロガーの使用を避ける。代わりにロギング レベルを使用する</a></li><li><a href="#CODSTA.BP.AWRT">CODSTA.BP.AWRT - メソッドの戻り値の型にワイルドカードを使用しない</a></li><li><a href="#CODSTA.BP.BLK">CODSTA.BP.BLK - 条件文で '{}' ブロックを使用する</a></li><li><a href="#CODSTA.BP.BLOCK">CODSTA.BP.BLOCK - 不必要なネストされたブロックを避ける</a></li><li><a href="#CODSTA.BP.CFNF">CODSTA.BP.CFNF - すべての大文字のフィールドは final として宣言する</a></li><li><a href="#CODSTA.BP.CMUTA">CODSTA.BP.CMUTA - 不変クラスで public または protected コンストラクターを使用しない</a></li><li><a href="#CODSTA.BP.CONTINUE">CODSTA.BP.CONTINUE - break 文または continue 文を使用しない</a></li><li><a href="#CODSTA.BP.CS">CODSTA.BP.CS - 比較式では適切な側に定数を置く</a></li><li><a href="#CODSTA.BP.DLSF">CODSTA.BP.DLSF - ロガーを static final フィールドとして宣言する</a></li><li><a href="#CODSTA.BP.EXIT">CODSTA.BP.EXIT - Java 仮想マシンを終了するメソッドを呼び出してはならない</a></li><li><a href="#CODSTA.BP.FPF">CODSTA.BP.FPF - すべての仮引数を final とする</a></li><li><a href="#CODSTA.BP.FQNIC">CODSTA.BP.FQNIC - インターフェイス定数を参照する場合は、定数を宣言しているインターフェイス名を付ける</a></li><li><a href="#CODSTA.BP.HTV">CODSTA.BP.HTV - Hashtable と Vector を使用しないようにする</a></li><li><a href="#CODSTA.BP.IMPTD">CODSTA.BP.IMPTD - import 文でのワイルドカード (*) の使用を避けるまたは推進する</a></li><li><a href="#CODSTA.BP.NRVA">CODSTA.BP.NRVA - 可変個引数メソッドに具体化できない型を渡さない</a></li><li><a href="#CODSTA.BP.NTX">CODSTA.BP.NTX - 一般的または非チェック例外型を throw するメソッドの宣言を避ける</a></li><li><a href="#CODSTA.BP.OCMA">CODSTA.BP.OCMA - オーバーロードされたコンストラクターまたはメソッドのアクセシビリティをすべて同じにする</a></li><li><a href="#CODSTA.BP.PCF">CODSTA.BP.PCF - private コンストラクターだけを持つクラスは final として宣言する</a></li><li><a href="#CODSTA.BP.PPAC">CODSTA.BP.PPAC - 匿名クラスに public または protected メンバーを宣言しない</a></li><li><a href="#PB.CLOSE">PB.CLOSE - 無制限のロック リソース</a></li><li><a href="#PB.CUB.ADE">PB.CUB.ADE - else のある if では "{ }" 括弧を使用する</a></li><li><a href="#PB.CUB.AIPQ">PB.CUB.AIPQ - PriorityQueue および  PriorityBlockingQueue で iterator() を使用しない</a></li><li><a href="#PB.CUB.AMCO">PB.CUB.AMCO - 複数の ! または ~ 単項演算子を使用しない</a></li><li><a href="#PB.CUB.APAM">PB.CUB.APAM - 配列ではない引数を取るメソッドに配列を引数として渡してはならない</a></li><li><a href="#PB.CUB.ARCF">PB.CUB.ARCF - try-catch ブロック内に return 文がある場合、 finally ブロックでの return 文の使用を避ける</a></li><li><a href="#PB.CUB.ATSF">PB.CUB.ATSF - finally ブロックを途中で終了しない</a></li><li><a href="#PB.CUB.AWP">PB.CUB.AWP - コンストラクターの引数への紛らわしい代入を避ける</a></li><li><a href="#PB.CUB.CILB">PB.CUB.CILB - ログ記録コード以外のものをログ記録ブロックに入れない</a></li><li><a href="#PB.CUB.CNVC">PB.CUB.CNVC - 文字と数字の不適切な連結を避ける</a></li><li><a href="#PB.CUB.CTOR">PB.CUB.CTOR - コンストラクターから final、static、private ではないメソッドを呼び出してはならない</a></li><li><a href="#PB.CUB.CWRITE">PB.CUB.CWRITE - File.canWrite() メソッドは、ディレクトリが書き込み可能でない場合にも true を返す可能性があるため、使用を避ける</a></li><li><a href="#PB.CUB.DCP">PB.CUB.DCP - "+" 文字列連結演算子を使って数字を連結してはいけない。"+" は数字の加算にだけ使用する</a></li><li><a href="#PB.CUB.EBI">PB.CUB.EBI - 誤って文をブロックの外に置くのを避ける</a></li><li><a href="#PB.CUB.EOOM">PB.CUB.EOOM - 誤って java.lang.Object のメソッドをオーバーライドすることを避ける</a></li><li><a href="#PB.CUB.FLVA">PB.CUB.FLVA - for ループの内部でループ制御変数に代入しない</a></li><li><a href="#PB.CUB.IMC">PB.CUB.IMC - オーバーライドされるメソッドが引数型の違いによる予定外の共変ではないようにする</a></li><li><a href="#PB.CUB.IMM">PB.CUB.IMM - static final フィールドを不変にする</a></li><li><a href="#PB.CUB.ISF">PB.CUB.ISF - 誤って static 宣言された可能性のある private static フィールドを調べる</a></li><li><a href="#PB.CUB.MAIN">PB.CUB.MAIN - エントリ ポイント メソッドだけにメソッド名 main を使用する</a></li><li><a href="#PB.CUB.NCUCP">PB.CUB.NCUCP - Java の char が Unicode のコード ポイントを完全に表現できると仮定しない</a></li><li><a href="#PB.CUB.OE">PB.CUB.OE - 疑わしい 8 進数エスケープを避ける</a></li><li><a href="#PB.CUB.OSM">PB.CUB.OSM - サブクラスのメソッドをオーバーライドする場合は、スーパークラスでオーバーロードされたメソッドもオーバーライドする</a></li><li><a href="#PB.CUB.OVAM">PB.CUB.OVAM - 可変個引数メソッドのオーバーライドを避ける</a></li><li><a href="#PB.CUB.PSFA">PB.CUB.PSFA - public static final 配列フィールドの使用を避ける</a></li><li><a href="#PB.CUB.RMO">PB.CUB.RMO - 可変フィールドの間接参照を避ける</a></li><li><a href="#PB.CUB.SAC">PB.CUB.SAC - String の連結で char 配列を使用してはいけない</a></li><li><a href="#PB.CUB.SBC">PB.CUB.SBC - 不正な case を含む switch 文を避ける</a></li><li><a href="#PB.CUB.SRAD">PB.CUB.SRAD - アノテーション型の宣言に @Retention を指定する</a></li><li><a href="#PB.CUB.STRCC">PB.CUB.STRCC - print() 文および println() 文の複雑な式を括弧で囲む</a></li><li><a href="#PB.CUB.TOCTOU">PB.CUB.TOCTOU - Time-of-check Time-of-use (TOCTOU) 競合状況を避ける</a></li><li><a href="#PB.CUB.TOS">PB.CUB.TOS - 配列変数で toString() を呼び出さない</a></li><li><a href="#PB.CUB.TVOM">PB.CUB.TVOM - オーバーロードされたメソッドを呼び出す場合、型変数引数を使用しない</a></li><li><a href="#PB.CUB.UEIC">PB.CUB.UEIC - オブジェクト同士の比較に '==' または '!=' を使用しない</a></li><li><a href="#PB.EAR">PB.EAR - void ではないメソッドの戻り値は、空の配列または null であってはいけない</a></li><li><a href="#PB.IKICO">PB.IKICO - 比較演算に使用されているキーが不変であることを確認する</a></li><li><a href="#PB.LOGIC.AIL">PB.LOGIC.AIL - 無限ループを使用しない</a></li><li><a href="#PB.LOGIC.AMOI">PB.LOGIC.AMOI - 配列または List 要素へアクセスするのに誤ったインデックス変数を使用しない</a></li><li><a href="#PB.LOGIC.AOBO">PB.LOGIC.AOBO - ループ条件で「1 つずれる」エラーを避ける</a></li><li><a href="#PB.LOGIC.AULV">PB.LOGIC.AULV - ループの条件で使用されないループ変数を避ける</a></li><li><a href="#PB.LOGIC.CPI">PB.LOGIC.CPI - String.indexOf() の結果が正かどうかをチェックしてはいけない</a></li><li><a href="#PB.LOGIC.CRRV">PB.LOGIC.CRRV - 読み込みまたはスキップを行うメソッドの戻り値を確認する</a></li><li><a href="#PB.LOGIC.DJNCR">PB.LOGIC.DJNCR - 戻り値が null ではないことをチェックした後に readLine() の結果を破棄してはいけない</a></li><li><a href="#PB.LOGIC.EQLC">PB.LOGIC.EQLC - equals() および compareTo() メソッドの実装では getClass() または instanceof を使用する</a></li><li><a href="#PB.LOGIC.EQUS">PB.LOGIC.EQUS - 常に false を返す equals() メソッドの呼び出しを避ける</a></li><li><a href="#PB.LOGIC.ESO">PB.LOGIC.ESO - 同一のオブジェクトに対して equals() を呼び出さない</a></li><li><a href="#PB.LOGIC.FLRC">PB.LOGIC.FLRC - 無限の再帰呼び出しを行わない</a></li><li><a href="#PB.LOGIC.INDEX">PB.LOGIC.INDEX - ループ変数の使用でのバグを防止する</a></li><li><a href="#PB.LOGIC.JI">PB.LOGIC.JI - ネストされた複数の for ループにおいて同じループ変数をインクリメント/デクリメントしてはいけない</a></li><li><a href="#PB.LOGIC.LLM">PB.LOGIC.LLM - 呼び出すロギング メソッドのレベルに一致したロギング レベルをチェックする</a></li><li><a href="#PB.LOGIC.OAMC">PB.LOGIC.OAMC - ループの条件で使用されるオブジェクトは適切にループ本体でアクセスされるようにする</a></li><li><a href="#PB.LOGIC.OOR">PB.LOGIC.OOR - 範囲外の比較を避ける</a></li><li><a href="#PB.LOGIC.ROM">PB.LOGIC.ROM - メソッドが正しいオブジェクトで呼び出されるようにする</a></li><li><a href="#PB.LOGIC.SG">PB.LOGIC.SG - get/set メソッドが必ず正しい変数にアクセスするようにする</a></li><li><a href="#PB.NAECS">PB.NAECS - switch 文の 列挙型の各定数に case 文を用意する</a></li><li><a href="#PB.OCSF">PB.OCSF - ファイルと同じ名前を持つ型を 1 つだけ必ず用意する</a></li><li><a href="#PB.PCSF">PB.PCSF - ファイルと同名の型を必ず public として宣言する</a></li><li><a href="#PB.PDCL">PB.PDCL - switch 文の最後の case として default を置く </a></li><li><a href="#PB.PDS">PB.PDS - 各 switch 文には default: を用意する</a></li>
+</ol>
+<a class="notPrintable" id="CODSTA.BP.ABCL" href="#top">[Top]</a><br/><br/><STRONG>
+ラベル付きの break または continue を避ける [CODSTA.BP.ABCL]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+break  ラベルまたは continue ラベルパターンの使用を
+検出するたびに、このルールはエラーをレポートします。
+
+
+
+</PRE>
+<STRONG>
+スコープ レベル
+</STRONG>
+<PRE>
+LINE
+
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v6.0
+
+
+</PRE>
+<STRONG>
+パラメーター
+</STRONG>
+<PRE>
+
+-ラベル付きの break を警告する (デフォルト true)
+    -switch 文の case 中の break を指摘する (デフォルト true)
+    詳細については「デメリット」を参照してください。
+-ラベル付きの continue を警告する (デフォルト true)
+    -switch 文の case 中の continue を指摘する (デフォルト true)
+    詳細については「デメリット」を参照してください。
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+ラベル付きの break  または continue は jump ステートメントと同じように
+動作します。そのため、ラベル付きの break  または continue を使用すると、
+コードが複雑になって理解しにくくなります。
+このルールに従うと、コードにエラーが入り込む可能性を低減できます。
+
+
+</PRE>
+<STRONG>
+デメリット
+</STRONG>
+<PRE>
+
+ループの内側に switch 文が置かれる場合があります。特定の条件が満たされたときに
+ループを終了したい場合、ラベルは便利です。
+例)
+    public String upperCaseFirstWord(String sentence) {
+        StringBuffer sb = new StringBuffer(sentence);
+
+        exit:
+        for (int i = 0; i &lt; sb.length(); i++) {
+            char c = sb.charAt(i);
+            switch(c) {
+                case ' ':
+                    //fall through
+                case '\t':
+                    //fall through
+                case '\n':
+                    break exit;
+                default:
+                    sb.setCharAt(i, Character.toUpperCase(c));
+                    break;
+            }
+        }
+        return sb.toString();
+    }
+    
+この場合は switch を if および else 文にリファクタリングすることが可能ですが、
+この方法が効果的ではなく、ラベルを使用したほうが可読性が向上する場合もあります。
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+package examples.rules.codsta.bp;
+
+public class ABCL {
+    public String alternateCapsFirstWord(String sentence) {
+        StringBuffer sb = new StringBuffer(sentence);
+
+        exit:
+        for (int i = 0; i &lt; sb.length(); i++) {
+            if (i % 2 == 0) {
+                switch(c) {
+                    case ' ':
+                        break exit;
+                    default:
+                        sb.setCharAt(i, Character.toLowerCase(c));
+                        break;
+                }
+            }
+            else {
+                switch(c) {
+                    case ' ':
+                        break exit;
+                    default:
+                        sb.setCharAt(i, Character.toUpperCase(c));
+                        break;
+                }
+            }
+        }
+        return sb.toString();
+    }
+}
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+ロジックを再構築してこのようなパターンを避けます。
+
+package examples.rules.codsta.bp;
+
+public class ABCLFixed {
+    public String alternateCapsFirstWord(String sentence) {
+        StringBuffer sb = new StringBuffer(sentence);
+
+        exit:
+        for (int i = 0; i &lt; sb.length(); i++) {
+            char c = sb.charAt(i);
+            if (c == ' ') {
+                break;
+            }
+
+            if (i % 2 == 0) {
+                sb.setCharAt(i, Character.toLowerCase(c));
+            }
+            else {
+                sb.setCharAt(i, Character.toUpperCase(c));
+            }
+        }
+        return sb.toString();
+    }
+}
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="CODSTA.BP.AMRO" href="#top">[Top]</a><br/><br/><STRONG>
+Object を返すメソッドを宣言しない [CODSTA.BP.AMRO]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+このルールは、java.lang.Object を返すメソッドの宣言を違反としてレポートします。
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v9.0
+
+
+</PRE>
+<STRONG>
+注意
+</STRONG>
+<PRE>
+
+このルールは、Object を返す Java API メソッドのオーバーライドを無視します。
+例えば、clone() の実装は違反としてレポートされません。
+また、abstract メソッドまたはインターフェイスに定義されたメソッドはチェック
+されません。
+
+
+</PRE>
+<STRONG>
+パラメーター
+</STRONG>
+<PRE>
+
+-オーバーライドしているメソッドを無視する (デフォルト true)
+    このパラメーターを有効にすると、他のメソッドをオーバーライドしているメソッドは
+    無視されます。
+    これにより、オーバーライドされている最初のメソッドだけがレポートされます。
+-Object 型を返すだけのメソッドを無視する (デフォルト true)
+    このパラメーターを有効にすると、Object 型を返すだけのメソッドは無視されます。
+    例:
+        Object method() {
+            return new Object();
+        }
+    このメソッドは Object を返しているため、無視されます。
+
+-メソッド スタブを無視する (デフォルト true)
+    このパラメーターを有効にすると、null を返すだけの型、または例外を throw
+    するだけの型は無視されます。
+
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+Object を返すメソッドは、実際に何が返されているのかが分かりにくくなります。
+戻り値を使用する前にキャストしなければならないことがよくあります。場合によっては、
+ClassCastException が発生します。可能であれば、より限定された型を返すと、可読性が
+向上し、メソッドが誤って使用されるのを防ぐことができます。
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+package examples.rules.codsta.bp;
+
+public class AMRO {
+    public Object add(int i, int j) { //違反
+        return new Integer(i + j);
+    }
+}
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+package examples.rules.codsta.bp;
+
+public class AMROFixed {
+    public Integer add(int i, int j) { //修正
+        return new Integer(i + j);
+    }           
+}
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="CODSTA.BP.ARM" href="#top">[Top]</a><br/><br/><STRONG>
+リフレクション メソッドを使用しない [CODSTA.BP.ARM]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+このルールは、リフレクション メソッドの呼び出しを違反としてレポートします。
+詳細については「利点」、「デメリット」、「パラメーター」のセクションを参照して
+ください。
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v9.0
+
+
+</PRE>
+<STRONG>
+パラメーター
+</STRONG>
+<PRE>
+
+-次のメソッドをチェック:
+    チェック対象の型を完全修飾名で指定します。メソッド名は正規表現で指定できます。
+    デフォルトのリストでは、すべてのリフレクション メソッドが網羅されているわけでは
+    なく、一部のよく使われるリフレクション メソッドだけが含まれていることに注意して
+    ください。
+
+    型 (完全修飾名)                メソッド名 (正規表現)
+    ---------------------          --------------------------------
+    java.lang.Class                get(Declared)?(Constructor|Field|Method)(s)?
+    java.lang.Class                newInstance
+    java.lang.reflect.Constructor  setAccessible
+    java.lang.reflect.Constructor  newInstance
+    java.lang.reflect.Method       invoke
+    java.lang.reflect.Method       setAccessible
+    java.lang.reflect.Field        set.*
+
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+リフレクションの使用にはさまざまな影響があるため、可能な限り避けるべきです。
+パフォーマンスに関して言えば、型の動的解決はパフォーマンスのオーバーヘッドを
+増加させます。カプセル化に関して言えば、private メンバやその他の通常はアクセス
+できないメンバにアクセスできるため、リフレクションを使用すると意図しない結果を
+招く場合があります。
+
+
+</PRE>
+<STRONG>
+デメリット
+</STRONG>
+<PRE>
+
+やむをえない理由からリフレクション メソッドが使用されている場合があります。その場合、
+適切な代替の手段がないケースに対して違反がレポートされる可能性があります。
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+package examples.rules.codsta.bp;
+
+public class ARM {
+    public boolean addOffer(Collection c, Object o) {
+        try {
+            Method m = c.getClass().getMethod("offer", null); //違反
+            return (Boolean) m.invoke(o);
+        } catch (Exception e) {
+            return c.add(o);
+        }
+    }
+}
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+可能であれば、リフレクション以外の代替の手段を使用します。
+
+package examples.rules.codsta.bp;
+
+public class ARMFixed {
+    public boolean addOffer(Collection c, Object o) {
+        if (c instanceof Queue) { //修正
+            return ((Queue) c).offer(o);
+        }
+        return c.add(o);
+    }
+}
+
+
+教育とトレーニング
+
+Code Injections
+Video: <A target="_blank" HREF="https://vimeo.com/304405723">https://vimeo.com/304405723</A>
+PDF: <A target="_blank" HREF="http://research.cs.wisc.edu/mist/SoftwareSecurityCourse/Chapters/3_8_3-Code-Injections.pdf">http://research.cs.wisc.edu/mist/SoftwareSecurityCourse/Chapters/3_8_3-Code-Injections.pdf</A>
+
+
+
+</PRE>
+<STRONG>
+関連資料
+</STRONG>
+<PRE>
+
+Trail: The Reflection API (The Java Tutorials)
+<A target="_blank" HREF="http://docs.oracle.com/javase/tutorial/reflect/index.html">http://docs.oracle.com/javase/tutorial/reflect/index.html</A>
+
+SEI CERT Oracle Coding Standard for Java
+SEC05-J. Do not use reflection to increase accessibility of classes, methods, or fields
+<A target="_blank" HREF="https://wiki.sei.cmu.edu/confluence/display/java/SEC05-J.+Do+not+use+reflection+to+increase+accessibility+of+classes%2C+methods%2C+or+fields">https://wiki.sei.cmu.edu/confluence/display/java/SEC05-J.+Do+not+use+reflection+to+increase+accessibility+of+classes%2C+methods%2C+or+fields</A>
+
+OWASP API Security Top 10-2019
+API8-Injection
+<A target="_blank" HREF="https://github.com/OWASP/API-Security/blob/v1.4.1/2019/en/src/0xa8-injection.md">https://github.com/OWASP/API-Security/blob/v1.4.1/2019/en/src/0xa8-injection.md</A>
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="CODSTA.BP.ARN" href="#top">[Top]</a><br/><br/><STRONG>
+配列および特定の型に対して null を返すのを避ける [CODSTA.BP.ARN]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+配列を返すメソッドが、空の配列ではなく "null" を返す場合、
+このルールはエラーをレポートします。ルールをパラメーター化して
+特定の型から null が返されている場合に違反をレポートすることも
+できます。
+オカレンスごとにエラーがレポートされます。
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v4.5
+
+
+</PRE>
+<STRONG>
+パラメーター
+</STRONG>
+<PRE>
+
+-@return タグが次の正規表現に一致するメソッドを無視する:
+    -このパラメーターが有効な場合、ルールは @return Javadoc タグにここで指定した
+     テキストが含まれるメソッドを無視します。
+    -デフォルトの設定では、パラメーターは有効です。デフォルトの正規表現 "&lt;code&gt;null&lt;/code&gt;"
+     が指定されています。つまり、@return Javadoc タグに "&lt;code&gt;null&lt;/code&gt;" が含まれる
+     メソッドが無視されます。例えば、次のメソッドが "null" を返していても、違反は
+     レポートされません。
+     
+     /**
+      * @return Allowed to return &lt;code&gt;null&lt;/code&gt;
+      */
+     public Object[] testMethod() {
+         return null;
+     }
+     
+    -正規表現は大文字/小文字を区別しません。
+
+-配列をチェックする (デフォルト値 true)
+    このパラメーターが有効な場合、戻り値の型が配列のメソッドがチェックされます。
+    このルールは、別の場所で空の配列が返されている場合にだけ、null 配列を
+    違反としてレポートします。これは、null と空の配列を区別して意図的に
+    返しているメソッドが違反としてレポートされるのを避けるためです。
+
+-特定の型をチェックする (デフォルト値 false)
+    このパラメーターが有効な場合、このパラメーターのいずれか、またはそのサブタイプと
+    戻り値の型が一致するメソッドをチェックします。型の完全修飾名を指定します。
+
+    デフォルトの型リスト:
+        java.util.Collection
+        java.util.Enumeration
+        java.util.Iterator
+        java.util.Map
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+空の配列ではなく "null" を返すかもしれない配列メソッドを使っている場合、
+クライアントは余分にコードを記述しなければなりません。
+その結果、プログラムの内容が乱雑になり、空の配列を返した場合に比べて著しく
+パフォーマンスが向上することもありません。
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+package examples.rules.codsta.bp;
+
+import java.util.*;
+
+public class ARN {
+    private List slist;
+    
+    public String[] getStringList () {
+        if (slist.size() == 0) { 
+            return null;  // 違反
+        }
+        
+        return (String[])slist.toArray (new String[slist.size ()]);
+    }
+    
+    public void find () {
+        ARN a = new ARN ();
+        String[] list = a.getStringList ();
+        if (list != null)  {  // クライアントで追加のエラー チェック コードが必要
+            if (Arrays.asList (list).contains ("Hello")) {
+                System.out.println ("find");
+            }
+        }
+    }
+}
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+"null" ではなく空の配列を返すようにしてください。
+
+package examples.rules.codsta.bp;
+
+import java.util.*;
+
+public class ARNFixed {
+    private List slist;
+
+    public String[] getStringList () {  
+        return (String[])slist.toArray (new String[slist.size()]);  // 修正
+    }
+    
+    public void find () {
+        ARNFixed a = new ARNFixed ();
+        String[] list = a.getStringList ();
+        if (Arrays.asList (list).contains ("Hello")) {
+            System.out.println ("find");
+        }
+    }
+}
+
+
+</PRE>
+<STRONG>
+関連資料
+</STRONG>
+<PRE>
+
+Joshua Bloch: "Effective Java - Programming Language Guide"
+Addison Wesley, 2001, pp. 134
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="CODSTA.BP.AULS" href="#top">[Top]</a><br/><br/><STRONG>
+ラベルを使用してはいけない [CODSTA.BP.AULS]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+このルールは、コード中のラベルを特定します。
+オカレンスごとにエラーがレポートされます。
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v6.0
+
+
+</PRE>
+<STRONG>
+注意
+</STRONG>
+<PRE>
+
+このルールを補完する UC.AUL ルールを利用すると、無効な
+ラベルまたは未使用のラベルだけを発見できます。
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+ラベルを使用すると、フローが非論理的になることがあり、
+その結果、エラーのあるコードや読みにくいコードになることがあります。
+そのようなコードは、ラベルを使用しないコードに変更できます。
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+package examples.rules.codsta.bp;
+
+public class AULS
+{
+    public static void main (String args[]) {
+        int a = 0;
+        int b = 0;
+        while (a &lt;= 10) {
+            tag:  //違反
+            {
+                a++;
+                b = 0;
+                while (b &lt;= 10) {
+                    b++;
+                    System.out.println(a * b);
+                    if (a == b)
+                        break tag;
+                }
+            }
+        }
+    }
+}
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+package examples.rules.codsta.bp;
+
+public class AULSFixed
+{
+    public static void main (String args[]) {
+      
+        int a = 0;
+        int b = 0;
+        boolean flag= true;
+        while (a &lt;= 10) {
+            a++;
+            b = 0;
+            flag= true;
+            while ((b &lt;= 10) &amp;&amp; (flag)) {
+                b++;
+                System.out.println(a * b);
+                if (a == b)
+                    flag= false; //修正: フラグを使用
+            }
+        }
+    }
+}
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="CODSTA.BP.AUML" href="#top">[Top]</a><br/><br/><STRONG>
+複数のロガーの使用を避ける。代わりにロギング レベルを使用する [CODSTA.BP.AUML]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+このルールは、複数のロガーがあるクラスを違反としてレポートします。
+
+
+
+</PRE>
+<STRONG>
+スコープ レベル
+</STRONG>
+<PRE>
+CLASS
+
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v8.4
+
+
+
+</PRE>
+<STRONG>
+パラメーター
+</STRONG>
+<PRE>
+
+-チェックするロガーの型:
+    -デフォルト値:
+     java.util.logging.Logger
+     org.apache.log4j.Logger
+     
+デフォルトの設定では、このルールは java.util.logging.Logger 型および
+org.apache.log4j.Logger 型だけをチェックします。この 2 つは最も広く使われている
+ロガーです。これ以外のロガーを使用している場合、パラメーター リストにロガーの
+完全修飾名を追加する必要があります。
+
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+ロギング レベルを使用して同じような機能を達成できます。多くの場合、ロギング レベルを
+使用するほうが優れた方法であると考えられます。また、コードがより明確になります。
+
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+package examples.rules.codsta.bp;
+
+import java.util.logging.Logger;
+
+public class AUML { //違反
+    private final static Logger _logger1 = Logger.getAnonymousLogger();
+    private final static Logger _logger2 = Logger.getAnonymousLogger();
+    private final static Logger _logger3 = Logger.getAnonymousLogger();
+}
+
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+余分なロガーを削除し、ロギング レベルを実装します。
+
+package examples.rules.codsta.bp;
+
+import java.util.logging.Logger;
+
+public class AUMLFixed { //修正
+    private final static Logger _logger1 = Logger.getAnonymousLogger();
+}
+
+
+
+</PRE>
+<STRONG>
+関連資料
+</STRONG>
+<PRE>
+
+OWASP API Security Top 10-2019
+API10-Insufficient Logging &amp; Monitoring
+<A target="_blank" HREF="https://github.com/OWASP/API-Security/blob/v1.4.1/2019/en/src/0xaa-insufficient-logging-monitoring.md">https://github.com/OWASP/API-Security/blob/v1.4.1/2019/en/src/0xaa-insufficient-logging-monitoring.md</A>
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="CODSTA.BP.AWRT" href="#top">[Top]</a><br/><br/><STRONG>
+メソッドの戻り値の型にワイルドカードを使用しない [CODSTA.BP.AWRT]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+
+このルールは、戻り値の型にワイルドカードが含まれるメソッドを違反としてレポート
+します。メソッド定義を変更すると意味が変わってしまうことがよくあるため、
+違反を 1 つずつ調べてから修正する必要があります。
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v9.0
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+ワイルドカード型を使用すると、戻り値の型のさまざまな側面へのアクセスが制限される
+場合があります。一般的に、戻り値の型にワイルドカードを使用することは避けるほうが
+有利です。ワイルドカードを使用しない場合、ユーザーは返されたデータでより多くの操作を
+行うことができます。また、ワイルドカードを使用したことにより発生する警告やエラー 
+メッセージは、わかりにくいことがあります。
+
+For example:
+    void method(Number[][] array) {
+        List&lt;? extends Number&gt; result = sumArray(array);
+        result.add(new Integer(0)); //コンパイル エラー
+    }
+    
+上記のサンプルでは、result は List&lt;? extends Number&gt; 型です。
+result に Integer を追加しようとすると、コンパイル エラーが
+発生します。これは、Integer は Number を拡張していますが、result は
+実際には List&lt;Double&gt; である場合があるからです。型安全性を維持するため、
+add() の呼び出しは許されません。
+
+
+</PRE>
+<STRONG>
+デメリット
+</STRONG>
+<PRE>
+
+メソッド定義を変更すると、メソッドの意味が変わる場合があります。
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+package examples.rules.codsta.bp;
+
+public class AWRT {
+    public List&lt;? extends Number&gt; sumArray(Number[][] array) { //違反
+        ...
+    }
+}
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+ワイルドカードをジェネリックまたは明示的な型に置き換えます。それにより
+メソッドの意味が変わる場合があることに注意してください。
+
+package examples.rules.codsta.bp;
+
+public class ABCLFixed {
+    public List&lt;Number&gt; sumArray(Number[][] array) { //修正
+        ...
+    }
+}
+
+
+</PRE>
+<STRONG>
+関連資料
+</STRONG>
+<PRE>
+
+Java Generics FAQs - Programming With Java Generics by Angelika Langer
+<A target="_blank" HREF="http://www.angelikalanger.com/GenericsFAQ/FAQSections/ProgrammingIdioms.html#FAQ303">http://www.angelikalanger.com/GenericsFAQ/FAQSections/ProgrammingIdioms.html#FAQ303</A>
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="CODSTA.BP.BLK" href="#top">[Top]</a><br/><br/><STRONG>
+条件文で '{}' ブロックを使用する [CODSTA.BP.BLK]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+条件文に {  } ブロックがない場合、このルールはエラーをレポートします。
+チェックする条件文は if、else、for、while、および do-while です。
+
+
+
+</PRE>
+<STRONG>
+スコープ レベル
+</STRONG>
+<PRE>
+
+LINE
+
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v6.0
+
+
+</PRE>
+<STRONG>
+セキュリティとの関連
+</STRONG>
+<PRE>
+
+「このエラーが運用環境にまで持ち越され、アプリケーションの予期しない状態に
+つながる制御フローパスの原因となることで、新たな攻撃ベクターを追加する
+可能性があります。その結果は、不正に実行される動作のタイプによって異なります。」
+[CWE-483]
+
+
+
+</PRE>
+<STRONG>
+パラメーター
+</STRONG>
+<PRE>
+
+-if 文をチェックする (デフォルト true)
+-else 文をチェックする (デフォルト true)
+-for 文をチェックする (デフォルト true)
+-while 文をチェックする (デフォルト true)
+-do-while 文をチェックする (デフォルト true)
+
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+{   } ブロックがある条件文のほうが、{   } ブロックがない条件文よりも
+エラーが発生しにくくなります。
+
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+package examples.rules.codsta.bp;
+
+public class BLK {
+    public void method () {
+        for (int i = 0; i &lt; 10; i++)  // 違反
+            System.out.println (i * i);  // ループ内
+            System.out.println (i);      // ループ外
+    }
+}
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+for 文に {  }  ブロックを用意します。
+
+
+package examples.rules.codsta.bp;
+
+public class BLKFixed {
+    public void method () {
+        for (i = 0; i &lt; 10; i++) {  // 修正
+            System.out.println (i * i);  // ループ内
+            System.out.println (i);      // ループ内
+        }
+    }
+}
+
+
+</PRE>
+<STRONG>
+関連資料
+</STRONG>
+<PRE>
+
+Section 7.2 of <A target="_blank" HREF="http://www.oracle.com/technetwork/java/javase/documentation/codeconventions-142311.html#15395">http://www.oracle.com/technetwork/java/javase/documentation/codeconventions-142311.html#15395</A>
+
+CWE-483: Incorrect Block Delimitation
+<A target="_blank" HREF="https://cwe.mitre.org/data/definitions/483.html">https://cwe.mitre.org/data/definitions/483.html</A>
+
+
+</PRE>
+<STRONG>
+ログ
+</STRONG>
+<PRE>
+
+@deprecated MISC.BLKDOWHL
+@deprecated MISC.BLKELSE
+@deprecated MISC.BLKFOR
+@deprecated MISC.BLKIF
+@deprecated MISC.BLKWHL
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="CODSTA.BP.BLOCK" href="#top">[Top]</a><br/><br/><STRONG>
+不必要なネストされたブロックを避ける [CODSTA.BP.BLOCK]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+このルールは、ネストされたブロックを特定します。
+オカレンスごとにエラーがレポートされます。
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v6.0
+
+
+</PRE>
+<STRONG>
+注意
+</STRONG>
+<PRE>
+
+N/A
+
+
+</PRE>
+<STRONG>
+セキュリティとの関連
+</STRONG>
+<PRE>
+
+N/A
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+ネストされたブロックは通常、削除し忘れたデバッグ用コードです。
+ネストされたブロックは混乱を招くおそれがあるので、より明確に構造化された
+コードにするために、できる限りそのようなブロックを削除するべきです。
+
+
+</PRE>
+<STRONG>
+デメリット
+</STRONG>
+<PRE>
+
+N/A
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+package examples.rules.codsta.bp;
+
+public class BLOCK {
+    public void myMethod() {
+        { //違反
+            System.out.print("Hello ");
+        }
+        System.out.println("World!");
+    }
+}
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+package examples.rules.codsta.bp;
+
+public class BLOCKFixed {
+    public void myMethod() {
+        System.out.print("Hello "); //修正
+        System.out.println("World!");
+    }
+}
+   
+
+</PRE>
+<STRONG>
+関連資料
+</STRONG>
+<PRE>
+
+N/A
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="CODSTA.BP.CFNF" href="#top">[Top]</a><br/><br/><STRONG>
+すべての大文字のフィールドは final として宣言する [CODSTA.BP.CFNF]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+このルールは、final として宣言されていない、定数フィールドと
+思われるフィールドを特定します。
+フィールド名がすべて大文字の場合、フィールドは定数と見なされます。
+オカレンスごとにエラーがレポートされます。
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v6.0
+
+
+</PRE>
+<STRONG>
+注意
+</STRONG>
+<PRE>
+
+N/A
+
+
+</PRE>
+<STRONG>
+セキュリティとの関連
+</STRONG>
+<PRE>
+
+N/A
+
+
+</PRE>
+<STRONG>
+パラメーター
+</STRONG>
+<PRE>
+
+N/A
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+フィールドが実際に定数である場合、final としてフィールドを宣言するべきです。
+
+</PRE>
+<STRONG>
+デメリット
+</STRONG>
+<PRE>
+
+N/A
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+package rules.examples.codsta.bp;
+
+public class CFNF {
+    public static int MAX= 100; //違反
+    public static int MIN= 0; //違反
+}
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+package rules.examples.codsta.bp;
+
+public class CFNFFixed {
+    public static final int MAX= 100; //修正
+    public static final int MIN= 0; //修正
+}
+
+
+</PRE>
+<STRONG>
+関連資料
+</STRONG>
+<PRE>
+
+N/A
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="CODSTA.BP.CMUTA" href="#top">[Top]</a><br/><br/><STRONG>
+不変クラスで public または protected コンストラクターを使用しない [CODSTA.BP.CMUTA]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+このルールは、不変クラスに public または protected コンストラクターがある
+場合に違反をレポートします。
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v9.0
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+コンストラクターを隠すと、インスタンスの作成とキャッシュの柔軟性が高まります。
+これらのオブジェクトを生成するビルド メソッドを作成するのは、よいやり方です。
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+package examples.rules.codsta.bp;
+
+public class CMUTA {
+    private int a;
+    
+    public CMUTA(){ //違反
+    }
+    
+    private void method() {
+    }
+}
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+package examples.rules.codsta.bp;
+
+public class CMUTAFixed {
+    private int a;
+    
+    private CMUTA(){ //修正
+    }
+    
+    private void method() {
+    }
+}
+
+
+</PRE>
+<STRONG>
+関連資料
+</STRONG>
+<PRE>
+
+<A target="_blank" HREF="http://www.oracle.com/technetwork/java/seccodeguide-139067.html#6-1">http://www.oracle.com/technetwork/java/seccodeguide-139067.html#6-1</A>
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="CODSTA.BP.CONTINUE" href="#top">[Top]</a><br/><br/><STRONG>
+break 文または continue 文を使用しない [CODSTA.BP.CONTINUE]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+このルールは continue 文または break 文の使用を検出します。
+該当するコードを発見するたびに、このルールはエラーをレポートします。
+
+
+
+</PRE>
+<STRONG>
+スコープ レベル
+</STRONG>
+<PRE>
+LINE
+
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v6.0
+
+
+</PRE>
+<STRONG>
+パラメーター
+</STRONG>
+<PRE>
+
+-break 文を指摘する (デフォルト false)
+-continue 文を指摘する (デフォルト true)
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+continue 文や break 文を使うと、現在の構造を
+後から小さな構造やメソッドに分割するのが難しくなります。
+また、開発者は 1 つの構造について複数の終了ポイントを考慮しなければなりません。
+
+このルールに準拠すれば、コードが読みやすくなり、モジュール的になります。
+
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+package examples.rules.codsta.bp;
+
+public class CONTINUE {
+    public int getNum (int max){
+        int i= 0;
+        while (true) {
+            i+= max;
+            max--;
+            if (max== 0) {
+                break; //違反
+            }
+        }
+        return i;
+    }
+}
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+Reorganize the logic of the code segment in order to 
+avoid those patterns.
+
+package examples.rules.codsta.bp;
+
+public class CONTINUEFixed {
+    public int getNum (int max){
+        int i= 0;
+        while (max&gt; 0) {
+            i+= max;
+            max--;   //修正
+        }
+        return i;
+    }
+}
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="CODSTA.BP.CS" href="#top">[Top]</a><br/><br/><STRONG>
+比較式では適切な側に定数を置く [CODSTA.BP.CS]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+このルールは、定数が比較式の適切な位置 (ルールのパラメーターで定義) にない場合、
+違反をレポートします。デフォルトのパラメーター設定では、定数が比較式の右側に
+ない場合、違反をレポートします。
+
+
+
+</PRE>
+<STRONG>
+スコープ レベル
+</STRONG>
+<PRE>
+LINE
+
+
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v6.0
+
+
+
+</PRE>
+<STRONG>
+パラメーター
+</STRONG>
+<PRE>
+
+-定数の位置:
+   -左辺 
+   -右辺 (デフォルト値)
+   
+-比較式の一方に "null" 定数が含まれることを許可する
+   -デフォルトはオフです。この設定がオンの場合、
+     このルールは null 定数を無視します。
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+比較式の決まった位置に定数を置くのは良い習慣です。
+
+比較式の左辺に定数を置くことには他にもメリットがあります。
+コードの記述ミスでよくあるのは、等価式において "==" ではなく
+"=" と記述してしまうことです。
+定数を式の左辺に必ず置くようにしておくと、
+コンパイラはこの記述ミスをエラーとしてレポートします。
+たとえば、javac コンパイラは次のコードではエラー メッセージをレポートしますが、
+
+    if (false = var)
+
+次のコードではエラー メッセージをレポートしません。
+
+    if (var = false)
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+package examples.rules.codsta.bp;
+
+public class CS {
+    public void testMethod (int something) {
+        if (something == 5) {}  // 違反 (デフォルト設定時)
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+package examples.rules.codsta.bp;
+
+public class CSFixed {
+    public void testMethod (int something) {
+        if (5 == something) {}  // 修正
+    }
+}
+
+
+</PRE>
+<STRONG>
+関連資料
+</STRONG>
+<PRE>
+
+<A target="_blank" HREF="http://www.sourceformat.com/pdf/java-coding-standard-ambysoft.pdf">http://www.sourceformat.com/pdf/java-coding-standard-ambysoft.pdf</A>
+のセクション 2.5.2
+
+
+
+</PRE>
+<STRONG>
+ログ
+</STRONG>
+<PRE>
+
+@deprecated CODSTA.CLS
+@deprecated CODSTA.CRS
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="CODSTA.BP.DLSF" href="#top">[Top]</a><br/><br/><STRONG>
+ロガーを static final フィールドとして宣言する [CODSTA.BP.DLSF]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+慣例により、ロガー オブジェクトは static final フィールドとして宣言する必要が
+あります。このルールは、ロガー型として宣言されているが、final および static では
+ないフィールドを違反としてレポートします。また、ロガー型のローカル変数も違反として
+レポートします。慣例により、ロガーはローカル変数ではなくフィールドでなければなりません。
+
+
+
+</PRE>
+<STRONG>
+スコープ レベル
+</STRONG>
+<PRE>
+LINE
+
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v8.4
+
+
+</PRE>
+<STRONG>
+パラメーター
+</STRONG>
+<PRE>
+
+-チェックするロガーの型:
+    -デフォルト値:
+     java.util.logging.Logger
+     org.apache.log4j.Logger
+     
+デフォルトの設定では、このルールは java.util.logging.Logger 型および
+org.apache.log4j.Logger 型だけをチェックします。この 2 つは最も広く使われている
+ロガーです。これ以外のロガーを使用している場合、パラメーター リストにロガーの
+完全修飾名を追加する必要があります。
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+ロガーの使用方法に関する慣例は、クラスに 2 つ以上のロガーがあってはならないと
+定めています。また、ロガーはいったん作成されたら、再代入されてはなりません。
+これを保証する最良の方法は、ロガーを static final フィールドとして宣言することです。
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+このサンプルでは、ロガー フィールドが static 宣言されていないため、クラス DLSF の
+インスタンスは、それぞれ固有のロガーのコピーを持ちます。これはロガーの使用方法の慣例に
+反します。
+
+package examples.rules.codsta.bp;
+
+import java.util.logging.Logger;
+
+public class DLSF {
+    private final Logger LOGGER = Logger.getLogger("DLSF");  //違反 - 'LOGGER' は "static" ではない
+    
+    public void testMethod() {
+        LOGGER.info("In 'testMethod()'");
+    }
+}
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+ロガーを static かつ final として宣言します。ローカル変数の場合、static final
+フィールドに変更します。
+
+package examples.rules.codsta.bp;
+
+import java.util.logging.Logger;
+
+public class DLSF_Fixed {
+    private static final Logger LOGGER = Logger.getLogger("DLSF_Fixed");  //修正
+    
+    public void testMethod() {
+        LOGGER.info("In 'testMethod()'");
+    }
+}
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="CODSTA.BP.EXIT" href="#top">[Top]</a><br/><br/><STRONG>
+Java 仮想マシンを終了するメソッドを呼び出してはならない [CODSTA.BP.EXIT]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+このルールは、以下のメソッドの呼び出しを違反としてレポートします。
+- java.lang.Runtime の 'halt()' メソッド
+- java.lang.Runtime の 'exit()' メソッド
+
+
+</PRE>
+<STRONG>
+スコープ レベル
+</STRONG>
+<PRE>
+LINE
+
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v10.4
+
+
+
+</PRE>
+<STRONG>
+セキュリティとの関連
+</STRONG>
+<PRE>
+
+「Web アプリケーションにとって、アプリケーション コンテナーをシャットダウン
+しようとするのはよい考えではありません。アプリケーションをシャットダウンする
+可能性がある関数にアクセスすると、サービス拒否 (DoS) 攻撃を招きやすくなります．．．
+シャットダウン関数は、適切に認可された管理ユーザーにだけ可能な特権的な関数
+であるべきです。」 [CWE-382]
+
+
+
+</PRE>
+<STRONG>
+パラメーター
+</STRONG>
+<PRE>
+
+-'main()' メソッド内では無視する
+(デフォルト値 オン)
+
+-メソッド呼び出しの後、同一行にコメントがある場合は無視する
+ (デフォルト値 オフ)
+
+-メソッド呼び出しの直前の行にコメントがある場合は無視する
+ (デフォルト値 オフ)
+
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+このルールは Java 仮想マシンの予期しないシャットダウンを防ぐのに役立ちます。
+'System.exit()'、'Runtime.getRuntime().exit()'、'Runtime.getRuntime().halt()' を呼び出すと、Java仮想マシン
+全体が終了します。一般的に、これらのメソッドを呼び出す代わりに実行時例外をスローすることが推奨されます。
+
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+package examples.rules.codsta.bp;
+
+public class EXIT {
+    void myMethod() {
+        System.exit(0); // 違反
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+package examples.rules.codsta.bp;
+
+public class EXITFixed {
+    void myMethod() {
+        throw new RuntimeException(); // 修正
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+関連資料
+</STRONG>
+<PRE>
+
+CWE-382: J2EE Bad Practices: Use of System.exit()
+<A target="_blank" HREF="https://cwe.mitre.org/data/definitions/382.html">https://cwe.mitre.org/data/definitions/382.html</A>
+
+SEI CERT Oracle Coding Standard for Java
+ERR09-J. Do not allow untrusted code to terminate the JVM
+<A target="_blank" HREF="https://wiki.sei.cmu.edu/confluence/display/java/ERR09-J.+Do+not+allow+untrusted+code+to+terminate+the+JVM">https://wiki.sei.cmu.edu/confluence/display/java/ERR09-J.+Do+not+allow+untrusted+code+to+terminate+the+JVM</A>
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="CODSTA.BP.FPF" href="#top">[Top]</a><br/><br/><STRONG>
+すべての仮引数を final とする [CODSTA.BP.FPF]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+このルールは、final として宣言されていない仮引数を検出します。
+デフォルトのパラメーター設定では、メソッドの引数に加えて、
+catch ブロックの引数もチェックされます。
+
+
+</PRE>
+<STRONG>
+スコープ レベル
+</STRONG>
+<PRE>
+LINE
+
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v6.0
+
+
+</PRE>
+<STRONG>
+注意
+</STRONG>
+<PRE>
+
+このコーディング スタイルは個人的な好みの問題です。
+このルールを無視しても、ソフトウェアのエラーにはつながりません。
+
+このルールはエラーを誤検出する可能性があります。
+
+
+</PRE>
+<STRONG>
+セキュリティとの関連
+</STRONG>
+<PRE>
+
+カテゴリ: コード品質
+
+
+</PRE>
+<STRONG>
+パラメーター
+</STRONG>
+<PRE>
+
+-catch ブロックで宣言された引数は無視する
+ (デフォルト値は "false")
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+引数を変更すると混乱につながります。
+すべての引数を final として宣言すると、
+混乱を避けることができます。
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+package examples.rules.codsta.bp;
+
+class FPF {
+    public int sum(int a, int b) { //違反
+        return (a + b); 
+    }
+}
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+package examples.rules.codsta.bp;
+
+class FPFFixed {
+    public int sum(final int a, final int b) { //修正
+        return (a + b); 
+    }
+}
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="CODSTA.BP.FQNIC" href="#top">[Top]</a><br/><br/><STRONG>
+インターフェイス定数を参照する場合は、定数を宣言しているインターフェイス名を付ける [CODSTA.BP.FQNIC]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+このルールは、宣言しているインターフェイス名を付けずに
+インターフェイス定数を参照している場合、違反をレポートします。
+
+
+
+
+</PRE>
+<STRONG>
+スコープ レベル
+</STRONG>
+<PRE>
+
+LINE
+
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v8.0
+
+
+
+
+</PRE>
+<STRONG>
+注意
+</STRONG>
+<PRE>
+
+Java 5.0 では、静的インポート規約が導入されました。静的
+インポートでは、宣言インターフェイス名を付けずにインターフェイス
+定数を参照できます。
+
+
+
+
+</PRE>
+<STRONG>
+セキュリティとの関連
+</STRONG>
+<PRE>
+
+N/A
+
+
+
+</PRE>
+<STRONG>
+パラメーター
+</STRONG>
+<PRE>
+
+N/A
+
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+インターフェイス定数を参照する際に接頭辞を使わなくても済むよう、
+継承によって定数へのアクセスを可能にする目的で、定数を参照するクラスが
+インターフェイスを実装することがあります。この定数インターフェイス 
+アンチパターンと呼ばれる習慣は推奨されません。
+
+このやりかたは良くない Java プログラミングの習慣であると見なされます。
+なぜなら、クラスがインターフェイスを実装すると、インターフェイスは
+クラスのパブリック API の一部となるからです。別のクラスの静的メンバーを
+使用している等の実装の詳細は、パブリック API に漏らすべきではありません。
+
+宣言スコープ外のインターフェイス定数に単純名でアクセスしていることは、
+このような良くないプログラミング習慣が行われていることを意味します。
+
+
+
+
+</PRE>
+<STRONG>
+デメリット
+</STRONG>
+<PRE>
+
+N/A
+
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+package examples.rules.codsta.bp;
+
+import java.awt.Color;
+
+public class FQNIC implements Color {
+    public static final Color DEFAULT_COLOR= BLACK; //違反
+}
+
+
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+package examples.rules.codsta.bp;
+
+import java.awt.Color;
+
+public class FQNICFixed {
+    public static final Color DEFAULT_COLOR= Color.BLACK; //修正
+}
+
+
+
+</PRE>
+<STRONG>
+関連資料
+</STRONG>
+<PRE>
+
+N/A
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="CODSTA.BP.HTV" href="#top">[Top]</a><br/><br/><STRONG>
+Hashtable と Vector を使用しないようにする [CODSTA.BP.HTV]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+このルールは、java.util.Hashtable および java.util.Vector の
+インスタンス化を違反としてレポートします。
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v9.0
+
+
+</PRE>
+<STRONG>
+パラメーター
+</STRONG>
+<PRE>
+
+-Hashtable をチェックする (デフォルト値 true)
+-Vector をチェックする (デフォルト値 true)
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+Hashtable および Vector には、他の Collection や Map にはない、同期の機能が
+あります。このため、同期が意図されたものであり、必要なものなのかどうかに関して、
+疑問が生じる場合があります。同期が必要ない場合は、通常 HashMap または ArrayList 
+を使用します。非同期の Collection および Map には、パフォーマンス向上というメリット
+もあります。 同期が必要な場合は、java.util.Collections#synchronizedXXX() メソッドを
+使用して Collection または Map をラップできます。それらのメソッドを使用することで、
+同期が意図的なものであることをコード中ではっきりと示すことができるという利点が
+あります。
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+package examples.rules.codsta.bp;
+
+import java.util.*;
+
+public class HTV {
+    private Hashtable _table;
+
+    public HTV() {
+        _table = new HashTable(); //違反
+        _table.put("Hello","World");
+    }
+    ...
+}
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+package examples.rules.codsta.bp;
+
+import java.util.*;
+
+public class HTVFixed {
+    private Map _table;
+
+    public HTVFixed() {
+        _table = new HashMap(); //修正
+        _table.put("Hello","World");
+    }
+    ...    
+}
+
+
+</PRE>
+<STRONG>
+関連資料
+</STRONG>
+<PRE>
+
+Hashtable (Java Platform SE 6)
+<A target="_blank" HREF="http://java.sun.com/javase/6/docs/api/java/util/Hashtable.html">http://java.sun.com/javase/6/docs/api/java/util/Hashtable.html</A>
+
+Vector (Java Platform SE 6)
+<A target="_blank" HREF="http://java.sun.com/javase/6/docs/api/java/util/Vector.html">http://java.sun.com/javase/6/docs/api/java/util/Vector.html</A>
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="CODSTA.BP.IMPTD" href="#top">[Top]</a><br/><br/><STRONG>
+import 文でのワイルドカード (*) の使用を避けるまたは推進する [CODSTA.BP.IMPTD]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+このルールは、ワイルド カード (*) を使用した import 文を検出します。
+デフォルトのパラメーター設定では、ワイルド カードを使用してクラスを
+インポートしている場合、違反がレポートされます。ルールの設定を変更して、
+クラスのインポート以外でワイルド カードを使用している場合に違反を検出
+することもできます。
+
+
+
+</PRE>
+<STRONG>
+スコープ レベル
+</STRONG>
+<PRE>
+LINE
+
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v6.0
+
+
+
+</PRE>
+<STRONG>
+パラメーター
+</STRONG>
+<PRE>
+
+-ルール オプション:
+    -クラスのインポートでワイルド カードを使用してはいけない (デフォルト true)
+    -クラスのインポートではワイルド カードだけを使用する
+    -カスタマイズされた設定を使用する
+      - 同一パッケージから使用される型の数が指定より少ない場合、単一型インポートを使用する (デフォルト値は 2)
+      - 同一パッケージからインポートされる型の数が指定の数を超える場合、ワイルドカードを使用する (デフォルト値は 20)
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+ワイルド カードを使用してクラスをインポートしない場合の利点
+正確にインポート対象を示さないと、コードを読む者がクラスの
+コンテキストや依存関係を把握するのが困難になります。
+import 文をまったく使用しない (すべてのクラス参照を完全修飾する) 開発者も
+います。import 文を使用しない場合、あいまいさを完全に排除し、パッケージ名が
+変更された場合に必要なコードの変更量を抑えることができます。
+
+ワイルド カードを使用してクラスをインポートする場合の利点
+import 文でワイルドカードを使用してクラス名を指定することができます。
+たとえば、import java.awt.*; という文は、java.awt パッケージで利用可能な
+すべてのクラスをインポートします。ワイルド カードの使用によってコードが
+膨張することはありません。実際に使用されるクラスだけがコンパイルされて
+バイト コードになります。
+
+カスタム設定を使用してパラメーターを微調整すると、適切な数の範囲内で単一の
+型のインポートを許しながら、過剰な単一の型のインポート文を排除することが
+できます。
+
+
+</PRE>
+<STRONG>
+デメリット
+</STRONG>
+<PRE>
+
+ワイルド カードを使用してクラスをインポートしない場合のデメリット
+新たにクラスを使用するようになったり、インポートされたクラスの使用を
+止めたりした場合、毎回インポート文を修正する必要があります。
+
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+package examples.rules.codsta.bp;
+
+import java.io.*;  // 違反 
+
+public class IMPTD {
+    void method (InputStream in) {
+        if (in == null) return;
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+package examples.rules.codsta.bp;
+
+import java.io.InputStream;  // 修正
+
+public class IMPTDFixed {
+    void method (InputStream in) {
+        if (in == null) return;
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+関連資料
+</STRONG>
+<PRE>
+
+Avoid using wild card when importing class:
+<A target="_blank" HREF="http://g.oswego.edu/dl/html/javaCodingStd.html">http://g.oswego.edu/dl/html/javaCodingStd.html</A>
+
+Enforce using wild card when importing class:
+Section 7.2 of <A target="_blank" HREF="http://www.sourceformat.com/pdf/java-coding-standard-ambysoft.pdf">http://www.sourceformat.com/pdf/java-coding-standard-ambysoft.pdf</A>
+
+
+</PRE>
+<STRONG>
+ログ
+</STRONG>
+<PRE>
+
+@deprecated CODSTA.IMPT
+@deprecated CODSTA.IMPT2
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="CODSTA.BP.NRVA" href="#top">[Top]</a><br/><br/><STRONG>
+可変個引数メソッドに具体化できない型を渡さない [CODSTA.BP.NRVA]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+このルールは、reifiable (具体化可能な) 型以外の型を型変数の varargs 引数に
+渡している場合、違反としてレポートします (例 &lt;E&gt; void method(E...args))。
+このルールの違反は、型安全性の問題につながる可能性があります。詳細については
+「利点」を参照してください。
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v9.0
+
+
+</PRE>
+<STRONG>
+注意
+</STRONG>
+<PRE>
+
+このルールはコンパイラ準拠レベルが JDK 1.5 以降のプロジェクトだけをチェックします。
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+配列は reifiable 型からだけ作成できます。varargs 引数は、コンパイル時に
+配列に変換されます。varargs 引数が型変数である場合 (例 &lt;T&gt; void method(T...args))、
+コンパイラが non-reifiable 型の配列を作成する場合があります。詳細については
+「サンプルコード」を参照してください。
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+このサンプルには次の 2 つの varargs メソッドがあります。
+    1) 'getFirstElementArray()' - メソッドの最初の引数だけを格納した配列を返します。
+    2) 'getArray()' - メソッドへの引数を格納した配列を返します。
+           コンパイラは "T..." を "T[]" に変換することに注意してください。
+
+このサンプルでは、コンパイル時の erasure (消去) により、'getFirstElementArray()' の 
+"T" は "Object" に変換されます。このため、"Object[]" が返されることになります。
+'main()' メソッドで結果は "String[]" 型に格納されるため、実行時に
+ClassCastException が発生します。
+
+package examples.rules.codsta.bp;
+
+public class NRVA {
+    public static void main(String[] args) {
+        String[] first = getFirstElementArray("testing", "123");
+    }
+
+    &lt;T&gt; T[] getFirstElementArray(T...args) {
+        return (args.length &gt; 0) ? getArray(args[0]) : null; //違反
+    }
+
+    &lt;T&gt; T[] getArray(T...args) {
+        return args;
+    }
+}
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+varargs メソッドには reifiable 型だけを渡します。メソッドが特定の型でだけ使用される
+場合、varargs 引数に型を指定します。
+
+package examples.rules.codsta.bp;
+
+public class NRVAFixed {
+    public static void main(String[] args) {
+        String[] first = getFirstElementArray("testing", "123");
+    }
+
+    String[] getFirstElementArray(String...args) {
+        return (args.length &gt; 0) ? getArray(args[0]) : null; //修正
+    }
+
+    &lt;T&gt; T[] getArray(T...args) {
+        return args;
+    }
+}
+
+
+</PRE>
+<STRONG>
+関連資料
+</STRONG>
+<PRE>
+
+Types, Values, and Variables
+<A target="_blank" HREF="http://docs.oracle.com/javase/specs/jls/se5.0/html/typesValues.html">http://docs.oracle.com/javase/specs/jls/se5.0/html/typesValues.html</A>
+
+Java Generics FAQs - Programming With Java Generics by Angelika Langer
+<A target="_blank" HREF="http://www.angelikalanger.com/GenericsFAQ/FAQSections/ProgrammingIdioms.html#FAQ300">http://www.angelikalanger.com/GenericsFAQ/FAQSections/ProgrammingIdioms.html#FAQ300</A>
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="CODSTA.BP.NTX" href="#top">[Top]</a><br/><br/><STRONG>
+一般的または非チェック例外型を throw するメソッドの宣言を避ける [CODSTA.BP.NTX]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+このルールは、あまりに包括的な例外型、または非チェック例外型を throw
+するよう宣言されているメソッドを検出します。デフォルトの設定では、
+Exception、Error、Throwable または RuntimeException を throw
+すると宣言されているメソッドをチェックします。ルールをパラメータライズして、
+他の例外型をスローすると宣言されているメソッドを検出できます。
+
+
+
+</PRE>
+<STRONG>
+スコープ レベル
+</STRONG>
+<PRE>
+
+LINE
+
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v4.5
+
+
+
+</PRE>
+<STRONG>
+セキュリティとの関連
+</STRONG>
+<PRE>
+
+「一般的すぎる例外を throw すると、エラー処理コードが複雑になり、セキュリティ
+脆弱性が入り込みやすくなります。」[CWE-397]
+
+
+
+</PRE>
+<STRONG>
+パラメーター
+</STRONG>
+<PRE>
+
+-throw 宣言されるべきでない Exception 型 (完全修飾名)
+    -デフォルト値は次の Exception 型です。
+     * java.lang.Exception
+     * java.lang.Error
+     * java.lang.Throwable
+     * java.lang.RuntimeException
+-JUnit クラスをスキップする (デフォルト値 false)
+    -このパラメーターが有効な場合、ルールは JUnit テスト クラスを解析しません。
+-Error と RuntimeException のサブクラスの例外をチェックする
+ (デフォルト値 false)
+    -このパラメーターが有効な場合、'Error' または 'RuntimeException' のサブクラス
+     が throw される例外として宣言されている場合、違反をレポートします。 
+     この 2 つのクラスのサブクラスの例外は非チェック例外です。
+-オーバーライド メソッドを無視する (デフォルト値 true)
+   -メソッドが別のメソッドをオーバーライドしている場合、オーバーライドする側のメソッドは、
+     オーバーライドされる側のメソッドと同じ例外を throw するように宣言しなければなりません。
+     この理由から、オーバーライド メソッドは通常無視するべきです。
+-呼び出されたメソッドの Exception 型を伝播するメソッドを無視する
+ (デフォルト値 true)
+    -このパラメーターが有効な場合、汎用的な Exception 型を throw しているメソッドが、
+     同じ例外を throw する別のメソッドを呼び出しているときは、違反をレポートしません。
+
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+包括的な例外型、または非チェック例外型を throw するようメソッドを宣言すると
+混乱を招きます。型が throw する例外として、Exception などの包括的な
+例外型を宣言すると、メソッドを使用する場合に処理すべき実際の例外の型がわかり
+にくくなります。このルールに従うと、コードがより明確になり、エラーが発生しに
+くくなります。
+
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+package examples.rules.codsta.bp;
+
+public class NTX {
+    void lostDetailsTest () throws Exception {  // 違反
+        try {
+            throw new java.io.IOException ("IO exception");
+        } finally  {
+        }
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+汎用的すぎる例外型または非チェック例外を throw するメソッドを宣言しない
+ようにします。また、発生する可能性のあるすべての例外を finally ブロックで
+キャッチします。
+
+package examples.rules.codsta.bp;
+
+public class NTXFixed {
+    void lostDetailsTest () throws java.io.IOException {  // 修正
+        try {
+            throw new java.io.IOException ("IO exception");
+        } finally  {
+        }
+    }
+}
+
+
+教育とトレーニング
+
+Exceptions
+Video: <A target="_blank" HREF="https://vimeo.com/201696974">https://vimeo.com/201696974</A>
+PDF: <A target="_blank" HREF="http://research.cs.wisc.edu/mist/SoftwareSecurityCourse/Chapters/3_4-Exceptions.pdf">http://research.cs.wisc.edu/mist/SoftwareSecurityCourse/Chapters/3_4-Exceptions.pdf</A>
+
+Parasoft の教育パートナーが、この脆弱性と予防ベスト プラクティスに関するトレーニングを提供しています。
+トレーニング リソースへのアクセス方法については、Parasoft 製品サポートにお問い合わせください。
+<A target="_blank" HREF="https://app.hackedu.com/link/52f2cf86-dd5a-4c2c-aac1-e04b933f78d5">https://app.hackedu.com/link/52f2cf86-dd5a-4c2c-aac1-e04b933f78d5</A>
+
+
+</PRE>
+<STRONG>
+関連資料
+</STRONG>
+<PRE>
+
+CWE-397: Declaration of Throws for Generic Exception
+<A target="_blank" HREF="https://cwe.mitre.org/data/definitions/397.html">https://cwe.mitre.org/data/definitions/397.html</A>
+
+OWASP Top 10-2017
+A6-Security Misconfiguration
+<A target="_blank" HREF="https://www.owasp.org/index.php/Top_10-2017_A6-Security_Misconfiguration">https://www.owasp.org/index.php/Top_10-2017_A6-Security_Misconfiguration</A>
+
+OWASP API Security Top 10-2019
+API7-Security Misconfiguration
+<A target="_blank" HREF="https://github.com/OWASP/API-Security/blob/v1.4.1/2019/en/src/0xa7-security-misconfiguration.md">https://github.com/OWASP/API-Security/blob/v1.4.1/2019/en/src/0xa7-security-misconfiguration.md</A>
+
+Nigel Warren, Philip Bishop: "Java in Practice - Design Styles and Idioms
+for Effective Java".  Addison-Wesley, 1999, p.76.
+
+SEI CERT Oracle Coding Standard for Java
+ERR07-J. Do not throw RuntimeException, Exception, or Throwable
+<A target="_blank" HREF="https://wiki.sei.cmu.edu/confluence/display/java/ERR07-J.+Do+not+throw+RuntimeException%2C+Exception%2C+or+Throwable">https://wiki.sei.cmu.edu/confluence/display/java/ERR07-J.+Do+not+throw+RuntimeException%2C+Exception%2C+or+Throwable</A>
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="CODSTA.BP.OCMA" href="#top">[Top]</a><br/><br/><STRONG>
+オーバーロードされたコンストラクターまたはメソッドのアクセシビリティをすべて同じにする [CODSTA.BP.OCMA]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+このルールは、オーバーロードされたコンストラクターおよびクラスのメソッドの
+アクセシビリティが異なる場合に違反をレポートします。
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v8.3
+
+
+</PRE>
+<STRONG>
+パラメーター
+</STRONG>
+<PRE>
+-コンストラクターをチェックする (デフォルト値 true)
+-メソッドをチェックする (デフォルト値 true)
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+一貫性のないアクセシビリティは通常、意図されたものでありません。コードをコンパイルできる
+ようにオーバーロードされたメソッドやコンストラクターが呼び出される場合があります。
+しかし、実行時にアクセシビリティの異なるオーバーロードされたメソッドやコンストラクターが
+代わりに呼び出されると、エラーにつながる場合があります。
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+package examples.rules.codsta.bp;
+
+class OCMA {
+    public OCMA(){};
+    protected OCMA(int i){}; //違反
+
+    protected void method1(Object o){};
+    private void method1(String s){}; //違反
+}
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+
+メソッド/コンストラクターの可視性が一致するように変更します。
+
+package examples.rules.codsta.bp;
+
+class OCMAFixed {
+    public OCMAFixed(){};
+    public OCMAFixed(int i){}; //修正
+    
+    protected void method1(Object o){};
+    protected void method1(String s){}; //修正
+}
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="CODSTA.BP.PCF" href="#top">[Top]</a><br/><br/><STRONG>
+private コンストラクターだけを持つクラスは final として宣言する [CODSTA.BP.PCF]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+このルールは、private コンストラクターだけを持つが 
+final として宣言されていないクラスを特定します。
+private コンストラクターだけを持つが final として宣言されていない
+クラスがある場合、エラーがレポートされます。
+
+
+</PRE>
+<STRONG>
+スコープ レベル
+</STRONG>
+<PRE>
+
+CLASS
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v6.0
+
+
+</PRE>
+<STRONG>
+注意
+</STRONG>
+<PRE>
+
+インナー クラスがアウター クラスを拡張する場合、このルールはエラーを
+レポートしません。
+
+
+</PRE>
+<STRONG>
+セキュリティとの関連
+</STRONG>
+<PRE>
+
+N/A
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+private コンストラクターだけを持っているが final として宣言されていないクラスは、
+他のクラスが拡張しようとすることができます。
+ただし、そのような継承されたクラスは、コンストラクターを正しく実装できません。
+なぜなら、private コンストラクターだけを持つペアレント クラスのコンストラクターに
+まったくアクセスできないからです。
+( 外部クラスを拡張するインナー クラスを作成してそのようなクラスを拡張することは
+可能です。しかし、そのような関係は奇妙であり、避けるべきです。)
+したがって、他のクラスに継承されないようにクラスを final として宣言する方が
+理にかなっています。
+
+
+</PRE>
+<STRONG>
+デメリット
+</STRONG>
+<PRE>
+
+N/A
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+package examples.rules.codsta.bp;
+
+public class PCF { //違反、private のコンストラクターしかない
+    private PCF() {}
+}
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+package examples.rules.codsta.bp;
+
+public final class PCF { //修正
+    private PCF() {}
+}
+
+
+</PRE>
+<STRONG>
+関連資料
+</STRONG>
+<PRE>
+
+N/A
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="CODSTA.BP.PPAC" href="#top">[Top]</a><br/><br/><STRONG>
+匿名クラスに public または protected メンバーを宣言しない [CODSTA.BP.PPAC]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+匿名クラスは public または protected メンバーを持つべきでは
+ありません。このルールは、匿名クラスに public または
+protected のフィールドまたはメソッドが宣言されているのを
+発見するたびに、違反をレポートします。
+
+
+非推奨
+このルールは非推奨であり、OPT.AAM ルールに置き換えられました。
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v8.1
+
+
+</PRE>
+<STRONG>
+注意
+</STRONG>
+<PRE>
+
+このルールは、オーバーライドしているメソッドには違反をレポート
+しません。オーバーライドしているメソッドのアクセシビリティを
+下げることはできないからです。
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+匿名クラスのメンバーはクラス定義の外からアクセスすることは
+できません。そのため、public または protected で宣言する意味が
+ありません。匿名クラスのメンバーは private で宣言します。
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+package examples.rules.codsta.bp;
+
+public class PPAC {
+    TestAnonClass anonObj= new TestAnonClass(){
+        public int foo;  //違反
+        
+        public void bar(String args[]){  //違反
+        }
+    };
+}
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+public または protected ではなく、private で
+匿名クラスのメンバーを宣言します。
+
+package examples.rules.codsta.bp;
+
+public class PPACFixed {
+    TestAnonClass anonObj= new TestAnonClass(){
+        private int foo;  //修正
+        
+        private void bar(String args[]){  //修正
+        }
+    };
+}
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="PB.CLOSE" href="#top">[Top]</a><br/><br/><STRONG>
+無制限のロック リソース [PB.CLOSE]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+このルールは、ロックの未解放につながる可能性のある、クローズされないままのリソースを防ぎます。
+リソースに責任のある変数を検索し、クローズ メソッドが呼び出されているかをチェックします。
+呼び出されていない場合、違反がレポートされます。
+
+このルールはカスタマイズ可能です。リソース クラスおよびクラスのリソースを
+クローズするのに使用する必要があるメソッドを指定します。
+
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v9.2
+
+
+
+</PRE>
+<STRONG>
+注意
+</STRONG>
+<PRE>
+
+このルールは、他のクラスに渡されない変数にだけ適用されます。
+変数が他のクラスのメソッドへの引数である場合、無視されます。
+
+
+
+</PRE>
+<STRONG>
+パラメーター
+</STRONG>
+<PRE>
+
+-クラス名
+    -デフォルト値は "java.io.Closeable"
+    -リソースに責任のあるクラス
+    -ルールは常に階層をチェックする
+    
+-メソッド名
+    -デフォルト値は "close"
+    -リソースをクローズするメソッド
+
+
+セキュリティとの関連性
+
+カテゴリ: デッドロックと競合状態
+カテゴリ: アプリケーションの誤動作
+
+攻撃者がロックを制御できる場合、プログラムは攻撃者が
+ロックを解放するまでずっと待機し続け、プログラムの他の
+ユーザーに対するサービス拒否の原因となる可能性があります。
+
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+このルールに従うと、ファイルなどのリソースのロックの問題を軽減できます。
+
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+// BAD
+public class Example {
+
+    public Example() {
+        try {
+            Writer fw = new FileWriter("/tmp/resourceLock");
+            closeFw(fw);
+        } catch (IOException e) {
+
+        }
+    }
+
+    public void closeFw(Writer fw) throws IOException {
+        // fw.close(); // BAD
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+// OK
+public class Example {
+
+    public Example() {
+        try {
+            Writer fw = new FileWriter("/tmp/resourceLock");
+            closeFw(fw);
+        } catch (IOException e) {
+
+        }
+    }
+
+    public void closeFw(Writer fw) throws IOException {
+        fw.close(); // OK
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+関連資料
+</STRONG>
+<PRE>
+
+CWE-667: Improper Locking
+<A target="_blank" HREF="https://cwe.mitre.org/data/definitions/667.html">https://cwe.mitre.org/data/definitions/667.html</A>
+
+CWE-772: Missing Release of Resource after Effective Lifetime
+<A target="_blank" HREF="https://cwe.mitre.org/data/definitions/772.html">https://cwe.mitre.org/data/definitions/772.html</A>
+
+SAMATE-2104 example
+<A target="_blank" HREF="http://samate.nist.gov/SRD/view_testcase.php?tID=2104">http://samate.nist.gov/SRD/view_testcase.php?tID=2104</A>
+
+SAMATE-2124 example
+<A target="_blank" HREF="http://samate.nist.gov/SRD/view_testcase.php?tID=2124">http://samate.nist.gov/SRD/view_testcase.php?tID=2124</A>
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="PB.CUB.ADE" href="#top">[Top]</a><br/><br/><STRONG>
+else のある if では "{ }" 括弧を使用する [PB.CUB.ADE]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+このルールは、ぶらさがり else (dangling else) 文を検出します。
+{} ブロックがないために、else 文が複数のネストされた if にかかる
+ことが考えられる場合、else 文はぶらさがり else とみなされます。
+ルールのデフォルトのパラメーター設定では、ぶらさがり else 文が
+発見されるたびに、違反がレポートされます。
+
+
+
+</PRE>
+<STRONG>
+スコープ レベル
+</STRONG>
+<PRE>
+LINE
+
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v4.5
+
+
+</PRE>
+<STRONG>
+パラメーター
+</STRONG>
+<PRE>
+
+-誤った位置におかれたelse文の違反のみをレポートする
+    -このパラメーターを有効にすると、if および else キーワードの位置から判断して、
+     ぶらさがり else がバグの可能性が高い場合にだけ違反をレポートします。
+    - else 文は、対応する if 文と位置を揃える必要があります。このパラメーターが
+      有効な場合、else キーワードが対応する if と同じ列から始まっている場合、
+      違反をレポートしません。例外として、ネストの外側の if も内側の if も 
+      else と同じ列からキーワードが始まっている場合は、違反がレポートされます。
+    -このパラメーターが有効な場合、else キーワードが対応する if と同じ行にある
+     場合も、違反がレポートされません。
+ 
+     例外として、ネストの外側の if も内側の if も else と同じ行にキーワードが
+     ある場合は、違反がレポートされます。
+    -たとえば、このパラメーターが有効な場合、次のサンプルに違反がレポートされます。
+     
+     if (blah)
+         if (blah)
+             do something;
+     else
+         do another thing;
+         
+     この場合、else が内側の if ではなく最初の if と位置を揃えられているため、
+     バグの可能性が高いでしょう。しかし、このパラメーターが有効な場合、次の例では
+     違反はレポートされません。
+     
+     if (blah)
+         if (blah)
+             do something;
+         else
+             do do another thing;
+     
+     コードの意味に対しインデントが適切なため、違反はレポートされません。
+     
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+括弧で指示されていないかぎり、コンパイラは常に else を直前の
+if と関連付けます。if を括弧で囲んでいない場合、else が別の
+if 文と関連付けられてしまう誤りが容易に起こり得ます。
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+次のコードのインデントを見ると、プログラマは i &gt;= 5 だった
+場合に i をデクリメントするつもりだったと考えられます。
+このサンプルでは、else は 2 番目の if と関連付けられるため、
+(i &gt;= 2) だった場合にデクリメントが実行されます。
+
+package examples.rules.pb.cub;
+
+public class ADE {
+    void method () {
+        int i = 5;
+        if (i &lt; 5)  // 違反: 括弧 "{ }" がなければならない
+            if (i &lt; 2)
+                i++;
+        else
+            i--;
+    }
+}
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+本来の意図のとおりに構文が実行されるようにするには、
+括弧を使用して、else が最初の if に対応することをコンパイラに 
+教えます。または、else を実際に最後の if に接続するつもりだった
+場合は、インデントを変更し、最後の if 文に括弧を追加してあいまいさを
+なくします。
+
+package examples.rules.pb.cub;
+
+public class ADEFixed {
+    void method () {
+        int i = 5;
+        if (i &lt; 5) {  // 修正
+            if (i &lt; 2)
+                i++;
+        }
+        else {
+            i--;
+        }
+    }
+}
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="PB.CUB.AIPQ" href="#top">[Top]</a><br/><br/><STRONG>
+PriorityQueue および  PriorityBlockingQueue で iterator() を使用しない [PB.CUB.AIPQ]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+このルールは、PriorityQueue または PriorityBlockingQueue から
+iterator() が呼び出されている場合に違反をレポートします。
+詳細については「利点」、「デメリット」、「サンプルコード」を
+参照してください。
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+PriorityQueue の Javadoc には次のように書かれています。
+    「iterator() は PriorityQueue の要素を特定の順序で遷移するとは保証されて
+     いません。特定の順序で遷移する必要がある場合は、Arrays.sort(pq.toArray())
+     を使用することを検討してください。」
+このキューの目的は、優先度に基づいてキューの内容を順序付けることであるため、
+この動作は直感的にわかりにくいものです。同じことが PriorityBlockingQueue にも
+当てはまります。
+
+
+</PRE>
+<STRONG>
+デメリット
+</STRONG>
+<PRE>
+
+優先度キューを反復処理する際に、順番が重要でない場合もあります。例えば、
+優先度に関わらず、すべての要素に対して何らかの処理を行う必要がある場合などです。
+ルールはこのような例に対して違反を誤検出します。
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+v9.0
+
+サンプルコード
+
+package examples.rules.pb.cub;
+
+import java.util.*;
+
+public class AIPQ {
+    void checkQueue(PriorityQueue pq) {
+        for (Iterator iter = pq.iterator(); iter.hasNext(); ) { //違反
+            ...
+        }
+    }
+}
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+順序が重要な場合は、キューの内容の配列を取得し、Arrays.sort() でソートします。
+その後、iterator() を使用して配列を反復処理します。
+
+package examples.rules.pb.cub;
+
+import java.util.*;
+
+public class AIPQFixed {
+    void checkQueue(PriorityQueue pq) {
+        Object[] array = pq.toArray();
+        Arrays.sort(array);
+        for (int i = 0; i &lt; array.length; i++) { //修正
+            ...
+        }
+    }
+}
+
+
+</PRE>
+<STRONG>
+関連資料
+</STRONG>
+<PRE>
+
+Arrays (Java 2 Platform SE 5.0)
+<A target="_blank" HREF="http://docs.oracle.com/javase/1.5.0/docs/api/java/util/Arrays.html">http://docs.oracle.com/javase/1.5.0/docs/api/java/util/Arrays.html</A>
+
+PriorityQueue (Java 2 Platform SE 5.0)
+<A target="_blank" HREF="http://docs.oracle.com/javase/1.5.0/docs/api/java/util/PriorityQueue.html">http://docs.oracle.com/javase/1.5.0/docs/api/java/util/PriorityQueue.html</A>
+
+PriorityBlockingQueue (Java 2 Platform SE 5.0)
+<A target="_blank" HREF="http://docs.oracle.com/javase/1.5.0/docs/api/java/util/concurrent/PriorityBlockingQueue.html">http://docs.oracle.com/javase/1.5.0/docs/api/java/util/concurrent/PriorityBlockingQueue.html</A>
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="PB.CUB.AMCO" href="#top">[Top]</a><br/><br/><STRONG>
+複数の ! または ~ 単項演算子を使用しない [PB.CUB.AMCO]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+このルールは、複数の単項演算子が使用されている場合に違反をレポートします。
+次の単項演算子がチェックされます。
+1) '!' --- 論理補数 (not)
+2) '~' --- ビット補数 (inversion)
+
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v8.4
+
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+複数の補数演算子はタイプミスの可能性があり、予期しない動作の原因になることが
+あります。また、複数の補数演算子の使用を避けると、コードが明確になります。
+
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+次のコードでは、2 つの ! 演算子は実質上、何の効果もありません。本来の意図は
+1 つの ! による論理否定であり、 ブーリアン型のパラメーター twice が false だった
+場合、もう一度乗算を行なう前に戻ることです。
+
+package examples.rules.pb.cub;
+
+public class AMCO {
+    int squareInt(int i, boolean twice) {
+        int square = i * i;
+        if (!!twice) //違反
+            return square;
+
+        return square * square;
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+タイプミスを修正するか、不要な演算子を削除します。
+
+package examples.rules.pb.cub;
+
+public class AMCOFixed {
+    int squareInt(int i, boolean twice) {
+        int square = i * i;
+        if (!twice) //修正
+            return square;
+
+        return square * square;
+    }
+}
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="PB.CUB.APAM" href="#top">[Top]</a><br/><br/><STRONG>
+配列ではない引数を取るメソッドに配列を引数として渡してはならない [PB.CUB.APAM]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+このルールは、メソッドに配列が渡されているが、メソッドの宣言では単一の
+型が指定されている場合に違反をレポートします。
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v8.4
+
+
+</PRE>
+<STRONG>
+パラメーター
+</STRONG>
+<PRE>
+
+-次の型をチェックする:
+    -オブジェクト配列型をチェックする (デフォルト値)
+    -すべての配列型をチェックする
+-次のメソッドを無視する (正規表現で指定):
+    -"assertNull"、"assertNotNull"、"put"、"add" (デフォルト値)
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+単一の型が指定されているメソッドに配列を渡すことは可能ですが、誤解を招きやすく、
+また不注意による誤りの可能性もあります。同じ型の配列を取るようにメソッドを
+オーバーロードするほうが適切です。
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+package examples.rules.pb.cub;
+
+class APAM {
+    public void method() {
+        Object obj = new Object();
+        Object[] objs = { new Object() };
+        printObject(obj);
+        printObject(objs); //違反
+    }
+    printObject(Object obj) {
+        ...
+    }
+}
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+誤った呼び出しを修正するか、メソッドをオーバーロードすることで混乱を解消します。
+
+package examples.rules.pb.cub;
+
+class APAMFixed {
+    public void method() {
+        Object obj = new Object();
+        Object[] objs = { new Object() };
+        printObject(obj);
+        printObject(objs);
+    }
+    printObject(Object obj) {
+        ...
+    }
+    printObject(Object[] objs) { //修正
+        ...
+    }
+}
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="PB.CUB.ARCF" href="#top">[Top]</a><br/><br/><STRONG>
+try-catch ブロック内に return 文がある場合、 finally ブロックでの return 文の使用を避ける [PB.CUB.ARCF]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+このルールは、
+finally ブロックと、対応する try-catch ブロックの両方で
+return 文が使用されていることを検出します。
+finally ブロックの return 文に対して違反がレポートされます。
+
+
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v6.0
+
+
+</PRE>
+<STRONG>
+セキュリティとの関連
+</STRONG>
+<PRE>
+
+「finally ブロックの内側に return 文があります。そのため、try ブロックで
+throw された例外が破棄されます。」[CWE-584]
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+finally ブロックは常に実行されるため、
+finally ブロックの return 文が常に実行され、
+他の return 文は無視されてしまいます。
+
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+package examples.rules.pb.cub;
+
+public class ARCF
+{
+    public int method (String[] arg) {
+        try {
+            int i= 0;
+            System.in.read();
+            return i;
+        } catch (java.io.IOException e) {
+            System.err.println(e.getMessage ());
+            return 1;
+        } finally {
+            System.out.println("FINALLY...");
+            return -1;  //違反
+        }
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+package examples.rules.pb.cub;
+
+public class ARCFFixed
+{
+   public int method (String[] arg) {
+        try {
+            int i= 0;
+            System.in.read();
+            return i;
+        } catch (java.io.IOException e) {
+            System.err.println(e.getMessage ());
+            return 1;
+        } finally {
+            System.out.println("FINALLY...");
+            //修正
+        }
+    }
+}            
+    
+
+</PRE>
+<STRONG>
+関連資料
+</STRONG>
+<PRE>
+
+PCI Data Security Standard 3.2
+6.5.5 Improper error handling
+<A target="_blank" HREF="https://www.pcisecuritystandards.org/documents/PCI_DSS_v3-2-1.pdf">https://www.pcisecuritystandards.org/documents/PCI_DSS_v3-2-1.pdf</A>
+
+CWE-584: Return Inside Finally Block
+<A target="_blank" HREF="https://cwe.mitre.org/data/definitions/584.html">https://cwe.mitre.org/data/definitions/584.html</A>
+
+SEI CERT Oracle Coding Standard for Java
+ERR04-J. Do not complete abruptly from a finally block
+<A target="_blank" HREF="https://wiki.sei.cmu.edu/confluence/display/java/ERR04-J.+Do+not+complete+abruptly+from+a+finally+block">https://wiki.sei.cmu.edu/confluence/display/java/ERR04-J.+Do+not+complete+abruptly+from+a+finally+block</A>
+
+SEI CERT Oracle Coding Standard for Java
+ERR05-J. Do not let checked exceptions escape from a finally block
+<A target="_blank" HREF="https://wiki.sei.cmu.edu/confluence/display/java/ERR05-J.+Do+not+let+checked+exceptions+escape+from+a+finally+block">https://wiki.sei.cmu.edu/confluence/display/java/ERR05-J.+Do+not+let+checked+exceptions+escape+from+a+finally+block</A>
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="PB.CUB.ATSF" href="#top">[Top]</a><br/><br/><STRONG>
+finally ブロックを途中で終了しない [PB.CUB.ATSF]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+このルールは、デフォルトの設定では、finally ブロックを throw 文で終了している場合に
+違反をレポートします。パラメーター設定によって、finally ブロックを return、break、continue
+で終了している場合や、finally ブロックで非チェック例外を throw する可能性のある
+メソッドやコンストラクタの呼び出しで終了している場合に違反をレポートすることもできます。
+これらの方法で finally ブロックを終了することは中途終了 (abrupt exit) と呼ばれ、
+予期しない結果につながる可能性があります。
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v6.0
+
+
+</PRE>
+<STRONG>
+注意
+</STRONG>
+<PRE>
+
+ルールのパラメーターで return 文のチェックが有効に設定されている場合、このルールと
+PB.CUB.ARCF ルールは一部重複する違反を検出します。PB.CUB.ARCF は、対応する try または 
+catch ブロックに return 文がある場合、finally ブロックに return 文がないかを
+チェックします。このルールは、どのような場合でも finally ブロックに return 文が
+ないかをチェックします。このため、このルールの方が PB.CUB.ARCF より包括的です。
+
+
+</PRE>
+<STRONG>
+セキュリティとの関連
+</STRONG>
+<PRE>
+
+カテゴリ: 安全でないエラー処理およびログ記録
+
+finally ブロックから例外が throw されていることは、エラー処理が適切ではなく、
+アプリケーションが不安定であることを示している場合があります。finally ブロック
+には、try ブロックが実行された後のクリーンアップを行うコードだけが含まれるべき
+です。finally ブロックから例外が throw されている場合、try ブロックで throw された
+例外からの回復を適切に行っていないことを表します。finally ブロックから例外を
+throw すると、クリーンアップ コードの一部が実行されない可能性もあります。
+
+
+
+</PRE>
+<STRONG>
+パラメーター
+</STRONG>
+<PRE>
+
+チェックの対象
+-throw 文 (デフォルト値 true)
+    -finally ブロックからの例外の再 throw を許す (デフォルト値 false)
+        catch ブロックにネストされた throw 文が違反としてレポートされません。
+-return 文 (デフォルト値 false)
+-break 文と continue 文 (デフォルト値 false)
+-キャッチされない例外を throw するメソッド呼び出し (デフォルト値 false)
+
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+finally の中途終了は容易にバグにつながります。なぜなら、finally ブロックは、
+対応する try ブロックが通常終了でも中途終了でも必ず呼び出されるからです。
+finally ブロックを中途終了すると、try ブロックの中途終了が隠蔽される可能性が
+あります。たとえば、try ブロック (または catch ブロック) と finally ブロックの
+両方に return 文がある場合、finally ブロックは必ず実行されるため、finally の 
+return 値が他方の return 値を隠蔽してしまいます。似たような状況は、finally 
+ブロックでの例外の throw が、try または catch ブロックでの例外の throw を隠蔽する
+場合にも起こり得ます。このような状況は非常に混乱を招きやすいものです。
+
+また、finally ブロックは必ず実行しなければならない重要な文を含んでいる場合があります。
+finally ブロックを中途終了すると、未到達の文が実行されないままになります。これも
+バグにつながる可能性があります。
+
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+次のサンプルでは、throw 文が throw する例外が、BufferedReader または FileReader
+コンストラクタが throw する例外を隠蔽しています。これはおそらく正しい振る舞いではありません。
+
+package examples.rules.pb.cub;
+
+import java.io.IOException;
+
+public class ATSF
+{
+    public static void main(String[] args) throws java.io.IOException {
+        java.io.BufferedReader _in = null;
+        try {
+            _in = new java.io.BufferedReader (
+                  new java.io.FileReader (
+                  args[0]));
+        } finally {
+            throw new IOException("Oops");  // 違反: finally での明示的な "throw"
+        }
+    }
+}
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+finally ブロックの中途終了を許す文を削除します。このサンプルでは throw 文を削除
+します。
+
+package examples.rules.pb.cub;
+
+public class ATSFFixed
+{
+    public static void main(String[] args) throws java.io.IOException {
+        java.io.BufferedReader _in = null;
+        try {
+            _in = new java.io.BufferedReader(new java.io.FileReader(args[0]));
+        } finally {
+            //修正
+        }
+    }
+}
+
+
+</PRE>
+<STRONG>
+関連資料
+</STRONG>
+<PRE>
+
+1. Joshua Bloch, Neal Gafter: "Java Puzzlers: Traps, Pitfalls, and Corner Cases" 
+   Addison-Wesley, 2005, pp. 77-78, 87-89
+   
+2. Cigital Java Security Rulepack # 15:
+   <A target="_blank" HREF="http://www.cigital.com/securitypack/view/index.html">http://www.cigital.com/securitypack/view/index.html</A>
+
+3. SEI CERT Oracle Coding Standard for Java
+   ERR04-J. Do not complete abruptly from a finally block
+   <A target="_blank" HREF="https://wiki.sei.cmu.edu/confluence/display/java/ERR04-J.+Do+not+complete+abruptly+from+a+finally+block">https://wiki.sei.cmu.edu/confluence/display/java/ERR04-J.+Do+not+complete+abruptly+from+a+finally+block</A>
+
+4. SEI CERT Oracle Coding Standard for Java
+   ERR05-J. Do not let checked exceptions escape from a finally block
+   <A target="_blank" HREF="https://wiki.sei.cmu.edu/confluence/display/java/ERR05-J.+Do+not+let+checked+exceptions+escape+from+a+finally+block">https://wiki.sei.cmu.edu/confluence/display/java/ERR05-J.+Do+not+let+checked+exceptions+escape+from+a+finally+block</A>
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="PB.CUB.AWP" href="#top">[Top]</a><br/><br/><STRONG>
+コンストラクターの引数への紛らわしい代入を避ける [PB.CUB.AWP]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+このルールは、コンストラクター引数への紛らわしい代入を検出します。
+コンストラクターのパラメータ名が外側のクラスで定義されている
+フィールドの名前と一致している場合に、
+パラメーターへの書き込みアクセスがあったとき、
+このルールはエラーをレポートします。ただし、次の「注意」で説明する
+場合を除きます。
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v6.0
+
+
+</PRE>
+<STRONG>
+注意
+</STRONG>
+<PRE>
+
+パラメーターが if 文の本体に記述されており、if 文がパラメーターの値をチェックして
+いる場合、エラーはレポートされません。これは通常、渡された値が無効な場合に、
+意図的にパラメーターの値を変更するために行われます。変更されたパラメーター値は、
+通常、コンストラクターの後の部分でフィールドに代入されます。
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+コンストラクターのパラメーターと対応するフィールドが同じ名前の場合があるため、
+フィールドとパラメーターは混同されがちです。
+この混同は、パラメーターに書き込みアクセスが行われていることによって判断できます。
+ほとんどの場合、パラメーターへの書き込みアクセスは、実際にはフィールドへの
+書き込みアクセスの間違いです。
+しかし、そのような書き込みアクセスは、構文的には正しいため、
+気づくのが困難です。
+
+
+</PRE>
+<STRONG>
+デメリット
+</STRONG>
+<PRE>
+
+N/A
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+package examples.rules.pb.cub;
+
+public class AWP {
+    int value;
+    public AWP (int value, int offset) {
+        value= value+ offset; //違反：正しくは this.value= value+ offset
+    }
+}
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+package examples.rules.pb.cub;
+
+public class AWPFixed {
+    int value;
+    public AWPFixed (int value, int offset) {
+        this.value= value+ offset; //修正
+   }
+}
+
+
+</PRE>
+<STRONG>
+関連資料
+</STRONG>
+<PRE>
+
+N/A
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="PB.CUB.CILB" href="#top">[Top]</a><br/><br/><STRONG>
+ログ記録コード以外のものをログ記録ブロックに入れない [PB.CUB.CILB]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+"java.util.logging.Logger" または "org.apache.log4j.Logger" を使用して情報を
+ログに記録する際によくある誤りは、ログ記録に関係のないコードを誤ってログ記録
+ブロック内に入れてしまうことです。たとえば下記のログ記録ブロックでは、
+エラー メッセージをログに記録した後にインスタンス変数を設定しています。
+
+if (log.isDebugEnabled()) {
+    String test = "error";
+    log.debug(test);
+    this._classVariable = false;    
+} 
+
+このブロックはログ記録だけを意図したものであるため、ログ記録に関係のない
+コードを入れるべきではありません。インスタンス変数への代入は、ログ記録
+ブロックの外にあるべきだった可能性があります。
+
+このルールは、以下の条件に該当する if 文内のコードを違反としてレポートします。
+
+1. if 文の条件が、特定のレベルのログ記録が有効かどうかのチェックである 
+   (org.apache.log4j.Logger の isDebugEnabled() メソッドや
+    java.util.logging.Logger の isLoggable() メソッドの呼び出しなど)。
+
+2. if ブロック内にログ記録メソッドへの呼び出しがある (java.util.logging.Logger の
+   warning() メソッドや org.apache.log4j.Logger の debug() メソッドなど)。
+
+3. 条件 2 に挙げたログ記録メソッドの呼び出しの後に、余分なコードがある。
+
+余分なコードはログ記録ブロックに誤って入れられた可能性があるため、
+コードを調べて、適切な場所にあるかどうかを確認する必要があります。
+
+
+
+</PRE>
+<STRONG>
+スコープ レベル
+</STRONG>
+<PRE>
+LINE
+
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v8.2
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+ログ記録を意図した if 文に、ログ記録に関係のないコードが含まれているケースを
+検出できます。誤って置かれたコードを検出するのに役立ちます。
+
+
+</PRE>
+<STRONG>
+デメリット
+</STRONG>
+<PRE>
+
+このルールは、意図的にログ記録ブロック内に置いたコードに対して、誤って
+違反をレポートする可能性があります。まれなケースですが、ログ記録に直接
+関係のないコードをログ記録ブロック内に理由がある場合もあります。たとえば、
+次の if ブロックの最後の行は、あきらかに if 文の本体に属しています。
+
+if (log.isDebugEnabled()) {
+    String debugMsg = "message";
+    log.debug(debugMsg);
+    this._isDebugMessageLogged = false;  //if ブロックに属しているが、
+                                         //違反としてレポートされる
+} 
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+package examples.rules.pb.cub;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+public class CILB {
+    private static final Logger LOGGER = Logger.getLogger("examples.rules.pb.cub.CILB");
+    
+    public static void main(String[] args) {
+        if(LOGGER.isLoggable(Level.WARNING)) {
+            String warnMsg = "Warning message";
+            LOGGER.warning(warnMsg);
+            System.out.println("Inside 'main()' method");  //違反 - ログ記録に
+                                   //関係のないコードがログ記録ブロック内に
+                                   //置かれている                         
+        }      
+    }
+}
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+違反を修正する前に、違反がレポートされたコードがログ記録ブロックの外にあるべきか
+どうかを確認する必要があります。外にあるべき場合は、ログ記録ブロックの後に移動
+させます。
+
+package examples.rules.pb.cub;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+public class CILB_Fixed {
+    private static final Logger LOGGER = Logger.getLogger("examples.rules.pb.cub.CILB_Fixed");
+    
+    public static void main(String[] args) {
+        if(LOGGER.isLoggable(Level.WARNING)) {
+            String warnMsg = "Warning message";
+            LOGGER.warning(warnMsg);
+        } 
+        System.err.println("Inside 'main()' method");
+    } 
+}
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="PB.CUB.CNVC" href="#top">[Top]</a><br/><br/><STRONG>
+文字と数字の不適切な連結を避ける [PB.CUB.CNVC]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+このルールは、連結が意図されていると推測される箇所で、数値が文字に加算されている場合に
+違反をレポートします。
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v8.4
+
+
+</PRE>
+<STRONG>
+注意
+</STRONG>
+<PRE>
+
+このルールは、最終的な結果が文字列になる式を違反としてレポートします。
+例: hour + ':' + minutes + "PM"
+また、String.valueOf()　メソッドに渡されている式もレポートします。
+これは加算ではなく連結が意図されている可能性が高いからです。
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+期待と異なる内容の文字列が生成される可能性があります。結果として、分かりにくい
+動作を引き起こす場合があります。文字列がログ情報として使用される場合、誤った
+データが記録される可能性があります。文字列が Map のキーとして使用される場合、
+後に値を取得するときに正しく連結されたキーを使用すると、値を取得できない可能性が
+あります。
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+package examples.rules.pb.cub;
+
+public class CNVC {
+    public String getTimeString(int hour, int minute) {
+        return String.valueOf(hour + ':' + minute); //違反
+    }
+
+    public String getLowercaseIntString(char c) {
+        return c + 32 + ""; //違反
+    }
+}
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+加算を意図したものでない場合、文字を String.valueOf(char) または
+Character.toString(char) メソッドの呼び出しでラップします。
+加算を意図したものである場合、意図を明確にするために文字を整数に
+キャストします。
+
+package examples.rules.pb.cub;
+
+public class CNVCFixed {
+    public String getTimeString(int hour, int minute) {
+        return String.valueOf(hour + String.valueOf(':') + minute); //修正
+    }
+
+    public String getLowercaseIntString(char c) {
+        return (int)c + 32 + ""; //修正
+    }
+}
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="PB.CUB.CTOR" href="#top">[Top]</a><br/><br/><STRONG>
+コンストラクターから final、static、private ではないメソッドを呼び出してはならない [PB.CUB.CTOR]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+final でも private でもないメソッドをコンストラクターから呼び出している場合、
+このルールはエラーをレポートします。
+オカレンスごとにエラーがレポートされます。
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v4.5
+
+
+</PRE>
+<STRONG>
+セキュリティとの関連
+</STRONG>
+<PRE>
+
+final でも private でもないメソッドをコンストラクターから呼び出している場合、
+攻撃者がメソッドをオーバーライドして悪意のある処理を行わせる可能性があります。
+
+
+</PRE>
+<STRONG>
+パラメーター
+</STRONG>
+<PRE>
+
+-間接的なメソッド呼び出しのチェックの深さ (デフォルト値 false)
+    このパラメーターを有効にすると、コンストラクターから呼び出されるメソッドをチェックし、
+    さらにそれらのメソッドから呼び出されるメソッドをチェックします。ユーザが指定した
+    深さまで処理が続けられます。深さ 1 は次のケースを違反としてレポートします。
+        class CTOR {
+            public CTOR() {
+                /*
+                 * private ではない "callDepth1" が間接的に呼び出されている
+                 */
+                callDepth0(); //違反 (パラメーター有効、深さ 1)
+            }
+            private void callDepth0() {
+                callDepth1();
+            }
+            void callDepth1() {
+                ...
+            }
+        }
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+コンストラクタの目的は、オブジェクトを初期化することです。サブクラスからア
+クセス可能な非 final メソッドがコンストラクターから呼び出された場合、サブ
+クラスによってそのメソッドがオーバーライドされる可能性があります。さらに、
+このことが原因で、予期しない結果が導かれる場合が考えられます。
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+package examples.rules.pb.cub;
+
+import java.io.*;
+
+public class CTOR {
+    public CTOR() {
+        _size = readSize();  // 違反
+    }
+    
+    public int readSize() {
+        try {
+            fis = new FileInputStream("data.out");
+            return fis.read();
+        } 
+        catch(IOException e) {
+            return -1;
+        }
+        
+    }
+    private FileInputStream fis;
+    private int _size;
+}
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+オブジェクトを初期化するためにコンストラクターがメソッドを呼び出す必要がある
+場合には、final または private を使ってこのメソッドを宣言してください。
+または、private void メソッドを 1 つ作成して、すべての初期化を実行してく
+ださい。
+
+package examples.rules.pb.cub;
+
+import java.io.*;
+
+public class CTORFixed {
+    public CTORFixed() {
+        _size = readSize();
+    }
+    
+    private int readSize() {  // 修正
+        try {
+            fis = new FileInputStream("data.out");
+            return fis.read();
+        } 
+        catch(IOException e) {
+            return -1;
+        }
+    }
+    
+    private FileInputStream fis;
+    private int _size;
+}
+
+
+</PRE>
+<STRONG>
+関連資料
+</STRONG>
+<PRE>
+
+Peter Haggar: "Practical Java - Programming Language Guide".
+Addison Wesley, 2000, pp.238 - 240
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="PB.CUB.CWRITE" href="#top">[Top]</a><br/><br/><STRONG>
+File.canWrite() メソッドは、ディレクトリが書き込み可能でない場合にも true を返す可能性があるため、使用を避ける [PB.CUB.CWRITE]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+このルールは、File.canWrite() メソッドが使用されている場合、違反としてレポートします。
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+v9.4
+
+
+</PRE>
+<STRONG>
+注意
+</STRONG>
+<PRE>
+このルールには即時修正があります - 「Replace with {...proposal...} statement that uses new Files API」
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+Windows 上の Java 7 では、java.io.File クラスの setWritable メソッドは、ディレクトリに読み取り専用属性を
+設定せず、常に false を返すようになりました。canWrite との関連を保つため、canWrite メソッドは
+ディレクトリに対して true を返します。
+
+この動作の変更は、canWrite を使用するコードは、Java 6 までと Java 7 とでは動作が異なることを意味します。
+そのため、このようなコードを修正して canWrite の代わりに java.nio.file.Files.isWritable メソッドを使用
+するべきです。
+
+このルールは、FIO.DRWA 実行時エラー検出ルールを補完するルールです。
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+if (file.canWrite()) { // 違反
+    file.setWritable(true); 
+}
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+if (Files.isWritable(file.toPath())) { // 修正
+    file.setWritable(true); 
+}
+
+
+</PRE>
+<STRONG>
+関連資料
+</STRONG>
+<PRE>
+1. <A target="_blank" HREF="http://www.oracle.com/technetwork/java/javase/compatibility-417013.html">http://www.oracle.com/technetwork/java/javase/compatibility-417013.html</A>
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="PB.CUB.DCP" href="#top">[Top]</a><br/><br/><STRONG>
+"+" 文字列連結演算子を使って数字を連結してはいけない。"+" は数字の加算にだけ使用する [PB.CUB.DCP]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+文字列を連結する "+" 演算子を使って、基本データ型の数値型 （たとえば int 型） を
+連結している場合、このルールはエラーをレポートします。
+
+
+
+</PRE>
+<STRONG>
+スコープ レベル
+</STRONG>
+<PRE>
+LINE
+
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v4.5
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+"+" 演算子の左側にあるオペランドが String 型の場合、
+右側のオペランドがすでに String 型でない限り、"+" 演算子は
+右側のオペランドに対して toString () メソッドを呼び出します。
+
+下記のサンプル コードでは、ユーザーが期待している出力結果は
+"2+9 = 11" です。しかし、実際に出力されるのは "2+9 = 29" です。
+
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+package examples.rules.pb.cub;
+
+public class DCP {
+    public static void main (String args []) {
+        System.err.println ("2+9 = " + 2 + 9);  // 違反
+    }
+}
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+System.out.println 文の外部で結果を算出して出力します。
+または、次のように "2+9" を括弧で囲みます。
+     "2+9 = " + (2+9)
+
+package examples.rules.pb.cub;
+
+public class DCPFixed {
+    public static void main (String args []) {
+        System.err.println ("2+9 = " + (2 + 9));  // 修正
+    }
+}
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="PB.CUB.EBI" href="#top">[Top]</a><br/><br/><STRONG>
+誤って文をブロックの外に置くのを避ける [PB.CUB.EBI]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+このルールは、 '{' および '}' がない if、else、for、while、do 文を違反として
+レポートします。同じインデント位置に複数の文が続いている場合、作成者はそれらの
+文を 1 つのブロックに入れたつもりだったかもしれません。しかし実際は、'{' および
+'}' がないため、最初の文だけがブロックに属します。
+
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v8.4
+
+
+</PRE>
+<STRONG>
+注意
+</STRONG>
+<PRE>
+
+次の補足的なルールと組み合わせて使用できます。
+    --&gt;CODSTA.BP.BLK ルールは、if、else、for、while、do 文で常に '{' および '}' を使うよう促します。
+     このルールに従うと、動作の誤りを予防できます。
+    -PB.TYPO.EB ルールは、制御文の本体が空であるケースを指摘します。
+    -FORMAT.IND ルールは、紛らわしいインデントを指摘します。
+	
+	
+
+</PRE>
+<STRONG>
+セキュリティとの関連
+</STRONG>
+<PRE>
+
+「簡単にしかテストされていないコードや未テストのコードでは、このエラーが
+運用環境にまで持ち越され、アプリケーションの予期しない状態につながる制御
+フローパスの原因となることで、新たな攻撃ベクターを追加する可能性があります。
+その結果は、不正に実行される動作のタイプによって異なります。」[CWE-483]
+
+
+
+</PRE>
+<STRONG>
+パラメーター
+</STRONG>
+<PRE>
+
+-if 文をチェックする (デフォルト値は true)
+-else 文をチェックする (デフォルト値は true)
+-for 文をチェックする (デフォルト値は true)
+-while 文をチェックする (デフォルト値は true)
+-do-while 文をチェックする (デフォルト値は true)
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+このルールは、1 つのブロックに入れるつもりで既存の文の後に文を追加したケースを
+違反としてレポートできます。実際は、'{' および '}' がないため、追加した文は
+ブロックの一部として実行されません。
+
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+package examples.rules.pb.cub;
+
+public class EBI {
+    void method(String[] strs) {
+        int i = 0;
+        while (i &lt; strs.length)
+            i++;
+            System.out.println(strs[i]); //違反
+    }
+}
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+public class EBI {
+    void method(String[] strs) {
+        int i = 0;
+        while (i &lt; strs.length) {
+            i++;
+            System.out.println(strs[i]); //修正
+        }
+    }
+}
+
+
+</PRE>
+<STRONG>
+関連資料
+</STRONG>
+<PRE>
+
+CWE-483: Incorrect Block Delimitation
+<A target="_blank" HREF="https://cwe.mitre.org/data/definitions/483.html">https://cwe.mitre.org/data/definitions/483.html</A>
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="PB.CUB.EOOM" href="#top">[Top]</a><br/><br/><STRONG>
+誤って java.lang.Object のメソッドをオーバーライドすることを避ける [PB.CUB.EOOM]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+このルールは、Object のメソッドをオーバーライドしようとしているが、
+誤りがある場合に違反をレポートします。メソッド名が Object のメソッドと
+一致しているが、パラメーターの数が異なっているケースを指摘します。
+また、メソッド名が Object のメソッドとわずかにスペルが異なるケースも指摘します。
+
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v8.4
+
+
+
+</PRE>
+<STRONG>
+注意
+</STRONG>
+<PRE>
+
+静的なメソッドはチェックされません。このルールは意図しない共変を指摘しません。
+意図しない共変は PB.CUB.IMC ルールによって指摘されます。オーバーライドのスペルが
+誤っている場合、このルールは PB.TYPO.IMO ルールと同じ違反をレポートする可能性が
+あります。 
+
+
+
+</PRE>
+<STRONG>
+パラメーター
+</STRONG>
+<PRE>
+-メソッドのパラメーターをチェックする (デフォルト値 true)
+-メソッド名のスペルをチェックする (デフォルト値 true)
+-private メソッドをチェックする (デフォルト値 false)
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+Object のメソッドをカスタマイズしたバージョンでオーバーライドする必要がある
+場合があります。コードの他の場所でカスタマイズされたバージョンの代わりに
+汎用的な Object のメソッドが呼び出されるために、混乱を引き起こしたり
+誤った動作の原因になることがあります。
+
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+package examples.rules.pb.cub;
+
+public class EOOM {
+    String _field;
+    public String toString() { //違反ではない
+        return _field;
+    }
+    public boolean equals(Object obj, Object obj2) { //違反 パラメーター
+        return obj.toString().equals(obj2.toString);
+    }
+    public int hashcode() { //違反 スペル
+        return _field.hashCode();
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+package examples.rules.pb.cub;
+
+public class EOOMFixed {
+    String _field;
+    public String toString() { //違反ではない
+        return _field;
+    }
+    public boolean equals(Object obj) { //修正
+        return this.toString().equals(obj.toString);
+    }
+    public int hashCode() { //修正
+        return _field.hashCode();
+    }
+}
+}
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="PB.CUB.FLVA" href="#top">[Top]</a><br/><br/><STRONG>
+for ループの内部でループ制御変数に代入しない [PB.CUB.FLVA]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+このルールは、for ループ制御変数を for ループの本体で変更することを禁止します。
+ループ制御変数 (ループの条件で使用され、更新式で更新されている変数) がループの
+本体で変更されているのを発見するたびに、違反をレポートします。
+
+
+
+</PRE>
+<STRONG>
+スコープ レベル
+</STRONG>
+<PRE>
+LINE
+
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v4.5
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+for ループ制御変数は、for 文の初期化式および更新式でのみ変更すべきです。
+for ループ制御変数をループの本体で変更すると、コードが理解し難くなり、
+発見し難いバグにつながる可能性があります。
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+package examples.rules.pb.cub;
+
+public class FLVA {
+    int method () {
+        int sum = 0;
+        for (int i = 0; i &lt; 100; i++) {
+            i += 3;  // 違反
+            sum += i;
+        }
+
+        return sum;
+    }
+}
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+コードを修正し、for ループの制御変数をループ内で代入しないで済むようにする。
+
+package examples.rules.pb.cub;
+
+public class FLVAFixed {
+    int method () {
+        int sum = 0;
+        for (int i = 0; i &lt; 100; i += 4) {  // 修正
+            sum += i;
+        }
+        return sum;
+    }
+}
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="PB.CUB.IMC" href="#top">[Top]</a><br/><br/><STRONG>
+オーバーライドされるメソッドが引数型の違いによる予定外の共変ではないようにする [PB.CUB.IMC]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+このルールは、親メソッドをオーバーライドしようとする
+予定外の共変を検出します。
+引数型の違いによって、共変は
+実際には親メソッドをオーバーライドしません。
+
+メソッドが、その親の型のメソッドと同じ名前を持ち、同じ数の引数を
+持つが、引数の型が異なる場合、メソッドは予定外の共変であると
+見なされます。
+
+
+
+</PRE>
+<STRONG>
+スコープ レベル
+</STRONG>
+<PRE>
+METHOD
+
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v6.0
+
+
+
+</PRE>
+<STRONG>
+パラメーター
+</STRONG>
+<PRE>
+
+-static メソッドを無視する (デフォルト true)
+   親メソッドまたは共変が static の場合、エラーはレポートされません。
+
+-異なる可視性の共変を無視する (デフォルト false)
+   親メソッドの可視性が共変の可視性と異なる場合、エラーはレポートされません。
+
+-無視するメソッド ( 書式は &lt;完全に修飾された型名&gt; および &lt;メソッド&gt;)
+   リスト中のメソッドの共変と見なされるメソッドは、エラーとしてレポートされません。
+   たとえば:
+   java.lang.Object および equals をリストに追加した場合、
+   equals メソッドの共変はレポートされません。
+ 
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+共通に使用される一部のメソッド (たとえば java.lang.Object の equals() ) は、
+オーバーライドされることがあります。しかし、シグネチャ (渡される引数) が
+オーバーライドされるメソッドと異なる場合、予想外の動作につながることがあります。
+異なる型宣言を持つが同じオブジェクトを参照している 2 つのオブジェクト参照は、
+同じ名前を使ってメソッドへの引数として渡された場合、異なる結果を
+生成することがあります (注意：実際には異なるシグネチャで異なるメソッドを呼び出しています)。
+そのような動作は大変危険です。なぜなら、
+他の多くのクラスが、そのようなよく知られたメソッドの一貫性に依存している
+可能性があるからです。
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+package examples.rules.pb.cub;
+
+public class IMC {
+    public static void main(String args[]) {
+        Covariant obj1= new Covariant("testing");
+        Covariant obj2= new Covariant("testing");
+        Object obj3= obj2; //obj2 と obj3 は同じオブジェクトを指している
+        System.out.println("obj1== obj2? "+ obj1.equals(obj2)); //true を返却
+        System.out.println("obj1== obj3? "+ obj1.equals(obj3)); //false を返却
+    }
+} 
+
+class Covariant {
+    String string;
+    Covariant(String string) {
+        this.string= string;
+    }
+    public boolean equals(Covariant obj) { //違反
+        return string.equals(obj.string);
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+package examples.rules.pb.cub;
+
+public class IMCFixed {
+    public static void main(String args[]) {
+        Covariant obj1= new Covariant("testing");
+        Covariant obj2= new Covariant("testing");
+        Object obj3= obj2; //obj2 と obj3 は同じオブジェクトを指している
+        System.out.println("obj1== obj2? "+ obj1.equals(obj2)); //true を返却
+        System.out.println("obj1== obj3? "+ obj1.equals(obj3)); //true を返却
+    }
+} 
+
+class Covariant {
+    String string;
+    Covariant(String string) {
+        this.string= string;
+    }
+    public boolean equals(Object obj) { //修正
+        if (obj== null || !(obj instanceof Covariant)) {
+            return false;
+        }
+        else {
+            return string.equals(((Covariant)obj).string);
+        }
+    }
+}
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="PB.CUB.IMM" href="#top">[Top]</a><br/><br/><STRONG>
+static final フィールドを不変にする [PB.CUB.IMM]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+このルールは可変 (mutable) な "static" "final" フィールドを検出します。
+オカレンスごとにエラーがレポートされます。
+
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v6.0
+
+
+
+</PRE>
+<STRONG>
+注意
+</STRONG>
+<PRE>
+
+フィールドが "static" "final" でありながら、同時に可変と考えられる理由は
+いくつかあります。
+
+1. 配列型のフィールド。配列自体が "final" と宣言されていても、
+配列の個々の要素は変更可能です。たとえば、"SOME_ARRAY[0]= null;" は、
+"SOME_ARRAY が "static" "final" 配列であっても有効です。
+
+2. 型を可変にするメソッドを持つことが分かっている Java ライブラリの型
+のフィールド。たとえば、次のような型です。
+"java.lang.StringBuffer"、"java.util.Collection"、"java.awt.Point"、
+"java.awt.Dimension"、"java.awt.Rectangle"、"java.util.Date"
+
+3.  "public" setter メソッドを持つ型のフィールド。"public" setter メソッドは、
+名前が "set" で始まる "public" メソッドです。
+
+4.  次の条件を満たす "public" メソッドを持つ型のフィールド。
+メソッドが、ここに列挙した理由によって可変と判明したフィールドを返す、
+または可変のフィールドに書き込んでいる。
+
+5.  次の条件を満たすフィールドを持つ型のフィールド。
+フィールドが "public" かつ 非 "final"。または、ここに列挙した理由によって
+可変と判明した型。
+
+このルールが特定の "static" "final" 型を可変であると指摘する理由が分からない
+場合は、指摘されたフィールドの型に対し、上記の条件が当てはまるかどうかを
+検討してください。
+
+
+
+</PRE>
+<STRONG>
+セキュリティとの関連
+</STRONG>
+<PRE>
+
+「public または protected static final フィールドが可変オブジェクトを参照している
+場合、悪意のあるコードによって、あるいは他のパッケージから意図せずにオブジェクトが
+変更される可能性があります。」[CWE-607]
+
+
+
+</PRE>
+<STRONG>
+パラメーター
+</STRONG>
+<PRE>
+
+- [private として宣言されていない可変の非 final "static" フィールドをレポートする] (デフォルト値 オフ)
+このパラメーターがオンの場合、ルールは可変の非 final "static" フィールドが[private として宣言されていない
+場合に違反をレポートします。
+
+- 無視する型 (デフォルト値 オフ)
+このパラメーターを使用すると、無視する型を指定できます。ルールは、ここに挙げられた型に対して
+違反をレポートしません。
+
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+"static" "final" フィールドは、ほとんどの状況では、定数であるはずです。
+ただし、そのようなフィールドが可変 (mutable) である場合、
+"static" "final" 修飾子がついていてもフィールドのステータスが
+変わる可能性があるため、プログラマは注意しなければなりません。
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+package examples.rules.pb.cub;
+
+import java.util.*;
+
+public class IMM {
+    public static final Set CONSTANT_SET= new HashSet(); //違反
+}
+
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+そのような定数の使用にアクセスする際は十分な注意が必要です。
+可能であれば定数オブジェクトに対して不変な型を使用してください。
+そうでなければ、定数オブジェクトのアクセシビリティを "private" に
+変更して、オブジェクトのディープ コピーを返すアクセサー メソッドを
+作成してください。
+
+
+
+</PRE>
+<STRONG>
+関連資料
+</STRONG>
+<PRE>
+
+CWE-582: Array Declared Public, Final, and Static
+<A target="_blank" HREF="https://cwe.mitre.org/data/definitions/582.html">https://cwe.mitre.org/data/definitions/582.html</A>
+
+CWE-607: Public Static Final Field References Mutable Object
+<A target="_blank" HREF="https://cwe.mitre.org/data/definitions/607.html">https://cwe.mitre.org/data/definitions/607.html</A>
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="PB.CUB.ISF" href="#top">[Top]</a><br/><br/><STRONG>
+誤って static 宣言された可能性のある private static フィールドを調べる [PB.CUB.ISF]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+このルールは、インスタンス フィールドのはずが
+誤って static で宣言されている、final でない private フィールドを
+特定します。
+
+ルールは、以下の条件を満たす static フィールドを、誤って static 宣言された
+可能性があると見なします。
+
+1.  コンストラクタまたは非 static イニシャライザーによってフィールドに代入している。
+
+2.  フィールドが 1 回も静的なコンテキストでアクセスされていない。
+    つまり、宣言している型の名前を使ってアクセスされたり、static メソッドまたは
+    static イニシャライザーの中で非修飾名を使ってアクセスされたりしていない。
+
+3.  宣言しているクラスの中で、1 回以上静的でないコンテキストでフィールドに
+    アクセスしている。つまり、宣言している型のインスタンス、this キーワード、
+    または static でないメソッドの中で非修飾名を使ってフィールドにアクセスしている。
+
+
+
+</PRE>
+<STRONG>
+スコープ レベル
+</STRONG>
+<PRE>
+LINE
+
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v8.0
+
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+インスタンス フィールドを間違って static として宣言した場合、
+同じ型のすべてのインスタンスが
+独自のフィールドを持つ代わりに、同じフィールドを共有します。
+これは意図とは異なる可能性があります。
+
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+package examples.rules.pb.cub;
+
+public class ISF {
+    private static String _id; //違反
+   
+    public ISF(String id) {
+        _id= id;
+    }
+    
+    public String getId() {
+        return _id;
+    }
+    
+    public void setId(String newId) {
+        _id= newId;
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+static フィールドをチェックして、インスタンス フィールドの間違いかどうかを判断します。
+
+package examples.rules.pb.cub;
+
+public class ISF_Fixed {
+    private String _id; //修正
+   
+    public ISF_Fixed(String id) {
+        _id= id;
+    }
+    
+    public String getId() {
+        return _id;
+    }
+    
+    public void setId(String newId) {
+        _id= newId;
+    }
+}
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="PB.CUB.MAIN" href="#top">[Top]</a><br/><br/><STRONG>
+エントリ ポイント メソッドだけにメソッド名 main を使用する [PB.CUB.MAIN]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+'main()' という名前のメソッドにシグニチャ
+'public static void main (java.lang.String[])' がない場合、
+このルールはエラーをレポートします。
+オカレンスごとにエラーがレポートされます。
+
+
+</PRE>
+<STRONG>
+スコープ レベル
+</STRONG>
+<PRE>
+
+METHOD
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v4.5
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+Java 言語では、特別な働きをするメソッドに対してだけ 'main()' という名前が
+付けられます。したがって、main() を使用するのは
+'public static void main (java.lang.String[])' の定義だけにするべきです。
+それ以外の目的で main() を使用すると、混乱が生じる可能性があります。
+
+
+</PRE>
+<STRONG>
+デメリット
+</STRONG>
+<PRE>
+
+N/A
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+package examples.rules.pb.cub;
+
+public class MAIN {
+
+    public static void main (String[] args) {
+        System.out.println ("This is the main method.");
+    }
+
+    public static void main () {  // 違反
+        System.out.println ("This is another method named main.");
+    }
+}
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+'main()' 以外のメソッド名に変えてください。
+
+package examples.rules.pb.cub;
+
+public class MAINFixed {
+
+    public static void main (String[] args) {
+        System.out.println ("This is the main method.");
+    }
+
+    public static void other_main () {  // 修正
+        System.out.println ("This is another method, now named other_main.");
+    }
+}
+
+</PRE>
+<STRONG>
+関連資料
+</STRONG>
+<PRE>
+
+N/A
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="PB.CUB.NCUCP" href="#top">[Top]</a><br/><br/><STRONG>
+Java の char が Unicode のコード ポイントを完全に表現できると仮定しない [PB.CUB.NCUCP]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+「プリミティブ型の char (または Character オブジェクト) の値が Unicode のコード
+ポイントで完全に表現できることを前提としてコードを書いてはいけません。
+この要求に従うには、通常、Unicode のコード ポイントを int 値として受け取る
+メソッドを使用し、Unicode のコード ユニットを char 値として受け取る
+メソッドは使用しないようにする必要があります。なぜなら後者のメソッドは、
+補助文字をサポートできないからです。」[SEI CERT Oracle Coding Standard for Java]
+
+補助文字とは、コード ポイントが U+FFFF を超える Unicode 文字であり、char データ
+型などの単一の 16 ビットのエンティティでは表現できません。
+
+char 型のパラメーターだけを取るメソッドは、補助文字をサポートしていません。
+そのため、補助文字を確実にサポートするには、int 型のパラメーターを取る同等の
+メソッドを使用するべきです。
+
+デフォルトでは、ルールは char 型のパラメーターだけを取る java.lang.Character
+クラスのメソッドが使用されている場合に違反をレポートするようパラメータライズ
+されています。検出するメソッドのリストはカスタマイズできます。詳細は
+「パラメーター」を参照してください。
+
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+2021.1
+
+
+
+</PRE>
+<STRONG>
+パラメーター
+</STRONG>
+<PRE>
+
+[チェック対象メソッド] パラメーターは、不適切としてレポートするメソッドと、
+代わりに使用するべきメソッドを定義します。
+ - [Incorrect method (qualified name)] 列は、不適切としてレポートする
+   char 型のパラメーターだけを取るメソッドの修飾名を指定します。
+ - [Correct method (qualified name)] 列は、補助文字を確実にサポートする
+   ために、レポートされたメソッドと置き換えるべきメソッドの修飾名を
+   指定します。
+
+デフォルトでは、以下のメソッドをレポートするようパラメータライズされています。
+- java.lang.Character$isDefined(char)
+- java.lang.Character$isDigit(char)
+- java.lang.Character$isIdentifierIgnorable(char)
+- java.lang.Character$isISOControl(char)
+- java.lang.Character$isJavaIdentifierPart(char)
+- java.lang.Character$isJavaIdentifierStart(char)
+- java.lang.Character$isLetter(char)
+- java.lang.Character$isLetterOrDigit(char)
+- java.lang.Character$isLowerCase(char)
+- java.lang.Character$isMirrored(char)
+- java.lang.Character$isSpaceChar(char)
+- java.lang.Character$isTitleCase(char)
+- java.lang.Character$isUnicodeIdentifierPart(char)
+- java.lang.Character$isUnicodeIdentifierStart(char)
+- java.lang.Character$isUpperCase(char)
+- java.lang.Character$isWhitespace(char)
+
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+互換性の問題や、不適切なメソッドを使用して String を操作することで起こる
+その他のエラーを防ぐのに役立ちます。
+
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+package examples.rules.PB.CUB;
+
+public class NCUCP
+{
+    public static String trim(String string) {
+        char ch;
+        int i;
+        for (i = 0; i &lt; string.length(); i += 1) {
+            ch = string.charAt(i);
+            if (!Character.isLetter(ch)) { //違反
+                break;
+            }
+        }
+        return string.substring(i);
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+int 引数として Unicode のコード ポイントを受け取る Character.isLetter() の
+整数形式を使用します。
+
+package examples.rules.PB.CUB;
+
+public class NCUCPFixed
+{
+    public static String trim(String string) {
+        int ch;
+        int i;
+        for (i = 0; i &lt; string.length(); i += Character.charCount(ch)) {
+            ch = string.codePointAt(i);
+            if (!Character.isLetter(ch)) { //修正
+                break;
+            }
+        }
+        return string.substring(i);
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+関連資料
+</STRONG>
+<PRE>
+
+SEI CERT Oracle Coding Standard for Java
+STR01-J. Do not assume that a Java char fully represents a Unicode code point
+<A target="_blank" HREF="https://wiki.sei.cmu.edu/confluence/display/java/STR01-J.+Do+not+assume+that+a+Java+char+fully+represents+a+Unicode+code+point">https://wiki.sei.cmu.edu/confluence/display/java/STR01-J.+Do+not+assume+that+a+Java+char+fully+represents+a+Unicode+code+point</A>
+
+The Java Tutorials
+Unicode: Design Considerations
+<A target="_blank" HREF="https://docs.oracle.com/javase/tutorial/i18n/text/design.html">https://docs.oracle.com/javase/tutorial/i18n/text/design.html</A>
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="PB.CUB.OE" href="#top">[Top]</a><br/><br/><STRONG>
+疑わしい 8 進数エスケープを避ける [PB.CUB.OE]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+このルールは、String リテラル中の疑わしい 8 進数エスケープを検出します。
+8 進数エスケープは、OctalDigit または OctalDigit OctalDigit または 
+ZeroToThree OctalDigit OctalDigit として定義されます。
+ここで、OctalDigit は [0-7] です。オカレンスごとにエラーがレポートされます。
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+V6.0
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+OctalDigit ではない文字が後ろに続く 8 進数エスケープ シーケンスまたは
+3 桁よりも長い 8 進数エスケープ シーケンスがコード中にある場合、
+開発者の意図とは異なる解釈をコンパイラが行うことがあります。
+エスケープ シーケンスの再構成はコードのセマンティクスを変更しません (下記を参照)。
+しかし、コードがより読みやすくなり理解しやすくなります。
+
+</PRE>
+<STRONG>
+デメリット
+</STRONG>
+<PRE>
+
+N/A
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+package examples.rules.pb.cub;
+
+public class OE {
+    public void myMethod() {
+	System.out.println("\218 . Do something"); //違反
+        //開発者は \218 をエスケープ シーケンスだと思っているかもしれないが
+        //実際にはエスケープ シーケンスの \21 の後に
+        //文字列 "8 . Do something" が続いている
+    }
+}
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+package examples.rules.pb.cub;
+
+public class OEFixed {
+    public void myMethod() {
+        System.out.println("\21"+ "8 . Do something"); //修正
+    }
+}
+
+
+</PRE>
+<STRONG>
+関連資料
+</STRONG>
+<PRE>
+
+N/A
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="PB.CUB.OSM" href="#top">[Top]</a><br/><br/><STRONG>
+サブクラスのメソッドをオーバーライドする場合は、スーパークラスでオーバーロードされたメソッドもオーバーライドする [PB.CUB.OSM]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+このルールは、スーパークラスのメソッドをオーバーライドしている
+サブクラスのメソッドを探します。見つかった場合、スーパークラスの
+オーバーロードされたメソッドすべてを、サブクラスがオーバーライド
+しているかどうかをチェックします。ルールは、スーパークラスの
+メソッドが private である場合、またはデフォルトのアクセシビリティを
+持つ別のパッケージにある場合は無視します。
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v8.3
+
+
+</PRE>
+<STRONG>
+注意
+</STRONG>
+<PRE>
+
+単にスーパークラスの実装を呼び出すことでこのルールの違反を修正すると、
+UC.SO ルールの違反が検出されるようになる場合があります。スーパークラスの
+メソッドが、abstract メソッドを呼び出す具象メソッドである場合、違反はレポート
+されません。これは、このような使い方は、abstract メソッドだけをサブクラスでオーバー
+ライドすることが予定されていた可能性を示唆しているからです。
+
+
+</PRE>
+<STRONG>
+パラメーター
+</STRONG>
+<PRE>
+
+-次のメソッドを無視する:
+    -visit、accept、beginVisit、endVisit、
+     run、read、write、print (デフォルト値)
+
+-空のメソッドを無視する (デフォルト値 true)
+
+-連結されたメソッドを無視する (デフォルト値 true)
+    このパラメーターを有効にすると、オーバーロードされたメソッドを直接呼び出す
+    メソッドは無視されます。そのような場合、メソッドの 1 つをオーバーライドする
+    ことだけが意図されている場合が多いでしょう。
+    例
+        class OSM {
+            void print(String s) {
+                print();
+                System.out.print(s);
+            }
+            void print() {}
+        }
+        class OSM2 extends OSM {
+            void print() {
+                System.out.print("String is: ");
+            }
+        }
+    条件付でオーバーロードされたメソッドを呼び出している場合 (上記の例では if/else
+    ブロック内で print() が呼び出されている場合)は、違反がレポートされることに注意
+    してください。
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+サブクラスとスーパークラスの一貫性を保たずに変更すると、誤ってスーパークラスの
+別のメソッドをオーバーライドしてしまう可能性があります。このルールは、ユーザが
+意図していたメソッドをオーバーライドし忘れた可能性のあるケースを検出するのに
+役立ちます。
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+package examples.rules.pb.cub;
+
+class OSM {
+    public void print(String s){
+        System.out.println("String is: "+s);
+    }
+}
+class OSM2 extends OSM {
+    public void print(Object o) { //違反
+        System.out.println(o.toString());
+    }
+    public static void main(String[] args) {
+        Object o = getUserString();
+        print(o);
+    }
+}
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+実行時にどちらの print メソッドが呼び出されるかが明確でないため、プログラムが
+予期しない結果を出力する場合があります。明確にするため、他の print メソッドも
+オーバーライドします。
+
+package examples.rules.pb.cub;
+
+class OSMFixed {
+    public void print(String s){
+        System.out.println("String is: "+s);
+    }
+}
+class OSM2Fixed extends OSMFixed {
+    public void print(Object o) { //修正
+        System.out.println(o.toString());
+    }
+    public void print(String s) {
+        super.print(s);
+    }
+    public static void main(String[] args) {
+        Object o = getUserString();
+        print(o);
+    }
+}
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="PB.CUB.OVAM" href="#top">[Top]</a><br/><br/><STRONG>
+可変個引数メソッドのオーバーライドを避ける [PB.CUB.OVAM]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+このルールは、オーバーロードされている可変引数メソッドを違反としてレポートします。
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v9.0
+
+
+</PRE>
+<STRONG>
+注意
+</STRONG>
+<PRE>
+
+可変引数は JDK 1.5 で導入されたため、このルールは、コンパイラ準拠レベルが 
+JDK 1.5 以降のプロジェクトだけをチェックします。
+
+
+</PRE>
+<STRONG>
+パラメーター
+</STRONG>
+<PRE>
+
+-引数の型が異なるオーバーロードされたメソッドを無視する (デフォルト値 true)
+    このパラメーターを有効にすると、"類似の" 引数型を持つオーバーロード
+    メソッドだけがレポートされます。このパラメーターは、より分かりにくい違反だけを
+    レポートするのに役立ちます。
+
+    次の条件に当てはまる型が類似しているとみなされます。
+        1) 型の消去 (erasure) が一致する
+        2) 一方の型が他方の型のプリミティブ ラッパーである
+        3) どちらかの型が型変数である
+        4) どちらかの型が他方と代入互換性がある
+    可変引数型と他のメソッドの引数が順に比較されます。
+        void method(int i, Object...args) {}
+        void method(int i, String s, Double d) {}
+    上記の例の場合、String と Double は可変引数で表される位置に対応している
+    ため、 Object と比較されます。
+
+-戻り値の型が異なるオーバーロードされたメソッドを無視する (デフォルト値 false)
+    このパラメーターを有効にすると、"類似の" 戻り値型を持つオーバーロード
+    メソッドだけがレポートされます。このパラメーターは、デフォルトの設定では
+    オフです。メソッドの戻り値を使用することは必須ではなく、戻り値の型が似ていない
+    場合も、どのメソッドが呼び出されているかに関する混乱が発生するからです。
+
+    次の条件に当てはまる型が類似しているとみなされます。
+        1) 型の消去 (erasure) が一致する
+        2) 一方の型が他方の型のプリミティブ ラッパーである
+        3) どちらかの型が型変数である
+        4) どちらかの型が他方と代入互換性がある
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+可変引数メソッドをオーバーロードすると、どのメソッドが呼び出されているのかが
+分かりにくくなり、可読性を損ないます。
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+package examples.rules.pb.cub;
+
+public class OVAM {
+    void method(int i, Object... args) { //違反
+        ...
+    }
+
+    void method(int i, String s) {
+        ...
+    }
+}
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+package examples.rules.pb.cub;
+
+public class OVAMFixed {
+    void method(int i, Object... args) {
+        ...
+    }
+
+    void method2(int i, String s) { //修正
+        ...
+    }
+}
+
+
+</PRE>
+<STRONG>
+関連資料
+</STRONG>
+<PRE>
+
+Varargs
+<A target="_blank" HREF="http://docs.oracle.com/javase/1.5.0/docs/guide/language/varargs.html">http://docs.oracle.com/javase/1.5.0/docs/guide/language/varargs.html</A>
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="PB.CUB.PSFA" href="#top">[Top]</a><br/><br/><STRONG>
+public static final 配列フィールドの使用を避ける [PB.CUB.PSFA]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+このルールは、public static final 配列フィールドの使用を検出します。
+
+
+
+</PRE>
+<STRONG>
+スコープ レベル
+</STRONG>
+<PRE>
+LINE
+
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v4.5
+
+
+</PRE>
+<STRONG>
+注意
+</STRONG>
+<PRE>
+
+このルールは、インターフェイス内のすべての配列定数を無視します。
+
+
+</PRE>
+<STRONG>
+セキュリティとの関連
+</STRONG>
+<PRE>
+
+カテゴリ: アプリケーションの誤動作
+
+配列フィールドを final 宣言した場合、個々の要素が変更可能であるために、
+依然としてフィールドが変更可能であることを忘れがちです。セキュリティ上の
+理由から、配列のような可変のフィールドに public アクセスを許可するべきでは
+ありません。public アクセスを不可能にすると、攻撃者によってフィールドが変更されるのを
+防ぐことができます。
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+このルールに従ってコーディングしないと、
+中身が空でないすべての配列フィールドの定数は可変であるため、
+悪意のあるプログラマが定数を変更する可能性があります。
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+package examples.rules.pb.cub;
+
+public class PSFA {
+    public static final Integer[] MUTABLE = { new Integer(0) };  // 違反
+
+    public static void main (String[] args) {
+        MUTABLE[0] = new Integer(1);
+        System.out.println ("MUTABLE[0]=" + MUTABLE[0]);
+    }
+}
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+上記のサンプル コードでは、値が変えられる可能性があるため、"MUTABLE[0]=1" と
+出力されます。これを防止するには、定数配列にユーザーが直接アクセスできないように
+します。
+
+package examples.rules.pb.cub;
+
+import java.util.*;
+
+public class PSFAFixed {
+    private static final Integer[] MUTABLE = { new Integer(0) }; // 修正
+    public static final List unmutable =
+       Collections.unmodifiableList (Arrays.asList(MUTABLE));
+}
+
+
+</PRE>
+<STRONG>
+関連資料
+</STRONG>
+<PRE>
+
+Joshua Bloch: "Effective Java - Programming Language Guide"
+Addison Wesley, 2001, pp. 62
+
+CWE-582: Array Declared Public, Final, and Static
+<A target="_blank" HREF="http://cwe.mitre.org/data/definitions/582.html">http://cwe.mitre.org/data/definitions/582.html</A>
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="PB.CUB.RMO" href="#top">[Top]</a><br/><br/><STRONG>
+可変フィールドの間接参照を避ける [PB.CUB.RMO]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+このルールは、static な可変フィールドが変数に代入されている場合に違反をレポートします。
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v8.4
+
+
+</PRE>
+<STRONG>
+セキュリティとの関連
+</STRONG>
+<PRE>
+
+このルールは、PCI DSS (Payment Card Industry Data Security Standard) の要件 6「安全な
+システムとアプリケーションの開発と保守」を推進するのに役立ちます。特に、項目 6.5.4
+「安全でない直接的なオブジェクト参照」を検証するのに役立ちます。
+
+このルールは、OWASP 2013 Top 10 アプリケーション脆弱性「A4-安全でないオブジェクトの直接参照」に対する防御に役立ちます。
+
+
+</PRE>
+<STRONG>
+パラメーター
+</STRONG>
+<PRE>
+
+-static final フィールドだけをチェックする (デフォルト値 false)
+-次のアクセシビリティのフィールドをチェックする
+    -public (デフォルト値 true)
+    -protected
+    -package-private
+    -private
+-次のクラスのフィールドを無視する: (Glob 式)
+    -デフォルトのリスト
+       * java.lang.System
+       * java.util.Locale
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+static な可変フィールドを変数に代入した場合、変数への変更が static な可変
+フィールドの状態に直接影響を与えることを意識するべきです。
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+package examples.rules.pb.cub;
+
+class NumberConst {
+
+    public static final String[] NUMBER = {"1", "2"};
+    
+}
+
+public class RMO {    
+    public void run() {
+        String[] number = NumberConst.NUMBER;  // 違反
+     
+        // ......   
+        number[0] = "XXX"; // New number
+    }
+}
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+変数 number を代入する場合、可変フィールド自体ではなく、フィールドの
+防衛的コピーを使用します。
+
+package examples.rules.pb.cub;
+
+class NumberConst {
+
+    private static final String[] NUMBER = {"1", "2"};
+    
+    public static final String[] getNumber() {
+        String[] copy = new String[NUMBER];
+        System.arraycopy(NUMBER, 0, copy, 0, NUMBER.length);
+        return copy;
+    }
+}
+
+public class RMOFixed {    
+    public void run() {
+        String[] number = NumberConst.getNumber();  // 修正
+        
+        // ......   
+        number[0] = "XXX"; // New number
+    }
+}
+
+
+</PRE>
+<STRONG>
+関連資料
+</STRONG>
+<PRE>
+
+OWASP Top 10 2013 (A4-Insecure Direct Object References):
+<A target="_blank" HREF="https://www.owasp.org/index.php/Top_10_2013-Top_10">https://www.owasp.org/index.php/Top_10_2013-Top_10</A>
+
+PCI Data Security Standard:
+<A target="_blank" HREF="https://www.pcisecuritystandards.org/security_standards/pci_dss.shtml">https://www.pcisecuritystandards.org/security_standards/pci_dss.shtml</A>
+
+CWE-607: Public Static Final Field References Mutable Object
+<A target="_blank" HREF="https://cwe.mitre.org/data/definitions/607.html">https://cwe.mitre.org/data/definitions/607.html</A>
+
+SEI CERT Oracle Coding Standard for Java
+OBJ10-J. Do not use public static nonfinal fields
+<A target="_blank" HREF="https://wiki.sei.cmu.edu/confluence/display/java/OBJ10-J.+Do+not+use+public+static+nonfinal+fields">https://wiki.sei.cmu.edu/confluence/display/java/OBJ10-J.+Do+not+use+public+static+nonfinal+fields</A>
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="PB.CUB.SAC" href="#top">[Top]</a><br/><br/><STRONG>
+String の連結で char 配列を使用してはいけない [PB.CUB.SAC]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+String の連結で char 配列を使用している場合、
+このルールは違反をレポートします。
+
+
+
+</PRE>
+<STRONG>
+スコープ レベル
+</STRONG>
+<PRE>
+LINE
+
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v8.0
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+他の一部の言語と異なり、Java は char 配列と文字列の連結を
+サポートしていません。
+Java はこの連結をコンパイル エラーとしてレポートしませんが、
+連結結果はプログラマが期待した結果とは異なるでしょう。
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+package examples.rules.pb.cub;
+
+public class SAC {
+    private String str= "";
+    private String appendString(char[] charSequence) {
+        str+= charSequence; //違反
+        return str;
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+package examples.rules.pb.cub;
+
+public class SACFixed {
+    private String str= "";
+    private String appendString(char[] charSequence) {
+        str+= String.valueOf(charSequence); //修正
+        return str;
+    }
+}
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="PB.CUB.SBC" href="#top">[Top]</a><br/><br/><STRONG>
+不正な case を含む switch 文を避ける [PB.CUB.SBC]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+このルールは、不正な case を含む switch 文を検出します。
+switch ブロック内のすべての case 文に、
+break 文、/* falls through */ コメント、または
+次の case への処理を止めるための return がない場合、
+このルールはエラーをレポートします。
+
+
+
+</PRE>
+<STRONG>
+スコープ レベル
+</STRONG>
+<PRE>
+LINE
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v4.5
+
+
+
+</PRE>
+<STRONG>
+セキュリティとの関連
+</STRONG>
+<PRE>
+
+「switch 文などに break 文がないため、複数の条件に関連付けられたコードが実行される
+ことになります。これは、プログラマーが 1 つの条件に関連付けられたコードだけを
+実行することを意図していた場合、問題の原因になる可能性があります．．．この
+弱点は、意図していないロジックが実行されたり、その他の予期しないアプリケーション
+の動作の原因になる可能性があります。」 [CWE-484]
+
+
+</PRE>
+<STRONG>
+パラメーター
+</STRONG>
+<PRE>
+
+-最後の "switch" case を無視する (デフォルト true)
+-空の "case" 文を無視する (デフォルト true)
+   -このオプションが有効な場合、本体に空白文字以外に何も
+    ない case 文に対しては違反をレポートしません。
+    
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+case 文に break 、/* falls through */ コメント、または return 文がない場合、
+制御はそのまま次の case 文に移ります。
+それが最後の case 文である場合、特に問題はないように
+思われますが、その後に多くの case 文が続く場合、安全性が失われる
+ことになります。
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+package examples.rules.pb.cub;
+
+public class SBC {
+    int method (int i) {
+        int x = 0;
+        switch (i) {
+        case 1:
+            x = 10;
+            break;
+        case 2:  // 違反
+            x = 20;
+        default:
+            a = 40;
+            break;
+        }
+    }
+}
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+break 文、/* falls through */コメント、または return 文を追加してください。
+
+package examples.rules.pb.cub;
+
+public class SBCFixed {
+    void method (int i) {
+        int x = 0;
+        switch (i) {
+        case 1:
+            x = 10;
+            break;
+        case 2:
+            x = 20;
+            break;  // 修正
+        default:
+            x = 40;
+            break;
+        }
+    }
+}
+
+
+</PRE>
+<STRONG>
+関連資料
+</STRONG>
+<PRE>
+
+CWE-484: Omitted Break Statement in Switch
+<A target="_blank" HREF="https://cwe.mitre.org/data/definitions/484.html">https://cwe.mitre.org/data/definitions/484.html</A>
+
+
+</PRE>
+<STRONG>
+ログ
+</STRONG>
+<PRE>
+
+@severity-from 1(v6.0)
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="PB.CUB.SRAD" href="#top">[Top]</a><br/><br/><STRONG>
+アノテーション型の宣言に @Retention を指定する [PB.CUB.SRAD]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+このルールは、@Retention (java.lang.annotation.Retention) アノテーションを指定していない
+アノテーション宣言を違反としてレポートします。
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v9.0
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+アノテーションの宣言に @Retention アノテーションが指定されていない場合、デフォルトの RetentionPolicy.CLASS
+になります。つまり、アノテーションはクラス ファイルに保持されますが、VM はそれを破棄する可能性が
+あります。リフレクションを使用してアノテーションにアクセスする場合、RetetionPolicy.RUNTIME を
+使用するべきです。
+そうでなければ、アノテーションを実行時に参照できないために混乱を引き起こす可能性があります。
+そのため、常に明示的に @Retention を指定してアノテーションの使用目的を明確にすると役に立ちます。
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+package examples.rules.pb.cub;
+
+public @interface SRAD {
+    ...
+}
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+アノテーションの宣言に @Retention を指定します。
+
+package examples.rules.pb.cub;
+
+@Retention(RetentionPolicy.SOURCE)
+public @interface SRADFixed {
+    ...
+}
+
+
+</PRE>
+<STRONG>
+関連資料
+</STRONG>
+<PRE>
+
+Retention (Java 2 Platform SE 5.0)
+<A target="_blank" HREF="http://docs.oracle.com/javase/1.5.0/docs/api/java/lang/annotation/Retention.html">http://docs.oracle.com/javase/1.5.0/docs/api/java/lang/annotation/Retention.html</A>
+
+RetentionPolicy (Java 2 Platform SE 5.0)
+<A target="_blank" HREF="http://docs.oracle.com/javase/1.5.0/docs/api/java/lang/annotation/RetentionPolicy.html">http://docs.oracle.com/javase/1.5.0/docs/api/java/lang/annotation/RetentionPolicy.html</A>
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="PB.CUB.STRCC" href="#top">[Top]</a><br/><br/><STRONG>
+print() 文および println() 文の複雑な式を括弧で囲む [PB.CUB.STRCC]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+java.io.PrintStream の print() または println() に、
+複雑な式を括弧で囲まずに引数として渡している場合、
+このルールは違反をレポートします。
+
+
+
+</PRE>
+<STRONG>
+スコープ レベル
+</STRONG>
+<PRE>
+LINE
+
+
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v8.0
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+Java では '+' 演算子を使って文字列を連結できます。そのため、
+1 つのステートメントに文字列の連結と他の演算子 ( == や != など) が
+混在する場合、コードは簡単に曖昧になります。
+この曖昧さはバグの可能性につながる場合があります。
+ほとんどの場合、このバグはコンパイル時に型の非互換として現れます。
+しかし、PrintStream の print() および println() は基本的にすべての
+プリミティブ型を受け取るため、実行時の前にバグの可能性を見分けるのは
+困難です。曖昧さを防ぐには、式を適切に括弧で囲むべきです。
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+package examples.rules.pb.cub;
+
+public class STRCC {
+    public static void main(String[] arg) {
+         Object obj = null;
+         System.out.println("Obj is " 
+                          + obj != null ? obj.toString() : "null"); 
+                  //違反：コンパイラは意図していない場合でも
+                  // ("Obj is" + obj) != null として式を解釈します
+     }
+}
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+package examples.rules.pb.cub;
+
+public class STRCCFixed {
+    public static void main(String[] arg) {
+         Object obj = null;
+         System.out.println("Obj is " 
+                          + (obj != null ? obj.toString() : "null"));  //修正
+     }
+}
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="PB.CUB.TOCTOU" href="#top">[Top]</a><br/><br/><STRONG>
+Time-of-check Time-of-use (TOCTOU) 競合状況を避ける [PB.CUB.TOCTOU]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+TTOCTOU (Time Of Check To Time Of Use - チェック時から使用時まで) は、リソースがチェックされてから使用される間に
+変更される可能性がある競合状態です。これにより、予期しない振る舞いが発生したり、セキュリティ攻撃につながる可能性が
+あります。Java は、チェックされたリソースが使用の前に変更されている場合、実行時例外をスローしますが、予期しない振る舞いを
+防ぎ、セキュリティを確保するため、TOCTOU に対処することが推奨されます。
+
+このルールは、リソースがチェックされてから使用するまでの間の変更を防ぐため、中間の操作に制限をかけます。
+ルールのパラメーターを設定する必要があります。
+
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v9.2
+
+
+
+</PRE>
+<STRONG>
+セキュリティとの関連
+</STRONG>
+<PRE>
+TOCTOU 競合状態は、攻撃者がリソースに認可されないアクセスを行ったり、サービス拒否を引き起こすことを
+可能にする場合があります。
+
+
+
+</PRE>
+<STRONG>
+パラメーター
+</STRONG>
+<PRE>
+[メソッドのペア] テーブルでは、ルールがチェックするメソッドのペアを指定できます。
+次のパターンを使用してメソッドを指定します。
+&lt;完全修飾型名&gt;#&lt;メソッド名&gt;(&lt;パラメーター1 完全修飾型名&gt;,&lt;パラメーター2 完全修飾型名&gt;))
+デフォルト値は java.io.File#canWrite() および java.io.FileWriter#FileWriter(java.io.File) です。
+
+[メソッドのペアの間で発生するメソッド呼び出しの最大数] パラメーターを使用すると、[メソッドのペア] テーブルで
+指定されたメソッド間の最大メソッド呼び出し数を指定できます。
+デフォルト値は 3 です。
+
+[ブロック命令] パラメーターを使用すると、プロセスの遅延やブロックの原因になるため、[メソッドのペア] テーブルで
+指定されたメソッド間で呼び出してはいけないメソッドのリストを指定できます。
+デフォルト値は java.lang.Thread#sleep(long) および java.lang.Thread#sleep(long,int) です。
+次のパターンを使用してメソッドを指定します。
+&lt;完全修飾型名&gt;#&lt;メソッド名&gt;(&lt;パラメーター1 完全修飾型名&gt;,&lt;パラメーター2 完全修飾型名&gt;))
+
+ルールは次の場合に違反をレポートします。
+- [メソッドのペア] テーブルで指定されたメソッド間のメソッド呼び出し数が、指定された最大数を超えた場合
+- [ブロック命令] テーブルで指定されたメソッドが [メソッドのペア] テーブルで指定されたメソッド間で呼び出されている場合
+
+    
+    
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+リソースが予期しない状態に陥るのを避け、セキュリティ攻撃を防ぐのに役立ちます。
+
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+ /* This reference program was developed in June 2009 as part of the Software
+ * Assurance Metrics And Tool Evaluation (SAMATE) project.
+ * We would appreciate acknowledgment if the software is used.
+ * The SAMATE project website is: <A target="_blank" HREF="http://samate.nist.gov">http://samate.nist.gov</A>
+ */
+import java.io.*;
+import java.util.logging.Logger;
+ 
+ 
+public class TimeOfCheckTimeOfUse_367
+{
+    public TimeOfCheckTimeOfUse_367()
+    {
+        try
+        {
+            // Try to open the given file
+            File f = new File( "Z:/TCG_Java_Test_Cases/367_TOCTOU_java/myfile.txt" );
+
+            if( f.canWrite() == false )
+            {
+                // Try to cause the currently executing thread to sleep
+                try
+                {
+                    // BUG
+                    // The state of the file may change in the meantime
+                    Thread.sleep( 1000 );
+                }
+                catch (InterruptedException e)
+                {
+                    final Logger logger = Logger.getAnonymousLogger();
+                    String exception = "Exception " + e;
+                    logger.warning( exception );
+                }
+
+                // Create the file if it didn't exist before the sleep function
+                FileWriter fw = new FileWriter( f ); //違反
+                fw.close();
+             }
+        }
+        catch ( IOException e )
+        {
+            final Logger logger = Logger.getAnonymousLogger();
+            String exception = "Exception " + e;
+            logger.warning( exception );
+        }
+    }
+
+    public static void main( String argv[] )
+    {
+        new TimeOfCheckTimeOfUse_367();
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+/* This reference program was developed in June 2009 as part of the Software
+ * Assurance Metrics And Tool Evaluation (SAMATE) project.
+ * We would appreciate acknowledgment if the software is used.
+ * The SAMATE project website is: <A target="_blank" HREF="http://samate.nist.gov">http://samate.nist.gov</A>
+ */
+ 
+import java.io.*;
+import java.util.logging.Logger;
+ 
+ 
+public class TimeOfCheckTimeOfUse_good_367
+{
+    public TimeOfCheckTimeOfUse_good_367()
+    {
+        try {
+            // Try to open the given file
+            File f = new File( "Z:/TCG_Java_Test_Cases/367_TOCTOU_java/myfile.txt" );
+
+            if( f.canWrite() == false ) {
+                // Try to cause the currently executing thread to sleep
+                try {
+                   // The state of the file may change in the meantime
+                   Thread.sleep( 1000 );
+                }
+                catch (InterruptedException e)
+                {
+                    final Logger logger = Logger.getAnonymousLogger();
+                    String exception = "Exception " + e;
+                    logger.warning( exception );
+                }
+
+                // Verify the state hasn't changed
+                if( f.canWrite() == false )
+                {
+                    // Create the file if it didn't exist before the sleep function
+                    FileWriter fw = new FileWriter( f ); //修正
+                    fw.close();
+                }
+            }
+        }
+        catch ( IOException e )
+        {
+            final Logger logger = Logger.getAnonymousLogger();
+            String exception = "Exception " + e;
+            logger.warning( exception );
+        }
+    }
+
+    public static void main( String argv[] )
+    {
+        new TimeOfCheckTimeOfUse_good_367();
+    }
+}
+    
+    
+    
+
+</PRE>
+<STRONG>
+関連資料
+</STRONG>
+<PRE>
+
+SAMATE cases repository (test case Id: 2096)
+<A target="_blank" HREF="http://samate.nist.gov/SRD/view_testcase.php?tID=2096">http://samate.nist.gov/SRD/view_testcase.php?tID=2096</A>
+
+SAMATE cases repository (test case Id: 2122)
+<A target="_blank" HREF="http://samate.nist.gov/SRD/view_testcase.php?tID=2122">http://samate.nist.gov/SRD/view_testcase.php?tID=2122</A>
+
+2020 CWE Weaknesses On the Cusp
+CWE-362: Concurrent Execution using Shared Resource with Improper Synchronization ('Race Condition')
+<A target="_blank" HREF="https://cwe.mitre.org/data/definitions/362.html">https://cwe.mitre.org/data/definitions/362.html</A>
+
+CWE-367: Time-of-check Time-of-use (TOCTOU) Race Condition
+<A target="_blank" HREF="https://cwe.mitre.org/data/definitions/367.html">https://cwe.mitre.org/data/definitions/367.html</A>
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="PB.CUB.TOS" href="#top">[Top]</a><br/><br/><STRONG>
+配列変数で toString() を呼び出さない [PB.CUB.TOS]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+このルールは、配列変数で toString() を呼び出している場合に、違反を検出します。
+
+
+
+</PRE>
+<STRONG>
+スコープ レベル
+</STRONG>
+<PRE>
+LINE
+
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v8.2
+
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+配列変数で toString() を呼び出すと、[C@16f0472 などの読めない文字が返されます。
+配列ではなく、配列の要素に対して toString() を呼び出すべきであるため、これは
+タイプミスであると考えられます。
+
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+package examples.rules.pb.cub;
+
+public class TOS {
+
+    private String[] array;
+    
+    public String toString() {
+        return array.toString();  // 違反
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+Arrays.toString() を使用して、配列変数内の要素を返します。
+
+package examples.rules.pb.cub;
+
+import java.util.*;
+
+public class TOSFixed {
+
+    private String[] array;
+    
+    public String toString() {
+        return Arrays.toString(array);  // 修正
+    }
+}
+
+
+</PRE>
+<STRONG>
+関連資料
+</STRONG>
+<PRE>
+
+<A target="_blank" HREF="http://developer.android.com/guide/practices/design/performance.html">http://developer.android.com/guide/practices/design/performance.html</A>
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="PB.CUB.TVOM" href="#top">[Top]</a><br/><br/><STRONG>
+オーバーロードされたメソッドを呼び出す場合、型変数引数を使用しない [PB.CUB.TVOM]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+このルールは、オーバーロードされたメソッドに型変数が渡されている場合に
+違反をレポートします。
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v9.0
+
+
+</PRE>
+<STRONG>
+注意
+</STRONG>
+<PRE>
+
+可変引数は JDK 1.5 で導入されたため、このルールはコンパイラ準拠レベルが JDK 1.5
+以上のプロジェクトだけをチェックします。
+
+
+</PRE>
+<STRONG>
+パラメーター
+</STRONG>
+<PRE>
+
+-引数が異なるオーバーロードされたメソッドを無視する (デフォルト値 false)
+    このパラメーターを有効にすると、"類似の" 引数型を持つオーバーロード
+    メソッドだけがレポートされます。このパラメーターは、より分かりにくい違反だけを
+    レポートするのに役立ちます。
+
+    次の条件に当てはまる型が類似しているとみなされます。
+        1) 型の消去 (erasure) が一致する
+        2) 一方の型が他方の型のプリミティブ ラッパーである
+        3) どちらかの型が型変数である
+        4) どちらかの型が他方と代入互換性がある
+    可変引数型と他のメソッドの引数が順に比較されます。
+        void method(int i, Object...args) {}
+        void method(int i, String s, Double d) {}
+    上記の例の場合、String と Double は可変引数で表される位置に対応している
+    ため、 Object と比較されます。
+
+-戻り値の型が異なるオーバーロードされたメソッドを無視する (デフォルト値 false)
+    このパラメーターを有効にすると、"類似の" 戻り値型を持つオーバーロード
+    メソッドだけがレポートされます。このパラメーターは、デフォルトの設定では
+    オフです。メソッドの戻り値を使用することは必須ではなく、戻り値の型が似ていない
+    場合も、どのメソッドが呼び出されているかに関する混乱が発生するからです。
+
+    次の条件に当てはまる型が類似しているとみなされます。
+        1) 型の消去 (erasure) が一致する
+        2) 一方の型が他方の型のプリミティブ ラッパーである
+        3) どちらかの型が型変数である
+        4) どちらかの型が他方と代入互換性がある
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+オーバーロードされたメソッドに型変数が渡されると、実際にはどのメソッドが呼び出されて
+いるかが分かりにくくなります。どのメソッドが呼び出されているかがすぐに分からないため、
+コードの可読性が損なわれます。さらに、コンパイラによって型変数が予期しない型に変換
+される可能性があります。詳細については「サンプルコード」を参照してください。
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+このサンプルでは、コンパイラは print(T) を print(Object) に変換します。
+このため、最終的には printMethod(Object) メソッドが呼び出されますが、
+これは直感的には分かりにくい動作です。
+
+package examples.rules.pb.cub;
+
+public class TVOM {
+    static void printMethod(Object o) {
+        System.out.println("Object");
+    }
+
+    static void printMethod(String s) {
+        System.out.println("String");
+    }
+
+    static &lt;T&gt; void print(T t) {
+        printMethod(t); //違反
+    }
+
+    public static void main(String[] args) {
+        print("test");
+    }
+}
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+コードをリファクタリングし、メソッドをオーバーロードしないようにするか、
+オーバーロードされたメソッドに型変数を渡さないようにします。
+
+package examples.rules.pb.cub;
+
+public class TVOMFixed {
+    static void printMethod(Object o) {
+        System.out.println("Object");
+    }
+
+    static void printMethod(String s) {
+        System.out.println("String");
+    }
+
+    public static void main(String[] args) {
+        printMethod("test"); //修正
+    }
+}
+
+
+</PRE>
+<STRONG>
+関連資料
+</STRONG>
+<PRE>
+
+Java Generics FAQs - Programming With Java Generics by Angelika Langer
+<A target="_blank" HREF="http://www.angelikalanger.com/GenericsFAQ/FAQSections/ProgrammingIdioms.html#FAQ050">http://www.angelikalanger.com/GenericsFAQ/FAQSections/ProgrammingIdioms.html#FAQ050</A>
+
+Varargs
+<A target="_blank" HREF="http://docs.oracle.com/javase/1.5.0/docs/guide/language/varargs.html">http://docs.oracle.com/javase/1.5.0/docs/guide/language/varargs.html</A>
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="PB.CUB.UEIC" href="#top">[Top]</a><br/><br/><STRONG>
+オブジェクト同士の比較に '==' または '!=' を使用しない [PB.CUB.UEIC]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+基本的に、演算子 '==' および '!=' は 2 つのオブジェクトを比較して、同じ
+オブジェクトのインスタンスかどうかをチェックします。いっぽう  'equals()'
+メソッドは 2 つのオブジェクトが同じ値を持つかどうかをチェックします。
+
+このルールは、オブジェクトの比較に equals() ではなく、== または != を
+使用しているコードを違反としてレポートします。
+このルールはパラメータライズできます (「パラメーター」セクションを参照)。
+デフォルトのパラメーターを有効すると、オブジェクトの比較で == または != が
+使用されている場合に違反がレポートされます。
+
+
+
+</PRE>
+<STRONG>
+スコープ レベル
+</STRONG>
+<PRE>
+
+LINE
+
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v4.5
+
+
+
+</PRE>
+<STRONG>
+注意
+</STRONG>
+<PRE>
+
+このルールは、次の場合に違反をレポートしません。
+- 比較演算子のオペランドが Class オブジェクトである (Class オブジェクトは 
+== または != を使って比較できるため)。
+- また、比較演算子のオペランドが java.lang.Object 型のオブジェクトで
+ある (== または != を使用して 2 つの java.lang.Object 型のオブジェクトを
+比較するのは、equals() メソッドを使用するのと同じであるため)。
+
+
+
+</PRE>
+<STRONG>
+セキュリティとの関連
+</STRONG>
+<PRE>
+
+「プログラムは、オブジェクト自体の内容ではなく、オブジェクト参照を比較しています。
+そのため、オブジェクトの等価性を検出できません．．．この弱点は、結果の誤りに
+つながり、結果として予期しないアプリケーションの動作を引き起こす可能性があります。」
+[CWE-595]
+
+
+
+</PRE>
+<STRONG>
+パラメーター
+</STRONG>
+<PRE>
+
+-チェック範囲:
+    -すべてのオブジェクト (デフォルト オン)
+    -String オブジェクトのみ
+- 配列での Object クラスの equals () メソッドの呼び出しをチェックする (デフォルト オン)
+- static final オブジェクトとの比較をチェックする (デフォルト オフ)
+- equals() メソッド内の比較をチェックする (デフォルト オン)
+
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+オブジェクトの比較でのエラーを防ぐのに役立ちます。
+
+また、Java 1.5 以降のボックス化解除に関する思い込みによる誤りを検出します。
+2 つの Integer が比較されている場合、それらが等しくないにも関わらず、一見等しい
+ように見える場合があります。
+例:
+    void isSame(Integer a, Integer b) {
+        return (a == b);
+    }
+このメソッドは、a と b が同じオブジェクトを参照している場合に true を返します。
+しかし、単に両者の値が同じである場合 (それらが比較のためにボックス化解除されて
+いない場合) には、true を返しません。
+
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+package examples.rules.pb.cub;
+
+import java.awt.*;
+
+public class UEIC {
+    public boolean notEqual (Choice other) {
+       boolean monthly = co != other;  // 違反
+       return monthly;
+    }
+    private Choice co = null;
+}
+
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+ "==" または "!=" ではなく equals() を使用します。
+
+package examples.rules.pb.cub;
+
+import java.awt.*;
+
+public class UEICFixed {
+    public boolean notEqual (Choice other) {
+       boolean monthly = !(co.equals(other));  // 修正
+       return monthly;
+    }
+    private Choice co = null;
+}
+
+
+</PRE>
+<STRONG>
+関連資料
+</STRONG>
+<PRE>
+
+CWE-595: Comparison of Object References Instead of Object Contents
+<A target="_blank" HREF="https://cwe.mitre.org/data/definitions/595.html">https://cwe.mitre.org/data/definitions/595.html</A>
+
+Joshua Bloch: "Effective Java - Programming Language Guide
+Addison Wesley, 2001, pp.25 - 36
+
+Allan Vermeulen, Scott W. Ambler, Greg Bumgardner, Eldon Metz, Trevor Misfeldt,
+Jim Shur, Patrick Thompson: "The Elements of Java Style"
+SIGS Cambridge, 2000, pp. 69 - 70
+
+SEI CERT Oracle Coding Standard for Java
+EXP02-J. Do not use the Object.equals() method to compare two arrays
+<A target="_blank" HREF="https://wiki.sei.cmu.edu/confluence/display/java/EXP02-J.+Do+not+use+the+Object.equals%28%29+method+to+compare+two+arrays">https://wiki.sei.cmu.edu/confluence/display/java/EXP02-J.+Do+not+use+the+Object.equals%28%29+method+to+compare+two+arrays</A>
+
+SEI CERT Oracle Coding Standard for Java
+EXP03-J. Do not use the equality operators when comparing values of boxed primitives
+<A target="_blank" HREF="https://wiki.sei.cmu.edu/confluence/display/java/EXP03-J.+Do+not+use+the+equality+operators+when+comparing+values+of+boxed+primitives">https://wiki.sei.cmu.edu/confluence/display/java/EXP03-J.+Do+not+use+the+equality+operators+when+comparing+values+of+boxed+primitives</A>
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="PB.EAR" href="#top">[Top]</a><br/><br/><STRONG>
+void ではないメソッドの戻り値は、空の配列または null であってはいけない [PB.EAR]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+このルールは、可能な唯一の戻り値が 「空の配列」 または 「定数 null 」 である
+メソッド宣言を特定します。このルールは、非プリミティブ型を返すように
+定義されたメソッドにおいてエラーを探します。
+戻り値のそれぞれが「初期化されなかった配列」または「定数 null」
+である場合、違反がレポートされます。
+
+
+
+</PRE>
+<STRONG>
+スコープ レベル
+</STRONG>
+<PRE>
+LINE
+
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v8.0
+
+
+
+</PRE>
+<STRONG>
+パラメーター
+</STRONG>
+<PRE>
+
+-オプション
+  -各戻り値がリテラルの "null" であるメソッドだけをレポートする
+  -各戻り値がリテラルの "null" または空配列であるメソッドをレポートする（デフォルト）
+- abstract クラスのメンバー、または abstract クラスの abstract メソッドをオーバーライドするメソッドを無視する
+    デフォルト値 false      
+- インターフェイス実装メソッドを無視する
+    デフォルト値 false   
+
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+戻り値が空配列または定数 "null" の場合、
+返された配列要素にアクセスしようとしたとき、
+または戻り値が null かどうかをチェックしないときに
+予想外の例外が発生する恐れがあります。
+
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+package examples.rules.pb;
+
+public class EAR {
+
+    public int[] method() {
+        int[] a= {};
+        return a;   //違反
+    }
+
+    public Object method3(){  
+        return null;   //違反
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+戻り値が配列の場合、空ではないリストまたは new 文を使って
+配列を必ず初期化します。
+また、定数 "null" の返却以外の処理につながる
+実行パスがあるようにします。
+
+package examples.rules.pb;
+
+public class EARFixed {
+
+    public int[] method() {
+        int[] a= {5};
+        return a;   //FIXED
+    }
+    
+    public int[] method2() {
+        int[] a= new int[5];
+        return a;   //FIXED
+    }
+    
+    public Object method3(){  
+        return new Object();   //修正
+    }    
+}
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="PB.IKICO" href="#top">[Top]</a><br/><br/><STRONG>
+比較演算に使用されているキーが不変であることを確認する [PB.IKICO]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+「順序付きのセットおよびマップでキーとして使用されるオブジェクトは不変でなければなりません。可変のフィールドが
+ある場合、equals()、hashCode()、compareTo() メソッドは、不変の状態だけを使用してオブジェクトを比較するべきです。
+このルールに違反すると、コレクション内の順序が一定しないという問題が発生する可能性があります。」
+[SEI CERT Oracle Coding Standard for Java; MET11-J. Ensure that keys used in comparison operations are immutable]
+
+このルールは、equals()、hashCode()、compareTo() メソッドで可変フィールドが使用されている場合に違反をレポートします。
+
+
+</PRE>
+<STRONG>
+スコープ レベル
+</STRONG>
+<PRE>
+
+LINE
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v10.4
+
+
+
+</PRE>
+<STRONG>
+パラメーター
+</STRONG>
+<PRE>
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+コレクション内の順序の不一致を防ぎ、確実性のない動作を避けるのに役立ちます。
+
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+// 可変クラス Employee
+class Employee {
+  private String name;
+  private double salary;
+ 
+  Employee(String empName, double empSalary) {
+    this.name = empName;
+    this.salary = empSalary;
+  }
+ 
+  public void setEmployeeName(String empName) {
+    this.name = empName;
+  }
+ 
+  public void setSalary(double empSalary) {
+    this.salary = empSalary;
+  }
+ 
+  @Override
+  public boolean equals(Object o) {
+    if (!(o instanceof Employee)) {
+      return false;
+    }
+ 
+    Employee emp = (Employee)o;
+    return emp.name.equals(name);	// 違反:  equals() メソッドで可変フィールド 'name' が使用されている
+  }
+ 
+  public int hashCode() {/* ... */}
+ 
+}
+ 
+// クライアント コード
+Map&lt;Employee, Calendar&gt; map =
+  new ConcurrentHashMap&lt;Employee, Calendar&gt;();
+// ...
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+// 可変クラス Employee
+class Employee {
+  private String name;
+  private double salary;
+  private final long employeeID;  // 各 Employee ごとに固有
+ 
+  Employee(String name, double salary, long empID) {
+    this.name = name;
+    this.salary = salary;
+    this.employeeID = empID;
+  }
+ 
+  // ...
+ 
+  @Override
+  public boolean equals(Object o) {
+    if (!(o instanceof Employee)) {
+      return false;
+    }
+ 
+    Employee emp = (Employee)o;
+    return emp.employeeID == employeeID;	//修正: 不変フィールドを使用してオブジェクトを比較するようになった
+  }
+}
+ 
+// クライアント コードは変更なし
+Map&lt;Employee, Calendar&gt; map =
+  new ConcurrentHashMap&lt;Employee, Calendar&gt;();
+// ...
+
+
+
+</PRE>
+<STRONG>
+関連資料
+</STRONG>
+<PRE>
+
+SEI CERT Oracle Coding Standard for Java
+MET11-J. Ensure that keys used in comparison operations are immutable
+<A target="_blank" HREF="https://wiki.sei.cmu.edu/confluence/display/java/MET11-J.+Ensure+that+keys+used+in+comparison+operations+are+immutable">https://wiki.sei.cmu.edu/confluence/display/java/MET11-J.+Ensure+that+keys+used+in+comparison+operations+are+immutable</A> 
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="PB.LOGIC.AIL" href="#top">[Top]</a><br/><br/><STRONG>
+無限ループを使用しない [PB.LOGIC.AIL]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+このルールは、無限ループの可能性があるループを検出します。
+次の 3 つのケースを検出します。
+
+1.  while、do-while および for ループが次の条件を満たす場合、ルールは違反を
+    レポートします。
+
+    a.  条件が常に true に評価されるか、ループの本体で変更されていない変数の
+        評価に依存している。
+
+    b.  内部ループによって包含されない break; 文がない。
+
+    c.  return 文または throw 文がない。
+
+    d. System.exit() または Runtime.exit() の呼び出しがない。
+    
+
+2.  このルールはまた、次の条件を満たす while、do-while、および for ループ
+     についても違反をレポートします。 
+    
+    a. 条件が java.util.Iterator インターフェイスの hasNext() の呼び出しである。
+        
+    b. ループの本体に、Iterator インターフェイスの next() または remove() 
+       メソッドの呼び出しがない。
+        
+    このケースは hasNext() が常に true を返す状況につながりやすく、
+    常に true が返される場合、無限ループが起こります。
+
+
+3.  このルールはまた、次の条件を満たす while、do-while、および for ループ
+     についても違反をレポートします。 
+    
+    a. 条件が java.util.StringTokenizer クラスの hasMoreElements() の呼び出しである。
+        
+    b. ループの本体に、StringTokenizer クラスの nextToken() または nextElement() 
+       メソッドの呼び出しがない。
+        
+    このケースは hasMoreElements() が常に true を返す状況につながりやすく、
+    常に true が返される場合、無限ループが起こります。
+    
+上記のいずれかに該当する場合、無限ループにつながる可能性が高くなります。
+
+
+
+</PRE>
+<STRONG>
+スコープ レベル
+</STRONG>
+<PRE>
+LINE
+
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v8.0
+
+
+</PRE>
+<STRONG>
+注意
+</STRONG>
+<PRE>
+
+スレッドは特殊なケースであり、ループが上記の条件を満たさずに終了できるため、
+スレッド化メソッドへの呼び出しを含むループについてはこのルールは違反を
+レポートしません。
+スレッド化メソッドとは、java.lang.Thread クラスのメソッド、wait()、notify()、および 
+notifyAll() です。
+
+
+
+</PRE>
+<STRONG>
+セキュリティとの関連
+</STRONG>
+<PRE>
+
+「プログラムに、到達できない終了条件を持つ反復またはループ、つまり無限ループ
+があります。攻撃者がループに影響を与えることができる場合、この弱点によって、
+攻撃者が CPU やメモリなどのリソースを過剰に消費させることが可能な場合があります。」
+[CWE-835]
+
+
+
+</PRE>
+<STRONG>
+パラメーター
+</STRONG>
+<PRE>
+
+-'Iterator.next()' または 'Iterator.remove()' のネストされた呼び出しを
+ チェックする最大の深さ
+    -デフォルトは 5 です。
+    -このパラメーターは「説明」のケース 2 にのみ影響します。
+     ルールは、ループ中のメソッド内でネストされた Iterator.next() または
+     Iterator.remove()の呼び出しをチェックします。パラメーターで指定された
+     値の深さまで、ルールはネストされたメソッド呼び出しをチェックします。
+     ほとんどの場合、デフォルトの 5 で十分です。この問題のために、実際には
+     エラーではないのにエラーがレポートされる場合にだけ、このパラメーターを
+     変更してください。
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+このルールで“無限ループの可能性”として検出されたループは、
+おそらくバグです。条件として変数を使用する場合、ループは変数値を変更するか、
+別の方法 ( つまり  break、return、または throw ステートメント) でループを
+終了させるべきです。
+条件として論理値の true を使用する場合、ループには break、 return、
+throw ステートメントのいずれかがなければなりません。
+条件として Iterator.hasNext() の呼び出しを使用する場合、
+ループの本体に Iterator.next() または Iterator.remove()を呼び出すべきです。
+これらの規則に従うことは、無限ループの防止に役立ちます。
+
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+package examples.rules.pb.logic;
+
+import java.util.List;
+import java.util.Iterator;
+
+public class AIL {
+    public void method(List l) {
+        boolean bool = true;
+        do {
+            //Some code that never modifies "bool"  
+        } while (bool); //VIOLATION
+
+        Iterator iter;
+        for (iter = l.iterator(); iter.hasNext();) { ////違反
+            //'iter.next()' を呼び出さないコード  
+        }
+
+        while (true) { ////違反
+            //"break"、"return"、"throw" 文を含まないコード
+        }
+    }
+}
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+ループ条件を変更するか、ループを抜ける手段を用意します。
+
+package examples.rules.pb.logic;
+
+import java.util.List;
+import java.util.Iterator;
+
+public class AILFixed {
+    public void method(List l) {
+        boolean bool = true;
+        do {
+            //...
+            bool = false; //FIXED   
+        } while (bool);
+
+        Iterator iter;
+        for (iter = l.iterator(); iter.hasNext();) {
+            //...
+            System.err.println(iter.next()); //修正   
+        }
+        
+        while (true) {
+            //...
+            break; //修正
+        }
+    }
+}
+
+
+</PRE>
+<STRONG>
+関連資料
+</STRONG>
+<PRE>
+
+2020 CWE Weaknesses On the Cusp
+CWE-835: Loop with Unreachable Exit Condition ('Infinite Loop')
+<A target="_blank" HREF="https://cwe.mitre.org/data/definitions/835.html">https://cwe.mitre.org/data/definitions/835.html</A>
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="PB.LOGIC.AMOI" href="#top">[Top]</a><br/><br/><STRONG>
+配列または List 要素へアクセスするのに誤ったインデックス変数を使用しない [PB.LOGIC.AMOI]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+このルールはデフォルトの設定では、同一のループ内で同一の配列または "List" 
+に対し、2 つ以上の異なるループインデックス変数を使用してアクセスしている場合に違反を
+検出します。このルールの定義では、ループ インデックス変数はループの条件に使用され、
+ループ内で更新されている変数を指します。このルールは、ループ条件にはめ込まれた
+ループのインデックス変数だけを考慮します。ネストされたループで同一の配列または
+"List" をインデックス付けするのに 2 つ以上のインデックス変数が使用されている場合、通常は
+バグです。
+
+このルールは、配列型の変数および "java.util.List" 型の変数、"java.util.List"
+の具象実装をチェックします。
+このルールは、配列の最初のインデックスだけをチェックします。多次元配列では、他の添え字
+は無視されます。すでに他のループ インデックス変数によってアクセスされている配列または
+"List" に、ループの中で新しいループ インデックス変数によってアクセスしているのを
+発見するたびに違反をレポートします (デフォルトのパラメーター設定の場合)。
+
+
+
+</PRE>
+<STRONG>
+スコープ レベル
+</STRONG>
+<PRE>
+LINE
+
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v8.1
+
+
+</PRE>
+<STRONG>
+パラメーター
+</STRONG>
+<PRE>
+
+-次を違反として検出
+    -ループで複数のインデックス変数を使用して配列または List にアクセスしているすべての場合 (デフォルト)
+    -インデックス変数とループ条件が一致しない場合だけ
+        -このパラメーターが有効の場合、ループ条件を検査し、各配列または List の
+         アクセスにどのインデックスを使用すべきか判断しようとします。たとえば、
+         次のループがあるとします。
+         
+         for(int i = 0; i &lt; a.length; i++){
+             for(int j = 0; j &lt; b.length; j++){
+             }
+         }
+ 
+         "i" は明らかに配列 "a" のインデックスであり、"j" は配列 "b"のインデックスです。
+         インデックス変数 "j" で配列 "a" にアクセスしている場合、違反としてレポート
+         されます。またインデックス変数 "i" で配列 "b" にアクセスしている場合も
+         違反としてレポートされます。
+        -このパラメーターが有効の場合、レポートされる違反は少なくなります。
+         レポートされた違反はバグの可能性が高くなります。ルールがレポートする
+         違反が多すぎる場合、このパラメーターの設定を変更してください。
+        -どのインデックス変数がどの配列または List に対応するか判断できないことが
+         あります。そのような場合、このパラメーターが有効であると、違反はレポートされません。
+         たとえば、ループ条件が配列の length または List のサイズとの比較で
+         ない場合、どの配列または List がインデックス付けされているかを判断できません
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+ネストされたループの中では、どのインデックスがどの配列または List に属しているのかが
+分かりにくくなります。同一の配列または List をインデックス付けするために、2 つの
+異なるループ変数が使用されている場合、どちらかのアクセスがバグの可能性があります
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+このコードの宣言 "int var2 = a[j] + b[j];" にはバグがあります。"i" が配列 "a" の
+インデックスであるため、宣言は "int var2 = a[i] + b[j];" でなければなりません。
+ルールは、"var2" の宣言の時点で、別の変数 ("i") が配列 "a" のインデックスとして
+既に使用されているのを検出することで、このバグを発見します。
+ 
+package examples.rules.pb.logic;
+
+public class AMOI {
+    public void method(int[] a, int[] b) {
+        for (int i = 0; i &lt; a.length; i++) {
+            int var1 = a[i];
+            System.err.println("a[i]: " + var1);
+            for (int j = 0; j &lt; b.length; j++) {
+                int var2 = a[j] + b[j];            // 違反- "i" がすでに  "a" の
+                                                   // インデックスとして使用されている
+                System.err.println("a[i] + b[j]: " + var2);
+            }
+        }
+    }
+}
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+違反がレポートされた配列のアクセスの箇所で、誤ったインデックス変数を使用していないか
+確認します。
+
+package examples.rules.pb.logic;
+
+public class AMOIFixed {
+    public void method(int[] a, int[] b) {
+        for (int i = 0; i &lt; a.length; i++) {
+            int var1 = a[i];
+            System.err.println("a[i]: " + var1);
+            for (int j = 0; j &lt; b.length; j++) {
+                int var2 = a[i] + b[j];            // 修正
+                System.err.println("a[i] + b[j]: " + var2);
+            }
+        }
+    }
+}
+
+もうひとつの修正方法は、Java 5 で新たに導入された拡張 for ループ構文を
+使用して、インデックスをまったく使わないようにすることです。
+
+package examples.rules.pb.logic;
+
+public class AMOIFixed {
+    public void method(int[] a, int[] b) {
+        for (int aIter:a) {
+            int var1 = aIter;
+            System.err.println("aIter: " + var1);
+            for (int jIter:b) {
+                int var2 = aIter + jIter;            // 修正
+                System.err.println("aIter + jIter: " + var2);
+            }
+        }
+    }
+}
+
+CODSTA.READ.AEFS ルールを使用すると、古いスタイルの for ループか、新しい Java 5 構文の
+どちらかの使用を推進できます。また、両方の即時修正オプションがあります。
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="PB.LOGIC.AOBO" href="#top">[Top]</a><br/><br/><STRONG>
+ループ条件で「1 つずれる」エラーを避ける [PB.LOGIC.AOBO]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+このルールは、境界値の判定に関する Off-by-one エラーの可能性がある for ループの
+条件を違反としてレポートします。
+ループのカウンターが以下のいずれかと比較されている、簡単なループだけをチェック
+します。
+    1) array.length
+    2) string.length()
+    3) collection.size()
+    4) map.size()
+詳細については「利点」および「デメリット」を参照してください。
+
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v9.0
+
+
+
+</PRE>
+<STRONG>
+セキュリティとの関連
+</STRONG>
+<PRE>
+
+「製品は、正しい値より 1 大きいか 1 小さい、誤った最大値または最小値を計算
+または使用しています．．．一般的にこの弱点は、未定義の動作につながり、従って
+クラッシュの原因になります。ループのインデックス変数に関してオーバーフロー
+が発生した場合、無限ループに陥る可能性も低くありません．．．この弱点がバッファー
+オーバーフローを引き起こし、恣意的なコードの実行に利用される場合もあります。」
+[CWE-193]
+
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+Off-bye-one エラーは、タイプミスやゼロベースのインデックスに関する勘違いによって
+発生する場合があります。これらのエラーを修正すると、実行時の
+ArrayIndexOutOfBoundsException や、演算が意図した回数よりも少ない回数しか
+実行されないという事態を防ぐことができます。
+
+
+
+</PRE>
+<STRONG>
+デメリット
+</STRONG>
+<PRE>
+
+意図的に Off-bye-one アルゴリズムが使用される可能性もありますが、そのような
+場合、違反が誤検出される可能性があります。
+
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+package examples.rules.pb.logic;
+
+public class AOBO {
+    public String getArrayString(Object[] array) {
+        if (array == null || array.length == 0) {
+            return "";
+        }
+        StringBuffer sb = new StringBuffer(array[0].toString());
+
+        for (int i = 1; i &lt;= array.length; i++) { //違反
+            sb.append(", ").append(array[i]);
+        }
+        return sb.toString();
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+package examples.rules.pb.logic;
+
+public class AOBOFixed {
+    public String getArrayString(Object[] array) {
+        if (array == null || array.length == 0) {
+            return "";
+        }
+        StringBuffer sb = new StringBuffer(array[0].toString());
+
+        for (int i = 1; i &lt; array.length; i++) { //修正
+            sb.append(", ").append(array[i]);
+        }
+        return sb.toString();
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+関連資料
+</STRONG>
+<PRE>
+
+CWE-193: Off-by-one Error
+<A target="_blank" HREF="https://cwe.mitre.org/data/definitions/193.html">https://cwe.mitre.org/data/definitions/193.html</A>
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="PB.LOGIC.AULV" href="#top">[Top]</a><br/><br/><STRONG>
+ループの条件で使用されないループ変数を避ける [PB.LOGIC.AULV]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+このルールは、未使用のループ変数を検出します。ループ変数が
+宣言されているが、ループ条件に使用されていない場合に違反を
+レポートします。
+
+
+
+</PRE>
+<STRONG>
+スコープ レベル
+</STRONG>
+<PRE>
+LINE
+
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v6.0
+
+
+</PRE>
+<STRONG>
+パラメーター
+</STRONG>
+<PRE>
+
+-break または return 文を含むループには違反をレポートしない (デフォルト true)
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+ループの初期化パートで宣言されている変数はループ変数であると
+想定されます。ループの条件パートでこれらの変数が使用されていないと
+意味をなしません。未使用のループ変数は、不要なループ変数という
+だけでなく、複数階層のループの変数が誤って混入している可能性をも
+示唆します。
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+package examples.rules.pb.logic;
+
+public class AULV {
+    public void myMethod() {
+    for (int i= 0; i&lt; 10; i++) {
+            for (int unusedJ= 0; i&lt; 10; unusedJ++) { //違反
+                System.out.print(i* unusedJ+ " ");
+            }
+            System.out.println();
+        }
+    }
+}
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+package examples.rules.pb.logic;
+
+public class AULVFixed {
+    public void myMethod() {
+    for (int i= 0; i&lt; 10; i++) {
+            for (int j= 0; j&lt; 10; j++) { //修正
+                System.out.print(i* j+ " ");
+            }
+            System.out.println();
+        }
+    }
+}
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="PB.LOGIC.CPI" href="#top">[Top]</a><br/><br/><STRONG>
+String.indexOf() の結果が正かどうかをチェックしてはいけない [PB.LOGIC.CPI]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+String.indexOf() の結果が負であるかではなく、
+正であるかをチェックするのは、よくある間違いです。
+このルールは、次の比較を“バグの可能性”としてレポートします。
+
+1. String.indexOf(...) &gt; 0
+2. String.indexOf(...) &lt;= 0
+3. 0 &lt; String.indexOf(...)
+4. 0 &gt;= String.indexOf(...)
+
+これらの比較の目的はおそらく、引数として渡される String が
+呼び出し元オブジェクトの String 内に包含されるかをどうかを
+チェックすることです。その場合、String.indexOf(...) の呼び出しの結果が
+負であるかをチェックする必要があります。
+上記の 4 つの比較は、String.indexOf(...) が正であるかを
+チェックしているため、不正な比較です。
+
+
+
+</PRE>
+<STRONG>
+スコープ レベル
+</STRONG>
+<PRE>
+LINE
+
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v8.0
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+String のインデックスは 0 から開始するため、String.indexOf(...) の呼び出しでは、
+結果が負であるかをチェックするべきです。正であるかをチェックするのは、
+パラメーターの String がもう一方の String の先頭にあることを考慮していないバグです。
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+package examples.rules.pb.logic;
+
+public class CPI{
+    public static void main(String[] args){
+        String myStr= "foobar";
+        if(myStr.indexOf("foo")&gt;0){  // 違反
+            System.err.println("String contains foo.");
+        }
+    }
+}
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+String.indexOf() が負かどうかをチェックするようにコードを変更します。
+
+package examples.rules.pb.logic;
+
+public class CPIFixed{
+    public static void main(String[] args){
+        String myStr= "foobar";
+        if(myStr.indexOf("foo")&gt;=0){  // 修正
+            System.err.println("String contains foo.");
+        }
+    }
+}
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="PB.LOGIC.CRRV" href="#top">[Top]</a><br/><br/><STRONG>
+読み込みまたはスキップを行うメソッドの戻り値を確認する [PB.LOGIC.CRRV]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+通常、入力の読み込みまたはスキップを行うメソッドは、読み込みまたはスキップされた
+バイト数を返すか、あるいは 1 バイトだけを読み込むメソッドの場合は、読み込まれた
+バイトを返します。どちらにせよ、メソッドの戻り値を無視せずにチェックしなければ
+なりません。読み込みまたはスキップされたバイト数を返すメソッドの場合は、実際に
+読み込みまたはスキップされたバイト数が、期待したバイト数と一致するかどうかを
+確認します。java.io.InputStream.read(byte[]) など、読み込まれたバイトを返す
+メソッドの場合は、ストリームの終端に達していないことを確認します。
+
+このルールは、パラメーター リストで指定されたメソッドの戻り値が、式で使用されたり
+変数に割り当てされたりせずに破棄されているのを発見するたびに違反をレポートします。
+
+
+
+</PRE>
+<STRONG>
+スコープ レベル
+</STRONG>
+<PRE>
+LINE
+
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v8.0
+
+
+</PRE>
+<STRONG>
+注意
+</STRONG>
+<PRE>
+
+現在、このルールには一部のケースのための即時修正しかありません。即時修正が
+あるのは、java.io.DataInput インターフェイスを実装する型の read(byte[]) または
+read(byte[], int, int) メソッドの呼び出しです。このような場合、read() ではなく
+readFully(byte[]) または readFully(byte[], int, int) の呼び出しに修正するのが
+適切です。そのため、即時修正は read() メソッドの呼び出しを readFully() に変更します。
+
+
+
+</PRE>
+<STRONG>
+セキュリティとの関連
+</STRONG>
+<PRE>
+
+「ソフトウェアはメソッドまたは関数から返された値をチェックしていません。これにより、
+予期しない状態や条件を検出しそこねる可能性があります．．．攻撃者が関数を失敗させたり、
+予期されない値を返すよう強制できる場合、ソフトウェアはプログラマーが想定した状態では
+ないため、後続のプログラムロジックは脆弱になる可能性があります。たとえば、プログラムが
+権限を削除する関数を呼び出しているが、戻り値をチェックして権限が正常に削除されことを
+確認していない場合、プログラムはより高い権限で実行され続けることになります。」
+[CWE-252]
+
+
+
+</PRE>
+<STRONG>
+パラメーター
+</STRONG>
+<PRE>
+
+-チェックするメソッド:
+ (&lt;完全修飾型名&gt;#&lt;メソッド&gt;(&lt;パラメーター1 型&gt;,&lt;パラメーター2 型&gt;) の形式で入力)
+    -デフォルト値:
+        -java.io.InputStream#read()
+        -java.io.InputStream#read(byte[])
+        -java.io.InputStream#read(byte[],int,int)
+        -java.io.InputStream#skip(long)
+        -java.io.DataInput#skipBytes(int)
+    -このリストで指定されたメソッドをオーバーライドまたは実装するメソッドの
+     呼び出しもチェックされます。
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+入力の読み込みまたはスキップを行うメソッドの戻り値をチェックをしないと、
+バグにつながる場合が多くあります。ストリームの終端に達したり、要求した
+よりも少ないバイト数が読み込みまたはスキップされることがあります。
+このようなケースを適切に処理するために、戻り値をチェックすべきです。
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+package examples.rules.pb.logic;
+
+import java.io.*;
+
+public class CRRV{
+    public byte[] readFully(InputStream input, int length) throws IOException
+    {
+        byte[] buffer = new byte[length];
+        input.read(buffer, 0, length); // 違反
+        return buffer;
+    }
+
+    public byte[] readFully(DataInputStream input, int length) throws IOException
+    {
+        byte[] buffer = new byte[length];
+        input.read(buffer, 0, length);  // 違反
+        return buffer;
+    }
+}
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+read() メソッドの戻り値をチェックします。特に、戻り値が負の値ではないことを
+チェックして、文字列の終端に達しなかったことを確認するべきです。
+
+java.io.DataInput インターフェイスを実装する型を使用している場合は、この
+インターフェイスに定義されている readFully() メソッドを使用して、入力
+ストリーム全体を読み込むことができます。readFully() メソッドは、期待したバイト
+数を読み込むことができなかった場合は例外を throw するため、戻り値をチェックする
+必要がありません。
+
+package examples.rules.pb.logic;
+
+import java.io.*;
+
+public class CRRVFixed{
+    public byte[] readFully(InputStream input, int length) throws IOException {
+        byte[] buffer = new byte[length];
+        int num_read = 0;
+        while (num_read &lt; length)
+        {
+            int count = input.read(buffer, num_read, length - num_read);
+            if (count &lt; 0)                                                // 修正
+                throw new IOException("end of stream reached");
+            num_read += count;
+        }
+        return buffer;
+    }
+
+    public byte[] readFully(DataInputStream input, int length) throws IOException {
+        byte[] buffer = new byte[length];
+        input.readFully(buffer);  //修正
+        return buffer;
+    }
+}
+
+
+</PRE>
+<STRONG>
+関連資料
+</STRONG>
+<PRE>
+
+PCI Data Security Standard 3.2
+6.5.5 Improper error handling
+<A target="_blank" HREF="https://www.pcisecuritystandards.org/documents/PCI_DSS_v3-2-1.pdf">https://www.pcisecuritystandards.org/documents/PCI_DSS_v3-2-1.pdf</A>
+
+CWE-252: Unchecked Return Value
+<A target="_blank" HREF="https://cwe.mitre.org/data/definitions/252.html">https://cwe.mitre.org/data/definitions/252.html</A>
+
+SEI CERT Oracle Coding Standard for Java
+FIO08-J. Distinguish between characters or bytes read from a stream and -1
+<A target="_blank" HREF="https://wiki.sei.cmu.edu/confluence/display/java/FIO08-J.+Distinguish+between+characters+or+bytes+read+from+a+stream+and+-1">https://wiki.sei.cmu.edu/confluence/display/java/FIO08-J.+Distinguish+between+characters+or+bytes+read+from+a+stream+and+-1</A>
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="PB.LOGIC.DJNCR" href="#top">[Top]</a><br/><br/><STRONG>
+戻り値が null ではないことをチェックした後に readLine() の結果を破棄してはいけない [PB.LOGIC.DJNCR]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+readLine() の戻り値を変数に格納していない場合、
+または null との比較以外で使用していない場合、
+このルールは違反をレポートします。
+このルールは、
+java.io.Reader クラスで宣言された readLine() メソッドだけをチェックします。 	          
+
+
+
+</PRE>
+<STRONG>
+スコープ レベル
+</STRONG>
+<PRE>
+LINE
+
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v8.0
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+readLine() の戻り値が null ではない場合、
+プログラマは通常この戻り値を使用します。
+戻り値を変数に格納しない場合、または直ちに使用しない場合、
+次の readLine() で別の行が読み込まれるため、
+戻り値は失われます。
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+package examples.rules.pb.logic;
+
+import java.io.*;
+
+public class DJNCR {
+    public static void main(String[] args){    
+        BufferedReader br= new BufferedReader(new StringReader(""));
+        try{
+            if(br.readLine()!= null){  //違反
+                System.out.println("readLine() was not null");
+            }
+        }
+        catch(Exception e){}
+    }
+}
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+readLine() の戻り値を変数に格納するか、何らかの方法で使用します。
+
+package examples.rules.pb.logic;
+
+import java.io.*;
+
+public class DJNCRFixed {
+    public static void main(String[] args){    
+        BufferedReader br= new BufferedReader(new StringReader(""));
+        try{
+            String line= br.readLine();
+            if(line!= null){  //修正
+                System.out.println("The line was "+line);
+            }
+        }
+        catch(Exception e){}
+    }
+}
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="PB.LOGIC.EQLC" href="#top">[Top]</a><br/><br/><STRONG>
+equals() および compareTo() メソッドの実装では getClass() または instanceof を使用する [PB.LOGIC.EQLC]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+このルールは、equals() および compareTo() メソッドの実装が getClass() または 
+instanceof を使用していない場合に、違反を検出します。デフォルトの設定では、
+getClass() またはinstanceof のどちらを使用していてもかまいません
+
+
+
+</PRE>
+<STRONG>
+スコープ レベル
+</STRONG>
+<PRE>
+METHOD
+
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v8.1
+
+
+</PRE>
+<STRONG>
+注意
+</STRONG>
+<PRE>
+
+このルールは、以前のバージョンの Jtest の PB.EQL および PB.EQL2 ルールの代替です。
+このルールは、PB.EQL および PB.EQL2 の機能を併せ持っています。equals() の実装で
+getClass() だけを使用するのを好む開発者もいれば、instanceof だけを使用するのを
+好む開発者もいます。どちらの方法が優れているかについて、専門家の意見は一致して
+いません。どちらかを優先的に使用したい場合は、ルールのパラメーターを変更する必要が
+あります。デフォルトでは、ルールは getClass() または instanceof の両方を
+許容します。
+  
+
+
+</PRE>
+<STRONG>
+セキュリティとの関連
+</STRONG>
+<PRE>
+
+カテゴリ: エラー処理
+
+実行時キャスト例外の防止
+
+
+</PRE>
+<STRONG>
+パラメーター
+</STRONG>
+<PRE>
+
+-equals() メソッドをチェックする (デフォルト true)
+-compareTo() メソッドをチェックする (デフォルト false)
+    -型をパラメーターライズされた compareTo() メソッドを無視する (デフォルト true)
+        -このパラメーターが有効な場合、Comparable インターフェイスの型パラメーター
+         を指定しているクラスの compareTo() メソッドは無視されます。一般的にそのような
+         メソッドは受け入れられる型を制限しているため、getClass() または instanceof
+         は不要です。
+-パラメーターの型をチェックする方法
+    -getClass() のみ
+        -このパラメーターが有効な場合、すべての equals() メソッドの実装に、
+         getClass() メソッドの呼び出しがなければなりません。getClass() ではなく
+         instanceof 演算子が使用されている場合、違反がレポートされます。
+        -このパラメーターが有効な場合、このルールは、以前の Jtest のPB.EQL ルールに
+         相当します。
+    -instanceof のみ
+        -このパラメーターが有効な場合、すべての equals() メソッドの実装に、
+         instanceof 演算子が使用されていなければなりません。instanceof 演算子
+         ではなく getClass()メソッドが使用されている場合、違反がレポートされます。
+        -このパラメーターが有効な場合、このルールは、以前の Jtest のPB.EQL2 ルールに
+         相当します。
+    -両方 (デフォルト)
+        -このパラメーターが有効な場合、すべての equals() メソッドの実装に、
+         getClass() メソッドまたは instanceof 演算子が使用されていなければ
+         なりません。
+        -以前の Jtest のPB.EQL および PB.EQL2 ルールと違って、このルールは、
+         デフォルトの設定では、getClass() または instanceof の両方を許容します。         
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+同じクラスのオブジェクト同士だけが等しいと考えることは、equals() および compareTo() 
+メソッドを正しく実装するうえで、単純かつ明快な解決です。getClass() メソッドまたは 
+instanceof 演算子を使用して、パラメーターの型と equals() および compareTo() メソッドを
+定義する型が同じかどうかをチェックします。
+  
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+package examples.rules.pb.logic;
+
+public class EQL {
+    public int value;
+    public boolean equals (Object o) {
+        EQL temp = (EQL)o;
+        return temp.value == value;  // 違反
+    }
+}
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+2 つのオブジェクトの等値を比較する前に、getClass() メソッドまたは instanceof 
+演算子を使用します。
+
+package examples.rules.pb.logic;
+
+public class EQLFixed {
+    public int value;
+    public boolean equals (Object o) {
+        if ((o == null) || (getClass () != o.getClass ())) {  // 修正
+            return false;
+        }
+
+        EQLFixed temp = (EQLFixed)o;
+        return temp.value == value;
+    }
+}
+
+
+</PRE>
+<STRONG>
+関連資料
+</STRONG>
+<PRE>
+
+Peter Haggar: "Practical Java - Programming Language Guide".
+Addison Wesley, 2000, pp.44 -47
+
+Joshua Bloch: "Effective Java - Programming Language Guide".
+Addison Wesley, 2000, pp.25 - 34
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="PB.LOGIC.EQUS" href="#top">[Top]</a><br/><br/><STRONG>
+常に false を返す equals() メソッドの呼び出しを避ける [PB.LOGIC.EQUS]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+このルールは、常に false を返す equals() メソッドの呼び出しを検出します。
+
+
+
+</PRE>
+<STRONG>
+スコープ レベル
+</STRONG>
+<PRE>
+LINE
+
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v5.1
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+常に false を返す equals() メソッドは、equals() メソッドの機能を
+無効にしているため、意味がありません。メソッド引数のコンパイル時の
+型と、メソッドが呼び出されるオブジェクトのコンパイル時の型との間に
+代入互換性がない場合、メソッドが true を返すことはありません。
+とくに、複雑な式では、互換性のない型同士が比較されていることが
+明らかでない場合があります。そのようなエラーは非常に発見しにくく、
+コンパイラでも検出されません。このルールを有効にすると、このような
+発見しにくいバグの可能性をプログラマに警告できます。
+
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+package examples.rules.pb.logic;
+
+public class EQUS {
+
+    private StringBuffer _string;
+
+    public EQUS(String string) {
+        _string = new StringBuffer(string);
+    }
+
+    public boolean isStringEqualTo(String string) {
+        return _string.equals(string); // 違反
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+package examples.rules.pb;
+
+public class EQUSFixed {
+
+    private StringBuffer _string;
+
+    public EQUSFixed(String string) {
+        _string = new StringBuffer(string);
+    }
+
+    public boolean isStringEqualTo(String string) {
+        return _string.toString().equals(string); // 修正
+    }
+}
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="PB.LOGIC.ESO" href="#top">[Top]</a><br/><br/><STRONG>
+同一のオブジェクトに対して equals() を呼び出さない [PB.LOGIC.ESO]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+このルールは、equals() メソッドの呼び出し元オブジェクトと引数が同じである場合に
+違反をレポートします。
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v9.0
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+equals() メソッドの呼び出し元オブジェクトと引数が同じである場合、通常はロジックの
+エラーかタイプミスです。よくあるケースの 1 つは、2 つのオブジェクトの比較です。
+2 つのオブジェクトのフィールドを比較するつもりで equals() メソッドを呼び出しているが
+呼び出し元オブジェクトと引数が同じである場合、2 つのオブジェクトが等しくないにも
+かかわらず等しいように見える可能性があります。詳細については「サンプルコード」
+を参照してください。
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+package examples.rules.pb.logic;
+
+public class EOL {
+    private String _name;
+    private Object _data;
+
+    public EOL(String name, Object data) {
+        _name = name;
+        _data = data;
+    }
+
+    public boolean hasSameData(EOL eol) {
+        return _data.equals(_data); //違反
+    }
+}
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+package examples.rules.pb.logic;
+
+public class EOLFixed {
+    private String _name;
+    private Object _data;
+
+    public EOLFixed(String name, Object data) {
+        _name = name;
+        _data = data;
+    }
+
+    public boolean hasSameData(EOLFixed eol) {
+        return _data.equals(eol._data); //修正
+    }
+}
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="PB.LOGIC.FLRC" href="#top">[Top]</a><br/><br/><STRONG>
+無限の再帰呼び出しを行わない [PB.LOGIC.FLRC]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+このルールは、無限の再帰呼び出しの可能性がある場合、違反を検出します。
+一般的に、次の 2 つの場合に無限の再帰呼び出しにつながります。
+
+1. 他のコードを実行する前にメソッド自身を呼び出している。つまり、
+   メソッド定義の最初の文でそのメソッド自身を再帰的に呼び出している
+   場合です。このコードが実行されると、確実に無限の再帰呼び出しにつながります。
+
+2. メソッドに渡されたパラメーターを変更せずに、同じ引数でメソッド自身を
+   呼び出している。この場合、メソッド呼び出しが実行されると、無限の再帰
+   呼び出しにつながる可能性があります。デフォルトの設定では、このケースは
+   違反としてレポートされません。これは、コードが無限の再帰呼び出しに陥るか
+   どうかを判断するのが困難だからです。
+   
+
+デフォルトの設定では、このルールは、上記の 1 の条件にあてはまるメソッド再帰呼び出しだけ
+を違反としてレポートします。
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v8.0
+
+
+</PRE>
+<STRONG>
+セキュリティとの関連
+</STRONG>
+<PRE>
+
+カテゴリ: アプリケーションの誤動作
+
+無限の再帰呼び出しは容易にアプリケーションのクラッシュにつながります。
+安全なアプリケーションは、すべての再帰呼び出しが終了することを確実に
+すべきです。
+
+
+</PRE>
+<STRONG>
+パラメーター
+</STRONG>
+<PRE>
+
+-各メソッドの最初の文だけをチェックする
+    -このパラメーターが有効な場合、ルールはメソッドの最初の文に再帰呼び出しがあるか
+     どうかだけをチェックします。メソッドの後の部分での再帰呼び出しは、メソッドの
+     制御フローによって無限の再帰呼び出しになったり、ならなかったりします。
+     しかし、最初の文での再帰呼び出しは常に実行されるため、確実に無限の再帰
+     呼び出しにつながります。
+    -デフォルトの設定では、ノイズを減らすため、このパラメーターはオンに設定されています。
+　　-メソッド呼び出しが条件文の then または else にある場合、1 行目での再帰呼び出しを許可する ( デフォルトはオン )
+    　　-再帰呼び出しが条件文の then または else 部分にあるという条件で、
+     　　このパラメーターはメソッドの 1 行目の "a?b:c" 条件式での再帰呼び出しを許可します。
+     
+     　　条件式の条件部分 ( "a" で表される部分) で再帰呼び出しがある場合、
+     　　このパラメーターの値に関係なくルール違反がレポートされます。
+-呼び出しオブジェクトが this でなく、オーバーライドされたメソッドが呼び出される可能性があるときは無視する (デフォルトはオン)
+    -呼び出されているメソッドが static、private、final ではなく、また呼び出し
+     オブジェクトが明示的または暗黙的に this ではない場合、どのメソッドが
+     呼び出されるかを実行前に判断することができません。オーバーライドされた
+     メソッドが呼び出される可能性もあります。このため、ルールは、this オブジェクト
+     以外での 1 行目の再帰呼び出しが無限の再帰を引き起こすかどうかを判断できません。
+     デフォルトでは、このような場合は違反としてレポートされません。
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+無限の再帰呼び出しは、特にテストですべての実行パスを動作させていない場合は、
+検出するのが困難です。再帰呼び出しが正しく実装されていることを確認するために、
+再帰呼び出しを実行する前に底の状態かどうかをチェックし、またメソッドに渡された
+のと同じ引数でメソッド自身を呼び出す場合、事前にパラメーターを変更します。
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+package examples.rules.pb.logic;
+
+public class FLRC {
+    public static void main(String[] args) {
+        System.out.println("3! = "+factorial(3));
+    }
+    
+    public static int factorial(int num) {
+        return num * factorial(num - 1);  // 違反
+    }
+}
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+この場合、再帰呼び出ししないケースを確認し、再帰が適切に終了
+するようにします。
+
+public class FLRCFixed {
+    public static void main(String[] args) {
+        System.out.println("3! = "+factorial(3));
+    }
+    
+    public static int factorial(int num) {
+        if (num == 0) {                    // 修正
+            return 1;
+        }
+        
+        return num * factorial(num - 1);
+    }
+}
+
+
+</PRE>
+<STRONG>
+関連資料
+</STRONG>
+<PRE>
+
+CWE-674: Uncontrolled Recursion
+<A target="_blank" HREF="https://cwe.mitre.org/data/definitions/674.html">https://cwe.mitre.org/data/definitions/674.html</A>
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="PB.LOGIC.INDEX" href="#top">[Top]</a><br/><br/><STRONG>
+ループ変数の使用でのバグを防止する [PB.LOGIC.INDEX]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+このルールは、不正な使用の可能性があるループ制御変数を探します。
+次のいずれかの場合に違反をレポートします。
+
+1 つ目のケース:
+
+Array1[] array1 = getArray1();
+for (int i = 0; i &lt; array1.length; i++) {
+    System.out.println("array 1:" + array1[i]);
+    Array2[] array2 = array1[i].getArray2();
+    for (int j = 0; j &lt; array2.length; j++) {
+        System.out.println("array 2:" + array2[i]);  // j であるべき
+    }
+}
+
+内側の for 文で不正なループ制御変数を使用しています。
+もっとも内側のループ制御変数が for 文で使用されず、外側の制御変数が
+ループ本体で使用されている場合、このルールは違反をレポートします。
+上記の例の場合、もっとも内側のループの制御変数 "j" が使用されずに
+変数 "i" が使用されているため、このルールは違反をレポートします。
+
+2 つ目のケース:
+for 文の更新部分で使用されている変数が、
+初期化と条件文で使用されている変数と異なる場合、
+このルールは違反をレポートします。
+たとえば、次のループは更新部分にバグがある恐れがあります。
+
+for (int j = 0; j &lt; array2.length; i++) {  // "i++" ではなく "j++" であるべき
+    System.out.println("The index is:" + j);  
+}
+
+変数 "i" はループの初期化でも条件でも使用されていないため、
+変数 "i" が更新部分に使用されているのは、おそらく間違いです。
+
+上記のいずれかのケースを発見するたびに、
+このルールは違反をレポートします。
+
+
+
+</PRE>
+<STRONG>
+スコープ レベル
+</STRONG>
+<PRE>
+LINE
+
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v8.0
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+上記のようなケースは、
+不正な変数を使用している可能性が非常に高いため、
+このルールはバグを防止するのに役立ちます。
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+package examples.rules.pb.logic;
+
+class INDEX{
+    public void myMethod(){
+        int[] a= new int[5];
+      
+        for(int i=0; i&lt;a.length; i++){
+            int[] b= new int[5];
+            for(int j=0; j&lt;b.length; j++){
+                b[i]= 1;   //違反: j であるべき
+            }
+        } 
+        for (int j = 0; j &lt; a.length; i++) {  // 違反: "i++" ではなく "j++" であるべき
+            System.out.println("The index is:" + j);  
+        }   
+    }
+}
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+変数の使用をチェックして、必ず正しい変数をループで使用するようにします。
+
+package examples.rules.pb.logic;
+
+class INDEXFixed{
+    public void myMethod(){
+        int[] a= new int[5];
+      
+        for(int i=0; i&lt;a.length; i++){
+            int[] b= new int[5];
+            for(int j=0; j&lt;b.length; j++){
+                b[j]= 1;   //修正
+            }
+        } 
+        for (int j = 0; j &lt; a.length; j++) {  // 修正
+            System.out.println("The index is:" + j);  
+        }      
+    }
+}
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="PB.LOGIC.JI" href="#top">[Top]</a><br/><br/><STRONG>
+ネストされた複数の for ループにおいて同じループ変数をインクリメント/デクリメントしてはいけない [PB.LOGIC.JI]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+ネストされた複数の for ループにおいて
+同じループ変数をインクリメント/デクリメントしている場合、
+このルールはエラーをレポートします。
+オカレンスごとにエラーがレポートされます。
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v6.0
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+ネストされた複数の for ループにおいて
+同じループ変数をインクリメント/デクリメントしているのは、
+ほとんどの場合、記述ミスです。このようなループ変数の使用は、
+予想外のループの動作を引き起こします。
+
+たとえ意図的に使用している場合でも、
+読み手を混乱させるほか、論理エラーを起こす可能性があります。
+
+
+</PRE>
+<STRONG>
+デメリット
+</STRONG>
+<PRE>
+
+N/A
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+package examples.rules.pb.logic;
+
+public class JI {
+    public void myMethod() {
+        for (int i= 0; i&lt; 10; i++) {
+            for (int j= 9; j&gt;= 0; i--) { //違反
+                //INFINITE LOOP
+            }
+        }
+    }
+}
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+package examples.rules.pb.logic;
+
+public class JIFixed {
+    public void myMethod() {
+        for (int i= 0; i&lt; 10; i++) {
+            for (int j= 9; j&gt;= 0; j--) { //修正
+                //LOOPING 100 TIMES
+            }
+        }
+    }
+}
+
+
+</PRE>
+<STRONG>
+関連資料
+</STRONG>
+<PRE>
+
+N/A
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="PB.LOGIC.LLM" href="#top">[Top]</a><br/><br/><STRONG>
+呼び出すロギング メソッドのレベルに一致したロギング レベルをチェックする [PB.LOGIC.LLM]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+ロギング システムを使用する場合、特定のログ メッセージの重要度レベルが、ログの
+対象となるほど高いかどうかをチェックしてから、実際にメッセージをロギングする
+メソッドを呼び出すことがよくあります。このようにすると、メッセージが現在の
+ロガーの設定では記録されない場合、メソッドのパラメーターの評価やログ メソッドの
+呼び出しのオーバーヘッドを避けることができます。
+OPT.CLL ルールは、このような最適化を使用することを推奨します。
+
+上記で説明した最適化を実装する際によくある誤りは、メッセージをログに記録する
+ために呼び出すメソッドのロギング レベルと、メッセージがログの対象になるかを
+チェックするときに指定したロギング レベルが異なるというものです。
+たとえば、次のような  Log4j システムのコードがあるとします。
+
+if(logger.isDebugEnabled()) {
+    logger.warn(expensiveMethod());
+}
+
+このコードは、logger.isDebugEnabled() という条件によって、logger.warn
+(expensiveMethod()) の呼び出しをガードし、必要な場合にだけ expensiveMethod() が
+呼ばれるよう意図しています。しかし、ロギング レベル WARN を指定してメッセージを
+記録する際に、DEBUG ロギング レベルが有効であるかをチェックするのは意味が
+ありません。条件を logger.isWarnEnabled() に変更するか、ロギング メソッドの
+呼び出しを logger.debug(expensiveMethod()) に変更する必要があります。
+
+このルールは、最初の段落で説明した最適化を誤って実装している可能性がある
+場合に、違反をレポートします。
+つまり、if 文の条件が、if 文の中で呼び出されているロギング メソッドの呼び出しと
+一致していない場合、違反をレポートします。
+ルールは、java.util.logging.Logger または org.apache.log4j.Logger ロギング
+システム用に書かれたコードをテストします。
+
+
+
+</PRE>
+<STRONG>
+スコープ レベル
+</STRONG>
+<PRE>
+LINE
+
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v8.2
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+このルールを使用すると、ロギング システムを使用する際によくある誤りを検出する
+のに役立ちます。誤りによって重要なロギング メッセージがログに記録されなかったり、
+効率が悪くなったりする可能性があります。
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+下記の "incorrectUtil()" メソッドでは、チェックされているロギング レベルは
+INFO ですが、ログ メッセージ "Warning message" は WARNING で記録されています。
+この例では java.util.logging.Logger ロギング システムを使用していますが、
+ルールは Log4j ロギング システムにも対応しています。
+
+package examples.rules.pb.logic;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+public class LLM {  
+    static Logger _utilLogger= Logger.getLogger("examples.rules.pb.LLM");
+    
+    public static void main(String[] args) {
+        LLM myLLMObj= new LLM();
+        _utilLogger.setLevel(Level.WARNING);
+        myLLMObj.incorrectUtil();
+    }
+    
+    public void incorrectUtil() {
+        if(_utilLogger.isLoggable(Level.INFO)){  //違反
+            _utilLogger.warning("Warning message");
+        }
+    }
+}
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+このバグを修正する方法は 2 つあります。
+
+1. チェックされるロギング レベルを変更し、呼び出されるロギング メソッドと一致
+させる。
+
+2. 呼び出されるロギング メソッドを変更し、条件文でチェックされているロギング
+レベルと一致させる。
+
+以下は 1 の修正方法を示しています。
+
+package examples.rules.pb.logic;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+public class LLMFixed {  //FR65501
+    static Logger _utilLogger= Logger.getLogger("examples.rules.pb.LLM");
+    
+    public static void main(String[] args) {
+        LLMFixed myLLMObj= new LLMFixed();
+        _utilLogger.setLevel(Level.WARNING);
+        myLLMObj.incorrectUtil();
+    }
+    
+    public void incorrectUtil() {
+        if(_utilLogger.isLoggable(Level.WARNING)){  //修正
+            _utilLogger.warning("Warning message");
+        }
+    }
+}
+
+
+</PRE>
+<STRONG>
+関連資料
+</STRONG>
+<PRE>
+
+OWASP API Security Top 10-2019
+API10-Insufficient Logging &amp; Monitoring
+<A target="_blank" HREF="https://github.com/OWASP/API-Security/blob/v1.4.1/2019/en/src/0xaa-insufficient-logging-monitoring.md">https://github.com/OWASP/API-Security/blob/v1.4.1/2019/en/src/0xaa-insufficient-logging-monitoring.md</A>
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="PB.LOGIC.OAMC" href="#top">[Top]</a><br/><br/><STRONG>
+ループの条件で使用されるオブジェクトは適切にループ本体でアクセスされるようにする [PB.LOGIC.OAMC]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+java.util.List の size() メソッドまたは java.util.Iterator の hasNext() メソッドが
+ループの条件にある場合、ループの意図は通常、get() メソッドを使用して List を
+反復処理するか、next() メソッドを使用して Iterator を反復処理することです。
+対応する get() または next() メソッドがない場合、バグの可能性があります。
+このルールは、次の条件に該当するループを違反として検出します。
+
+1. ループの条件に java.util.List の size() メソッドまたは java.util.Iterator の
+hasNext() の呼び出しがある。
+
+2. 条件 1. の size() または hasNext() の呼び出しに使用された変数が、ループの本体で
+get() (List の場合) または next() (Iterator の場合) の呼び出しに使用されていない。
+
+3. 条件 1. の size() または hasNext() の呼び出しに使用された変数が、ループの本体で
+他のメソッドに渡されておらず、また他の変数に再代入されてもいない。変数がループの
+本体で他のメソッドに渡されているか、他の変数に再代入されている場合、
+フロー解析によって、変数の参照で get() または next() が呼び出されているかどうかを
+判断する必要があります。
+
+
+
+</PRE>
+<STRONG>
+スコープ レベル
+</STRONG>
+<PRE>
+LINE
+
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v8.1
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+このルールに従うと、無限ループを防ぐことができ、また hasNext() または get() を
+呼び出すのを忘れたり、間違った変数を使用してメソッドを呼び出したりしている場合に
+発生する可能性のあるバグを防ぐことができます。
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+このクラスの main() メソッドを実行すると、IndexOutOfBoundsException が発生します。
+testMethod() の内側のループで、listB の代わりに誤って listA が使用されています。
+package examples.rules.pb.logic;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class OAMC {
+    public static void main(String[] args){
+        List listA= new ArrayList();
+        listA.add("A");
+        listA.add("B");
+        testMethod(listA, new ArrayList());
+    }
+    
+    public static void testMethod(List listA, List listB) {
+        for(int i= 0; i&lt; listA.size(); i++){
+            listB.add(listA.get(i));
+            for(int j= 0; j&lt; listA.size(); j++){  //違反- 条件は "j&lt; listB.size()"
+                                                  //でなければならない
+                System.err.println(listB.get(j));
+            }
+        }
+    }
+}
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+メソッドの呼び出しを忘れていないか、また正しい変数でメソッドを呼び出しているかを
+確認します。
+
+package examples.rules.pb.logic;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class OAMCFixed {
+    public static void main(String[] args){
+        List listA= new ArrayList();
+        listA.add("A");
+        listA.add("B");
+        testMethod(listA, new ArrayList());
+    }
+    
+    public static void testMethod(List listA, List listB) {
+        for(int i= 0; i&lt; listA.size(); i++){
+            listB.add(listA.get(i));
+            for(int j= 0; j&lt; listB.size(); j++){  //修正- "listA" を "listB" に変更
+                System.err.println(listB.get(j));
+            }
+        }
+    }
+}
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="PB.LOGIC.OOR" href="#top">[Top]</a><br/><br/><STRONG>
+範囲外の比較を避ける [PB.LOGIC.OOR]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+このルールは、char/byte/short/int 型の変数と定数との比較において、
+型が取り得る範囲を定数が超えている場合にエラーをレポートします。
+
+
+
+</PRE>
+<STRONG>
+スコープ レベル
+</STRONG>
+<PRE>
+LINE
+
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v6.0
+
+
+</PRE>
+<STRONG>
+パラメーター
+</STRONG>
+<PRE>
+
+-char の比較をチェックする (デフォルト値 true)
+-byte の比較をチェックする (デフォルト値 false)
+-short の比較をチェックする (デフォルト値 false)
+-int の比較をチェックする (デフォルト値 false)
+
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+char/byte/short/int 型の変数を、型の範囲を超えた定数と比較することは意味がありません。
+変数の値に関係なく、比較は常に true だけ (または false だけ) を返します
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+package examples.rules.pb.logic;
+
+public class UIF {
+    public static String getAsciiString(String inString) {
+        StringBuffer outStringBuffer= new StringBuffer();
+        for (int i= 0; i&lt; inString.length(); i++) {
+            char currentChar= inString.charAt(i);
+            if (currentChar&gt; -1 &amp;&amp; currentChar&lt; 256) { //違反： -1 は char が取れる値ではない
+                outStringBuffer.append(currentChar);
+            }
+        }
+        return outStringBuffer.toString();
+    }
+}
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+package examples.rules.pb.logic;
+
+public class UIFFixed {
+    public static String getAsciiString(String inString) {
+        StringBuffer outStringBuffer= new StringBuffer();
+        for (int i= 0; i&lt; inString.length(); i++) {
+            char currentChar= inString.charAt(i);
+            if (currentChar&lt; 256) { //修正： -1 の比較を削除した
+                outStringBuffer.append(currentChar);
+            }
+        }
+        return outStringBuffer.toString();
+    }
+}
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="PB.LOGIC.ROM" href="#top">[Top]</a><br/><br/><STRONG>
+メソッドが正しいオブジェクトで呼び出されるようにする [PB.LOGIC.ROM]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+このルールは、メソッドが呼び出されていない変数に対し、違反をレポートします。
+ルールは、非プリミティブ型のローカル変数およびパラメーターで、定数 null 以外の値に
+初期化されているものをチェックします。また、可変型の変数だけをチェックします。
+
+ノイズを減らすため、デフォルトの設定では、同一メソッド内で、他のオブジェクトの
+互換性のあるメソッドが 2 回以上呼び出されている変数に対してだけ、違反をレポート
+します。互換性のあるメソッドとは、変数の型または型の階層構造のどこかで定義されている
+メソッドを指します。メソッド宣言の中で、互換性のあるメソッドが 2 回以上呼ばれ
+ている場合、どちらかの呼び出しは、メソッドが 1 回も呼び出されていないオブジェクト
+で呼び出されるはずだった可能性が高いと考えられます。このため、このような場合
+だけに違反がレポートされます。
+
+
+
+</PRE>
+<STRONG>
+スコープ レベル
+</STRONG>
+<PRE>
+LINE
+
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v8.1
+
+
+</PRE>
+<STRONG>
+パラメーター
+</STRONG>
+<PRE>
+
+-他のオブジェクトで互換性のあるメソッドが 2 回以上呼ばれている場合のみレポートする
+
+    -デフォルト true
+    -このパラメーターが有効な場合、同一メソッド内で、互換性のあるメソッド (変数の
+     型または型の階層構造のどこかで定義されているメソッド) が他のオブジェクトで
+     2 回以上呼び出されている変数またはパラメーターに対してだけ、違反がレポート
+     されます。詳細については「説明」の項を参照してください。
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+ローカル変数やパラメーターが宣言されているが、1 回もその変数でメソッドが呼び出されて
+いない場合、バグである可能性が十分にあります。メソッドを呼び出すのを忘れたか、
+いずれかのメソッド呼び出しで、間違った変数を呼び出しオブジェクトとして使用して
+いるかのどちらかです。変数またはパラメーターを宣言しているメソッドを調べ、
+バグかどうかを検討する必要があります。
+
+
+</PRE>
+<STRONG>
+デメリット
+</STRONG>
+<PRE>
+
+このルールは誤った違反を検出する可能性があります。ローカル変数またはパラメーターを
+宣言し、メソッドを呼び出していないのが正しい振る舞いの場合があります。このような
+場合、違反を抑制する必要があります。このような誤検出は非常にまれであるはずです。
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+package examples.rules.pb.logic;
+
+import java.util.*;
+
+public class ROM {
+    List collectPositive(List input) {
+        List output = new ArrayList();
+        for (int i = 0; i &lt; input.size(); i++) {
+            Integer element = (Integer) input.get(i);
+            if (element.intValue() &gt; 0)
+                input.add(element);  //違反: 間違ったリストに追加されている
+        }
+        return output;
+    } 
+}
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+変数またはパラメーターを宣言しているメソッドで、間違ったオブジェクトを使用して
+メソッドを呼び出していないか、またメソッド呼び出しが抜けていないかを確認します。
+
+package examples.rules.pb.logic;
+
+import java.util.*;
+
+public class ROMFixed {
+    List collectPositive(List input) {
+        List output = new ArrayList();
+        for (int i = 0; i &lt; input.size(); i++) {
+            Integer element = (Integer) input.get(i);
+            if (element.intValue() &gt; 0)
+                output.add(element); // 修正
+        }
+        return output;
+    }
+}
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="PB.LOGIC.SG" href="#top">[Top]</a><br/><br/><STRONG>
+get/set メソッドが必ず正しい変数にアクセスするようにする [PB.LOGIC.SG]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+このルールは、目的のインスタンス フィールドにアクセスしない
+'set' および 'get' メソッドを検出します。
+"setX" または "getX" メソッドがフィールド "X" に
+アクセスしない場合、このルールはエラーをレポートします。
+
+
+
+</PRE>
+<STRONG>
+スコープ レベル
+</STRONG>
+<PRE>
+METHOD
+
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v6.0
+
+
+</PRE>
+<STRONG>
+注意
+</STRONG>
+<PRE>
+
+フィールドに異なる名前付け規則がある可能性があるので、
+フィールド名のマッチングを行うときに
+このルールは文字と数字以外のあらゆる物を無視します。
+
+"set" メソッドが他のメソッドを呼び出している場合、このルールは
+目的のインスタンス フィールドにアクセスしているかを検索します。
+検索は、深さが3のレベルまでのメソッド呼び出しに対して行なわれます。
+ただし、呼ばれているメソッドが abstract で宣言されており、
+名前が命名規則に一致している場合（例えば、フィールド x に対する
+setX() の場合）、実際に目的のフィールドにアクセスしているかを
+静的には確認することができないため、実際に値がセットされているかに
+かかわらず、違反は検出されません。
+
+また、フィールドがプリミティブ型でなく、"set" メソッドがフィールドを他のメソッド
+に引数として渡している場合も、"set" メソッドが意図されたフィールドをセットして
+いるかどうかを静的に確認することができません。このため、別のメソッドに引数として
+フィールドを渡している "set" メソッドに対して違反は検出されません。
+
+
+</PRE>
+<STRONG>
+パラメーター
+</STRONG>
+<PRE>
+
+-set メソッドをチェックする（デフォルト true）
+    -例外を throw する set メソッドを無視する (デフォルト false)
+    正しい動作として例外を throw する場合もあります。例えば、
+    メソッドがまだ実装されていない場合や、フィールドにアクセスされるべきでない
+    場合は、UnsupportedOperationException が throw される可能性があります。
+-get メソッドをチェックする（デフォルト true）
+    -例外を throw する get メソッドを無視する (デフォルト false)
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+メソッドの名前付け規則によって、メソッド名が "setX" または "getX" である場合、
+メソッドは X という名前のインスタンス フィールドの値を set/get するべきです。
+メソッドが他のインスタンス フィールドを set/get しているのは
+バグの可能性があります。
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+package examples.rules.pb.logic;
+
+public class SG {
+    private String _str1;
+    private String _str2;
+    
+    public void setStr1(String str) { //違反,  set _str1 を set するべき
+        _str2= str; 
+    }
+    public String getStr2() { //違反,  _str2 を get するべき
+        return _str1;
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+package examples.rules.pb;
+
+public class SG {
+    private String _str1;
+    private String _str2;
+    
+    public void setStr1(String str) { //修正
+        _str1= str; 
+    }
+    public String getStr2() { //修正
+        return _str2;
+    }
+}
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="PB.NAECS" href="#top">[Top]</a><br/><br/><STRONG>
+switch 文の 列挙型の各定数に case 文を用意する [PB.NAECS]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+switch 式が列挙型であり、列挙型が取りうる値ごとに case 文を
+用意していない場合、このルールは違反をレポートします。
+
+switch 文が列挙型を使用している場合、
+列挙型の取りうる値ごとに case 文を用意するべきです。
+
+
+
+</PRE>
+<STRONG>
+スコープ レベル
+</STRONG>
+<PRE>
+LINE
+
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v8.0
+
+
+
+</PRE>
+<STRONG>
+注意
+</STRONG>
+<PRE>
+
+N/A
+
+
+</PRE>
+<STRONG>
+セキュリティとの関連
+</STRONG>
+<PRE>
+
+N/A
+
+
+</PRE>
+<STRONG>
+パラメーター
+</STRONG>
+<PRE>
+
+N/A
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+通常、switch 文において 列挙型の取りうる値に case 文がないのはバグです。
+switch 文は式が取りうるすべての値を処理するべきです。
+
+
+</PRE>
+<STRONG>
+デメリット
+</STRONG>
+<PRE>
+
+N/A
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+package examples.rules.pb;
+
+public class NAECS {
+    enum Color {
+        RED, GREEN
+    };
+
+    public void printColor(Color c) {
+        switch (c) {  // 違反- GREEN に対する case文がない
+        case RED:
+            System.err.println("Red");
+            break;
+        default:
+            System.err.println("Error");
+            break;
+        }
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+列挙型 のすべての取りうる値に case 文を用意します。
+
+package examples.rules.pb;
+
+public class NAECSFixed {
+    enum Color {
+        RED, GREEN
+    };
+
+    public void printColor(Color c) {
+        switch (c) {  
+        case RED:
+            System.err.println("Red");
+            break;
+        case GREEN:                       //修正- GREEN のための case 文を追加
+            System.err.println("Green");
+            break;    
+        default:
+            System.err.println("Error");
+            break;
+        }
+    }
+}
+
+
+</PRE>
+<STRONG>
+関連資料
+</STRONG>
+<PRE>
+
+N/A
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="PB.OCSF" href="#top">[Top]</a><br/><br/><STRONG>
+ファイルと同じ名前を持つ型を 1 つだけ必ず用意する [PB.OCSF]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+Java ファイル中に、Java ファイルと同じ名前のインナー クラスではない型
+（クラス、インターフェイス、列挙型、アノテーション）が
+存在しない場合、このルールはエラーをレポートします。
+オカレンスごとにエラーがレポートされます。
+
+
+</PRE>
+<STRONG>
+スコープ レベル
+</STRONG>
+<PRE>
+
+FILE
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v6.0
+
+
+</PRE>
+<STRONG>
+注意
+</STRONG>
+<PRE>
+
+インナー クラスは対象外です。
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+ほとんどの場合、このルールの違反はファイル名または型名の
+タイプミスが原因です。
+
+
+</PRE>
+<STRONG>
+デメリット
+</STRONG>
+<PRE>
+
+N/A
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+file name: OCSF.java
+
+package examples.rules.pb;
+
+class OCSF_ //違反
+{
+}
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+file name: OCSF.java
+
+package pb;
+
+class OCSF    //修正
+{
+}
+
+
+</PRE>
+<STRONG>
+関連資料
+</STRONG>
+<PRE>
+
+N/A
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="PB.PCSF" href="#top">[Top]</a><br/><br/><STRONG>
+ファイルと同名の型を必ず public として宣言する [PB.PCSF]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+ファイルと同じ名前のクラス/インターフェイスが
+public として宣言されていない場合、このルールはエラーをレポートします。
+オカレンスごとにエラーがレポートされます。
+
+
+</PRE>
+<STRONG>
+スコープ レベル
+</STRONG>
+<PRE>
+
+CLASS
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v6.0
+
+
+</PRE>
+<STRONG>
+注意
+</STRONG>
+<PRE>
+
+インナー クラスは対象外です。
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+N/A
+
+
+</PRE>
+<STRONG>
+デメリット
+</STRONG>
+<PRE>
+
+N/A
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+file name: PCSF.java
+
+package examples.rules.pb;
+
+class PCSF //違反
+{}
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+file name: PCSFFixed.java
+
+package examples.rules.pb;
+
+public class PCSFFixed  //修正
+{}
+
+
+</PRE>
+<STRONG>
+関連資料
+</STRONG>
+<PRE>
+
+N/A
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="PB.PDCL" href="#top">[Top]</a><br/><br/><STRONG>
+switch 文の最後の case として default を置く  [PB.PDCL]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+default 文が、switch ステートメントの最後の caseではない場合、
+このルールはエラーをレポートします。
+
+
+
+</PRE>
+<STRONG>
+スコープ レベル
+</STRONG>
+<PRE>
+LINE
+
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v5.1
+
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+switch ステートメントの最後の case として default 文を使用するのが
+ベスト プラクティスです。default 文が最後の case でない場合、default 
+文に必ず break 文があるようにします。さもないと、次の case に処理が
+移動します。
+
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+package examples.rules.pb;
+
+public class PDCL {
+
+    public void method() {
+        switch(3) {
+        case 1 : System.out.println("case 1");
+        default : System.out.println("default case");  // 違反
+        case 2 : System.out.println("case 2");
+        }
+        // output: 
+        // default case
+        // case 2
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+default 文を最後に置きます。
+
+public class PDCLFixed {
+
+    public void method() {
+        switch(3) {
+        case 1 : System.out.println("case 1");
+        case 2 : System.out.println("case 2");
+        default : System.out.println("default case");  // 修正
+        }
+        // output:
+        // default case
+    }
+}
+
+</PRE><br/><hr/><br/><a class="notPrintable" id="PB.PDS" href="#top">[Top]</a><br/><br/><STRONG>
+各 switch 文には default: を用意する [PB.PDS]
+</STRONG>
+<p>
+<BR><BR>
+<STRONG>
+説明
+</STRONG>
+<PRE>
+
+このルールは、default 文がない switch 文を検出します。
+該当するコードを発見するたびに、このルールはエラーをレポートします。
+
+
+
+</PRE>
+<STRONG>
+スコープ レベル
+</STRONG>
+<PRE>
+LINE
+
+
+
+</PRE>
+<STRONG>
+このルールが導入されたバージョン
+</STRONG>
+<PRE>
+
+v4.5
+
+
+
+</PRE>
+<STRONG>
+セキュリティとの関連
+</STRONG>
+<PRE>
+
+「switch 文にデフォルトのケースがありません。これは、複雑な論理エラーやその結果としての
+弱点につながる可能性があります。この欠陥は、変数の可能なすべての値が検討されていない、
+あるいは特定のプロセスによって処理されていないという、ソフトウェア開発のよくある
+問題を表しています。このため、その後の決定は不適切な情報に基づいて行われ、波及的な
+エラーが発生します。この波及的なエラーは、さまざまなセキュリティの問題を引き起こし、
+システムの重大な障害を構成する可能性があります。」[CWE-478]
+
+
+
+</PRE>
+<STRONG>
+利点
+</STRONG>
+<PRE>
+
+多くの場合、case 文は switch 文の唯一の論理オプションになります。
+そのため、入力値以外のオプションを処理するために default 文を
+用意するべきです。
+
+
+
+</PRE>
+<STRONG>
+サンプルコード
+</STRONG>
+<PRE>
+
+package examples.rules.pb;
+
+public class PDS {
+    void method (int i) {
+        switch (i) {  // 違反: default 文がない
+        case 0:
+            System.out.println ("Zero");
+            break;
+        }
+    }
+}
+
+
+
+</PRE>
+<STRONG>
+修正
+</STRONG>
+<PRE>
+
+default 文を追加します。
+
+package examples.rules.pb;
+
+public class PDSFixed {
+    void method (int i) {
+        switch (i) {
+        case 0:
+            System.out.println ("Zero");
+            break;
+        default:  // 修正
+        }
+    }
+}
+
+
+</PRE>
+<STRONG>
+関連資料
+</STRONG>
+<PRE>
+
+Section 7.8 of <A target="_blank" HREF="http://www.oracle.com/technetwork/java/javase/documentation/codeconventions-142311.html#472">http://www.oracle.com/technetwork/java/javase/documentation/codeconventions-142311.html#472</A>
+
+CWE-478: Missing Default Case in Switch Statement
+<A target="_blank" HREF="https://cwe.mitre.org/data/definitions/478.html">https://cwe.mitre.org/data/definitions/478.html</A>
+
+</PRE><br/><hr/><br/>
+</body>
