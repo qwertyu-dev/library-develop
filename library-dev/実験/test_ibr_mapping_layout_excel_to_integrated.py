@@ -1,6 +1,6 @@
 import pandas as pd
 import ulid
-
+from tabulate import tabulate
 class ExcelProcessorError(Exception):
     """Base exception for ExcelProcessor errors"""
 
@@ -655,3 +655,96 @@ class KanrenExcelProcessor(ExcelProcessor):
             raise ExcelProcessorError(err_msg) from None
         else:
             return unified_df[unified_layout].fillna("")
+
+
+
+        
+# サンプルデータの作成と処理
+def process_and_print(processor, data, data_path, case_name):
+    print(f"\n{case_name} Case:")
+    
+    # オリジナルデータ
+    print("\nOriginal Data:")
+    print(tabulate(data, headers='keys', tablefmt='pipe', showindex=False))
+    
+    # Excel ファイルに保存
+    data.to_excel(data_path, index=False)
+    
+    # 最初のマッピング（read_and_map の結果）
+    df_mapped = processor.read_and_map(data_path)
+    print("\nFirst Mapping:")
+    print(tabulate(df_mapped, headers='keys', tablefmt='pipe', showindex=False))
+    
+    # 最後のマッピング（統合レイアウト）
+    df_unified = processor.map_to_unified_layout(df_mapped)
+    print("\nFinal Unified Layout:")
+    print(tabulate(df_unified, headers='keys', tablefmt='pipe', showindex=False))
+
+# 人事のサンプルデータ
+jinji_data = pd.DataFrame({
+    '報告日': ['2023-05-01', '2023-05-01', '2023-05-01'],
+    'no': [1, 2, 3],
+    '有効日付': ['2023-06-01', '2023-06-01', '2023-06-01'],
+    '種類': ['新設', '変更', '新設'],
+    '対象': ['部', '課', 'エリア'],
+    '部門コード': ['A01', 'B02', 'C03'],
+    '親部店コード': ['P001', 'P002', 'P003'],
+    '部店コード': ['S001', 'S002', 'S003'],
+    '部店名称': ['営業第一部', '企画課', '東京エリア'],
+    '部店名称(英語)': ['Sales Dept. 1', 'Planning Section', 'Tokyo Area'],
+    '課/エリアコード': ['', 'G001', 'E001'],
+    '課/エリア名称': ['', '企画第一課', '東京エリア'],
+    '課/エリア名称(英語)': ['', 'Planning Section 1', 'Tokyo Area'],
+    '常駐部店コード': ['R001', 'R002', 'R003'],
+    '常駐部店名称': ['本店', '支店A', '支店B'],
+    '純新規店の組織情報受渡し予定日(開店日基準)': ['2023-05-25', '', '2023-05-26'],
+    '共通認証受渡し予定日(人事データ反映基準)': ['2023-05-28', '2023-05-28', '2023-05-28'],
+    '備考': ['新設部門', '課名変更', 'エリア新設'],
+})
+
+# 国企のサンプルデータ
+kokuki_data = pd.DataFrame({
+    '報告日': ['2023-05-01', '2023-05-01', '2023-05-01'],
+    'no': [1, 2, 3],
+    '登録予定日(yyyy/mm/dd)': ['2023-06-01', '2023-06-01', '2023-06-01'],
+    '種類(新規変更廃止)': ['新設', '変更', '新設'],
+    '対象(課・エリア/中間階層)': ['課・エリア', '課・エリア', 'エリア'],
+    '部店店番': ['S001', 'S002', 'S003'],
+    '部店名称 日本語': ['東京支店', '大阪支店', '名古屋エリア'],
+    '部店名称 英語': ['Tokyo Branch', 'Osaka Branch', 'Nagoya Area'],
+    '中間階層コード': ['M001', 'M002', 'M003'],
+    '中間階層名称:日本語': ['東日本', '西日本', '中部'],
+    '中間階層名称:英語': ['East Japan', 'West Japan', 'Central Japan'],
+    '中間階層略称:日本語': ['東', '西', '中'],
+    '中間階層略称:英語': ['East', 'West', 'Central'],
+    '課・エリアコード': ['G001', 'G002', 'E001'],
+    '課・エリア名称:日本語': ['営業第一課', '営業第二課', '名古屋エリア'],
+    '課・エリア名称:英語': ['Sales Section 1', 'Sales Section 2', 'Nagoya Area'],
+    '課・エリア略称:日本語': ['営1', '営2', '名古屋'],
+    '課・エリア略称:英語': ['S1', 'S2', 'Nagoya'],
+    '共通認証受渡予定日': ['2023-05-28', '2023-05-28', '2023-05-28'],
+    '変更種別・詳細旧名称・略語': ['新設', '名称変更', 'エリア新設'],
+})
+
+# 関連のサンプルデータ
+kanren_data = pd.DataFrame({
+    '種類': ['新設', '変更', '新設'],
+    '対象': ['部', '課', 'エリア'],
+    '部門コード': ['R01', 'R02', 'R03'],
+    '親部店コード': ['RP001', 'RP002', 'RP003'],
+    '部店コード': ['RB001', 'RB002', 'RB003'],
+    '部店名称': ['関連会社A', '関連会社B部門', '関連会社Cエリア'],
+    '課Grコード': ['RS001', 'RS002', 'RE001'],
+    '課Gr名称': ['営業部', '企画課', '東日本エリア'],
+    '課名称(英語)': ['Sales Department', 'Planning Section', 'East Japan Area'],
+    '共通認証受渡し予定日': ['2023-05-28', '2023-05-28', '2023-05-28'],
+    '部店カナ': ['カンレンガイシャA', 'カンレンガイシャBブモン', 'カンレンガイシャCエリア'],
+    '課Gr名称(カナ)': ['エイギョウブ', 'キカクカ', 'ヒガシニホンエリア'],
+    '課Gr名称(略称)': ['営', '企', '東'],
+    'BPR対象/対象外フラグ': ['1', '1', '0'],
+})
+
+# 処理と出力
+process_and_print(JinjiExcelProcessor(), jinji_data, "jinji.xlsx", "Jinji")
+process_and_print(KokukiExcelProcessor(), kokuki_data, "kokuki.xlsx", "Kokuki")
+process_and_print(KanrenExcelProcessor(), kanren_data, "kanren.xlsx", "Kanren")
