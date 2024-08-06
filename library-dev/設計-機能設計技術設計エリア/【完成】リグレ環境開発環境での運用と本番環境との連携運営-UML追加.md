@@ -65,7 +65,7 @@ end note
 @enduml
 ----
 
-[plamtuml]
+[plantuml]
 ----
 @startuml
 skinparam backgroundColor #EEEBDC
@@ -93,6 +93,73 @@ Prod -> Prod : 送信実行
 @enduml
 ----
 
+[plantuml]
+----
+@startuml
+skinparam backgroundColor #EEEBDC
+skinparam handwritten false
+cloud "開発用GitLab" as DevGit #LightPink
+cloud "プロダクションGitLab" as ProdGit #LightCyan
+rectangle "開発環境" as Dev #LightYellow {
+rectangle "開発データtag" as DevData
+rectangle "開発コード" as DevCode
+rectangle "開発コードtag" as DevCode1
+rectangle "処理フロー" {
+rectangle "一括申請" as BulkApply
+rectangle "受付" as Reception
+rectangle "パターン編集" as PatternEdit
+rectangle "反映" as Reflect
+rectangle "一括処理" as Batch
+rectangle "送信" as Send
+BulkApply -> Reception
+Reception -> PatternEdit
+PatternEdit -> Reflect
+Reflect -> Batch
+Batch -> Send
+}
+}
+rectangle "リグレッション環境" as Reg #LightGreen {
+rectangle "リグレデータ" as RegData
+rectangle "リグレコード" as RegCode
+}
+rectangle "本番環境" as Prod #LightBlue {
+rectangle "本番データ" as ProdData
+rectangle "本番コード/更新明細" as ProdCode
+}
+Dev -[hidden]right- Reg
+Reg -[hidden]right- Prod
+DevGit -[hidden]down- Dev
+ProdGit -[hidden]down- Prod
+
+
+ProdGit --> ProdCode : 配布とデプロイ
+ProdData .-> DevGit : データ搬送(運用オペ)\ngit格納
+
+DevGit .-> DevData : データ配布\ntag
+
+DevGit .-> DevCode1 : git clone\ntag
+DevCode .-> DevGit : コードpush
+
+note bottom of Dev
+物理的に分離された環境
+新機能開発とテスト
+end note
+note bottom of Reg
+物理的に分離された環境
+本番リリース前の検証
+end note
+note bottom of Prod
+物理的に分離された環境
+end note
+note top of DevGit
+開発・リグレッション用リポジトリ
+本番データの中継点
+end note
+note top of ProdGit
+本番用リポジトリ
+end note
+@enduml
+----
 
 
 ### 文書の目的
