@@ -1,3 +1,4 @@
+"""ULID列を生成する"""
 import ulid
 import pandas as pd
 
@@ -43,7 +44,7 @@ def generate_ulid_column(df: pd.DataFrame) -> pd.DataFrame:
         - ulid-py
 
     Todo:
-        - あれば記載する
+        - lambdaでも良いのかもしれない、検討
 
     Chage History:
     | No   | 修正理由     | 修正点   | 対応日       | 担当          |

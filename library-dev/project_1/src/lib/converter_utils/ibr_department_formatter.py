@@ -82,21 +82,29 @@ def format_department_name(department_name: str) -> str:
     individual_requirements = [
         "営業本部業務部",
         "内部監査部業務監査グループ第三ユニット",
+        "成田加良部社宅（６９１０）人事室",
+        "葉山倶楽部（６９１０）人事室",
+        "軽井沢倶楽部（６９１０）人事室",
     ]
 
     # 全体マッチの例外ケース 完全一致でバイパス
     full_match_exceptions = [
         "本部審議役",
-        "本部参事役",
+        "本部審議役（大阪）",
+        "本部審議役（名古屋）",
+        "本部賛事役",
+        "本部賛事役（大阪）",
+        "本部賛事役（名古屋）",
     ]
 
     # 部分マッチの例外ケース 部分一致で処理
     partial_match_exceptions = [
         "中部",
-        "春日部",
-        "宇部",
         "東部",
         "西部",
+        "春日部",
+        "宇部",
+        "内部",
     ]
 
     # 個別要件チェック
@@ -127,6 +135,7 @@ def format_department_name(department_name: str) -> str:
         parts[i] = parts[i].replace("部部門", "部 部門")
         parts[i] = parts[i].replace("部門 (", "部門(")
         parts[i] = parts[i].replace("部 ·", "部·")
+        parts[i] = parts[i].replace("部 ・", "部・")
 
     department_name = ''.join(parts)
 

@@ -259,3 +259,27 @@ class TestFormatDepartmentName:
         log_msg(f"\n{test_doc}", LogLevel.INFO)
         log_msg(f"\nテスト: 入力: {input_name}, 期待出力: {expected_output}, シナリオ: {scenario}", LogLevel.INFO)
         assert format_department_name(input_name) == expected_output
+
+    # C2: 条件組み合わせ: 202410名称変更対応
+    @pytest.mark.parametrize(("input_name", "expected_output", "scenario"), [
+        ("営業本部資源・エネルギー部", "営業本部 資源・エネルギー部", "202410組織変更対応"),
+        ("営業本部フィナンシャルインスティテューションズ部", "営業本部 フィナンシャルインスティテューションズ部", "202410組織変更対応"),
+        ("営業本部大企業営業部", "営業本部 大企業営業部", "202410組織変更対応"),
+        ("営業本部不動産・建設セクター部", "営業本部 不動産・建設セクター部", "202410組織変更対応"),
+        ("営業本部流通・サービス 消費財部", "営業本部 流通・サービス 消費財部", "202410組織変更対応"),
+        ("営業本部運輸セクター部", "営業本部 運輸セクター部", "202410組織変更対応"),
+        ("営業本部半導体・テクノロジー部", "営業本部 半導体・テクノロジー部", "202410組織変更対応"),
+        ("営業本部情報通信・テクノロジー部", "営業本部 情報通信・テクノロジー部", "202410組織変更対応"),
+        ("営業本部モビリティ・テクノロジー部", "営業本部 モビリティ・テクノロジー部", "202410組織変更対応"),
+        ("営業本部ジェネラルインダストリー部", "営業本部 ジェネラルインダストリー部", "202410組織変更対応"),
+        ("営業本部ケミカル・ウェルビーイング部", "営業本部 ケミカル・ウェルビーイング部", "202410組織変更対応"),
+    ])
+    def test_format_department_name_202410_org_C2(self, input_name, expected_output, scenario):
+        test_doc = f"""テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: {scenario}
+        """
+        log_msg(f"\n{test_doc}", LogLevel.INFO)
+        log_msg(f"\nテスト: 入力: {input_name}, 期待出力: {expected_output}, シナリオ: {scenario}", LogLevel.INFO)
+        assert format_department_name(input_name) == expected_output
