@@ -1,0 +1,118 @@
+= テスト実施：環境設定ガイド
+
+== 1. テストコード実行の際のルール
+
+=== 1.1 環境変数の設定
+
+環境変数を使用してテストログの出力先を設定します。
+
+* 環境設定変数によりtests系ディレクトリのlogにテストログを出力するよう設定します
+* パプリカローカル処理では構いませんが、開発環境・リグレ環境での実行時にはJenkinsなどで環境設定するようにしてください
+
+==== 環境変数名: `EXEC_PATTERN`
+
+値を `tests` に設定します。
+
+[source,bash]
+.Ubuntu:
+----
+export EXEC_PATTERN=tests
+----
+
+[source,powershell]
+.Windows:
+----
+$ENV:EXEC_PATTERN='tests'
+----
+
+IMPORTANT: 開発環境・リグレッション環境での実行時には、Jenkinsなどで環境変数を設定してください。
+
+== 2. pytest実行
+
+pytestをコンソールから実行する手順:
+
+1. `project` ディレクトリに移動
+2. 以下のコマンドを実行:
+
+[source,bash]
+----
+pytest -lvs ./tests/lib/converter_utils/test_ibr_excel_field_analyzer.py
+----
+
+TIP: 状況に応じて引数を調整してください。例:
+
+[source,bash]
+----
+pytest -lv ./tests/lib/converter_utils/test_ibr_excel_field_analyzer.py
+----
+
+== 3. Visual Studio Code デバッガー設定
+
+VSCodeのデバッグ機能を使用する場合の設定:
+
+1. VSCodeの左サイドバーの「実行とデバッグ」アイコンをクリック
+2. 「構成の追加」をクリック
+3. 「Python: モジュールの実行」を選択
+
+=== 3.1 モジュール/パッケージのデバッグ設定
+
+.launch.json の設定例:
+[source,json]
+----
+{
+## module/file起動バターン
+// launch.json sample
+{
+    "name": "Python: Module",
+    "type": "python",
+    "request": "launch",
+    // テスト対象モジュールパスを.形式で指定する
+    // case1 -m 形式で__main__.pyを起動する形式の場合はモジュールパッケージパスまで設定
+    // case2 直接起動する場合はモジュールパス(ただし.pyは書かない)を設定
+    //"module": "src.package.validator_excel_main_class-2",            // case1
+    "module": "src.lib.validator_utils.ibr_check_reference_exists",  // case2
+    // プロジェクトパスを指定すること
+    "cwd": "${workspaceFolder}/library-dev/project_1/",
+    "console": "integratedTerminal",
+}
+----
+
+* `module`: テスト対象のモジュールパスを指定（`.py`は不要）
+* `cwd`: プロジェクトのルートパスを指定
+
+=== 3.2 テストコードのデバッグ設定
+
+.pytestを使用したデバッグ設定の例:
+[source,json]
+----
+{
+    "name": "Python: pytest",
+    "type": "python",
+    "request": "launch",
+    "module": "pytest",
+    "args": [
+        "-lvs",
+        "tests/lib/validator_utils/test_ibr_check_reference_exists.py"
+    ],
+    "cwd": "${workspaceFolder}/library-dev/project_1/",
+    "console": "integratedTerminal"
+}
+----
+
+== 4. デバッグの実行
+
+1. テスト対象のコードにブレークポイントを設定
+2. デバッガーを実行
+
+NOTE: プロジェクト固有の設定については、個別のプロジェクトガイドラインを参照してください。
+
+== 5. トラブルシューティング
+
+* 環境変数が正しく設定されていない場合、`echo $EXEC_PATTERN`（Unixシステム）または`echo %EXEC_PATTERN%`（Windows）で確認してください。
+* pytestの実行に問題がある場合、`pytest --version`でインストールを確認してください。
+* VSCodeデバッガーが動作しない場合、Python拡張機能が最新であることを確認してください。
+
+== 6. 参考リンク
+
+* https://docs.pytest.org/[pytest公式ドキュメント]
+* https://code.visualstudio.com/docs/python/debugging[VSCodeでのPythonデバッグガイド]

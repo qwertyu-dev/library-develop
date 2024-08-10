@@ -1,6 +1,7 @@
 import pandas as pd
 import ulid
 from tabulate import tabulate
+
 class ExcelProcessorError(Exception):
     """Base exception for ExcelProcessor errors"""
 
@@ -50,8 +51,45 @@ class ExcelProcessor:
     | v0.1 | 初期定義作成 | 新規作成 | 2024/07/20 | John Doe |
 
     """
+    def __init__(self) -> None:
+        """統合レイアウトをインスタンス共有します
 
-    def read_and_map(self, file_path: str) -> pd.DataFrame:
+        Arguments:
+        なし
+
+        Return Value:
+        なし
+
+        Exceptions:
+        なし
+        """
+        self.unified_layout = [
+            'ulid',
+            'applicant_info',
+            'application_type',
+            'target_org',
+            'business_unit_code',
+            'parent_branch_code',
+            'branch_code',
+            'branch_name',
+            'section_gr_code',
+            'section_gr_name',
+            'section_name_en',
+            'resident_branch_code',
+            'resident_branch_name',
+            'auth_transfer_date',
+            'sales_department_code_within_location',
+            'sales_department_name_within_location',
+            'area_code',
+            'area_name',
+            'remarks',
+            'branch_name_kana',
+            'section_gr_name_kana',
+            'section_gr_name_abbr',
+            'bpr_target_flag',
+        ]
+
+    def read_and_map(self, file_path: str) -> pd.DataFrame:  # noqa: ARG002 interface定義上の引数定義でありinterface上で使用されないため
         """Excelファイルを読み込み、列名をマッピングします
 
         Arguments:
@@ -66,7 +104,7 @@ class ExcelProcessor:
         err_msg = "Subclasses must implement read_and_map method"
         raise NotImplementedError(err_msg)
 
-    def map_to_unified_layout(self, df: pd.DataFrame) -> pd.DataFrame:
+    def map_to_unified_layout(self, df: pd.DataFrame) -> pd.DataFrame: # noqa: ARG002 interface定義上の引数定義
         """データを統一レイアウトにマッピングします
 
         Arguments:
@@ -81,7 +119,7 @@ class ExcelProcessor:
         err_msg = "Subclasses must implement map_to_unified_layout method"
         raise NotImplementedError(err_msg)
 
-    def validate_data(self, df: pd.DataFrame) -> None:
+    def validate_data(self, df: pd.DataFrame) -> None: # noqa: ARG002 interface定義上の引数定義
         """データフレームの内容を検証します
 
         Arguments:
@@ -249,33 +287,7 @@ class JinjiExcelProcessor(ExcelProcessor):
             4. ULIDを生成して追加
         """
         try:
-            unified_layout = [
-                'ulid',
-                'applicant_info',
-                'application_type',
-                'target_org',
-                'business_unit_code',
-                'parent_branch_code',
-                'branch_code',
-                'branch_name',
-                'section_gr_code',
-                'section_gr_name',
-                'section_name_en',
-                'resident_branch_code',
-                'resident_branch_name',
-                'aaa_transfer_date',
-                'sales_department_code_within_location',
-                'sales_department_name_within_location',
-                'area_code',
-                'area_name',
-                'remarks',
-                'branch_name_kana',
-                'section_gr_name_kana',
-                'section_gr_name_abbr',
-                'bpr_target_flag',
-            ]
-
-            unified_df = pd.DataFrame(columns=unified_layout)
+            unified_df = pd.DataFrame(columns=self.unified_layout)
 
             unified_df['ulid'] = [str(ulid.new()) for _ in range(len(df))]
             unified_df['applicant_info'] = '1'
@@ -285,8 +297,8 @@ class JinjiExcelProcessor(ExcelProcessor):
             unified_df['parent_branch_code'] = df['parent_branch_code']
             unified_df['branch_code'] = df['branch_code']
             unified_df['branch_name'] = df['branch_name']
-            unified_df['section_gr_code'] = df.apply(lambda row: row['section_area_code'] if ((row['target_org'] == '部') or (row['target_org'] == '課')) else '', axis=1)
-            unified_df['section_gr_name'] = df.apply(lambda row: row['section_area_name'] if ((row['target_org'] == '部') or (row['target_org'] == '課')) else '', axis=1)
+            unified_df['section_gr_code'] = df.apply(lambda row: row['section_area_code'] if row['target_org'] == '課' else '', axis=1)
+            unified_df['section_gr_name'] = df.apply(lambda row: row['section_area_name'] if row['target_org'] == '課' else '', axis=1)
             unified_df['section_name_en'] = df['section_area_name_en']
             unified_df['resident_branch_code'] = df['resident_branch_code']
             unified_df['resident_branch_name'] = df['resident_branch_name']
@@ -299,7 +311,7 @@ class JinjiExcelProcessor(ExcelProcessor):
             err_msg = f"Error occurred while mapping to unified layout: {str(e)}"
             raise ExcelProcessorError(err_msg) from None
         else:
-            return unified_df[unified_layout].fillna("")
+            return unified_df[self.unified_layout].fillna("")
 
 class KokukiExcelProcessor(ExcelProcessor):
     """国際事務企画部門用Excelファイル処理クラス
@@ -431,33 +443,7 @@ class KokukiExcelProcessor(ExcelProcessor):
             5. エリア情報の条件付きマッピング
         """
         try:
-            unified_layout = [
-                'ulid',
-                'applicant_info',
-                'application_type',
-                'target_org',
-                'business_unit_code',
-                'parent_branch_code',
-                'branch_code',
-                'branch_name',
-                'section_gr_code',
-                'section_gr_name',
-                'section_name_en',
-                'resident_branch_code',
-                'resident_branch_name',
-                'auth_transfer_date',
-                'sales_department_code_within_location',
-                'sales_department_name_within_location',
-                'area_code',
-                'area_name',
-                'remarks',
-                'branch_name_kana',
-                'section_gr_name_kana',
-                'section_gr_name_abbr',
-                'bpr_target_flag',
-            ]
-
-            unified_df = pd.DataFrame(columns=unified_layout)
+            unified_df = pd.DataFrame(columns=self.unified_layout)
 
             unified_df['ulid'] = [str(ulid.new()) for _ in range(len(df))]
             unified_df['applicant_info'] = '2'
@@ -465,19 +451,17 @@ class KokukiExcelProcessor(ExcelProcessor):
             unified_df['target_org'] = df['target_org']
             unified_df['branch_code'] = df['branch_code']
             unified_df['branch_name'] = df['branch_name_ja']
-            unified_df['section_gr_code'] = df.apply(lambda row: row['section_area_code'] if ((row['target_org'] == '部') or (row['target_org'] == '課')) else '', axis=1)
-            unified_df['section_gr_name'] = df.apply(lambda row: row['section_area_name_ja'] if ((row['target_org'] == '部') or (row['target_org'] == '課')) else '', axis=1)
+            unified_df['section_gr_code'] = df['section_area_code']
+            unified_df['section_gr_name'] = df['section_area_name_ja']
             unified_df['section_name_en'] = df['section_area_name_en']
             unified_df['aaa_transfer_date'] = df['aaa_transfer_date']
             unified_df['section_gr_name_abbr'] = df['section_area_abbr_ja']
-            unified_df['area_code'] = df.apply(lambda row: row['section_area_code'] if row['target_org'] == 'エリア' else '', axis=1)
-            unified_df['area_name'] = df.apply(lambda row: row['section_area_name_ja'] if row['target_org'] == 'エリア' else '', axis=1)
 
         except Exception as e:
             err_msg = f"Error occurred while mapping to unified layout: {str(e)}"
             raise ExcelProcessorError(err_msg) from None
         else:
-            return unified_df[unified_layout].fillna("")
+            return unified_df[self.unified_layout].fillna("")
 
 class KanrenExcelProcessor(ExcelProcessor):
     """関連会社用Excelファイル処理クラス
@@ -603,58 +587,30 @@ class KanrenExcelProcessor(ExcelProcessor):
             5. target_orgを条件に基づいて設定
         """
         try:
-            unified_layout = [
-                'ulid',
-                'applicant_info',
-                'application_type',
-                'target_org',
-                'business_unit_code',
-                'parent_branch_code',
-                'branch_code',
-                'branch_name',
-                'section_gr_code',
-                'section_gr_name',
-                'section_name_en',
-                'resident_branch_code',
-                'resident_branch_name',
-                'auth_transfer_date',
-                'sales_department_code_within_location',
-                'sales_department_name_within_location',
-                'area_code',
-                'area_name',
-                'remarks',
-                'branch_name_kana',
-                'section_gr_name_kana',
-                'section_gr_name_abbr',
-                'bpr_target_flag',
-            ]
-
-            unified_df = pd.DataFrame(columns=unified_layout)
+            unified_df = pd.DataFrame(columns=self.unified_layout)
 
             unified_df['ulid'] = [str(ulid.new()) for _ in range(len(df))]
             unified_df['applicant_info'] = '3'  # または '4' (条件に応じて設定が必要)
             unified_df['application_type'] = df['application_type']
-            unified_df['target_org'] = df['target_org']
             unified_df['business_unit_code'] = df['business_unit_code']
             unified_df['parent_branch_code'] = df['parent_branch_code']
             unified_df['branch_code'] = df['branch_code']
             unified_df['branch_name'] = df['branch_name']
-            unified_df['section_gr_code'] = df.apply(lambda row: row['section_gr_code'] if ((row['target_org'] == '部') or (row['target_org'] == '課')) else '', axis=1)
-            unified_df['section_gr_name'] = df.apply(lambda row: row['section_gr_name'] if ((row['target_org'] == '部') or (row['target_org'] == '課')) else '', axis=1)
+            unified_df['section_gr_code'] = df['section_gr_code']
+            unified_df['section_gr_name'] = df['section_gr_name']
             unified_df['section_name_en'] = df['section_name_en']
             unified_df['aaa_transfer_date'] = df['aaa_transfer_date']
             unified_df['branch_name_kana'] = df['branch_name_kana']
             unified_df['section_gr_name_kana'] = df['section_gr_name_kana']
             unified_df['section_gr_name_abbr'] = df['section_gr_name_abbr']
             unified_df['bpr_target_flag'] = df['bpr_target_flag']
-            unified_df['area_code'] = df.apply(lambda row: row['section_gr_code'] if row['target_org'] == 'エリア' else '', axis=1)
-            unified_df['area_name'] = df.apply(lambda row: row['section_gr_name'] if row['target_org'] == 'エリア' else '', axis=1)
 
         except Exception as e:
             err_msg = f"Error occurred while mapping to unified layout: {str(e)}"
             raise ExcelProcessorError(err_msg) from None
         else:
-            return unified_df[unified_layout].fillna("")
+            return unified_df[self.unified_layout].fillna("")
+
 
 
 

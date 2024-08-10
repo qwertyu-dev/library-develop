@@ -25,5 +25,5 @@
 | 21 | BPR対象/対象外フラグ | bpr_target_flag | str | - | Façade |
 | 22 | 共通認証受渡予定日 | auth_transfer_date | datetime | - | Façade |
 | 23 | 備考 | remarks | str | - | Façade |
-
+| 24 | デバッグ適用Facade名 | debug_apply_facade_name | str | - | 出力として保有するのみ、パターン編集で仕様はしない  |
 このテーブルは、変更情報テーブル（受付 output・パターン編集 input）の各カラムの情報を示しています。カラム名（日本語）、Pythonでの変数名、データ型、および受付 output・パターン編集 inputの情報が含まれています。桁数/文字数の情報は提供されていないため、その列は空白になっています。
