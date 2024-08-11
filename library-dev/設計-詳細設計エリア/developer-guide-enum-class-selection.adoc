@@ -1,0 +1,204 @@
+= EnumとClassによる変数定義のルールと使用例
+
+== 1. Enumの使用
+
+Enumは以下の場合に使用します:
+
+a. 明確に定義された、限られた選択肢のセットがある場合 +
+    例：曜日、月、カードのスート
+
+b. 値が互いに排他的で、特定の意味を持つ場合 +
+    例：状態（進行中、完了、キャンセル）、優先度（低、中、高）
+
+c. コード内で比較や判断に使用され、型安全性が重要な場合 +
+    例：API応答のステータス、ユーザーの権限レベル
+
+d. 将来的に選択肢が追加される可能性はあるが、頻繁ではない場合 +
+    例：支払い方法、商品カテゴリ
+
+Enumの命名規則:
+
+* クラス名は単数形、PascalCase
+* 列挙子（Enum内の値）は大文字のSNAKE_CASE
+
+=== 定義例：
+
+[source,python]
+----
+from enum import Enum, auto
+
+class Color(Enum):
+    RED = auto()
+    GREEN = auto()
+    BLUE = auto()
+
+class HttpStatus(Enum):
+    OK = 200
+    NOT_FOUND = 404
+    SERVER_ERROR = 500
+----
+
+=== 使用例：
+
+[source,python]
+----
+def paint(color: Color):
+    if color is Color.RED:
+        print("Painting in red")
+    elif color is Color.GREEN:
+        print("Painting in green")
+    elif color is Color.BLUE:
+        print("Painting in blue")
+
+paint(Color.RED)  # 出力: Painting in red
+
+def handle_response(status: HttpStatus):
+    if status is HttpStatus.OK:
+        print("Request successful")
+    elif status is HttpStatus.NOT_FOUND:
+        print("Resource not found")
+    elif status is HttpStatus.SERVER_ERROR:
+        print("Server error occurred")
+
+handle_response(HttpStatus.NOT_FOUND)  # 出力: Resource not found
+----
+
+== 2. Classによる定数定義
+
+以下の場合にClassを使用して定数を定義します:
+
+a. 関連する定数のグループがある場合 +
+    例：設定値、数学定数、アプリケーション固有の定数
+
+b. 値が単純で、特別な振る舞いを必要としない場合 +
+    例：最大値、最小値、デフォルト値
+
+c. 頻繁に参照される値で、一箇所にまとめておきたい場合 +
+    例：ファイルパス、データベース設定
+
+d. 将来的に値が変更される可能性がある場合 +
+    例：タイムアウト値、ページサイズ
+
+Classによる定数定義の命名規則:
+
+* クラス名は複数形または集合を表す名前、PascalCase
+* 定数名は大文字のSNAKE_CASE
+
+=== 定義例：
+
+[source,python]
+----
+class DatabaseConfig:
+    HOST = 'localhost'
+    PORT = 5432
+    MAX_CONNECTIONS = 100
+
+class MathConstants:
+    PI = 3.14159
+    E = 2.71828
+    GOLDEN_RATIO = 1.61803
+----
+
+=== 使用例：
+
+[source,python]
+----
+import psycopg2
+import math
+
+def connect_to_database():
+    conn = psycopg2.connect(
+        host=DatabaseConfig.HOST,
+        port=DatabaseConfig.PORT
+    )
+    conn.set_session(autocommit=True)
+    return conn
+
+db_connection = connect_to_database()
+print(f"Connected to database at {DatabaseConfig.HOST}:{DatabaseConfig.PORT}")
+
+def calculate_circle_area(radius):
+    return MathConstants.PI * radius ** 2
+
+area = calculate_circle_area(5)
+print(f"Area of circle with radius 5: {area:.2f}")
+----
+
+== 3. 選択の指針と使用例の比較
+
+例えば、アプリケーションの設定を扱う場合：
+
+=== Enumを使用する場合（限定された選択肢）:
+
+[source,python]
+----
+class LogLevel(Enum):
+    DEBUG = auto()
+    INFO = auto()
+    WARNING = auto()
+    ERROR = auto()
+
+def set_log_level(level: LogLevel):
+    if level is LogLevel.DEBUG:
+        print("Setting log level to DEBUG")
+    elif level is LogLevel.INFO:
+        print("Setting log level to INFO")
+    # ... 他のケース
+
+set_log_level(LogLevel.WARNING)  # 出力: Setting log level to WARNING
+----
+
+=== Classを使用する場合（関連する設定値のグループ）:
+
+[source,python]
+----
+class AppConfig:
+    MAX_USERS = 1000
+    TIMEOUT = 30
+    DEBUG_MODE = True
+
+def initialize_app():
+    print(f"Initializing app with max users: {AppConfig.MAX_USERS}")
+    print(f"Timeout set to: {AppConfig.TIMEOUT} seconds")
+    if AppConfig.DEBUG_MODE:
+        print("Debug mode is ON")
+
+initialize_app()
+----
+
+== 4. ベストプラクティス
+
+=== Enumでの`auto()`の使用：
+
+[source,python]
+----
+class Priority(Enum):
+    LOW = auto()
+    MEDIUM = auto()
+    HIGH = auto()
+
+print(Priority.LOW.value)  # 1
+print(Priority.MEDIUM.value)  # 2
+print(Priority.HIGH.value)  # 3
+----
+
+=== Classでのインスタンス化防止:
+
+[source,python]
+----
+class ConfigConstants:
+    API_KEY = "your_api_key_here"
+    MAX_RETRIES = 3
+
+    def __init__(self):
+        raise NotImplementedError("This class should not be instantiated")
+
+# 使用例
+print(ConfigConstants.API_KEY)  # "your_api_key_here"
+# ConfigConstants()  # これは NotImplementedError を発生させる
+----
+
+== 5. 注意点
+
+* Enumの値を直接比較する際は、`==` ではなく `is` を使用してください。
+* Classで定義した定数は変更可能であるため、重要な値の不用意な変更を防ぐために、必要に応じて`@property`デコレータを使用することを検討します。
