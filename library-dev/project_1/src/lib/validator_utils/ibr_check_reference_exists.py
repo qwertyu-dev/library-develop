@@ -10,7 +10,7 @@ class CheckExistsRefferenceRecord:
     """リファレンスレコードの存在をチェックするクラス
 
     Class Overview:
-        このクラスは、指定された部門コードに基づいて、利用申請明細（df_requests）とリファレンステーブル（df_refference）を
+        このクラスは、指定された部門コードに基づいて、利用申請明細(df_requests)とリファレンステーブル(df_refference)を
         照合し、対応するリファレンスレコードが存在するかどうかを確認します。部店、課、エリアの各レベルでのチェックと
         特別ケースの処理を行います。
 
@@ -79,11 +79,14 @@ class CheckExistsRefferenceRecord:
         df_requests (pd.DataFrame): 利用申請明細データ
         """
         if not isinstance(branch_code, str):
-            raise TypeError("branch_code must be a string")
+            error_msg = "Invalid branch must be a string"
+            raise TypeError(error_msg) from None
         if len(branch_code) not in [4, 5]:
-            raise ValueError("branch_code must be either 4 or 5 digits")
+            error_msg = "branch_code must be either 4 or 5 digits"
+            raise ValueError(error_msg) from None
         if not isinstance(df_requests, pd.DataFrame):
-            raise TypeError("df_requests must be a pandas DataFrame")
+            error_msg = "df_requests must be a pandas DataFrame"
+            raise TypeError(error_msg) from None
 
         self.special_case_checkers: list[SpecialCaseChecker] = [
             Case7818Checker(),
@@ -118,39 +121,8 @@ class CheckExistsRefferenceRecord:
         >>> #print(result)
         True
         """
-        #if self._check_c_sw(df_refference):
-        #    return self._check_ref_find(df_refference)
-        #return False
         return self._check_ref_find(df_refference)
 
-    #def _check_c_sw(self, df_refference: pd.DataFrame) -> bool:
-    #    """初期チェックを実行
-
-    #    どちらかがTrueであれば、Trueを返す
-    #    - リファレンス.部店コード.bpr上位4桁 == 処理対象に合致する利用申請明細.部店コード.上位４桁
-    #    - リファレンス.部店コード.jinji上位4桁 == 処理対象に合致する利用申請明細.部店コード.上位４桁
-
-    #    Arguments:
-    #    df_refference (pd.DataFrame): リファレンステーブルデータ
-
-    #    Return Value:
-    #    bool: チェック結果(True: 成功, False: 失敗)
-    #    """
-    #    if self.matching_df_requests.empty:
-    #        return False
-
-    #    # 前処理: branch_codeの先頭4文字を抽出
-    #    ## リファレンステーブル
-    #    df_refference_prefix = df_refference[['branch_code_bpr', 'branch_code_jinji']].apply(lambda x: x.str[:4])
-
-    #    # unique指定部店コードに対応する利用申請明細
-    #    matching_prefix = self.matching_df_requests['branch_code'].str[:4]
-
-    #    # 一括チェック
-    #    bpr_match = df_refference_prefix['branch_code_bpr'].isin(matching_prefix).any()
-    #    jinji_match = df_refference_prefix['branch_code_jinji'].isin(matching_prefix).any()
-
-    #    return bpr_match or jinji_match
 
     def _check_ref_find(self, df_refference: pd.DataFrame) -> bool:
         """詳細なリファレンス照合を実行
@@ -181,89 +153,48 @@ class CheckExistsRefferenceRecord:
 
         return False
 
-#    def _check_buten(self, df_refference: pd.DataFrame, df_requests_row: pd.Series) -> bool:
-#        """部店レベルのチェックを実行
-#    
-#        Arguments:
-#        df_refference (pd.DataFrame): リファレンステーブルデータ
-#        df_requests_row (pd.Series): チェック対象の利用申請明細の1行
-#    
-#        Return Value:
-#        bool: チェック結果(True: 成功, False: 失敗)
-#        """
-#        if len(df_requests_row['branch_code']) == BranchCodeLength.BRANCH:
-#            matching_rows = df_refference.loc[df_refference['branch_code_bpr'] == df_requests_row['branch_code']]
-#            # 複数の対象明細の内、1つでも0を持つ明細があればTrueを返す
-#            return (matching_rows['section_gr_code_bpr'] == "0").any()
-#
-#        if len(df_requests_row['branch_code']) == BranchCodeLength.SECTION_GR:
-#            matching_rows = df_refference.loc[df_refference['branch_code_jinji'] == df_requests_row['branch_code']]
-#            return (matching_rows['section_gr_code_jinji'] == df_requests_row['section_gr_code']).any()
-#
-#        return False
-
     def _check_buten(self, df_refference: pd.DataFrame, df_requests_row: pd.Series) -> bool:
         """部店レベルのチェックを実行
-    
+
         Arguments:
         df_refference (pd.DataFrame): リファレンステーブルデータ
         df_requests_row (pd.Series): チェック対象の利用申請明細の1行
-    
+
         Return Value:
         bool: チェック結果(True: 成功, False: 失敗)
         """
         branch_code_length = len(df_requests_row['branch_code'])
-    
+
         if branch_code_length == BranchCodeLength.BRANCH:
             matching_rows = df_refference.loc[df_refference['branch_code_bpr'] == df_requests_row['branch_code']]
             # 複数の対象明細の内、1つでも0を持つ明細があればTrueを返す
             condition = (matching_rows['section_gr_code_bpr'] == "0")
             return condition.any()
-    
+
         if branch_code_length == BranchCodeLength.SECTION_GR:
             matching_rows = df_refference.loc[df_refference['branch_code_jinji'] == df_requests_row['branch_code']]
             condition = (matching_rows['section_gr_code_jinji'] == df_requests_row['section_gr_code'])
             return condition.any()
-    
+
         return False
 
-#    def _check_ka(self, df_refference: pd.DataFrame, df_requests_row: pd.Series) -> bool:
-#        """課レベルのチェックを実行
-#
-#        Arguments:
-#        df_refference (pd.DataFrame): リファレンステーブルデータ
-#        df_requests_row (pd.Series): チェック対象の利用申請明細の1行
-#
-#        Return Value:
-#        bool: チェック結果(True: 成功, False: 失敗)
-#        """
-#        if len(df_requests_row['branch_code']) == BranchCodeLength.BRANCH:
-#            matching_rows = df_refference.loc[df_refference['branch_code_jinji'] == df_requests_row['branch_code']]
-#            return (matching_rows['section_gr_code_jinji'] == df_requests_row['section_gr_code']).any()
-#
-#        if len(df_requests_row['branch_code']) == BranchCodeLength.SECTION_GR:
-#            matching_rows = df_refference.loc[df_refference['branch_code_jinji'] == df_requests_row['branch_code']]
-#            return (matching_rows['section_gr_code_jinji'] == df_requests_row['section_gr_code']).any()
-#
-#        return False
-#
     def _check_ka(self, df_refference: pd.DataFrame, df_requests_row: pd.Series) -> bool:
         """課レベルのチェックを実行
-    
+
         Arguments:
         df_refference (pd.DataFrame): リファレンステーブルデータ
         df_requests_row (pd.Series): チェック対象の利用申請明細の1行
-    
+
         Return Value:
         bool: チェック結果(True: 成功, False: 失敗)
         """
         branch_code_length = len(df_requests_row['branch_code'])
-    
+
         if branch_code_length in [BranchCodeLength.BRANCH, BranchCodeLength.SECTION_GR]:
             matching_rows = df_refference.loc[df_refference['branch_code_jinji'] == df_requests_row['branch_code']]
             condition = (matching_rows['section_gr_code_jinji'] == df_requests_row['section_gr_code'])
             return condition.any()
-    
+
         return False
 
     def _check_area(self, df_refference: pd.DataFrame, df_requests_row: pd.Series) -> bool:
@@ -372,11 +303,9 @@ def create_sample_data() -> (pd.DataFrame, pd.DataFrame):
         'area_code': ['X001', 'X002', 'X003', 'X004', 'X005'],
     }
     rt_df = pd.DataFrame(rt_data)
-    print(rj_df)
-    print(rt_df)
-
     return rj_df, rt_df
 
+# -------------------------------------------------------------------------------------
 def test_department_processor() -> None:
     rj_df, rt_df = create_sample_data()
 
