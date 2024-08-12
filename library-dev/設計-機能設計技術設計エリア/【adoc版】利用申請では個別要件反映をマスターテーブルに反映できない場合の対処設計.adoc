@@ -249,7 +249,7 @@ stop
 
 === パッチ作成工程
 
-[options="header", cols="1, 2, 2, 2"]
+[options="header", cols="1, 1, 1, 1"]
 |===
 |コンポーネント |詳細 |利点 |注意点
 |Pythonパッチコード

@@ -21,6 +21,7 @@ rectangle "リグレコード" as RegCode
     rectangle "パターン編集" as RegPatternEdit
     RegBulkApply -> RegReception
     RegReception -> RegPatternEdit
+    RegPatternEdit -> DevGit
 }
 }
 rectangle "本番環境" as Prod #LightBlue {
@@ -78,8 +79,8 @@ participant "プロダクションGitLab" as ProdGit
 participant "本番環境" as Prod
 開発者 -> Dev : コード開発/テスト
 Dev -> DevGit : コードpush
-Prod -> DevGit : データ取得
-DevGit -> Reg : コード、データを配布
+Prod -> DevGit : データ取得(リファレンス等)
+DevGit -> Reg : コード、データを配布(git clone)
 Reg -> Reg : 環境構築
 Reg -> Reg : 一括申請実行
 Reg -> Reg : 受付実行

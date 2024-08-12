@@ -13,9 +13,9 @@ StepByStepで進めます、一度に進めず各stepで立ち止まってくだ
   <step1>テスト対象コードの理解</step1>
   <step2>テスト対象コードに対するC0の考察、全てのメソッド、考察結果は説明の上でテーブル形式で出力</step2>
   <step3>テスト対象コードに対するC1の考察、全てのメソッド、考察結果は説明の上でテーブル形式で出力</step3>
-  <step4>テスト対象コードに対するC2の考察<、全てのメソッド、考察結果は説明の上でテーブル形式で出力、テーブルの縦棒は位置を揃えてください</step4>
+  <step4>テスト対象コードに対するC2の考察<、全てのメソッド、考察結果は説明の上でテーブル形式で出力</step4>
   <step5>テスト対象コードに対するテスト全体鳥瞰としてmindmap作成しアウトラインtree構造で出力する、日本語、C0,C1,C2の区分を付与する</step5>
-  <step6>テスト対象コードに対するテスト全体鳥瞰としてmindmap妥当性評価、アウトラインtree構造で出力する、日本語、C0,C1,C2の区分を付与する</step6>
+  <step6>テスト対象コードに対するテスト全体鳥瞰としてmindmap妥当性評価、アウトラインtree構造で出力する、日本語、C0,C1,C2の区分を付与する、アウトラインの縦棒に相当する位置は揃えてください</step6>
 </step>
 
 
@@ -381,10 +381,10 @@ class TestBusinessUnitCodeConverterInit:
 ## それではStep1に進みます
 
 ## テスト対象モジュール配置場所
-src.lib.converter_utils
+src.lib.common_utils
 
 ## テスト対象モジュール名
-ibr_mapping_layout_excel_to_integrated.py
+ibr_pickled_table_searcher.py
 
 ## テスト対象モジュール
 

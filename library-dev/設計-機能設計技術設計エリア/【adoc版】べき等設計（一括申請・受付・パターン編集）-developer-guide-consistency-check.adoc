@@ -1,8 +1,4 @@
-= 銀行部署情報管理システム 冪等性設計書
-:toc:
-:toc-title: 目次
-:sectnums:
-:icons: font
+= 冪等性設計書
 
 == はじめに
 
