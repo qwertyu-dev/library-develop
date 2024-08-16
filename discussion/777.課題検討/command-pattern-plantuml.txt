@@ -1,0 +1,41 @@
+@startuml
+interface CheckCommand {
+  +execute(df: DataFrame): DataFrame
+}
+
+class ValidationCheckCommand {
+  +execute(df: DataFrame): DataFrame
+}
+
+class ConsistencyCheckCommand {
+  +execute(df: DataFrame): DataFrame
+}
+
+class BlacklistCheckCommand {
+  -blacklist: List
+  +__init__(blacklist_file: str)
+  +execute(df: DataFrame): DataFrame
+  -_check_blacklist(row): str
+}
+
+class CheckCommandInvoker {
+  -commands: List[CheckCommand]
+  +__init__(commands: List[CheckCommand])
+  +execute_all(df: DataFrame): DataFrame
+}
+
+class BatchApplicationProcessor {
+  +process_batch_applications(excel_file: str)
+  -process_check_results(df: DataFrame)
+  -continue_normal_batch_process(df: DataFrame)
+}
+
+CheckCommand <|.. ValidationCheckCommand
+CheckCommand <|.. ConsistencyCheckCommand
+CheckCommand <|.. BlacklistCheckCommand
+CheckCommandInvoker o-- CheckCommand
+BatchApplicationProcessor --> CheckCommandInvoker : uses
+BatchApplicationProcessor ..> ValidationCheckCommand : creates
+BatchApplicationProcessor ..> ConsistencyCheckCommand : creates
+BatchApplicationProcessor ..> BlacklistCheckCommand : creates
+@enduml
