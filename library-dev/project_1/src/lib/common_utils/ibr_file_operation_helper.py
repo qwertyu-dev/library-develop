@@ -1,11 +1,9 @@
 """危険なファイル操作サポートライブラリ"""
-import datetime
+from datetime import datetime
 import os
 import shutil
 import traceback
 from pathlib import Path
-from typing import Union
-
 from dateutil import tz
 from src.lib.common_utils.ibr_enums import LogLevel
 from src.lib.common_utils.ibr_logger_package import LoggerPackage
@@ -95,7 +93,7 @@ def delete_file(file_path: str|Path) -> bool:
         return True
 
 
-def move_file(old_file_path: str|Path, destination_directory: str|Path, overwrite:int=0) -> bool | Path|None:
+def move_file(old_file_path: str|Path, destination_directory: str|Path, overwrite: bool=False, with_timestamp: bool=True) -> bool | Path|None:
     """ファイル移動操作
 
     ファイル移動操作には危険が伴う
@@ -112,6 +110,7 @@ def move_file(old_file_path: str|Path, destination_directory: str|Path, overwrit
         old_file_path (str | Path): 移動元ファイルパス
         destination_directory (str | Path): 移動先ディレクトリパス
         overwrite (int): default=0 上書き可否判定(デフォルトNG), 上書き可とする場合は0以外の数字を設定する
+        with_timestamp (int): default=1 0以外でタイムスタンプ付与してファイル移動、0の場合はタイムスタンプ付与なし
 
     Returns:
         (bool): True 成功, False 失敗
@@ -121,8 +120,9 @@ def move_file(old_file_path: str|Path, destination_directory: str|Path, overwrit
         - Exception ファイル移動中の異常発生
 
     Example:
-        >>> move_file('./test.txt", '/temp') 上書き不可で/tmpへ移動
-        >>> move_file('./test.txt", '/temp', overwrite=True) 上書き可で/tmpへ移動
+        >>> move_file('./test.txt", '/temp') 上書き不可で/tmpへ移動, タイムスタンプ付与あり
+        >>> move_file('./test.txt", '/temp', overwrite=1) 上書き可で/tmpへ移動, タイムスタンプ付与あり
+        >>> move_file('./test.txt", '/temp', overwrite=0, with_timestamp=0) 上書き不可で/tmpへ移動,タイムスタンプ付与なし
 
     Notes:
         _description_
@@ -134,7 +134,16 @@ def move_file(old_file_path: str|Path, destination_directory: str|Path, overwrit
     old_file_path = Path(old_file_path)
     old_file_name = old_file_path.name
     destination_directory = Path(destination_directory)
-    new_file_path = destination_directory / old_file_name
+
+    # timestamp付与有無生成
+    if with_timestamp:
+        timestamp = datetime.now(tz=JST).strftime("%Y%m%d_%H%M%S")
+        file_name, file_extension = old_file_name.rsplit('.', 1)
+        new_file_name = f"{file_name}_{timestamp}.{file_extension}"
+    else:
+        new_file_name = old_file_name
+
+    new_file_path = destination_directory / new_file_name
 
     # 変更元ファイルに読み込み権限があるか
     if not _precheck_read_file(old_file_path):
@@ -224,7 +233,7 @@ def rename_file(old_file_path: str|Path, new_file_name: str, overwrite:int=0) ->
         return (True, new_file_path)
 
 
-def copy_file(source_file_path: str|Path, destination_directory: str|Path, overwrite: int=0, with_timestamp: int=0) -> bool |  Path|None:
+def copy_file(source_file_path: str|Path, destination_directory: str|Path, overwrite: bool=False, with_timestamp: bool=False) -> bool |  Path|None:
     """ファイルコピー操作
 
     ファイルコピー操作には危険が伴う
@@ -268,8 +277,10 @@ def copy_file(source_file_path: str|Path, destination_directory: str|Path, overw
 
     # ファイルにタイムスタンプ付与するかの判定処理
     if  with_timestamp:
-        now = datetime.datetime.now(tz=JST)
-        new_file_path = destination_directory / f"{source_file_name}_{now.strftime('%Y%m%d_%H%M%S')}"
+        timestamp = datetime.now(tz=JST).strftime("%Y%m%d_%H%M%S")
+        file_name, file_extension = source_file_name.rsplit('.', 1)
+        new_file_name = f"{file_name}_{timestamp}.{file_extension}"
+        new_file_path = destination_directory / new_file_name
     else:
         new_file_path = destination_directory / source_file_name
 

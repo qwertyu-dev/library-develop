@@ -14,8 +14,8 @@ StepByStepで進めます、一度に進めず各stepで立ち止まってくだ
   <step2>テスト対象コードに対するC0の考察、全てのメソッド、考察結果は説明の上でテーブル形式で出力</step2>
   <step3>テスト対象コードに対するC1の考察、全てのメソッド、考察結果は説明の上でテーブル形式で出力</step3>
   <step4>テスト対象コードに対するC2の考察<、全てのメソッド、考察結果は説明の上でテーブル形式で出力</step4>
-  <step5>テスト対象コードに対するテスト全体鳥瞰としてmindmap作成しアウトラインtree構造で出力する、日本語、C0,C1,C2の区分を付与する</step5>
-  <step6>テスト対象コードに対するテスト全体鳥瞰としてmindmap妥当性評価、アウトラインtree構造で出力する、日本語、C0,C1,C2の区分を付与する、アウトラインの縦棒に相当する位置は揃えてください</step6>
+  <step5>テスト対象コードに対するテスト全体鳥瞰としてmindmap作成しアウトラインtree構造で出力する、日本語、必ずメソッド単位にC0,C1,C2の区分を付与する</step5>
+  <step6>テスト対象コードに対するテスト全体鳥瞰としてmindmap妥当性評価、アウトラインtree構造で出力する、日本語、必ずメソッド単位にC0,C1,C2の区分を付与する、アウトラインの縦棒に相当する位置は揃えてください</step6>
 </step>
 
 
@@ -232,6 +232,7 @@ TODO(me)
 ## 確認
 前提・要件はOKでしょうか
 
+いちどここで立ち止まりましょう
 
 ## では<step0>から進めましょう
 
@@ -278,12 +279,12 @@ class TestBusinessUnitCodeConverterInit:
         └── 異常系: 無効な構造のDataFrameを含むpickleファイルでException
 
     # C1のディシジョンテーブル
-    | 条件 | ケース1 | ケース2 | ケース3 | ケース4 |
-    |------|--------|--------|--------|--------|
-    | ファイルが存在する | Y | N | Y | Y |
-    | ファイルが有効なpickle形式 | Y | - | N | Y |
-    | ファイルに読み取り権限がある | Y | - | - | N |
-    | 出力 | 正常にインスタンス生成 | FileNotFoundError | Exception (無効なファイル) | Exception (権限エラー) |
+    | 条件                          | ケース1                | ケース2           | ケース3                    | ケース4                |
+    |-------------------------------|------------------------|-------------------|----------------------------|------------------------|
+    | ファイルが存在する            | Y                      | N                 | Y                          | Y                      |
+    | ファイルが有効なpickle形式    | Y                      | -                 | N                          | Y                      |
+    | ファイルに読み取り権限がある  | Y                      | -                 | -                          | N                      |
+    | 出力                          | 正常にインスタンス生成 | FileNotFoundError | Exception (無効なファイル) | Exception (権限エラー) |
     """
     def setup_method(self):
         # テスト定義をログ出力 このまま記述してください
@@ -377,90 +378,201 @@ class TestBusinessUnitCodeConverterInit:
             assert result == expected
             log_msg(f"Result: {result}", LogLevel.DEBUG)
 ```
+いちどここで立ち止まりましょう
+
+
 
 ## それではStep1に進みます
 
 ## テスト対象モジュール配置場所
-src.lib.common_utils
+src.lib.converter_utils
 
 ## テスト対象モジュール名
-ibr_pickled_table_searcher.py
+ibr_reference_merger.py
 
 ## テスト対象モジュール
+"""一括申請明細にリファレンステーブル情報をマージして情報付与する"""
+import pandas as pd
+from typing import  Any
+from src.lib.common_utils.ibr_pickled_table_searcher import TableSearcher
+
+class ReferenceMerger:
+    """統合レイアウトデータとリファレンステーブルのマージを行うクラス
+
+    Class Overview:
+        このクラスはデータ取り込み後の統合レイアウトデータと
+        リファレンステーブルの情報をマージする機能を提供します。
+        部店コードの上位4桁を使用してリファレンステーブルを検索し、
+        条件に合致する一部のColumnデータを統合レイアウトにマージします。
+
+    Attributes:
+        table_searcher (TableSearcher): リファレンステーブルの検索を行うオブジェクト
+
+    Condition Information:
+        - Condition:1
+            - ID: ZERO_SECTION_GR_CODE
+            - Type: フィルタリング条件
+            - Applicable Scenarios: リファレンステーブルから課グループコードが'0'のレコードを選択する
+
+    Pattern Information:
+        - Pattern:1
+            - ID: BRANCH_CODE_PREFIX_MATCH
+            - Type: 検索パターン
+            - Applicable Scenarios: 部店コードの上位4桁を使用してリファレンステーブルを検索する
+
+    Methods:
+        merge_reference_data(integrated_layout: pd.DataFrame) -> pd.DataFrame:
+            統合レイアウトデータにリファレンス情報をマージする
+        _get_reference_info(row: pd.Series) -> dict[str, Any]:
+            1行のデータに対応するリファレンス情報を取得する
+        _get_branch_code_prefix(row: pd.Series) -> str:
+            部店コードの上位4桁を取得する
+        _search_reference_table(branch_code_prefix: str) -> pd.DataFrame:
+            リファレンステーブルを検索する
+        _filter_zero_row(df: pd.DataFrame) -> pd.DataFrame:
+            課グループコードが'0'の行をフィルタリングする
+        _create_result_dict(row: pd.Series) -> dict[str, Any]:
+            リファレンス情報の辞書を作成する
+        _get_empty_result() -> dict[str, Any]:
+            空のリファレンス情報辞書を返す
+
+    Usage Example:
+        >>> from src.lib.common_utils.ibr_pickled_table_searcher import TableSearcher
+        >>> from src.lib.converter_utils.ibr_reference_merger import ReferenceMerger
+        >>> table_searcher = TableSearcher("reference_table.pkl")
+        >>> merger = ReferenceMerger(table_searcher)
+        >>> integrated_layout = pd.read_csv("integrated_layout.csv")
+        >>> merged_data = merger.merge_reference_data(integrated_layout)
+        >>> print(merged_data.head())
+
+    Notes:
+        - リファレンステーブルは事前にpickleファイルとして保存されている必要があります
+        - 大量のデータを処理する場合、メモリ使用量に注意してください
+
+    Dependency:
+        - pandas
+        - src.lib.common_utils.ibr_pickled_table_searcher.TableSearcher
+
+    ResourceLocation:
+        - [本体]
+            - src/lib/converter_utils/ibr_reference_merger.py
+        - [テストコード]
+            - tests/lib/converter_utils/test_ibr_reference_merger.py
+
+    Todo:
+        - パフォーマンスの最適化
+        - 並列処理の導入検討
+        - エラーハンドリングの強化
+
+    Change History:
+    | No   | 修正理由     | 修正点   | 対応日     | 担当         |
+    |------|--------------|----------|------------|--------------|
+    | v0.1 | 初期定義作成 | 新規作成 | 2024/08/18 | xxxx aaa.bbb |
+
+    """
+
+    def __init__(self, table_searcher: TableSearcher):
+        """コンストラクタ
+
+        Arguments:
+        table_searcher (TableSearcher): リファレンステーブルの検索を行うオブジェクト
+        """
+        self.table_searcher = table_searcher
+
+    def merge_reference_data(self, integrated_layout: pd.DataFrame) -> pd.DataFrame:
+        """統合レイアウトデータにリファレンステーブルの情報をマージする
+
+        Arguments:
+        integrated_layout (pd.DataFrame): 統合レイアウトデータ
+
+        Return Value:
+        pd.DataFrame: マージされたデータフレーム
+
+        Algorithm:
+            1. 統合レイアウトの各行に対して_get_reference_infoメソッドを適用
+            2. 得られた結果を元のDataFrameとマージして返す
+
+        Exception:
+        ValueError: 入力DataFrameが空の場合
+
+        Usage Example:
+        >>> merged_data = merger.merge_reference_data(integrated_layout)
+        >>> print(merged_data.columns)
+        Index(['branch_code', 'other_data', 'reference_branch_code', 'reference_branch_name', 'reference_parent_branch_code'], dtype='object')
+        """
+        if integrated_layout.empty:
+            err_msg = "入力DataFrameが空です"
+            raise ValueError(err_msg) from None
+
+        reference_info = integrated_layout.apply(self._get_reference_info, axis=1, result_type='expand')
+        return pd.concat([integrated_layout, reference_info], axis=1)
+
+    def _get_reference_info(self, row: pd.Series) -> dict[str, Any]:
+        """1行のデータに対応するリファレンス情報を取得する
+
+        Arguments:
+        row (pd.Series): 統合レイアウトの1行のデータ
+
+        Return Value:
+        dict[str, Any]: 取得したリファレンス情報
+
+        Algorithm:
+            1. 部店コードの上位4桁を取得
+            2. リファレンステーブルを検索
+            3. 検索結果から条件に合う行を抽出
+            4. 結果の辞書を作成して返す
+
+        Exception:
+        KeyError: 必要なカラムが存在しない場合
+        """
+        try:
+            branch_code_prefix = self._get_branch_code_prefix(row)
+            matching_rows = self._search_reference_table(branch_code_prefix)
+            zero_row = self._filter_zero_row(matching_rows)
+
+            if zero_row.empty:
+                return self._get_empty_result()
+            return self._create_result_dict(zero_row.iloc[0])
+        except KeyError:
+            #必要なカラムが存在しない
+            return self._get_empty_result()
+
+    def _get_branch_code_prefix(self, row: pd.Series) -> str:
+        """部店コードの上位4桁を取得する"""
+        return str(row['branch_code'])[:4]
+
+    def _search_reference_table(self, branch_code_prefix: str) -> pd.DataFrame:
+        """リファレンステーブルを検索する"""
+        return self.table_searcher.simple_search({
+            "branch_code_bpr": f"startswith:{branch_code_prefix}",
+        })
+
+    def _filter_zero_row(self, df: pd.DataFrame) -> pd.DataFrame:
+        """課グループコードが'0'の行をフィルタリングする"""
+        return df[df['section_gr_code_bpr'] == '0']
+
+    def _create_result_dict(self, row: pd.Series) -> dict[str, Any]:
+        """リファレンス情報の辞書を作成する"""
+        return {
+            "reference_branch_code": row['branch_code_bpr'],
+            "reference_branch_name": row['branch_name_bpr'],
+            "reference_parent_branch_code": row['parent_branch_code'] if pd.notna(row['parent_branch_code']) else None,
+        }
+
+    def _get_empty_result(self) -> dict[str, Any]:
+        """空のリファレンス情報辞書を返す"""
+        return {
+            "reference_branch_code": None,
+            "reference_branch_name": None,
+            "reference_parent_branch_code": None,
+        }
+
+
+
 
 ---
 
-
-import pandas as pd
-from pathlib import Path
-
-class BusinessUnitCodeConverter:
-    """人事部門コードの変換を行うクラス
-
-    ClassOverView:
-    - 人事部門コードをキーとして、変換テーブルから対応する主管部門コード及びBPR部門コードを取得する
-
-    Attributes:
-    - conversion_table (pd.DataFrame): 変換テーブル
-        - 人事部門コードをキーとして持ち、変換対応する情報を含むDataFrame
-        - pickleからロードした部門変換テーブル実体
-
-    Notes:
-    - 変換テーブルは business_unit_code_table.pickle ファイルから読み込まれるため、ファイルが存在し、pickle形式で保存されている必要がある
-    - ファイルパスが間違っている場合、FileNotFoundErrorを発生する
-    - 引数指定した人事部門コードが変換テーブルに存在しない場合、ValueErrorを返す
-    - 予期せぬエラーが発生した場合、Exceptionを返す
-
-    Dependency:
-    - pickle
-    - pandas
-    - pathlib
-    """
-
-    def __init__(self, conversion_table_file: Path) -> None:
-        """コンストラクタ
-
-        - pickle ファイルから変換テーブルを読み込みconversion_table 属性に格納する
-        - ファイルパスの操作はpathlib.Pathを使用する
-
-        Args:
-            conversion_table_file (Path): 変換テーブルの pickle ファイルパス
-
-        Raises:
-            FileNotFoundError: ファイルが存在しない場合に発生する
-            Exception: その他の予期せぬエラーが発生した場合
-        """
-        try:
-            self.conversion_table = pd.read_pickle(conversion_table_file)
-            self.conversion_table.set_index('business_unit_code_jinji', inplace=True)
-        except FileNotFoundError:
-            raise FileNotFoundError(f"変換テーブルファイルが見つかりません: {conversion_table_file}")
-        except Exception as e:
-            raise Exception(f"変換テーブルの読み込み中にエラーが発生しました: {str(e)}")
-
-    def get_business_unit_code_main(self, business_unit_code_jinji: str) -> str:
-        """人事部門コードから主管部門コードを取得する
-
-        Args:
-            business_unit_code_jinji (str): 人事部門コード
-
-        Returns:
-            str: 対応する主管部門コード
-
-        Raises:
-            ValueError: 指定コードが部門コード変換テーブル.人事部門コードに存在しない場合に発生する
-            Exception: その他の予期せぬエラーが発生した場合
-        """
-        if business_unit_code_jinji not in self.conversion_table.index:
-            raise ValueError(f"指定された人事部門コードは変換テーブルに存在しません: {business_unit_code_jinji}")
-
-        try:
-            return self.conversion_table.loc[business_unit_code_jinji, 'main_business_unit_code_jinji']
-        except Exception as e:
-            raise Exception(f"主管部門コードの取得中にエラーが発生しました: {e}")
-
-
-
+いちどここで立ち止まりましょう
 
 ## 続いてstepxを実施していきます
 

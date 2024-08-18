@@ -11,7 +11,7 @@ LOGGER_MSG_FILE = 'src/def/mfaUtilsLoggingHelper/config_MessageList.toml'
 UPDATE_EXCEL_PATH = 'share/receive'
 
 [production.output_file_path]
-SEND_REFFERENCE_MASTER_PATH = 'share/receive'
+SEND_REFERENCE_MASTER_PATH = 'share/receive'
 
 ##############################
 # リグレ定義 regression
@@ -26,7 +26,7 @@ LOGGER_MSG_FILE = 'src/def/mfaUtilsLoggingHelper/config_MessageList.toml'
 UPDATE_EXCEL_PATH = 'share/receive'
 
 [regression.output_file_path]
-SEND_REFFERENCE_MASTER_PATH = 'share/receive'
+SEND_REFERENCE_MASTER_PATH = 'share/receive'
 
 
 ##############################
@@ -42,7 +42,7 @@ LOGGER_MSG_FILE = 'src/def/mfaUtilsLoggingHelper/config_MessageList.toml'
 UPDATE_EXCEL_PATH = 'share/receive'
 
 [develop.output_file_path]
-SEND_REFFERENCE_MASTER_PATH = 'share/receive'
+SEND_REFERENCE_MASTER_PATH = 'share/receive'
 
 
 ##############################
@@ -58,4 +58,4 @@ LOGGER_MSG_FILE = 'src/def/mfaUtilsLoggingHelper/config_MessageList.toml'
 UPDATE_EXCEL_PATH = 'src/share/receive'
 
 [local.output_file_path]
-SEND_REFFERENCE_MASTER_PATH = 'src/share/receive'
+SEND_REFERENCE_MASTER_PATH = 'src/share/receive'

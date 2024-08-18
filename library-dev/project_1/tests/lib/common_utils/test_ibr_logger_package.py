@@ -1010,19 +1010,19 @@ class Test_loggerpackage_get_config_dict:
         expected = {'develop': {'input_file_path': {'UPDATE_EXCEL_PATH': 'tests/share/receive'},
                                 'logger_path': {'LOGGER_DEF_FILE': 'tests/def/mfaUtilsLoggingHelper/logging_TimedRotate.json',
                                                 'LOGGER_MSG_FILE': 'tests/def/mfaUtilsLoggingHelper/config_MessageList.toml'},
-                                'output_file_path': {'SEND_REFFERENCE_MASTER_PATH': 'tests/share/receive'}},
+                                'output_file_path': {'SEND_REFERENCE_MASTER_PATH': 'tests/share/receive'}},
                     'local': {'input_file_path': {'UPDATE_EXCEL_PATH': 'tests/share/receive'},
                                 'logger_path': {'LOGGER_DEF_FILE': 'tests/def/mfaUtilsLoggingHelper/logging_TimedRotate.json',
                                                 'LOGGER_MSG_FILE': 'tests/def/mfaUtilsLoggingHelper/config_MessageList.toml'},
-                                'output_file_path': {'SEND_REFFERENCE_MASTER_PATH': 'tests/share/receive'}},
+                                'output_file_path': {'SEND_REFERENCE_MASTER_PATH': 'tests/share/receive'}},
                     'production': {'input_file_path': {'UPDATE_EXCEL_PATH': 'tests/share/receive'},
                 'logger_path': {'LOGGER_DEF_FILE': 'tests/def/mfaUtilsLoggingHelper/logging_TimedRotate.json',
                                 'LOGGER_MSG_FILE': 'tests/def/mfaUtilsLoggingHelper/config_MessageList.toml'},
-                'output_file_path': {'SEND_REFFERENCE_MASTER_PATH': 'tests/share/receive'}},
+                'output_file_path': {'SEND_REFERENCE_MASTER_PATH': 'tests/share/receive'}},
                     'regression': {'input_file_path': {'UPDATE_EXCEL_PATH': 'tests/share/receive'},
                 'logger_path': {'LOGGER_DEF_FILE': 'tests/def/mfaUtilsLoggingHelper/logging_TimedRotate.json',
                                 'LOGGER_MSG_FILE': 'tests/def/mfaUtilsLoggingHelper/config_MessageList.toml'},
-                'output_file_path': {'SEND_REFFERENCE_MASTER_PATH': 'tests/share/receive'}}}
+                'output_file_path': {'SEND_REFERENCE_MASTER_PATH': 'tests/share/receive'}}}
 
         # テスト記述
         logger_package = LoggerPackage('dummy_patch')

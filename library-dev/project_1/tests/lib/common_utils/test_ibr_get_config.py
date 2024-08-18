@@ -92,7 +92,7 @@ class Test_config_toml:
         func_info = f"        - テスト関数: {', '.join(test_functions)}"
         print(f"\n{func_info}{test_doc}", LogLevel.DEBUG)
 
-        expected_common_config = {'logger_path': {'LOGGER_DEF_FILE': 'tests/def/mfaUtilsLoggingHelper/logging_TimedRotate.json', 'LOGGER_MSG_FILE': 'tests/def/mfaUtilsLoggingHelper/config_MessageList.toml'}, 'input_file_path': {'UPDATE_EXCEL_PATH': 'tests/share/receive'}, 'output_file_path': {'SEND_REFFERENCE_MASTER_PATH': 'tests/share/receive'}}
+        expected_common_config = {'logger_path': {'LOGGER_DEF_FILE': 'tests/def/mfaUtilsLoggingHelper/logging_TimedRotate.json', 'LOGGER_MSG_FILE': 'tests/def/mfaUtilsLoggingHelper/config_MessageList.toml'}, 'input_file_path': {'UPDATE_EXCEL_PATH': 'tests/share/receive'}, 'output_file_path': {'SEND_REFERENCE_MASTER_PATH': 'tests/share/receive'}}
         expected_package_config = {'test': {'local_test': 'test'}}
 
         package_path = Path(__file__)

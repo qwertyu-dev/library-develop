@@ -1,0 +1,345 @@
+= 申請明細に対するリファレンステーブルデータマージ設計
+
+== はじめに
+
+=== 業務要件
+
+本システムは、銀行の部署情報管理において、統合レイアウトデータとリファレンステーブルをマージする機能を提供します。主な要件は以下の通りです：
+
+1. 統合レイアウトの各レコードに対し、部店コードの上位4桁を使用してリファレンステーブルから情報を取得する。
+2. リファレンステーブルの検索結果から、課グループコード（section_gr_code_bpr）が'0'のレコードの情報を使用する。
+3. マージ結果として、以下の情報を追加する：
+   * リファレンス部店コード
+   * リファレンス部店名
+   * リファレンス親部店コード
+4. マッチするリファレンス情報がない場合、これらの項目にはNoneを設定する。
+
+=== システム概要
+
+本システムは、以下の主要コンポーネントで構成されています：
+
+1. ReferenceMergerクラス：マージ処理の中心的な役割を担う
+2. TableSearcherクラス：リファレンステーブルの検索機能を提供する
+
+これらのクラスを使用して、効率的かつ柔軟なデータマージを実現します。
+
+=== マージ処理のイメージ図
+
+以下は、マージ処理の概念図です：
+
+[source]
+----
+[統合レイアウト]
++------------+-------+
+| branch_code| other |
++------------+-------+
+| 12345      | AAA   |
+| 23456      | BBB   |
+| 34567      | CCC   |
++------------+-------+
+         |
+         | 1. 部店コード上位4桁で検索
+         |
+         v
+    +----------------+      [リファレンステーブル]
+    |  検索条件      |      +--------+--------+-------+
+    |  branch_code   | ---> | branch | section| parent|
+    |  先頭4桁一致   |      | _code  | _gr_   |       |
+    +----------------+      +--------+--------+-------+
+         |                  | 1234*  | 0      | 11111 |
+         |                  | 1234*  | 1      | 12340 |
+         |                  | 2345*  | 0      | 22222 |
+         |                  +--------+--------+-------+
+         |                         |
+         |                         | 2. section_gr_code = '0'
+         |                         |    の行を選択
+         v                         v
+    +----------------+      +-------------------+
+    |  マージ情報    | <--- | 選択された行の情報 |
+    +----------------+      +-------------------+
+         |
+         | 3. マージ情報を追加
+         v
+[マージ結果]
++------------+-------+------------+------------+------------+
+| branch_code| other | reference_ | reference_ | reference_ |
+|            |       | branch_code| branch_name| parent_    |
+|            |       |            |            | branch_code|
++------------+-------+------------+------------+------------+
+| 12345      | AAA   | 12340      | Branch A   | 11111      |
+| 23456      | BBB   | 23450      | Branch B   | 22222      |
+| 34567      | CCC   | 34560      | Branch C   | 33333      |
++------------+-------+------------+------------+------------+
+----
+
+この図は、統合レイアウトの各レコードに対して、どのようにリファレンステーブルから情報を取得し、最終的なマージ結果を生成するかを示しています。
+
+=== 設計上の考慮事項
+
+1. パフォーマンス: 一万件程度のデータを効率的に処理するため、pandas DataFrameを活用します。
+2. 柔軟性：将来的な要件変更に対応できるよう、モジュール化された設計を採用します。
+3. 保守性：クラスと責任を明確に分離し、コードの可読性と保守性を高めます。
+4. エラー処理：データの不整合やファイルの欠落などの例外を適切に処理します。
+
+これらの考慮事項を踏まえて、以下の詳細設計を行います。
+
+== クラス設計
+
+=== ReferenceMergerクラス
+
+==== クラス概要
+ReferenceMergerクラスは、統合レイアウトデータとリファレンステーブルのデータをマージする機能を提供します。このクラスは、TableSearcherクラスを使用してリファレンステーブルの検索を行い、指定された条件に基づいてデータのマージを実行します。
+
+==== 属性
+* table_searcher: TableSearcher
+** リファレンステーブルの検索を行うTableSearcherクラスのインスタンス
+
+==== メソッド一覧
+* merge_reference_data(integrated_layout: pd.DataFrame) -> pd.DataFrame
+* _get_reference_info(row: pd.Series) -> Dict[str, Any]
+* _get_branch_code_prefix(row: pd.Series) -> str
+* _search_reference_table(branch_code_prefix: str) -> pd.DataFrame
+* _filter_zero_row(df: pd.DataFrame) -> pd.DataFrame
+* _create_result_dict(row: pd.Series) -> Dict[str, Any]
+* _get_empty_result() -> Dict[str, Any]
+
+=== TableSearcherクラス
+
+==== クラス概要
+TableSearcherクラスは、pickleファイルとして保存されたリファレンステーブルデータの読み込みと検索機能を提供します。
+
+==== 属性
+* df: pd.DataFrame
+** 読み込まれたリファレンステーブルのデータ
+
+==== メソッド一覧
+* simple_search(conditions: Dict[str, str]) -> pd.DataFrame
+
+===== class図
+[plantuml]
+----
+@startuml
+skinparam classAttributeIconSize 0
+
+class ReferenceMerger {
+    - table_searcher: TableSearcher
+    + merge_reference_data(integrated_layout: pd.DataFrame): pd.DataFrame
+    - _get_reference_info(row: pd.Series): Dict[str, Any]
+    - _get_branch_code_prefix(row: pd.Series): str
+    - _search_reference_table(branch_code_prefix: str): pd.DataFrame
+    - _filter_zero_row(df: pd.DataFrame): pd.DataFrame
+    - _create_result_dict(row: pd.Series): Dict[str, Any]
+    - _get_empty_result(): Dict[str, Any]
+}
+
+class TableSearcher {
+    - df: pd.DataFrame
+    + simple_search(conditions: Dict[str, str]): pd.DataFrame
+}
+
+ReferenceMerger o-- TableSearcher : uses >
+@enduml
+----
+
+== 主要メソッド詳細設計
+
+=== ReferenceMergerクラス
+
+==== merge_reference_data
+[cols="1,4"]
+|===
+|項目 |説明
+
+|概要
+|統合レイアウトデータにリファレンステーブルの情報をマージします。
+
+|引数
+|integrated_layout: pd.DataFrame - 統合レイアウトデータ
+
+|戻り値
+|pd.DataFrame - マージされたデータフレーム
+
+|処理内容
+a|
+1. 統合レイアウトの各行に対して_get_reference_infoメソッドを適用
+2. 得られた結果を元のDataFrameとマージして返す
+|===
+
+==== _get_reference_info
+[cols="1,4"]
+|===
+|項目 |説明
+
+|概要
+|1行の統合レイアウトデータに対応するリファレンス情報を取得します。
+
+|引数
+|row: pd.Series - 統合レイアウトの1行のデータ
+
+|戻り値
+|Dict[str, Any] - 取得したリファレンス情報
+
+|処理内容
+a|
+1. 部店コードの上位4桁を取得
+2. リファレンステーブルを検索
+3. 検索結果から条件に合う行を抽出
+4. 結果の辞書を作成して返す
+|===
+
+==== _search_reference_table
+[cols="1,4"]
+|===
+|項目 |説明
+
+|概要
+|部店コードの上位4桁を使用してリファレンステーブルを検索します。
+
+|引数
+|branch_code_prefix: str - 部店コードの上位4桁
+
+|戻り値
+|pd.DataFrame - 検索結果
+|===
+
+==== _filter_zero_row
+[cols="1,4"]
+|===
+|項目 |説明
+
+|概要
+|検索結果からsection_gr_code_bprが'0'の行を抽出します。
+
+|引数
+|df: pd.DataFrame - 検索結果のDataFrame
+
+|戻り値
+|pd.DataFrame - フィルタリングされたDataFrame
+|===
+
+==== その他の補助メソッド
+* _get_branch_code_prefix: 部店コードの上位4桁を取得
+* _create_result_dict: リファレンス情報の辞書を作成
+* _get_empty_result: 空の結果辞書を返す
+
+=== TableSearcherクラス
+
+==== simple_search
+[cols="1,4"]
+|===
+|項目 |説明
+
+|概要
+|指定された条件でリファレンステーブルを検索します。
+
+|引数
+|conditions: Dict[str, str] - 検索条件
+
+|戻り値
+|pd.DataFrame - 検索結果
+
+|処理内容
+a|
+1. 条件からbranch_code_bprの前方一致条件を抽出
+2. 条件に合致する行を返す
+|===
+
+== 処理シーケンス
+[plantuml]
+----
+@startuml
+actor User
+participant "ReferenceMerger" as RM
+participant "TableSearcher" as TS
+database "IntegratedLayout" as IL
+database "ReferenceTable" as RT
+
+User -> RM : merge_reference_data(integrated_layout)
+activate RM
+
+RM -> IL : 読み込み
+activate IL
+IL --> RM : データ
+deactivate IL
+
+loop 各行に対して
+    RM -> RM : _get_reference_info(row)
+    activate RM
+    
+    RM -> RM : _get_branch_code_prefix(row)
+    RM -> TS : simple_search(条件)
+    activate TS
+    
+    TS -> RT : 検索
+    activate RT
+    RT --> TS : 検索結果
+    deactivate RT
+    
+    TS --> RM : 検索結果
+    deactivate TS
+    
+    RM -> RM : _filter_zero_row(検索結果)
+    
+    alt 該当行あり
+        RM -> RM : _create_result_dict(該当行)
+    else 該当行なし
+        RM -> RM : _get_empty_result()
+    end
+    
+    RM --> RM : リファレンス情報
+    deactivate RM
+end
+
+RM -> RM : マージ処理
+
+RM --> User : マージ済みデータ
+deactivate RM
+
+@enduml
+----
+
+== データ構造
+
+=== 入力データ構造（統合レイアウト）
+* branch_code: str - 部店コード
+* other_data: str - その他のデータ
+
+=== 出力データ構造（マージ後データ）
+* branch_code: str - 部店コード
+* other_data: str - その他のデータ
+* reference_branch_code: str - リファレンス部店コード
+* reference_branch_name: str - リファレンス部店名
+* reference_parent_branch_code: str - リファレンス親部店コード
+
+=== リファレンステーブル構造
+* branch_code_bpr: str - BPR部店コード
+* branch_name_bpr: str - BPR部店名
+* section_gr_code_bpr: str - BPR課グループコード
+* parent_branch_code: str - 親部店コード
+
+== 例外処理
+
+=== 想定される例外
+* FileNotFoundError: リファレンステーブルのpickleファイルが見つからない場合
+* KeyError: 必要なカラムが存在しない場合
+* ValueError: データ型の不整合がある場合
+
+=== 例外処理方針
+* ファイル読み込み時の例外: プログラムを終了し、エラーメッセージを表示
+* データ処理時の例外: エラーログを出力し、該当行をスキップして処理を続行
+
+== 付録
+
+=== 使用例
+[source,python]
+----
+integrated_layout = pd.read_csv("integrated_layout.csv")
+table_searcher = TableSearcher("reference_table.pkl")
+merger = ReferenceMerger(table_searcher)
+merged_data = merger.merge_reference_data(integrated_layout)
+print(merged_data)
+----
+
+=== 依存ライブラリ
+* pandas: データ処理と分析のためのライブラリ
+* pickle: Pythonオブジェクトのシリアライズ/デシリアライズに使用

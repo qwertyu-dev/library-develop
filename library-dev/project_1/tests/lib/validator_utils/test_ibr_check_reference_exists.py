@@ -5,7 +5,7 @@ from pathlib import Path
 from unittest.mock import patch, MagicMock
 from unittest.mock import Mock, patch
 from src.lib.validator_utils.ibr_check_reference_exists import BranchCodeLength
-from src.lib.validator_utils.ibr_check_reference_exists import CheckExistsRefferenceRecord
+from src.lib.validator_utils.ibr_check_reference_exists import CheckExistsReferenceRecord
 from src.lib.validator_utils.ibr_check_reference_exists import Case7818Checker
 
 ####################################
@@ -84,8 +84,8 @@ class TestBranchCodeLength:
         assert issubclass(BranchCodeLength, IntEnum)
 
 
-class TestCheckExistsRefferenceRecordInit:
-    """CheckExistsRefferenceRecordの__init__メソッドのテスト
+class TestCheckExistsReferenceRecordInit:
+    """CheckExistsReferenceRecordの__init__メソッドのテスト
 
     テスト構造:
     ├── C0: 基本機能テスト
@@ -134,14 +134,14 @@ class TestCheckExistsRefferenceRecordInit:
         """
         log_msg(f"\n{test_doc}", LogLevel.INFO)
         
-        checker_4 = CheckExistsRefferenceRecord('1234', valid_df_requests)
-        assert isinstance(checker_4, CheckExistsRefferenceRecord)
+        checker_4 = CheckExistsReferenceRecord('1234', valid_df_requests)
+        assert isinstance(checker_4, CheckExistsReferenceRecord)
         assert checker_4.branch_code == '1234'
         assert not checker_4.matching_df_requests.empty
         assert isinstance(checker_4.special_case_checkers[0], Case7818Checker)
 
-        checker_5 = CheckExistsRefferenceRecord('12345', valid_df_requests)
-        assert isinstance(checker_5, CheckExistsRefferenceRecord)
+        checker_5 = CheckExistsReferenceRecord('12345', valid_df_requests)
+        assert isinstance(checker_5, CheckExistsReferenceRecord)
         assert checker_5.branch_code == '12345'
         assert not checker_5.matching_df_requests.empty
 
@@ -155,7 +155,7 @@ class TestCheckExistsRefferenceRecordInit:
         log_msg(f"\n{test_doc}", LogLevel.INFO)
         
         with pytest.raises(TypeError, match="branch_code must be a string"):
-            CheckExistsRefferenceRecord(1234, valid_df_requests)
+            CheckExistsReferenceRecord(1234, valid_df_requests)
 
     def test_init_C0_invalid_branch_code_length(self, valid_df_requests):
         test_doc = """テスト内容:
@@ -167,10 +167,10 @@ class TestCheckExistsRefferenceRecordInit:
         log_msg(f"\n{test_doc}", LogLevel.INFO)
         
         with pytest.raises(ValueError, match="branch_code must be either 4 or 5 digits"):
-            CheckExistsRefferenceRecord('123', valid_df_requests)
+            CheckExistsReferenceRecord('123', valid_df_requests)
         
         with pytest.raises(ValueError, match="branch_code must be either 4 or 5 digits"):
-            CheckExistsRefferenceRecord('123456', valid_df_requests)
+            CheckExistsReferenceRecord('123456', valid_df_requests)
 
     def test_init_C0_invalid_df_requests(self):
         test_doc = """テスト内容:
@@ -182,7 +182,7 @@ class TestCheckExistsRefferenceRecordInit:
         log_msg(f"\n{test_doc}", LogLevel.INFO)
         
         with pytest.raises(TypeError, match="df_requests must be a pandas DataFrame"):
-            CheckExistsRefferenceRecord('1234', [])
+            CheckExistsReferenceRecord('1234', [])
 
     def test_init_C1_empty_df_requests(self):
         test_doc = """テスト内容:
@@ -194,7 +194,7 @@ class TestCheckExistsRefferenceRecordInit:
         log_msg(f"\n{test_doc}", LogLevel.INFO)
         
         empty_df = pd.DataFrame(columns=['branch_code', 'target_org', 'section_gr_code'])
-        checker = CheckExistsRefferenceRecord('1234', empty_df)
+        checker = CheckExistsReferenceRecord('1234', empty_df)
         assert checker.matching_df_requests.empty
 
     def test_init_C1_multiple_rows_df_requests(self, valid_df_requests):
@@ -207,7 +207,7 @@ class TestCheckExistsRefferenceRecordInit:
         """
         log_msg(f"\n{test_doc}", LogLevel.INFO)
         
-        checker = CheckExistsRefferenceRecord('1234', valid_df_requests)
+        checker = CheckExistsReferenceRecord('1234', valid_df_requests)
         assert len(checker.matching_df_requests) == 2 
         assert checker.matching_df_requests.iloc[0]['branch_code'] == '1234'
 
@@ -221,7 +221,7 @@ class TestCheckExistsRefferenceRecordInit:
         """
         log_msg(f"\n{test_doc}", LogLevel.INFO)
         
-        checker = CheckExistsRefferenceRecord('1234', valid_df_requests)
+        checker = CheckExistsReferenceRecord('1234', valid_df_requests)
         assert checker.branch_code == '1234'
         assert len(checker.matching_df_requests) == 2
 
@@ -235,7 +235,7 @@ class TestCheckExistsRefferenceRecordInit:
         """
         log_msg(f"\n{test_doc}", LogLevel.INFO)
         
-        checker = CheckExistsRefferenceRecord('12345', valid_df_requests)
+        checker = CheckExistsReferenceRecord('12345', valid_df_requests)
         assert checker.branch_code == '12345'
         assert len(checker.matching_df_requests) == 2
 
@@ -248,11 +248,11 @@ class TestCheckExistsRefferenceRecordInit:
         """
         log_msg(f"\n{test_doc}", LogLevel.INFO)
         
-        checker = CheckExistsRefferenceRecord('9999', valid_df_requests)
+        checker = CheckExistsReferenceRecord('9999', valid_df_requests)
         assert checker.matching_df_requests.empty
 
-class TestCheckExistsRefferenceRecordSetMatchingDfRequests:
-    """CheckExistsRefferenceRecordの_set_matching_df_requestsメソッドのテスト
+class TestCheckExistsReferenceRecordSetMatchingDfRequests:
+    """CheckExistsReferenceRecordの_set_matching_df_requestsメソッドのテスト
 
     テスト構造:
     ├── C0: 基本機能テスト
@@ -298,7 +298,7 @@ class TestCheckExistsRefferenceRecordSetMatchingDfRequests:
         """
         log_msg(f"\n{test_doc}", LogLevel.INFO)
         
-        checker = CheckExistsRefferenceRecord('1234', sample_df_requests)
+        checker = CheckExistsReferenceRecord('1234', sample_df_requests)
         result = checker.matching_df_requests
         
         assert len(result) == 2
@@ -313,7 +313,7 @@ class TestCheckExistsRefferenceRecordSetMatchingDfRequests:
         """
         log_msg(f"\n{test_doc}", LogLevel.INFO)
         
-        checker = CheckExistsRefferenceRecord('7777', sample_df_requests)
+        checker = CheckExistsReferenceRecord('7777', sample_df_requests)
         result = checker.matching_df_requests
         
         assert result.empty
@@ -328,7 +328,7 @@ class TestCheckExistsRefferenceRecordSetMatchingDfRequests:
         log_msg(f"\n{test_doc}", LogLevel.INFO)
         
         empty_df = pd.DataFrame(columns=['branch_code', 'target_org', 'section_gr_code'])
-        checker = CheckExistsRefferenceRecord('1234', empty_df)
+        checker = CheckExistsReferenceRecord('1234', empty_df)
         result = checker.matching_df_requests
         
         assert result.empty
@@ -342,7 +342,7 @@ class TestCheckExistsRefferenceRecordSetMatchingDfRequests:
         """
         log_msg(f"\n{test_doc}", LogLevel.INFO)
         
-        checker = CheckExistsRefferenceRecord('1234', sample_df_requests)
+        checker = CheckExistsReferenceRecord('1234', sample_df_requests)
         result = checker.matching_df_requests
         
         assert len(result) == 2
@@ -357,7 +357,7 @@ class TestCheckExistsRefferenceRecordSetMatchingDfRequests:
         """
         log_msg(f"\n{test_doc}", LogLevel.INFO)
         
-        checker = CheckExistsRefferenceRecord('12345', sample_df_requests)
+        checker = CheckExistsReferenceRecord('12345', sample_df_requests)
         result = checker.matching_df_requests
         
         assert len(result) == 2
@@ -372,7 +372,7 @@ class TestCheckExistsRefferenceRecordSetMatchingDfRequests:
         """
         log_msg(f"\n{test_doc}", LogLevel.INFO)
         
-        checker = CheckExistsRefferenceRecord('1234', sample_df_requests)
+        checker = CheckExistsReferenceRecord('1234', sample_df_requests)
         result = checker.matching_df_requests
         
         assert '1234' in result['branch_code'].values
@@ -386,7 +386,7 @@ class TestCheckExistsRefferenceRecordSetMatchingDfRequests:
         """
         log_msg(f"\n{test_doc}", LogLevel.INFO)
         
-        checker = CheckExistsRefferenceRecord('12346', sample_df_requests)
+        checker = CheckExistsReferenceRecord('12346', sample_df_requests)
         result = checker.matching_df_requests
         
         assert '12345' in result['branch_code'].values
@@ -400,14 +400,14 @@ class TestCheckExistsRefferenceRecordSetMatchingDfRequests:
         """
         log_msg(f"\n{test_doc}", LogLevel.INFO)
         
-        checker = CheckExistsRefferenceRecord('1234', sample_df_requests)
+        checker = CheckExistsReferenceRecord('1234', sample_df_requests)
         result = checker.matching_df_requests
         
         assert len(result) == 2
         assert set(result['branch_code'].values) == {'1234', '12345'}
 
-class TestCheckExistsRefferenceRecordProcessCheck:
-    """CheckExistsRefferenceRecordのproces_check_refference_data_existsメソッドのテスト
+class TestCheckExistsReferenceRecordProcessCheck:
+    """CheckExistsReferenceRecordのproces_check_reference_data_existsメソッドのテスト
 
     テスト構造:
     ├── C0: 基本機能テスト
@@ -418,8 +418,8 @@ class TestCheckExistsRefferenceRecordProcessCheck:
     │   ├── 正常系: _check_c_swがTrueを返す分岐
     │   └── 正常系: _check_c_swがFalseを返す分岐
     └── C2: 条件カバレッジ
-        ├── 正常系: df_refferenceが空のDataFrameの場合
-        └── 正常系: df_refferenceに複数の行がある場合
+        ├── 正常系: df_referenceが空のDataFrameの場合
+        └── 正常系: df_referenceに複数の行がある場合
 
     # C1のディシジョンテーブル
     | 条件               | ケース1 | ケース2 | ケース3 |
@@ -442,10 +442,10 @@ class TestCheckExistsRefferenceRecordProcessCheck:
             'target_org': [],
             'section_gr_code': [],
         })
-        return CheckExistsRefferenceRecord('1234', df)
+        return CheckExistsReferenceRecord('1234', df)
 
     @pytest.fixture
-    def sample_df_refference(self):
+    def sample_df_reference(self):
         return pd.DataFrame({
             'branch_code_bpr': ['1234', '5678'],
             'branch_code_jinji': ['1234', '5678'],
@@ -453,10 +453,10 @@ class TestCheckExistsRefferenceRecordProcessCheck:
             'section_group_code_bpr': ['A001', 'B002'],
         })
 
-    #@patch.object(CheckExistsRefferenceRecord, '_check_c_sw')
-    @patch.object(CheckExistsRefferenceRecord, '_check_ref_find')
-    #def test_process_check_C0_both_true(self, mock_ref_find, mock_c_sw, mock_checker, sample_df_refference):
-    def test_process_check_C0_both_true(self, mock_ref_find, mock_checker, sample_df_refference):
+    #@patch.object(CheckExistsReferenceRecord, '_check_c_sw')
+    @patch.object(CheckExistsReferenceRecord, '_check_ref_find')
+    #def test_process_check_C0_both_true(self, mock_ref_find, mock_c_sw, mock_checker, sample_df_reference):
+    def test_process_check_C0_both_true(self, mock_ref_find, mock_checker, sample_df_reference):
         test_doc = """テスト内容:
         
         - テストカテゴリ: C0
@@ -468,16 +468,16 @@ class TestCheckExistsRefferenceRecordProcessCheck:
         #mock_c_sw.return_value = True
         mock_ref_find.return_value = True
 
-        result = mock_checker.proces_check_refference_data_exists(sample_df_refference)
+        result = mock_checker.proces_check_reference_data_exists(sample_df_reference)
 
         assert result is True
-        #mock_c_sw.assert_called_once_with(sample_df_refference)
-        mock_ref_find.assert_called_once_with(sample_df_refference)
+        #mock_c_sw.assert_called_once_with(sample_df_reference)
+        mock_ref_find.assert_called_once_with(sample_df_reference)
 
-    #@patch.object(CheckExistsRefferenceRecord, '_check_c_sw')
-    @patch.object(CheckExistsRefferenceRecord, '_check_ref_find')
-    #def test_process_check_C0_c_sw_true_ref_find_false(self, mock_ref_find, mock_c_sw, mock_checker, sample_df_refference):
-    def test_process_check_C0_c_sw_true_ref_find_false(self, mock_ref_find, mock_checker, sample_df_refference):
+    #@patch.object(CheckExistsReferenceRecord, '_check_c_sw')
+    @patch.object(CheckExistsReferenceRecord, '_check_ref_find')
+    #def test_process_check_C0_c_sw_true_ref_find_false(self, mock_ref_find, mock_c_sw, mock_checker, sample_df_reference):
+    def test_process_check_C0_c_sw_true_ref_find_false(self, mock_ref_find, mock_checker, sample_df_reference):
         test_doc = """テスト内容:
         
         - テストカテゴリ: C0
@@ -489,16 +489,16 @@ class TestCheckExistsRefferenceRecordProcessCheck:
         #mock_c_sw.return_value = True
         mock_ref_find.return_value = False
 
-        result = mock_checker.proces_check_refference_data_exists(sample_df_refference)
+        result = mock_checker.proces_check_reference_data_exists(sample_df_reference)
 
         assert result is False
-        #mock_c_sw.assert_called_once_with(sample_df_refference)
-        mock_ref_find.assert_called_once_with(sample_df_refference)
+        #mock_c_sw.assert_called_once_with(sample_df_reference)
+        mock_ref_find.assert_called_once_with(sample_df_reference)
 
-    ##@patch.object(CheckExistsRefferenceRecord, '_check_c_sw')
-    #@patch.object(CheckExistsRefferenceRecord, '_check_ref_find')
-    ##def test_process_check_C0_c_sw_false(self, mock_ref_find, mock_c_sw, mock_checker, sample_df_refference):
-    #def test_process_check_C0_c_sw_false(self, mock_ref_find, mock_checker, sample_df_refference):
+    ##@patch.object(CheckExistsReferenceRecord, '_check_c_sw')
+    #@patch.object(CheckExistsReferenceRecord, '_check_ref_find')
+    ##def test_process_check_C0_c_sw_false(self, mock_ref_find, mock_c_sw, mock_checker, sample_df_reference):
+    #def test_process_check_C0_c_sw_false(self, mock_ref_find, mock_checker, sample_df_reference):
     #    test_doc = """テスト内容:
     #    
     #    - テストカテゴリ: C0
@@ -509,15 +509,15 @@ class TestCheckExistsRefferenceRecordProcessCheck:
 
     #    #mock_c_sw.return_value = False
 
-    #    result = mock_checker.proces_check_refference_data_exists(sample_df_refference)
+    #    result = mock_checker.proces_check_reference_data_exists(sample_df_reference)
 
     #    assert result is False
-    #    #mock_c_sw.assert_called_once_with(sample_df_refference)
+    #    #mock_c_sw.assert_called_once_with(sample_df_reference)
     #    mock_ref_find.assert_not_called()
 
-    ##@patch.object(CheckExistsRefferenceRecord, '_check_c_sw')
-    #@patch.object(CheckExistsRefferenceRecord, '_check_ref_find')
-    #def test_process_check_C1_c_sw_true_branch(self, mock_ref_find, mock_checker, sample_df_refference):
+    ##@patch.object(CheckExistsReferenceRecord, '_check_c_sw')
+    #@patch.object(CheckExistsReferenceRecord, '_check_ref_find')
+    #def test_process_check_C1_c_sw_true_branch(self, mock_ref_find, mock_checker, sample_df_reference):
     #    test_doc = """テスト内容:
     #    
     #    - テストカテゴリ: C1
@@ -529,16 +529,16 @@ class TestCheckExistsRefferenceRecordProcessCheck:
     #    #mock_c_sw.return_value = True
     #    mock_ref_find.return_value = True
 
-    #    result = mock_checker.proces_check_refference_data_exists(sample_df_refference)
+    #    result = mock_checker.proces_check_reference_data_exists(sample_df_reference)
 
     #    assert result is True
-    #    #mock_c_sw.assert_called_once_with(sample_df_refference)
-    #    mock_ref_find.assert_called_once_with(sample_df_refference)
+    #    #mock_c_sw.assert_called_once_with(sample_df_reference)
+    #    mock_ref_find.assert_called_once_with(sample_df_reference)
 
-    ##@patch.object(CheckExistsRefferenceRecord, '_check_c_sw')
-    #@patch.object(CheckExistsRefferenceRecord, '_check_ref_find')
-    ##def test_process_check_C1_c_sw_false_branch(self, mock_ref_find, mock_c_sw, mock_checker, sample_df_refference):
-    #def test_process_check_C1_c_sw_false_branch(self, mock_ref_find, mock_checker, sample_df_refference):
+    ##@patch.object(CheckExistsReferenceRecord, '_check_c_sw')
+    #@patch.object(CheckExistsReferenceRecord, '_check_ref_find')
+    ##def test_process_check_C1_c_sw_false_branch(self, mock_ref_find, mock_c_sw, mock_checker, sample_df_reference):
+    #def test_process_check_C1_c_sw_false_branch(self, mock_ref_find, mock_checker, sample_df_reference):
     #    test_doc = """テスト内容:
     #    
     #    - テストカテゴリ: C1
@@ -549,21 +549,21 @@ class TestCheckExistsRefferenceRecordProcessCheck:
 
     #    #mock_c_sw.return_value = False
 
-    #    result = mock_checker.proces_check_refference_data_exists(sample_df_refference)
+    #    result = mock_checker.proces_check_reference_data_exists(sample_df_reference)
 
     #    assert result is False
-    #    #mock_c_sw.assert_called_once_with(sample_df_refference)
+    #    #mock_c_sw.assert_called_once_with(sample_df_reference)
     #    mock_ref_find.assert_not_called()
 
-    #@patch.object(CheckExistsRefferenceRecord, '_check_c_sw')
-    @patch.object(CheckExistsRefferenceRecord, '_check_ref_find')
-    #def test_process_check_C2_empty_df_refference(self, mock_ref_find, mock_c_sw, mock_checker):
-    def test_process_check_C2_empty_df_refference(self, mock_ref_find, mock_checker):
+    #@patch.object(CheckExistsReferenceRecord, '_check_c_sw')
+    @patch.object(CheckExistsReferenceRecord, '_check_ref_find')
+    #def test_process_check_C2_empty_df_reference(self, mock_ref_find, mock_c_sw, mock_checker):
+    def test_process_check_C2_empty_df_reference(self, mock_ref_find, mock_checker):
         test_doc = """テスト内容:
         
         - テストカテゴリ: C2
         - テスト区分: 正常系
-        - テストシナリオ: df_refferenceが空のDataFrameの場合
+        - テストシナリオ: df_referenceが空のDataFrameの場合
         """
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
@@ -571,36 +571,36 @@ class TestCheckExistsRefferenceRecordProcessCheck:
         #mock_c_sw.return_value = False
         mock_ref_find.return_value = False
 
-        result = mock_checker.proces_check_refference_data_exists(empty_df)
+        result = mock_checker.proces_check_reference_data_exists(empty_df)
 
         assert result is False
         #mock_c_sw.assert_called_once_with(empty_df)
         mock_ref_find.assert_called_once_with(empty_df)
         #mock_ref_find.assert_not_called()
 
-    #@patch.object(CheckExistsRefferenceRecord, '_check_c_sw')
-    @patch.object(CheckExistsRefferenceRecord, '_check_ref_find')
-    #def test_process_check_C2_multiple_rows_df_refference(self, mock_ref_find, mock_c_sw, mock_checker, sample_df_refference):
-    def test_process_check_C2_multiple_rows_df_refference(self, mock_ref_find, mock_checker, sample_df_refference):
+    #@patch.object(CheckExistsReferenceRecord, '_check_c_sw')
+    @patch.object(CheckExistsReferenceRecord, '_check_ref_find')
+    #def test_process_check_C2_multiple_rows_df_reference(self, mock_ref_find, mock_c_sw, mock_checker, sample_df_reference):
+    def test_process_check_C2_multiple_rows_df_reference(self, mock_ref_find, mock_checker, sample_df_reference):
         test_doc = """テスト内容:
         
         - テストカテゴリ: C2
         - テスト区分: 正常系
-        - テストシナリオ: df_refferenceに複数の行がある場合
+        - テストシナリオ: df_referenceに複数の行がある場合
         """
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
         #mock_c_sw.return_value = True
         mock_ref_find.return_value = True
 
-        result = mock_checker.proces_check_refference_data_exists(sample_df_refference)
+        result = mock_checker.proces_check_reference_data_exists(sample_df_reference)
 
         assert result is True
-        #mock_c_sw.assert_called_once_with(sample_df_refference)
-        mock_ref_find.assert_called_once_with(sample_df_refference)
+        #mock_c_sw.assert_called_once_with(sample_df_reference)
+        mock_ref_find.assert_called_once_with(sample_df_reference)
 
-#class TestCheckExistsRefferenceRecordCheckCSW:
-#    """CheckExistsRefferenceRecordの_check_c_swメソッドのテスト
+#class TestCheckExistsReferenceRecordCheckCSW:
+#    """CheckExistsReferenceRecordの_check_c_swメソッドのテスト
 #
 #    テスト構造:
 #    ├── C0: 基本機能テスト
@@ -632,7 +632,7 @@ class TestCheckExistsRefferenceRecordProcessCheck:
 #        log_msg(f"test end\n{'-'*80}\n", LogLevel.INFO)
 #
 #    @pytest.fixture
-#    def sample_df_refference(self):
+#    def sample_df_reference(self):
 #        return pd.DataFrame({
 #            'branch_code_bpr': ['1234', '5678', '9012'],
 #            'branch_code_jinji': ['1234', '5678', '3456'],
@@ -640,7 +640,7 @@ class TestCheckExistsRefferenceRecordProcessCheck:
 #            'section_group_code_bpr': ['A001', 'B002', 'C003']
 #        })
 #
-#    def test_check_c_sw_C0_matching_records(self, sample_df_refference):
+#    def test_check_c_sw_C0_matching_records(self, sample_df_reference):
 #        test_doc = """テスト内容:
 #        
 #        - テストカテゴリ: C0
@@ -650,12 +650,12 @@ class TestCheckExistsRefferenceRecordProcessCheck:
 #        log_msg(f"\n{test_doc}", LogLevel.INFO)
 #        
 #        df_requests = pd.DataFrame({'branch_code': ['1234', '5678']})
-#        checker = CheckExistsRefferenceRecord('1234', df_requests)
+#        checker = CheckExistsReferenceRecord('1234', df_requests)
 #        
-#        result = checker._check_c_sw(sample_df_refference)
+#        result = checker._check_c_sw(sample_df_reference)
 #        assert result == True
 #
-#    def test_check_c_sw_C0_empty_matching_df_requests(self, sample_df_refference):
+#    def test_check_c_sw_C0_empty_matching_df_requests(self, sample_df_reference):
 #        test_doc = """テスト内容:
 #        
 #        - テストカテゴリ: C0
@@ -665,12 +665,12 @@ class TestCheckExistsRefferenceRecordProcessCheck:
 #        log_msg(f"\n{test_doc}", LogLevel.INFO)
 #        
 #        df_requests = pd.DataFrame({'branch_code': []})
-#        checker = CheckExistsRefferenceRecord('1234', df_requests)
+#        checker = CheckExistsReferenceRecord('1234', df_requests)
 #        
-#        result = checker._check_c_sw(sample_df_refference)
+#        result = checker._check_c_sw(sample_df_reference)
 #        assert result == False
 #
-#    def test_check_c_sw_C0_no_matching_records(self, sample_df_refference):
+#    def test_check_c_sw_C0_no_matching_records(self, sample_df_reference):
 #        test_doc = """テスト内容:
 #        
 #        - テストカテゴリ: C0
@@ -680,12 +680,12 @@ class TestCheckExistsRefferenceRecordProcessCheck:
 #        log_msg(f"\n{test_doc}", LogLevel.INFO)
 #        
 #        df_requests = pd.DataFrame({'branch_code': ['7777']})
-#        checker = CheckExistsRefferenceRecord('7777', df_requests)
+#        checker = CheckExistsReferenceRecord('7777', df_requests)
 #        
-#        result = checker._check_c_sw(sample_df_refference)
+#        result = checker._check_c_sw(sample_df_reference)
 #        assert result == False
 #
-#    def test_check_c_sw_C1_bpr_match_true(self, sample_df_refference):
+#    def test_check_c_sw_C1_bpr_match_true(self, sample_df_reference):
 #        test_doc = """テスト内容:
 #        
 #        - テストカテゴリ: C1
@@ -695,12 +695,12 @@ class TestCheckExistsRefferenceRecordProcessCheck:
 #        log_msg(f"\n{test_doc}", LogLevel.INFO)
 #        
 #        df_requests = pd.DataFrame({'branch_code': ['9012']})
-#        checker = CheckExistsRefferenceRecord('9012', df_requests)
+#        checker = CheckExistsReferenceRecord('9012', df_requests)
 #        
-#        result = checker._check_c_sw(sample_df_refference)
+#        result = checker._check_c_sw(sample_df_reference)
 #        assert result == True
 #
-#    def test_check_c_sw_C1_jinji_match_true(self, sample_df_refference):
+#    def test_check_c_sw_C1_jinji_match_true(self, sample_df_reference):
 #        test_doc = """テスト内容:
 #        
 #        - テストカテゴリ: C1
@@ -710,12 +710,12 @@ class TestCheckExistsRefferenceRecordProcessCheck:
 #        log_msg(f"\n{test_doc}", LogLevel.INFO)
 #        
 #        df_requests = pd.DataFrame({'branch_code': ['3456']})
-#        checker = CheckExistsRefferenceRecord('3456', df_requests)
+#        checker = CheckExistsReferenceRecord('3456', df_requests)
 #        
-#        result = checker._check_c_sw(sample_df_refference)
+#        result = checker._check_c_sw(sample_df_reference)
 #        assert result == True
 #
-#    def test_check_c_sw_C1_both_match_false(self, sample_df_refference):
+#    def test_check_c_sw_C1_both_match_false(self, sample_df_reference):
 #        test_doc = """テスト内容:
 #        
 #        - テストカテゴリ: C1
@@ -725,12 +725,12 @@ class TestCheckExistsRefferenceRecordProcessCheck:
 #        log_msg(f"\n{test_doc}", LogLevel.INFO)
 #        
 #        df_requests = pd.DataFrame({'branch_code': ['7777']})
-#        checker = CheckExistsRefferenceRecord('7777', df_requests)
+#        checker = CheckExistsReferenceRecord('7777', df_requests)
 #        
-#        result = checker._check_c_sw(sample_df_refference)
+#        result = checker._check_c_sw(sample_df_reference)
 #        assert result == False
 #
-#    def test_check_c_sw_C2_only_bpr_match(self, sample_df_refference):
+#    def test_check_c_sw_C2_only_bpr_match(self, sample_df_reference):
 #        test_doc = """テスト内容:
 #        
 #        - テストカテゴリ: C2
@@ -740,12 +740,12 @@ class TestCheckExistsRefferenceRecordProcessCheck:
 #        log_msg(f"\n{test_doc}", LogLevel.INFO)
 #        
 #        df_requests = pd.DataFrame({'branch_code': ['9012']})
-#        checker = CheckExistsRefferenceRecord('9012', df_requests)
+#        checker = CheckExistsReferenceRecord('9012', df_requests)
 #        
-#        result = checker._check_c_sw(sample_df_refference)
+#        result = checker._check_c_sw(sample_df_reference)
 #        assert result == True
 #
-#    def test_check_c_sw_C2_only_jinji_match(self, sample_df_refference):
+#    def test_check_c_sw_C2_only_jinji_match(self, sample_df_reference):
 #        test_doc = """テスト内容:
 #        
 #        - テストカテゴリ: C2
@@ -755,12 +755,12 @@ class TestCheckExistsRefferenceRecordProcessCheck:
 #        log_msg(f"\n{test_doc}", LogLevel.INFO)
 #        
 #        df_requests = pd.DataFrame({'branch_code': ['3456']})
-#        checker = CheckExistsRefferenceRecord('3456', df_requests)
+#        checker = CheckExistsReferenceRecord('3456', df_requests)
 #        
-#        result = checker._check_c_sw(sample_df_refference)
+#        result = checker._check_c_sw(sample_df_reference)
 #        assert result == True
 #
-#    def test_check_c_sw_C2_both_match(self, sample_df_refference):
+#    def test_check_c_sw_C2_both_match(self, sample_df_reference):
 #        test_doc = """テスト内容:
 #        
 #        - テストカテゴリ: C2
@@ -770,13 +770,13 @@ class TestCheckExistsRefferenceRecordProcessCheck:
 #        log_msg(f"\n{test_doc}", LogLevel.INFO)
 #        
 #        df_requests = pd.DataFrame({'branch_code': ['1234']})
-#        checker = CheckExistsRefferenceRecord('1234', df_requests)
+#        checker = CheckExistsReferenceRecord('1234', df_requests)
 #        
-#        result = checker._check_c_sw(sample_df_refference)
+#        result = checker._check_c_sw(sample_df_reference)
 #        assert result == True
 
-class TestCheckExistsRefferenceRecordCheckRefFind:
-    """CheckExistsRefferenceRecordの_check_ref_findメソッドのテスト
+class TestCheckExistsReferenceRecordCheckRefFind:
+    """CheckExistsReferenceRecordの_check_ref_findメソッドのテスト
 
     テスト構造:
     ├── C0: 基本機能テスト
@@ -812,7 +812,7 @@ class TestCheckExistsRefferenceRecordCheckRefFind:
         log_msg(f"test end\n{'-'*80}\n", LogLevel.INFO)
 
     @pytest.fixture
-    def sample_df_refference(self):
+    def sample_df_reference(self):
         return pd.DataFrame({
             'branch_code_bpr': ['1234', '5678', '9012'],
             'branch_code_jinji': ['1234', '5678', '3456'],
@@ -827,13 +827,13 @@ class TestCheckExistsRefferenceRecordCheckRefFind:
             'target_org': ['部店', '課'],
             'section_gr_code': ['A001', 'B002']
         })
-        return CheckExistsRefferenceRecord('1234', df_requests)
+        return CheckExistsReferenceRecord('1234', df_requests)
 
-    @patch.object(CheckExistsRefferenceRecord, '_check_special_cases')
-    @patch.object(CheckExistsRefferenceRecord, '_check_buten')
-    @patch.object(CheckExistsRefferenceRecord, '_check_ka')
-    @patch.object(CheckExistsRefferenceRecord, '_check_area')
-    def test_check_ref_find_C0_non_empty_matching(self, mock_area, mock_ka, mock_buten, mock_special, mock_checker, sample_df_refference):
+    @patch.object(CheckExistsReferenceRecord, '_check_special_cases')
+    @patch.object(CheckExistsReferenceRecord, '_check_buten')
+    @patch.object(CheckExistsReferenceRecord, '_check_ka')
+    @patch.object(CheckExistsReferenceRecord, '_check_area')
+    def test_check_ref_find_C0_non_empty_matching(self, mock_area, mock_ka, mock_buten, mock_special, mock_checker, sample_df_reference):
         test_doc = """テスト内容:
         
         - テストカテゴリ: C0
@@ -845,10 +845,10 @@ class TestCheckExistsRefferenceRecordCheckRefFind:
         mock_special.return_value = False
         mock_buten.return_value = True
         
-        result = mock_checker._check_ref_find(sample_df_refference)
+        result = mock_checker._check_ref_find(sample_df_reference)
         assert result
 
-    def test_check_ref_find_C0_empty_matching(self, mock_checker, sample_df_refference):
+    def test_check_ref_find_C0_empty_matching(self, mock_checker, sample_df_reference):
         test_doc = """テスト内容:
         
         - テストカテゴリ: C0
@@ -858,11 +858,11 @@ class TestCheckExistsRefferenceRecordCheckRefFind:
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
         mock_checker.matching_df_requests = pd.DataFrame()
-        result = mock_checker._check_ref_find(sample_df_refference)
+        result = mock_checker._check_ref_find(sample_df_reference)
         assert not result
 
-    @patch.object(CheckExistsRefferenceRecord, '_check_special_cases')
-    def test_check_ref_find_C0_special_case(self, mock_special, mock_checker, sample_df_refference):
+    @patch.object(CheckExistsReferenceRecord, '_check_special_cases')
+    def test_check_ref_find_C0_special_case(self, mock_special, mock_checker, sample_df_reference):
         test_doc = """テスト内容:
         
         - テストカテゴリ: C0
@@ -872,12 +872,12 @@ class TestCheckExistsRefferenceRecordCheckRefFind:
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
         mock_special.return_value = True
-        result = mock_checker._check_ref_find(sample_df_refference)
+        result = mock_checker._check_ref_find(sample_df_reference)
         assert result
 
-    @patch.object(CheckExistsRefferenceRecord, '_check_special_cases')
-    @patch.object(CheckExistsRefferenceRecord, '_check_buten')
-    def test_check_ref_find_C0_normal_check(self, mock_buten, mock_special, mock_checker, sample_df_refference):
+    @patch.object(CheckExistsReferenceRecord, '_check_special_cases')
+    @patch.object(CheckExistsReferenceRecord, '_check_buten')
+    def test_check_ref_find_C0_normal_check(self, mock_buten, mock_special, mock_checker, sample_df_reference):
         test_doc = """テスト内容:
         
         - テストカテゴリ: C0
@@ -888,11 +888,11 @@ class TestCheckExistsRefferenceRecordCheckRefFind:
 
         mock_special.return_value = False
         mock_buten.return_value = True
-        result = mock_checker._check_ref_find(sample_df_refference)
+        result = mock_checker._check_ref_find(sample_df_reference)
         assert result
 
-    @patch.object(CheckExistsRefferenceRecord, '_check_special_cases')
-    def test_check_ref_find_C1_special_case_true(self, mock_special, mock_checker, sample_df_refference):
+    @patch.object(CheckExistsReferenceRecord, '_check_special_cases')
+    def test_check_ref_find_C1_special_case_true(self, mock_special, mock_checker, sample_df_reference):
         test_doc = """テスト内容:
         
         - テストカテゴリ: C1
@@ -902,12 +902,12 @@ class TestCheckExistsRefferenceRecordCheckRefFind:
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
         mock_special.return_value = True
-        result = mock_checker._check_ref_find(sample_df_refference)
+        result = mock_checker._check_ref_find(sample_df_reference)
         assert result
 
-    @patch.object(CheckExistsRefferenceRecord, '_check_special_cases')
-    @patch.object(CheckExistsRefferenceRecord, '_check_buten')
-    def test_check_ref_find_C1_buten_true(self, mock_buten, mock_special, mock_checker, sample_df_refference):
+    @patch.object(CheckExistsReferenceRecord, '_check_special_cases')
+    @patch.object(CheckExistsReferenceRecord, '_check_buten')
+    def test_check_ref_find_C1_buten_true(self, mock_buten, mock_special, mock_checker, sample_df_reference):
         test_doc = """テスト内容:
         
         - テストカテゴリ: C1
@@ -918,13 +918,13 @@ class TestCheckExistsRefferenceRecordCheckRefFind:
 
         mock_special.return_value = False
         mock_buten.return_value = True
-        result = mock_checker._check_ref_find(sample_df_refference)
+        result = mock_checker._check_ref_find(sample_df_reference)
         assert result
 
-    @patch.object(CheckExistsRefferenceRecord, '_check_special_cases')
-    @patch.object(CheckExistsRefferenceRecord, '_check_buten')
-    @patch.object(CheckExistsRefferenceRecord, '_check_ka')
-    def test_check_ref_find_C1_ka_true(self, mock_ka, mock_buten, mock_special, mock_checker, sample_df_refference):
+    @patch.object(CheckExistsReferenceRecord, '_check_special_cases')
+    @patch.object(CheckExistsReferenceRecord, '_check_buten')
+    @patch.object(CheckExistsReferenceRecord, '_check_ka')
+    def test_check_ref_find_C1_ka_true(self, mock_ka, mock_buten, mock_special, mock_checker, sample_df_reference):
         test_doc = """テスト内容:
         
         - テストカテゴリ: C1
@@ -937,14 +937,14 @@ class TestCheckExistsRefferenceRecordCheckRefFind:
         mock_buten.return_value = False
         mock_ka.return_value = True
         mock_checker.matching_df_requests.loc[0, 'target_org'] = '課'
-        result = mock_checker._check_ref_find(sample_df_refference)
+        result = mock_checker._check_ref_find(sample_df_reference)
         assert result
 
-    @patch.object(CheckExistsRefferenceRecord, '_check_special_cases')
-    @patch.object(CheckExistsRefferenceRecord, '_check_buten')
-    @patch.object(CheckExistsRefferenceRecord, '_check_ka')
-    @patch.object(CheckExistsRefferenceRecord, '_check_area')
-    def test_check_ref_find_C1_area_true(self, mock_area, mock_ka, mock_buten, mock_special, mock_checker, sample_df_refference):
+    @patch.object(CheckExistsReferenceRecord, '_check_special_cases')
+    @patch.object(CheckExistsReferenceRecord, '_check_buten')
+    @patch.object(CheckExistsReferenceRecord, '_check_ka')
+    @patch.object(CheckExistsReferenceRecord, '_check_area')
+    def test_check_ref_find_C1_area_true(self, mock_area, mock_ka, mock_buten, mock_special, mock_checker, sample_df_reference):
         test_doc = """テスト内容:
         
         - テストカテゴリ: C1
@@ -958,12 +958,12 @@ class TestCheckExistsRefferenceRecordCheckRefFind:
         mock_ka.return_value = False
         mock_area.return_value = True
         mock_checker.matching_df_requests.loc[0, 'target_org'] = 'エリア'
-        result = mock_checker._check_ref_find(sample_df_refference)
+        result = mock_checker._check_ref_find(sample_df_reference)
         assert result
 
-    @patch.object(CheckExistsRefferenceRecord, '_check_special_cases')
-    @patch.object(CheckExistsRefferenceRecord, '_check_buten')
-    def test_check_ref_find_C2_target_org_buten(self, mock_buten, mock_special, mock_checker, sample_df_refference):
+    @patch.object(CheckExistsReferenceRecord, '_check_special_cases')
+    @patch.object(CheckExistsReferenceRecord, '_check_buten')
+    def test_check_ref_find_C2_target_org_buten(self, mock_buten, mock_special, mock_checker, sample_df_reference):
         test_doc = """テスト内容:
         
         - テストカテゴリ: C2
@@ -975,13 +975,13 @@ class TestCheckExistsRefferenceRecordCheckRefFind:
         mock_special.return_value = False
         mock_buten.return_value = True
         mock_checker.matching_df_requests.loc[0, 'target_org'] = '部店'
-        result = mock_checker._check_ref_find(sample_df_refference)
+        result = mock_checker._check_ref_find(sample_df_reference)
         assert result
 
-    @patch.object(CheckExistsRefferenceRecord, '_check_special_cases')
-    @patch.object(CheckExistsRefferenceRecord, '_check_buten')
-    @patch.object(CheckExistsRefferenceRecord, '_check_ka')
-    def test_check_ref_find_C2_target_org_ka(self, mock_ka, mock_buten, mock_special, mock_checker, sample_df_refference):
+    @patch.object(CheckExistsReferenceRecord, '_check_special_cases')
+    @patch.object(CheckExistsReferenceRecord, '_check_buten')
+    @patch.object(CheckExistsReferenceRecord, '_check_ka')
+    def test_check_ref_find_C2_target_org_ka(self, mock_ka, mock_buten, mock_special, mock_checker, sample_df_reference):
         test_doc = """テスト内容:
         
         - テストカテゴリ: C2
@@ -994,14 +994,14 @@ class TestCheckExistsRefferenceRecordCheckRefFind:
         mock_buten.return_value = False
         mock_ka.return_value = True
         mock_checker.matching_df_requests.loc[0, 'target_org'] = '課'
-        result = mock_checker._check_ref_find(sample_df_refference)
+        result = mock_checker._check_ref_find(sample_df_reference)
         assert result
 
-    @patch.object(CheckExistsRefferenceRecord, '_check_special_cases')
-    @patch.object(CheckExistsRefferenceRecord, '_check_buten')
-    @patch.object(CheckExistsRefferenceRecord, '_check_ka')
-    @patch.object(CheckExistsRefferenceRecord, '_check_area')
-    def test_check_ref_find_C2_target_org_area(self, mock_area, mock_ka, mock_buten, mock_special, mock_checker, sample_df_refference):
+    @patch.object(CheckExistsReferenceRecord, '_check_special_cases')
+    @patch.object(CheckExistsReferenceRecord, '_check_buten')
+    @patch.object(CheckExistsReferenceRecord, '_check_ka')
+    @patch.object(CheckExistsReferenceRecord, '_check_area')
+    def test_check_ref_find_C2_target_org_area(self, mock_area, mock_ka, mock_buten, mock_special, mock_checker, sample_df_reference):
         test_doc = """テスト内容:
         
         - テストカテゴリ: C2
@@ -1015,12 +1015,12 @@ class TestCheckExistsRefferenceRecordCheckRefFind:
         mock_ka.return_value = False
         mock_area.return_value = True
         mock_checker.matching_df_requests.loc[0, 'target_org'] = 'エリア'
-        result = mock_checker._check_ref_find(sample_df_refference)
+        result = mock_checker._check_ref_find(sample_df_reference)
         assert result
 
 
-class TestCheckExistsRefferenceRecordCheckButen:
-    """CheckExistsRefferenceRecordの_check_butenメソッドのテスト
+class TestCheckExistsReferenceRecordCheckButen:
+    """CheckExistsReferenceRecordの_check_butenメソッドのテスト
 
     テスト構造:
     ├── C0: 基本機能テスト
@@ -1057,7 +1057,7 @@ class TestCheckExistsRefferenceRecordCheckButen:
         log_msg(f"test end\n{'-'*80}\n", LogLevel.INFO)
 
     @pytest.fixture
-    def sample_df_refference(self):
+    def sample_df_reference(self):
         return pd.DataFrame({
             'branch_code_bpr': ['1234', '5678', '56789', '90123'],
             'branch_code_jinji': ['1234', '5678', '56789', '90123'],
@@ -1072,9 +1072,9 @@ class TestCheckExistsRefferenceRecordCheckButen:
             'target_org': ['部店', '課'],
             'section_gr_code': ['A001', 'B002']
         })
-        return CheckExistsRefferenceRecord('1234', df_requests)
+        return CheckExistsReferenceRecord('1234', df_requests)
 
-    def test_check_buten_C0_4digit_match(self, checker, sample_df_refference):
+    def test_check_buten_C0_4digit_match(self, checker, sample_df_reference):
         test_doc = """テスト内容:
         
         - テストカテゴリ: C0
@@ -1084,10 +1084,10 @@ class TestCheckExistsRefferenceRecordCheckButen:
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
         df_requests_row = pd.Series({'branch_code': '1234', 'section_gr_code': 'A001'})
-        result = checker._check_buten(sample_df_refference, df_requests_row)
+        result = checker._check_buten(sample_df_reference, df_requests_row)
         assert result
 
-    def test_check_buten_C0_5digit_match(self, checker, sample_df_refference):
+    def test_check_buten_C0_5digit_match(self, checker, sample_df_reference):
         test_doc = """テスト内容:
         
         - テストカテゴリ: C0
@@ -1097,10 +1097,10 @@ class TestCheckExistsRefferenceRecordCheckButen:
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
         df_requests_row = pd.Series({'branch_code': '56789', 'section_gr_code': 'B002'})
-        result = checker._check_buten(sample_df_refference, df_requests_row)
+        result = checker._check_buten(sample_df_reference, df_requests_row)
         assert result
 
-    def test_check_buten_C0_no_match(self, checker, sample_df_refference):
+    def test_check_buten_C0_no_match(self, checker, sample_df_reference):
         test_doc = """テスト内容:
         
         - テストカテゴリ: C0
@@ -1110,10 +1110,10 @@ class TestCheckExistsRefferenceRecordCheckButen:
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
         df_requests_row = pd.Series({'branch_code': '9999', 'section_gr_code': 'X999'})
-        result = checker._check_buten(sample_df_refference, df_requests_row)
+        result = checker._check_buten(sample_df_reference, df_requests_row)
         assert not result
 
-    def test_check_buten_C1_4digit(self, checker, sample_df_refference):
+    def test_check_buten_C1_4digit(self, checker, sample_df_reference):
         test_doc = """テスト内容:
         
         - テストカテゴリ: C1
@@ -1123,10 +1123,10 @@ class TestCheckExistsRefferenceRecordCheckButen:
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
         df_requests_row = pd.Series({'branch_code': '1234', 'section_gr_code': 'A001'})
-        result = checker._check_buten(sample_df_refference, df_requests_row)
+        result = checker._check_buten(sample_df_reference, df_requests_row)
         assert result
 
-    def test_check_buten_C1_5digit(self, checker, sample_df_refference):
+    def test_check_buten_C1_5digit(self, checker, sample_df_reference):
         test_doc = """テスト内容:
         
         - テストカテゴリ: C1
@@ -1136,10 +1136,10 @@ class TestCheckExistsRefferenceRecordCheckButen:
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
         df_requests_row = pd.Series({'branch_code': '56789', 'section_gr_code': 'B002'})
-        result = checker._check_buten(sample_df_refference, df_requests_row)
+        result = checker._check_buten(sample_df_reference, df_requests_row)
         assert result
 
-    def test_check_buten_C1_invalid_length(self, checker, sample_df_refference):
+    def test_check_buten_C1_invalid_length(self, checker, sample_df_reference):
         test_doc = """テスト内容:
         
         - テストカテゴリ: C1
@@ -1149,10 +1149,10 @@ class TestCheckExistsRefferenceRecordCheckButen:
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
         df_requests_row = pd.Series({'branch_code': '123', 'section_gr_code': 'A001'})
-        result = checker._check_buten(sample_df_refference, df_requests_row)
+        result = checker._check_buten(sample_df_reference, df_requests_row)
         assert not result
 
-    def test_check_buten_C2_4digit_section_gr_0(self, checker, sample_df_refference):
+    def test_check_buten_C2_4digit_section_gr_0(self, checker, sample_df_reference):
         test_doc = """テスト内容:
         
         - テストカテゴリ: C2
@@ -1162,10 +1162,10 @@ class TestCheckExistsRefferenceRecordCheckButen:
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
         df_requests_row = pd.Series({'branch_code': '1234', 'section_gr_code': 'A001'})
-        result = checker._check_buten(sample_df_refference, df_requests_row)
+        result = checker._check_buten(sample_df_reference, df_requests_row)
         assert result
 
-    def test_check_buten_C2_4digit_section_gr_non_0(self, checker, sample_df_refference):
+    def test_check_buten_C2_4digit_section_gr_non_0(self, checker, sample_df_reference):
         test_doc = """テスト内容:
         
         - テストカテゴリ: C2
@@ -1175,10 +1175,10 @@ class TestCheckExistsRefferenceRecordCheckButen:
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
         df_requests_row = pd.Series({'branch_code': '5678', 'section_gr_code': 'A001'})
-        result = checker._check_buten(sample_df_refference, df_requests_row)
+        result = checker._check_buten(sample_df_reference, df_requests_row)
         assert not result
 
-    def test_check_buten_C2_4digit_no_match(self, checker, sample_df_refference):
+    def test_check_buten_C2_4digit_no_match(self, checker, sample_df_reference):
         test_doc = """テスト内容:
         
         - テストカテゴリ: C2
@@ -1188,10 +1188,10 @@ class TestCheckExistsRefferenceRecordCheckButen:
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
         df_requests_row = pd.Series({'branch_code': '9999', 'section_gr_code': 'A001'})
-        result = checker._check_buten(sample_df_refference, df_requests_row)
+        result = checker._check_buten(sample_df_reference, df_requests_row)
         assert not result
 
-    def test_check_buten_C2_5digit_section_gr_match(self, checker, sample_df_refference):
+    def test_check_buten_C2_5digit_section_gr_match(self, checker, sample_df_reference):
         test_doc = """テスト内容:
         
         - テストカテゴリ: C2
@@ -1201,10 +1201,10 @@ class TestCheckExistsRefferenceRecordCheckButen:
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
         df_requests_row = pd.Series({'branch_code': '56789', 'section_gr_code': 'B002'})
-        result = checker._check_buten(sample_df_refference, df_requests_row)
+        result = checker._check_buten(sample_df_reference, df_requests_row)
         assert result
 
-    def test_check_buten_C2_5digit_section_gr_mismatch(self, checker, sample_df_refference):
+    def test_check_buten_C2_5digit_section_gr_mismatch(self, checker, sample_df_reference):
         test_doc = """テスト内容:
         
         - テストカテゴリ: C2
@@ -1214,10 +1214,10 @@ class TestCheckExistsRefferenceRecordCheckButen:
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
         df_requests_row = pd.Series({'branch_code': '56789', 'section_gr_code': 'X999'})
-        result = checker._check_buten(sample_df_refference, df_requests_row)
+        result = checker._check_buten(sample_df_reference, df_requests_row)
         assert not result
 
-    def test_check_buten_C2_5digit_no_match(self, checker, sample_df_refference):
+    def test_check_buten_C2_5digit_no_match(self, checker, sample_df_reference):
         test_doc = """テスト内容:
         
         - テストカテゴリ: C2
@@ -1227,11 +1227,11 @@ class TestCheckExistsRefferenceRecordCheckButen:
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
         df_requests_row = pd.Series({'branch_code': '99999', 'section_gr_code': 'A001'})
-        result = checker._check_buten(sample_df_refference, df_requests_row)
+        result = checker._check_buten(sample_df_reference, df_requests_row)
         assert not result
 
-class TestCheckExistsRefferenceRecordCheckKa:
-    """CheckExistsRefferenceRecordの_check_kaメソッドのテスト
+class TestCheckExistsReferenceRecordCheckKa:
+    """CheckExistsReferenceRecordの_check_kaメソッドのテスト
 
     テスト構造:
     ├── C0: 基本機能テスト
@@ -1268,7 +1268,7 @@ class TestCheckExistsRefferenceRecordCheckKa:
         log_msg(f"test end\n{'-'*80}\n", LogLevel.INFO)
 
     @pytest.fixture
-    def sample_df_refference(self):
+    def sample_df_reference(self):
         return pd.DataFrame({
             'branch_code_bpr': ['1234', '5678', '56789', '90123'],
             'branch_code_jinji': ['1234', '5678', '56789', '90123'],
@@ -1283,9 +1283,9 @@ class TestCheckExistsRefferenceRecordCheckKa:
             'target_org': ['部店', '課'],
             'section_gr_code': ['A001', 'C003']
         })
-        return CheckExistsRefferenceRecord('1234', df_requests)
+        return CheckExistsReferenceRecord('1234', df_requests)
 
-    def test_check_ka_C0_4digit_match(self, checker, sample_df_refference):
+    def test_check_ka_C0_4digit_match(self, checker, sample_df_reference):
         test_doc = """テスト内容:
         
         - テストカテゴリ: C0
@@ -1295,10 +1295,10 @@ class TestCheckExistsRefferenceRecordCheckKa:
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
         df_requests_row = pd.Series({'branch_code': '1234', 'section_gr_code': 'A001'})
-        result = checker._check_ka(sample_df_refference, df_requests_row)
+        result = checker._check_ka(sample_df_reference, df_requests_row)
         assert result
 
-    def test_check_ka_C0_5digit_match(self, checker, sample_df_refference):
+    def test_check_ka_C0_5digit_match(self, checker, sample_df_reference):
         test_doc = """テスト内容:
         
         - テストカテゴリ: C0
@@ -1308,10 +1308,10 @@ class TestCheckExistsRefferenceRecordCheckKa:
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
         df_requests_row = pd.Series({'branch_code': '56789', 'section_gr_code': 'C003'})
-        result = checker._check_ka(sample_df_refference, df_requests_row)
+        result = checker._check_ka(sample_df_reference, df_requests_row)
         assert result
 
-    def test_check_ka_C0_no_match(self, checker, sample_df_refference):
+    def test_check_ka_C0_no_match(self, checker, sample_df_reference):
         test_doc = """テスト内容:
         
         - テストカテゴリ: C0
@@ -1321,10 +1321,10 @@ class TestCheckExistsRefferenceRecordCheckKa:
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
         df_requests_row = pd.Series({'branch_code': '9999', 'section_gr_code': 'X999'})
-        result = checker._check_ka(sample_df_refference, df_requests_row)
+        result = checker._check_ka(sample_df_reference, df_requests_row)
         assert not result
 
-    def test_check_ka_C1_4digit(self, checker, sample_df_refference):
+    def test_check_ka_C1_4digit(self, checker, sample_df_reference):
         test_doc = """テスト内容:
         
         - テストカテゴリ: C1
@@ -1334,10 +1334,10 @@ class TestCheckExistsRefferenceRecordCheckKa:
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
         df_requests_row = pd.Series({'branch_code': '1234', 'section_gr_code': 'A001'})
-        result = checker._check_ka(sample_df_refference, df_requests_row)
+        result = checker._check_ka(sample_df_reference, df_requests_row)
         assert result
 
-    def test_check_ka_C1_5digit(self, checker, sample_df_refference):
+    def test_check_ka_C1_5digit(self, checker, sample_df_reference):
         test_doc = """テスト内容:
         
         - テストカテゴリ: C1
@@ -1347,10 +1347,10 @@ class TestCheckExistsRefferenceRecordCheckKa:
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
         df_requests_row = pd.Series({'branch_code': '56789', 'section_gr_code': 'C003'})
-        result = checker._check_ka(sample_df_refference, df_requests_row)
+        result = checker._check_ka(sample_df_reference, df_requests_row)
         assert result
 
-    def test_check_ka_C1_invalid_length(self, checker, sample_df_refference):
+    def test_check_ka_C1_invalid_length(self, checker, sample_df_reference):
         test_doc = """テスト内容:
         
         - テストカテゴリ: C1
@@ -1360,10 +1360,10 @@ class TestCheckExistsRefferenceRecordCheckKa:
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
         df_requests_row = pd.Series({'branch_code': '123', 'section_gr_code': 'A001'})
-        result = checker._check_ka(sample_df_refference, df_requests_row)
+        result = checker._check_ka(sample_df_reference, df_requests_row)
         assert not result
 
-    def test_check_ka_C2_4digit_section_group_match(self, checker, sample_df_refference):
+    def test_check_ka_C2_4digit_section_group_match(self, checker, sample_df_reference):
         test_doc = """テスト内容:
         
         - テストカテゴリ: C2
@@ -1373,10 +1373,10 @@ class TestCheckExistsRefferenceRecordCheckKa:
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
         df_requests_row = pd.Series({'branch_code': '1234', 'section_gr_code': 'A001'})
-        result = checker._check_ka(sample_df_refference, df_requests_row)
+        result = checker._check_ka(sample_df_reference, df_requests_row)
         assert result
 
-    def test_check_ka_C2_4digit_section_group_mismatch(self, checker, sample_df_refference):
+    def test_check_ka_C2_4digit_section_group_mismatch(self, checker, sample_df_reference):
         test_doc = """テスト内容:
         
         - テストカテゴリ: C2
@@ -1386,10 +1386,10 @@ class TestCheckExistsRefferenceRecordCheckKa:
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
         df_requests_row = pd.Series({'branch_code': '1234', 'section_gr_code': 'X999'})
-        result = checker._check_ka(sample_df_refference, df_requests_row)
+        result = checker._check_ka(sample_df_reference, df_requests_row)
         assert not result
 
-    def test_check_ka_C2_4digit_no_match(self, checker, sample_df_refference):
+    def test_check_ka_C2_4digit_no_match(self, checker, sample_df_reference):
         test_doc = """テスト内容:
         
         - テストカテゴリ: C2
@@ -1399,10 +1399,10 @@ class TestCheckExistsRefferenceRecordCheckKa:
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
         df_requests_row = pd.Series({'branch_code': '9999', 'section_gr_code': 'A001'})
-        result = checker._check_ka(sample_df_refference, df_requests_row)
+        result = checker._check_ka(sample_df_reference, df_requests_row)
         assert not result
 
-    def test_check_ka_C2_5digit_section_gr_match(self, checker, sample_df_refference):
+    def test_check_ka_C2_5digit_section_gr_match(self, checker, sample_df_reference):
         test_doc = """テスト内容:
         
         - テストカテゴリ: C2
@@ -1412,10 +1412,10 @@ class TestCheckExistsRefferenceRecordCheckKa:
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
         df_requests_row = pd.Series({'branch_code': '56789', 'section_gr_code': 'C003'})
-        result = checker._check_ka(sample_df_refference, df_requests_row)
+        result = checker._check_ka(sample_df_reference, df_requests_row)
         assert result
 
-    def test_check_ka_C2_5digit_section_gr_mismatch(self, checker, sample_df_refference):
+    def test_check_ka_C2_5digit_section_gr_mismatch(self, checker, sample_df_reference):
         test_doc = """テスト内容:
         
         - テストカテゴリ: C2
@@ -1425,10 +1425,10 @@ class TestCheckExistsRefferenceRecordCheckKa:
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
         df_requests_row = pd.Series({'branch_code': '56789', 'section_gr_code': 'X999'})
-        result = checker._check_ka(sample_df_refference, df_requests_row)
+        result = checker._check_ka(sample_df_reference, df_requests_row)
         assert not result
 
-    def test_check_ka_C2_5digit_no_match(self, checker, sample_df_refference):
+    def test_check_ka_C2_5digit_no_match(self, checker, sample_df_reference):
         test_doc = """テスト内容:
         
         - テストカテゴリ: C2
@@ -1438,12 +1438,12 @@ class TestCheckExistsRefferenceRecordCheckKa:
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
         df_requests_row = pd.Series({'branch_code': '99999', 'section_gr_code': 'A001'})
-        result = checker._check_ka(sample_df_refference, df_requests_row)
+        result = checker._check_ka(sample_df_reference, df_requests_row)
         assert not result
 
 
-class TestCheckExistsRefferenceRecordCheckSpecialCases:
-    """CheckExistsRefferenceRecordの_check_special_casesメソッドのテスト
+class TestCheckExistsReferenceRecordCheckSpecialCases:
+    """CheckExistsReferenceRecordの_check_special_casesメソッドのテスト
 
     テスト構造:
     ├── C0: 基本機能テスト
@@ -1470,7 +1470,7 @@ class TestCheckExistsRefferenceRecordCheckSpecialCases:
         log_msg(f"test end\n{'-'*80}\n", LogLevel.INFO)
 
     @pytest.fixture
-    def sample_df_refference(self):
+    def sample_df_reference(self):
         return pd.DataFrame({
             'branch_code_bpr': ['1234', '5678', '78180', '90123'],
             'branch_code_jinji': ['1234', '5678', '78180', '90123'],
@@ -1485,9 +1485,9 @@ class TestCheckExistsRefferenceRecordCheckSpecialCases:
             'target_org': ['部店', '課'],
             'section_gr_code': ['A001', '7818C']
         })
-        return CheckExistsRefferenceRecord('1234', df_requests)
+        return CheckExistsReferenceRecord('1234', df_requests)
 
-    def test_check_special_cases_C0_all_checkers_called(self, checker, sample_df_refference):
+    def test_check_special_cases_C0_all_checkers_called(self, checker, sample_df_reference):
         test_doc = """テスト内容:
         
         - テストカテゴリ: C0
@@ -1501,12 +1501,12 @@ class TestCheckExistsRefferenceRecordCheckSpecialCases:
         checker.special_case_checkers = [mock_checker1, mock_checker2]
 
         df_requests_row = pd.Series({'branch_code': '1234', 'section_gr_code': 'A001'})
-        checker._check_special_cases(sample_df_refference, df_requests_row)
+        checker._check_special_cases(sample_df_reference, df_requests_row)
 
-        mock_checker1.check.assert_called_once_with(sample_df_refference, df_requests_row)
-        mock_checker2.check.assert_called_once_with(sample_df_refference, df_requests_row)
+        mock_checker1.check.assert_called_once_with(sample_df_reference, df_requests_row)
+        mock_checker2.check.assert_called_once_with(sample_df_reference, df_requests_row)
 
-    def test_check_special_cases_C0_empty_checkers(self, checker, sample_df_refference):
+    def test_check_special_cases_C0_empty_checkers(self, checker, sample_df_reference):
         test_doc = """テスト内容:
         
         - テストカテゴリ: C0
@@ -1519,9 +1519,9 @@ class TestCheckExistsRefferenceRecordCheckSpecialCases:
         df_requests_row = pd.Series({'branch_code': '1234', 'section_gr_code': 'A001'})
         
         # 例外が発生しないことを確認
-        checker._check_special_cases(sample_df_refference, df_requests_row)
+        checker._check_special_cases(sample_df_reference, df_requests_row)
 
-    def test_check_special_cases_C1_multiple_checkers(self, checker, sample_df_refference):
+    def test_check_special_cases_C1_multiple_checkers(self, checker, sample_df_reference):
         test_doc = """テスト内容:
         
         - テストカテゴリ: C1
@@ -1536,13 +1536,13 @@ class TestCheckExistsRefferenceRecordCheckSpecialCases:
         checker.special_case_checkers = [mock_checker1, mock_checker2, mock_checker3]
 
         df_requests_row = pd.Series({'branch_code': '1234', 'section_gr_code': 'A001'})
-        checker._check_special_cases(sample_df_refference, df_requests_row)
+        checker._check_special_cases(sample_df_reference, df_requests_row)
 
-        mock_checker1.check.assert_called_once_with(sample_df_refference, df_requests_row)
-        mock_checker2.check.assert_called_once_with(sample_df_refference, df_requests_row)
-        mock_checker3.check.assert_called_once_with(sample_df_refference, df_requests_row)
+        mock_checker1.check.assert_called_once_with(sample_df_reference, df_requests_row)
+        mock_checker2.check.assert_called_once_with(sample_df_reference, df_requests_row)
+        mock_checker3.check.assert_called_once_with(sample_df_reference, df_requests_row)
 
-    def test_check_special_cases_C2_real_case7818(self, checker, sample_df_refference):
+    def test_check_special_cases_C2_real_case7818(self, checker, sample_df_reference):
         test_doc = """テスト内容:
         
         - テストカテゴリ: C2
@@ -1556,11 +1556,11 @@ class TestCheckExistsRefferenceRecordCheckSpecialCases:
         checker.special_case_checkers = [real_checker, mock_checker]
 
         df_requests_row = pd.Series({'branch_code': '78180', 'section_gr_code': '7818C'})
-        checker._check_special_cases(sample_df_refference, df_requests_row)
+        checker._check_special_cases(sample_df_reference, df_requests_row)
 
-        mock_checker.check.assert_called_once_with(sample_df_refference, df_requests_row)
+        mock_checker.check.assert_called_once_with(sample_df_reference, df_requests_row)
 
-    def test_check_special_cases_C2_mixed_checkers(self, checker, sample_df_refference):
+    def test_check_special_cases_C2_mixed_checkers(self, checker, sample_df_reference):
         test_doc = """テスト内容:
         
         - テストカテゴリ: C2
@@ -1570,7 +1570,7 @@ class TestCheckExistsRefferenceRecordCheckSpecialCases:
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
         class DummyChecker:
-            def check(self, df_refference, df_requests_row):
+            def check(self, df_reference, df_requests_row):
                 pass
 
         real_checker = Case7818Checker()
@@ -1579,6 +1579,6 @@ class TestCheckExistsRefferenceRecordCheckSpecialCases:
         checker.special_case_checkers = [real_checker, dummy_checker, mock_checker]
 
         df_requests_row = pd.Series({'branch_code': '1234', 'section_gr_code': 'A001'})
-        checker._check_special_cases(sample_df_refference, df_requests_row)
+        checker._check_special_cases(sample_df_reference, df_requests_row)
 
-        mock_checker.check.assert_called_once_with(sample_df_refference, df_requests_row)
+        mock_checker.check.assert_called_once_with(sample_df_reference, df_requests_row)

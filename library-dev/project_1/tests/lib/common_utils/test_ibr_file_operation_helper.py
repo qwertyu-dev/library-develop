@@ -616,6 +616,7 @@ class Test_move_file:
         rc, _new_file_path = move_file(
             file_path,
             target_dir,
+            with_timestamp=False,
             )
 
         # キャプチャされたログメッセージを取得
@@ -670,6 +671,7 @@ class Test_move_file:
         rc, _new_file_path = move_file(
             file_path,
             target_dir,
+            with_timestamp=False,
             )
 
         # キャプチャされたログメッセージを取得
@@ -1242,7 +1244,8 @@ class Test_copy_file:
         rc, _new_file_path = copy_file(
             file_path,
             target_dir,
-            with_timestamp=True)
+            with_timestamp=True,
+            )
 
         # キャプチャされたログメッセージを取得
         captured_logs = caplog.text
@@ -1252,11 +1255,13 @@ class Test_copy_file:
         # ファイル名に . を含むためescapeする必要があります
         # {}は正規表現では特殊な意味を持つため、{}自体を文字列に含める場合は{{}}と書く必要があります
         original_filename = re.escape(file_path.name)
-        match = re.search(rf'^{original_filename}_(\d{{8}}_\d{{6}})$', _new_file_path.name)
+        original_file_name, original_file_extension = original_filename.rsplit('.', 1)
+        match = re.search(rf'^{original_file_name}_(\d{{8}}_\d{{6}})\.{original_file_extension}$', _new_file_path.name)
 
         log_msg(f'file_path.name : {file_path.name}', LogLevel.INFO)
         log_msg(f'original_filename : {original_filename}', LogLevel.INFO)
-        log_msg(rf'^{original_filename}_(\d{{8}}_\d{{6}})$', LogLevel.INFO)
+        log_msg(f'new_filename_path : {_new_file_path}', LogLevel.INFO)
+        log_msg(f'^{original_file_name}_(\d{{8}}_\d{{6}})\.{original_file_extension}$', LogLevel.INFO)
 
         # ログメッセージが期待通りのものか確認
         assert rc is True
@@ -1595,7 +1600,8 @@ class Test_copy_file:
         # ファイル名に . を含むためescapeする必要があります
         # {}は正規表現では特殊な意味を持つため、{}自体を文字列に含める場合は{{}}と書く必要があります
         original_filename = re.escape(file_path.name)
-        match = re.search(rf'^{original_filename}_(\d{{8}}_\d{{6}})$', _new_file_path.name)
+        original_file_name, original_file_extension = original_filename.rsplit('.', 1)
+        match = re.search(rf'^{original_file_name}_(\d{{8}}_\d{{6}})\.{original_file_extension}$', _new_file_path.name)
 
         log_msg(f'file_path.name : {file_path.name}', LogLevel.INFO)
         log_msg(f'original_filename : {original_filename}', LogLevel.INFO)
