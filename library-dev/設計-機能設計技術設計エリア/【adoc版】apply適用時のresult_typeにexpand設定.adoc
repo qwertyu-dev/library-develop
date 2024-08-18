@@ -1,0 +1,120 @@
+= Pandas apply() 関数使用ガイドライン
+
+== 概要
+
+Pandasの`apply()`関数は強力なツールですが、その使用方法によって結果の形式が大きく変わる可能性があります。このガイドラインでは、`apply()`関数を使用する際の推奨プラクティス、特に`result_type='expand'`パラメータの使用に関する方針を説明します。
+
+== `apply()` 関数の基本的な使用
+
+`apply()` 関数は、DataFrameの各行または各列に対して関数を適用するために使用されます。基本的な使用方法は以下の通りです：
+
+[source,python]
+----
+import pandas as pd
+
+df = pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6]})
+
+def my_func(row):
+    return row['A'] * 2, row['B'] * 3
+
+result = df.apply(my_func, axis=1)
+----
+
+== `result_type='expand'` の重要性
+
+`apply()`関数を使用する際、特に関数が複数の値を返す場合、`result_type='expand'`パラメータの使用を強く推奨します。このパラメータは、返される複数の値を別々の列に展開します。
+
+=== `result_type='expand'` を使用しない場合：
+
+[source,python]
+----
+result = df.apply(my_func, axis=1)
+print(result)
+----
+
+出力：
+[source,text]
+----
+0    (2, 12)
+1    (4, 15)
+2    (6, 18)
+dtype: object
+----
+
+この場合、結果はSeries型となり、各要素がタプルになります。
+
+=== `result_type='expand'` を使用した場合：
+
+[source,python]
+----
+result = df.apply(my_func, axis=1, result_type='expand')
+print(result)
+----
+
+出力：
+[source,text]
+----
+   0   1
+0  2  12
+1  4  15
+2  6  18
+----
+
+この場合、結果はDataFrame型となり、各返り値が別々の列に展開されます。
+
+== ガイドライン
+
+1. 複数の値を返す関数を`apply()`で使用する場合は、常に`result_type='expand'`を指定してください。
+2. `result_type='expand'`を使用する際は、返される値の数が一定であることを確認してください。
+3. 返される値にはわかりやすい名前を付けることを推奨します。例えば：
++
+[source,python]
+----
+result = df.apply(my_func, axis=1, result_type='expand')
+result.columns = ['doubled_A', 'tripled_B']
+----
+
+4. 単一の値を返す関数を使用する場合は、`result_type='expand'`は必要ありません。
+
+== 注意点
+
+- `result_type='expand'`を使用すると、結果は常にDataFrameになります。これにより、後続の処理が簡単になりますが、型の一貫性に注意してください。
+- パフォーマンスに敏感な場合は、`apply()`の代わりにベクトル化された操作を検討してください。
+
+== 追加情報：ベクトル化操作
+
+`apply()`関数は柔軟性が高いですが、大きなデータセットでは効率が低下する可能性があります。ベクトル化操作は、多くの場合`apply()`よりも高速で効率的です。
+
+=== ベクトル化操作の例
+
+[source,python]
+----
+import pandas as pd
+import numpy as np
+
+df = pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6]})
+
+# apply()を使用した場合
+def my_func(row):
+    return row['A'] * 2, row['B'] * 3
+
+result_apply = df.apply(my_func, axis=1, result_type='expand')
+
+# ベクトル化操作を使用した場合
+result_vectorized = pd.DataFrame({
+    'doubled_A': df['A'] * 2,
+    'tripled_B': df['B'] * 3
+})
+
+print(result_vectorized)
+----
+
+=== ベクトル化のベストプラクティス
+
+1. 可能な限りPandasやNumPyの組み込み関数を使用する
+2. カスタム関数を使用する場合は、NumPyのufuncを検討する
+3. 大規模なデータセットでは、チャンク処理を検討する
+4. パフォーマンスをモニタリングする
+5. 複雑な操作は、可能な限り単純な操作に分解する
+
+NOTE: ベクトル化操作を適切に使用することで、多くの場合、コードの可読性を維持しながらパフォーマンスを大幅に向上させることができます。ただし、非常に複雑な操作や、行ごとに異なる処理が必要な場合は、`apply()`の使用が適切な場合もあることに注意してください。
