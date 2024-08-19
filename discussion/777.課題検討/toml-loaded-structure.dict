@@ -1,0 +1,38 @@
+{
+    "blacklist": [
+        {
+            "branch_code": "12345",
+            "section_gr_code": "67890",
+            "conditions": [
+                {
+                    "application_type": "1",
+                    "target_org": "部店",
+                    "alert_message": "この部店・課Grの新設申請には特別な承認が必要です。",
+                    "action_required": "人事部門の責任者に連絡し、特別承認プロセスを実施してください。"
+                },
+                {
+                    "application_type": "2",
+                    "target_org": "課",
+                    "alert_message": "この部店・課Grの変更申請には追加の確認が必要です。",
+                    "action_required": "コンプライアンス部門に連絡し、変更内容の詳細レビューを行ってください。"
+                }
+            ]
+        },
+        {
+            "branch_code": "54321",
+            "section_gr_code": "09876",
+            "conditions": [
+                {
+                    "application_type": "3",
+                    "alert_message": "この部店・課Grの廃止申請には特別な手続きが必要です。",
+                    "action_required": "経営企画部門に連絡し、廃止に伴う影響評価を実施してください。"
+                },
+                {
+                    "bpr_target_flag": "1",
+                    "alert_message": "この部店・課GrはBPR対象であるため、特別な配慮が必要です。",
+                    "action_required": "BPR推進部門に連絡し、変更内容がBPR計画に与える影響を確認してください。"
+                }
+            ]
+        }
+    ]
+}
