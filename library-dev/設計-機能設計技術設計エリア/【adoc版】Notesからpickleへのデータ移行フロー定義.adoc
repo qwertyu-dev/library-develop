@@ -1,0 +1,640 @@
+= データ移行システム機能設計書
+
+== データ移行プロセス
+
+=== 全体フロー
+
+データ移行プロセスは以下の手順で実施します：
+
+1. Notes/Dominoテーブルからのデータ抽出
+2. 抽出データのCSVファイルへの変換
+3. PandasによるCSVファイルの読み込みと処理
+4. 処理済みデータのPickleファイルへの保存
+
+[plantuml]
+----
+@startuml
+skinparam activityDiamondAspectRatio 0.8
+skinparam activityDiamondFontSize 10
+start
+:Notes/Dominoテーブルからデータ抽出;
+:CSVファイルへ変換;
+:Pandasを使用してCSVファイル読み込み;
+repeat
+  :データマッピングとトランスフォーメーション;
+  fork
+    :カラムマッピング適用;
+  fork again
+    :データ型変換;
+  fork again
+    :新規カラム追加と初期値設定;
+  fork again
+    :不要カラム削除;
+  end fork
+  :Null値と欠損データの処理;
+  if (Null値や欠損データあり?) then (yes)
+    :欠損値処理戦略適用;
+  else (no)
+  endif
+  :データバリデーション;
+repeat while (バリデーション失敗?) is (yes) not (no)
+:Pickleファイルへ保存;
+:データバージョン管理;
+stop
+@enduml
+----
+
+このフローにより、既存のNotes/Dominoシステムから新システムへのスムーズなデータ移行を実現します。
+
+=== Notes/Dominoテーブルからの抽出
+
+- Notes/Dominoデータベースに対してSQL問い合わせを実行し、必要なデータを抽出します。
+- 抽出時には、文字エンコーディングをUTF-8に統一します。
+- 日付・時刻データはISO形式（YYYY-MM-DD HH:MM:SS）で抽出します。
+
+=== CSVファイルへの変換
+
+- 抽出したデータをCSV形式に変換します。
+- CSVファイルの仕様：
+  * 区切り文字: カンマ（,）
+  * 文字コード: UTF-8
+  * 1行目をヘッダーとし、カラム名を記述
+  * 特殊文字（カンマ、改行など）を含むフィールドはダブルクォートで囲む
+
+=== Pandasを使用したデータ処理
+
+- pandas.read_csv()関数を使用してCSVファイルを読み込みます。
+- 読み込み時のオプション：
+  * na_values: ['', 'NULL', 'N/A']  // Null値として扱う文字列を指定
+  * dtype: 各カラムのデータ型を指定（パフォーマンス向上のため）
+- 大規模データセットの場合は、chunksize引数を使用して分割読み込みを行います。
+
+=== Pickleファイルへの保存
+
+- 処理済みのDataFrameをPickle形式で保存します。
+- pandas.to_pickle()関数を使用し、圧縮オプションを有効にします。
+- 保存例：
+
+[source,python]
+----
+df.to_pickle('output_data.pkl', compression='gzip')
+----
+
+== データマッピングとトランスフォーメーション
+
+=== カラムマッピング定義
+
+旧システム（Notes/Domino）のカラムと新システムのカラムとのマッピングを以下のように定義します：
+
+[source,python]
+----
+column_mapping = {
+    'old_column1': 'new_column1',
+    'old_column2': 'new_column2',
+    'old_column3': 'new_column3',
+    # ... 他のマッピングを追加
+}
+----
+
+このマッピングは、データ処理時に以下のように適用します：
+
+[source,python]
+----
+df = df.rename(columns=column_mapping)
+----
+
+=== データ型変換
+
+各カラムのデータ型を適切に変換します。データ型の定義は以下の通りです：
+
+[source,python]
+----
+dtype_mapping = {
+    'new_column1': 'int64',
+    'new_column2': 'float64',
+    'new_column3': 'datetime64[ns]',
+    'new_column4': 'str',
+    # ... 他のデータ型定義を追加
+}
+----
+
+データ型の変換は以下のように実施します：
+
+[source,python]
+----
+for col, dtype in dtype_mapping.items():
+    df[col] = df[col].astype(dtype)
+----
+
+=== 新規カラムの追加と初期値設定
+
+新システムで必要となる新規カラムを追加し、適切な初期値を設定します：
+
+[source,python]
+----
+new_columns = {
+    'new_column5': {'default_value': 0, 'dtype': 'int64'},
+    'new_column6': {'default_value': 'Unknown', 'dtype': 'str'},
+    'new_column7': {'default_value': pd.Timestamp.now(), 'dtype': 'datetime64[ns]'},
+    # ... 他の新規カラムを追加
+}
+
+for col, info in new_columns.items():
+    df[col] = info['default_value']
+    df[col] = df[col].astype(info['dtype'])
+----
+
+=== 不要カラムの削除
+
+新システムで不要となるカラムを削除します：
+
+[source,python]
+----
+columns_to_drop = ['old_unnecessary_column1', 'old_unnecessary_column2']
+df = df.drop(columns=columns_to_drop)
+----
+
+トランスフォーメーション処理の全体フロー：
+
+1. カラムのリネーム（マッピングの適用）
+2. データ型の変換
+3. 新規カラムの追加と初期値設定
+4. 不要カラムの削除
+
+これらの処理を実行する関数を以下のように定義します：
+
+[source,python]
+----
+def transform_data(df, column_mapping, dtype_mapping, new_columns, columns_to_drop):
+    df = df.rename(columns=column_mapping)
+    
+    for col, dtype in dtype_mapping.items():
+        df[col] = df[col].astype(dtype)
+    
+    for col, info in new_columns.items():
+        df[col] = info['default_value']
+        df[col] = df[col].astype(info['dtype'])
+    
+    df = df.drop(columns=columns_to_drop)
+    
+    return df
+----
+
+この関数を使用してデータ変換を一括で行うことができます。
+
+== Null値と欠損データの処理
+
+=== Null値の検出と報告
+
+Null値や欠損データを適切に処理するため、まず現状を把握します。以下の関数を使用してNull値の検出と報告を行います：
+
+[source,python]
+----
+def report_missing_values(df):
+    missing = df.isnull().sum()
+    missing_percent = 100 * df.isnull().sum() / len(df)
+    missing_table = pd.concat([missing, missing_percent], axis=1, keys=['Missing Values', '% of Total Values'])
+    missing_table = missing_table[missing_table['Missing Values'] > 0].sort_values('% of Total Values', ascending=False)
+    print(missing_table)
+    return missing_table
+----
+
+この関数を使用して、データ処理の前後でNull値の状況を確認します。
+
+=== 欠損値の処理戦略
+
+欠損値の処理には以下の戦略を採用します：
+
+1. 削除: 重要なカラムにNullが含まれる行を削除
+2. 固定値での埋め込み: 特定のカラムのNullを事前定義した値で置換
+3. 統計値での埋め込み: 数値カラムのNullを平均値や中央値で置換
+4. 前後の値での補間: 時系列データなどで、前後の値を使用して補間
+
+これらの戦略を実装する関数を以下のように定義します：
+
+[source,python]
+----
+def handle_missing_values(df, strategies):
+    for column, strategy in strategies.items():
+        if strategy == 'drop':
+            df = df.dropna(subset=[column])
+        elif strategy == 'fill_value':
+            df[column] = df[column].fillna(strategies[column]['value'])
+        elif strategy == 'mean':
+            df[column] = df[column].fillna(df[column].mean())
+        elif strategy == 'median':
+            df[column] = df[column].fillna(df[column].median())
+        elif strategy == 'interpolate':
+            df[column] = df[column].interpolate()
+    return df
+----
+
+=== カラム別の処理方針
+
+各カラムに対する欠損値処理の方針を以下のように定義します：
+
+[source,python]
+----
+missing_value_strategies = {
+    'column1': 'drop',
+    'column2': {'strategy': 'fill_value', 'value': 0},
+    'column3': 'mean',
+    'column4': 'median',
+    'column5': 'interpolate',
+    # ... 他のカラムの処理方針を追加
+}
+----
+
+この定義を使用して、欠損値処理を実行します：
+
+[source,python]
+----
+df = handle_missing_values(df, missing_value_strategies)
+----
+
+処理の流れ：
+
+1. データフレームの読み込み後、report_missing_values()を使用して初期状態を確認
+2. handle_missing_values()を使用して欠損値を処理
+3. 再度report_missing_values()を使用して処理後の状態を確認
+
+注意事項：
+
+- 欠損値の処理方針は、ビジネス要件やデータの性質に基づいて慎重に決定する必要があります。
+- 処理前後でデータの分布や統計的特性が大きく変化していないか確認することが重要です。
+- 欠損値の処理方法によっては、後続の分析や予測モデルに影響を与える可能性があるため、その影響を考慮して選択する必要があります。
+
+== データバリデーションと品質管理
+
+=== 入力データの検証
+
+データ変換プロセスの信頼性を確保するため、入力データの検証を行います。Pandasとpydanticを使用して、以下の検証を実施します。
+
+[source,python]
+----
+from pydantic import BaseModel, validator
+from typing import List, Optional
+
+class InputData(BaseModel):
+    column1: int
+    column2: float
+    column3: str
+    column4: Optional[str]
+    
+    @validator('column1')
+    def check_column1(cls, v):
+        if v < 0:
+            raise ValueError('column1 must be non-negative')
+        return v
+    
+    @validator('column3')
+    def check_column3(cls, v):
+        if len(v) > 50:
+            raise ValueError('column3 must not exceed 50 characters')
+        return v
+
+def validate_input_data(df):
+    errors = []
+    for index, row in df.iterrows():
+        try:
+            InputData(**row.to_dict())
+        except ValueError as e:
+            errors.append(f"Row {index}: {str(e)}")
+    
+    if errors:
+        raise ValueError(f"Validation errors:\n" + "\n".join(errors))
+----
+
+この関数を使用して、データ処理の前に入力データの検証を行います。
+
+=== 変換後データの検証
+
+データ変換後、出力データが期待される形式と制約を満たしているか確認します。
+
+[source,python]
+----
+def validate_output_data(df):
+    # 必須カラムの存在確認
+    required_columns = ['new_column1', 'new_column2', 'new_column3']
+    missing_columns = set(required_columns) - set(df.columns)
+    if missing_columns:
+        raise ValueError(f"Missing required columns: {missing_columns}")
+    
+    # データ型の確認
+    expected_dtypes = {
+        'new_column1': 'int64',
+        'new_column2': 'float64',
+        'new_column3': 'datetime64[ns]'
+    }
+    for col, dtype in expected_dtypes.items():
+        if df[col].dtype != dtype:
+            raise ValueError(f"Column {col} has incorrect dtype. Expected {dtype}, got {df[col].dtype}")
+    
+    # 値の範囲チェック
+    if df['new_column1'].min() < 0 or df['new_column1'].max() > 100:
+        raise ValueError("new_column1 values must be between 0 and 100")
+    
+    # ユニーク制約の確認
+    if df['new_column2'].duplicated().any():
+        raise ValueError("new_column2 must contain unique values")
+
+    print("Output data validation passed successfully.")
+----
+
+=== エラー処理とログ記録
+
+データ処理中に発生したエラーを適切に処理し、ログに記録します。
+
+[source,python]
+----
+import logging
+
+logging.basicConfig(filename='data_processing.log', level=logging.INFO,
+                    format='%(asctime)s - %(levelname)s - %(message)s')
+
+def process_data_with_error_handling(input_file, output_file):
+    try:
+        # データの読み込み
+        df = pd.read_csv(input_file)
+        logging.info(f"Data loaded from {input_file}")
+
+        # 入力データの検証
+        validate_input_data(df)
+        logging.info("Input data validation passed")
+
+        # データの変換
+        df = transform_data(df, column_mapping, dtype_mapping, new_columns, columns_to_drop)
+        logging.info("Data transformation completed")
+
+        # Null値と欠損データの処理
+        df = handle_missing_values(df, missing_value_strategies)
+        logging.info("Missing value handling completed")
+
+        # 出力データの検証
+        validate_output_data(df)
+
+        # データの保存
+        df.to_pickle(output_file)
+        logging.info(f"Data saved to {output_file}")
+
+    except ValueError as e:
+        logging.error(f"Validation error: {str(e)}")
+        raise
+    except Exception as e:
+        logging.error(f"Unexpected error: {str(e)}")
+        raise
+----
+
+この関数を使用することで、データ処理の各段階でエラーハンドリングとログ記録を行いながら、一連の処理を実行することができます。
+
+品質管理のベストプラクティス：
+
+1. 定期的なデータプロファイリングの実施
+2. 自動化されたデータ品質チェックの導入
+3. データ品質指標（DQI）の設定と監視
+4. 異常値検出アルゴリズムの導入
+5. データ変換ルールのバージョン管理
+6. 定期的なデータサンプリング検査の実施
+
+これらの施策により、データの品質と整合性を継続的に維持・向上させることができます。
+
+== データバージョン管理と保管
+
+=== バージョン管理戦略
+
+データの変更履歴を追跡し、必要に応じて過去のバージョンを復元できるよう、以下のバージョン管理戦略を採用します。
+
+1. セマンティックバージョニング:
+   * メジャー.マイナー.パッチ形式（例：1.2.3）を使用
+   * メジャー：データスキーマの大幅な変更
+   * マイナー：後方互換性のある変更
+   * パッチ：バグ修正や小規模な調整
+
+2. 日付ベースのバージョニング:
+   * YYYYMMDD_HHMMSS形式を使用
+   * 各データセットに一意のタイムスタンプを付与
+
+バージョン管理を実装する基本的なクラスを以下に示します：
+
+[source,python]
+----
+import os
+import json
+from datetime import datetime
+
+class DataVersionManager:
+    def __init__(self, storage_path):
+        self.storage_path = storage_path
+        os.makedirs(storage_path, exist_ok=True)
+    
+    def save_version(self, data, metadata):
+        version = metadata.get('version', self._generate_version())
+        timestamp = datetime.now().isoformat()
+        
+        version_info = {
+            'version': version,
+            'timestamp': timestamp,
+            'metadata': metadata
+        }
+        
+        version_file = os.path.join(self.storage_path, f"{version}.json")
+        data_file = os.path.join(self.storage_path, f"{version}.pkl")
+        
+        with open(version_file, 'w') as f:
+            json.dump(version_info, f, indent=2)
+        
+        data.to_pickle(data_file)
+        
+        return version
+    
+    def _generate_version(self):
+        return datetime.now().strftime("%Y%m%d_%H%M%S")
+    
+    def load_version(self, version):
+        version_file = os.path.join(self.storage_path, f"{version}.json")
+        data_file = os.path.join(self.storage_path, f"{version}.pkl")
+        
+        if not os.path.exists(version_file) or not os.path.exists(data_file):
+            raise ValueError(f"Version {version} not found")
+        
+        with open(version_file, 'r') as f:
+            version_info = json.load(f)
+        
+        data = pd.read_pickle(data_file)
+        
+        return data, version_info
+----
+
+=== メタデータ管理
+
+各バージョンに関する以下の情報をメタデータとして記録します：
+
+1. バージョン番号
+2. タイムスタンプ
+3. 作成者
+4. 変更内容の概要
+5. 関連するチケット番号やプロジェクト識別子
+6. 使用したデータ処理スクリプトのバージョン
+
+メタデータの例：
+
+[source,python]
+----
+metadata = {
+    'version': '1.0.0',
+    'created_by': 'data_engineer@example.com',
+    'description': 'Initial data migration from Notes/Domino',
+    'ticket': 'PROJ-123',
+    'script_version': '0.1.0'
+}
+----
+
+=== ストレージ戦略
+
+データとメタデータを効率的に保管するため、以下のストレージ戦略を採用します：
+
+1. ローカルストレージ:
+   * 開発環境や小規模データセット用
+   * パス：`/path/to/data/versions/`
+
+2. クラウドストレージ:
+   * 本番環境や大規模データセット用
+   * Amazon S3やGoogle Cloud Storageを使用
+
+クラウドストレージを使用する場合の実装例（AWS S3を使用）：
+
+[source,python]
+----
+import boto3
+
+class S3DataVersionManager(DataVersionManager):
+    def __init__(self, bucket_name, prefix):
+        self.s3 = boto3.client('s3')
+        self.bucket_name = bucket_name
+        self.prefix = prefix
+    
+    def save_version(self, data, metadata):
+        version = super().save_version(data, metadata)
+        
+        version_key = f"{self.prefix}/{version}.json"
+        data_key = f"{self.prefix}/{version}.pkl"
+        
+        self.s3.upload_file(f"{self.storage_path}/{version}.json", self.bucket_name, version_key)
+        self.s3.upload_file(f"{self.storage_path}/{version}.pkl", self.bucket_name, data_key)
+        
+        return version
+    
+    def load_version(self, version):
+        version_key = f"{self.prefix}/{version}.json"
+        data_key = f"{self.prefix}/{version}.pkl"
+        
+        self.s3.download_file(self.bucket_name, version_key, f"{self.storage_path}/{version}.json")
+        self.s3.download_file(self.bucket_name, data_key, f"{self.storage_path}/{version}.pkl")
+        
+        return super().load_version(version)
+----
+
+=== アクセス制御とセキュリティ
+
+データのセキュリティを確保するため、以下の措置を講じます：
+
+1. ロールベースのアクセス制御（RBAC）:
+   * 読み取り専用ロール：データサイエンティスト、アナリスト
+   * 読み書き可能ロール：データエンジニア
+   * 管理者ロール：システム管理者
+
+2. データ暗号化:
+   * 保存時の暗号化（S3のサーバーサイド暗号化など）
+   * 転送時の暗号化（HTTPS/TLSの使用）
+
+3. アクセスログの記録:
+   * すべてのデータアクセスと変更操作をログに記録
+
+4. 定期的なセキュリティ監査:
+   * アクセス権限の見直し
+   * 暗号化設定の確認
+   * 脆弱性スキャンの実施
+
+これらの方策により、データのバージョン管理と安全な保管を実現します。定期的にバックアップを作成し、災害復旧計画を策定することも重要です。
+
+== 結論と推奨事項
+
+=== 主要な設計決定事項
+
+本設計書で示した主要な決定事項は以下の通りです：
+
+1. データ移行プロセス：
+   * Notes/DominoからCSV形式を経由してPandasデータフレームへの変換
+   * 最終的なデータ保存形式としてPickle形式の採用
+
+2. データマッピングとトランスフォーメーション：
+   * カラムマッピング辞書の使用による柔軟な対応
+   * 新規カラムの追加と不要カラムの削除機能の実装
+
+3. Null値と欠損データの処理：
+   * カラム別の処理戦略の定義
+   * 統計的手法を用いた欠損値の補完
+
+4. データバリデーションと品質管理：
+   * 入力データと出力データの両方に対する厳格な検証
+   * エラーログの詳細な記録とエラーハンドリング
+
+5. データバージョン管理と保管：
+   * セマンティックバージョニングと日付ベースのバージョニングの併用
+   * ローカルストレージとクラウドストレージ（AWS S3）の併用
+
+=== 潜在的なリスクと緩和策
+
+1. データ整合性リスク：
+   * リスク：データ変換過程でのデータ損失や不整合
+   * 緩和策：厳格なバリデーション、変換前後のデータ比較、サンプルデータを用いた徹底的なテスト
+
+2. パフォーマンスリスク：
+   * リスク：大規模データセットの処理時間の増大
+   * 緩和策：チャンク処理の導入、並列処理の検討、クラウドリソースの活用
+
+3. セキュリティリスク：
+   * リスク：機密データの漏洩、不正アクセス
+   * 緩和策：強固な暗号化、厳格なアクセス制御、定期的なセキュリティ監査
+
+4. 技術的負債リスク：
+   * リスク：将来の要件変更への対応が困難になる
+   * 緩和策：モジュール化された設計、詳細なドキュメンテーション、定期的なコードレビュー
+
+=== 次のステップと実装計画
+
+1. プロトタイプ開発（2週間）：
+   * 小規模データセットを用いた変換プロセスの実装
+   * 基本的なバリデーションとエラーハンドリングの実装
+
+2. テスト環境構築（1週間）：
+   * テストデータの準備
+   * クラウド環境（AWS）のセットアップ
+
+3. 本格的な開発（4週間）：
+   * 全機能の実装
+   * ユニットテストとインテグレーションテストの作成
+
+4. 性能最適化（2週間）：
+   * 大規模データセットでのパフォーマンステスト
+   * ボトルネックの特定と改善
+
+5. セキュリティ強化（1週間）：
+   * 暗号化の実装
+   * アクセス制御の設定
+
+6. ドキュメンテーション（1週間）：
+   * ユーザーマニュアルの作成
+   * 技術文書の完成
+
+7. テストと品質保証（2週間）：
+   * エンドツーエンドテスト
+   * セキュリティ監査
+
+8. トレーニングと展開（1週間）：
+   * 運用チームへのトレーニング
+   * 本番環境への段階的な展開
+
+この実装計画に従うことで、約3ヶ月での完全な移行システムの構築が見込まれます。定期的な進捗報告と関係者との密接なコミュニケーションを維持し、必要に応じて計画を調整することが重要です。
+
+最後に、本設計書に基づくシステムの実装により、安全で効率的なデータ移行が可能となり、新システムへのスムーズな移行が実現されることが期待されます。継続的な改善と最新技術の導入により、長期的にも有効なソリューションとなるでしょう。
