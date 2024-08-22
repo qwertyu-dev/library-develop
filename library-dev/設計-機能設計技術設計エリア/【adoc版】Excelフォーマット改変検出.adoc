@@ -1,0 +1,262 @@
+= Excel申請シート検出チェックプロセス 機能設計書
+
+== 機能要件
+
+=== Excel申請シートの読み込み
+
+==== ファイル形式
+- システムは .xlsx 形式のExcelファイルを読み込む機能を提供する。
+- 他の形式（.xls, .csv等）は現在サポートしない。
+
+==== ヘッダー行の扱い
+- ヘッダー行は固定位置にあることを前提とする。
+- デフォルトでは6行目（インデックス5）をヘッダー行と想定する。
+- ヘッダー行の位置は設定ファイルで変更可能とする。
+- システムは指定されたヘッダー行位置から実データの読み込みを開始する。
+
+[source,python]
+----
+import pandas as pd
+
+# ヘッダー行の位置（設定ファイルから読み込むことを想定）
+HEADER_ROW = 5
+
+def read_excel_file(file_path):
+    return pd.read_excel(file_path, header=HEADER_ROW)
+----
+
+=== データ構造の検証
+
+==== カラム構造の確認
+- システムは以下の期待されるカラム名と順序を確認する：
+  1. no
+  2. 有効日付
+  3. 種類
+  4. 対象
+  5. 部門コード
+  6. 親部店コード
+  7. 部店コード
+  8. 部店名称
+  9. 部店名称(英語)
+  10. 課/エリアコード
+  11. 課/エリア名称
+  12. 課/エリア名称(英語)
+  13. 常駐部店コード
+  14. 常駐部店名称
+  15. 共通認証受渡し予定日
+  16. 備考
+- カラム名や順序が一致しない場合、詳細なエラーメッセージを生成する。
+- 不足しているカラムや余分なカラムがある場合、それらを明示的に報告する。
+
+[source,python]
+----
+def validate_column_structure(df):
+    expected_columns = [
+        "no", "有効日付", "種類", "対象", "部門コード", "親部店コード", "部店コード", 
+        "部店名称", "部店名称(英語)", "課/エリアコード", "課/エリア名称", "課/エリア名称(英語)", 
+        "常駐部店コード", "常駐部店名称", "共通認証受渡し予定日", "備考"
+    ]
+    
+    if list(df.columns) != expected_columns:
+        missing = set(expected_columns) - set(df.columns)
+        extra = set(df.columns) - set(expected_columns)
+        error_msg = "カラム構造が不正です。"
+        if missing:
+            error_msg += f"不足カラム: {', '.join(missing)}. "
+        if extra:
+            error_msg += f"余分なカラム: {', '.join(extra)}."
+        raise ValueError(error_msg)
+----
+
+==== 必須項目の確認
+- 以下のカラムを必須項目として扱い、空値を許容しない：
+  - no
+  - 有効日付
+  - 種類
+  - 対象
+  - 部門コード
+  - 親部店コード
+  - 部店コード
+  - 部店名称
+  - 共通認証受渡し予定日
+- 必須項目に空値がある場合、エラーとして報告する。
+
+[source,python]
+----
+def validate_required_fields(df):
+    required_fields = [
+        "no", "有効日付", "種類", "対象", "部門コード", "親部店コード",
+        "部店コード", "部店名称", "共通認証受渡し予定日"
+    ]
+    for field in required_fields:
+        if df[field].isnull().any():
+            null_rows = df[df[field].isnull()].index + HEADER_ROW + 2
+            raise ValueError(f"'{field}'に空値があります。行番号: {list(null_rows)}")
+----
+
+=== データ内容の検証
+
+==== データ型の検証
+- 各カラムのデータ型を以下のように検証する：
+  - no: 整数
+  - 有効日付: 日付形式の文字列
+  - 種類: 文字列
+  - 対象: 文字列
+  - 部門コード: 文字列
+  - 親部店コード: 文字列
+  - 部店コード: 文字列
+  - 部店名称: 文字列
+  - 部店名称(英語): 文字列（オプション）
+  - 課/エリアコード: 文字列（オプション）
+  - 課/エリア名称: 文字列（オプション）
+  - 課/エリア名称(英語): 文字列（オプション）
+  - 常駐部店コード: 文字列（オプション）
+  - 常駐部店名称: 文字列（オプション）
+  - 共通認証受渡し予定日: 日付形式の文字列
+  - 備考: 文字列（オプション）
+
+==== 値の範囲チェック
+- 'no'フィールドは正の整数であることを確認する。
+- '種類'フィールドは予め定義された値（例：'新設', '変更', '廃止'）のいずれかであることを確認する。
+- 'コード'系のフィールド（部門コード、親部店コード、部店コード、課/エリアコード）は定められた桁数と形式に従っていることを確認する。
+
+==== 日付形式の検証
+- '有効日付'と'共通認証受渡し予定日'フィールドが有効な日付形式（YYYY-MM-DD）であることを確認する。
+- 日付が未来の日付であることを確認する（過去の日付はエラーとする）。
+
+[source,python]
+----
+from pydantic import BaseModel, validator
+from typing import Optional
+from datetime import date
+
+class ExcelRowModel(BaseModel):
+    no: int
+    effective_date: date
+    type: str
+    target: str
+    department_code: str
+    parent_branch_code: str
+    branch_code: str
+    branch_name: str
+    branch_name_en: Optional[str]
+    area_code: Optional[str]
+    area_name: Optional[str]
+    area_name_en: Optional[str]
+    resident_branch_code: Optional[str]
+    resident_branch_name: Optional[str]
+    common_auth_transfer_date: date
+    remarks: Optional[str]
+
+    @validator('no')
+    def no_must_be_positive(cls, v):
+        if v <= 0:
+            raise ValueError('must be positive')
+        return v
+
+    @validator('type')
+    def type_must_be_valid(cls, v):
+        valid_types = {'新設', '変更', '廃止'}
+        if v not in valid_types:
+            raise ValueError(f'must be one of {valid_types}')
+        return v
+
+    @validator('department_code', 'parent_branch_code', 'branch_code', 'area_code')
+    def code_format(cls, v):
+        if v and not v.isdigit():
+            raise ValueError('must contain only digits')
+        return v
+
+    @validator('effective_date', 'common_auth_transfer_date')
+    def date_must_be_future(cls, v):
+        if v <= date.today():
+            raise ValueError('must be a future date')
+        return v
+
+def validate_row(row):
+    try:
+        ExcelRowModel(**row)
+    except ValueError as e:
+        return str(e)
+    return None
+
+def validate_data_content(df):
+    errors = df.apply(lambda row: validate_row(row.to_dict()), axis=1)
+    error_rows = errors[errors.notnull()]
+    if not error_rows.empty:
+        for idx, error in error_rows.items():
+            print(f"行 {idx + HEADER_ROW + 2}: {error}")
+        raise ValueError("データ内容に不正があります。")
+----
+
+=== エラー処理
+
+==== エラーメッセージの生成
+- 各検証ステップでエラーが発生した場合、詳細なエラーメッセージを生成する。
+- エラーメッセージには以下の情報を含める：
+  - エラーが発生した行番号（Excelファイル上の実際の行番号）
+  - エラーが発生したカラム名
+  - エラーの種類（例：データ型不一致、必須項目の欠落、値の範囲外）
+  - 期待される値や形式（該当する場合）
+
+==== エラーログの記録
+- すべてのエラーをログファイルに記録する。
+- ログには以下の情報を含める：
+  - タイムスタンプ
+  - 処理中のファイル名
+  - エラーの詳細（3.4.1で生成されたメッセージ）
+- ログレベルを使用して、エラーの重大度を区別する（例：WARNING, ERROR）。
+
+[source,python]
+----
+import logging
+
+logging.basicConfig(filename='excel_validation.log', level=logging.ERROR,
+                    format='%(asctime)s - %(levelname)s - %(message)s')
+
+def log_error(file_name, error_message):
+    logging.error(f"File: {file_name}, Error: {error_message}")
+----
+
+==== エラー報告の集約
+- 検証プロセス全体で発生したすべてのエラーを集約し、一括して報告する。
+- エラー報告には以下を含める：
+  - 総エラー数
+  - カラム構造に関するエラー（存在する場合）
+  - データ内容に関するエラーの一覧（行番号順）
+
+==== 処理の継続または中断
+- カラム構造に問題がある場合、即座に処理を中断し、エラーを報告する。
+- データ内容のエラーが検出された場合でも、可能な限り全行の検証を続行し、すべてのエラーを集約して報告する。
+- ただし、エラー数が一定のしきい値（例：総行数の10%）を超えた場合、処理を中断するオプションを提供する。
+
+[source,python]
+----
+def validate_excel_file(file_path, error_threshold=0.1):
+    try:
+        df = read_excel_file(file_path)
+        validate_column_structure(df)
+        validate_required_fields(df)
+        validate_data_content(df)
+    except ValueError as e:
+        log_error(file_path, str(e))
+        print(f"エラー: {e}")
+        return False
+
+    error_count = len(df[df.apply(lambda row: validate_row(row.to_dict()), axis=1).notnull()])
+    if error_count > len(df) * error_threshold:
+        log_error(file_path, f"エラー数が閾値を超えました。総行数: {len(df)}, エラー数: {error_count}")
+        print(f"エラー: エラー数が閾値を超えました。処理を中断します。")
+        return False
+
+    print("検証が完了しました。エラーはありません。")
+    return True
+
+# 使用例
+if __name__ == "__main__":
+    file_path = "path/to/your/excel/file.xlsx"
+    is_valid = validate_excel_file(file_path)
+    print(f"ファイルは有効: {is_valid}")
+----
+
+この設計書とサンプルコードに基づいて実装を行うことで、堅牢で信頼性の高いExcel申請シート検出チェックプロセスを構築することができます。また、将来的な拡張や変更にも対応しやすい設計となっています。
