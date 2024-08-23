@@ -1,0 +1,211 @@
+= GitLab IssueとRedmineチケットの役割定義とステータスフロー
+
+== 概要
+
+DDCTフェーズでの変更管理運営
+
+本文書は、詳細設計・コーディング・テスト（DDCT）フェーズにおける変更管理の運営方法を説明します。
+この手法は、GitLab IssueとRedmineチケットを効果的に組み合わせることで、変更要求の追跡から具体的なタスク管理までをシームレスに行うことを目的としています。
+
+== プロセス概要
+
+1. GitLab Issueの活用:
+   * 資源（コード、設計書など）に対するレビュー結果や変更の必要性を Issue として起票します。
+   * Issue 内で技術的な議論や変更の影響範囲の検討を行います。
+
+2. Redmineチケットへの展開:
+   * GitLab Issue の内容をベースに、具体的なタスクへの分解を行います。
+   * Redmineで親チケットを作成し、Issue の概要を記載します。
+   * 親チケットの下に、タスクを細分化した小チケットを複数作成します。
+
+3. 追跡と管理:
+   * GitLab Issue では全体的な変更の方向性や技術的な決定事項を管理します。
+   * Redmineチケットでは具体的な作業の進捗や詳細を管理します。
+
+この方法により、変更要求の発生から具体的なタスクの完了まで、一貫した追跡と管理が可能になります。
+
+
+== 役割定義
+
+[cols="3,4,4", options="header"]
+|===
+|項目 |GitLab issue |Redmineチケット
+
+|主な目的
+|レビュー結果の記録と課題検出
+|タスクへのブレークダウンと進捗管理
+
+|使用者
+|主に開発者、レビュアー
+|プロジェクトマネージャー、開発者
+
+|粒度
+|大きな機能単位、問題点
+|具体的な作業タスク
+
+|内容
+a|* コードレビューのフィードバック
+* 機能の改善提案
+* バグ報告
+* 技術的な議論
+a|* 具体的な実装タスク
+* バグ修正作業
+* ドキュメント作成タスク
+* テスト作業
+
+|タイムライン
+|短期的（問題提起から解決策決定まで）
+|中長期的（タスクの開始から完了まで）
+
+|関連付け
+a|* コミット
+* マージリクエスト
+* CI/CD結果
+a|* プロジェクトのマイルストーン
+* 他のタスクとの依存関係
+
+|主な機能
+a|* コメントスレッド
+* ラベル付け
+a|* ガントチャート
+* アサイン管理
+* 期日管理
+* ステータス管理
+
+|レポーティング
+|技術的な課題の傾向分析
+|プロジェクト全体の進捗状況
+
+|通知
+|開発者間の技術的な議論
+|チーム全体への進捗報告
+
+|===
+
+== 関係図
+
+以下の図は、GitLab IssueとRedmineチケット（親チケットと小チケット）の関係を示しています。
+
+=== クラス図
+
+[plantuml, class-diagram, png]
+....
+@startuml
+skinparam classFontSize 14
+skinparam classFontName Helvetica
+
+class GitLabIssue {
+  +id: Integer
+  +title: String
+  +description: String
+  +status: IssueStatus
+  +created_at: DateTime
+  +updated_at: DateTime
+}
+
+class RedmineParentTicket {
+  +id: Integer
+  +subject: String
+  +description: String
+  +status: TicketStatus
+  +created_on: DateTime
+  +updated_on: DateTime
+}
+
+class RedmineChildTicket {
+  +id: Integer
+  +subject: String
+  +description: String
+  +status: TicketStatus
+  +parent_id: Integer
+  +created_on: DateTime
+  +updated_on: DateTime
+}
+
+enum IssueStatus {
+  OPEN
+  IN_REVIEW
+  READY_FOR_TASK
+  CLOSED
+}
+
+enum TicketStatus {
+  NEW
+  IN_PROGRESS
+  RESOLVED
+  CLOSED
+}
+
+GitLabIssue "1" -- "1" RedmineParentTicket : generates >
+RedmineParentTicket "1" *-- "0..*" RedmineChildTicket : contains
+GitLabIssue -- IssueStatus
+RedmineParentTicket -- TicketStatus
+RedmineChildTicket -- TicketStatus
+@enduml
+....
+
+=== フロー図
+
+[plantuml, flow-diagram, png]
+....
+@startuml
+skinparam activityFontSize 14
+skinparam activityFontName Helvetica
+
+start
+:GitLab Issueを作成;
+:Issue内容をレビュー・議論;
+:Issueをクローズ準備;
+
+:Redmine親チケットを作成;
+fork
+  :小チケット1を作成;
+fork again
+  :小チケット2を作成;
+fork again
+  :小チケット3を作成;
+end fork
+
+:親チケットと小チケットを関連付け;
+:GitLab Issueをクローズ;
+
+fork
+  :小チケット1の作業;
+fork again
+  :小チケット2の作業;
+fork again
+  :小チケット3の作業;
+end fork
+
+:全小チケットの完了を確認;
+:親チケットをクローズ;
+stop
+@enduml
+....
+
+== 説明
+
+=== クラス図
+クラス図は、GitLab IssueとRedmineチケット（親チケットと小チケット）の構造と関係を示しています。
+
+* 1つのGitLab Issueは1つのRedmine親チケットを生成します。
+* 1つのRedmine親チケットは0個以上の小チケットを含むことができます。
+* GitLab IssueとRedmineチケットはそれぞれ独自のステータスを持ちます。
+
+=== フロー図
+フロー図は、GitLab Issueの作成から、Redmineチケットの作成、作業、完了までの一般的なプロセスを示しています。
+
+* GitLab Issueが作成され、レビューと議論が行われます。
+* Issueの内容に基づいてRedmine親チケットが作成されます。
+* 親チケットから複数の小チケットが作成され、関連付けられます。
+* GitLab Issueがクローズされ、Redmineチケットの作業が開始されます。
+* 全ての小チケットが完了したら、親チケットがクローズされます。
+
+この構造とフローにより、GitLab Issueで大きな課題や機能を議論し、それをRedmineで具体的なタスクに分解して管理することができます。
+
+
+
+
+
+
+
