@@ -1,0 +1,395 @@
+= 動的ブラックリストシステム設計書
+
+== 現状課題／暫定対処
+
+現行システムでは特別な申請パターンや扱いに留意が必要な申請に対するチェック処理は人間の判断・経験に依存しており、一貫性のある厳密なチェックの実施に運用負担がかかっている。また運用担当者の経験に依存度も高く恒久的に安定したチェック機能提供に懸念もある。
+
+簡単なチェック定義(以後、静的ブラックリスト)により申請明細での留意検出は可能と考えられる。 +
+しかしながら組織ポリシーの変更が生じた場合 静的ブラックリストでは、ルールの追加、変更、削除のたびにシステム管理者や開発者の介入が必要となる。人手によるメンテナンスは、時間とリソースを消費し、人的ミスのリスクを増大させる懸念があり根本的な課題解消には至らない。
+
+=== 達成事項
+
+動的ブラックリストシステムの導入により、以下の成果を実現する。
+
+* ルールの動的な追加・変更を可能とすることで、システムの柔軟性が大幅に向上させる
+* 複雑な条件やルールの組み合わせを効果的に表現・管理できるようになり、より精緻なチェックが可能にする
+* 自動化されたチェックプロセスにより、人的ミスを削減し、処理の一貫性と効率性を向上させる
+
+== システム概要
+
+動的ブラックリストシステムは、組織変更申請に対して自動的にチェックを行い、特定の条件に合致する申請を検出する仕組みである。リファレンステーブルと申請テーブルを基に、定義されたルールに従って申請をチェックし、ブラックリストに該当する申請を特定する。
+
+主な特徴：
+
+* 動的なルール適用
+* 柔軟なルール定義
+* 自動化されたチェックプロセス
+* 高い拡張性と保守性
+
+== アーキテクチャ設計
+
+システムは以下の主要コンポーネントで構成されている
+
+* BlacklistChecker: ブラックリストチェックの中核機能を提供
+* TableSearcher: テーブルデータの検索と情報取得を行う
+* ルール定義: 各チェックルールを定義する関数群
+* データストア: リファレンステーブルと申請テーブルを格納
+
+データフロー：
+
+1. TableSearcherがリファレンステーブルと申請テーブルを読み込む
+2. BlacklistCheckerが初期化され、ルールが追加される
+3. チェックプロセスが実行され、各ルールが適用される
+4. 結果が集計され、ブラックリストに該当する申請が特定される
+
+=== フロー図
+
+[plantuml]
+----
+@startuml
+start
+:初期化プロセス;
+:TableSearcherインスタンスの作成;
+:BlacklistCheckerインスタンスの作成;
+:ルールの追加;
+repeat
+  :申請データの取得;
+  :ブラックリストチェックプロセス;
+  :各ルールの適用;
+  :条件に合致する申請の抽出;
+  :結果の集計;
+  :レポート生成;
+repeat while (新しい申請がある?) is (yes)
+stop
+@enduml
+----
+
+== クラス設計
+
+=== BlacklistChecker クラス
+
+[cols="1,2", options="header"]
+|===
+|項目 |説明
+|目的 |ブラックリストチェックの中核機能を提供
+|主要属性 
+a|
+* reference_searcher: TableSearcher
+* application_searcher: TableSearcher
+* rules: List[Dict]
+|主要メソッド 
+a|
+* __init__(reference_searcher: TableSearcher, application_searcher: TableSearcher)
+* add_rule(name: str, condition: Callable)
+* check_blacklist() -> pd.DataFrame
+|===
+
+=== TableSearcher クラス（既存）
+
+[cols="1,2", options="header"]
+|===
+|項目 |説明
+|目的 |テーブルデータの検索と情報取得
+|主要属性 
+a|
+* table_name: str
+* df: pd.DataFrame
+|主要メソッド 
+a|
+* __init__(table_name: str)
+* refresh_data()
+* simple_search(conditions: dict, operator: str) -> pd.DataFrame
+|===
+
+== インターフェース設計
+
+=== 公開メソッド
+
+* BlacklistChecker.add_rule(name: str, condition: Callable)
+* BlacklistChecker.check_blacklist() -> pd.DataFrame
+
+=== 入力パラメータ
+
+add_rule:
+
+* name: str - ルールの名称
+* condition: Callable[[pd.DataFrame, pd.DataFrame], pd.Series] - ルールの条件関数
+
+=== 戻り値
+
+check_blacklist: pd.DataFrame
+
+* カラム：申請テーブルの全カラム + 'rule_name'
+
+== データ構造
+
+=== リファレンステーブル
+* TODO(Suzuki): レイアウト定義リンクを記載する
+
+=== 申請テーブル
+* TODO(Suzuki): レイアウト定義リンクを記載する
+
+
+=== ブラックリストルール
+
+構造：List[Dict]
+
+* name: str - ルールの名称
+* condition: Callable[[pd.DataFrame, pd.DataFrame], pd.Series] - ルールの条件関数
+
+== ルール定義
+
+=== ルール構造
+
+* 名前（string）: ルールを識別するための一意の名前
+* 条件関数（Callable）: リファレンスDFと申請DFを入力とし、ブールのSeriesを返す関数
+
+=== 標準ルール一覧
+
+. 役員変更制限
+. 特定部署変更制限
+
+=== ルール追加・変更プロセス
+
+. 新規ルールの関数を定義
+. BlacklistChecker.add_rule()メソッドを使用してルールを追加
+. 既存ルールの変更は、同名のルールを再度add_rule()することで上書き
+
+=== クラス図
+
+[plantuml]
+----
+@startuml
+class BlacklistChecker {
+  - reference_searcher: TableSearcher
+  - application_searcher: TableSearcher
+  - rules: List[Dict]
+  + __init__(reference_searcher: TableSearcher, application_searcher: TableSearcher)
+  + add_rule(name: str, condition: Callable)
+  + check_blacklist() -> pd.DataFrame
+}
+
+class TableSearcher {
+  - table_name: str
+  - df: pd.DataFrame
+  + __init__(table_name: str)
+  + refresh_data()
+  + simple_search(conditions: dict, operator: str) -> pd.DataFrame
+}
+
+class RuleDefinition {
+  + {static} rule_executive_change(ref_df: pd.DataFrame, app_df: pd.DataFrame) -> pd.Series
+  + {static} rule_specific_department_change(ref_df: pd.DataFrame, app_df: pd.DataFrame) -> pd.Series
+}
+
+BlacklistChecker --> TableSearcher : uses
+BlacklistChecker --> RuleDefinition : applies
+@enduml
+----
+
+== 処理フロー
+
+=== 初期化プロセス
+
+1. TableSearcherインスタンスの作成（リファレンス、申請）
+2. BlacklistCheckerインスタンスの作成
+3. ルールの追加（add_rule）
+
+=== ブラックリストチェックプロセス
+
+1. リファレンスDFと申請DFの取得
+2. 各ルールの条件関数を適用
+3. 条件に合致する申請レコードの抽出
+4. 結果の集計
+
+=== 結果集計プロセス
+
+1. 各ルールの結果を統合
+2. rule_nameカラムの追加
+3. 最終的なDataFrameの作成
+
+== 拡張性と保守性
+
+=== 新規ルール追加の手順
+
+1. 新しいルール関数の定義
+2. BlacklistChecker.add_rule()を使用してルールを追加
+3. 必要に応じてテストケースの追加
+
+=== 既存ルールの修正プロセス
+
+1. ルール関数の修正
+2. 同名のルールをadd_rule()で再登録
+3. テストケースの更新と実行
+
+=== 将来の機能拡張可能性
+
+* ルールの優先順位付け機能の追加
+* GUIベースのルール管理インターフェースの開発
+* リアルタイムチェック機能の実装
+* 機械学習モデルとの統合によるより高度な判定
+* ルールの自動生成機能の追加
+* 履歴管理とバージョニング機能の実装
+
+=== シーケンス図
+
+[plantuml]
+----
+@startuml
+actor User
+participant "BlacklistChecker" as BC
+participant "TableSearcher\n(Reference)" as TSR
+participant "TableSearcher\n(Application)" as TSA
+participant "RuleDefinition" as RD
+
+User -> BC : create
+BC -> TSR : create
+BC -> TSA : create
+User -> BC : add_rule()
+BC -> RD : define rule
+User -> BC : check_blacklist()
+BC -> TSR : get data
+BC -> TSA : get data
+loop for each rule
+    BC -> RD : apply rule
+end
+BC -> BC : aggregate results
+BC --> User : return results
+@enduml
+----
+
+== コード実装例
+
+=== BlacklistChecker クラス
+
+[source,python]
+----
+from typing import Callable, List, Dict
+import pandas as pd
+
+class BlacklistChecker:
+    def __init__(self, reference_searcher, application_searcher):
+        self.reference_searcher = reference_searcher
+        self.application_searcher = application_searcher
+        self.rules: List[Dict] = []
+
+    def add_rule(self, name: str, condition: Callable[[pd.DataFrame, pd.DataFrame], pd.Series]):
+        self.rules.append({"name": name, "condition": condition})
+
+    def check_blacklist(self) -> pd.DataFrame:
+        reference_df = self.reference_searcher.df
+        application_df = self.application_searcher.df
+
+        results = []
+        for rule in self.rules:
+            try:
+                mask = rule["condition"](reference_df, application_df)
+                if not isinstance(mask, pd.Series) or mask.dtype != bool:
+                    raise ValueError(f"Rule '{rule['name']}' did not return a valid boolean mask.")
+                
+                result = application_df[mask].copy()
+                result["rule_name"] = rule["name"]
+                results.append(result)
+            except Exception as e:
+                print(f"Error in rule '{rule['name']}': {str(e)}")
+
+        return pd.concat(results, ignore_index=True) if results else pd.DataFrame()
+----
+
+=== ルール定義
+
+[source,python]
+----
+def rule_executive_change(ref_df: pd.DataFrame, app_df: pd.DataFrame) -> pd.Series:
+    return (
+        app_df["部店コード"].isin(ref_df["部店コード"]) &
+        (app_df["種類"] == "変更") &
+        ref_df["BPR部店名称"].str.contains("役員") &
+        ref_df["職位コード"].isin(["001", "002", "003"])
+    )
+
+def rule_specific_department_change(ref_df: pd.DataFrame, app_df: pd.DataFrame) -> pd.Series:
+    return (
+        app_df["部店コード"].isin(ref_df["部店コード"]) &
+        (app_df["種類"] == "変更") &
+        ref_df["BPR部店コード"].astype(str).str.startswith("1") &
+        ref_df["BPR課Grコード"].astype(str).str.endswith("00") &
+        (ref_df["重要度"] > 5)
+    )
+----
+
+== サンプル実施
+
+=== テストデータの準備
+
+[source,python]
+----
+import pandas as pd
+
+# リファレンステーブルのサンプルデータ
+reference_data = {
+    '部店コード': ['1001', '1002', '1003', '1004', '1005'],
+    'BPR部店名称': ['役員室', '一般部署1', '役員秘書室', '重要部署', '役員会議室'],
+    'BPR部店コード': ['1001', '2002', '1003', '1004', '1005'],
+    'BPR課Grコード': ['100', '200', '300', '400', '500'],
+    '職位コード': ['001', '004', '002', '005', '003'],
+    '重要度': [8, 3, 7, 6, 9]
+}
+reference_df = pd.DataFrame(reference_data)
+
+# 申請テーブルのサンプルデータ
+application_data = {
+    'ULID': ['U1', 'U2', 'U3', 'U4', 'U5'],
+    '部店コード': ['1001', '1002', '1003', '1004', '1005'],
+    '種類': ['変更', '新設', '変更', '変更', '変更'],
+    '部店名称': ['役員室', '一般部署1', '役員秘書室', '重要部署', '役員会議室']
+}
+application_df = pd.DataFrame(application_data)
+
+# モックTableSearcherクラス
+class MockTableSearcher:
+    def __init__(self, df):
+        self.df = df
+
+# BlacklistCheckerインスタンスの作成
+reference_searcher = MockTableSearcher(reference_df)
+application_searcher = MockTableSearcher(application_df)
+checker = BlacklistChecker(reference_searcher, application_searcher)
+
+# ルールの追加
+checker.add_rule("役員変更制限", rule_executive_change)
+checker.add_rule("特定部署変更制限", rule_specific_department_change)
+----
+
+=== ブラックリストチェックの実行
+
+[source,python]
+----
+# ブラックリストチェックの実行
+blacklist_results = checker.check_blacklist()
+
+print("ブラックリストチェック結果:")
+print(blacklist_results)
+
+if not blacklist_results.empty:
+    print("\n各ルールの該当件数:")
+    print(blacklist_results['rule_name'].value_counts())
+else:
+    print("ブラックリストに該当する申請はありませんでした。")
+----
+
+=== 実行結果
+
+----
+ブラックリストチェック結果:
+  ULID 部店コード  種類    部店名称      rule_name
+0   U1    1001  変更      役員室  役員変更制限
+1   U3    1003  変更  役員秘書室  役員変更制限
+2   U5    1005  変更  役員会議室  役員変更制限
+3   U4    1004  変更    重要部署  特定部署変更制限
+
+各ルールの該当件数:
+役員変更制限         3
+特定部署変更制限     1
+Name: rule_name, dtype: int64
+----
