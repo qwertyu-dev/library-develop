@@ -17,8 +17,8 @@ def username_alphanumeric(v: str) -> str:
 class StringValidator:
     """文字列特性判定サポートクラス"""
 
-    def __init__(self, check_text: str) -> bool:
-        self.checktext = check_text
+    def __init__(self, text: str) -> bool:
+        self.text = text
 
         # 定義
         self.halfwidth_range = 128
@@ -29,7 +29,7 @@ class StringValidator:
         Returns:
             bool : True 全てが大文字, False 条件を満たさない
         """
-        return self.checktext.isupper()
+        return self.text.isupper()
 
     def is_all_halfwidth(self) -> bool:
         """文字列全てが半角であるか
@@ -37,7 +37,7 @@ class StringValidator:
         Returns:
             bool : True 全てが大文字, False 条件を満たさない
         """
-        return all(ord(c) < self.halfwidth_range for c in self.checktext)
+        return all(ord(c) < self.halfwidth_range for c in self.text)
 
     def is_all_halfwidth_kana(self) -> bool:
         """文字列全てが半角カナであるか
