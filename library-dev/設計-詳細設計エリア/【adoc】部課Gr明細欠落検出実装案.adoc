@@ -1,0 +1,154 @@
+= 不完全な申請検出方法の比較
+
+== サンプルデータ
+
+[source,python]
+----
+import pandas as pd
+import numpy as np
+
+# サンプルデータの作成
+df = pd.DataFrame({
+    '部店コード': ['1234', '1234', '5678', '9012', '9012', '3456'],
+    '課Grコード': [None, '01', None, '01', '02', None],
+    '部店名称': ['東京支店', '東京支店', '大阪支店', '名古屋支店', '名古屋支店', '福岡支店'],
+    '課Gr名称': [None, '営業課', None, '営業課', '管理課', None]
+})
+
+print("サンプルデータ:")
+print(df)
+print("\nNaN判定:")
+print(df.isna())
+----
+
+== 1. グループ化と集計（np.any使用）
+
+[source,python]
+----
+def detect_incomplete_submissions(df):
+    grouped = df.groupby('部店コード').agg({
+        '課Grコード': lambda x: np.any(x.notnull()),
+        '部店名称': 'first'
+    })
+    
+    print("\nグループ化後:")
+    print(grouped)
+    
+    incomplete = grouped[
+        (grouped['課Grコード'] == False) |
+        (grouped.index.isin(df[df['課Grコード'].isnull()]['部店コード']))
+    ]
+    
+    return incomplete
+
+result = detect_incomplete_submissions(df)
+print("\n不完全な申請がある部店:")
+print(result)
+----
+
+== 2. グループ化とapply
+
+[source,python]
+----
+def detect_incomplete_records(df):
+    grouped = df.groupby('部店コード')
+
+    def check_group(group):
+        has_bu = group['課Grコード'].isnull().any()
+        has_ka = group['課Grコード'].notnull().any()
+        return pd.Series({'has_bu': has_bu, 'has_ka': has_ka})
+
+    result = grouped.apply(check_group)
+    
+    print("\nグループ化とapply後:")
+    print(result)
+
+    incomplete_bu = result[result['has_bu'] & ~result['has_ka']].index
+    incomplete_ka = result[~result['has_bu'] & result['has_ka']].index
+
+    return incomplete_bu, incomplete_ka
+
+incomplete_bu, incomplete_ka = detect_incomplete_records(df)
+print("\n部明細のみの部店コード:", incomplete_bu.tolist())
+print("課Gr明細のみの部店コード:", incomplete_ka.tolist())
+----
+
+== 3. merge/join を使用
+
+[source,python]
+----
+def detect_incomplete_with_merge(df):
+    bu_df = df[df['課Grコード'].isnull()][['部店コード']].drop_duplicates()
+    ka_df = df[df['課Grコード'].notnull()][['部店コード']].drop_duplicates()
+    
+    print("\n部明細DataFrame:")
+    print(bu_df)
+    print("\n課Gr明細DataFrame:")
+    print(ka_df)
+    
+    bu_only = bu_df.merge(ka_df, on='部店コード', how='left', indicator=True)
+    ka_only = ka_df.merge(bu_df, on='部店コード', how='left', indicator=True)
+    
+    print("\nマージ後の部明細:")
+    print(bu_only)
+    print("\nマージ後の課Gr明細:")
+    print(ka_only)
+    
+    bu_only = bu_only[bu_only['_merge'] == 'left_only']['部店コード']
+    ka_only = ka_only[ka_only['_merge'] == 'left_only']['部店コード']
+    
+    return bu_only, ka_only
+
+bu_only, ka_only = detect_incomplete_with_merge(df)
+print("\n部明細のみの部店コード:", bu_only.tolist())
+print("課Gr明細のみの部店コード:", ka_only.tolist())
+----
+
+== 4. ピボットテーブルの利用
+
+[source,python]
+----
+def detect_incomplete_with_pivot(df):
+    pivot = pd.pivot_table(df, values='課Grコード', index='部店コード', 
+                           aggfunc=['count', lambda x: x.isnull().sum()])
+    
+    print("\nピボットテーブル:")
+    print(pivot)
+    
+    bu_only = pivot[pivot[('count', '課Grコード')] == pivot[('<lambda>', '課Grコード')]].index
+    ka_only = pivot[pivot[('count', '課Grコード')] > 0][pivot[('<lambda>', '課Grコード')] == 0].index
+    return bu_only, ka_only
+
+bu_only, ka_only = detect_incomplete_with_pivot(df)
+print("\n部明細のみの部店コード:", bu_only.tolist())
+print("課Gr明細のみの部店コード:", ka_only.tolist())
+----
+
+== 5. Boolean indexingの利用
+
+[source,python]
+----
+def detect_incomplete_with_boolean(df):
+    bu_mask = df['課Grコード'].isnull()
+    ka_mask = df['課Grコード'].notnull()
+    
+    print("\n部明細マスク:")
+    print(bu_mask)
+    print("\n課Gr明細マスク:")
+    print(ka_mask)
+    
+    bu_only = df[bu_mask]['部店コード'].unique()
+    ka_only = df[ka_mask]['部店コード'].unique()
+    
+    print("\n部明細のみの部店コード（重複除去前）:", bu_only)
+    print("課Gr明細のみの部店コード（重複除去前）:", ka_only)
+    
+    bu_only = set(bu_only) - set(ka_only)
+    ka_only = set(ka_only) - set(bu_only)
+    
+    return list(bu_only), list(ka_only)
+
+bu_only, ka_only = detect_incomplete_with_boolean(df)
+print("\n部明細のみの部店コード:", bu_only)
+print("課Gr明細のみの部店コード:", ka_only)
+----
