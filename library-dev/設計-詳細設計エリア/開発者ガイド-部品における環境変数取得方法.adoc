@@ -1,0 +1,268 @@
+= 環境設定取得 
+
+== システムの目的
+複数の環境（本番、リグレッション、開発、ローカル）で一貫して動作し、環境固有の設定を柔軟に管理することが必要である。特に、パス設定や環境依存の設定値を効率的に管理し、アプリケーションの可搬性と保守性を高める仕組みを構築するとともに実装規約として制定する。
+
+== 主要機能
+* 環境別設定の動的ロード
+* 統一されたログ記録メカニズム
+* 標準化されたエラー処理
+* 柔軟なパス解決（相対パスと絶対パスの混在に対応）
+* パッケージレベルでの一貫した実装方法の提供
+
+== アーキテクチャ設計
+
+=== 主要コンポーネント
+[cols="1,4", options='header']
+|===
+|コンポーネント |説明
+| 設定管理 (Config)
+a|* 環境別の設定をロードする
+* アプリケーション全体で使用可能な設定を提供する
+* 異なる環境（開発、リグレッションなど）に対応する
+
+| ログユーティリティ (LoggerPackage)
+a|* 統一されたインターフェースでログ出力を提供する
+* 異なるログレベルに対応する
+* ログの出力先やフォーマットを設定可能にする
+
+| 列挙型定義 (Enums)
+a|* LogLevelやExecEnvironmentなど、共通で使用する列挙型を定義する
+* アプリケーション全体で一貫した定数値を提供する
+
+| バリデーションユーティリティ (ValidationErrorManager)
+a|* エラーの一元管理を行う
+* 標準化されたエラーハンドリングを提供する
+* エラーメッセージの一貫性を確保する
+
+| パス解決ユーティリティ
+a|* 環境に応じて適切にパスを解決する
+* 相対パスと絶対パスの両方に対応する
+* 異なる環境間でのファイルパスの一貫性を保証する
+|===
+
+=== クラス図/package構成
+
+[plantuml]
+----
+@startuml
+class Config {
+    +load(package_path: str|Path): dict
+    +resolve_path(path: str): str
+}
+class LoggerPackage {
+    +log_message(msg_id: str, level: LogLevel)
+}
+enum Enums {
+    LogLevel
+    ExecEnvironment
+}
+class ValidationErrorManager {
+    +add_error(error_code: str, error_message: str)
+    +has_errors(): bool
+    +get_errors(): list
+}
+class ExcelProcessor {
+    -file_path: Path
+    -sheet_name: str
+    -config: Config
+    -log_msg: Callable
+    -excel_loader: ExcelDataLoader
+    -error_manager: ValidationErrorManager
+    +process()
+}
+Config --> LoggerPackage : uses
+Config --> Enums : uses
+ExcelProcessor --> Config : uses
+ExcelProcessor --> ValidationErrorManager : uses
+ExcelProcessor --> LoggerPackage : uses
+@enduml
+----
+
+== 設定管理
+
+=== common_config.toml の構造
+
+[source,toml]
+----
+[<環境名>]
+[<環境名>.logger_path]
+LOGGER_DEF_FILE = '<パス>'
+LOGGER_MSG_FILE = '<パス>'
+
+[<環境名>.input_file_path]
+UPDATE_EXCEL_PATH = '<パス>'
+
+[<環境名>.output_file_path]
+SEND_REFERENCE_MASTER_PATH = '<パス>'
+----
+
+NOTE: リグレッション環境と本番環境では、相対パスと絶対パスが混在する
+
+[source,toml]
+----
+[production]
+[production.logger_path]
+LOGGER_DEF_FILE = 'D:/app/def/mfaUtilsLoggingHelper/logging_TimedRotate.json'
+LOGGER_MSG_FILE = 'src/def/mfaUtilsLoggingHelper/config_MessageList.toml'
+----
+
+=== 設定の読み込み方法
+`Config.load()` メソッドを使用して、現在の環境に対応する設定を動的に読み込む。
+
+[source,python]
+----
+from src.lib.common_utils.ibr_get_config import Config
+
+config = Config.load(__package__)
+env_config = config.common_config  # 現在の環境の設定
+----
+
+== ログ機能
+
+=== ログレベル
+`LogLevel` 列挙型を使用して、一貫したログレベルを定義する
+
+[source,python]
+----
+from src.lib.common_utils.ibr_enums import LogLevel
+
+class LogLevel(Enum):
+    DEBUG = "DEBUG"
+    INFO = "INFO"
+    WARNING = "WARNING"
+    ERROR = "ERROR"
+    CRITICAL = "CRITICAL"
+----
+
+=== ログ出力方法
+`Config` オブジェクトから取得した `log_message` 関数を使用して、統一されたフォーマットでログを出力する
+
+[source,python]
+----
+config = Config.load(__package__)
+log_msg = config.log_message
+
+log_msg("処理を開始します", LogLevel.INFO)
+----
+
+== パス解決
+
+=== 環境別のパス設定
+各環境セクションで定義されたパス設定を使用し、必要に応じて `base_path` との結合を行う。
+
+[source,python]
+----
+config = Config.load(__file__)
+self.env = config.env
+self.common_config = config.common_config
+self.package_config = config.package_config
+self.log_msg = config.log_message
+input_path = config.resolve_path(config.common_config['input_file_path']['UPDATE_EXCEL_PATH'])
+----
+
+== パッケージレベルの実装指針
+
+=== 共通ライブラリの使用
+* `Config` クラスを使用した設定の取得
+* `LogLevel` 列挙型を使用したログレベルの指定
+* `ValidationErrorManager` を使用したエラー管理
+
+=== 標準的なクラス構造
+
+[source,python]
+----
+from src.lib.common_utils.ibr_get_config import Config
+from src.lib.common_utils.ibr_enums import LogLevel
+from src.lib.common_utils.validation_error_manager import ValidationErrorManager
+
+class ExampleProcessor:
+    def __init__(self):
+        self.config = Config.load(__file__)
+        self.log_msg = self.config.log_message
+        self.error_manager = ValidationErrorManager(self.log_msg)
+
+    def process(self):
+        self.log_msg("処理を開始します", LogLevel.INFO)
+        try:
+            # 処理ロジック
+            pass
+        except Exception as e:
+            self.error_manager.add_error("PROCESS_ERROR", str(e))
+            self.log_msg(f"エラーが発生しました: {str(e)}", LogLevel.ERROR)
+        finally:
+            self.log_msg("処理を終了します", LogLevel.INFO)
+----
+
+=== 標準的な部品構造
+[source,python]
+----
+from src.lib.common_utils.ibr_get_config import Config
+from src.lib.common_utils.ibr_enums import LogLevel
+from src.lib.common_utils.validation_error_manager import ValidationErrorManager
+from src.lib.common_utils.path_resolver import resolve_path
+
+class EditingComponentInterface:
+    def __init__(self, config: Config):
+        raise NotImplementedError("Subclass must implement abstract method")
+
+    def edit(self, data):
+        raise NotImplementedError("Subclass must implement abstract method")
+
+
+class EditingComponent(EditingComponentInterface):
+    def __init__(self):
+        self.config = Config.load(__file__)
+        self.config = config
+        self.log_msg = config.log_message
+        self.error_manager = ValidationErrorManager(self.log_msg)
+
+    # 公開メソッド
+    def edit(self, data):
+        self.log_msg("編集処理を開始します", LogLevel.INFO)
+        try:
+            # データの検証
+            self._validate_data(data)
+            
+            # データの編集
+            edited_data = self._perform_edit(data)
+            
+            # 編集結果の保存
+            self._save_result(edited_data)
+            
+            return edited_data
+        except Exception as e:
+            self.error_manager.add_error("EDIT_ERROR", str(e))
+            self.log_msg(f"編集中にエラーが発生しました: {str(e)}", LogLevel.ERROR)
+            raise
+        finally:
+            self.log_msg("編集処理を終了します", LogLevel.INFO)
+
+    # 内部メソッド
+    def _validate_data(self, data):
+        # データのバリデーションロジック
+        if not data:
+            self.error_manager.add_error("INVALID_DATA", "データが空です")
+            raise ValueError("Invalid data")
+
+    def _perform_edit(self, data):
+        # 実際の編集ロジック
+        # この例では単純に大文字に変換
+        return data.upper()
+
+    def _save_result(self, edited_data):
+        # 編集結果の保存ロジック
+        output_path = self.config.package_config.get('output_file_path')
+        full_path = resolve_path(output_path, self.config.env)
+        with open(full_path, 'w') as f:
+            f.write(edited_data)
+        self.log_msg(f"編集結果を {full_path} に保存しました", LogLevel.INFO)
+
+# 使用例
+if __name__ == "__main__":
+    # 編集部品インスタンス生成
+    editor = EditingComponent()
+    result = editor.edit("hello world")
+
+    print(result)
+----

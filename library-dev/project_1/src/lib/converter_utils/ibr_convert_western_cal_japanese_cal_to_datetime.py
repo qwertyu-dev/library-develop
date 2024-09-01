@@ -1,4 +1,5 @@
 """和暦であっても西暦であってもdatetimeに変換する"""
+from dataclasses import dataclass
 from datetime import datetime
 from enum import Enum, auto
 from typing import NamedTuple
@@ -221,6 +222,8 @@ class Era(Enum):
 
         return era.value.start_year + era_year - 1
 
+
+@dataclass(frozen=True)
 class DateConstants:
     """日付処理に関する定数を定義するクラス
 
@@ -260,18 +263,18 @@ class DateConstants:
     | v0.1 | 初期定義作成 | 新規作成 | 2024/08/11 |                 |
 
     """
-    WESTERN_DATE_LENGTH = 10
-    JAPANESE_DATE_LENGTH = 7
-    WESTERN_DATE_SEPARATOR = '/'
-    WESTERN_YEAR_INDEX = 4
-    WESTERN_MONTH_INDEX = 7
-    ERA_INDEX = 0
-    YEAR_START_INDEX = 1
-    YEAR_END_INDEX = 3
-    MONTH_START_INDEX = 3
-    MONTH_END_INDEX = 5
-    DAY_START_INDEX = 5
-    DAY_END_INDEX = 7
+    WESTERN_DATE_LENGTH: int = 10
+    JAPANESE_DATE_LENGTH: int = 7
+    WESTERN_DATE_SEPARATOR: str = '/'
+    WESTERN_YEAR_INDEX: int = 4
+    WESTERN_MONTH_INDEX: int = 7
+    ERA_INDEX: int = 0
+    YEAR_START_INDEX: int = 1
+    YEAR_END_INDEX: int = 3
+    MONTH_START_INDEX: int = 3
+    MONTH_END_INDEX: int = 5
+    DAY_START_INDEX: int = 5
+    DAY_END_INDEX: int = 7
 
 def determine_date_format(date_string: str) -> DateFormat:
     """日付文字列のフォーマットを判定する

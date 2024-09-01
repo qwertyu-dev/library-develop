@@ -1,0 +1,260 @@
+= 例外処理ガイドライン
+
+== パッケージ独自の例外の使用
+
+=== はじめに
+
+==== except Exceptionを避ける
+* 予期しない例外も捕捉してしまい、重大な問題を隠蔽する可能性がある
+* デバッグを困難にし、問題の根本原因の特定を妨げる
+* コードの意図を不明確にし、可読性を低下させる
+
+==== 独自例外の利点
+パッケージ独自の例外を使用することで、以下の利点がある
+* より具体的なエラー処理が可能になる
+* コードの可読性と保守性が向上する
+* APIの使用者に対して、起こりうる問題をより明確に伝えられる
+
+=== パッケージ独自の例外の設計規約
+==== 基本的な例外階層の構築
+* パッケージ毎にExcepionを継承したルート例外を定義し、それを継承して具体的なパッケージ例外を作成する
+* 例：
++
+[source,python]
+----
+class MyPackageError(Exception):
+    """Base exception for MyPackage."""
+
+class ValidationError(MyPackageError):
+    """Raised when validation fails."""
+
+class NetworkError(MyPackageError):
+    """Raised when network operations fail."""
+----
+
+==== 例外の命名規則
+* 例外クラス名は常に`Error`とする
+* 発生障害に対する具体的な名前を付ける（例：`InvalidInputError`, `DatabaseConnectionError`）
+
+==== 適切な粒度での例外定義
+* 処理の文脈に応じて適切な粒度で例外を定義する
+
+=== 独自例外の実装
+==== 基本的な実装方法
+[source,python]
+----
+class CustomError(Exception):
+    def __init__(self, message, code=None):
+        self.message = message
+        self.code = code
+        super().__init__(self.message)
+----
+
+==== 追加情報の付加
+* エラーコード、タイムスタンプ、コンテキスト情報などを追加する
+
+==== エラーメッセージのフォーマット
+* 明確で簡潔なメッセージを心がける
+* 必要に応じてフォーマット文字列を使用する
+
+=== 例外の使用
+
+==== 例外の発生（raise）
+[source,python]
+----
+if not valid_input:
+    raise ValidationError("Input is not valid")
+----
+
+==== 例外のキャッチ（except）
+[source,python]
+----
+try:
+    process_data()
+except ValidationError as e:
+    log_error(f"Validation failed: {e}")
+except NetworkError as e:
+    retry_operation()
+----
+
+==== 例外の再発生
+[source,python]
+----
+try:
+    do_something()
+except SomeError as e:
+    raise CustomError("A custom error occurred") from e
+----
+
+=== ベストプラクティス
+
+[cols="1,2", options="header"]
+|===
+|カテゴリ |ガイドライン
+
+|適切な例外の選択
+a|* 状況に最も適した具体的な例外を選択する
+* 標準ライブラリの例外を適切に利用する（例：`ValueError`, `TypeError`）
+
+|例外の文書化
+a|* 発生しうる例外をドキュメントに記載する
+* 例外の意味と対処方法を説明する
+
+|テストにおける例外の扱い
+a|* 例外が適切に発生することをテストする
+* 例外のメッセージや属性も検証する
+
+|よくある間違いと対処法
+a|* 例外の過剰な使用を避ける
+* 空の`except`節を使用しない
+* 例外を適切にログに記録する
+
+|===
+
+
+== 例外情報伝搬: from e と from None の使い分け
+
+=== 例外の連鎖（Exception Chaining）の概要
+例外の連鎖は、元の例外を新しい例外に関連付ける機能であり、例外の発生経路を追跡可能にする。　
+
+=== from e と from None の基本的な違い
+== from e の使用
+[cols="1,2", options="header", width='75%']
+|===
+|構文 |説明
+
+|`from e`
+|元の例外を新しい例外の直接の原因として設定
+
+|`from None`
+|新しい例外を独立した例外として扱い、元の例外との関連を切断
+
+|===
+
+=== 基本的な使用方法
+[source,python]
+----
+try:
+    do_something()
+except SomeError as e:
+    raise CustomError("A custom error occurred") from e
+----
+
+[cols="1,2", options="header"]
+|===
+|カテゴリ |詳細
+
+|使用すべき状況
+a| * デバッグ情報を最大限保持したい場合
+* 例外の発生経路を追跡する必要がある場合
+* テストコードにおいて、詳細な情報が必要な場合
+
+|メリット
+a| * デバッグの容易さ
+* 詳細な情報の保持
+* 透明性の向上
+* エラーハンドリングの柔軟性
+
+|===
+
+
+== from None の使用
+
+=== 基本的な使用方法
+[source,python]
+----
+try:
+    do_something()
+except SomeError:
+    raise CustomError("A custom error occurred") from None
+----
+
+[cols="1,2", options="header", width='75&']
+|===
+|カテゴリ |詳細
+
+|使用すべき状況
+a| * セキュリティ上の理由で内部例外を隠蔽する必要がある場合
+* ユーザーに表示するエラーメッセージを単純化したい場合
+* 低レベルの実装詳細を抽象化したい場合
+
+|デメリットと注意点
+a| * デバッグ情報の損失
+* 問題の根本原因の特定が困難になる可能性
+
+|===
+
+== 使い分けの基準
+
+[cols="1,2", options="header"]
+|===
+|判断基準 |考慮事項
+
+|プロダクションコードでの判断基準
+a| * セキュリティとデバッグのバランスを考慮する
+* ユーザーへの表示情報の適切性を判断する
+
+|テストコードでの判断基準
+a| * 原則として`from e`を使用し、詳細な情報を保持する
+
+|セキュリティとのバランス
+a|* センシティブな情報を含む可能性がある場合は`from None`を検討する
+
+|===
+
+== 実装例と解説
+
+=== from e を使用するケース
+[source,python]
+----
+def process_data(data):
+    try:
+        validate_data(data)
+        transform_data(data)
+    except ValidationError as e:
+        raise ProcessingError("Data processing failed due to validation error") from e
+    except TransformationError as e:
+        raise ProcessingError("Data processing failed during transformation") from e
+----
+
+=== from None を使用するケース
+[source,python]
+----
+def authenticate_user(username, password):
+    try:
+        user = find_user(username)
+        check_password(user, password)
+    except (UserNotFoundError, PasswordMismatchError):
+        raise AuthenticationError("Invalid username or password") from None
+----
+
+=== 複雑な例外処理の例
+[source,python]
+----
+def complex_operation():
+    try:
+        step1()
+    except Step1Error as e:
+        try:
+            alternative_step1()
+        except AlternativeStep1Error:
+            raise ComplexOperationError("Both step1 and alternative failed") from e
+    # ... 続く ...
+----
+
+=== コードレビューのポイント
+
+[cols="1,2", options="header"]
+|===
+|カテゴリ |チェック項目
+
+| from e と from None の使用をチェックする際の観点
+a| * [ ] 適切な使用状況であるか
+* [ ] セキュリティリスクはないか
+* [ ] デバッグ可能性は確保されているか
+
+|適切な使用を促すためのレビュー手法
+a|* [ ] 使用理由の明確化を求める
+* [ ] セキュリティと可読性のバランスを議論する
+
+|===

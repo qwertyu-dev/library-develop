@@ -1,0 +1,273 @@
+= Pandas groupby 操作開発ガイドライン
+
+== はじめに
+
+このガイドラインは、Pandas の groupby 操作を効果的に使用し、結果のデータ構造を理解するための指針を提供します。
+
+== groupby の基本
+
+[source,python]
+----
+grouped = df.groupby('列名')
+----
+
+groupby 操作は、指定した列の値に基づいてデータをグループ化します。結果は GroupBy オブジェクトとなり、これに対して様々な操作を適用できます。ただ直感的にはGroupbyオブジェクトは視覚的には捉えにくく、その扱いを詳しく把握した上で設計・実装を行う必要があります。
+
+== groupby 結果の構造理解
+
+groupby 後のデータ構造を理解するために、以下の方法を使用します：
+
+=== グループの確認
+
+[source,python]
+----
+# グループのキーと対応するインデックスを表示
+print(grouped.groups)
+
+# グループの総数を確認
+print(grouped.ngroups)
+----
+
+=== 各グループの内容確認
+
+[source,python]
+----
+# 特定のグループの内容を確認
+print(grouped.get_group('グループ名'))
+
+# すべてのグループを順に確認
+for name, group in grouped:
+    print(f"グループ {name}:")
+    print(group)
+    print("\n")
+----
+
+=== グループサイズの確認
+
+[source,python]
+----
+print(grouped.size())
+----
+
+=== グループの統計情報
+
+[source,python]
+----
+# 各グループの最初の行を表示
+print(grouped.first())
+
+# 各グループの最後の行を表示
+print(grouped.last())
+
+# 各グループの詳細な統計情報を表示
+print(grouped.describe())
+----
+
+== groupby 後の操作
+
+=== 集計操作
+
+[source,python]
+----
+# 合計を計算
+result = grouped['列名'].sum()
+
+# 平均を計算
+result = grouped['列名'].mean()
+
+# 複数の集計操作を同時に行う
+result = grouped.agg({'列名1': 'sum', '列名2': 'mean'})
+
+----
+
+=== apply メソッドの使用
+
+カスタム関数を各グループに適用する場合は apply メソッドを使用します。特にgroupby適用後のindex及びデータ構造を正確に把握した上でapply()による一括処理を適用する必要があります。
+
+[source, python]
+----
+# 使用例
+df = pd.DataFrame({
+    '部店コード': ['1234', '1234', '5678', '9012', '9012', '3456'],
+    '課Grコード': [None, '01', None, '01', '02', None],
+    '部店名称': ['東京支店', '東京支店', '大阪支店', '名古屋支店', '名古屋支店', '福岡支店'],
+    '課Gr名称': [None, '営業課', None, '営業課', '管理課', None]
+})
+
+# 実行結果
++--------------+--------------+------------+------------+
+|   部店コード |   課Grコード | 部店名称   | 課Gr名称   |
++==============+==============+============+============+
+|         1234 |              | 東京支店   |            |
++--------------+--------------+------------+------------+
+|         1234 |           01 | 東京支店   | 営業課     |
++--------------+--------------+------------+------------+
+|         5678 |              | 大阪支店   |            |
++--------------+--------------+------------+------------+
+|         9012 |           01 | 名古屋支店 | 営業課     |
++--------------+--------------+------------+------------+
+|         9012 |           02 | 名古屋支店 | 管理課     |
++--------------+--------------+------------+------------+
+|         3456 |              | 福岡支店   |            |
++--------------+--------------+------------+------------+
+
+# 部店コードでGroupby処理適用
+grouped = df.groupby('部店コード')
+
+# 各グループの最初の行を選択
+# GroupbyのKeyが単一か複合キーかで以下結果は異なります
+print(tabulate(grouped.first(), tablefmt='grid', headers=grouped.first().columns, showindex=True))
+print(tabulate(grouped.last(), tablefmt='grid', headers=grouped.last().columns, showindex=True))
++------+--------------+------------+------------+
+|      |   課Grコード | 部店名称   | 課Gr名称   |
++======+==============+============+============+
+| 1234 |           01 | 東京支店   | 営業課     |
++------+--------------+------------+------------+
+| 3456 |              | 福岡支店   |            |
++------+--------------+------------+------------+
+| 5678 |              | 大阪支店   |            |
++------+--------------+------------+------------+
+| 9012 |           01 | 名古屋支店 | 営業課     |
++------+--------------+------------+------------+
+
+# 構造分析
+for name, group in grouped:
+    print(f"部店コード {name} のグループ:")
+    print(group)
+    print(f"課Grコードがnullの行がある: {group['課Grコード'].isnull().any()}")
+    print(f"課Grコードが非nullの行がある: {group['課Grコード'].notnull().any()}")
+    print("\n")
+
+部店コード 1234 のグループ:
+    部店コード 課Grコード  部店名称   課Gr名称
+0   1234      None        東京支店   None
+1   1234      01          東京支店   営業課
+課Grコードがnullの行がある: True
+課Grコードが非nullの行がある: True
+
+
+部店コード 3456 のグループ:
+    部店コード 課Grコード  部店名称  課Gr名称
+5   3456       None        福岡支店  None
+課Grコードがnullの行がある: True
+課Grコードが非nullの行がある: False
+
+
+部店コード 5678 のグループ:
+    部店コード 課Grコード  部店名称  課Gr名称
+2   5678       None        大阪支店  None
+課Grコードがnullの行がある: True
+課Grコードが非nullの行がある: False
+
+
+部店コード 9012 のグループ:
+    部店コード 課Grコード   部店名称     課Gr名称
+3   9012       01           名古屋支店   営業課
+4   9012       02           名古屋支店   管理課
+課Grコードがnullの行がある: False
+課Grコードが非nullの行がある: True
+
+# apply()適用を前提にしているので留意が必要です
+# apply()適用対象はgroupby結果Objectそのものではありません,index部分は適用対象外です
+def check_group(group):
+    has_bu = group['課Grコード'].isnull().any()  # 部明細の存在チェック
+    has_ka = group['課Grコード'].notnull().any()  # 課Gr明細の存在チェック
+    return pd.Series({'has_bu': has_bu, 'has_ka': has_ka})
+
+result = grouped.apply(check_group)
+
++--------------+--------------+
+|   部店コード |   課Grコード |
++==============+==============+
+|            1 |            1 |
++--------------+--------------+
+|            1 |            0 |
++--------------+--------------+
+|            1 |            0 |
++--------------+--------------+
+|            0 |            1 |
++--------------+--------------+
+
+----
+
+これらふまえてのコード
+[source,python]
+----
+import pandas as pd
+
+def detect_incomplete_records(df):
+    # 部店コードと課Grコードをキーにしてグループ化
+    grouped = df.groupby('部店コード')
+
+    # 各グループ内で部明細と課Gr明細の存在をチェック
+    def check_group(group):
+        has_bu = group['課Grコード'].isnull().any()  # 部明細の存在チェック
+        has_ka = group['課Grコード'].notnull().any()  # 課Gr明細の存在チェック
+        return pd.Series({'has_bu': has_bu, 'has_ka': has_ka})
+
+    result = grouped.apply(check_group)
+
+    # 部明細のみ、または課Gr明細のみの部店コードを抽出
+    # Groupby実行結果のindexにGroupby毎の部店が設定されているのを利用する
+    incomplete_bu = result[result['has_bu'] & ~result['has_ka']].index
+    incomplete_ka = result[~result['has_bu'] & result['has_ka']].index
+
+    return incomplete_bu, incomplete_ka
+
+# 使用例
+df = pd.DataFrame({
+    '部店コード': ['1234', '1234', '5678', '9012', '9012', '3456'],
+    '課Grコード': [None, '01', None, '01', '02', None],
+    '部店名称': ['東京支店', '東京支店', '大阪支店', '名古屋支店', '名古屋支店', '福岡支店'],
+    '課Gr名称': [None, '営業課', None, '営業課', '管理課', None]
+})
+
+incomplete_bu, incomplete_ka = detect_incomplete_records(df)
+
+print("部明細のみの部店コード:", incomplete_bu.tolist())
+print("課Gr明細のみの部店コード:", incomplete_ka.tolist())
+
+----
+
+[source,python]
+----
+# 実行結果
+部明細のみの部店コード: ['3456', '5678']
+課Gr明細のみの部店コード: ['9012']
+----
+
+== 結果の処理
+=== 結果の整形
+[source,python]
+----
+# インデックスをリセット
+result = result.reset_index()
+
+# 列名の変更
+result = result.rename(columns={'旧列名': '新列名'})
+----
+
+=== 結果の可視化
+
+[source,python]
+----
+import matplotlib.pyplot as plt
+
+result.plot(kind='bar')
+plt.show()
+----
+
+== パフォーマンスとメモリ管理
+
+- 大規模なデータセットを扱う場合は、メモリ使用量に注意してください。
+- 必要に応じて、チャンクサイズを指定してデータを分割処理することを検討してください。
+
+== ベストプラクティス
+
+- グループ化の前にデータのクリーニングと前処理を行い、不要なデータや異常値を除去してください。
+- 複雑な操作は、可能な限り小さな単位に分割し、段階的に処理してください。
+- 結果を常に検証し、期待通りの出力が得られているか確認してください。
+
+== まとめ
+
+groupby 操作は強力なデータ分析ツールですが、その結果の構造を正しく理解することが重要です。このガイドラインを参考に、効果的かつ効率的な groupby 操作の実装を心がけてください。
