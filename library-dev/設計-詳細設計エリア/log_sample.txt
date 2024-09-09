@@ -1,0 +1,173 @@
+$ python -m src.packages.preparation_editor
+2024-09-09 09:23:46 [INFO] preparation_editor - start line 43: local:
+2024-09-09 09:23:46 [INFO] preparation_editor - start line 44: src/share/receive:
+2024-09-09 09:23:46 [INFO] preparation_editor - start line 45: src/def/decision_table:
+2024-09-09 09:23:46 [INFO] preparation_editor - start line 46: decision_table.xlsx:
+2024-09-09 09:23:46 [INFO] preparation_editor - start line 47: data_sample.xlsx:
+2024-09-09 09:23:46 [INFO] preparation_editor - start line 50: IBRDEV-I-0000001:起動しました
+2024-09-09 09:23:46 [INFO] preparation_editor - start line 62: sample data path: src/share/receive/data_sample.xlsx:
+2024-09-09 09:23:46 [INFO] preparation_editor - start line 63: sample decision table path: src/def/decision_table/decision_table.xlsx:
+2024-09-09 09:23:46 [INFO] preparation_editor - start line 71: 
+|    | DecisionResult    |   column1 | column2      | column3    | column4    | column5   | column6   |   column7 |
+|---:|:------------------|----------:|:-------------|:-----------|:-----------|:----------|:----------|----------:|
+|  0 | DataFrameEditor1  |         1 | 1            | 1          | 1          | 1         | 1         |         1 |
+|  1 | DataFrameEditor2  |         1 | 0            | is_4digits | 1          | 1         | 1         |         1 |
+|  2 | DataFrameEditor3  |         1 | 1            | 0          | is_5digits | 1         | 1         |         1 |
+|  3 | DataFrameEditor4  |         1 | 1            | 1          | 0          | any       | 1         |         1 |
+|  4 | DataFrameEditor5  |         1 | 1            | 1          | 1          | 0         | 1,2,3     |         1 |
+|  5 | DataFrameEditor6  |         1 | 1            | 1          | 1          | any       | 0         |         1 |
+|  6 | DataFrameEditor7  |         1 | 1            | 1          | any        | 1         | 1         |         0 |
+|  7 | DataFrameEditor8  |         0 | is_not_empty | 1          | 1          | 1         | 1         |         1 |
+|  8 | DataFrameEditor9  |         0 | 0            | 1          | 1          | 1         | is_empty  |         1 |
+|  9 | DataFrameEditor10 |         0 | 1            | 0          | 1          | 1         | 1         |         1 |:
+2024-09-09 09:23:46 [INFO] factory - __init__ line 85: self.dt_functions: {'is_4digits': <function DT.is_4digits at 0x7f0c5b4aede0>, 'is_5digits': <function DT.is_5digits at 0x7f0c5b4aeca0>, 'is_empty': <function DT.is_empty at 0x7f0c5b4aefc0>, 'is_not_empty': <function DT.is_not_empty at 0x7f0c5b4af100>}:
+2024-09-09 09:23:46 [INFO] factory - evaluate_conditions line 112: All conditions met, returning DecisionResult: DataFrameEditor1:
+2024-09-09 09:23:46 [INFO] factory - evaluate_conditions line 113: ----------------------------------------------------------------------------------------------------:
+2024-09-09 09:23:46 [INFO] factory - create_editor line 300: Created editor: DataFrameEditor1, column_editors: {'column1': <src.lib.converter_utils.ibr_basic_column_editor.Column1Editor object at 0x7f0c5ad9af90>, 'column2': <src.lib.converter_utils.ibr_basic_column_editor.Column2Editor object at 0x7f0c5ad9aa50>, 'column3': <src.lib.converter_utils.ibr_basic_column_editor.Column3Editor object at 0x7f0c5b4e5510>}:
+2024-09-09 09:23:46 [INFO] facade - edit_dataframe line 55: Editing column: column1:
+2024-09-09 09:23:46 [INFO] facade - edit_dataframe line 56: Original values: [1] -> Edited values: [10]:
+2024-09-09 09:23:46 [INFO] facade - edit_dataframe line 55: Editing column: column2:
+2024-09-09 09:23:46 [INFO] facade - edit_dataframe line 56: Original values: [1] -> Edited values: [1]:
+2024-09-09 09:23:46 [INFO] facade - edit_dataframe line 55: Editing column: column3:
+2024-09-09 09:23:46 [INFO] facade - edit_dataframe line 56: Original values: [1] -> Edited values: [2]:
+2024-09-09 09:23:46 [INFO] factory - check_condition line 185: DT function is_4digits result: True:
+2024-09-09 09:23:46 [INFO] factory - evaluate_conditions line 112: All conditions met, returning DecisionResult: DataFrameEditor2:
+2024-09-09 09:23:46 [INFO] factory - evaluate_conditions line 113: ----------------------------------------------------------------------------------------------------:
+2024-09-09 09:23:46 [INFO] factory - create_editor line 300: Created editor: DataFrameEditor2, column_editors: {'column4': <src.lib.converter_utils.ibr_basic_column_editor.Column4Editor object at 0x7f0c5d2d0c90>, 'column5': <src.lib.converter_utils.ibr_basic_column_editor.Column5Editor object at 0x7f0c5adbfe10>, 'column6': <src.lib.converter_utils.ibr_basic_column_editor.Column8Editor object at 0x7f0c5adbc910>}:
+2024-09-09 09:23:46 [INFO] facade - edit_dataframe line 55: Editing column: column4:
+2024-09-09 09:23:46 [INFO] facade - edit_dataframe line 56: Original values: [1] -> Edited values: [1]:
+2024-09-09 09:23:46 [INFO] facade - edit_dataframe line 55: Editing column: column5:
+2024-09-09 09:23:46 [INFO] facade - edit_dataframe line 56: Original values: [1] -> Edited values: [1]:
+2024-09-09 09:23:46 [INFO] facade - edit_dataframe line 55: Editing column: column6:
+2024-09-09 09:23:46 [INFO] facade - edit_dataframe line 56: Original values: [1] -> Edited values: ['1*']:
+2024-09-09 09:23:46 [INFO] factory - check_condition line 185: DT function is_4digits result: False:
+2024-09-09 09:23:46 [INFO] factory - check_condition line 185: DT function is_5digits result: True:
+2024-09-09 09:23:46 [INFO] factory - evaluate_conditions line 112: All conditions met, returning DecisionResult: DataFrameEditor3:
+2024-09-09 09:23:46 [INFO] factory - evaluate_conditions line 113: ----------------------------------------------------------------------------------------------------:
+2024-09-09 09:23:46 [INFO] factory - create_editor line 300: Created editor: DataFrameEditor3, column_editors: {'column7': <src.lib.converter_utils.ibr_basic_column_editor.Column8Editor object at 0x7f0c5adbe390>}:
+2024-09-09 09:23:46 [INFO] facade - edit_dataframe line 55: Editing column: column7:
+2024-09-09 09:23:46 [INFO] facade - edit_dataframe line 56: Original values: [1] -> Edited values: ['1*']:
+2024-09-09 09:23:46 [INFO] factory - check_condition line 185: DT function is_4digits result: False:
+2024-09-09 09:23:46 [INFO] factory - check_condition line 185: DT function is_5digits result: False:
+2024-09-09 09:23:46 [INFO] factory - evaluate_conditions line 112: All conditions met, returning DecisionResult: DataFrameEditor4:
+2024-09-09 09:23:46 [INFO] factory - evaluate_conditions line 113: ----------------------------------------------------------------------------------------------------:
+2024-09-09 09:23:46 [INFO] factory - create_editor line 300: Created editor: DataFrameEditor4, column_editors: {'column4': <src.lib.converter_utils.ibr_basic_column_editor.Column4Editor object at 0x7f0c5adbe290>, 'column5': <src.lib.converter_utils.ibr_basic_column_editor.Column5Editor object at 0x7f0c5adbfbd0>, 'column6': <src.lib.converter_utils.ibr_basic_column_editor.Column6Editor object at 0x7f0c5adbc910>, 'column7': <src.lib.converter_utils.ibr_basic_column_editor.Column7Editor object at 0x7f0c5adbd8d0>}:
+2024-09-09 09:23:46 [INFO] facade - edit_dataframe line 55: Editing column: column4:
+2024-09-09 09:23:46 [INFO] facade - edit_dataframe line 56: Original values: [0] -> Edited values: [100]:
+2024-09-09 09:23:46 [INFO] facade - edit_dataframe line 55: Editing column: column5:
+2024-09-09 09:23:46 [INFO] facade - edit_dataframe line 56: Original values: [3] -> Edited values: [0]:
+2024-09-09 09:23:46 [INFO] facade - edit_dataframe line 55: Editing column: column6:
+2024-09-09 09:23:46 [INFO] facade - edit_dataframe line 56: Original values: [1] -> Edited values: [1]:
+2024-09-09 09:23:46 [INFO] facade - edit_dataframe line 55: Editing column: column7:
+2024-09-09 09:23:46 [INFO] facade - edit_dataframe line 56: Original values: [1] -> Edited values: ['1_']:
+2024-09-09 09:23:46 [INFO] factory - check_condition line 185: DT function is_4digits result: False:
+2024-09-09 09:23:46 [INFO] factory - check_condition line 185: DT function is_5digits result: False:
+2024-09-09 09:23:46 [INFO] factory - check_condition line 185: DT function is_not_empty result: True:
+2024-09-09 09:23:46 [INFO] factory - check_condition line 185: DT function is_empty result: False:
+2024-09-09 09:23:46 [INFO] factory - evaluate_conditions line 115: No matching conditions found, returning DataFrameEditorDefault:
+2024-09-09 09:23:46 [INFO] factory - evaluate_conditions line 116: ----------------------------------------------------------------------------------------------------:
+2024-09-09 09:23:46 [INFO] factory - create_editor line 300: Created editor: DataFrameEditorDefault, column_editors: {}:
+2024-09-09 09:23:46 [INFO] factory - check_condition line 185: DT function is_4digits result: False:
+2024-09-09 09:23:46 [INFO] factory - check_condition line 185: DT function is_5digits result: False:
+2024-09-09 09:23:46 [INFO] factory - check_condition line 185: DT function is_not_empty result: True:
+2024-09-09 09:23:46 [INFO] factory - check_condition line 185: DT function is_empty result: False:
+2024-09-09 09:23:46 [INFO] factory - evaluate_conditions line 115: No matching conditions found, returning DataFrameEditorDefault:
+2024-09-09 09:23:46 [INFO] factory - evaluate_conditions line 116: ----------------------------------------------------------------------------------------------------:
+2024-09-09 09:23:46 [INFO] factory - create_editor line 300: Created editor: DataFrameEditorDefault, column_editors: {}:
+2024-09-09 09:23:46 [INFO] factory - check_condition line 185: DT function is_4digits result: False:
+2024-09-09 09:23:46 [INFO] factory - check_condition line 185: DT function is_5digits result: False:
+2024-09-09 09:23:46 [INFO] factory - check_condition line 185: DT function is_not_empty result: True:
+2024-09-09 09:23:46 [INFO] factory - evaluate_conditions line 112: All conditions met, returning DecisionResult: DataFrameEditor8:
+2024-09-09 09:23:46 [INFO] factory - evaluate_conditions line 113: ----------------------------------------------------------------------------------------------------:
+2024-09-09 09:23:46 [INFO] factory - create_editor line 300: Created editor: DataFrameEditor8, column_editors: {'column7': <src.lib.converter_utils.ibr_basic_column_editor.Column7Editor object at 0x7f0c5adbedd0>}:
+2024-09-09 09:23:46 [INFO] facade - edit_dataframe line 55: Editing column: column7:
+2024-09-09 09:23:46 [INFO] facade - edit_dataframe line 56: Original values: [1] -> Edited values: ['1_']:
+2024-09-09 09:23:46 [INFO] factory - check_condition line 185: DT function is_4digits result: False:
+2024-09-09 09:23:46 [INFO] factory - check_condition line 185: DT function is_5digits result: False:
+2024-09-09 09:23:46 [INFO] factory - check_condition line 185: DT function is_not_empty result: True:
+2024-09-09 09:23:46 [INFO] factory - check_condition line 185: DT function is_empty result: False:
+2024-09-09 09:23:46 [INFO] factory - evaluate_conditions line 112: All conditions met, returning DecisionResult: DataFrameEditor10:
+2024-09-09 09:23:46 [INFO] factory - evaluate_conditions line 113: ----------------------------------------------------------------------------------------------------:
+2024-09-09 09:23:46 [INFO] factory - create_editor line 300: Created editor: DataFrameEditor10, column_editors: {'column7': <src.lib.converter_utils.ibr_basic_column_editor.Column7Editor object at 0x7f0c5ad8c1d0>}:
+2024-09-09 09:23:46 [INFO] facade - edit_dataframe line 55: Editing column: column7:
+2024-09-09 09:23:46 [INFO] facade - edit_dataframe line 56: Original values: [1] -> Edited values: ['1_']:
+2024-09-09 09:23:46 [INFO] factory - check_condition line 185: DT function is_4digits result: False:
+2024-09-09 09:23:46 [INFO] factory - check_condition line 185: DT function is_5digits result: False:
+2024-09-09 09:23:46 [INFO] factory - evaluate_conditions line 112: All conditions met, returning DecisionResult: DataFrameEditor6:
+2024-09-09 09:23:46 [INFO] factory - evaluate_conditions line 113: ----------------------------------------------------------------------------------------------------:
+2024-09-09 09:23:46 [INFO] factory - create_editor line 300: Created editor: DataFrameEditor6, column_editors: {'column7': <src.lib.converter_utils.ibr_basic_column_editor.Column7Editor object at 0x7f0c5b158590>}:
+2024-09-09 09:23:46 [INFO] facade - edit_dataframe line 55: Editing column: column7:
+2024-09-09 09:23:46 [INFO] facade - edit_dataframe line 56: Original values: [1] -> Edited values: ['1_']:
+2024-09-09 09:23:46 [INFO] factory - check_condition line 185: DT function is_4digits result: False:
+2024-09-09 09:23:46 [INFO] factory - check_condition line 185: DT function is_5digits result: False:
+2024-09-09 09:23:46 [INFO] factory - evaluate_conditions line 112: All conditions met, returning DecisionResult: DataFrameEditor5:
+2024-09-09 09:23:46 [INFO] factory - evaluate_conditions line 113: ----------------------------------------------------------------------------------------------------:
+2024-09-09 09:23:46 [INFO] factory - create_editor line 300: Created editor: DataFrameEditor5, column_editors: {'column5': <src.lib.converter_utils.ibr_basic_column_editor.Column5Editor object at 0x7f0c5b146190>, 'column6': <src.lib.converter_utils.ibr_basic_column_editor.Column6Editor object at 0x7f0c5b146b50>, 'column7': <src.lib.converter_utils.ibr_basic_column_editor.Column8Editor object at 0x7f0c5b146610>}:
+2024-09-09 09:23:46 [INFO] facade - edit_dataframe line 55: Editing column: column5:
+2024-09-09 09:23:46 [INFO] facade - edit_dataframe line 56: Original values: [0] -> Edited values: [0]:
+2024-09-09 09:23:46 [INFO] facade - edit_dataframe line 55: Editing column: column6:
+2024-09-09 09:23:46 [INFO] facade - edit_dataframe line 56: Original values: [1] -> Edited values: [1]:
+2024-09-09 09:23:46 [INFO] facade - edit_dataframe line 55: Editing column: column7:
+2024-09-09 09:23:46 [INFO] facade - edit_dataframe line 56: Original values: [1] -> Edited values: ['1*']:
+2024-09-09 09:23:46 [INFO] factory - check_condition line 185: DT function is_4digits result: False:
+2024-09-09 09:23:46 [INFO] factory - check_condition line 185: DT function is_5digits result: False:
+2024-09-09 09:23:46 [INFO] factory - evaluate_conditions line 112: All conditions met, returning DecisionResult: DataFrameEditor5:
+2024-09-09 09:23:46 [INFO] factory - evaluate_conditions line 113: ----------------------------------------------------------------------------------------------------:
+2024-09-09 09:23:46 [INFO] factory - create_editor line 300: Created editor: DataFrameEditor5, column_editors: {'column5': <src.lib.converter_utils.ibr_basic_column_editor.Column5Editor object at 0x7f0c5adbf290>, 'column6': <src.lib.converter_utils.ibr_basic_column_editor.Column6Editor object at 0x7f0c5adbe390>, 'column7': <src.lib.converter_utils.ibr_basic_column_editor.Column8Editor object at 0x7f0c5b146190>}:
+2024-09-09 09:23:46 [INFO] facade - edit_dataframe line 55: Editing column: column5:
+2024-09-09 09:23:46 [INFO] facade - edit_dataframe line 56: Original values: [0] -> Edited values: [0]:
+2024-09-09 09:23:46 [INFO] facade - edit_dataframe line 55: Editing column: column6:
+2024-09-09 09:23:46 [INFO] facade - edit_dataframe line 56: Original values: [2] -> Edited values: [2]:
+2024-09-09 09:23:46 [INFO] facade - edit_dataframe line 55: Editing column: column7:
+2024-09-09 09:23:46 [INFO] facade - edit_dataframe line 56: Original values: [1] -> Edited values: ['1*']:
+2024-09-09 09:23:46 [INFO] factory - check_condition line 185: DT function is_4digits result: False:
+2024-09-09 09:23:46 [INFO] factory - check_condition line 185: DT function is_5digits result: False:
+2024-09-09 09:23:46 [INFO] factory - evaluate_conditions line 112: All conditions met, returning DecisionResult: DataFrameEditor5:
+2024-09-09 09:23:46 [INFO] factory - evaluate_conditions line 113: ----------------------------------------------------------------------------------------------------:
+2024-09-09 09:23:46 [INFO] factory - create_editor line 300: Created editor: DataFrameEditor5, column_editors: {'column5': <src.lib.converter_utils.ibr_basic_column_editor.Column5Editor object at 0x7f0c5adbfdd0>, 'column6': <src.lib.converter_utils.ibr_basic_column_editor.Column6Editor object at 0x7f0c5adbf290>, 'column7': <src.lib.converter_utils.ibr_basic_column_editor.Column8Editor object at 0x7f0c5adbe390>}:
+2024-09-09 09:23:46 [INFO] facade - edit_dataframe line 55: Editing column: column5:
+2024-09-09 09:23:46 [INFO] facade - edit_dataframe line 56: Original values: [0] -> Edited values: [0]:
+2024-09-09 09:23:46 [INFO] facade - edit_dataframe line 55: Editing column: column6:
+2024-09-09 09:23:46 [INFO] facade - edit_dataframe line 56: Original values: [3] -> Edited values: [10]:
+2024-09-09 09:23:46 [INFO] facade - edit_dataframe line 55: Editing column: column7:
+2024-09-09 09:23:46 [INFO] facade - edit_dataframe line 56: Original values: [1] -> Edited values: ['1*']:
+2024-09-09 09:23:46 [INFO] factory - check_condition line 185: DT function is_4digits result: False:
+2024-09-09 09:23:46 [INFO] factory - check_condition line 185: DT function is_5digits result: False:
+2024-09-09 09:23:46 [INFO] factory - check_condition line 185: DT function is_not_empty result: True:
+2024-09-09 09:23:46 [INFO] factory - check_condition line 185: DT function is_empty result: False:
+2024-09-09 09:23:46 [INFO] factory - evaluate_conditions line 115: No matching conditions found, returning DataFrameEditorDefault:
+2024-09-09 09:23:46 [INFO] factory - evaluate_conditions line 116: ----------------------------------------------------------------------------------------------------:
+2024-09-09 09:23:46 [INFO] factory - create_editor line 300: Created editor: DataFrameEditorDefault, column_editors: {}:
+2024-09-09 09:23:46 [INFO] preparation_editor - start line 79: 
+|    |   column1 |   column2 |   column3 |   column4 |   column5 |   column6 |   column7 |
+|---:|----------:|----------:|----------:|----------:|----------:|----------:|----------:|
+|  0 |         1 |         1 |         1 |         1 |         1 |         1 |         1 |
+|  1 |         1 |         0 |      1111 |         1 |         1 |         1 |         1 |
+|  2 |         1 |         1 |         0 |     10000 |         1 |         1 |         1 |
+|  3 |         1 |         1 |         1 |         0 |         3 |         1 |         1 |
+|  4 |         1 |         1 |         1 |         1 |         2 |         2 |         1 |
+|  5 |         0 |         1 |         1 |         1 |         1 |         0 |         1 |
+|  6 |         0 |         0 |         1 |         1 |         1 |         1 |         1 |
+|  7 |         0 |         1 |         0 |         1 |         1 |         1 |         1 |
+|  8 |         1 |         1 |         1 |         1 |         0 |         0 |         1 |
+|  9 |         1 |         1 |         1 |         1 |         0 |         1 |         1 |
+| 10 |         1 |         1 |         1 |         1 |         0 |         2 |         1 |
+| 11 |         1 |         1 |         1 |         1 |         0 |         3 |         1 |
+| 12 |         1 |         1 |         1 |         1 |         0 |         4 |         1 |:
+2024-09-09 09:23:46 [INFO] preparation_editor - start line 80: 
+|    |   column1 |   column2 |   column3 |   column4 |   column5 | column6   | column7   |
+|---:|----------:|----------:|----------:|----------:|----------:|:----------|:----------|
+|  0 |        10 |         1 |         2 |         1 |         1 | 1         | 1         |
+|  1 |         1 |         0 |      1111 |         1 |         1 | 1*        | 1         |
+|  2 |         1 |         1 |         0 |     10000 |         1 | 1         | 1*        |
+|  3 |         1 |         1 |         1 |       100 |         0 | 1         | 1_        |
+|  4 |         1 |         1 |         1 |         1 |         2 | 2         | 1         |
+|  5 |         0 |         1 |         1 |         1 |         1 | 0         | 1         |
+|  6 |         0 |         0 |         1 |         1 |         1 | 1         | 1_        |
+|  7 |         0 |         1 |         0 |         1 |         1 | 1         | 1_        |
+|  8 |         1 |         1 |         1 |         1 |         0 | 0         | 1_        |
+|  9 |         1 |         1 |         1 |         1 |         0 | 1         | 1*        |
+| 10 |         1 |         1 |         1 |         1 |         0 | 2         | 1*        |
+| 11 |         1 |         1 |         1 |         1 |         0 | 10        | 1*        |
+| 12 |         1 |         1 |         1 |         1 |         0 | 4         | 1         |:
+2024-09-09 09:23:46 [INFO] preparation_editor - start line 84: IBRDEV-I-0000002:正常終了しました
