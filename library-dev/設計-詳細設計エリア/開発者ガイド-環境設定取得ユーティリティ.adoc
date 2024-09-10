@@ -1,0 +1,91 @@
+= ログ設定初期化ガイドライン
+
+== 設定ユーティリティの定義
+
+プロジェクト全体で一貫したログ設定の初期化を行うため、以下の2つのユーティリティを用意しています。
+
+[source,python]
+.ibr_decorator_config.py
+----
+from functools import wraps
+from pathlib import Path
+from src.lib.common_utils.ibr_get_config import Config
+from src.lib.common_utils.ibr_enums import LogLevel
+
+def with_config(cls):
+    @wraps(cls)
+    def wrapper(*args, **kwargs):
+        instance = cls(*args, **kwargs)
+        instance.config = Config.load(Path(cls.__module__).with_suffix('.py'))
+        instance.log_msg = instance.config.log_message
+        instance.log_msg(f"Initialized {cls.__name__} with config", LogLevel.DEBUG)
+        return instance
+    return wrapper
+
+def initialize_config(module_path):
+    config = Config.load(Path(module_path).with_suffix('.py'))
+    return config, config.log_message
+----
+
+* `with_config`: クラスに対して使用するデコレータです。クラスインスタンスに`config`と`log_msg`を自動的に追加します。
+* `initialize_config`: 関数ベースのモジュールで使用する関数です。モジュールレベルで設定とロガーを初期化します。
+
+== クラスでのログ設定初期化
+
+クラスを定義する際は、`@with_config` デコレータを使用してください。
+
+[source,python]
+----
+from src.lib.common_utils.ibr_decorator_config import with_config
+from src.lib.common_utils.ibr_enums import LogLevel
+
+@with_config
+class SampleClass:
+    def __init__(self):
+        self.env = self.config.env
+        self.common_config = self.config.common_config
+        self.package_config = self.config.package_config
+        self.log_msg = self.config.log_message
+
+    def some_method(self):
+        self.log_msg("This is a sample log message", LogLevel.INFO)
+        # メソッドの実装...
+
+    def another_method(self):
+        some_setting = self.common_config['some_key']
+        self.log_msg(f"Using setting: {some_setting}", LogLevel.DEBUG)
+        # さらなる実装...
+----
+
+* `@with_config` デコレータを使用することで、クラスインスタンスに `config` オブジェクトが自動的に追加されます。
+* `__init__` メソッド内で、`self.config` から必要な設定コンポーネントを取得します。
+* `self.env` 、`self.common_config` 、`self.package_config` を使用して、それぞれ環境設定、共通設定、パッケージ固有の設定にアクセスできます。
+* `self.log_msg` は `self.config.log_message` から取得し、クラス全体でログ出力に使用できます。
+* 異なるメソッドで設定値の利用とログ出力の例を示しています。
+
+
+== 関数ベースモジュールでのログ設定初期化
+
+関数のみで構成されるモジュールでは、モジュールの先頭で `initialize_config` を呼び出してください。
+
+[source,python]
+----
+from src.lib.common_utils.ibr_decorator_config import initialize_config
+
+config, log_msg = initialize_config(__file__)
+
+def some_function():
+    log_msg("This is a log message from a function", LogLevel.INFO)
+    some_setting = config.common_config['some_key']
+    # 関数の実装...
+
+def another_function():
+    log_msg("Another log message", LogLevel.DEBUG)
+    another_setting = config.package_config['another_key']
+    # 関数の実装...
+----
+
+* モジュールレベルで `config` と `log_msg` が初期化され、すべての関数から利用可能になります。
+* 各関数内で直接 `config` と `log_msg` を使用できます。
+
+この方法を採用することで、プロジェクト全体で一貫したログ設定と使用方法を確保できます。クラスベースと関数ベースの両方のコーディングスタイルに対応し、設定の管理とログ出力を簡潔に行うことができます。
