@@ -11,6 +11,11 @@ from src.lib.exceptions.business_exceptions import BusinessLogicError
 from src.lib.validator_utils.validation_error_manager import ValidationErrorManager
 from pydantic import ValidationError
 
+from src.lib.common_utils.ibr_decorator_config import with_config
+
+import sys
+from src.lib.common_utils.ibr_decorator_config import initialize_config
+
 class ExcelProcessor:
     """Excelファイルの処理とバリデーションを行うクラス。
 
@@ -97,6 +102,7 @@ class ExcelProcessor:
         self.process_validation_errors()
         return _df
 
+@with_config
 class Main:
     """アプリケーションのメインクラス。
 
@@ -114,11 +120,22 @@ class Main:
 
     def __init__(self):
         """Mainクラスのコンストラクタ。設定の読み込みと初期化を行う。"""
-        config = Config.load(__file__)
-        self.env = config.env
-        self.common_config = config.common_config
-        self.package_config = config.package_config
-        self.log_msg = config.log_message
+        #config = Config.load(__file__)
+        #self.env = config.env
+        #self.common_config = config.common_config
+        #self.package_config = config.package_config
+        #self.log_msg = config.log_message
+
+        # class
+        self.env = self.config.env
+        self.common_config = self.config.common_config
+        self.package_config = self.config.package_config
+        self.log_msg = self.config.log_message
+
+        # function
+        self.fconfig = initialize_config(sys.modules[__name__])
+        print(f'function: {self.fconfig}')
+
 
         self.excel_file_path = Path(
             f"{self.common_config['input_file_path']['UPDATE_EXCEL_PATH']}/"
