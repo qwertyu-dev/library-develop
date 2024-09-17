@@ -6,14 +6,16 @@ from src.model.factory.preparation_factory import create_editor_factory, process
 
 from src.lib.common_utils.ibr_enums import LogLevel
 from src.lib.common_utils.ibr_dataframe_helper import tabulate_dataframe
-from src.lib.common_utils.ibr_get_config import Config
+from src.lib.common_utils.ibr_logger_helper import format_config
 
-import sys
-from src.lib.common_utils.ibr_decorator_config import initialize_config
+# config共有
+from src.lib.common_utils.ibr_decorator_config import with_config
 
-# function
+#import sys
+#from src.lib.common_utils.ibr_decorator_config import initialize_config
 #config = initialize_config(sys.modules[__name__])
 
+@with_config
 class Main:
     """アプリケーションのメインクラス。
 
@@ -28,24 +30,27 @@ class Main:
 
     def __init__(self):
         """Mainクラスのイニシャライザ。設定の読み込みと初期化を行う。"""
-        #config = Config.load(__file__)
-        self.config = config
         self.env = self.config.env
         self.common_config = self.config.common_config
         self.package_config = self.config.package_config
         self.log_msg = self.config.log_message
+
+        self.log_msg(f'config: \n{format_config(self.config)}', LogLevel.DEBUG)
+        self.log_msg(self.env, LogLevel.INFO)
+        #self.log_msg(self.common_config['input_file_path']['UPDATE_EXCEL_PATH'], LogLevel.INFO)
+        #self.log_msg(self.common_config['decision_table_path']['DEF_DECISION_TABLE_PATH'], LogLevel.INFO)
+        #self.log_msg(self.package_config['decision_table_book_name']['DECISION_TABLE_BOOK_NANE'], LogLevel.INFO)
+        #self.log_msg(self.package_config['preparation_sample_data']['PREPARATION_SAMPLE_DATA'], LogLevel.INFO)
+        self.log_msg(f"input_file path: {self.common_config.get('input_file_path', {}).get('UPDATE_EXCEL_PATH',[])}", LogLevel.INFO)
+        self.log_msg(f"decision table path: {self.common_config.get('decision_table_path',{}).get('DEF_DECISION_TABLE_PATH',[])}", LogLevel.INFO)
+        self.log_msg(f"decision table book name: {self.package_config.get('decision_table_book_name',{}).get('DECISION_TABLE_BOOK_NANE',[])}", LogLevel.INFO)
+        self.log_msg(f"sample data path: {self.package_config.get('preparation_sample_data',{}).get('PREPARATION_SAMPLE_DATA',[])}", LogLevel.INFO)
 
         # toml定義からの取り出し方法
         #pprint(self.package_config.get('layout', {}).get('unified_layout', []))
 
     def start(self) -> None:
         """アプリケーションのメイン処理を実行する。"""
-        self.log_msg(self.env, LogLevel.INFO)
-        self.log_msg(self.common_config['input_file_path']['UPDATE_EXCEL_PATH'], LogLevel.INFO)
-        self.log_msg(self.common_config['decision_table_path']['DEF_DECISION_TABLE_PATH'], LogLevel.INFO)
-        self.log_msg(self.package_config['decision_table_book_name']['DECISION_TABLE_BOOK_NANE'], LogLevel.INFO)
-        self.log_msg(self.package_config['preparation_sample_data']['PREPARATION_SAMPLE_DATA'], LogLevel.INFO)
-
         try:
             self.log_msg("IBRDEV-I-0000001")  # 処理開始ログ
 
