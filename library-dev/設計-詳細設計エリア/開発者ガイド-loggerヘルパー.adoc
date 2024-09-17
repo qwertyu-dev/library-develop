@@ -1,0 +1,136 @@
+= ログ出力ヘルパー関数使用ガイドライン
+
+== ヘルパー関数の概要
+
+=== 目的と利点
+ログ出力ヘルパー関数は、複雑なデータ構造（特に辞書型）のログ出力を改善し、可読性を高めることを目的としています。これらの関数を使用することで、以下の利点が得られます：
+
+* 構造化されたデータの見やすい出力
+* 一貫性のあるログフォーマット
+* デバッグとトラブルシューティングの効率化
+
+=== 共通関数提供
+
+* src.lib.common_utils.ibr_logger_helper
+
+=== 提供される関数の一覧
+. `format_dict(data: dict[str, Any], indent: int = 2, width: int = 120) -> str`
+* 辞書を読みやすい形式でフォーマットします。
+
+. `format_config(config: dict[str, Any]) -> str`
+* 設定情報を読みやすい形式でフォーマットします。
+
+== format_dict 関数の使用方法
+
+=== 基本的な使い方
+`format_dict` 関数は、辞書型のデータを整形された文字列に変換します。
+
+[source,python]
+----
+from src.lib.common_utils.ibr_logger_helper import format_dict
+
+data = {"key1": "value1", "key2": {"nested_key": "nested_value"}}
+formatted_output = format_dict(data)
+logger.debug(f"Processed data: \n{formatted_output}")
+----
+
+=== パラメータの説明
+* `data`: フォーマットする辞書型データ
+* `indent`: インデントのスペース数（デフォルト: 2）
+* `width`: 出力の最大幅（デフォルト: 120）
+
+=== 使用例と出力サンプル
+[source,python]
+----
+complex_data = {
+    "user": "John Doe",
+    "age": 30,
+    "address": {
+        "street": "123 Main St",
+        "city": "Anytown",
+        "country": "USA"
+    },
+    "hobbies": ["reading", "cycling", "photography"]
+}
+
+logger.debug(f"User data: \n{format_dict(complex_data)}")
+----
+
+出力例：
+[source]
+----
+User data: 
+{ 'address': { 'city': 'Anytown',
+               'country': 'USA',
+               'street': '123 Main St'},
+  'age': 30,
+  'hobbies': ['reading', 'cycling', 'photography'],
+  'user': 'John Doe'}
+----
+
+== format_config 関数の活用
+
+=== 設定情報出力の標準化
+`format_config` 関数は、アプリケーションの設定情報を標準化された形式で出力します。
+
+== ヘルパー関数の使用前後の比較
+
+=== 使用前（従来のログ出力）
+[source,python]
+----
+error_data = {
+    "type": "ValidationError",
+    "message": "Invalid input",
+    "details": {
+        "field": "email",
+        "error": "Invalid email format",
+        "value": "user@example",
+        "allowed_domains": ["com", "org", "net"]
+    }
+}
+
+logger.error(f"An error occurred: {error_data}")
+----
+
+
+出力例：
+[source]
+----
+2024-09-17 23:45:12 [ERROR] An error occurred: {'type': 'ValidationError', 'message': 'Invalid input', 'details': {'field': 'email', 'error': 'Invalid email format', 'value': 'user@example', 'allowed_domains': ['com', 'org', 'net']}}
+----
+
+=== 使用後（ヘルパー関数を使用したログ出力）
+
+[source,python]
+----
+from src.lib.common_utils.ibr_logger_helper import format_dict
+
+error_data = {
+    "type": "ValidationError",
+    "message": "Invalid input",
+    "details": {
+        "field": "email",
+        "error": "Invalid email format",
+        "value": "user@example",
+        "allowed_domains": ["com", "org", "net"]
+    }
+}
+
+logger.error(f"An error occurred: \n{format_dict(error_data)}")
+----
+
+出力例：
+[source]
+----
+2024-09-17 23:45:12 [ERROR] An error occurred: 
+{ 'details': { 'allowed_domains': ['com', 'org', 'net'],
+               'error': 'Invalid email format',
+               'field': 'email',
+               'value': 'user@example'},
+  'message': 'Invalid input',
+  'type': 'ValidationError'}
+----
+
+この比較から、ヘルパー関数を使用することで、ログの可読性が大幅に向上し、特に複雑なデータ構造の場合にデバッグがより容易になることがわかります。
+
+これらのヘルパー関数を適切に使用することで、ログの可読性が向上し、デバッグやトラブルシューティングの効率が大幅に改善されます。プロジェクト全体で一貫してこれらの関数を使用することをお勧めします。

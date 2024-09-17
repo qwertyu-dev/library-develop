@@ -23,29 +23,24 @@ class Main:
     """
 
     def __init__(self):
-        """Mainクラスのコンストラクタ。設定の読み込みと初期化を行う。"""
+        """Mainクラスのイニシャライザ。設定の読み込みと初期化を行う。"""
         config = Config.load(__file__)
         self.env = config.env
         self.common_config = config.common_config
         self.package_config = config.package_config
         self.log_msg = config.log_message
 
-        from pprint import pprint
-        pprint(self.env)
-        pprint(self.common_config)
-        pprint(self.package_config)
-
         # toml定義からの取り出し方法
-        pprint(self.package_config.get('layout', {}).get('unified_layout', []))
+        # self.package_config.get('layout', {}).get('unified_layout', [])
 
-        
-        #copy_file(Path('/tmp/file_move_test.txt'), Path('/tmp'), with_timestamp=1)
-        move_file(Path('/tmp/file_move_test.txt'), Path('/tmp'))
 
     def start(self) -> None:
         """アプリケーションのメイン処理を実行する。"""
+        self.log_msg("IBRDEV-I-0000001")  # 処理開始ログ
+
         try:
-            self.log_msg("IBRDEV-I-0000001")  # 処理開始ログ
+            copy_file(Path('/tmp/file_move_test.txt'), Path('/tmp'), with_timestamp=1)
+            move_file(Path('/tmp/file_move_test.txt'), Path('/tmp'))
         finally:
             self.log_msg("IBRDEV-I-0000002")  # 処理終了ログ
 

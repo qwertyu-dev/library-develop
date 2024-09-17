@@ -59,3 +59,6 @@ UPDATE_EXCEL_PATH = 'src/share/receive'
 
 [local.output_file_path]
 SEND_REFERENCE_MASTER_PATH = 'src/share/receive'
+
+[local.decision_table_path]
+DEF_DECISION_TABLE_PATH = 'src/def/decision_table'

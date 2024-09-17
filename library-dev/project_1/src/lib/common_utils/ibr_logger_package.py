@@ -248,8 +248,13 @@ class LoggerPackage(metaclass=SingletonType):
         func_name = caller_frame.f_code.co_name
         caller_lineno = caller_frame.f_lineno
 
+        # ファイルパスからパッケージ名とモジュール名を推察
+        file_path = Path(caller_frame.f_globals['__file__'])
+        package_name = file_path.parent.name
+        module_name = file_path.stem
+
         # logger.name差し替え
-        self._logger.name = package_name
+        self._logger.name = f'{package_name}.{module_name}'
 
         # 書き出し、ログレベルに応じて出力
         try:

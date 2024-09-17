@@ -1,0 +1,1166 @@
+2024-08-31 09:16:43 [DEBUG] converter_utils - <module> line 16: Config(env='local', common_config={'logger_path': {'LOGGER_DEF_FILE': 'src/def/mfaUtilsLoggingHelper/logging_TimedRotate.json', 'LOGGER_MSG_FILE': 'src/def/mfaUtilsLoggingHelper/config_MessageList.toml'}, 'input_file_path': {'UPDATE_EXCEL_PATH': 'src/share/receive'}, 'output_file_path': {'SEND_REFERENCE_MASTER_PATH': 'src/share/receive'}}, package_config={'test': {'local_test': 'tests'}}, log_message=<bound method LoggerPackage.log_message of <src.lib.common_utils.ibr_logger_package.LoggerPackage object at 0x7efff855d1d0>>):
+2024-08-31 09:16:43 [INFO] converter_utils - setup_method line 44: test start:
+2024-08-31 09:16:43 [INFO] converter_utils - test_era_attributes_C0_basic line 57: 
+
+        テスト内容:
+        - テストカテゴリ: C0
+        - テスト区分: 正常系
+        - テストシナリオ: 各元号の属性(name, code, start_year, max_year)の正確性確認
+        :
+2024-08-31 09:16:43 [INFO] converter_utils - teardown_method line 48: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:43 [INFO] converter_utils - setup_method line 44: test start:
+2024-08-31 09:16:43 [INFO] converter_utils - test_from_code_C1_valid line 75: 
+
+        テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 正常系
+        - テストシナリオ: 有効なコードでの Era オブジェクト取得
+        :
+2024-08-31 09:16:43 [INFO] converter_utils - teardown_method line 48: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:43 [INFO] converter_utils - setup_method line 44: test start:
+2024-08-31 09:16:43 [INFO] converter_utils - test_from_code_C1_valid line 75: 
+
+        テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 正常系
+        - テストシナリオ: 有効なコードでの Era オブジェクト取得
+        :
+2024-08-31 09:16:43 [INFO] converter_utils - teardown_method line 48: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:43 [INFO] converter_utils - setup_method line 44: test start:
+2024-08-31 09:16:43 [INFO] converter_utils - test_from_code_C1_valid line 75: 
+
+        テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 正常系
+        - テストシナリオ: 有効なコードでの Era オブジェクト取得
+        :
+2024-08-31 09:16:43 [INFO] converter_utils - teardown_method line 48: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:43 [INFO] converter_utils - setup_method line 44: test start:
+2024-08-31 09:16:43 [INFO] converter_utils - test_from_code_C1_invalid line 86: 
+
+        テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 異常系
+        - テストシナリオ: 無効なコードでの ValueError 発生
+        :
+2024-08-31 09:16:43 [INFO] converter_utils - teardown_method line 48: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:43 [INFO] converter_utils - setup_method line 44: test start:
+2024-08-31 09:16:43 [INFO] converter_utils - test_convert_japanese_year_to_western_C2_valid line 106: 
+
+        テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 各元号の様々な年での変換
+        :
+2024-08-31 09:16:43 [INFO] converter_utils - teardown_method line 48: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:43 [INFO] converter_utils - setup_method line 44: test start:
+2024-08-31 09:16:43 [INFO] converter_utils - test_convert_japanese_year_to_western_C2_valid line 106: 
+
+        テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 各元号の様々な年での変換
+        :
+2024-08-31 09:16:43 [INFO] converter_utils - teardown_method line 48: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:43 [INFO] converter_utils - setup_method line 44: test start:
+2024-08-31 09:16:43 [INFO] converter_utils - test_convert_japanese_year_to_western_C2_valid line 106: 
+
+        テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 各元号の様々な年での変換
+        :
+2024-08-31 09:16:43 [INFO] converter_utils - teardown_method line 48: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:43 [INFO] converter_utils - setup_method line 44: test start:
+2024-08-31 09:16:43 [INFO] converter_utils - test_convert_japanese_year_to_western_C2_valid line 106: 
+
+        テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 各元号の様々な年での変換
+        :
+2024-08-31 09:16:43 [INFO] converter_utils - teardown_method line 48: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:43 [INFO] converter_utils - setup_method line 44: test start:
+2024-08-31 09:16:43 [INFO] converter_utils - test_convert_japanese_year_to_western_C2_valid line 106: 
+
+        テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 各元号の様々な年での変換
+        :
+2024-08-31 09:16:43 [INFO] converter_utils - teardown_method line 48: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:43 [INFO] converter_utils - setup_method line 44: test start:
+2024-08-31 09:16:43 [INFO] converter_utils - test_convert_japanese_year_to_western_C2_valid line 106: 
+
+        テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 各元号の様々な年での変換
+        :
+2024-08-31 09:16:43 [INFO] converter_utils - teardown_method line 48: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:43 [INFO] converter_utils - setup_method line 44: test start:
+2024-08-31 09:16:43 [INFO] converter_utils - test_convert_japanese_year_to_western_C2_invalid line 117: 
+
+        テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 異常系
+        - テストシナリオ: 無効な元号コードや和暦年での ValueError 発生
+        :
+2024-08-31 09:16:43 [INFO] converter_utils - teardown_method line 48: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:43 [INFO] converter_utils - setup_method line 44: test start:
+2024-08-31 09:16:43 [INFO] converter_utils - test_convert_japanese_year_to_western_C2_current_era line 148: 
+
+        テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 現在進行中の元号(令和)の来年までの変換
+        :
+2024-08-31 09:16:43 [INFO] converter_utils - teardown_method line 48: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:43 [INFO] converter_utils - setup_method line 191: test start:
+2024-08-31 09:16:43 [INFO] converter_utils - test_determine_date_format_C0_basic line 208: 
+
+        テスト内容:
+        - テストカテゴリ: C0
+        - テスト区分: 正常系
+        - テストシナリオ: 基本的な日付形式の判定
+        :
+2024-08-31 09:16:43 [INFO] converter_utils - teardown_method line 194: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:43 [INFO] converter_utils - setup_method line 191: test start:
+2024-08-31 09:16:43 [INFO] converter_utils - test_determine_date_format_C0_basic line 208: 
+
+        テスト内容:
+        - テストカテゴリ: C0
+        - テスト区分: 正常系
+        - テストシナリオ: 基本的な日付形式の判定
+        :
+2024-08-31 09:16:43 [INFO] converter_utils - teardown_method line 194: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:43 [INFO] converter_utils - setup_method line 191: test start:
+2024-08-31 09:16:43 [INFO] converter_utils - test_determine_date_format_C0_basic line 208: 
+
+        テスト内容:
+        - テストカテゴリ: C0
+        - テスト区分: 正常系
+        - テストシナリオ: 基本的な日付形式の判定
+        :
+2024-08-31 09:16:43 [INFO] converter_utils - teardown_method line 194: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:43 [INFO] converter_utils - setup_method line 191: test start:
+2024-08-31 09:16:43 [INFO] converter_utils - test_determine_date_format_C1_boundary line 226: 
+
+        テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 境界値
+        - テストシナリオ: 日付形式の境界値テスト
+        :
+2024-08-31 09:16:43 [INFO] converter_utils - teardown_method line 194: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:43 [INFO] converter_utils - setup_method line 191: test start:
+2024-08-31 09:16:43 [INFO] converter_utils - test_determine_date_format_C1_boundary line 226: 
+
+        テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 境界値
+        - テストシナリオ: 日付形式の境界値テスト
+        :
+2024-08-31 09:16:43 [INFO] converter_utils - teardown_method line 194: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:43 [INFO] converter_utils - setup_method line 191: test start:
+2024-08-31 09:16:43 [INFO] converter_utils - test_determine_date_format_C1_boundary line 226: 
+
+        テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 境界値
+        - テストシナリオ: 日付形式の境界値テスト
+        :
+2024-08-31 09:16:43 [INFO] converter_utils - teardown_method line 194: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:43 [INFO] converter_utils - setup_method line 191: test start:
+2024-08-31 09:16:43 [INFO] converter_utils - test_determine_date_format_C1_boundary line 226: 
+
+        テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 境界値
+        - テストシナリオ: 日付形式の境界値テスト
+        :
+2024-08-31 09:16:43 [INFO] converter_utils - teardown_method line 194: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:43 [INFO] converter_utils - setup_method line 191: test start:
+2024-08-31 09:16:43 [INFO] converter_utils - test_determine_date_format_C2_invalid line 247: 
+
+        テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 異常系
+        - テストシナリオ: 無効な日付形式の判定
+        :
+2024-08-31 09:16:43 [INFO] converter_utils - teardown_method line 194: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:43 [INFO] converter_utils - setup_method line 191: test start:
+2024-08-31 09:16:43 [INFO] converter_utils - test_determine_date_format_C2_invalid line 247: 
+
+        テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 異常系
+        - テストシナリオ: 無効な日付形式の判定
+        :
+2024-08-31 09:16:43 [INFO] converter_utils - teardown_method line 194: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:43 [INFO] converter_utils - setup_method line 191: test start:
+2024-08-31 09:16:43 [INFO] converter_utils - test_determine_date_format_C2_invalid line 247: 
+
+        テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 異常系
+        - テストシナリオ: 無効な日付形式の判定
+        :
+2024-08-31 09:16:43 [INFO] converter_utils - teardown_method line 194: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:43 [INFO] converter_utils - setup_method line 191: test start:
+2024-08-31 09:16:43 [INFO] converter_utils - test_determine_date_format_C2_invalid line 247: 
+
+        テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 異常系
+        - テストシナリオ: 無効な日付形式の判定
+        :
+2024-08-31 09:16:43 [INFO] converter_utils - teardown_method line 194: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:43 [INFO] converter_utils - setup_method line 191: test start:
+2024-08-31 09:16:43 [INFO] converter_utils - test_determine_date_format_C2_invalid line 247: 
+
+        テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 異常系
+        - テストシナリオ: 無効な日付形式の判定
+        :
+2024-08-31 09:16:43 [INFO] converter_utils - teardown_method line 194: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:43 [INFO] converter_utils - setup_method line 191: test start:
+2024-08-31 09:16:43 [INFO] converter_utils - test_determine_date_format_C2_invalid line 247: 
+
+        テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 異常系
+        - テストシナリオ: 無効な日付形式の判定
+        :
+2024-08-31 09:16:43 [INFO] converter_utils - teardown_method line 194: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:43 [INFO] converter_utils - setup_method line 191: test start:
+2024-08-31 09:16:43 [INFO] converter_utils - test_determine_date_format_C2_invalid line 247: 
+
+        テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 異常系
+        - テストシナリオ: 無効な日付形式の判定
+        :
+2024-08-31 09:16:43 [INFO] converter_utils - teardown_method line 194: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:43 [INFO] converter_utils - setup_method line 191: test start:
+2024-08-31 09:16:43 [INFO] converter_utils - test_determine_date_format_C2_edge_cases line 259: 
+
+        テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: エッジケース
+        - テストシナリオ: 特殊な入力値の処理
+        :
+2024-08-31 09:16:43 [INFO] converter_utils - teardown_method line 194: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:43 [INFO] converter_utils - setup_method line 191: test start:
+2024-08-31 09:16:43 [INFO] converter_utils - test_determine_date_format_C2_performance line 278: 
+
+        テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: パフォーマンス
+        - テストシナリオ: 大量の入力に対する処理時間の確認
+        :
+2024-08-31 09:16:43 [INFO] converter_utils - test_determine_date_format_C2_performance line 290: Execution time for 30000 calls: 0.01 seconds:
+2024-08-31 09:16:43 [INFO] converter_utils - teardown_method line 194: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:43 [INFO] converter_utils - setup_method line 323: test start:
+2024-08-31 09:16:43 [INFO] converter_utils - test_parse_str_to_datetime_C0_basic line 340: 
+
+        テスト内容:
+        - テストカテゴリ: C0
+        - テスト区分: 正常系
+        - テストシナリオ: 基本的な日付形式の変換
+        :
+2024-08-31 09:16:43 [INFO] converter_utils - teardown_method line 327: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:43 [INFO] converter_utils - setup_method line 323: test start:
+2024-08-31 09:16:43 [INFO] converter_utils - test_parse_str_to_datetime_C0_basic line 340: 
+
+        テスト内容:
+        - テストカテゴリ: C0
+        - テスト区分: 正常系
+        - テストシナリオ: 基本的な日付形式の変換
+        :
+2024-08-31 09:16:43 [INFO] converter_utils - teardown_method line 327: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:43 [INFO] converter_utils - setup_method line 323: test start:
+2024-08-31 09:16:43 [INFO] converter_utils - test_parse_str_to_datetime_C1_boundary line 368: 
+
+        テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 境界値
+        - テストシナリオ: 日付形式の境界値テスト
+        :
+2024-08-31 09:16:43 [INFO] converter_utils - teardown_method line 327: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:43 [INFO] converter_utils - setup_method line 323: test start:
+2024-08-31 09:16:43 [INFO] converter_utils - test_parse_str_to_datetime_C1_boundary line 368: 
+
+        テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 境界値
+        - テストシナリオ: 日付形式の境界値テスト
+        :
+2024-08-31 09:16:43 [INFO] converter_utils - teardown_method line 327: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:43 [INFO] converter_utils - setup_method line 323: test start:
+2024-08-31 09:16:43 [INFO] converter_utils - test_parse_str_to_datetime_C1_boundary line 368: 
+
+        テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 境界値
+        - テストシナリオ: 日付形式の境界値テスト
+        :
+2024-08-31 09:16:43 [INFO] converter_utils - teardown_method line 327: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:43 [INFO] converter_utils - setup_method line 323: test start:
+2024-08-31 09:16:43 [INFO] converter_utils - test_parse_str_to_datetime_C1_boundary line 368: 
+
+        テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 境界値
+        - テストシナリオ: 日付形式の境界値テスト
+        :
+2024-08-31 09:16:43 [INFO] converter_utils - teardown_method line 327: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:43 [INFO] converter_utils - setup_method line 323: test start:
+2024-08-31 09:16:43 [INFO] converter_utils - test_parse_str_to_datetime_C1_boundary line 368: 
+
+        テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 境界値
+        - テストシナリオ: 日付形式の境界値テスト
+        :
+2024-08-31 09:16:43 [INFO] converter_utils - teardown_method line 327: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:43 [INFO] converter_utils - setup_method line 323: test start:
+2024-08-31 09:16:43 [INFO] converter_utils - test_parse_str_to_datetime_C1_boundary line 368: 
+
+        テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 境界値
+        - テストシナリオ: 日付形式の境界値テスト
+        :
+2024-08-31 09:16:43 [INFO] converter_utils - teardown_method line 327: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:43 [INFO] converter_utils - setup_method line 323: test start:
+2024-08-31 09:16:43 [INFO] converter_utils - test_parse_str_to_datetime_C1_boundary line 368: 
+
+        テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 境界値
+        - テストシナリオ: 日付形式の境界値テスト
+        :
+2024-08-31 09:16:43 [INFO] converter_utils - teardown_method line 327: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:43 [INFO] converter_utils - setup_method line 323: test start:
+2024-08-31 09:16:43 [INFO] converter_utils - test_parse_str_to_datetime_C1_boundary line 368: 
+
+        テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 境界値
+        - テストシナリオ: 日付形式の境界値テスト
+        :
+2024-08-31 09:16:43 [INFO] converter_utils - teardown_method line 327: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:43 [INFO] converter_utils - setup_method line 323: test start:
+2024-08-31 09:16:43 [INFO] converter_utils - test_parse_str_to_datetime_C1_boundary line 368: 
+
+        テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 境界値
+        - テストシナリオ: 日付形式の境界値テスト
+        :
+2024-08-31 09:16:43 [INFO] converter_utils - teardown_method line 327: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:43 [INFO] converter_utils - setup_method line 323: test start:
+2024-08-31 09:16:43 [INFO] converter_utils - test_parse_str_to_datetime_C1_boundary line 368: 
+
+        テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 境界値
+        - テストシナリオ: 日付形式の境界値テスト
+        :
+2024-08-31 09:16:43 [INFO] converter_utils - teardown_method line 327: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:43 [INFO] converter_utils - setup_method line 323: test start:
+2024-08-31 09:16:43 [INFO] converter_utils - test_parse_str_to_datetime_C1_boundary line 368: 
+
+        テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 境界値
+        - テストシナリオ: 日付形式の境界値テスト
+        :
+2024-08-31 09:16:43 [INFO] converter_utils - teardown_method line 327: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:43 [INFO] converter_utils - setup_method line 323: test start:
+2024-08-31 09:16:43 [INFO] converter_utils - test_parse_str_to_datetime_C1_max_date line 383: 
+
+        テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 境界値
+        - テストシナリオ: 最大日付のテスト
+        :
+2024-08-31 09:16:43 [INFO] converter_utils - test_parse_str_to_datetime_C1_max_date line 391: Expected error occurred: date value out of range:
+2024-08-31 09:16:43 [INFO] converter_utils - teardown_method line 327: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:43 [INFO] converter_utils - setup_method line 323: test start:
+2024-08-31 09:16:43 [INFO] converter_utils - test_parse_str_to_datetime_C1_era_boundaries line 407: 
+
+        テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 境界値
+        - テストシナリオ: 元号の境界日付テスト
+        :
+2024-08-31 09:16:43 [INFO] converter_utils - teardown_method line 327: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:43 [INFO] converter_utils - setup_method line 323: test start:
+2024-08-31 09:16:43 [INFO] converter_utils - test_parse_str_to_datetime_C2_invalid line 434: 
+
+        テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 異常系
+        - テストシナリオ: 無効な日付形式の処理
+
+        - エラーMSGいずれかが含まれていれば合致の判断をしています
+        :
+2024-08-31 09:16:43 [INFO] converter_utils - test_parse_str_to_datetime_C2_invalid line 440: Received error message: 無効な西暦日付: day is out of range for month:
+2024-08-31 09:16:43 [INFO] converter_utils - teardown_method line 327: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:43 [INFO] converter_utils - setup_method line 323: test start:
+2024-08-31 09:16:43 [INFO] converter_utils - test_parse_str_to_datetime_C2_invalid line 434: 
+
+        テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 異常系
+        - テストシナリオ: 無効な日付形式の処理
+
+        - エラーMSGいずれかが含まれていれば合致の判断をしています
+        :
+2024-08-31 09:16:43 [INFO] converter_utils - test_parse_str_to_datetime_C2_invalid line 440: Received error message: 無効な和暦年: Invalid era year: 13. Maximum allowed year for 令和 is 7 (next year).:
+2024-08-31 09:16:43 [INFO] converter_utils - teardown_method line 327: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:43 [INFO] converter_utils - setup_method line 323: test start:
+2024-08-31 09:16:43 [INFO] converter_utils - test_parse_str_to_datetime_C2_invalid line 434: 
+
+        テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 異常系
+        - テストシナリオ: 無効な日付形式の処理
+
+        - エラーMSGいずれかが含まれていれば合致の判断をしています
+        :
+2024-08-31 09:16:43 [INFO] converter_utils - test_parse_str_to_datetime_C2_invalid line 440: Received error message: 無効な和暦年: Invalid era code: 6:
+2024-08-31 09:16:43 [INFO] converter_utils - teardown_method line 327: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:43 [INFO] converter_utils - setup_method line 323: test start:
+2024-08-31 09:16:43 [INFO] converter_utils - test_parse_str_to_datetime_C2_invalid line 434: 
+
+        テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 異常系
+        - テストシナリオ: 無効な日付形式の処理
+
+        - エラーMSGいずれかが含まれていれば合致の判断をしています
+        :
+2024-08-31 09:16:43 [INFO] converter_utils - test_parse_str_to_datetime_C2_invalid line 440: Received error message: 無効な日付形式です:
+2024-08-31 09:16:43 [INFO] converter_utils - teardown_method line 327: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:43 [INFO] converter_utils - setup_method line 323: test start:
+2024-08-31 09:16:43 [INFO] converter_utils - test_parse_str_to_datetime_C2_invalid line 434: 
+
+        テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 異常系
+        - テストシナリオ: 無効な日付形式の処理
+
+        - エラーMSGいずれかが含まれていれば合致の判断をしています
+        :
+2024-08-31 09:16:43 [INFO] converter_utils - test_parse_str_to_datetime_C2_invalid line 440: Received error message: 無効な日付形式です:
+2024-08-31 09:16:43 [INFO] converter_utils - teardown_method line 327: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:43 [INFO] converter_utils - setup_method line 323: test start:
+2024-08-31 09:16:43 [INFO] converter_utils - test_parse_str_to_datetime_C2_invalid line 434: 
+
+        テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 異常系
+        - テストシナリオ: 無効な日付形式の処理
+
+        - エラーMSGいずれかが含まれていれば合致の判断をしています
+        :
+2024-08-31 09:16:43 [INFO] converter_utils - test_parse_str_to_datetime_C2_invalid line 440: Received error message: 無効な日付形式です:
+2024-08-31 09:16:43 [INFO] converter_utils - teardown_method line 327: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:43 [INFO] converter_utils - setup_method line 323: test start:
+2024-08-31 09:16:43 [INFO] converter_utils - test_parse_str_to_datetime_C2_performance line 452: 
+
+        テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: パフォーマンス
+        - テストシナリオ: 大量の入力に対する処理時間の確認
+        :
+2024-08-31 09:16:43 [INFO] converter_utils - test_parse_str_to_datetime_C2_performance line 463: Execution time for 2000 calls: 0.04 seconds:
+2024-08-31 09:16:43 [INFO] converter_utils - teardown_method line 327: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:49 [DEBUG] converter_utils - <module> line 16: Config(env='local', common_config={'logger_path': {'LOGGER_DEF_FILE': 'src/def/mfaUtilsLoggingHelper/logging_TimedRotate.json', 'LOGGER_MSG_FILE': 'src/def/mfaUtilsLoggingHelper/config_MessageList.toml'}, 'input_file_path': {'UPDATE_EXCEL_PATH': 'src/share/receive'}, 'output_file_path': {'SEND_REFERENCE_MASTER_PATH': 'src/share/receive'}}, package_config={'test': {'local_test': 'tests'}}, log_message=<bound method LoggerPackage.log_message of <src.lib.common_utils.ibr_logger_package.LoggerPackage object at 0x7f538d00c4d0>>):
+2024-08-31 09:16:49 [INFO] converter_utils - setup_method line 44: test start:
+2024-08-31 09:16:49 [INFO] converter_utils - test_era_attributes_C0_basic line 57: 
+
+        テスト内容:
+        - テストカテゴリ: C0
+        - テスト区分: 正常系
+        - テストシナリオ: 各元号の属性(name, code, start_year, max_year)の正確性確認
+        :
+2024-08-31 09:16:49 [INFO] converter_utils - teardown_method line 48: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:49 [INFO] converter_utils - setup_method line 44: test start:
+2024-08-31 09:16:49 [INFO] converter_utils - test_from_code_C1_valid line 75: 
+
+        テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 正常系
+        - テストシナリオ: 有効なコードでの Era オブジェクト取得
+        :
+2024-08-31 09:16:49 [INFO] converter_utils - teardown_method line 48: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:49 [INFO] converter_utils - setup_method line 44: test start:
+2024-08-31 09:16:49 [INFO] converter_utils - test_from_code_C1_valid line 75: 
+
+        テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 正常系
+        - テストシナリオ: 有効なコードでの Era オブジェクト取得
+        :
+2024-08-31 09:16:49 [INFO] converter_utils - teardown_method line 48: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:49 [INFO] converter_utils - setup_method line 44: test start:
+2024-08-31 09:16:49 [INFO] converter_utils - test_from_code_C1_valid line 75: 
+
+        テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 正常系
+        - テストシナリオ: 有効なコードでの Era オブジェクト取得
+        :
+2024-08-31 09:16:49 [INFO] converter_utils - teardown_method line 48: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:49 [INFO] converter_utils - setup_method line 44: test start:
+2024-08-31 09:16:49 [INFO] converter_utils - test_from_code_C1_invalid line 86: 
+
+        テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 異常系
+        - テストシナリオ: 無効なコードでの ValueError 発生
+        :
+2024-08-31 09:16:49 [INFO] converter_utils - teardown_method line 48: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:49 [INFO] converter_utils - setup_method line 44: test start:
+2024-08-31 09:16:49 [INFO] converter_utils - test_convert_japanese_year_to_western_C2_valid line 106: 
+
+        テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 各元号の様々な年での変換
+        :
+2024-08-31 09:16:49 [INFO] converter_utils - teardown_method line 48: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:49 [INFO] converter_utils - setup_method line 44: test start:
+2024-08-31 09:16:49 [INFO] converter_utils - test_convert_japanese_year_to_western_C2_valid line 106: 
+
+        テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 各元号の様々な年での変換
+        :
+2024-08-31 09:16:49 [INFO] converter_utils - teardown_method line 48: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:49 [INFO] converter_utils - setup_method line 44: test start:
+2024-08-31 09:16:49 [INFO] converter_utils - test_convert_japanese_year_to_western_C2_valid line 106: 
+
+        テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 各元号の様々な年での変換
+        :
+2024-08-31 09:16:49 [INFO] converter_utils - teardown_method line 48: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:49 [INFO] converter_utils - setup_method line 44: test start:
+2024-08-31 09:16:49 [INFO] converter_utils - test_convert_japanese_year_to_western_C2_valid line 106: 
+
+        テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 各元号の様々な年での変換
+        :
+2024-08-31 09:16:49 [INFO] converter_utils - teardown_method line 48: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:49 [INFO] converter_utils - setup_method line 44: test start:
+2024-08-31 09:16:49 [INFO] converter_utils - test_convert_japanese_year_to_western_C2_valid line 106: 
+
+        テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 各元号の様々な年での変換
+        :
+2024-08-31 09:16:49 [INFO] converter_utils - teardown_method line 48: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:49 [INFO] converter_utils - setup_method line 44: test start:
+2024-08-31 09:16:49 [INFO] converter_utils - test_convert_japanese_year_to_western_C2_valid line 106: 
+
+        テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 各元号の様々な年での変換
+        :
+2024-08-31 09:16:49 [INFO] converter_utils - teardown_method line 48: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:49 [INFO] converter_utils - setup_method line 44: test start:
+2024-08-31 09:16:49 [INFO] converter_utils - test_convert_japanese_year_to_western_C2_invalid line 117: 
+
+        テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 異常系
+        - テストシナリオ: 無効な元号コードや和暦年での ValueError 発生
+        :
+2024-08-31 09:16:49 [INFO] converter_utils - teardown_method line 48: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:49 [INFO] converter_utils - setup_method line 44: test start:
+2024-08-31 09:16:49 [INFO] converter_utils - test_convert_japanese_year_to_western_C2_current_era line 148: 
+
+        テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 正常系
+        - テストシナリオ: 現在進行中の元号(令和)の来年までの変換
+        :
+2024-08-31 09:16:49 [INFO] converter_utils - teardown_method line 48: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:49 [INFO] converter_utils - setup_method line 191: test start:
+2024-08-31 09:16:49 [INFO] converter_utils - test_determine_date_format_C0_basic line 208: 
+
+        テスト内容:
+        - テストカテゴリ: C0
+        - テスト区分: 正常系
+        - テストシナリオ: 基本的な日付形式の判定
+        :
+2024-08-31 09:16:49 [INFO] converter_utils - teardown_method line 194: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:49 [INFO] converter_utils - setup_method line 191: test start:
+2024-08-31 09:16:49 [INFO] converter_utils - test_determine_date_format_C0_basic line 208: 
+
+        テスト内容:
+        - テストカテゴリ: C0
+        - テスト区分: 正常系
+        - テストシナリオ: 基本的な日付形式の判定
+        :
+2024-08-31 09:16:49 [INFO] converter_utils - teardown_method line 194: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:49 [INFO] converter_utils - setup_method line 191: test start:
+2024-08-31 09:16:49 [INFO] converter_utils - test_determine_date_format_C0_basic line 208: 
+
+        テスト内容:
+        - テストカテゴリ: C0
+        - テスト区分: 正常系
+        - テストシナリオ: 基本的な日付形式の判定
+        :
+2024-08-31 09:16:49 [INFO] converter_utils - teardown_method line 194: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:49 [INFO] converter_utils - setup_method line 191: test start:
+2024-08-31 09:16:49 [INFO] converter_utils - test_determine_date_format_C1_boundary line 226: 
+
+        テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 境界値
+        - テストシナリオ: 日付形式の境界値テスト
+        :
+2024-08-31 09:16:49 [INFO] converter_utils - teardown_method line 194: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:49 [INFO] converter_utils - setup_method line 191: test start:
+2024-08-31 09:16:49 [INFO] converter_utils - test_determine_date_format_C1_boundary line 226: 
+
+        テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 境界値
+        - テストシナリオ: 日付形式の境界値テスト
+        :
+2024-08-31 09:16:49 [INFO] converter_utils - teardown_method line 194: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:49 [INFO] converter_utils - setup_method line 191: test start:
+2024-08-31 09:16:49 [INFO] converter_utils - test_determine_date_format_C1_boundary line 226: 
+
+        テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 境界値
+        - テストシナリオ: 日付形式の境界値テスト
+        :
+2024-08-31 09:16:49 [INFO] converter_utils - teardown_method line 194: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:49 [INFO] converter_utils - setup_method line 191: test start:
+2024-08-31 09:16:49 [INFO] converter_utils - test_determine_date_format_C1_boundary line 226: 
+
+        テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 境界値
+        - テストシナリオ: 日付形式の境界値テスト
+        :
+2024-08-31 09:16:49 [INFO] converter_utils - teardown_method line 194: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:49 [INFO] converter_utils - setup_method line 191: test start:
+2024-08-31 09:16:49 [INFO] converter_utils - test_determine_date_format_C2_invalid line 247: 
+
+        テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 異常系
+        - テストシナリオ: 無効な日付形式の判定
+        :
+2024-08-31 09:16:49 [INFO] converter_utils - teardown_method line 194: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:49 [INFO] converter_utils - setup_method line 191: test start:
+2024-08-31 09:16:49 [INFO] converter_utils - test_determine_date_format_C2_invalid line 247: 
+
+        テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 異常系
+        - テストシナリオ: 無効な日付形式の判定
+        :
+2024-08-31 09:16:49 [INFO] converter_utils - teardown_method line 194: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:49 [INFO] converter_utils - setup_method line 191: test start:
+2024-08-31 09:16:49 [INFO] converter_utils - test_determine_date_format_C2_invalid line 247: 
+
+        テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 異常系
+        - テストシナリオ: 無効な日付形式の判定
+        :
+2024-08-31 09:16:49 [INFO] converter_utils - teardown_method line 194: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:49 [INFO] converter_utils - setup_method line 191: test start:
+2024-08-31 09:16:49 [INFO] converter_utils - test_determine_date_format_C2_invalid line 247: 
+
+        テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 異常系
+        - テストシナリオ: 無効な日付形式の判定
+        :
+2024-08-31 09:16:49 [INFO] converter_utils - teardown_method line 194: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:49 [INFO] converter_utils - setup_method line 191: test start:
+2024-08-31 09:16:49 [INFO] converter_utils - test_determine_date_format_C2_invalid line 247: 
+
+        テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 異常系
+        - テストシナリオ: 無効な日付形式の判定
+        :
+2024-08-31 09:16:49 [INFO] converter_utils - teardown_method line 194: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:49 [INFO] converter_utils - setup_method line 191: test start:
+2024-08-31 09:16:49 [INFO] converter_utils - test_determine_date_format_C2_invalid line 247: 
+
+        テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 異常系
+        - テストシナリオ: 無効な日付形式の判定
+        :
+2024-08-31 09:16:49 [INFO] converter_utils - teardown_method line 194: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:49 [INFO] converter_utils - setup_method line 191: test start:
+2024-08-31 09:16:49 [INFO] converter_utils - test_determine_date_format_C2_invalid line 247: 
+
+        テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 異常系
+        - テストシナリオ: 無効な日付形式の判定
+        :
+2024-08-31 09:16:49 [INFO] converter_utils - teardown_method line 194: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:49 [INFO] converter_utils - setup_method line 191: test start:
+2024-08-31 09:16:49 [INFO] converter_utils - test_determine_date_format_C2_edge_cases line 259: 
+
+        テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: エッジケース
+        - テストシナリオ: 特殊な入力値の処理
+        :
+2024-08-31 09:16:49 [INFO] converter_utils - teardown_method line 194: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:49 [INFO] converter_utils - setup_method line 191: test start:
+2024-08-31 09:16:49 [INFO] converter_utils - test_determine_date_format_C2_performance line 278: 
+
+        テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: パフォーマンス
+        - テストシナリオ: 大量の入力に対する処理時間の確認
+        :
+2024-08-31 09:16:49 [INFO] converter_utils - test_determine_date_format_C2_performance line 290: Execution time for 30000 calls: 0.01 seconds:
+2024-08-31 09:16:49 [INFO] converter_utils - teardown_method line 194: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:49 [INFO] converter_utils - setup_method line 323: test start:
+2024-08-31 09:16:49 [INFO] converter_utils - test_parse_str_to_datetime_C0_basic line 340: 
+
+        テスト内容:
+        - テストカテゴリ: C0
+        - テスト区分: 正常系
+        - テストシナリオ: 基本的な日付形式の変換
+        :
+2024-08-31 09:16:49 [INFO] converter_utils - teardown_method line 327: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:49 [INFO] converter_utils - setup_method line 323: test start:
+2024-08-31 09:16:49 [INFO] converter_utils - test_parse_str_to_datetime_C0_basic line 340: 
+
+        テスト内容:
+        - テストカテゴリ: C0
+        - テスト区分: 正常系
+        - テストシナリオ: 基本的な日付形式の変換
+        :
+2024-08-31 09:16:49 [INFO] converter_utils - teardown_method line 327: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:49 [INFO] converter_utils - setup_method line 323: test start:
+2024-08-31 09:16:49 [INFO] converter_utils - test_parse_str_to_datetime_C1_boundary line 368: 
+
+        テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 境界値
+        - テストシナリオ: 日付形式の境界値テスト
+        :
+2024-08-31 09:16:49 [INFO] converter_utils - teardown_method line 327: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:49 [INFO] converter_utils - setup_method line 323: test start:
+2024-08-31 09:16:49 [INFO] converter_utils - test_parse_str_to_datetime_C1_boundary line 368: 
+
+        テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 境界値
+        - テストシナリオ: 日付形式の境界値テスト
+        :
+2024-08-31 09:16:49 [INFO] converter_utils - teardown_method line 327: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:49 [INFO] converter_utils - setup_method line 323: test start:
+2024-08-31 09:16:49 [INFO] converter_utils - test_parse_str_to_datetime_C1_boundary line 368: 
+
+        テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 境界値
+        - テストシナリオ: 日付形式の境界値テスト
+        :
+2024-08-31 09:16:49 [INFO] converter_utils - teardown_method line 327: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:49 [INFO] converter_utils - setup_method line 323: test start:
+2024-08-31 09:16:49 [INFO] converter_utils - test_parse_str_to_datetime_C1_boundary line 368: 
+
+        テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 境界値
+        - テストシナリオ: 日付形式の境界値テスト
+        :
+2024-08-31 09:16:49 [INFO] converter_utils - teardown_method line 327: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:49 [INFO] converter_utils - setup_method line 323: test start:
+2024-08-31 09:16:49 [INFO] converter_utils - test_parse_str_to_datetime_C1_boundary line 368: 
+
+        テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 境界値
+        - テストシナリオ: 日付形式の境界値テスト
+        :
+2024-08-31 09:16:49 [INFO] converter_utils - teardown_method line 327: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:49 [INFO] converter_utils - setup_method line 323: test start:
+2024-08-31 09:16:49 [INFO] converter_utils - test_parse_str_to_datetime_C1_boundary line 368: 
+
+        テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 境界値
+        - テストシナリオ: 日付形式の境界値テスト
+        :
+2024-08-31 09:16:49 [INFO] converter_utils - teardown_method line 327: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:49 [INFO] converter_utils - setup_method line 323: test start:
+2024-08-31 09:16:49 [INFO] converter_utils - test_parse_str_to_datetime_C1_boundary line 368: 
+
+        テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 境界値
+        - テストシナリオ: 日付形式の境界値テスト
+        :
+2024-08-31 09:16:49 [INFO] converter_utils - teardown_method line 327: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:49 [INFO] converter_utils - setup_method line 323: test start:
+2024-08-31 09:16:49 [INFO] converter_utils - test_parse_str_to_datetime_C1_boundary line 368: 
+
+        テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 境界値
+        - テストシナリオ: 日付形式の境界値テスト
+        :
+2024-08-31 09:16:49 [INFO] converter_utils - teardown_method line 327: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:49 [INFO] converter_utils - setup_method line 323: test start:
+2024-08-31 09:16:49 [INFO] converter_utils - test_parse_str_to_datetime_C1_boundary line 368: 
+
+        テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 境界値
+        - テストシナリオ: 日付形式の境界値テスト
+        :
+2024-08-31 09:16:49 [INFO] converter_utils - teardown_method line 327: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:49 [INFO] converter_utils - setup_method line 323: test start:
+2024-08-31 09:16:49 [INFO] converter_utils - test_parse_str_to_datetime_C1_boundary line 368: 
+
+        テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 境界値
+        - テストシナリオ: 日付形式の境界値テスト
+        :
+2024-08-31 09:16:49 [INFO] converter_utils - teardown_method line 327: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:49 [INFO] converter_utils - setup_method line 323: test start:
+2024-08-31 09:16:49 [INFO] converter_utils - test_parse_str_to_datetime_C1_boundary line 368: 
+
+        テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 境界値
+        - テストシナリオ: 日付形式の境界値テスト
+        :
+2024-08-31 09:16:49 [INFO] converter_utils - teardown_method line 327: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:49 [INFO] converter_utils - setup_method line 323: test start:
+2024-08-31 09:16:49 [INFO] converter_utils - test_parse_str_to_datetime_C1_max_date line 383: 
+
+        テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 境界値
+        - テストシナリオ: 最大日付のテスト
+        :
+2024-08-31 09:16:49 [INFO] converter_utils - test_parse_str_to_datetime_C1_max_date line 391: Expected error occurred: date value out of range:
+2024-08-31 09:16:49 [INFO] converter_utils - teardown_method line 327: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:49 [INFO] converter_utils - setup_method line 323: test start:
+2024-08-31 09:16:49 [INFO] converter_utils - test_parse_str_to_datetime_C1_era_boundaries line 407: 
+
+        テスト内容:
+        - テストカテゴリ: C1
+        - テスト区分: 境界値
+        - テストシナリオ: 元号の境界日付テスト
+        :
+2024-08-31 09:16:49 [INFO] converter_utils - teardown_method line 327: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:49 [INFO] converter_utils - setup_method line 323: test start:
+2024-08-31 09:16:49 [INFO] converter_utils - test_parse_str_to_datetime_C2_invalid line 434: 
+
+        テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 異常系
+        - テストシナリオ: 無効な日付形式の処理
+
+        - エラーMSGいずれかが含まれていれば合致の判断をしています
+        :
+2024-08-31 09:16:49 [INFO] converter_utils - test_parse_str_to_datetime_C2_invalid line 440: Received error message: 無効な西暦日付: day is out of range for month:
+2024-08-31 09:16:49 [INFO] converter_utils - teardown_method line 327: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:49 [INFO] converter_utils - setup_method line 323: test start:
+2024-08-31 09:16:49 [INFO] converter_utils - test_parse_str_to_datetime_C2_invalid line 434: 
+
+        テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 異常系
+        - テストシナリオ: 無効な日付形式の処理
+
+        - エラーMSGいずれかが含まれていれば合致の判断をしています
+        :
+2024-08-31 09:16:49 [INFO] converter_utils - test_parse_str_to_datetime_C2_invalid line 440: Received error message: 無効な和暦年: Invalid era year: 13. Maximum allowed year for 令和 is 7 (next year).:
+2024-08-31 09:16:49 [INFO] converter_utils - teardown_method line 327: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:49 [INFO] converter_utils - setup_method line 323: test start:
+2024-08-31 09:16:49 [INFO] converter_utils - test_parse_str_to_datetime_C2_invalid line 434: 
+
+        テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 異常系
+        - テストシナリオ: 無効な日付形式の処理
+
+        - エラーMSGいずれかが含まれていれば合致の判断をしています
+        :
+2024-08-31 09:16:49 [INFO] converter_utils - test_parse_str_to_datetime_C2_invalid line 440: Received error message: 無効な和暦年: Invalid era code: 6:
+2024-08-31 09:16:49 [INFO] converter_utils - teardown_method line 327: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:49 [INFO] converter_utils - setup_method line 323: test start:
+2024-08-31 09:16:49 [INFO] converter_utils - test_parse_str_to_datetime_C2_invalid line 434: 
+
+        テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 異常系
+        - テストシナリオ: 無効な日付形式の処理
+
+        - エラーMSGいずれかが含まれていれば合致の判断をしています
+        :
+2024-08-31 09:16:49 [INFO] converter_utils - test_parse_str_to_datetime_C2_invalid line 440: Received error message: 無効な日付形式です:
+2024-08-31 09:16:49 [INFO] converter_utils - teardown_method line 327: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:49 [INFO] converter_utils - setup_method line 323: test start:
+2024-08-31 09:16:49 [INFO] converter_utils - test_parse_str_to_datetime_C2_invalid line 434: 
+
+        テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 異常系
+        - テストシナリオ: 無効な日付形式の処理
+
+        - エラーMSGいずれかが含まれていれば合致の判断をしています
+        :
+2024-08-31 09:16:49 [INFO] converter_utils - test_parse_str_to_datetime_C2_invalid line 440: Received error message: 無効な日付形式です:
+2024-08-31 09:16:49 [INFO] converter_utils - teardown_method line 327: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:49 [INFO] converter_utils - setup_method line 323: test start:
+2024-08-31 09:16:49 [INFO] converter_utils - test_parse_str_to_datetime_C2_invalid line 434: 
+
+        テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: 異常系
+        - テストシナリオ: 無効な日付形式の処理
+
+        - エラーMSGいずれかが含まれていれば合致の判断をしています
+        :
+2024-08-31 09:16:49 [INFO] converter_utils - test_parse_str_to_datetime_C2_invalid line 440: Received error message: 無効な日付形式です:
+2024-08-31 09:16:49 [INFO] converter_utils - teardown_method line 327: test end
+--------------------------------------------------------------------------------
+:
+2024-08-31 09:16:49 [INFO] converter_utils - setup_method line 323: test start:
+2024-08-31 09:16:49 [INFO] converter_utils - test_parse_str_to_datetime_C2_performance line 452: 
+
+        テスト内容:
+        - テストカテゴリ: C2
+        - テスト区分: パフォーマンス
+        - テストシナリオ: 大量の入力に対する処理時間の確認
+        :
+2024-08-31 09:16:49 [INFO] converter_utils - test_parse_str_to_datetime_C2_performance line 463: Execution time for 2000 calls: 0.04 seconds:
+2024-08-31 09:16:49 [INFO] converter_utils - teardown_method line 327: test end
+--------------------------------------------------------------------------------
+:

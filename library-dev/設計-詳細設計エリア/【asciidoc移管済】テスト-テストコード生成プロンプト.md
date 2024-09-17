@@ -40,129 +40,6 @@ StepByStepで進めます、一度に進めず各stepで立ち止まってくだ
 </メソッド毎にstep>
 
 
-TODO(me)
-```
-メソッド毎にstepを完走した結果のコードを改めて貼り付けて
-最終ステップに臨んだほうが結果は適切かもしれない
-```
-生成されたテストコード全体を以下に貼り付けてください。この全体コードに対して最終品質チェックを行います。
-[ここに生成されたテストコード全体を貼り付け]
-
-出力したコードに対して最終品質チェックを行います
-<最終ステップ>
-  <step15>生成されたテストコード全体に対する品質チェックリストの適用と結果の提示</step15>
-  
-  以下の品質チェックリストを使用して、生成されたテストコード全体を評価し、結果を提示します。
-  この結果は、人間のレビュアーが最終判断と改善決定を行うための参考情報となります。
-
-  評価結果をテーブル形式で以下のように出力してください：
-  テーブルの縦棒位置は揃えてください
-
-  | 項目番号 | 項目名 | 評価 | 評価コメント |
-  |---------|-------|------|-------------|
-  | 1 | テストの独立性 | [評価] | [評価コメント] |
-  | 2 | テストの網羅性 | [評価] | [評価コメント] |
-  ...
-
-  [評価] には "pass", "fail", "partial path" のいずれかを入力してください。
-  [評価コメント] には簡潔な評価の理由や観察を記入してください。
-
-  1. テストの独立性
-     - 各テストが他のテストに依存していないか
-     - テストの実行順序が結果に影響しないか
-
-  2. テストの網羅性
-     - 全てのパブリックメソッドがテストされているか
-     - 境界値テストが適切に行われているか
-     - 正常系と異常系の両方がテストされているか
-
-  3. テストの可読性
-     - テストメソッド名が目的を明確に示しているか
-     - Arrange-Act-Assert（AAA）パターンが適用されているか
-     - テストケースの意図が明確か
-
-  4. テストの堅牢性
-     - フラッキーテスト（時々失敗するテスト）がないか
-     - 外部依存（ファイルシステム、データベース等）が適切に管理されているか
-
-  5. テストデータの管理
-     - テストデータが適切に準備されているか
-     - テストデータがバージョン管理されているか
-     - 大量のテストデータを効率的に扱えているか
-
-  6. モックとスタブの適切な使用
-     - 外部依存が適切にモック化されているか
-     - モックの使用が過剰でないか
-
-  7. アサーションの品質
-     - アサーションが具体的で明確か
-     - 複数の状態を確認する場合、個別のアサーションが使用されているか
-
-  8. エッジケースのカバレッジ
-     - null値、空文字列、大きな数値などのエッジケースがテストされているか
-     - 例外ケースが適切にテストされているか
-
-  9. パフォーマンスとリソース管理
-     - テストの実行時間が適切か
-     - リソース（メモリ、ファイルハンドルなど）が適切に解放されているか
-
-  10. テストの隔離
-      - テストがグローバル状態を変更していないか
-      - テスト後の適切なクリーンアップが行われているか
-
-  11. パラメータ化テスト
-      - 類似のテストケースが適切にパラメータ化されているか
-      - データプロバイダが効果的に使用されているか
-
-  12. コードカバレッジ
-      - 行カバレッジ、分岐カバレッジ、条件カバレッジが十分か
-      - 未テストのコードパスが明確に識別されているか
-
-  13. テストの保守性
-      - テストコードに重複がないか
-      - テストヘルパー関数が適切に使用されているか
-
-  14. テストの粒度
-      - 各テストが単一の概念や機能をテストしているか
-      - テストが適切なサイズと複雑さを保っているか
-
-  15. テストフィクスチャの適切な使用
-      - セットアップとティアダウンが効果的に使用されているか
-      - 共通のセットアップコードが適切に抽出されているか
-
-  16. 例外処理のテスト
-      - 予期される例外が適切にテストされているか
-      - 例外メッセージや型が検証されているか
-
-  17. 非決定的な要素の処理
-      - 日付、乱数などの非決定的な要素が適切に制御されているか
-
-  18. ドキュメンテーション
-      - 複雑なテストケースに対して適切なコメントが付与されているか
-      - テストの目的や前提条件が明確に記述されているか
-
-  19. テストの一貫性
-      - プロジェクト全体で一貫したテストスタイルが維持されているか
-
-  20. 負のテスト
-      - システムが適切にエラーを処理することを確認するテストが含まれているか
-
-  評価結果の要約:
-  - 全体的な品質評価:
-  - 主要な強み:
-  - 潜在的な改善領域:
-  - 追加の考察:
-
-</最終ステップ>
-
-注意: この評価結果は自動生成されたものであり、参考情報として提供されています。最終的な品質判断、改善の必要性、および具体的な修正方法の決定は、人によるレビュー責任で行ってください。
-
-推奨される次のステップ:
-1. 人によるレビューで詳細な確認
-2. プロジェクト固有の要件や基準に基づく評価
-3. 必要に応じたテストコードの手動修正
-4. レビュー結果に基づく、テストコード生成プロセスの改善検討
-
 
 ## テストコード作成手順ルール:
 テストシナリオの設計:
@@ -385,187 +262,199 @@ class TestBusinessUnitCodeConverterInit:
 ## それではStep1に進みます
 
 ## テスト対象モジュール配置場所
-src.lib.converter_utils
+src.lib.validator_utils
 
 ## テスト対象モジュール名
-ibr_reference_merger.py
+ibr_dynamic_blacklist_checker.py
 
 ## テスト対象モジュール
-"""一括申請明細にリファレンステーブル情報をマージして情報付与する"""
-import pandas as pd
-from typing import  Any
-from src.lib.common_utils.ibr_pickled_table_searcher import TableSearcher
 
-class ReferenceMerger:
-    """統合レイアウトデータとリファレンステーブルのマージを行うクラス
+
+
+
+"""親部店を持っているか判定"""
+from ibr_pickled_table_searcher import TableSearcher
+
+class ParentBranchChecker:
+    """親部店情報の検索と判定を行うクラス
 
     Class Overview:
-        このクラスはデータ取り込み後の統合レイアウトデータと
-        リファレンステーブルの情報をマージする機能を提供します。
-        部店コードの上位4桁を使用してリファレンステーブルを検索し、
-        条件に合致する一部のColumnデータを統合レイアウトにマージします。
+        このクラスは、指定された部店コードに対して親部店情報を検索し、
+        3つの条件に基づいて判定を行います。リファレンステーブルと
+        申請明細レコード群の両方を対象に検索を実行し、条件を満たすレコードの
+        有無をブール値で返します。
 
     Attributes:
-        table_searcher (TableSearcher): リファレンステーブルの検索を行うオブジェクト
+        application_searcher (TableSearcher): 申請明細レコード群を検索するためのTableSearcherインスタンス
+        reference_searcher (TableSearcher): リファレンステーブルを検索するためのTableSearcherインスタンス
 
     Condition Information:
         - Condition:1
-            - ID: ZERO_SECTION_GR_CODE
-            - Type: フィルタリング条件
-            - Applicable Scenarios: リファレンステーブルから課グループコードが'0'のレコードを選択する
-
-    Pattern Information:
-        - Pattern:1
-            - ID: BRANCH_CODE_PREFIX_MATCH
-            - Type: 検索パターン
-            - Applicable Scenarios: 部店コードの上位4桁を使用してリファレンステーブルを検索する
+            - ID: GROUP_ZERO_BRANCH
+            - Type: 親部店判定条件
+            - Applicable Scenarios: 部店コードの前方4桁が一致し、課Grコードが0で、部店名に[グループなし]がついている場合
+        - Condition:2
+            - ID: SPECIFIC_LOCATION_BRANCH
+            - Type: 親部店判定条件
+            - Applicable Scenarios: 部店コードの前方4桁が一致し、部店名に(大阪)または(名古屋)がついている場合
+        - Condition:3
+            - ID: PARENT_CODE_DEFINED_BRANCH
+            - Type: 親部店判定条件
+            - Applicable Scenarios: 親部店コードで定義されている部店の場合
 
     Methods:
-        merge_reference_data(integrated_layout: pd.DataFrame) -> pd.DataFrame:
-            統合レイアウトデータにリファレンス情報をマージする
-        _get_reference_info(row: pd.Series) -> dict[str, Any]:
-            1行のデータに対応するリファレンス情報を取得する
-        _get_branch_code_prefix(row: pd.Series) -> str:
-            部店コードの上位4桁を取得する
-        _search_reference_table(branch_code_prefix: str) -> pd.DataFrame:
-            リファレンステーブルを検索する
-        _filter_zero_row(df: pd.DataFrame) -> pd.DataFrame:
-            課グループコードが'0'の行をフィルタリングする
-        _create_result_dict(row: pd.Series) -> dict[str, Any]:
-            リファレンス情報の辞書を作成する
-        _get_empty_result() -> dict[str, Any]:
-            空のリファレンス情報辞書を返す
+        check_condition_1(branch_code): 条件1に基づいて親部店の有無を判定
+        check_condition_2(branch_code): 条件2に基づいて親部店の有無を判定
+        check_condition_3(branch_code): 条件3に基づいて親部店の有無を判定
 
     Usage Example:
-        >>> from src.lib.common_utils.ibr_pickled_table_searcher import TableSearcher
-        >>> from src.lib.converter_utils.ibr_reference_merger import ReferenceMerger
-        >>> table_searcher = TableSearcher("reference_table.pkl")
-        >>> merger = ReferenceMerger(table_searcher)
-        >>> integrated_layout = pd.read_csv("integrated_layout.csv")
-        >>> merged_data = merger.merge_reference_data(integrated_layout)
-        >>> print(merged_data.head())
+        >>> checker = ParentBranchChecker("application_data.pkl", "reference_data.pkl")
+        >>> result = checker.check_condition_1("1234567")
+        >>> print(result)
+        True
 
     Notes:
-        - リファレンステーブルは事前にpickleファイルとして保存されている必要があります
-        - 大量のデータを処理する場合、メモリ使用量に注意してください
+        - 各条件チェックメソッドは、リファレンステーブルと申請明細レコード群の両方を検索します
+        - 結果はブール値で返されます。条件を満たすレコードが存在する場合はTrue、存在しない場合はFalseを返します
 
     Dependency:
+        - ibr_pickled_table_searcher.TableSearcher
         - pandas
-        - src.lib.common_utils.ibr_pickled_table_searcher.TableSearcher
 
     ResourceLocation:
         - [本体]
-            - src/lib/converter_utils/ibr_reference_merger.py
+            - src/lib/common_utils/parent_branch_checker.py
         - [テストコード]
-            - tests/lib/converter_utils/test_ibr_reference_merger.py
+            - tests/lib/common_utils/test_parent_branch_checker.py
 
     Todo:
-        - パフォーマンスの最適化
-        - 並列処理の導入検討
-        - エラーハンドリングの強化
+        - パフォーマンスの最適化(大規模データセットに対する効率的な検索方法の検討)
+        - 新たな条件や判定ロジックの追加に対する拡張性の確保
+        - エラーハンドリングの強化とロギング機能の追加
 
     Change History:
-    | No   | 修正理由     | 修正点   | 対応日     | 担当         |
-    |------|--------------|----------|------------|--------------|
-    | v0.1 | 初期定義作成 | 新規作成 | 2024/08/18 | xxxx aaa.bbb |
-
+    | No   | 修正理由                           | 修正点                                     | 対応日     | 担当         |
+    |------|------------------------------------|--------------------------------------------|------------|--------------|
+    | v0.1 | 初期定義作成                       | 新規作成                                   | 2024/08/14 | xxxx aaa.bbb |
+    | v0.2 | 戻り値をブール値に変更             | 各メソッドの戻り値をブール値に変更         | 2024/08/15 | xxxx aaa.bbb |
     """
 
-    def __init__(self, table_searcher: TableSearcher):
-        """コンストラクタ
+    def __init__(self, application_data_file: str, reference_data_file: str):
+        """ParentBranchCheckerクラスのコンストラクタ
 
         Arguments:
-        table_searcher (TableSearcher): リファレンステーブルの検索を行うオブジェクト
+        application_data_file (str): 申請明細レコード群のpickleファイルパス
+        reference_data_file (str): リファレンステーブルのpickleファイルパス
         """
-        self.table_searcher = table_searcher
+        self.application_searcher = TableSearcher(application_data_file)
+        self.reference_searcher = TableSearcher(reference_data_file)
 
-    def merge_reference_data(self, integrated_layout: pd.DataFrame) -> pd.DataFrame:
-        """統合レイアウトデータにリファレンステーブルの情報をマージする
+    def check_condition_1(self, branch_code: str) -> bool:
+        """条件1に基づいて親部店の有無を判定する
 
         Arguments:
-        integrated_layout (pd.DataFrame): 統合レイアウトデータ
+        branch_code (str): 確認対象の部店コード
 
         Return Value:
-        pd.DataFrame: マージされたデータフレーム
+        bool: 条件を満たす親部店が存在する場合はTrue、存在しない場合はFalse
 
         Algorithm:
-            1. 統合レイアウトの各行に対して_get_reference_infoメソッドを適用
-            2. 得られた結果を元のDataFrameとマージして返す
-
-        Exception:
-        ValueError: 入力DataFrameが空の場合
+            1. BPR部店コードの前方4桁を抽出
+            2. 申請明細レコード群を検索
+            3. リファレンステーブルを検索
+            4. いずれかの検索結果が存在すればTrueを返す
 
         Usage Example:
-        >>> merged_data = merger.merge_reference_data(integrated_layout)
-        >>> print(merged_data.columns)
-        Index(['branch_code', 'other_data', 'reference_branch_code', 'reference_branch_name', 'reference_parent_branch_code'], dtype='object')
+        >>> result = checker.check_condition_1("12345")
+        >>> print(result)
+        True
         """
-        if integrated_layout.empty:
-            err_msg = "入力DataFrameが空です"
-            raise ValueError(err_msg) from None
+        # 検索条件設定
+        prefix = branch_code[:4]
+        conditions = {
+            "branch_code_bpr": f"startswith:{prefix}",           # 部店コードBPR
+            "section_gr_code_bpr": "0",                          # 課GrコードBPR
+            "section_gr_name_bpr": "startswith:[グループなし]",  # 課Gr名称BRP
+        }
 
-        reference_info = integrated_layout.apply(self._get_reference_info, axis=1, result_type='expand')
-        return pd.concat([integrated_layout, reference_info], axis=1)
+        # 申請明細探索
+        app_result = self.application_searcher.simple_search(conditions, operator='AND')
+        if not app_result.empty:
+            return True
 
-    def _get_reference_info(self, row: pd.Series) -> dict[str, Any]:
-        """1行のデータに対応するリファレンス情報を取得する
+        # リファレンス探索
+        ref_result = self.reference_searcher.simple_search(conditions, operator='AND')
+        return not ref_result.empty
+
+    def check_condition_2(self, branch_code: str) -> bool:
+        """条件2に基づいて親部店の有無を判定する
 
         Arguments:
-        row (pd.Series): 統合レイアウトの1行のデータ
+        branch_code (str): 確認対象の部店コード
 
         Return Value:
-        dict[str, Any]: 取得したリファレンス情報
+        bool: 条件を満たす親部店が存在する場合はTrue、存在しない場合はFalse
 
         Algorithm:
-            1. 部店コードの上位4桁を取得
-            2. リファレンステーブルを検索
-            3. 検索結果から条件に合う行を抽出
-            4. 結果の辞書を作成して返す
+            1. 部店コードの前方4桁を抽出
+            2. 部店名に(大阪)または(名古屋)が含まれるか確認する条件を定義
+            3. 申請明細レコード群を検索
+            4. リファレンステーブルを検索
+            5. いずれかの検索結果が存在すればTrueを返す
 
-        Exception:
-        KeyError: 必要なカラムが存在しない場合
+        Usage Example:
+        >>> result = checker.check_condition_2("12345")
+        >>> print(result)
+        True
         """
-        try:
-            branch_code_prefix = self._get_branch_code_prefix(row)
-            matching_rows = self._search_reference_table(branch_code_prefix)
-            zero_row = self._filter_zero_row(matching_rows)
-
-            if zero_row.empty:
-                return self._get_empty_result()
-            return self._create_result_dict(zero_row.iloc[0])
-        except KeyError:
-            #必要なカラムが存在しない
-            return self._get_empty_result()
-
-    def _get_branch_code_prefix(self, row: pd.Series) -> str:
-        """部店コードの上位4桁を取得する"""
-        return str(row['branch_code'])[:4]
-
-    def _search_reference_table(self, branch_code_prefix: str) -> pd.DataFrame:
-        """リファレンステーブルを検索する"""
-        return self.table_searcher.simple_search({
-            "branch_code_bpr": f"startswith:{branch_code_prefix}",
-        })
-
-    def _filter_zero_row(self, df: pd.DataFrame) -> pd.DataFrame:
-        """課グループコードが'0'の行をフィルタリングする"""
-        return df[df['section_gr_code_bpr'] == '0']
-
-    def _create_result_dict(self, row: pd.Series) -> dict[str, Any]:
-        """リファレンス情報の辞書を作成する"""
-        return {
-            "reference_branch_code": row['branch_code_bpr'],
-            "reference_branch_name": row['branch_name_bpr'],
-            "reference_parent_branch_code": row['parent_branch_code'] if pd.notna(row['parent_branch_code']) else None,
+        # 検索条件設定
+        prefix = branch_code[:4]
+        conditions = {
+            "branch_code_bpr": f"startswith:{prefix}",       # 部店コードBPR
+            "branch_name_bpr": r"regex:\(（大阪|名古屋）\)", # 部店名BPR
         }
 
-    def _get_empty_result(self) -> dict[str, Any]:
-        """空のリファレンス情報辞書を返す"""
-        return {
-            "reference_branch_code": None,
-            "reference_branch_name": None,
-            "reference_parent_branch_code": None,
-        }
+        app_result = self.application_searcher.simple_search(conditions, operator='AND')
+        if not app_result.empty:
+            return True
+
+        ref_result = self.reference_searcher.simple_search(conditions, operator='AND')
+        return not ref_result.empty
+
+    def check_condition_3(self, branch_code: str) -> bool:
+        """条件3に基づいて親部店の有無を判定する
+
+        Arguments:
+        branch_code (str): 確認対象の部店コード
+
+        Return Value:
+        bool: 条件を満たす親部店が存在する場合はTrue、存在しない場合はFalse
+
+        Algorithm:
+            1. 部店コードの前方4桁を抽出
+            2. リファレンステーブルの親部店コードカラムを検索
+            3. 申請明細レコード群の親部店コードカラムを検索
+            4. いずれかの検索結果が存在すればTrueを返す
+
+        Usage Example:
+        >>> result = checker.check_condition_3("12347")
+        >>> print(result)
+        True
+        """
+        # 検索条件設定
+        prefix = branch_code[:4]
+
+        # 親部店検索
+        ref_result = self.reference_searcher.simple_search(
+            {"parent_branch_code": prefix},
+        )
+        if not ref_result.empty:
+            return True
+
+        app_result = self.application_searcher.simple_search(
+            {"parent_branch_code": prefix},
+        )
+        return not app_result.empty
 
 
 
@@ -580,4 +469,136 @@ class ReferenceMerger:
 
 
 
+
+
+TODO(me)
+```
+メソッド毎にstepを完走した結果のコードを改めて貼り付けて
+最終ステップに臨んだほうが結果は適切かもしれない
+```
+生成されたテストコード全体を以下に貼り付けてください。この全体コードに対して最終品質チェックを行います。
+[ここに生成されたテストコード全体を貼り付け]
+
+
+
+
+
+
+
+
+
+出力したコードに対して最終品質チェックを行います
+<最終ステップ>
+  <step15>生成されたテストコード全体に対する品質チェックリストの適用と結果の提示</step15>
+  
+  以下の品質チェックリストを使用して、生成されたテストコード全体を評価し、結果を提示します。
+  この結果は、人間のレビュアーが最終判断と改善決定を行うための参考情報となります。
+
+  評価結果をテーブル形式で以下のように出力してください：
+  テーブルの縦棒位置は揃えてください
+
+  | 項目番号 | 項目名 | 評価 | 評価コメント |
+  |---------|-------|------|-------------|
+  | 1 | テストの独立性 | [評価] | [評価コメント] |
+  | 2 | テストの網羅性 | [評価] | [評価コメント] |
+  ...
+
+  [評価] には "pass", "fail", "partial path" のいずれかを入力してください。
+  [評価コメント] には簡潔な評価の理由や観察を記入してください。
+
+  1. テストの独立性
+     - 各テストが他のテストに依存していないか
+     - テストの実行順序が結果に影響しないか
+
+  2. テストの網羅性
+     - 全てのパブリックメソッドがテストされているか
+     - 境界値テストが適切に行われているか
+     - 正常系と異常系の両方がテストされているか
+
+  3. テストの可読性
+     - テストメソッド名が目的を明確に示しているか
+     - Arrange-Act-Assert（AAA）パターンが適用されているか
+     - テストケースの意図が明確か
+
+  4. テストの堅牢性
+     - フラッキーテスト（時々失敗するテスト）がないか
+     - 外部依存（ファイルシステム、データベース等）が適切に管理されているか
+
+  5. テストデータの管理
+     - テストデータが適切に準備されているか
+     - テストデータがバージョン管理されているか
+     - 大量のテストデータを効率的に扱えているか
+
+  6. モックとスタブの適切な使用
+     - 外部依存が適切にモック化されているか
+     - モックの使用が過剰でないか
+
+  7. アサーションの品質
+     - アサーションが具体的で明確か
+     - 複数の状態を確認する場合、個別のアサーションが使用されているか
+
+  8. エッジケースのカバレッジ
+     - null値、空文字列、大きな数値などのエッジケースがテストされているか
+     - 例外ケースが適切にテストされているか
+
+  9. パフォーマンスとリソース管理
+     - テストの実行時間が適切か
+     - リソース（メモリ、ファイルハンドルなど）が適切に解放されているか
+
+  10. テストの隔離
+      - テストがグローバル状態を変更していないか
+      - テスト後の適切なクリーンアップが行われているか
+
+  11. パラメータ化テスト
+      - 類似のテストケースが適切にパラメータ化されているか
+      - データプロバイダが効果的に使用されているか
+
+  12. コードカバレッジ
+      - 行カバレッジ、分岐カバレッジ、条件カバレッジが十分か
+      - 未テストのコードパスが明確に識別されているか
+
+  13. テストの保守性
+      - テストコードに重複がないか
+      - テストヘルパー関数が適切に使用されているか
+
+  14. テストの粒度
+      - 各テストが単一の概念や機能をテストしているか
+      - テストが適切なサイズと複雑さを保っているか
+
+  15. テストフィクスチャの適切な使用
+      - セットアップとティアダウンが効果的に使用されているか
+      - 共通のセットアップコードが適切に抽出されているか
+
+  16. 例外処理のテスト
+      - 予期される例外が適切にテストされているか
+      - 例外メッセージや型が検証されているか
+
+  17. 非決定的な要素の処理
+      - 日付、乱数などの非決定的な要素が適切に制御されているか
+
+  18. ドキュメンテーション
+      - 複雑なテストケースに対して適切なコメントが付与されているか
+      - テストの目的や前提条件が明確に記述されているか
+
+  19. テストの一貫性
+      - プロジェクト全体で一貫したテストスタイルが維持されているか
+
+  20. 負のテスト
+      - システムが適切にエラーを処理することを確認するテストが含まれているか
+
+  評価結果の要約:
+  - 全体的な品質評価:
+  - 主要な強み:
+  - 潜在的な改善領域:
+  - 追加の考察:
+
+</最終ステップ>
+
+注意: この評価結果は自動生成されたものであり、参考情報として提供されています。最終的な品質判断、改善の必要性、および具体的な修正方法の決定は、人によるレビュー責任で行ってください。
+
+推奨される次のステップ:
+1. 人によるレビューで詳細な確認
+2. プロジェクト固有の要件や基準に基づく評価
+3. 必要に応じたテストコードの手動修正
+4. レビュー結果に基づく、テストコード生成プロセスの改善検討
 
