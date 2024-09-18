@@ -16,7 +16,7 @@ from src.lib.common_utils.ibr_decorator_config import with_config
 #config = initialize_config(sys.modules[__name__])
 
 @with_config
-class Main:
+class PreparatonExecutor:
     """アプリケーションのメインクラス。
 
     Excelファイルの処理を制御し、エラーハンドリングを行う。
@@ -35,46 +35,34 @@ class Main:
         self.package_config = self.config.package_config
         self.log_msg = self.config.log_message
 
-        self.log_msg(f'config: \n{format_config(self.config)}', LogLevel.DEBUG)
-        self.log_msg(self.env, LogLevel.INFO)
-        #self.log_msg(self.common_config['input_file_path']['UPDATE_EXCEL_PATH'], LogLevel.INFO)
-        #self.log_msg(self.common_config['decision_table_path']['DEF_DECISION_TABLE_PATH'], LogLevel.INFO)
-        #self.log_msg(self.package_config['decision_table_book_name']['DECISION_TABLE_BOOK_NANE'], LogLevel.INFO)
-        #self.log_msg(self.package_config['preparation_sample_data']['PREPARATION_SAMPLE_DATA'], LogLevel.INFO)
-        self.log_msg(f"input_file path: {self.common_config.get('input_file_path', {}).get('UPDATE_EXCEL_PATH',[])}", LogLevel.INFO)
-        self.log_msg(f"decision table path: {self.common_config.get('decision_table_path',{}).get('DEF_DECISION_TABLE_PATH',[])}", LogLevel.INFO)
-        self.log_msg(f"decision table book name: {self.package_config.get('decision_table_book_name',{}).get('DECISION_TABLE_BOOK_NANE',[])}", LogLevel.INFO)
-        self.log_msg(f"sample data path: {self.package_config.get('preparation_sample_data',{}).get('PREPARATION_SAMPLE_DATA',[])}", LogLevel.INFO)
-
-        # toml定義からの取り出し方法
-        #pprint(self.package_config.get('layout', {}).get('unified_layout', []))
-
     def start(self) -> None:
         """アプリケーションのメイン処理を実行する。"""
         try:
             self.log_msg("IBRDEV-I-0000001")  # 処理開始ログ
 
             # path生成
+            # TODO(suzuki); 受付入力pickleファイルへのPathへ
             sample_data_path = Path(
-                f"{self.common_config['input_file_path']['UPDATE_EXCEL_PATH']}/"
-                f"{self.package_config['preparation_sample_data']['PREPARATION_SAMPLE_DATA']}",
+                f"{self.common_config.get('input_file_path', []).get('UPDATE_EXCEL_PATH', '')}/"
+                f"{self.package_config.get('preparation_sample_data', []).get('PREPARATION_SAMPLE_DATA', '')}",
                 )
+            # TODO(suzuki); ディシジョンテーブルpickleファイルへのPathへ
             decision_table_path = Path(
                 f"{self.common_config['decision_table_path']['DEF_DECISION_TABLE_PATH']}/"
                 f"{self.package_config['decision_table_book_name']['DECISION_TABLE_BOOK_NANE']}",
                 )
 
-            self.log_msg(f'sample data path: {sample_data_path}')
-            self.log_msg(f'sample decision table path: {decision_table_path}')
+            self.log_msg(f'sample data path: {sample_data_path}', LogLevel.INFO)
+            self.log_msg(f'sample decision table path: {decision_table_path}', LogLevel.INFO)
 
             # データ取り込み
+            # TODO(suzuki): read_pickleに置き換え
             data_sample = pd.read_excel(sample_data_path)
             decision_table = pd.read_excel(decision_table_path)
 
             # 全ての列のデータ型を object に変更
             data_sample = data_sample.astype(object)
             decision_table = decision_table.astype(object)
-            self.log_msg(f'\n{tabulate_dataframe(decision_table)}')
 
             # factory生成
             factory = create_editor_factory(decision_table)
@@ -83,11 +71,12 @@ class Main:
             processed_data = data_sample.apply(lambda row: process_row(row, factory), axis=1)
 
             # 結果出力
-            self.log_msg(f'\n{tabulate_dataframe(data_sample)}')
-            self.log_msg(f'\n{tabulate_dataframe(processed_data)}')
+            self.log_msg(f'\n{tabulate_dataframe(decision_table)}', LogLevel.INFO)
+            self.log_msg(f'\n{tabulate_dataframe(data_sample)}', LogLevel.INFO)
+            self.log_msg(f'\n{tabulate_dataframe(processed_data)}', LogLevel.INFO)
 
         finally:
             self.log_msg("IBRDEV-I-0000002")  # 処理終了ログ
 
 if __name__ == '__main__':
-    Main().start()
+    PreparatonExecutor().start()

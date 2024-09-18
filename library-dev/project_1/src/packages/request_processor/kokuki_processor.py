@@ -8,7 +8,7 @@ from .processor_interface import (
     PostProcessor,
 )
 
-from .mapping_excel_column_to_dataframe import (
+from .excel_to_dataframe_mapper import (
     #JinjiExcelMapping,
     KokukiExcelMapping,
     #KanrenExcelMappingWithDummy,

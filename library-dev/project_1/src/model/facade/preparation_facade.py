@@ -8,6 +8,13 @@ from typing import Any
 from src.lib.common_utils.ibr_enums import LogLevel
 from src.lib.common_utils.ibr_get_config import Config
 
+# config共有
+from src.lib.common_utils.ibr_decorator_config import with_config
+
+#import sys
+#from src.lib.common_utils.ibr_decorator_config import initialize_config
+#config = initialize_config(sys.modules[__name__])
+
 from src.lib.converter_utils.ibr_basic_column_editor import (
     ColumnEditor,
     Column1Editor,
@@ -23,13 +30,9 @@ from src.lib.converter_utils.ibr_basic_column_editor import (
 # 個別のColumnEditorを呼ぶ
 # TODO(Suzuki): 個別編集部品をimportする
 
-package_path = Path(__file__)
-config = Config.load(package_path)
-
-log_msg = config.log_message
-log_msg(str(config), LogLevel.DEBUG)
 
 
+#TODO(suzuki): commonに入れるかどうかの判断
 # ロギングHelper関数
 def format_series_for_log(series: pd.Series) -> str:
     """Seriesオブジェクトを簡潔な文字列形式に変換します
@@ -38,13 +41,15 @@ def format_series_for_log(series: pd.Series) -> str:
     """
     return str(series.to_numpy().tolist())
 
+@with_config
 class DataFrameEditor:
-    def __init__(self):
+    def __init__(self, config: dict|None = None):
+        # DI
+        self.log_msg = config or self.config.log_message
         self.column_editors = self.initialize_editors()
 
     def initialize_editors(self) -> dict[str, ColumnEditor]:
         return {}
-
 
     def edit_series(self, series: pd.Series) -> pd.Series:
         valid_editors = {col: editor for col, editor in self.column_editors.items() if col in series.index}
@@ -54,8 +59,8 @@ class DataFrameEditor:
             original_value = series[col]
             edited_value = editor.edit(original_value)
             edited_series[col] = edited_value
-            log_msg(f"Editing column: {col}")
-            log_msg(f"Original value: {original_value} -> Edited value: {edited_value}")
+            self.log_msg(f"Editing column: {col}", LogLevel.INFO)
+            self.log_msg(f"Original value: {original_value} -> Edited value: {edited_value}", LogLevel.INFO)
 
         return edited_series
 

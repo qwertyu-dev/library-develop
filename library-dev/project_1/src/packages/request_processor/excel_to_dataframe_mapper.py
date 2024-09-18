@@ -143,8 +143,9 @@ class JinjiExcelMapping(ExcelMapping):
     | v0.1 | 初期定義作成 | 新規作成 | 2024/07/20 | John Doe |
 
     """
-    def __init__(self):
-        self.log_msg = self.config.log_message
+    def __init__(self, config: dict | None=None):
+        # DI
+        self.log_msg = config or self.config.log_message
 
     def column_map(self, df: pd.DataFrame) -> pd.DataFrame:
         """人事部門のExcelファイルを読み込み、列名をマッピングします
@@ -260,8 +261,9 @@ class KokukiExcelMapping(ExcelMapping):
     | v0.1 | 初期定義作成 | 新規作成 | 2024/07/20 | John Doe |
 
     """
-    def __init__(self):
-        self.log_msg = self.config.log_message
+    def __init__(self, config: dict|None = None):
+        # DI
+        self.log_msg = config or self.config.log_message
 
     def column_map(self, df: pd.DataFrame) -> pd.DataFrame:
         """国際事務企画部門のExcelファイルを読み込み、列名をマッピングします
@@ -371,8 +373,8 @@ class KanrenExcelMappingWithDummy(ExcelMapping):
     | v0.1 | 初期定義作成 | 新規作成 | 2024/07/20 | John Doe |
 
     """
-    def __init__(self):
-        self.log_msg = self.config.log_message
+    def __init__(self, config: dict|None = None):
+        self.log_msg = config or self.config.log_message
 
     def column_map(self, df: pd.DataFrame) -> pd.DataFrame:
         """関連会社のExcelファイルを読み込み、列名をマッピングします
@@ -486,8 +488,8 @@ class KanrenExcelMappingWithoutDummy(ExcelMapping):
     | v0.1 | 初期定義作成 | 新規作成 | 2024/07/20 | John Doe |
 
     """
-    def __init__(self):
-        pass
+    def __init__(self, config: dict|None=None):
+        self.log_msg = config or self.config.log_message
 
     def column_map(self, df: pd.DataFrame) -> pd.DataFrame:
         """関連会社のExcelファイルを読み込み、列名をマッピングします

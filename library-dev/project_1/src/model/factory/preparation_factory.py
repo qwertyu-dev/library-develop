@@ -1,19 +1,20 @@
-import pandas as pd
 from importlib import import_module
 from pathlib import Path
 
+import pandas as pd
 from src.model.facade.preparation_facade import DataFrameEditor
 from src.lib.validator_utils.ibr_decision_table_validator import DT
-
 from src.lib.common_utils.ibr_enums import LogLevel
-from src.lib.common_utils.ibr_get_config import Config
 
-package_path = Path(__file__)
-config = Config.load(package_path)
+# config共有
+from src.lib.common_utils.ibr_decorator_config import with_config
 
-log_msg = config.log_message
-log_msg(str(config), LogLevel.DEBUG)
+#import sys
+#from src.lib.common_utils.ibr_decorator_config import initialize_config
+#config = initialize_config(sys.modules[__name__])
 
+
+@with_config
 class EditorFactory:
     """データフレーム編集のためのFactory class
 
@@ -78,11 +79,12 @@ class EditorFactory:
             decision_table (pd.DataFrame): 編集方法を決定するためのディシジョンテーブル
             editor_classes (dict[str, DataFrameEditor] | None): カスタムエディタクラスの辞書 DI目的の定義
         """
+        self.log_msg = self.config.log_message
         self.decision_table = decision_table
         self.editor_classes = editor_classes or {}
         # DT classで定義のある関数名dictを生成
         self.dt_functions = {func: getattr(DT, func) for func in dir(DT) if callable(getattr(DT, func)) and not func.startswith("__")}
-        log_msg(f'self.dt_functions: {self.dt_functions}', LogLevel.DEBUG)
+        self.log_msg(f'self.dt_functions: {self.dt_functions}', LogLevel.DEBUG)
 
         if 'DataFramneEditorDefault' not in self.editor_classes:
             self.editor_classes["DataFrameEditorDefault"] = DataFrameEditor
@@ -109,11 +111,11 @@ class EditorFactory:
             conditions_met = [self.check_condition(row[col], decision_row[col]) for col in row.index]
             if all(conditions_met):
                 result = decision_row['DecisionResult']
-                log_msg('-'*100)
-                log_msg(f"All conditions met, returning DecisionResult: {result}")
+                self.log_msg('-'*100, LogLevel.INFO)
+                self.log_msg(f"All conditions met, returning DecisionResult: {result}", LogLevel.INFO)
                 return result
-        log_msg('-'*100)
-        log_msg("No matching conditions found, returning DataFrameEditorDefault")
+        self.log_msg('-'*100, LogLevel.INFO)
+        self.log_msg("No matching conditions found, returning DataFrameEditorDefault", LogLevel.INFO)
         return 'DataFrameEditorDefault'
 
     def check_condition(self, value: str | int, condition: str | int)-> bool | str:
@@ -147,7 +149,7 @@ class EditorFactory:
         def check_dt_function(val: str | int, cond: str) -> bool:
             if cond in self.dt_functions:
                 result = self.dt_functions[cond](val)
-                log_msg(f"DT function {cond} result: {result}", LogLevel.DEBUG)
+                self.log_msg(f"DT function {cond} result: {result}", LogLevel.DEBUG)
                 return result
             return False
 
@@ -197,6 +199,8 @@ class EditorFactory:
     def create_editor(self, row: pd.Series) -> DataFrameEditor:
         """適切なEditorインスタンスを生成する
 
+        指定されたFacade文字列から実物を生み出すだけ
+
         Arguments:
             row (pd.Series): 編集対象の行データ
 
@@ -220,11 +224,13 @@ class EditorFactory:
         if editor_class is None:
             editor_class = self.get_facade(facade_name)
         editor = editor_class()
-        log_msg(f"Created editor: {facade_name}, column_editors: {editor.column_editors}", LogLevel.DEBUG)
+        self.log_msg(f"Created editor: {facade_name}, column_editors: {editor.column_editors}", LogLevel.DEBUG)
         return editor
 
 def create_editor_factory(decision_table: pd.DataFrame, editor_classes: dict[str, DataFrameEditor] | None = None) -> EditorFactory:
-    """EditorFactoryインスタンスを生成する
+    """EditorFactoryインスタンスを生成するだけの役割
+
+    実質、なにもやっていない
 
     Function Overview:
         指定されたdecisionテーブルを使用して、

@@ -6,7 +6,6 @@ from src.lib.common_utils.ibr_decorator_config import with_config
 #from src.lib.common_utils.ibr_decorator_config import initialize_config
 #config = initialize_config(sys.modules[__name__])
 
-@with_config
 class FileConfigurationFactory():
     def create_file_path(self) -> Path:
         pass
@@ -14,6 +13,7 @@ class FileConfigurationFactory():
     def create_sheet_name(self) -> str:
         pass
 
+@with_config
 class JinjiFileConfigurationFactory(FileConfigurationFactory):
     def __init__(self, config: dict):
         # DI config
@@ -21,13 +21,13 @@ class JinjiFileConfigurationFactory(FileConfigurationFactory):
 
     def create_file_pattern(self) -> Path:
         return Path(
-            f"{self.config.common_config['input_file_path']['UPDATE_EXCEL_PATH']}",
+            f"{self.config.common_config.get('input_file_path', []).get('UPDATE_EXCEL_PATH','')}",
             ).glob(
-                f"{self.config.package_config['excel_definition']['UPDATE_RECORD_JINJI']}",
+                f"{self.config.package_config.get('excel_definition', []).get('UPDATE_RECORD_JINJI', '')}",
             )
 
     def create_sheet_name(self) -> str:
-        return self.config.package_config['excel_definition']['UPDATE_RECORD_JINJI_SHEET_NAME']
+        return self.config.package_config.get('excel_definition', []).get('UPDATE_RECORD_JINJI_SHEET_NAME', '')
 
 
 @with_config
@@ -39,13 +39,13 @@ class KokukiFileConfigurationFactory(FileConfigurationFactory):
     #def create_file_path(self) -> Path:
     def create_file_pattern(self) -> Path:
         return Path(
-            f"{self.config.common_config['input_file_path']['UPDATE_EXCEL_PATH']}",
+            f"{self.config.common_config.get('input_file_path', []).get('UPDATE_EXCEL_PATH', '')}",
             ).glob(
-                f"{self.config.package_config['excel_definition']['UPDATE_RECORD_KOKUKI']}",
+                f"{self.config.package_config.get('excel_definition', []).get('UPDATE_RECORD_KOKUKI', '')}",
             )
 
     def create_sheet_name(self) -> str:
-        return self.config.package_config['excel_definition']['UPDATE_RECORD_KOKUKI_SHEET_NAME']
+        return self.config.package_config.get('excel_definition', []).get('UPDATE_RECORD_KOKUKI_SHEET_NAME', '')
 
 @with_config
 class KanrenFileConfigurationFactory(FileConfigurationFactory):
@@ -55,10 +55,10 @@ class KanrenFileConfigurationFactory(FileConfigurationFactory):
 
     def create_file_pattern(self) -> Path:
         return Path(
-            f"{self.config.common_config['input_file_path']['UPDATE_EXCEL_PATH']}",
+            f"{self.config.common_config.get('input_file_path', []).get('UPDATE_EXCEL_PATH', '')}",
             ).glob(
-                f"{self.config.package_config['excel_definition']['UPDATE_RECORD_KANREN']}",
+                f"{self.config.package_config.get('excel_definition', []).get('UPDATE_RECORD_KANREN', '')}",
             )
 
     def create_sheet_name(self) -> str:
-        return self.config.package_config['excel_definition']['UPDATE_RECORD_KANREN_SHEET_NAME']
+        return self.config.package_config.get('excel_definition', []).get('UPDATE_RECORD_KANREN_SHEET_NAME', '')

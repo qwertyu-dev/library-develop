@@ -11,17 +11,17 @@ from pydantic import (
 from typing import Any
 
 # sample
-from src.lib.validator_utils.field_validators import (
+from src.lib.validator_utils.ibr_field_validator import (
     name_must_contain_space,
     username_alphanumeric,
 )
-from src.lib.validator_utils.model_validators import (
+from src.lib.validator_utils.ibr_model_validator import (
     check_password_match,
 )
 
 
-class KokukiModel(BaseModel):
-    """国企レイアウト: Validator,整合性チェック"""
+class KanrenModel(BaseModel):
+    """関連レイアウト: Validator,整合性チェック"""
     # Item定義
     NO: int = Field(...)
     あ: str = Field(...)

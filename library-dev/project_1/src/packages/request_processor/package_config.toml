@@ -123,3 +123,19 @@ unified_layout = [
 'section_gr_name_abbr',
 'bpr_target_flag',
 ]
+
+# Factory定義/class動的生成
+[local.processor_factory]
+jinji = "src.packages.request_processor.processor_factory.JinjiProcessorFactory"
+kokuki = "src.packages.request_processor.processor_factory.KokukiProcessorFactory"
+kanren = "src.packages.request_processor.processor_factory.KanrenProcessorFactory"
+
+[local.model_factory]
+jinji = "src.packages.request_processor.model_factory.JinjiModelFactory"
+kokuki = "src.packages.request_processor.model_factory.KokukiModelFactory"
+kanren = "src.packages.request_processor.model_factory.KanrenModelFactory"
+
+[local.file_configuration_factory]
+jinji = "src.packages.request_processor.file_configuration_factory.JinjiFileConfigurationFactory"
+kokuki = "src.packages.request_processor.file_configuration_factory.KokukiFileConfigurationFactory"
+kanren = "src.packages.request_processor.file_configuration_factory.KanrenFileConfigurationFactory"

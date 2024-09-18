@@ -1,15 +1,10 @@
-#import glob
-#from pathlib import Path
 import pandas as pd
-#from typing import Callable
-#from pydantic import BaseModel, ValidationError
 
 from src.lib.common_utils.ibr_enums import LogLevel
 from src.lib.common_utils.ibr_dataframe_helper import tabulate_dataframe
 from src.lib.common_utils.ibr_excel_reader import ExcelDataLoader
 
-from .file_configration_factory import FileConfigurationFactory
-
+from .file_configuration_factory import FileConfigurationFactory
 
 # config共有
 #import sys
@@ -17,11 +12,17 @@ from src.lib.common_utils.ibr_decorator_config import with_config
 #from src.lib.common_utils.ibr_decorator_config import initialize_config
 #config = initialize_config(sys.modules[__name__])
 
+class ExcelProcessorError(Exception):
+    pass
+def  excel_sheet_columns_unmatch_error():
+    """TRY30 ValueError発生させる"""
+    raise ValueError
+
 @with_config
 class ExcelProcessor:
     """Excelファイルの処理とバリデーションを行うクラス"""
 
-    def __init__(self, config: dict, file_cofigration_factory: FileConfigurationFactory):
+    def __init__(self, config: dict, file_configration_factory: FileConfigurationFactory):
         """ExcelProcessorのコンストラクタ。
 
         Args:
@@ -31,16 +32,14 @@ class ExcelProcessor:
         """
         # DI config
         self.config = config or self.config
-
-        # configから情報取得
         self.log_msg = config.log_message
 
         # Excel path/sheet fatory
-        self.excel_file_pattern = file_cofigration_factory.create_file_pattern()
+        self.excel_file_pattern = file_configration_factory.create_file_pattern()
         self.log_msg(f"excel file pattern: {self.excel_file_pattern}", LogLevel.DEBUG)
 
         # Sheet名が固定とは決まっていない可能性がある
-        self.excel_sheet_name = file_cofigration_factory.create_sheet_name()
+        self.excel_sheet_name = file_configration_factory.create_sheet_name()
 
 
     def load(self) -> tuple[pd.DataFrame, list[str]]:
@@ -59,14 +58,16 @@ class ExcelProcessor:
                     common_columns = list(_df.columns)
 
                 if set(_df.columns) != set(common_columns):
-                    # TODO(suzuki): Error
-                    continue
-                # 共通columns飲みを選択しcolumn順序整備
+                    # errorはログ出力するが処理は継続
+                    err_msg = f'カラム構造が一致しないExcelBookがあります: {file_path}::{self.excel_sheet_name}'
+                    excel_sheet_columns_unmatch_error(err_msg) # TRY301 ValueError発生
+
+                # 共通columnsのみを選択しcolumn順序整備
                 _df = _df[common_columns]
                 # 積み上げ
                 dataframes.append(_df)
             except Exception as e:
-                pass
+                raise ExcelProcessorError from e
 
         if not dataframes:
             return pd.DataFrame(), []

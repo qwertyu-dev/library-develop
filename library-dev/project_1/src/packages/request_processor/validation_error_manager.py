@@ -2,10 +2,7 @@ from typing import Any, Callable
 from pydantic import ValidationError
 
 from src.lib.common_utils.ibr_enums import LogLevel
-from src.lib.common_utils.ibr_logger_helper import (
-    format_config,
-    format_dict,
-)
+from src.lib.common_utils.ibr_logger_helper import format_dict
 
 # config共有
 from src.lib.common_utils.ibr_decorator_config import with_config
@@ -17,7 +14,7 @@ from src.lib.common_utils.ibr_decorator_config import with_config
 @with_config
 class ValidationErrorManager:
     def __init__(self, logger: Callable | None = None):
-        """初期化、loggerは差し替え可能構成"""
+        # DI
         self.log_msg = logger or self.config.log_message
 
         # エラー入れ物初期化
@@ -44,8 +41,8 @@ class ValidationErrorManager:
         if self.has_errors():
             for row_index, errors in self.errors:
                 for error in errors:
-                    error = format_dict(error)
-                    self.log_msg(f"Validation error at row {row_index}: \n{error}", LogLevel.WARNING)
+                    error_msg = format_dict(error)
+                    self.log_msg(f"Validation error at row {row_index}: \n{error_msg}", LogLevel.WARNING)
         else:
             self.log_msg("No validation errors found", LogLevel.INFO)
 
