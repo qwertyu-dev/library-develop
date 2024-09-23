@@ -1,11 +1,11 @@
 from src.lib.common_utils.ibr_enums import LogLevel
 from src.lib.common_utils.ibr_dataframe_helper import tabulate_dataframe
 from src.lib.common_utils.ibr_logger_helper import format_config
+from src.model.processor_chain.processor_interface import ProcessorChain
 
 from .data_validator import DataValidator
 from .excel_processor import ExcelProcessor
 from .factory_registry import FactoryRegistry
-from .processor_interface import ProcessorChain
 
 # config共有
 from src.lib.common_utils.ibr_decorator_config import with_config

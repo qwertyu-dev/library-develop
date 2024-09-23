@@ -325,7 +325,7 @@ class KokukiExcelMapping(ExcelMapping):
             unified_df['section_gr_name'] = df['section_area_name_ja']
             unified_df['section_name_en'] = df['section_area_name_en']
             unified_df['aaa_transfer_date'] = df['aaa_transfer_date']
-            unified_df['section_gr_name_abbr'] = df['section_area_abbr_ja']
+            unified_df['section_name_abbr'] = df['section_area_abbr_ja']
 
         except Exception as e:
             err_msg = f"Error occurred while mapping to unified layout: {str(e)}"
@@ -427,7 +427,7 @@ class KanrenExcelMappingWithDummy(ExcelMapping):
             unified_df = pd.DataFrame(columns=self.unified_layout)
 
             unified_df['ulid'] = [str(ulid.new()) for _ in range(len(df))]
-            unified_df['applicant_info'] = '3'  # ダミー課あり 
+            unified_df['applicant_info'] = '3'  # ダミー課あり
             unified_df['application_type'] = df['application_type']
             unified_df['business_unit_code'] = df['business_unit_code']
             unified_df['parent_branch_code'] = df['parent_branch_code']
@@ -437,9 +437,9 @@ class KanrenExcelMappingWithDummy(ExcelMapping):
             unified_df['section_gr_name'] = df['section_gr_name']
             unified_df['section_name_en'] = df['section_name_en']
             unified_df['aaa_transfer_date'] = df['aaa_transfer_date']
-            unified_df['branch_name_kana'] = df['branch_name_kana']
-            unified_df['section_gr_name_kana'] = df['section_gr_name_kana']
-            unified_df['section_gr_name_abbr'] = df['section_gr_name_abbr']
+            unified_df['orgnization_name_kana'] = df['orgnization_name_kana']
+            unified_df['section_name_kana'] = df['section_name_kana']
+            unified_df['section_name_abbr'] = df['section_name_abbr']
             unified_df['bpr_target_flag'] = df['bpr_target_flag']
 
         except Exception as e:
@@ -552,9 +552,9 @@ class KanrenExcelMappingWithoutDummy(ExcelMapping):
             unified_df['section_gr_name'] = df['section_gr_name']
             unified_df['section_name_en'] = df['section_name_en']
             unified_df['aaa_transfer_date'] = df['aaa_transfer_date']
-            unified_df['branch_name_kana'] = df['branch_name_kana']
-            unified_df['section_gr_name_kana'] = df['section_gr_name_kana']
-            unified_df['section_gr_name_abbr'] = df['section_gr_name_abbr']
+            unified_df['orgnization_name_kana'] = df['orgnization_name_kana']
+            unified_df['section_name_kana'] = df['section_name_kana']
+            unified_df['section_name_abbr'] = df['section_name_abbr']
             unified_df['bpr_target_flag'] = df['bpr_target_flag']
 
         except Exception as e:

@@ -92,9 +92,9 @@ UPDATE_RECORD_KANREN_SHEET_NAME = '関連会社入力シート'                 
 '課Gr名称' = 'section_gr_name'
 '課名称(英語)' = 'section_name_en'
 '共通認証受渡し予定日' = 'aaa_transfer_date'
-'部店カナ' = 'branch_name_kana'
-'課Gr名称(カナ)' = 'section_gr_name_kana'
-'課Gr名称(略称)' = 'section_gr_name_abbr'
+'部店カナ' = 'orgnization_name_kana'
+'課Gr名称(カナ)' = 'section_name_kana'
+'課Gr名称(略称)' = 'section_name_abbr'
 'BPR対象/対象外フラグ' = 'bpr_target_flag'
 
 # 一括申請データを統合レイアウトへ変換定義,column順定義 
@@ -114,13 +114,14 @@ unified_layout = [
 'resident_branch_code',
 'resident_branch_name',
 'aaa_transfer_date',
-'sales_department_code_within_loc',
-'sales_department_name_within_loc', 'area_code',
+'internal_sales_dept_code',
+'internal_sales_dept_name',
+'area_code',
 'area_name',
 'remarks',
-'branch_name_kana',
-'section_gr_name_kana',
-'section_gr_name_abbr',
+'orgnization_name_kana',
+'section_name_kana',
+'section_name_abbr',
 'bpr_target_flag',
 ]
 

@@ -23,8 +23,5 @@ x = 'x'
 # local定義 local
 #############################
 [local]
-[local.decision_table_book_name]
-DECISION_TABLE_BOOK_NANE = 'decision_table.xlsx'
-
-[local.preparation_sample_data]
-PREPARATION_SAMPLE_DATA = 'data_sample.xlsx'
+[local.x]
+x = 'x'

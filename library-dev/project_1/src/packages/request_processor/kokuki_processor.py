@@ -3,7 +3,7 @@ import pandas as pd
 
 from src.lib.common_utils.ibr_enums import LogLevel
 
-from .processor_interface import (
+from src.model.processor_chain.processor_interface import (
     PreProcessor,
     PostProcessor,
 )

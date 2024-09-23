@@ -1,0 +1,234 @@
+= ProcessChain ガイダンス
+
+== 概要
+
+ProcessChainは、主要処理の前後に独立した処理チェーンを配置するためのデザインパターンです。このパターンの主な目的は以下の通りです：
+
+* 主要処理と前後処理の密結合を回避する
+* 処理の順序や内容を柔軟に変更可能にする
+* コードの再利用性と保守性を向上させる
+
+== 構造
+
+ProcessChainは以下の要素で構成されています：
+
+* `Processor` 抽象基底クラス：すべてのプロセッサの基本インターフェース
+* `PreProcessor` クラス：前処理用のプロセッサ
+* `PostProcessor` クラス：後処理用のプロセッサ
+* `Validator` クラス：データ検証用のインターフェース
+* `ProcessorChain` クラス：プロセッサチェーンを管理し実行する
+
+== インターフェースと主要クラス
+インターフェース定義は以下参照
+
+* src/model/processor_chain/chain_interface.py
+
+=== Processor（抽象基底クラス）
+
+[source,python]
+----
+@with_config
+class Processor:
+    def process(self, df: pd.DataFrame) -> pd.DataFrame:
+        raise NotImplementedError
+----
+
+* すべてのプロセッサの基本インターフェース
+* `process` メソッドを実装する必要がある
+* `@with_config` デコレータにより設定情報が注入される
+
+=== PreProcessor と PostProcessor
+
+[source,python]
+----
+class PreProcessor(Processor):
+    pass
+
+class PostProcessor(Processor):
+    pass
+----
+
+* `Processor` を継承し、前処理と後処理を区別するためのマーカークラス
+
+=== Validator
+
+[source,python]
+----
+class Validator():
+    def validate(self, data: Any) -> None:
+        pass
+----
+
+* データ検証のためのインターフェース
+* 具体的な検証ロジックは子クラスで実装する
+
+=== ProcessorChain
+
+[source,python]
+----
+class ProcessorChain:
+    def __init__(self):
+        self.pre_processors = []
+        self.post_processors = []
+
+    def add_pre_processor(self, processor: PreProcessor):
+        self.pre_processors.append(processor)
+
+    def add_post_processor(self, processor: PostProcessor):
+        self.post_processors.append(processor)
+
+    def execute_pre_processor(self, data: pd.DataFrame) -> pd.DataFrame:
+        for processor in self.pre_processors:
+            data = processor.process(data)
+        return data
+
+    def execute_post_processor(self, data: pd.DataFrame) -> pd.DataFrame:
+        for processor in self.post_processors:
+            data = processor.process(data)
+        return data
+----
+
+* プロセッサチェーンを管理し実行するクラス
+* 前処理と後処理のプロセッサを別々のリストで管理
+* プロセッサの追加と実行のためのメソッドを提供
+
+== 使用方法
+
+* プロセッサの実装:
+** 前処理、後処理の実装Classを定義する
+** 処理単位は、互いに独立したClass構成で作成する
+
+[source,python]
+----
+class MyPreProcessor(PreProcessor):
+    def process(self, df: pd.DataFrame) -> pd.DataFrame:
+        # 前処理のロジックを実装
+        return processed_df
+
+class MyPostProcessor(PostProcessor):
+    def process(self, df: pd.DataFrame) -> pd.DataFrame:
+        # 後処理のロジックを実装
+        return processed_df
+----
+
+* ProcessorChainの設定:
+
+[source,python]
+----
+processor_chain = ProcessorChain()
+processor_chain.add_pre_processor(MyPreProcessor())
+processor_chain.add_post_processor(MyPostProcessor())
+----
+
+* 処理の実行:
+
+[source,python]
+----
+# 前処理の実行
+df = processor_chain.execute_pre_processor(df)
+
+# 主要処理（例：バリデーション）
+validator.validate(df)
+
+# 後処理の実行
+df = processor_chain.execute_post_processor(df)
+----
+
+== ベストプラクティスと注意点
+
+* インターフェースの遵守：新しいプロセッサを作成する際は、必ず`Processor`クラスを継承し、`process`メソッドを実装してください。
+
+* 型ヒントの活用：パラメータと戻り値の型を明示することで、コードの可読性と保守性が向上します。
+
+* 設定の注入：`@with_config`デコレータを使用して、設定情報をプロセッサに注入できます。これにより、プロセッサの柔軟性が向上します。
+
+* プロセッサの分離：`PreProcessor`と`PostProcessor`を明確に分けることで、処理の役割が明確になり、コードの組織化が容易になります。
+
+* チェーンの柔軟な構成：`add_pre_processor`と`add_post_processor`メソッドを使用して、実行時にプロセッサチェーンを動的に構成できます。
+
+* 単一責任の原則：各プロセッサ（前処理・後処理）は単一の責任を持つようにしてください。
+
+* 拡張性：新しい処理を追加する際は、既存のコードを変更せずに新しいプロセッサを追加できるようにしてください。
+
+* エラーハンドリング：各プロセッサでのエラーを適切に処理し、チェーン全体の実行に影響を与えないようにしてください。
+
+* パフォーマンス考慮：大量のデータを処理する場合、各プロセッサの処理時間に注意を払い、必要に応じて最適化を行ってください。
+
+* テスト容易性：各プロセッサを個別にテストできるようにし、また、プロセッサチェーン全体の統合テストも行ってください。
+
+* ドキュメンテーション：各プロセッサの役割と処理内容を明確に文書化し、チーム内での理解を促進してください。
+----
+
+承知しました。ベストプラクティス、対応、効果の3列構成でテーブルを再構成します。以下が結果です：
+
+[source,asciidoc]
+----
+[cols="1,2,2"]
+|===
+|ベストプラクティス |対応 |効果
+
+|インターフェースの遵守
+|新しいプロセッサを作成する際は、必ず `Processor` クラスを継承し、`process` メソッドを実装する
+a|
+* 一貫性のある設計が維持
+* システムの拡張性向上
+
+|型ヒントの活用
+|パラメータと戻り値の型を明示する
+a|
+* コードの可読性と保守性
+* 潜在的なバグを早期に発見
+
+|設定の注入
+|`@with_config` デコレータを使用して、設定情報をプロセッサに注入する
+a|
+* プロセッサの柔軟性が向上
+* 異なる環境や要件に対応
+
+|プロセッサの分離
+|`PreProcessor` と `PostProcessor` を明確に分ける
+a|
+* 処理の役割が明確
+* コードの組織化が容易
+
+|チェーンの柔軟な構成
+|`add_pre_processor` と `add_post_processor` メソッドを使用して、実行時にプロセッサチェーンを動的に構成する
+a|
+* 処理の順序や内容を柔軟に変更
+* システムの適応性が向上
+
+|単一責任の原則
+|各プロセッサ（前処理・後処理）に単一の責任を持たせる
+a|
+* コードの保守性と再利用性が向上
+* 変更の影響範囲が限定される
+
+|拡張性の確保
+|既存のコードを変更せずに新しいプロセッサを追加できるようにする
+a|
+* システムの機能拡張が容易
+* 既存機能への影響を最小限
+
+|エラーハンドリング
+|各プロセッサでのエラーを適切に処理し、チェーン全体の実行に影響を与えないようにする
+a|
+* システムの堅牢性向
+* 部分的な障害が全体に波及するのを防ぐ
+
+|パフォーマンスの最適化
+|各プロセッサの処理時間に注意を払い、必要に応じて最適化を行う
+a|
+* 大量データ処理時のシステム全体の性能
+
+|テスト容易性の確保
+|各プロセッサを個別にテストし、プロセッサチェーン全体の統合テストも行う
+a|
+* バグの早期発見、品質向上
+* システムの信頼性が高まる
+
+|ドキュメンテーション
+|各プロセッサの役割と処理内容を明確に文書化する
+a|
+* チーム内での理解が促進
+* 長期的なメンテナンス性維持
+|===

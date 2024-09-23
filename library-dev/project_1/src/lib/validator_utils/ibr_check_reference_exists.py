@@ -16,7 +16,7 @@ class CheckExistsReferenceRecord:
 
     Attributes:
         special_case_checkers (list[SpecialCaseChecker]): 特別ケースのチェッカーリスト
-        branch_code (str): 処理対象の部門コード
+        branch_code (str): 処理対象の部店コード
         matching_df_requests (pd.DataFrame): branch_codeに一致する利用申請明細
 
     Methods:

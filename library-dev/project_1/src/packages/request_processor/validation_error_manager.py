@@ -42,7 +42,8 @@ class ValidationErrorManager:
             for row_index, errors in self.errors:
                 for error in errors:
                     error_msg = format_dict(error)
-                    self.log_msg(f"Validation error at row {row_index}: \n{error_msg}", LogLevel.WARNING)
+                    #self.log_msg(f"Validation error at row {row_index}: \n{error_msg}", LogLevel.WARNING)
+                    self.log_msg(f"Validation error at row {row_index}: \n{error_msg}", LogLevel.DEBUG)
         else:
             self.log_msg("No validation errors found", LogLevel.INFO)
 

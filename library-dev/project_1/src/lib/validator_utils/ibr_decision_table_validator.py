@@ -37,7 +37,7 @@ class DT:
     constants = DTConstants()
 
     @staticmethod
-    def is_4digits(value: Any) -> bool:
+    def is_4digits(value: str|int) -> bool:
         """値が4桁の文字列/数値かどうかを判定"""
         if isinstance(value, str):
             return len(value) == DT.constants.DIGIT4_LEN and value.isdigit()
@@ -46,7 +46,7 @@ class DT:
         return False
 
     @staticmethod
-    def is_5digits(value: Any) -> bool:
+    def is_5digits(value: str|int) -> bool:
         """値が5桁の文字列/数値かどうかを判定"""
         if isinstance(value, str):
             return len(value) == DT.constants.DIGIT5_LEN and value.isdigit()

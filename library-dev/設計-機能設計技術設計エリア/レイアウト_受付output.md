@@ -9,8 +9,8 @@
 | 5 | 課Gr名称 | section_gr_name | str | - | Façade |
 | 6 | 拠点内営業部コード | internal_sales_dept_code | str | - | Façade |
 | 7 | 拠点内営業部名 | internal_sales_dept_name | str | - | Façade |
-| 8 | エリアコード | area_code | str | - | Façade |
-| 9 | エリア名称 | area_name | str | - | Façade |
+| 8 | エリアコード | business_and_area_code | str | - | Façade |
+| 9 | エリア名称 | business_and_area_name | str | - | Façade |
 | 10 | 常駐部店コード | resident_branch_code | str | - | Façade |
 | 11 | 常駐部店名称 | resident_branch_name | str | - | Façade |
 | 12 | フォームの種類 | form_type | str | - | Façade |

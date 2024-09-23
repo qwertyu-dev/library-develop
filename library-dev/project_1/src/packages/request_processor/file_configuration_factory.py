@@ -21,7 +21,7 @@ class JinjiFileConfigurationFactory(FileConfigurationFactory):
 
     def create_file_pattern(self) -> Path:
         return Path(
-            f"{self.config.common_config.get('input_file_path', []).get('UPDATE_EXCEL_PATH','')}",
+            f"{self.config.common_config.get('optional_path', []).get('SHARE_RECEIVE_PATH','')}",
             ).glob(
                 f"{self.config.package_config.get('excel_definition', []).get('UPDATE_RECORD_JINJI', '')}",
             )
@@ -39,7 +39,7 @@ class KokukiFileConfigurationFactory(FileConfigurationFactory):
     #def create_file_path(self) -> Path:
     def create_file_pattern(self) -> Path:
         return Path(
-            f"{self.config.common_config.get('input_file_path', []).get('UPDATE_EXCEL_PATH', '')}",
+            f"{self.config.common_config.get('optional_path', []).get('SHARE_RECEIVE_PATH','')}",
             ).glob(
                 f"{self.config.package_config.get('excel_definition', []).get('UPDATE_RECORD_KOKUKI', '')}",
             )
@@ -55,7 +55,7 @@ class KanrenFileConfigurationFactory(FileConfigurationFactory):
 
     def create_file_pattern(self) -> Path:
         return Path(
-            f"{self.config.common_config.get('input_file_path', []).get('UPDATE_EXCEL_PATH', '')}",
+            f"{self.config.common_config.get('optional_path', []).get('SHARE_RECEIVE_PATH','')}",
             ).glob(
                 f"{self.config.package_config.get('excel_definition', []).get('UPDATE_RECORD_KANREN', '')}",
             )

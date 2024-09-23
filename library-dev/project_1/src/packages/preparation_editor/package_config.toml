@@ -23,8 +23,18 @@ x = 'x'
 # local定義 local
 #############################
 [local]
+
+# sample
 [local.decision_table_book_name]
 DECISION_TABLE_BOOK_NANE = 'decision_table.xlsx'
 
 [local.preparation_sample_data]
 PREPARATION_SAMPLE_DATA = 'data_sample.xlsx'
+
+# 受付Facade
+[local.import_editor_facade]
+FACADE_IMPORT_PATH = 'src.model.facade.preparation_editor_facade'
+
+# パターン編集Facade
+#[local.import_editor_facade]
+#FACADE_IMPORT_PATH = 'src.model.facade.pattern_editor_facade'

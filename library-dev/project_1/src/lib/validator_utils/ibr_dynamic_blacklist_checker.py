@@ -154,9 +154,11 @@ class BlacklistChecker:
         >>> checker.add_rule("役員変更制限", rule_executive_change)
         """
         if not name or not name.strip():
-            raise ValueError("Rule name cannot be empty or only whitespace.")
+            err_msg = "Rule name cannot be empty or only whitespace."
+            raise ValueError(err_msg) from None
         if not callable(condition):
-            raise TypeError("Condition must be a callable function.")
+            err_msg = "Condition must be a callable function."
+            raise TypeError(err_msg) from None
         self.rules.append({"name": name, "condition": condition})
 
     def check_blacklist(self) -> pd.DataFrame:
@@ -213,4 +215,3 @@ class BlacklistChecker:
         except Exception as e:
             error_msg = f"Error refreshing data: {str(e)}"
             raise BlacklistCheckerError(error_msg) from e
-

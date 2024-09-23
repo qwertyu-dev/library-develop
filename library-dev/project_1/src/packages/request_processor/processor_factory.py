@@ -1,4 +1,4 @@
-from .processor_interface import (
+from src.model.processor_chain.processor_interface import (
     PreProcessor,
     PostProcessor,
 )

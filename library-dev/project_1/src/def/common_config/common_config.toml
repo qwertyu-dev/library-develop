@@ -3,62 +3,63 @@
 ##############################
 [production]
 [production.logger_path]
-LOGGER_DEF_FILE = 'src/def/mfaUtilsLoggingHelper/logging_TimedRotate.json'
+# Server向けlogger定義
+LOGGER_DEF_FILE = 'src/def/mfaUtilsLoggingHelper/logging_TimedRotateServer.json'
 LOGGER_MSG_FILE = 'src/def/mfaUtilsLoggingHelper/config_MessageList.toml'
-
-# input/output data path
-[production.input_file_path]
-UPDATE_EXCEL_PATH = 'share/receive'
-
-[production.output_file_path]
-SEND_REFERENCE_MASTER_PATH = 'share/receive'
 
 ##############################
 # リグレ定義 regression
 ##############################
 [regression]
 [regression.logger_path]
-LOGGER_DEF_FILE = 'src/def/mfaUtilsLoggingHelper/logging_TimedRotate.json'
+# Server向けlogger定義
+LOGGER_DEF_FILE = 'src/def/mfaUtilsLoggingHelper/logging_TimedRotateServer.json'
 LOGGER_MSG_FILE = 'src/def/mfaUtilsLoggingHelper/config_MessageList.toml'
 
-# input/output data path
-[regression.input_file_path]
-UPDATE_EXCEL_PATH = 'share/receive'
-
-[regression.output_file_path]
-SEND_REFERENCE_MASTER_PATH = 'share/receive'
-
+# サーバドライブ依存パス定義
+[regression.optional_path]
+#CACHE_PATH ='W:\reference\src\cache'          #  アプリ側からは意識しない
+LONGTERM_ACCUM_PATH ='W:\reference\src\work\longterm_accm'
+SHORTTERM_ACCUM_PATH ='W:\reference\src\work\shortterm_accm'
+TABLE_PATH = 'Z:\reference\src\table'
+SHARE_RECEIVE_PATH = 'Z:\reference\src\share\receive'
+SHARE_SEND_PATH = 'Z:\reference\src\share\send'
+ARCHIVES_REFERNCE_SNAPSHOT_PATH = 'Z:\reference\src\archives\reference_snapshots'
+ARCHIVES_REQUEST_SNAPSHOT_PATH = 'Z:\reference\src\archives\request_snapshots'
+ARCHIVES_REFERENCE_DIFFS_PATH = 'Z:\reference\src\archives\reference_diffs'
+ARCHIVES_CSV_FILES_PATH = 'Z:\reference\src\archives\csv_files'
 
 ##############################
 # 開発機定義 develop
 ##############################
 [develop]
 [develop.logger_path]
+# 開発機/local向けlogger定義
 LOGGER_DEF_FILE = 'src/def/mfaUtilsLoggingHelper/logging_TimedRotate.json'
 LOGGER_MSG_FILE = 'src/def/mfaUtilsLoggingHelper/config_MessageList.toml'
-
-# input/output data path
-[develop.input_file_path]
-UPDATE_EXCEL_PATH = 'share/receive'
-
-[develop.output_file_path]
-SEND_REFERENCE_MASTER_PATH = 'share/receive'
-
 
 ##############################
 # local定義 local
 ##############################
 [local]
 [local.logger_path]
+# 開発機/local向けlogger定義
 LOGGER_DEF_FILE = 'src/def/mfaUtilsLoggingHelper/logging_TimedRotate.json'
 LOGGER_MSG_FILE = 'src/def/mfaUtilsLoggingHelper/config_MessageList.toml'
 
-# input/output data path
-[local.input_file_path]
-UPDATE_EXCEL_PATH = 'src/share/receive'
-
-[local.output_file_path]
-SEND_REFERENCE_MASTER_PATH = 'src/share/receive'
-
 [local.decision_table_path]
-DEF_DECISION_TABLE_PATH = 'src/def/decision_table'
+DECISION_TABLE_PATH = 'src/def/decision_table'
+
+# サーバドライブ依存パス定義
+[local.optional_path]
+#CACHE_PATH ='W:\reference\src\cache'          #  アプリ側からは意識しない
+LONGTERM_ACCUM_PATH ='src/work/longterm_accm'
+SHORTTERM_ACCUM_PATH ='src/work/shortterm_accm'
+TABLE_PATH = 'src/table'
+SHARE_RECEIVE_PATH = 'src/share/receive'
+SHARE_SEND_PATH = 'src/share/send'
+ARCHIVES_REFERNCE_SNAPSHOT_PATH = 'src/archives/reference_snapshots'
+ARCHIVES_REQUEST_SNAPSHOT_PATH = 'src/archives/request_snapshots'
+ARCHIVES_REFERENCE_DIFFS_PATH = 'src/archives/reference_diffs'
+ARCHIVES_CSV_FILES_PATH = 'src/archives/csv_files'
+

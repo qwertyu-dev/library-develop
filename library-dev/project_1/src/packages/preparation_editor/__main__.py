@@ -1,32 +1,17 @@
 from pathlib import Path
 import pandas as pd
 
-# 受付処理
-from src.model.factory.preparation_factory import create_editor_factory, process_row
-
-from src.lib.common_utils.ibr_enums import LogLevel
 from src.lib.common_utils.ibr_dataframe_helper import tabulate_dataframe
-from src.lib.common_utils.ibr_logger_helper import format_config
-
-# config共有
 from src.lib.common_utils.ibr_decorator_config import with_config
-
-#import sys
-#from src.lib.common_utils.ibr_decorator_config import initialize_config
-#config = initialize_config(sys.modules[__name__])
+from src.lib.common_utils.ibr_enums import LogLevel
+from src.model.factory.column_edit_facade_controller import (
+    create_editor_factory,
+    process_row,
+)
 
 @with_config
 class PreparatonExecutor:
-    """アプリケーションのメインクラス。
-
-    Excelファイルの処理を制御し、エラーハンドリングを行う。
-
-    Attributes:
-        env: 環境設定
-        common_config: 共通設定
-        package_config: パッケージ固有の設定
-        log_msg: ログメッセージを出力する関数
-    """
+    """アプリケーションのメインクラス"""
 
     def __init__(self):
         """Mainクラスのイニシャライザ。設定の読み込みと初期化を行う。"""
@@ -43,17 +28,21 @@ class PreparatonExecutor:
             # path生成
             # TODO(suzuki); 受付入力pickleファイルへのPathへ
             sample_data_path = Path(
-                f"{self.common_config.get('input_file_path', []).get('UPDATE_EXCEL_PATH', '')}/"
+                f"{self.common_config.get('optional_path', []).get('SHARE_RECEIVE_PATH', '')}/"
                 f"{self.package_config.get('preparation_sample_data', []).get('PREPARATION_SAMPLE_DATA', '')}",
                 )
             # TODO(suzuki); ディシジョンテーブルpickleファイルへのPathへ
             decision_table_path = Path(
-                f"{self.common_config['decision_table_path']['DEF_DECISION_TABLE_PATH']}/"
-                f"{self.package_config['decision_table_book_name']['DECISION_TABLE_BOOK_NANE']}",
+                f"{self.common_config.get('decision_table_path', []).get('DECISION_TABLE_PATH', '')}/"
+                f"{self.package_config.get('decision_table_book_name', []).get('DECISION_TABLE_BOOK_NANE', '')}",
                 )
+
+            # Facade指定(受付orパターン編集をpackage_configで指定)
+            preparation_import_facade = self.package_config.get('import_editor_facade', []).get('FACADE_IMPORT_PATH','')
 
             self.log_msg(f'sample data path: {sample_data_path}', LogLevel.INFO)
             self.log_msg(f'sample decision table path: {decision_table_path}', LogLevel.INFO)
+            self.log_msg(f'preparation import facade: {preparation_import_facade}', LogLevel.INFO)
 
             # データ取り込み
             # TODO(suzuki): read_pickleに置き換え
@@ -65,7 +54,7 @@ class PreparatonExecutor:
             decision_table = decision_table.astype(object)
 
             # factory生成
-            factory = create_editor_factory(decision_table)
+            factory = create_editor_factory(decision_table, preparation_import_facade)
 
             # 編集定義適用
             processed_data = data_sample.apply(lambda row: process_row(row, factory), axis=1)
