@@ -1,0 +1,67 @@
+= 例外処理ガイドライン：類似例外の効果的な処理
+
+== 例外の種類の保持と明確化
+
+* 類似の例外を一つのexceptブロックで捕捉する際は、元の例外タイプを保持すること
+* 実現方式として `type` を使用すること
+
+.実装例：
+[source,python]
+----
+raise type(e)(新しいエラーメッセージ) from e
+----
+
+== カスタムエラーメッセージの活用
+
+* 捕捉した例外に対し、より具体的で状況を説明するカスタムエラーメッセージを設定すること
+* メッセージには、エラーの発生箇所や原因を明確に示す情報を含めること
+
+.実装例：
+[source,python]
+----
+err_msg = f'Failed to import Facade: {import_facade}::{facade_name}'
+----
+
+== 例外チェーンの活用
+
+* 新しい例外を発生させる際は、必ず元の例外をチェーンすること
+* これにより、デバッグ時に元の例外情報を失わずに保持できる
+
+.実装例：
+[source,python]
+----
+raise ... from e
+----
+
+== 複数例外の効率的な処理
+
+* 同様の処理を行う複数の例外は、一つのexceptブロックで捕捉すること
+* ただし、捕捉する例外が本当に同じ方法で扱えるか十分に確認すること
+
+.実装例：
+[source,python]
+----
+except (ImportError, AttributeError) as e:
+----
+
+== コンテキスト固有の情報の付加
+
+* エラーメッセージには、発生したコンテキストに固有の情報を含めること
+* 変数名、メソッド名、クラス名など、エラーの特定に役立つ情報を使用する
+
+.実装例
+[source,python]
+----
+err_msg = f'Failed to import Facade: {import_facade}::{facade_name}'
+----
+
+== 実装例（全体）
+
+[source,python]
+----
+try:
+    # 処理内容
+except (ImportError, AttributeError) as e:
+    err_msg = f'Failed to import Facade: {import_facade}::{facade_name}'
+    raise type(e)(err_msg) from e
+----

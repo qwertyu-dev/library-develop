@@ -18,7 +18,7 @@ class DataValidator:
         self.config = config or self.config
 
         self.validation_model = validation_model
-        self.log_msg = config.log_message
+        self.log_msg = self.config.log_message
         self.error_manager = ValidationErrorManager(self.log_msg)
 
     def validate(self, df: pd.DataFrame) -> None:

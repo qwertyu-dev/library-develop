@@ -1,0 +1,488 @@
+= Factory + ディシジョンテーブル + Facadeパターンのテストガイダンス
+
+== はじめに
+
+=== 本ガイダンスの目的
+
+本ガイダンスは、Factory + ディシジョンテーブル + Facadeパターンを使用したシステムのテスト方法について、具体的かつ実践的な指針を提供することを目的としています。このアーキテクチャパターンは複雑なビジネスロジックを整理し、保守性の高いコードを実現するために使用されますが、それゆえにテストも複雑になりがちです。
+
+
+本ガイダンスでは、このパターンの各コンポーネントを効果的にテストするための戦略と具体的な方法を解説します。
+
+== テスト戦略の概要
+
+Factory + ディシジョンテーブル + Facadeパターンのテスト戦略は、以下の主要なコンポーネントに焦点を当てます:
+
+[cols="1,2", options="header", width='80%']
+|===
+|コンポーネント|役割
+
+|Factory
+|入力条件に基づいて適切なFacadeを選択する
+
+|Facade
+|複雑な処理を隠蔽し、クライアントに簡単なインターフェースを提供する
+
+|編集部品（コンポーネント）
+|実際の処理を行う個々のモジュール
+|===
+
+これらのコンポーネントをそれぞれ個別にテストし、さらにそれらの統合をテストすることで、システム全体の信頼性を確保します。
+
+== Factoryのテスト
+
+=== Factoryテストの目的
+
+Factoryのテストの主な目的は、与えられた入力条件に基づいて、正しいFacadeが選択されることを確認することです。これには以下が含まれます:
+
+- 通常のケースでの正しいFacade選択
+- 境界値ケースでの正しいFacade選択
+- 異例ケースの適切な処理
+
+=== 入力条件と期待されるFacadeの検証
+
+[source,python]
+----
+import pytest
+from unittest.mock import patch
+from your_module import YourFactory, Facade1, Facade2, Facade3
+
+@pytest.mark.parametrize("input_data, expected_facade", [
+    ({"condition1": True, "condition2": False}, Facade1),
+    ({"condition1": False, "condition2": True}, Facade2),
+    ({"condition1": True, "condition2": True}, Facade3),
+])
+def test_factory_facade_selection(input_data, expected_facade):
+    factory = YourFactory()
+    with patch.object(factory, 'create_facade', wraps=factory.create_facade) as mock_create_facade:
+        facade = factory.create_facade(input_data)
+        assert isinstance(facade, expected_facade)
+        mock_create_facade.assert_called_once_with(input_data)
+----
+
+このテストでは、`pytest.mark.parametrize`を使用して、異なる入力条件とそれに対応する期待されるFacadeのペアを定義しています。テストは各ペアに対して実行され、Factoryが正しいFacadeを選択していることを確認します。
+
+=== 異例ケースの処理の検証
+
+[source,python]
+----
+def test_factory_exception_case():
+    factory = YourFactory()
+    exception_input = {"exception_flag": True}
+    
+    with pytest.raises(ValueError) as exc_info:
+        factory.create_facade(exception_input)
+    
+    assert str(exc_info.value) == "Invalid input condition"
+----
+
+このテストでは、Factoryが異例ケース（ここでは`exception_flag`が`True`の場合）を適切に処理し、期待される例外を発生させることを確認します。
+
+=== ディシジョンテーブルを用いたテストケース設計
+
+ディシジョンテーブルは、複雑な条件の組み合わせをテストする際に非常に有効です。以下は、ディシジョンテーブルの例です:
+
+[source,python]
+----
+decision_table = [
+    # condition1, condition2, condition3, expected_facade
+    (True,       True,       True,       Facade1),
+    (True,       True,       False,      Facade2),
+    (True,       False,      True,       Facade3),
+    (True,       False,      False,      Facade1),
+    (False,      True,       True,       Facade2),
+    (False,      True,       False,      Facade3),
+    (False,      False,      True,       Facade1),
+    (False,      False,      False,      Facade2),
+]
+
+@pytest.mark.parametrize("condition1, condition2, condition3, expected_facade", decision_table)
+def test_factory_with_decision_table(condition1, condition2, condition3, expected_facade):
+    factory = YourFactory()
+    input_data = {"condition1": condition1, "condition2": condition2, "condition3": condition3}
+    facade = factory.create_facade(input_data)
+    assert isinstance(facade, expected_facade)
+----
+
+このアプローチにより、すべての可能な条件の組み合わせを網羅的にテストすることができます。
+
+== Facadeのテスト
+
+=== Facadeテストの目的
+
+Facadeのテストの主な目的は、Facadeが正しく内部のコンポーネントを呼び出し、それらの結果を適切に処理することを確認することです。これには以下が含まれます:
+
+- 正しい順序での内部コンポーネントの呼び出し
+- 適切なパラメータの受け渡し
+- 戻り値の正しい処理
+- 例外の適切な処理
+
+=== 編集部品の呼び出し順序の検証
+
+[source,python]
+----
+from unittest.mock import Mock, call
+
+def test_facade_component_calls():
+    mock_component1 = Mock()
+    mock_component2 = Mock()
+    mock_component3 = Mock()
+    
+    facade = YourFacade(component1=mock_component1, component2=mock_component2, component3=mock_component3)
+    
+    facade.process_data({"input": "data"})
+    
+    expected_calls = [
+        call.component1.process({"input": "data"}),
+        call.component2.process(mock_component1.process.return_value),
+        call.component3.process(mock_component2.process.return_value)
+    ]
+    
+    assert mock_component1.mock_calls + mock_component2.mock_calls + mock_component3.mock_calls == expected_calls
+----
+
+このテストでは、Facadeが内部コンポーネントを正しい順序で呼び出していることを確認します。
+
+=== パラメータの受け渡しの検証
+
+[source,python]
+----
+def test_facade_parameter_passing():
+    mock_component1 = Mock()
+    mock_component2 = Mock()
+    
+    facade = YourFacade(component1=mock_component1, component2=mock_component2)
+    
+    input_data = {"key": "value"}
+    facade.process_data(input_data)
+    
+    mock_component1.process.assert_called_once_with(input_data)
+    mock_component2.process.assert_called_once_with(mock_component1.process.return_value)
+----
+
+このテストでは、Facadeが各コンポーネントに正しいパラメータを渡していることを確認します。
+
+=== 戻り値の処理の検証
+
+[source,python]
+----
+def test_facade_return_value_processing():
+    mock_component = Mock()
+    mock_component.process.return_value = {"processed": "data"}
+    
+    facade = YourFacade(component=mock_component)
+    
+    result = facade.process_data({"input": "data"})
+    
+    assert result == {"processed": "data"}
+    mock_component.process.assert_called_once_with({"input": "data"})
+----
+
+このテストでは、Facadeが内部コンポーネントからの戻り値を正しく処理していることを確認します。
+
+=== 例外処理の検証
+
+[source,python]
+----
+def test_facade_exception_handling():
+    mock_component = Mock()
+    mock_component.process.side_effect = ValueError("Component error")
+    
+    facade = YourFacade(component=mock_component)
+    
+    with pytest.raises(FacadeError) as exc_info:
+        facade.process_data({"input": "data"})
+    
+    assert str(exc_info.value) == "Error processing data: Component error"
+    mock_component.process.assert_called_once_with({"input": "data"})
+----
+
+このテストでは、Facadeが内部コンポーネントで発生した例外を適切に処理し、期待される例外をラップして再発生させることを確認します。
+
+== 編集部品（コンポーネント）のテスト
+
+=== 編集部品テストの目的
+
+編集部品（コンポーネント）のテストの主な目的は、各コンポーネントが独立して正しく機能することを確認することです。これには以下が含まれます:
+
+- 入力値に対する正しい出力値の生成
+- エッジケースや異常値の適切な処理
+- 副作用（例:データベース更新、ファイル操作）の正確な実行
+
+=== 単体テストの実施方法
+
+[source,python]
+----
+def test_edit_component():
+    component = EditComponent()
+    
+    input_data = {"key": "value"}
+    expected_output = {"processed_key": "processed_value"}
+    
+    result = component.process(input_data)
+    
+    assert result == expected_output
+----
+
+このテストでは、コンポーネントが期待通りの出力を生成することを確認します。
+
+=== 入力値と出力値の検証
+
+[source,python]
+----
+@pytest.mark.parametrize("input_data, expected_output", [
+    ({"key": "value1"}, {"processed_key": "processed_value1"}),
+    ({"key": "value2"}, {"processed_key": "processed_value2"}),
+    ({}, {"processed_key": "default"}),
+])
+def test_edit_component_input_output(input_data, expected_output):
+    component = EditComponent()
+    result = component.process(input_data)
+    assert result == expected_output
+----
+
+このテストでは、異なる入力値に対して期待される出力値が生成されることを確認します。
+
+=== 副作用の検証
+
+[source,python]
+----
+def test_edit_component_side_effect(tmp_path):
+    component = EditComponent()
+    
+    input_data = {"key": "value"}
+    log_file = tmp_path / "log.txt"
+    
+    component.process(input_data, log_file=log_file)
+    
+    assert log_file.read_text() == "Processed: {'key': 'value'}\n"
+----
+
+このテストでは、コンポーネントが期待される副作用（この場合はログファイルへの書き込み）を正しく実行することを確認します。
+
+== モックとスタブの活用
+
+=== モックとスタブの違い
+
+モックとスタブは両方とも、テスト対象のコードを他のコンポーネントから分離するために使用されるテストダブルですが、以下のように異なります:
+
+- スタブ:テスト対象のコードに特定の値を返すだけの簡単な置き換え
+- モック:スタブの機能に加えて、呼び出されたかどうか、どのように呼び出されたかを検証する機能を持つ
+
+=== Pythonにおけるモックの使用方法
+
+Pythonの`unittest.mock`モジュールを使用して、モックオブジェクトを作成し、使用することができます。
+
+[source,python]
+----
+from unittest.mock import Mock, patch
+
+def test_mock_usage():
+    # モックオブジェクトの作成
+    mock_object = Mock()
+    
+    # モックオブジェクトの使用
+    mock_object.some_method(1, 2, 3)
+    
+    # モックオブジェクトの呼び出しの検証
+    mock_object.some_method.assert_called_once_with(1, 2, 3)
+    
+    # 戻り値の設定
+    mock_object.return_value = "mocked result"
+    assert mock_object() == "mocked result"
+    
+    # 例外の発生
+    mock_object.side_effect = ValueError("mocked error")
+    with pytest.raises(ValueError):
+        mock_object()
+
+# パッチの使用例
+@patch('your_module.SomeClass')
+def test_patch_usage(mock_class):
+    mock_instance = mock_class.return_value
+    mock_instance.some_method.return_value = "patched result"
+    
+    # テスト対象のコードを実行
+    result = your_function_that_uses_some_class()
+    
+    assert result == "patched result"
+    mock_instance.some_method.assert_called_once()
+----
+
+=== 戻り値と副作用のモック化
+
+モックオブジェクトを使用して、特定の戻り値を設定したり、副作用（例外の発生など）をシミュレートしたりすることができます。
+
+[source,python]
+----
+def test_mock_return_and_side_effect():
+    mock_component = Mock()
+    
+    # 戻り値の設定
+    mock_component.process.return_value = {"processed": "data"}
+    assert mock_component.process({"input": "data"}) == {"processed": "data"}
+    
+    # 副作用（例外）の設定
+    mock_component.process.side_effect = ValueError("Processing error")
+    with pytest.raises(ValueError):
+        mock_component.process({"input": "data"})
+    
+    # 複数の戻り値の設定
+    mock_component.process.side_effect = [
+        {"result": "first"},
+        {"result": "second"},
+        ValueError("Third call raises an error")
+    ]
+    assert mock_component.process() == {"result": "first"}
+    assert mock_component.process() == {"result": "second"}
+    with pytest.raises(ValueError):
+        mock_component.process()
+----
+
+== まとめ
+
+=== 効果的なテスト戦略の要点
+
+Factory + ディシジョンテーブル + Facadeパターンを使用したシステムの効果的なテスト戦略の要点は以下の通りです:
+
+[cols="1,3", options="header"]
+|===
+|テスト対象|テストポイント
+
+|Factory
+a|
+* 入力条件に基づいて正しいFacadeが選択されることを確認する
+* 異例ケースが適切に処理されることを検証する
+* ディシジョンテーブルを使用して、すべての条件の組み合わせをテストする
+
+|Facade
+a|
+* 内部コンポーネントが正しい順序で呼び出されることを確認する
+* パラメータが正しく受け渡されることを検証する
+* 戻り値が適切に処理されることを確認する
+* 例外が適切に処理されることを検証する
+
+|編集部品（コンポーネント）
+a|
+* 各コンポーネントが独立して正しく機能することを確認する
+* 入力値に対する正しい出力値の生成を検証する
+* 副作用が正確に実行されることを確認する
+
+|モックとスタブの活用
+a|
+* 依存関係を分離し、テスト対象のコードを独立してテストする
+* 特定の戻り値や副作用をシミュレートする
+* 呼び出しの検証を行う
+|===
+
+=== 継続的な改善の重要性
+
+テスト戦略は、システムの進化と共に継続的に改善される必要があります:
+
+1. 新機能や変更に合わせてテストケースを更新する
+2. テストカバレッジを定期的に確認し、不足している部分を補完する
+3. テストの実行速度や可読性を改善する
+4. 新しいテスト技術やツールの導入を検討する
+5. テストチームや開発チームからのフィードバックを積極的に取り入れる
+
+継続的な改善により、テストの品質と効率が向上し、結果としてシステム全体の信頼性が高まります。
+
+== 付録
+
+=== サンプルコード
+
+以下は、Factory + ディシジョンテーブル + Facadeパターンを使用したシステムの簡単な実装例とそのテストコードです:
+
+[source,python]
+----
+# システム実装
+
+class ComponentA:
+    def process(self, data):
+        return {"A_processed": data["input"] + "_A"}
+
+class ComponentB:
+    def process(self, data):
+        return {"B_processed": data["input"] + "_B"}
+
+class Facade1:
+    def __init__(self, component_a, component_b):
+        self.component_a = component_a
+        self.component_b = component_b
+    
+    def process(self, data):
+        result_a = self.component_a.process(data)
+        result_b = self.component_b.process(data)
+        return {**result_a, **result_b}
+
+class Facade2:
+    def __init__(self, component_a):
+        self.component_a = component_a
+    
+    def process(self, data):
+        return self.component_a.process(data)
+
+class Factory:
+    def create_facade(self, condition):
+        if condition["use_both"]:
+            return Facade1(ComponentA(), ComponentB())
+        else:
+            return Facade2(ComponentA())
+
+# テストコード
+
+import pytest
+from unittest.mock import Mock, patch
+
+def test_factory():
+    factory = Factory()
+    
+    facade1 = factory.create_facade({"use_both": True})
+    assert isinstance(facade1, Facade1)
+    
+    facade2 = factory.create_facade({"use_both": False})
+    assert isinstance(facade2, Facade2)
+
+def test_facade1():
+    mock_component_a = Mock()
+    mock_component_b = Mock()
+    mock_component_a.process.return_value = {"A_processed": "data_A"}
+    mock_component_b.process.return_value = {"B_processed": "data_B"}
+    
+    facade = Facade1(mock_component_a, mock_component_b)
+    result = facade.process({"input": "test"})
+    
+    assert result == {"A_processed": "data_A", "B_processed": "data_B"}
+    mock_component_a.process.assert_called_once_with({"input": "test"})
+    mock_component_b.process.assert_called_once_with({"input": "test"})
+
+def test_facade2():
+    mock_component_a = Mock()
+    mock_component_a.process.return_value = {"A_processed": "data_A"}
+    
+    facade = Facade2(mock_component_a)
+    result = facade.process({"input": "test"})
+    
+    assert result == {"A_processed": "data_A"}
+    mock_component_a.process.assert_called_once_with({"input": "test"})
+
+def test_component_a():
+    component = ComponentA()
+    result = component.process({"input": "test"})
+    assert result == {"A_processed": "test_A"}
+
+def test_component_b():
+    component = ComponentB()
+    result = component.process({"input": "test"})
+    assert result == {"B_processed": "test_B"}
+
+# 統合テスト
+def test_integration():
+    factory = Factory()
+    facade = factory.create_facade({"use_both": True})
+    result = facade.process({"input": "test"})
+    assert result == {"A_processed": "test_A", "B_processed": "test_B"}
+----
+
+このサンプルコードは、Factory + ディシジョンテーブル + Facadeパターンの基本的な実装と、それに対応するテストケースを示しています。実際のプロジェクトでは、より複雑な条件や処理が含まれる可能性がありますが、このサンプルコードを基に拡張することができます。
+

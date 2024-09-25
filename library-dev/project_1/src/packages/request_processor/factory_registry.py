@@ -23,7 +23,8 @@ from src.lib.common_utils.ibr_decorator_config import with_config
 class FactoryRegistry:
     def __init__(self, config: dict|None = None):
         # DI
-        self.log_msg = config or self.config.log_message
+        self.config = config or self.config
+        self.log_msg = self.config.log_message
 
         # factory生成
         self.model_factories: dict[str, type[ModelFactory]] = self._load_factories('model_factory')

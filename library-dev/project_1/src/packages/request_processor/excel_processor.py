@@ -32,7 +32,7 @@ class ExcelProcessor:
         """
         # DI config
         self.config = config or self.config
-        self.log_msg = config.log_message
+        self.log_msg = self.config.log_message
 
         # Excel path/sheet fatory
         self.excel_file_pattern = file_configration_factory.create_file_pattern()

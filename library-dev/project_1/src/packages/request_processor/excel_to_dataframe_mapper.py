@@ -59,7 +59,7 @@ class ExcelMapping:
     | v0.1 | 初期定義作成 | 新規作成 | 2024/07/20 |      |
 
     """
-    def __init__(self) -> None:
+    def __init__(self, config: dict|None = None) -> None:
         """統合レイアウトをインスタンス共有します
 
         Arguments:
@@ -71,6 +71,8 @@ class ExcelMapping:
         Exceptions:
         なし
         """
+        # DI
+        self.config = config or self.config
         self.log_msg = self.config.log_message
         self.unified_layout = self.config.package_config['unified_layout']
 
@@ -145,7 +147,8 @@ class JinjiExcelMapping(ExcelMapping):
     """
     def __init__(self, config: dict | None=None):
         # DI
-        self.log_msg = config or self.config.log_message
+        self.config = config or self.config
+        self.log_msg = self.config.log_message
 
     def column_map(self, df: pd.DataFrame) -> pd.DataFrame:
         """人事部門のExcelファイルを読み込み、列名をマッピングします
@@ -263,7 +266,8 @@ class KokukiExcelMapping(ExcelMapping):
     """
     def __init__(self, config: dict|None = None):
         # DI
-        self.log_msg = config or self.config.log_message
+        self.config = config or self.config
+        self.log_msg = self.config.log_message
 
     def column_map(self, df: pd.DataFrame) -> pd.DataFrame:
         """国際事務企画部門のExcelファイルを読み込み、列名をマッピングします
@@ -374,7 +378,8 @@ class KanrenExcelMappingWithDummy(ExcelMapping):
 
     """
     def __init__(self, config: dict|None = None):
-        self.log_msg = config or self.config.log_message
+        self.config = config or self.config
+        self.log_msg = self.config.log_message
 
     def column_map(self, df: pd.DataFrame) -> pd.DataFrame:
         """関連会社のExcelファイルを読み込み、列名をマッピングします
@@ -489,7 +494,8 @@ class KanrenExcelMappingWithoutDummy(ExcelMapping):
 
     """
     def __init__(self, config: dict|None=None):
-        self.log_msg = config or self.config.log_message
+        self.config = config or self.config
+        self.log_msg = self.config.log_message
 
     def column_map(self, df: pd.DataFrame) -> pd.DataFrame:
         """関連会社のExcelファイルを読み込み、列名をマッピングします
