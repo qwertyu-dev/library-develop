@@ -230,7 +230,8 @@ class TestEditorFactoryCreateEditor:
             'DecisionResult': ['DataFrameEditorDefault', 'DataFrameEditor1'],
         })
         # 実在するFacadeを指定している
-        import_facade = "src.model.facade.preparation_editor_facade"
+        # ただし本来はfavcadeの位置に置くべきだがテストローカルルールでFactory下においている
+        import_facade = "tests.model.factory.dummy_editor_facade"
         return EditorFactory(decision_table, import_facade)
 
     @pytest.fixture()
@@ -393,7 +394,7 @@ class TestEditorFactoryLoadFacade:
         """
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
-        facade_class = editor_factory._load_facade("src.model.facade.preparation_editor_facade", "DataFrameEditor")
+        facade_class = editor_factory._load_facade("tests.model.factory.dummy_editor_facade", "DataFrameEditor")
         assert issubclass(facade_class, DataFrameEditor)
         log_msg(f"Loaded facade class: {facade_class}", LogLevel.DEBUG)
 
@@ -418,7 +419,7 @@ class TestEditorFactoryLoadFacade:
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
         # DT1: 正常系
-        facade_class = editor_factory._load_facade("src.model.facade.preparation_editor_facade", "DataFrameEditorDefault")
+        facade_class = editor_factory._load_facade("tests.model.factory.dummy_editor_facade", "DataFrameEditorDefault")
         assert issubclass(facade_class, DataFrameEditor)
         log_msg("DT1: Successfully loaded DataFrameEditorDefault", LogLevel.DEBUG)
 
@@ -430,7 +431,7 @@ class TestEditorFactoryLoadFacade:
 
         # DT3: 属性（クラス）が存在しない
         with pytest.raises(AttributeError) as exc_info:
-            editor_factory._load_facade("src.model.facade.preparation_editor_facade", "NonExistentClass")
+            editor_factory._load_facade("tests.model.factory.dummy_editor_facade", "NonExistentClass")
         assert "Failed to import Facade" in str(exc_info.value)
         log_msg("DT3: ImportError raised for non-existent class", LogLevel.DEBUG)
 
@@ -443,7 +444,7 @@ class TestEditorFactoryLoadFacade:
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
         # 正常系: 別のDataFrameEditorサブクラス
-        facade_class = editor_factory._load_facade("src.model.facade.preparation_editor_facade", "DataFrameEditor2")
+        facade_class = editor_factory._load_facade("tests.model.factory.dummy_editor_facade", "DataFrameEditor2")
         assert issubclass(facade_class, DataFrameEditor)
         log_msg("Successfully loaded AnotherDataFrameEditor", LogLevel.DEBUG)
 
@@ -454,7 +455,7 @@ class TestEditorFactoryLoadFacade:
 
         # 異常系: 存在しない属性
         with pytest.raises(AttributeError):
-            editor_factory._load_facade("src.model.facade.preparation_editor_facade", "NonExistentClass")
+            editor_factory._load_facade("tests.model.factory.dummy_editor_facade", "NonExistentClass")
         log_msg("ImportError raised for non-existent class", LogLevel.DEBUG)
 
     def test_load_facade_BVT_edge_cases(self, editor_factory):
@@ -474,7 +475,7 @@ class TestEditorFactoryLoadFacade:
         # BVT_002: 長いfacade_name
         long_facade_name = "A" * 255
         with pytest.raises(AttributeError):
-            editor_factory._load_facade("src.model.facade.preparation_editor_facade", long_facade_name)
+            editor_factory._load_facade("tests.model.factory.dummy_editor_facade", long_facade_name)
         log_msg("BVT_002: ImportError raised for long facade_name", LogLevel.DEBUG)
 
         # BVT_003, BVT_004: 特殊文字を含む文字列
@@ -484,5 +485,5 @@ class TestEditorFactoryLoadFacade:
         log_msg("BVT_003: ImportError raised for import_facade with special characters", LogLevel.DEBUG)
 
         with pytest.raises(AttributeError):
-            editor_factory._load_facade("src.model.facade.preparation_editor_facade", f"Invalid{special_chars}Class")
+            editor_factory._load_facade("tests.model.factory.dummy_editor_facade", f"Invalid{special_chars}Class")
         log_msg("BVT_004: ImportError raised for facade_name with special characters", LogLevel.DEBUG)

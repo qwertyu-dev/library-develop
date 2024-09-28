@@ -7,14 +7,13 @@ from src.model.dataclass.request_processor_kanren_model import KanrenModel
 
 # config共有
 from src.lib.common_utils.ibr_decorator_config import with_config
-#import sys
-#from src.lib.common_utils.ibr_decorator_config import initialize_config
-#config = initialize_config(sys.modules[__name__])
+import sys
+from src.lib.common_utils.ibr_decorator_config import initialize_config
+config = initialize_config(sys.modules[__name__])
 
-@with_config
 class ModelFactory:
     def create_model(self) -> Type[BaseModel]:
-        pass
+        raise NotImplementedError
 
 class JinjiModelFactory(ModelFactory):
     def create_model(self) -> Type[BaseModel]:

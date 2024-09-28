@@ -75,8 +75,9 @@ class RequestProcessExecutor:
         processor_chain.post_processors = post_processor.chain_post_process()
 
         # file_configuration選択 -> Excel処理インスタンス生成
-        file_configuration_factory = self.file_configuration_factory[department](self.config)
-        excel_processor = ExcelProcessor(self.config, file_configuration_factory)
+        #file_configuration_factory = self.file_configuration_factory[department](self.config)
+        file_configuration_factory = self.file_configuration_factory[department]()
+        excel_processor = ExcelProcessor(file_configuration_factory)
 
         self.log_msg(f'Factory Model: {model_factory}', LogLevel.INFO)
         self.log_msg(f'Factory FileConfig: {file_configuration_factory}', LogLevel.INFO)
@@ -90,7 +91,8 @@ class RequestProcessExecutor:
         self.log_msg(f'Instance ExcelProcessoer: {excel_processor}', LogLevel.INFO)
 
         # Excelファイル読み込み
-        _df, cols = excel_processor.load()
+        #_df, cols = excel_processor.load()
+        _df = excel_processor.load()
 
         # 対象外データ
         if _df.empty:

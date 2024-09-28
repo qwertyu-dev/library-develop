@@ -18,10 +18,10 @@ from .excel_to_dataframe_mapper import (
 
 # chain詰め込み定義 Pre
 ## 名称ではなくObjectそのものを格納
-class JinjiPreProcessor():
+class JinjiPreProcessor(PreProcessor):
     def chain_pre_process(self) -> list[PreProcessor]:
         return [
-            MapperProcessExcelColtoPythonColJinji(),
+            #MapperProcessExcelColtoPythonColJinji(),
             #DummyPreProcess1(),
             #DummyPreProcess2(),
         ]
@@ -34,7 +34,7 @@ class JinjiPreProcessor():
 
 """
 ## 名称ではなくObjectそのものを格納
-class JinjiPostProcessor():
+class JinjiPostProcessor(PostProcessor):
     def chain_post_process(self) -> list[PostProcessor]:
         return [
             #DummyPostProcess1(),

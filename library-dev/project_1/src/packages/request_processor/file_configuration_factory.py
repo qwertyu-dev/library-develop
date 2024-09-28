@@ -15,50 +15,69 @@ class FileConfigurationFactory():
 
 @with_config
 class JinjiFileConfigurationFactory(FileConfigurationFactory):
-    def __init__(self, config: dict):
+    def __init__(self, config: dict|None = None):
         # DI config
         self.config = config or self.config
 
     def create_file_pattern(self) -> Path:
-        return Path(
-            f"{self.config.common_config.get('optional_path', []).get('SHARE_RECEIVE_PATH','')}",
-            ).glob(
-                f"{self.config.package_config.get('excel_definition', []).get('UPDATE_RECORD_JINJI', '')}",
-            )
+        base_path = Path(self.config.common_config.get('optional_path', {}).get('SHARE_RECEIVE_PATH', ''))
+        pattern = self.config.package_config.get('excel_definition', {}).get('UPDATE_RECORD_JINJI', '')
+        return list(base_path.glob(pattern))
+
+        # listを返すように変更
+        #return list(
+        #    Path(
+        #        f"{self.config.common_config.get('optional_path', {}).get('SHARE_RECEIVE_PATH','')}",
+        #    ).glob(
+        #        f"{self.config.package_config.get('excel_definition', {}).get('UPDATE_RECORD_JINJI', '')}",
+        #    )
+        #)
 
     def create_sheet_name(self) -> str:
-        return self.config.package_config.get('excel_definition', []).get('UPDATE_RECORD_JINJI_SHEET_NAME', '')
+        return self.config.package_config.get('excel_definition', {}).get('UPDATE_RECORD_JINJI_SHEET_NAME', '')
 
 
 @with_config
 class KokukiFileConfigurationFactory(FileConfigurationFactory):
-    def __init__(self, config: dict):
+    def __init__(self, config: dict|None = None):
         # DI config
         self.config = config or self.config
 
     #def create_file_path(self) -> Path:
     def create_file_pattern(self) -> Path:
-        return Path(
-            f"{self.config.common_config.get('optional_path', []).get('SHARE_RECEIVE_PATH','')}",
-            ).glob(
-                f"{self.config.package_config.get('excel_definition', []).get('UPDATE_RECORD_KOKUKI', '')}",
-            )
+        base_path = Path(self.config.common_config.get('optional_path', {}).get('SHARE_RECEIVE_PATH', ''))
+        pattern = self.config.package_config.get('excel_definition', {}).get('UPDATE_RECORD_KOKUKI', '')
+        return list(base_path.glob(pattern))
+
+        ## listを返すように変更
+        #return list(Path(
+        #        f"{self.config.common_config.get('optional_path', {}).get('SHARE_RECEIVE_PATH','')}",
+        #    ).glob(
+        #        f"{self.config.package_config.get('excel_definition', {}).get('UPDATE_RECORD_KOKUKI', '')}",
+        #    )
+        #)
 
     def create_sheet_name(self) -> str:
-        return self.config.package_config.get('excel_definition', []).get('UPDATE_RECORD_KOKUKI_SHEET_NAME', '')
+        return self.config.package_config.get('excel_definition', {}).get('UPDATE_RECORD_KOKUKI_SHEET_NAME', '')
 
 @with_config
 class KanrenFileConfigurationFactory(FileConfigurationFactory):
-    def __init__(self, config: dict):
+    def __init__(self, config: dict|None = None):
         # DI config
         self.config = config or self.config
 
     def create_file_pattern(self) -> Path:
-        return Path(
-            f"{self.config.common_config.get('optional_path', []).get('SHARE_RECEIVE_PATH','')}",
-            ).glob(
-                f"{self.config.package_config.get('excel_definition', []).get('UPDATE_RECORD_KANREN', '')}",
-            )
+        base_path = Path(self.config.common_config.get('optional_path', {}).get('SHARE_RECEIVE_PATH', ''))
+        pattern = self.config.package_config.get('excel_definition', {}).get('UPDATE_RECORD_KANREN', '')
+        return list(base_path.glob(pattern))
+
+        #return list(
+        #    Path(
+        #        f"{self.config.common_config.get('optional_path', {}).get('SHARE_RECEIVE_PATH','')}",
+        #    ).glob(
+        #        f"{self.config.package_config.get('excel_definition', {}).get('UPDATE_RECORD_KANREN', '')}",
+        #    )
+        #)
 
     def create_sheet_name(self) -> str:
-        return self.config.package_config.get('excel_definition', []).get('UPDATE_RECORD_KANREN_SHEET_NAME', '')
+        return self.config.package_config.get('excel_definition', {}).get('UPDATE_RECORD_KANREN_SHEET_NAME', '')

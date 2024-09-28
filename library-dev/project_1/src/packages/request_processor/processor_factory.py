@@ -24,13 +24,12 @@ from src.lib.common_utils.ibr_decorator_config import with_config
 #from src.lib.common_utils.ibr_decorator_config import initialize_config
 #config = initialize_config(sys.modules[__name__])
 
-@with_config
 class ProcessorFactory():
     def create_pre_processor(self) -> PreProcessor:
-        pass
+        raise NotImplementedError
 
     def create_post_processor(self) -> PostProcessor:
-        pass
+        raise NotImplementedError
 
 
 class JinjiProcessorFactory(ProcessorFactory):

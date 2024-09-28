@@ -1,87 +1,73 @@
+from pathlib import Path
+from glob import glob
+
 import pandas as pd
 
-from src.lib.common_utils.ibr_enums import LogLevel
 from src.lib.common_utils.ibr_dataframe_helper import tabulate_dataframe
+from src.lib.common_utils.ibr_decorator_config import with_config
+from src.lib.common_utils.ibr_enums import LogLevel
 from src.lib.common_utils.ibr_excel_reader import ExcelDataLoader
 
 from .file_configuration_factory import FileConfigurationFactory
 
-# config共有
-#import sys
-from src.lib.common_utils.ibr_decorator_config import with_config
-#from src.lib.common_utils.ibr_decorator_config import initialize_config
-#config = initialize_config(sys.modules[__name__])
 
 class ExcelProcessorError(Exception):
     pass
-def  excel_sheet_columns_unmatch_error():
-    """TRY30 ValueError発生させる"""
-    raise ValueError
+
+class ExcelSheetColumnsUnmatchError(ValueError):
+    pass
 
 @with_config
 class ExcelProcessor:
     """Excelファイルの処理とバリデーションを行うクラス"""
 
-    def __init__(self, config: dict, file_configration_factory: FileConfigurationFactory):
-        """ExcelProcessorのコンストラクタ。
-
-        Args:
-            file_path (Path): 処理対象のExcelファイルのパス
-            sheet_name (str): 処理対象のシート名
-            log_msg (Callable): ログメッセージを出力する関数
-        """
-        # DI config
+    def __init__(self, file_configuration_factory: FileConfigurationFactory, config: dict|None = None):
         self.config = config or self.config
         self.log_msg = self.config.log_message
-
-        # Excel path/sheet fatory
-        self.excel_file_pattern = file_configration_factory.create_file_pattern()
+        self.excel_file_pattern = file_configuration_factory.create_file_pattern()
+        if not self.excel_file_pattern:
+            err_msg = "Invalid file pattern: None"
+            raise ExcelProcessorError(err_msg) from None
+        self.excel_sheet_name = file_configuration_factory.create_sheet_name()
         self.log_msg(f"excel file pattern: {self.excel_file_pattern}", LogLevel.DEBUG)
-
-        # Sheet名が固定とは決まっていない可能性がある
-        self.excel_sheet_name = file_configration_factory.create_sheet_name()
-
 
     def load(self) -> tuple[pd.DataFrame, list[str]]:
         dataframes = []
         common_columns = None
 
-        # 対象全探索
         for file_path in self.excel_file_pattern:
             self.log_msg(f'excel file path: {file_path}', LogLevel.INFO)
             try:
-                excel_loader = ExcelDataLoader(file_path)
-                _df = excel_loader.read_excel_one_sheet(sheet_name=self.excel_sheet_name)
-
-                # 最初のDataFrameのカラムを共通Columnとし次以降のDataFrameのColumnと一致しない場合はエラーとする
-                if common_columns is None:
-                    common_columns = list(_df.columns)
-
-                if set(_df.columns) != set(common_columns):
-                    # errorはログ出力するが処理は継続
-                    err_msg = f'カラム構造が一致しないExcelBookがあります: {file_path}::{self.excel_sheet_name}'
-                    excel_sheet_columns_unmatch_error(err_msg) # TRY301 ValueError発生
-
-                # 共通columnsのみを選択しcolumn順序整備
-                _df = _df[common_columns]
-                # 積み上げ
-                dataframes.append(_df)
+                _df = self._load_single_file(file_path)
+                df, common_columns = self._validate_and_align_columns(_df, file_path, common_columns)
+                dataframes.append(df)
             except Exception as e:
                 raise ExcelProcessorError from e
 
+        return self._combine_dataframes(dataframes)
+
+    def _load_single_file(self, file_path: Path) -> pd.DataFrame:
+        excel_loader = ExcelDataLoader(file_path)
+        return excel_loader.read_excel_one_sheet(sheet_name=self.excel_sheet_name)
+
+    def _validate_and_align_columns(self, df: pd.DataFrame, file_path: Path, common_columns: list[str] | None) -> tuple[pd.DataFrame, list[str]]:
+        common_columns = common_columns or list(df.columns)
+        self.log_msg(f'common_columns: {common_columns}', LogLevel.INFO)
+        self.log_msg(f'df.columns; {df.columns}', LogLevel.INFO)
+        if set(df.columns) != set(common_columns):
+            err_msg = f'カラム構造が一致しないExcelBookがあります: {file_path}::{self.excel_sheet_name}'
+            self.log_msg(err_msg, LogLevel.ERROR)
+            raise ExcelSheetColumnsUnmatchError(err_msg)
+        return df[common_columns], common_columns
+
+    def _combine_dataframes(self, dataframes: list[pd.DataFrame]) -> pd.DataFrame:
         if not dataframes:
-            return pd.DataFrame(), []
-
+            return pd.DataFrame()
         combined_df = pd.concat(dataframes, ignore_index=True)
-
-        return combined_df, []
+        self._log_dataframe_info(combined_df)
+        return combined_df
 
     def _log_dataframe_info(self, df: pd.DataFrame) -> None:
-        """DataFrameの情報をログに出力する。
-
-        Args:
-            df (pd.DataFrame): ログ出力対象のDataFrame
-        """
         info_type = tabulate_dataframe(df.dtypes.reset_index(), headers=['Columns', 'Type'])
         info_df = tabulate_dataframe(df)
         self.log_msg(f"DataFrame info_type:\n{info_type}", LogLevel.DEBUG)

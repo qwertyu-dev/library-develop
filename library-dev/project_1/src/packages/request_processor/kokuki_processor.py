@@ -17,17 +17,17 @@ from .excel_to_dataframe_mapper import (
 
 # chain詰め込み定義 Pre
 ## 名称ではなくObjectそのものを格納
-class KokukiPreProcessor():
+class KokukiPreProcessor(PreProcessor):
     def chain_pre_process(self) -> list[PreProcessor]:
         return [
-            MapperProcessExcelColtoPythonColKokuki(),
+            #MapperProcessExcelColtoPythonColKokuki(),
             #DummyPreProcess1(),
             #DummyPreProcess2(),
         ]
 
 # chain詰め込み定義 Post
 ## 名称ではなくObjectそのものを格納
-class KokukiPostProcessor():
+class KokukiPostProcessor(PostProcessor):
     def chain_post_process(self) -> list[PostProcessor]:
         return [
             #DummyPostProcess1(),

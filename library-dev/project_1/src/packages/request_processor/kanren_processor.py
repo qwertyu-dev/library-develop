@@ -18,17 +18,17 @@ from .excel_to_dataframe_mapper import (
 
 # chain詰め込み定義 Pre
 ## 名称ではなくObjectそのものを格納
-class KanrenPreProcessor():
+class KanrenPreProcessor(PreProcessor):
     def chain_pre_process(self) -> list[PreProcessor]:
         return [
-            MapperProcessExcelColtoPythonColKanren(),
+            #MapperProcessExcelColtoPythonColKanren(),
             #DummyPreProcess1(),
             #DummyPreProcess2(),
         ]
 
 # chain詰め込み定義 Post
 ## 名称ではなくObjectそのものを格納
-class KanrenPostProcessor():
+class KanrenPostProcessor(PostProcessor):
     def chain_post_process(self) -> list[PostProcessor]:
         return [
             #DummyPostProcess1(),
