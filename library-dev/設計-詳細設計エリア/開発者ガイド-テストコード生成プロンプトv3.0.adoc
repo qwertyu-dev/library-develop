@@ -36,7 +36,7 @@ StepByStepで進めます、一度に進めず各stepで立ち止まってくだ
     <step8>リスクベースのテスト、リスクの高い部分に対するテストケースを重点的に考察する</step8>
     <step9>テストデータの準備を考察し、必要なデータを準備する計画を立てる</step9>
     <step10>テスト対象コードに対するテスト全体鳥瞰としてmindmap作成しアウトラインtree構造で出力する、日本語、必ずメソッド単位にC0,C1,C2,DT,BVTの区分を付与する</step10>
-    <step11>テスト対象コードに対するテスト全体鳥瞰としてmindmap妥当性評価、アウトラインtree構造で出力する、日本語、必ずメソッド単位にC0,C1,C2,BVTの区分を付与する、アウトラインの縦棒に相当する位置は揃えてください</step11>
+    <step11>テスト対象コードに対するテスト全体鳥瞰としてmindmap妥当性評価、アウトラインtree構造で出力する、日本語、必ずメソッド単位にC0,C1,C2,DT,BVTの区分を付与する、アウトラインの縦棒に相当する位置は揃えてください</step11>
 </step>
 
 全てのメソッドに対して以下繰り返します +
@@ -188,6 +188,8 @@ StepByStepで進めます、一度に進めず各stepで立ち止まってくだ
 import pytest
 from pathlib import Path
 
+from unittest.mock import MagicMock, patch, Mock
+
 ####################################
 # テスト対象モジュールimport
 ####################################
@@ -196,6 +198,12 @@ from src.lib.convertor_utils.ibr_excel_field_analyzer import RemarksParser
 ####################################
 # テストサポートモジュールimport
 ####################################
+from src.lib.common_utils.ibr_dataframe_helper import tabulate_dataframe 
+from src.lib.common_utils.ibr_logger_helper import (
+    format_dict,
+    format_config,
+)
+
 # config共有
 import sys
 from src.lib.common_utils.ibr_enums import LogLevel
@@ -276,6 +284,32 @@ class TestBusinessUnitCodeConverterInit:
         with file_path.open('wb') as f:
             pickle.dump(df, f)
         return file_path
+
+    @pytest.fixture
+    def mock_config(self):
+        return Mock(log_message=Mock())
+
+    @pytest.fixture
+    def valid_factory(self):
+        factory = Mock()
+        factory.create_file_pattern.return_value = [Path('test.xlsx')]
+        factory.create_sheet_name.return_value = 'Sheet1'
+        return factory
+
+    def test_init_C0_valid_configuration(self, valid_factory, mock_config):
+        test_doc = """
+        テスト区分: UT
+        テスト内容:
+        - テストカテゴリ: C0
+        - テスト区分: 正常系
+        - テストシナリオ: 有効な設定でインスタンス生成
+        """
+        log_msg(f"\n{test_doc}", LogLevel.DEBUG)
+        
+        processor = ExcelProcessor(valid_factory, config=mock_config)
+        assert processor.excel_file_pattern == [Path('test.xlsx')]
+        assert processor.excel_sheet_name == 'Sheet1'
+        mock_config.log_message.assert_called_once()
 
     def test_init_C0_valid_file(self, valid_conversion_table):
         test_doc = """テスト内容:

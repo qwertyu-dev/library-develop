@@ -128,7 +128,46 @@ console_output_style = "classic"
 pythonpath = "project_1/src"  # -m 起動方式に対応/Debugger設定
 testpaths = ["tests"]
 
+################################################################
+# mypy
+################################################################
+[tool.mypy]
+# Python version
+python_version = "3.11"
+
+# Strict mode
+strict = true
+
+# Ignore missing imports (useful for third-party libraries without type hints)
+ignore_missing_imports = true
+
+# Disallow untyped definitions
+disallow_untyped_defs = true
+
+# Show error codes in error messages
+show_error_codes = true
+
+# Use colored output
+color_output = true
+
+# Exclude certain directories or files
+exclude = [
+    '^\.venv/.*$',  # Exclude virtual environment
+    '^venv/.*$',    # Exclude virtual environment
+    'tests/.*',     # Optionally exclude tests if you don't want to type check them
+]
+
+# Specific module configurations
+[[tool.mypy.overrides]]
+module = [
+    "pandas.*",
+    "numpy.*",
+    "pytest.*",
+]
+ignore_missing_imports = true
+
 # enf
 env = [
     "PYTHONIOENCODING=utf-8",
 ]
+
