@@ -184,7 +184,7 @@ class User(BaseModel):
     username: str
     email: str
 
-    @validator('email')
+    @field_validator('email')
     def check_email_domain(cls, v):
         if not v.endswith('@example.com'):
             raise ValueError('Email must end with @example.com')
@@ -220,7 +220,7 @@ class Product(BaseModel):
     name: str
     code: str
 
-    @validator('code')
+    @field_validator('code')
     @length_check(5)
     def validate_code(cls, v):
         return v
@@ -263,12 +263,12 @@ class UserModel(BaseModel):
     username: str
     password: str
 
-    @validator('username')
+    @field_validator('username')
     @not_empty
     def validate_username(cls, v):
         return v
 
-    @validator('password')
+    @field_validator('password')
     @length_check(8)
     def validate_password(cls, v):
         return v
@@ -330,7 +330,7 @@ def function2():
 
 === 適切な使用シーンの判断基準
 
-1. 固定の動作が必要な場合:
+1.固定の動作が必要な場合:
 * ログ記録
 * 基本的な入力検証
 * タイミング測定
@@ -343,7 +343,7 @@ def important_function():
     # 処理
 ----
 
-2. パラメータ化が必要な場合:
+2.パラメータ化が必要な場合:
 * 条件付きの実行
 * 設定可能なバリデーション
 * 再試行ロジック
@@ -356,8 +356,8 @@ def unstable_network_call():
     # ネットワーク処理
 ----
 
-3. 決定のためのチェックリスト:
-[cols="1,1,1,3", options="header"]
+3.決定のためのチェックリスト:
+[cols="2,1,1,3", options="header"]
 |===
 |要素 |2段階デコレータ |3段階デコレータ |判定結論
 
@@ -420,7 +420,7 @@ def unstable_network_call():
 
 === コード可読性とメンテナンス性の向上テクニック
 
-1. 明確な命名規則:
+1.明確な命名規則:
 * デコレータの名前は動作を明確に示す
 * パラメータ名は意図を明確に伝える
 
@@ -438,7 +438,7 @@ def validate_input_length(min_length, max_length):
     return decorator
 ----
 
-2. 適切なドキュメンテーション:
+2.適切なドキュメンテーション:
 * デコレータの目的、使用方法、パラメータの説明を含める
 * 例を提供する
 
@@ -472,7 +472,7 @@ def rate_limit(max_calls: int, period: float):
     return decorator
 ----
 
-3. 単一責任の原則を守る:
+3.単一責任の原則を守る:
 * 各デコレータは一つの明確な目的を持つ
 * 複雑な機能は複数のデコレータに分割する
 
@@ -486,7 +486,7 @@ def process_data(data):
     # データ処理ロジック
 ----
 
-4. テスト可能性を考慮:
+4.テスト可能性を考慮:
 * デコレータのロジックを別の関数に抽出し、単体テストを容易にする
 
 例:
@@ -510,7 +510,7 @@ def rate_limit(max_calls: int, period: float):
     return decorator
 ----
 
-5. エラー処理と例外:
+5.エラー処理と例外:
 * デコレータ内で発生する可能性のある例外を適切に処理
 * カスタム例外を使用して、デコレータ特有のエラーを明確に示す
 
@@ -612,24 +612,54 @@ greet("Alice")
 
 実際のプロジェクトでデコレータを使用する際は、以下の点に注意してください：
 
-* デコレータの目的を明確にし、単一責任の原則を守る
-* 適切なドキュメンテーションを提供し、他の開発者が理解しやすいようにする
-* パフォーマンスへの影響を考慮し、必要に応じて最適化を行う
-* テスト可能性を確保し、デコレータのロジックを単体テストできるようにする
+[cols="1,2,3", options="header"]
+|===
+|区分 |ポイント |詳細
 
-デコレータの使用に習熟することで、より表現力豊かで効率的なPythonコードを書くことができるようになります。継続的な学習と実践を通じて、デコレータの可能性を最大限に活用してください。
+|設計原則
+|デコレータの目的を明確にし、単一責任の原則を守る
+a|
+* 一つのデコレータは一つの機能に集中する
+* 複雑な機能は複数のデコレータに分割する
+* デコレータの名前は機能を明確に表現する
+
+|ドキュメンテーション
+|適切なドキュメンテーションを提供し、他の開発者が理解しやすいようにする
+a|
+* デコレータの目的、使用方法、パラメータを明記する
+* 具体的な使用例を含める
+* 副作用や制限事項があれば明示する
+* docstringを活用し、IDEのヒント機能に対応する
+
+|パフォーマンス
+|パフォーマンスへの影響を考慮し、必要に応じて最適化を行う
+a|
+* 不要な計算や処理を避ける
+* メモリ使用量に注意を払う
+* 頻繁に呼び出される関数への適用は慎重に検討する
+* プロファイリングツールを使用して影響を測定する
+
+|テスト可能性
+|テスト可能性を確保し、デコレータのロジックを単体テストできるようにする
+a|
+* デコレータのロジックを別の関数に抽出し、テスト可能にする
+* パラメータ化テストを活用して、様々な入力をテストする
+* モックやスタブを使用して、外部依存を分離する
+* エッジケースや異常系のテストを含める
+
+|===
+
 
 == 参考文献
 
-1. Python公式ドキュメント: デコレータ
-   https://docs.python.org/3/glossary.html#term-decorator
+. Python公式ドキュメント: デコレータ +
+https://docs.python.org/3/glossary.html#term-decorator
 
-2. Real Python: Primer on Python Decorators
-   https://realpython.com/primer-on-python-decorators/
+. Real Python: Primer on Python Decorators +
+https://realpython.com/primer-on-python-decorators/
 
-3. pydantic公式ドキュメント: Validators
-   https://pydantic-docs.helpmanual.io/usage/validators/
+. pydantic公式ドキュメント: Validators +
+https://pydantic-docs.helpmanual.io/usage/validators/
 
-これらのリソースを参照することで、デコレータについてさらに深く学ぶことができます。
 
 
