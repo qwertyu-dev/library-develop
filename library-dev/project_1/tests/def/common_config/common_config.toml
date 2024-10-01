@@ -3,8 +3,8 @@
 ##############################
 [production]
 [production.logger_path]
-LOGGER_DEF_FILE = 'tests/def/mfaUtilsLoggingHelper/logging_TimedRotate.json'
-LOGGER_MSG_FILE = 'tests/def/mfaUtilsLoggingHelper/config_MessageList.toml'
+LOGGER_DEF_FILE = 'tests/def/ibrUtilsLoggingHelper/logging_TimedRotate.json'
+LOGGER_MSG_FILE = 'tests/def/ibrUtilsLoggingHelper/config_MessageList.toml'
 
 # input/output data path
 [production.input_file_path]
@@ -18,8 +18,8 @@ SEND_REFERENCE_MASTER_PATH = 'tests/share/receive'
 ##############################
 [regression]
 [regression.logger_path]
-LOGGER_DEF_FILE = 'tests/def/mfaUtilsLoggingHelper/logging_TimedRotate.json'
-LOGGER_MSG_FILE = 'tests/def/mfaUtilsLoggingHelper/config_MessageList.toml'
+LOGGER_DEF_FILE = 'tests/def/ibrUtilsLoggingHelper/logging_TimedRotate.json'
+LOGGER_MSG_FILE = 'tests/def/ibrUtilsLoggingHelper/config_MessageList.toml'
 
 # input/output data path
 [regression.input_file_path]
@@ -34,8 +34,8 @@ SEND_REFERENCE_MASTER_PATH = 'tests/share/receive'
 ##############################
 [develop]
 [develop.logger_path]
-LOGGER_DEF_FILE = 'tests/def/mfaUtilsLoggingHelper/logging_TimedRotate.json'
-LOGGER_MSG_FILE = 'tests/def/mfaUtilsLoggingHelper/config_MessageList.toml'
+LOGGER_DEF_FILE = 'tests/def/ibrUtilsLoggingHelper/logging_TimedRotate.json'
+LOGGER_MSG_FILE = 'tests/def/ibrUtilsLoggingHelper/config_MessageList.toml'
 
 # input/output data path
 [develop.input_file_path]
@@ -50,8 +50,8 @@ SEND_REFERENCE_MASTER_PATH = 'tests/share/receive'
 ##############################
 [local]
 [local.logger_path]
-LOGGER_DEF_FILE = 'tests/def/mfaUtilsLoggingHelper/logging_TimedRotate.json'
-LOGGER_MSG_FILE = 'tests/def/mfaUtilsLoggingHelper/config_MessageList.toml'
+LOGGER_DEF_FILE = 'tests/def/ibrUtilsLoggingHelper/logging_TimedRotate.json'
+LOGGER_MSG_FILE = 'tests/def/ibrUtilsLoggingHelper/config_MessageList.toml'
 
 # input/output data path
 [local.input_file_path]

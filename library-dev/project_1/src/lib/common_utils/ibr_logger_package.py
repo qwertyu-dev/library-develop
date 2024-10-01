@@ -74,7 +74,8 @@ class SingletonType(type):
         """
         if cls not in cls._instances:
             #cls._instances[cls] = super().__call__(*args, **kwargs)
-            cls._instances[cls] = super().__call__()
+            #cls._instances[cls] = super().__call__()
+            cls._instances[cls] = super().__call__(*args, **kwargs)
 
         return cls._instances[cls]
 
@@ -103,9 +104,9 @@ class LoggerPackage(metaclass=SingletonType):
         -
     """
 
-    def __init__(self):
+    def __init__(self, file_path: str):
         # ロガー識別設定
-        self._name = Path(__file__).name
+        self._name = Path(file_path).name
 
         # src/tests を環境変数(EXEC_PATTERN)
         self._exec_pattern = os.environ.get('EXEC_PATTERN', 'src')

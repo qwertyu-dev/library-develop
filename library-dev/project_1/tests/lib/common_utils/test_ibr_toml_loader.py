@@ -43,8 +43,8 @@ def production_config():
     return {
         "production": {
             "logger_path": {
-                "LOGGER_DEF_FILE": "def/mfaUtilsLoggingHelper/logging_TimedRotate.json",
-                "LOGGER_MSG_FILE": "def/mfaUtilsLoggingHelper/config_MessageList.toml",
+                "LOGGER_DEF_FILE": "def/ibrUtilsLoggingHelper/logging_TimedRotate.json",
+                "LOGGER_MSG_FILE": "def/ibrUtilsLoggingHelper/config_MessageList.toml",
             },
             "input_file_path": {
                 "UPDATE_EXCEL_PATH": "share/receive",
@@ -206,8 +206,8 @@ class Test_parse_toml_file:
 
         # 結果定義,関数実行
         expected = {'production': {'input_file_path': {'UPDATE_EXCEL_PATH': 'share/receive'},
-                'logger_path': {'LOGGER_DEF_FILE': 'def/mfaUtilsLoggingHelper/logging_TimedRotate.json',
-                                'LOGGER_MSG_FILE': 'def/mfaUtilsLoggingHelper/config_MessageList.toml'},
+                'logger_path': {'LOGGER_DEF_FILE': 'def/ibrUtilsLoggingHelper/logging_TimedRotate.json',
+                                'LOGGER_MSG_FILE': 'def/ibrUtilsLoggingHelper/config_MessageList.toml'},
                 'output_file_path': {'SEND_REFERENCE_MASTER_PATH': 'share/receive'}}}
         result = TomlParser.parse_toml_file(toml_file_normal)
         log_msg(f'expected: {expected}', LogLevel.DEBUG)
@@ -241,8 +241,8 @@ class Test_parse_toml_file:
 
         # 結果定義,関数実行
         expected = {'production': {'input_file_path': {'UPDATE_EXCEL_PATH': 'share/receive'},
-                'logger_path': {'LOGGER_DEF_FILE': 'def/mfaUtilsLoggingHelper/logging_TimedRotate.json',
-                                'LOGGER_MSG_FILE': 'def/mfaUtilsLoggingHelper/config_MessageList.toml'},
+                'logger_path': {'LOGGER_DEF_FILE': 'def/ibrUtilsLoggingHelper/logging_TimedRotate.json',
+                                'LOGGER_MSG_FILE': 'def/ibrUtilsLoggingHelper/config_MessageList.toml'},
                 'output_file_path': {'SEND_REFERENCE_MASTER_PATH': 'share/receive'}}}
         result = TomlParser.parse_toml_file(toml_file_normal)
         log_msg(f'expected: {expected}', LogLevel.DEBUG)

@@ -4,8 +4,8 @@
 [production]
 [production.logger_path]
 # Server向けlogger定義
-LOGGER_DEF_FILE = 'src/def/mfaUtilsLoggingHelper/logging_TimedRotateServer.json'
-LOGGER_MSG_FILE = 'src/def/mfaUtilsLoggingHelper/config_MessageList.toml'
+LOGGER_DEF_FILE = 'src/def/ibrUtilsLoggingHelper/logging_TimedRotateServer.json'
+LOGGER_MSG_FILE = 'src/def/ibrUtilsLoggingHelper/config_MessageList.toml'
 
 ##############################
 # リグレ定義 regression
@@ -13,8 +13,8 @@ LOGGER_MSG_FILE = 'src/def/mfaUtilsLoggingHelper/config_MessageList.toml'
 [regression]
 [regression.logger_path]
 # Server向けlogger定義
-LOGGER_DEF_FILE = 'src/def/mfaUtilsLoggingHelper/logging_TimedRotateServer.json'
-LOGGER_MSG_FILE = 'src/def/mfaUtilsLoggingHelper/config_MessageList.toml'
+LOGGER_DEF_FILE = 'src/def/ibrUtilsLoggingHelper/logging_TimedRotateServer.json'
+LOGGER_MSG_FILE = 'src/def/ibrUtilsLoggingHelper/config_MessageList.toml'
 
 # サーバドライブ依存パス定義
 [regression.optional_path]
@@ -35,8 +35,8 @@ ARCHIVES_CSV_FILES_PATH = 'Z:\reference\src\archives\csv_files'
 [develop]
 [develop.logger_path]
 # 開発機/local向けlogger定義
-LOGGER_DEF_FILE = 'src/def/mfaUtilsLoggingHelper/logging_TimedRotate.json'
-LOGGER_MSG_FILE = 'src/def/mfaUtilsLoggingHelper/config_MessageList.toml'
+LOGGER_DEF_FILE = 'src/def/ibrUtilsLoggingHelper/logging_TimedRotate.json'
+LOGGER_MSG_FILE = 'src/def/ibrUtilsLoggingHelper/config_MessageList.toml'
 
 ##############################
 # local定義 local
@@ -44,8 +44,8 @@ LOGGER_MSG_FILE = 'src/def/mfaUtilsLoggingHelper/config_MessageList.toml'
 [local]
 [local.logger_path]
 # 開発機/local向けlogger定義
-LOGGER_DEF_FILE = 'src/def/mfaUtilsLoggingHelper/logging_TimedRotate.json'
-LOGGER_MSG_FILE = 'src/def/mfaUtilsLoggingHelper/config_MessageList.toml'
+LOGGER_DEF_FILE = 'src/def/ibrUtilsLoggingHelper/logging_TimedRotate.json'
+LOGGER_MSG_FILE = 'src/def/ibrUtilsLoggingHelper/config_MessageList.toml'
 
 [local.decision_table_path]
 DECISION_TABLE_PATH = 'src/def/decision_table'

@@ -142,7 +142,8 @@ class Config:
 
         # 4.カスタムロガーインスタンス
         try:
-            logger = LoggerPackage()
+            #logger = LoggerPackage()
+            logger = LoggerPackage(__file__)
             log_message = logger.log_message
         except Exception as e:
             log_msg(f'カスタムロガーインスタンス生成に失敗しました: {e}',LogLevel.ERROR)

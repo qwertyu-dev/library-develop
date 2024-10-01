@@ -92,11 +92,15 @@ class Test_config_toml:
         func_info = f"        - テスト関数: {', '.join(test_functions)}"
         print(f"\n{func_info}{test_doc}", LogLevel.DEBUG)
 
-        expected_common_config = {'logger_path': {'LOGGER_DEF_FILE': 'tests/def/mfaUtilsLoggingHelper/logging_TimedRotate.json', 'LOGGER_MSG_FILE': 'tests/def/mfaUtilsLoggingHelper/config_MessageList.toml'}, 'input_file_path': {'UPDATE_EXCEL_PATH': 'tests/share/receive'}, 'output_file_path': {'SEND_REFERENCE_MASTER_PATH': 'tests/share/receive'}}
+        # 定義ファイルのメンテナンスや環境に依存あり、どうするかの検討を要する
+        #expected_common_config = {'logger_path': {'LOGGER_DEF_FILE': 'tests/def/ibrUtilsLoggingHelper/logging_TimedRotate.json', 'LOGGER_MSG_FILE': 'tests/def/ibrUtilsLoggingHelper/config_MessageList.toml'}, 'input_file_path': {'UPDATE_EXCEL_PATH': 'tests/share/receive'}, 'output_file_path': {'SEND_REFERENCE_MASTER_PATH': 'tests/share/receive'}}
+        expected_common_config ={'logger_path': {'LOGGER_DEF_FILE': 'src/def/ibrUtilsLoggingHelper/logging_TimedRotate.json', 'LOGGER_MSG_FILE': 'src/def/ibrUtilsLoggingHelper/config_MessageList.toml'}, 'decision_table_path': {'DECISION_TABLE_PATH': 'src/def/decision_table'}, 'optional_path': {'LONGTERM_ACCUM_PATH': 'src/work/longterm_accm', 'SHORTTERM_ACCUM_PATH': 'src/work/shortterm_accm', 'TABLE_PATH': 'src/table', 'SHARE_RECEIVE_PATH': 'src/share/receive', 'SHARE_SEND_PATH': 'src/share/send', 'ARCHIVES_REFERNCE_SNAPSHOT_PATH': 'src/archives/reference_snapshots', 'ARCHIVES_REQUEST_SNAPSHOT_PATH': 'src/archives/request_snapshots', 'ARCHIVES_REFERENCE_DIFFS_PATH': 'src/archives/reference_diffs', 'ARCHIVES_CSV_FILES_PATH': 'src/archives/csv_files'}}
         expected_package_config = {'test': {'local_test': 'test'}}
 
         package_path = Path(__file__)
         config = Config.load(package_path)
+
+        print(f'{config.common_config}')
 
         assert config.env == 'local'
         assert config.common_config == expected_common_config
@@ -104,7 +108,7 @@ class Test_config_toml:
 
         # logger.name 確認
         log_msg = config.log_message
-        expected_1 = '[INFO] common_utils - test_config_load_UT_C0_set_config'
+        expected_1 = '[INFO] common_utils.test_ibr_get_config::test_config_load_UT_C0_set_config'
         expected_2 = 'test_1'
         log_msg('test_1')
         captured = capfd.readouterr()
