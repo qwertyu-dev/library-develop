@@ -154,7 +154,7 @@ class TestCheckExistsReferenceRecordInit:
         """
         log_msg(f"\n{test_doc}", LogLevel.INFO)
         
-        with pytest.raises(TypeError, match="branch_code must be a string"):
+        with pytest.raises(TypeError, match="Invalid branch must be a string"):
             CheckExistsReferenceRecord(1234, valid_df_requests)
 
     def test_init_C0_invalid_branch_code_length(self, valid_df_requests):
