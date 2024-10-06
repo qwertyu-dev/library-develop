@@ -204,59 +204,8 @@ OS環境に関わらず統一assert評価ができるようにしてください
 
 ## config共通について
 @with_configで外部から注入しています
-この考察を含めてください
-テストコードを書くに当たり、Mockの範囲などには十分な考慮が必要になります
-
-## @with_configの呼び出し元
-### ibr_decorator_config.py
-from functools import wraps
-from pathlib import Path
-import inspect
-
-from src.lib.common_utils.ibr_get_config import Config
-from src.lib.common_utils.ibr_enums import LogLevel
-
-def with_config(cls):
-    # 使用例
-    # from src.lib.common_utils.ibr_decorator_config import with_config
-    # @with_config
-    # class Aaaaaa:
-
-    original_init = cls.init
-    #print(f"Decorating class: {cls.name}")  # デバッグ用
-
-    @wraps(cls)
-    def new_init(self, *args, **kwargs):
-        # クラスの実際のファイルパスを取得
-        class_file = inspect.getfile(cls)
-        config_path = Path(class_file).parent / 'package_config.toml'
-        self.config = Config.load(config_path)
-
-        # 元のinitメソッドを呼び出す
-        original_init(self, *args, **kwargs)
-
-        #print(f"Initializing instance of: {cls.name}")  # デバッグ用
-        #print(f"Looking for config at: {config_path}")  # デバッグ用
-        #print(f"Config loaded for: {cls.name}")  # デバッグ用
-
-    cls.init = new_init
-    return cls
-
-def initialize_config(calling_module):
-    # 使用例
-    # from src.lib.common_utils.ibr_decorator_config import initialize_config
-    # import sys
-    # config, log_msg = initialize_config(sys.modules[name])
-
-    # 呼び出し元のモジュールファイルのパスを取得
-    caller_file = inspect.getfile(calling_module)
-    config_path = Path(caller_file).parent / 'package_config.toml'
-    config = Config.load(config_path)
-
-    #print(f"Looking for config at: {config_path}")  # デバッグ用
-    #print(f"Config loaded for module: {calling_module.name}")  # デバッグ用
-
-    return config
+この考察を含めてください、原則Mock(spec)は使用禁止とします(再帰が発生するため)。
+代わりにpatchを使って対処してください
 
 サンプルコード:
 
@@ -462,6 +411,89 @@ class TestBusinessUnitCodeConverterInit:
 
     # 境界値テストのコードは別途実装サンプルを補填予定
     # テスト用関数は作成してください
+
+
+# fixture-patch構成を使用したテストコード実装例
+# Mock(spec)は使用しない(重要)
+
+import sys
+from unittest.mock import MagicMock, patch
+
+import pandas as pd
+import pytest
+
+from src.lib.common_utils.ibr_decorator_config import initialize_config
+from src.lib.common_utils.ibr_enums import LogLevel
+from src.lib.common_utils.ibr_pickled_table_searcher import TableSearcher
+
+config = initialize_config(sys.modules[__name__])
+log_msg = config.log_message
+
+class TestTableSearcherNormalizeConditions:
+    @pytest.fixture()
+    def mock_searcher(self):
+        def mock_get_file_modified_time():
+            timestamp = 12345.0
+            log_msg(f"Mock _default_get_file_modified_time called, returning {timestamp}", LogLevel.DEBUG)
+            return timestamp
+
+        def mock_load_table():
+            _df = pd.DataFrame({'test_column': [1, 2, 3]})
+            log_msg(f"Mock _default_load_table called, returning DataFrame with shape {_df.shape}", LogLevel.DEBUG)
+            return _df
+
+        with patch('src.lib.common_utils.ibr_pickled_table_searcher.TableSearcher._default_get_file_modified_time',
+                side_effect=mock_get_file_modified_time) as mock_get_time, \
+            patch('src.lib.common_utils.ibr_pickled_table_searcher.TableSearcher._default_load_table',
+                side_effect=mock_load_table) as mock_load:
+
+            log_msg("Creating mock TableSearcher instance", LogLevel.DEBUG)
+            searcher = TableSearcher("test_table.pkl")
+
+            # パッチが適用されたことを確認
+            log_msg(f"_default_get_file_modified_time called: {mock_get_time.called}", LogLevel.DEBUG)
+            log_msg(f"_default_load_table called: {mock_load.called}", LogLevel.DEBUG)
+
+            # 実際に返された値を確認
+            if mock_get_time.called:
+                log_msg(f"Actual value returned by _default_get_file_modified_time: {searcher.last_modified_time}", LogLevel.DEBUG)
+            if mock_load.called:
+                log_msg(f"Actual DataFrame returned by _default_load_table: shape {searcher.df.shape}, columns {searcher.df.columns}", LogLevel.DEBUG)
+
+            yield searcher
+
+#--------------------------------------------------
+# 以下はfixture-patchを使ったテストコード例
+#--------------------------------------------------
+    def test_normalize_conditions_C0_dict(self, mock_searcher):
+        test_doc = """
+        テスト区分: UT
+        テストカテゴリ: C0
+        テスト内容: 辞書型の条件を正規化
+        """
+        log_msg(f"\n{test_doc}", LogLevel.DEBUG)
+
+        conditions = {"column1": "value1"}
+        log_msg("Calling _normalize_conditions", LogLevel.DEBUG)
+        result = mock_searcher._normalize_conditions(conditions)
+        log_msg(f"_normalize_conditions result: {result}", LogLevel.DEBUG)
+
+        assert isinstance(result, list)
+        assert len(result) == 1
+        assert result[0] == conditions
+
+"""
+2024-10-06 23:40:50 [INFO] common_utils.test_ibr_pickled_table_searcher::mock_get_file_modified_time line 990: Mock _default_get_file_modified_time called, returning 12345.0:
+2024-10-06 23:40:50 [INFO] common_utils.test_ibr_pickled_table_searcher::mock_load_table line 995: Mock _default_load_table called, returning DataFrame with shape (3, 1):
+2024-10-06 23:40:50 [INFO] common_utils.test_ibr_pickled_table_searcher::mock_searcher line 1007: _default_get_file_modified_time called: True:
+2024-10-06 23:40:50 [INFO] common_utils.test_ibr_pickled_table_searcher::mock_searcher line 1008: _default_load_table called: True:
+2024-10-06 23:40:50 [INFO] common_utils.test_ibr_pickled_table_searcher::mock_searcher line 1012: Actual value returned by _default_get_file_modified_time: 12345.0:
+2024-10-06 23:40:50 [INFO] common_utils.test_ibr_pickled_table_searcher::mock_searcher line 1014: Actual DataFrame returned by _default_load_table: shape (3, 1), columns Index(['test_column'], dtype='object'):
+2024-10-06 23:40:50 [INFO] common_utils.test_ibr_pickled_table_searcher::test_normalize_conditions_C0_dict line 1024:
+
+"""
+
+
 ```
 ====
 
