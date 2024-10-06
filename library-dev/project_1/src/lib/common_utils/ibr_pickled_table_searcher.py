@@ -7,6 +7,7 @@ import pandas as pd
 from cachetools import TTLCache, cached
 
 from src.lib.common_utils.ibr_enums import LogLevel
+from src.lib.common_utils.ibr_get_config import Config
 from src.lib.common_utils.ibr_decorator_config import with_config
 
 # typeエイリアス定義
@@ -125,9 +126,10 @@ class TableSearcher:
         table_name (str): 検索対象のテーブル名
         file_path (Path | None): pickleファイルのパス。Noneの場合はデフォルトパスが使用される
         get_file_modified_time (Callable[[], float] | None): ファイルの最終更新時刻を取得する関数。Noneの場合はデフォルト関数が使用される
-        config: configのDI 
+        config: configのDI
         """
         # configのDI
+        #self.config = config or Config.load(__file__)
         self.config = config or self.config
         self.env = self.config.env
         self.common_config = self.config.common_config
@@ -151,9 +153,12 @@ class TableSearcher:
             self.file_path = Path(self.common_config.get('optional_path', []).get('TABLE_PATH', '')) / self.table_name
         self.log_msg(f'self.file_path: {self.file_path}', LogLevel.INFO)
 
+        # ファイルの最終更新時刻を取得
         self.get_file_modified_time = get_file_modified_time or self._default_get_file_modified_time
-        self.df = self._default_load_table()
         self.last_modified_time = self.get_file_modified_time()
+
+        # テーブル読み込み
+        self.df = self._default_load_table()
 
     def _default_get_file_modified_time(self) -> float:
         """ファイルの最終更新時刻を取得する"""
@@ -179,9 +184,11 @@ class TableSearcher:
     @cached(cache=TTLCache(maxsize=FileConfig.CACHE_MAXSIZE, ttl=FileConfig.CACHE_TTL))
     def _default_load_table(self) -> pd.DataFrame:
         """テーブルファイルを読み込む"""
+        self.log_msg('load pickle: {self.file_path}', LogLevel.INFO)
         try:
             if self._should_update_cache():
                 self._default_load_table.cache_clear()
+                self.log_msg('file cache clear()', LogLevel.INFO)
             return pd.read_pickle(self.file_path)
         except FileNotFoundError as e:
             err_msg = f"{ErrorMessages.FILE_NOT_FOUND}"
@@ -278,6 +285,9 @@ class TableSearcher:
     def advanced_search(self, condition_func: Callable[[pd.DataFrame], pd.Series]) -> pd.DataFrame:
         """高度な条件での検索を行う
 
+        処理内部ではpickle→DataFrame(self.df)に取り込まれている状態なので
+        dfがある前提で抽出条件関数を定義しsearcher.advanced_searchメソッドに渡す(関数を引数にしている)
+
         Arguments:
         condition_func (Callable[[pd.DataFrame], pd.Series]): DataFrameを引数に取り、ブールのSeriesを返す関数
 
@@ -292,13 +302,14 @@ class TableSearcher:
         PickledTableSearchError: 無効な条件関数が指定された場合
 
         Usage Example:
-        >>> def condition(df):
+        >>> def condition(df: pd.DataFrame):
         ...     return (df['column1'] > 10) & (df['column2'].str.startswith('A'))
         >>> searcher = TableSearcher("example_table.pkl")
         >>> result = searcher.advanced_search(condition)
         >>> print(result)
         """
         try:
+            # resultにはTrue/Falseのpd.Seriesが格納されている(条件Bool判定)
             result = condition_func(self.df)
             if not isinstance(result, pd.Series):
                 raise_type_err(f"{ErrorMessages.INVALID_CONDITION_FUNC_RESULT}")
@@ -307,4 +318,6 @@ class TableSearcher:
         except Exception as e:
             err_msg = f"{ErrorMessages.INVALID_CONDITION_FUNCTION}"
             raise PickledTableSearchError(err_msg) from e
+
+        # Bool判定結果反映
         return self.df[result]

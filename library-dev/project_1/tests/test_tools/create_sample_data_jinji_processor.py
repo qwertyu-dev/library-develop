@@ -47,5 +47,6 @@ df = pd.DataFrame(data, columns=columns)
 
 # Excelファイルへの出力 (Indexなし)
 df.to_excel("jinji_requests.xlsx", index=False)
+df.to_pickle('jinji_requests.pkl')
 
 print("Excelファイルを作成しました: jinji_requests.xlsx")
