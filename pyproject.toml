@@ -63,6 +63,7 @@ ignore = [
     "ANN101",  # self annotation
     "ANN102",  # cls annotation
     "ANN204",  # __init__ annotation
+    "EM102",   # f-string-in-exception 
     "D415",    # 
     "D107",    # 
     "G004",    #

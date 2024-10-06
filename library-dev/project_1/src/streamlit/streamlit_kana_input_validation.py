@@ -190,7 +190,7 @@ def main() -> None:
             update_mode=GridUpdateMode.VALUE_CHANGED,
             allow_unsafe_jscode=True,
             fit_columns_on_grid_load=True,  # カラムが自動で画面にフィット
-            height=150,                     # グリッドの高さ
+            height=450,                     # グリッドの高さ
             width="1000",                   # グリッド全体の幅を1000に設定
         )
 

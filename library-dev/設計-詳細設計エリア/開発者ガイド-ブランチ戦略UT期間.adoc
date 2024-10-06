@@ -1,0 +1,434 @@
+= Git運用ガイダンス
+
+== DDCT期間のブランチ戦略：GitHub Flow
+
+DDCT（Design, Develop, Check, Test）期間中、我々はGitHub Flowを採用します。この戦略は以下の特徴を持ちます：
+
+* シンプルで理解しやすい
+* 継続的なデリバリーを促進
+* featureブランチを中心とした開発
+* featureブランチは週単位で切り出し、作業単位をcluster化
+
+[cols="1,2", options="header", width='75%']
+|===
+|ステップ               |説明
+|1. ブランチ作成        |`featureブランチ` から開発者個人フィーチャーブランチを作成
+|2. 変更の追加          |ブランチ上で変更を行い、定期的にコミットとプッシュ
+|3. マージリクエスト作成|UT完成時にマージリクエストを作成
+|4. レビューと議論      |コードレビューと必要に応じた修正
+|5. mainへのマージ      |`featureブランチ` 単位開発完了後速やかに `main` へマージ
+|===
+
+* この方法により、各機能の開発が独立して行われ、レビューとテストが容易になります
+* また、`main`ブランチは常にデプロイ可能な状態を維持します
+* ITフェーズ以降では `別方式のブランチ戦略` で運営予定です
+
+=== GitHub Flow(DDCTフェーズ)
+
+以下の図はGitHub Flowの基本的なワークフローを示しています：
+
+[plantuml]
+----
+@startuml
+!define ICONURL https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/devicons
+!includeurl ICONURL/git.puml
+
+skinparam activityFontName Arial
+skinparam activityFontSize 14
+skinparam arrowColor #333
+skinparam activityBorderColor #333
+skinparam activityBackgroundColor #FFF
+skinparam activityDiamondBackgroundColor #FFF
+
+|ライブラリアン|
+start
+:開発計画をPMから受領;
+:mainブランチからfeatureブランチを作成;
+
+|開発者|
+:featureブランチから個人開発featureを作成;
+repeat
+    :コードの変更を実装;
+    :UT実施;
+    :変更をコミット;
+    :ブランチをプッシュ;
+    :マージリクエストを作成;
+
+    |レビューアー|
+    :コードレビュー/UT結果レビュー;
+    if (レビュー指摘あり?) then (Yes)
+        :フィードバックを提供
+        issue起票;
+        |開発者|
+        :フィードバックの確認
+        指摘対処整理;
+    else (No)
+        |レビューアー|
+        :マージリクエスト承認;
+    endif
+    :状況チェック
+    UT再実施指示 or 承認完了;
+    |開発者|
+repeat while (feature単位内定義の全UT完了?) is (No) not (Yes)
+
+|ライブラリアン|
+start
+:週末に実施;
+:マージリクエストを起票;
+:メインブランチにマージ;
+:古いブランチを削除;
+
+stop
+@enduml
+----
+
+== 開発者向けガイド
+
+=== VSCベースでの環境セットアップ
+
+* すでに提示済の手順によりパプリカ上に構築してください。 +
+* 手順内にある開発リポジトリに対し、次セクション以降に説明をしています。
+
+=== 開発者個人ブランチネーミングルール
+
+.開発者個人ブランチネーミングルール
+[cols="1,2,3", options="header"]
+|===
+|部分|形式|説明
+|prefix|feature/|ブランチの種類を示す固定プレフィックス
+|年月|YYYYMM|4桁の年と2桁の月 (例: 202410)
+|週|W1からW5|月の第n週示す (月曜始まり)
+|期間|first-half または second-half| 一括申請・受付・パターン編集 or 反映・一括処理・反映を示す
+|username|開発者のユーザー名|作業者を識別するための名前
+|===
+
+例: `feature/202410-W1-first-half-username`
+
+
+=== 状況別に、開発者のブランチ作成・操作を記載する。
+
+==== 全くの新規開始、新しいfeatureでの開発指示があった場合
+
+. メインのfeatureブランチをクローン：
++
+[source,bash]
+----
+git clone -b feature/YYYYMM-W1-first-half https://gitlab.rp.dss.itmufg/systems/div99616/bpr/ibr-reference_userid_management.git
+cd ibr-reference_userid_management
+----
+
+. 個人の開発ブランチを作成：
++
+[source,bash]
+----
+git checkout -b feature/YYYYMM-W1-first-half-username
+----
+
+. 開発反映コミットを作成：
++
+[source,bash]
+----
+git add .
+git commit -m "Initial commit for feature/YYYYMM-Wn-first-half-username"
+----
+
+. リモートに個人の開発ブランチをプッシュ：
++
+[source,bash]
+----
+git push -u origin feature/YYYYMM-Wn-first-half-username
+----
+
+===== サンプル実行結果とログ
+
+[source,bash]
+----
+$ git clone -b feature/202410-W1-user-authentication https://gitlab.rp.dss.itmufg/systems/div99616/bpr/ibr-reference_userid_management.git
+Cloning into 'ibr-reference_userid_management'...
+remote: Enumerating objects: 1734, done.
+remote: Counting objects: 100% (1734/1734), done.
+remote: Compressing objects: 100% (1230/1230), done.
+remote: Total 1734 (delta 504), reused 1734 (delta 504), pack-reused 0
+Receiving objects: 100% (1734/1734), 2.5 MiB | 10.00 MiB/s, done.
+Resolving deltas: 100% (504/504), done.
+
+$ cd ibr-reference_userid_management
+
+$ git checkout -b feature/202410-W1-user-authentication-PAAAAAAA
+Switched to a new branch 'feature/202410-W1-user-authentication-PAAAAAAA'
+
+$ echo "Initial commit" > README.md
+$ git add README.md
+$ git commit -m "Initial commit for feature/202410-W1-user-authentication-PAAAAAAA"
+[feature/202410-W1-user-authentication-PAAAAAAA f7a8b9c] Initial commit for feature/202410-W1-user-authentication-PAAAAAAA
+ 1 file changed, 1 insertion(+)
+ create mode 100644 README.md
+
+$ git push -u origin feature/202410-W1-user-authentication-PAAAAAAA
+Enumerating objects: 4, done.
+Counting objects: 100% (4/4), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 329 bytes | 329.00 KiB/s, done.
+Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+To https://gitlab.rp.dss.itmufg/systems/div99616/bpr/ibr-reference_userid_management.git
+ * [new branch]      feature/202410-W1-user-authentication-PAAAAAAA -> feature/202410-W1-user-authentication-PAAAAAAA
+Branch 'feature/202410-W1-user-authentication-PAAAAAAA' set up to track remote branch 'feature/202410-W1-user-authentication-PAAAAAAA' from 'origin'.
+----
+
+==== まだmergeされていない状態の、リモートにある個人featureで開発を続ける場合
+
+. 個人の開発ブランチを直接クローン：
++
+[source,bash]
+----
+$ git clone -b feature/YYYYMM-Wn-first-half-username https://gitlab.rp.dss.itmufg/systems/div99616/bpr/ibr-reference_userid_management.git
+$ cd ibr-reference_userid_management
+----
+
+. ローカルの状態確認：
++
+[source,bash]
+----
+$ git status
+----
+
+. リモートの変更を取得：
++
+[source,bash]
+----
+$ git fetch origin
+----
+
+. メインのfeatureブランチの最新変更を確認：
++
+[source,bash]
+----
+$ git log HEAD..origin/feature/YYYYMM-Wn-first-half
+----
+
+. featureブランチの変更をマージ（原則実施、ただし状況判断）： +
+* mergeが有効になるのはローカル資源がcommit状態のものに対してになります
+* Table.1参照
++
+[source,bash]
+----
+$ git merge origin/feature/YYYYMM-Wn-first-half
+----
+
+. コンフリクト解決（発生時）
+
+* 担当者間で話し合い、修正方針を確定する
+* 結論をコードに反映する
+
+. 変更をリモートにプッシュ：
++
+[source,bash]
+----
+git push origin feature/YYYYMM-Wn-first-half-username
+----
+
+.未コミットの変更がある場合にはfeatureマージ前に以下判断：
+[cols="1,2", options="header", width='75%']
+|===
+|操作|コマンド
+|コミットする場合
+a|
+* git add .
+* git commit -m "Describe your changes"
+|一時的に保存（stash）する場合
+a|
+* git stash save "Description of your changes" (一時退避)
+* git stash pop (退避戻し)
+|===
+
+===== サンプル実行結果とログ
+
+[source,bash]
+----
+$ git clone -b feature/202410-W1-user-authentication-PAAAAAAA https://gitlab.rp.dss.itmufg/systems/div99616/bpr/ibr-reference_userid_management.git
+Cloning into 'ibr-reference_userid_management'...
+remote: Enumerating objects: 1737, done.
+remote: Counting objects: 100% (1737/1737), done.
+remote: Compressing objects: 100% (1233/1233), done.
+remote: Total 1737 (delta 505), reused 1737 (delta 505), pack-reused 0
+Receiving objects: 100% (1737/1737), 2.5 MiB | 10.00 MiB/s, done.
+Resolving deltas: 100% (505/505), done.
+
+$ cd ibr-reference_userid_management
+
+$ git status
+On branch feature/202410-W1-user-authentication-PAAAAAAA
+Your branch is up to date with 'origin/feature/202410-W1-user-authentication-PAAAAAAA'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   README.md
+
+$ git stash save "Temporary changes to README.md"
+Saved working directory and index state On feature/202410-W1-user-authentication-PAAAAAAA: Temporary changes to README.md
+
+$ git fetch origin
+remote: Enumerating objects: 5, done.
+remote: Counting objects: 100% (5/5), done.
+remote: Compressing objects: 100% (3/3), done.
+remote: Total 3 (delta 1), reused 0 (delta 0), pack-reused 0
+Unpacking objects: 100% (3/3), 329 bytes | 329.00 KiB/s, done.
+From https://gitlab.rp.dss.itmufg/systems/div99616/bpr/ibr-reference_userid_management
+   f7a8b9c..e2d3f4g  feature/202410-W1-user-authentication -> origin/feature/202410-W1-user-authentication
+
+$ git merge origin/feature/202410-W1-user-authentication
+Updating f7a8b9c..e2d3f4g
+Fast-forward
+ src/auth.py | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+ create mode 100644 src/auth.py
+
+$ git stash pop
+On branch feature/202410-W1-user-authentication-PAAAAAAA
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   README.md
+
+Dropped refs/stash@{0} (1a2b3c4d5e6f7g8h9i0j1k2l3m4n5o6p7q8r9s0)
+
+$ git add README.md
+$ git commit -m "Update README.md with project first-half"
+[feature/202410-W1-user-authentication-PAAAAAAA 0a1b2c3] Update README.md with project first-half
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+$ git push origin feature/202410-W1-user-authentication-PAAAAAAA
+Enumerating objects: 5, done.
+Counting objects: 100% (5/5), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 429 bytes | 429.00 KiB/s, done.
+Total 3 (delta 1), reused 0 (delta 0), pack-reused 0
+To https://gitlab.rp.dss.itmufg/systems/div99616/bpr/ibr-reference_userid_management.git
+   e2d3f4g..0a1b2c3  feature/202410-W1-user-authentication-PAAAAAAA -> feature/202410-W1-user-authentication-PAAAAAAA
+----
+
+== ライブラリアン向けガイド
+
+=== mainからのfeature作成
+
+コマンドで行ってもよいしUIで行っても良い
+
+以下はコマンドでの対処手順
+
+. mainブランチの最新化：
++
+[source,bash]
+----
+git checkout main
+git pull origin main
+----
+
+. 新しいfeatureブランチを作成：
++
+[source,bash]
+----
+git checkout -b feature/YYYYMM-Wn-first-half
+----
+
+. 新しいfeatureブランチをリモートにプッシュ：
++
+[source,bash]
+----
+git push -u origin feature/YYYYMM-Wn-first-half
+----
+
+=== feature作成単位、ネーミングルール
+
+[cols="1,2", options="header", width='75%']
+|===
+|項目|ルール
+|作成単位|原則として1週間ごと,月曜日朝に作成
+|ネーミングルール|feature/YYYYMM-Wn-description
+|===
+
+* YYYYMM: 年月
+* Wn: 第n週 (W1〜W5)
+* description:
+** first-half: 一括申請・受付・パターン編集および関連する定義、部品
+** second-half: 反映・一括処理・送信及び関連する定義、部品
+
+例：`feature/202410-W2-first-half`
+
+== feature単位での開発が終わっていない場合の運営方針
+
+未完タスクに対する方針決定を行う必要があります。 +
+一旦週末でとしていますが、状況によっては早期に対応を打つ必要がありPMがShiftLeftマインドで取り組むことが重要となります。
+
+* 安易にリスケとせず、状況判断リスク評価及を行い適切な指示をPMから行う必要があります
+* 遅延が頻発するのであれば計画や担当者アサインそのものを見直す必要もあります
+
+
+.週末営業日の意思決定会議と対応策
+[cols="1,3,2", options="header"]
+|===
+|項目|内容|対処の分析
+
+|週末営業日に意思決定会議の開催
+a|
+* 週末段階での成果確認
+* 未完了タスクの洗い出し
+* 次週に持ち越すタスクの特定
+* 週切り出しfeatureは原則継続しない
+
+a|
+* 進捗の可視化により、問題の早期発見と対応が可能
+* タスクの優先順位付けと再配分の機会
+* 継続しないことで、各週の独立性を保つ
+
+|新規featureブランチの作成に向けた定義
+a|
+* UT完了資源はfeature/mainマージ対象とする
+* UT未完了資源に対し次featureで継続開発としてよいかはレビューアーおよびPMに意思決定を求める
+* UT未完了資源は次週featureから作成する個人開発ブランチに開発者が取り込みを行い、開発継続とする
+
+a|
+* 品質管理の徹底
+* 意思決定プロセスの明確化
+* 開発の連続性の確保と管理
+
+|継続となるリスク分析、対処策
+a|
+* 継続解消スケジュールの定義
+* 継続となるリスク、クリティカルパスへの影響
+* 原因分析と対処
+
+a|
+* プロジェクト全体への影響を最小限に抑える
+* リスクの早期特定と軽減策の実施
+* 再発防止のための根本原因分析
+
+|開発者への指示
+a|
+* 新しいfeatureブランチへの移行指示
+* 継続タスクの取り扱いに関する明確な対処指示
+
+a|
+* 開発者の混乱を防ぎ、スムーズな移行を促進
+* タスクの継続性と一貫性の確保
+
+|PMによる進捗モニタリング
+a|
+* 開始後の数日間、密に進捗を確認
+* 必要に応じて、追加サポートや調整を行う
+
+a|
+* 早期の問題検出と介入
+* チームのサポートと生産性の向上
+
+|PMによるプロセス改善
+a|
+* 今後のスプリント計画やタスク見積もりの改善策を検討
+
+a|
+* 継続的な改善によるプロジェクト効率の向上
+* 見積もり精度の向上と将来の遅延リスクの軽減
+
+|===

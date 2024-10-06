@@ -72,8 +72,7 @@ class ClassName:
     """
 
     def __init__(self, parameters):
-        """
-        コンストラクタ
+        """イニシャライザ
 
         Arguments:
         [パラメータ名] ([型]): [説明]
@@ -107,8 +106,7 @@ class ClassName:
 
     @staticmethod
     def static_method_name(parameters):
-        """
-        [スタティックメソッドの簡潔な説明]
+        """[スタティックメソッドの簡潔な説明]
 
         このメソッドはクラスのインスタンスに依存せず、独立して動作します。
 

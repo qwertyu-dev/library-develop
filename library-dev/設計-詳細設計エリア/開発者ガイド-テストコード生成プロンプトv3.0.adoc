@@ -41,6 +41,12 @@ StepByStepで進めます、一度に進めず各stepで立ち止まってくだ
 
 全てのメソッドに対して以下繰り返します +
 メソッド単位に作成します、メソッド名を指定しその単位で立ち止まってください
+
+テストコード作成には以下厳守してください
+* テストコード作成にはHTMLタグを使わないでください
+** 例えば"["や"]"はそのまま使用し,HTML表現しない
+* テキストのみで表現してください
+
 <メソッド毎にstep>
     <step12>テスト対象コードに対するC0テストコード作成</step12>
     <step13>テスト対象コードに対するC0テストコード妥当性分析</step13>
@@ -172,7 +178,21 @@ StepByStepで進めます、一度に進めず各stepで立ち止まってくだ
 をサンプルコードと同様のタイミングで必ず出力処理を行ってください +
 
 ## python バージョン +
-3.11.6以降を使用します、古い書き方は採用しません +
+3.11.9以降を使用します、古い書き方は採用しません +
+
+## assertでは実行環境依存が出ない形式で評価する
+Unix環境とWindows環境の差異を吸収し環境依存性を回避する必要があります。
+OS環境に関わらず統一assert評価ができるようにしてください。
+特にPath評価にはPathlib.Pathを使用するようにしてください。
+
+# 呼び出し評価
+制御フロー評価が目的にもかかわらず、呼び出し先のモジュールのテストも組み込んでしまっているケースがあります。
+呼び出し資源は適切にMock化し制御フロー側からはCallの妥当性を評価するようにしてください。
+呼び出し先のテストは、その資源のテストカテゴリで独立して実施します。
+
+## Mock構成
+テストイベントに応じて適切な構造を持つようにしてください、情報が足りない場合はコードを書く前の評価フェーズで要求してください。
+依存度によってはその対象を丸ごとMock化するケースもあります、情報が足りない場合はコードを書く前の評価フェーズで要求してください。
 
 ## 確認 +
 前提・要件はOKでしょうか +
@@ -181,6 +201,62 @@ StepByStepで進めます、一度に進めず各stepで立ち止まってくだ
 .prompt: step0
 ====
 では<step0>から進めましょう
+
+## config共通について
+@with_configで外部から注入しています
+この考察を含めてください
+テストコードを書くに当たり、Mockの範囲などには十分な考慮が必要になります
+
+## @with_configの呼び出し元
+### ibr_decorator_config.py
+from functools import wraps
+from pathlib import Path
+import inspect
+
+from src.lib.common_utils.ibr_get_config import Config
+from src.lib.common_utils.ibr_enums import LogLevel
+
+def with_config(cls):
+    # 使用例
+    # from src.lib.common_utils.ibr_decorator_config import with_config
+    # @with_config
+    # class Aaaaaa:
+
+    original_init = cls.init
+    #print(f"Decorating class: {cls.name}")  # デバッグ用
+
+    @wraps(cls)
+    def new_init(self, *args, **kwargs):
+        # クラスの実際のファイルパスを取得
+        class_file = inspect.getfile(cls)
+        config_path = Path(class_file).parent / 'package_config.toml'
+        self.config = Config.load(config_path)
+
+        # 元のinitメソッドを呼び出す
+        original_init(self, *args, **kwargs)
+
+        #print(f"Initializing instance of: {cls.name}")  # デバッグ用
+        #print(f"Looking for config at: {config_path}")  # デバッグ用
+        #print(f"Config loaded for: {cls.name}")  # デバッグ用
+
+    cls.init = new_init
+    return cls
+
+def initialize_config(calling_module):
+    # 使用例
+    # from src.lib.common_utils.ibr_decorator_config import initialize_config
+    # import sys
+    # config, log_msg = initialize_config(sys.modules[name])
+
+    # 呼び出し元のモジュールファイルのパスを取得
+    caller_file = inspect.getfile(calling_module)
+    config_path = Path(caller_file).parent / 'package_config.toml'
+    config = Config.load(config_path)
+
+    #print(f"Looking for config at: {config_path}")  # デバッグ用
+    #print(f"Config loaded for module: {calling_module.name}")  # デバッグ用
+
+    return config
 
 サンプルコード:
 
@@ -340,10 +416,10 @@ class TestBusinessUnitCodeConverterInit:
 
 
     @pytest.mark.parametrize(("file_name", "expected"), [
-        ("人事_申請データ.xlsx", 1),
-        ("国企_申請データ.xlsx", 2),
-        ("関連(ダミー課あり)_申請データ.xlsx", 3),
-        ("関連(ダミー課なし)_申請データ.xlsx", 4),
+        ("人事_申請データ.xlsx", 1),                    # ケース説明コメントを生成してください
+        ("国企_申請データ.xlsx", 2),                    # ケース説明コメントを生成してください
+        ("関連(ダミー課あり)_申請データ.xlsx", 3),      # ケース説明コメントを生成してください
+        ("関連(ダミー課なし)_申請データ.xlsx", 4),      # ケース説明コメントを生成してください
     ])
     def test_generate_applicant_info_C0_valid_input(self, file_name, expected):
         test_doc = """テスト内容:
