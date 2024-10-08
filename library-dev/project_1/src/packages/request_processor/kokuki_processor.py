@@ -20,7 +20,7 @@ from .excel_to_dataframe_mapper import (
 class KokukiPreProcessor(PreProcessor):
     def chain_pre_process(self) -> list[PreProcessor]:
         return [
-            #MapperProcessExcelColtoPythonColKokuki(),
+            MapperProcessExcelColtoPythonColKokuki(),
             #DummyPreProcess1(),
             #DummyPreProcess2(),
         ]
@@ -30,6 +30,7 @@ class KokukiPreProcessor(PreProcessor):
 class KokukiPostProcessor(PostProcessor):
     def chain_post_process(self) -> list[PostProcessor]:
         return [
+            #MapperProcessExcelColtoPythonColKokuki(),
             #DummyPostProcess1(),
             #DummyPostProcess2(),
         ]

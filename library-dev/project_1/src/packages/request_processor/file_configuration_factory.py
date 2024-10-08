@@ -24,17 +24,15 @@ class JinjiFileConfigurationFactory(FileConfigurationFactory):
         pattern = self.config.package_config.get('excel_definition', {}).get('UPDATE_RECORD_JINJI', '')
         return list(base_path.glob(pattern))
 
-        # listを返すように変更
-        #return list(
-        #    Path(
-        #        f"{self.config.common_config.get('optional_path', {}).get('SHARE_RECEIVE_PATH','')}",
-        #    ).glob(
-        #        f"{self.config.package_config.get('excel_definition', {}).get('UPDATE_RECORD_JINJI', '')}",
-        #    )
-        #)
-
     def create_sheet_name(self) -> str:
         return self.config.package_config.get('excel_definition', {}).get('UPDATE_RECORD_JINJI_SHEET_NAME', '')
+
+    def create_sheet_skiprows(self) -> str:
+        return self.config.package_config.get('excel_definition', {}).get('UPDATE_RECORD_JINJI_SHEET_SKIPROWS', '')
+
+    def create_sheet_usecols(self) -> str:
+        return self.config.package_config.get('excel_definition', {}).get('UPDATE_RECORD_JINJI_SHEET_USECOLS', '')
+
 
 
 @with_config
@@ -49,16 +47,15 @@ class KokukiFileConfigurationFactory(FileConfigurationFactory):
         pattern = self.config.package_config.get('excel_definition', {}).get('UPDATE_RECORD_KOKUKI', '')
         return list(base_path.glob(pattern))
 
-        ## listを返すように変更
-        #return list(Path(
-        #        f"{self.config.common_config.get('optional_path', {}).get('SHARE_RECEIVE_PATH','')}",
-        #    ).glob(
-        #        f"{self.config.package_config.get('excel_definition', {}).get('UPDATE_RECORD_KOKUKI', '')}",
-        #    )
-        #)
-
     def create_sheet_name(self) -> str:
         return self.config.package_config.get('excel_definition', {}).get('UPDATE_RECORD_KOKUKI_SHEET_NAME', '')
+
+    def create_sheet_skiprows(self) -> str:
+        return self.config.package_config.get('excel_definition', {}).get('UPDATE_RECORD_KOKUKI_SHEET_SKIPROWS', '')
+
+    def create_sheet_usecols(self) -> str:
+        return self.config.package_config.get('excel_definition', {}).get('UPDATE_RECORD_KOKUKI_SHEET_USECOLS', '')
+
 
 @with_config
 class KanrenFileConfigurationFactory(FileConfigurationFactory):
@@ -71,13 +68,11 @@ class KanrenFileConfigurationFactory(FileConfigurationFactory):
         pattern = self.config.package_config.get('excel_definition', {}).get('UPDATE_RECORD_KANREN', '')
         return list(base_path.glob(pattern))
 
-        #return list(
-        #    Path(
-        #        f"{self.config.common_config.get('optional_path', {}).get('SHARE_RECEIVE_PATH','')}",
-        #    ).glob(
-        #        f"{self.config.package_config.get('excel_definition', {}).get('UPDATE_RECORD_KANREN', '')}",
-        #    )
-        #)
-
     def create_sheet_name(self) -> str:
         return self.config.package_config.get('excel_definition', {}).get('UPDATE_RECORD_KANREN_SHEET_NAME', '')
+
+    def create_sheet_skiprows(self) -> str:
+        return self.config.package_config.get('excel_definition', {}).get('UPDATE_RECORD_KANREN_SHEET_SKIPROWS', '')
+
+    def create_sheet_usecols(self) -> str:
+        return self.config.package_config.get('excel_definition', {}).get('UPDATE_RECORD_KANREN_SHEET_USECOLS', '')

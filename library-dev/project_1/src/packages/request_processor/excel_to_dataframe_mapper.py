@@ -214,9 +214,10 @@ class JinjiExcelMapping(ExcelMapping):
             unified_df['resident_branch_code'] = df['resident_branch_code']
             unified_df['resident_branch_name'] = df['resident_branch_name']
             unified_df['aaa_transfer_date'] = df['aaa_transfer_date']
-            unified_df['remarks'] = df['remarks']
-            unified_df['area_code'] = df.apply(lambda row: row['section_area_code'] if row['target_org'] == 'エリア' else '', axis=1)
+            unified_df['business_and_area_code'] = df.apply(lambda row: row['section_area_code'] if row['target_org'] == 'エリア' else '', axis=1)
             unified_df['area_name'] = df.apply(lambda row: row['section_area_name'] if row['target_org'] == 'エリア' else '', axis=1)
+            unified_df['remarks'] = df['remarks']
+            unified_df['organizaion_name_kana'] = df['organizaion_name_kana']
 
         except Exception as e:
             err_msg = f"Error occurred while mapping to unified layout: {str(e)}"
@@ -324,12 +325,10 @@ class KokukiExcelMapping(ExcelMapping):
             unified_df['application_type'] = df['application_type']
             unified_df['target_org'] = df['target_org']
             unified_df['branch_code'] = df['branch_code']
-            unified_df['branch_name'] = df['branch_name_ja']
             unified_df['section_gr_code'] = df['section_area_code']
             unified_df['section_gr_name'] = df['section_area_name_ja']
             unified_df['section_name_en'] = df['section_area_name_en']
             unified_df['aaa_transfer_date'] = df['aaa_transfer_date']
-            unified_df['section_name_abbr'] = df['section_area_abbr_ja']
 
         except Exception as e:
             err_msg = f"Error occurred while mapping to unified layout: {str(e)}"
@@ -412,6 +411,9 @@ class KanrenExcelMappingWithDummy(ExcelMapping):
     def map_to_unified_layout(self, df: pd.DataFrame) -> pd.DataFrame:
         """関連会社データを統一レイアウトに変換します
 
+        ダミー課ありパターン、ただし今後は新規申請は受領しない
+        現行ですでにダミー課あり部署のみ変更・削除のメンテナンスを行う
+
         Arguments:
         df (pd.DataFrame): 変換対象のデータフレーム
 
@@ -442,7 +444,6 @@ class KanrenExcelMappingWithDummy(ExcelMapping):
             unified_df['section_gr_name'] = df['section_gr_name']
             unified_df['section_name_en'] = df['section_name_en']
             unified_df['aaa_transfer_date'] = df['aaa_transfer_date']
-            unified_df['orgnization_name_kana'] = df['orgnization_name_kana']
             unified_df['section_name_kana'] = df['section_name_kana']
             unified_df['section_name_abbr'] = df['section_name_abbr']
             unified_df['bpr_target_flag'] = df['bpr_target_flag']
@@ -528,6 +529,9 @@ class KanrenExcelMappingWithoutDummy(ExcelMapping):
     def map_to_unified_layout(self, df: pd.DataFrame) -> pd.DataFrame:
         """関連会社データを統一レイアウトに変換します
 
+        * ダミー課なしパターン→人事レイアウトで申請する
+        * 設定・判定処理は人事と同じとして設定する
+
         Arguments:
         df (pd.DataFrame): 変換対象のデータフレーム
 
@@ -548,20 +552,23 @@ class KanrenExcelMappingWithoutDummy(ExcelMapping):
             unified_df = pd.DataFrame(columns=self.unified_layout)
 
             unified_df['ulid'] = [str(ulid.new()) for _ in range(len(df))]
-            unified_df['applicant_info'] = '4'  # ダミー課なし
+            unified_df['applicant_info'] = '1'
             unified_df['application_type'] = df['application_type']
+            unified_df['target_org'] = df['target_org']
             unified_df['business_unit_code'] = df['business_unit_code']
             unified_df['parent_branch_code'] = df['parent_branch_code']
             unified_df['branch_code'] = df['branch_code']
             unified_df['branch_name'] = df['branch_name']
-            unified_df['section_gr_code'] = df['section_gr_code']
-            unified_df['section_gr_name'] = df['section_gr_name']
-            unified_df['section_name_en'] = df['section_name_en']
+            unified_df['section_gr_code'] = df.apply(lambda row: row['section_area_code'] if row['target_org'] == '課' else '', axis=1)
+            unified_df['section_gr_name'] = df.apply(lambda row: row['section_area_name'] if row['target_org'] == '課' else '', axis=1)
+            unified_df['section_name_en'] = df['section_area_name_en']
+            unified_df['resident_branch_code'] = df['resident_branch_code']
+            unified_df['resident_branch_name'] = df['resident_branch_name']
             unified_df['aaa_transfer_date'] = df['aaa_transfer_date']
-            unified_df['orgnization_name_kana'] = df['orgnization_name_kana']
-            unified_df['section_name_kana'] = df['section_name_kana']
-            unified_df['section_name_abbr'] = df['section_name_abbr']
-            unified_df['bpr_target_flag'] = df['bpr_target_flag']
+            unified_df['business_and_area_code'] = df.apply(lambda row: row['section_area_code'] if row['target_org'] == 'エリア' else '', axis=1)
+            unified_df['area_name'] = df.apply(lambda row: row['section_area_name'] if row['target_org'] == 'エリア' else '', axis=1)
+            unified_df['remarks'] = df['remarks']
+            unified_df['organizaion_name_kana'] = df['organizaion_name_kana']
 
         except Exception as e:
             err_msg = f"Error occurred while mapping to unified layout: {str(e)}"
@@ -569,3 +576,29 @@ class KanrenExcelMappingWithoutDummy(ExcelMapping):
             raise ExcelMappingError(err_msg) from None
         else:
             return unified_df[self.unified_layout].fillna("")
+
+        #try:
+        #    unified_df = pd.DataFrame(columns=self.unified_layout)
+
+        #    unified_df['ulid'] = [str(ulid.new()) for _ in range(len(df))]
+        #    unified_df['applicant_info'] = '4'  # ダミー課なし
+        #    unified_df['application_type'] = df['application_type']
+        #    unified_df['business_unit_code'] = df['business_unit_code']
+        #    unified_df['parent_branch_code'] = df['parent_branch_code']
+        #    unified_df['branch_code'] = df['branch_code']
+        #    unified_df['branch_name'] = df['branch_name']
+        #    unified_df['section_gr_code'] = df['section_gr_code']
+        #    unified_df['section_gr_name'] = df['section_gr_name']
+        #    unified_df['section_name_en'] = df['section_name_en']
+        #    unified_df['aaa_transfer_date'] = df['aaa_transfer_date']
+        #    unified_df['orgnization_name_kana'] = df['orgnization_name_kana']
+        #    unified_df['section_name_kana'] = df['section_name_kana']
+        #    unified_df['section_name_abbr'] = df['section_name_abbr']
+        #    unified_df['bpr_target_flag'] = df['bpr_target_flag']
+
+        #except Exception as e:
+        #    err_msg = f"Error occurred while mapping to unified layout: {str(e)}"
+        #    self.log_msg(err_msg, LogLevel.ERROR)
+        #    raise ExcelMappingError(err_msg) from None
+        #else:
+        #    return unified_df[self.unified_layout].fillna("")

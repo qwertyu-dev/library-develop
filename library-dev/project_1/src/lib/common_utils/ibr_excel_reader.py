@@ -48,6 +48,7 @@ class ExcelDataLoader:
         """ExcelBookからシート1枚を指定してDataFrameへ取り込み
 
         1つのSheetからDataFrameへ取り込みを行う
+        属性は全てobject型で取り込み、利用者側で必要に応じて型変換対応を行う
 
         Copy right:
             (あとで書く)
@@ -93,6 +94,7 @@ class ExcelDataLoader:
                     skiprows=skiprows,
                     header=0,
                     usecols=usecols,
+                    dtype=object,     # デフォルトでは全てobject型で取り込み
                 )
                 # skiprowsは個別に対応する
                 _df = _df.iloc[skiprecords:]

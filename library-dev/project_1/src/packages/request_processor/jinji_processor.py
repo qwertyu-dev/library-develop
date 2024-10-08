@@ -21,7 +21,7 @@ from .excel_to_dataframe_mapper import (
 class JinjiPreProcessor(PreProcessor):
     def chain_pre_process(self) -> list[PreProcessor]:
         return [
-            #MapperProcessExcelColtoPythonColJinji(),
+            MapperProcessExcelColtoPythonColJinji(),
             #DummyPreProcess1(),
             #DummyPreProcess2(),
         ]

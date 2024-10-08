@@ -23,17 +23,18 @@ from src.lib.validator_utils.ibr_model_validator import (
 class KanrenModel(BaseModel):
     """関連レイアウト: Validator,整合性チェック"""
     # Item定義
-    NO: int = Field(...)
-    あ: str = Field(...)
-    い: str = Field(...)
-    う: int = Field(...)
-    え: int = Field(...)
-    お: int = Field(...)
-    か: int = Field(...)
-    き: str = Field(...)
-    く: int = Field(...)
-    け: int = Field(...)
-    こ: float = Field(...)
+    application_type: str = Field(...)
+    business_unit_code: str = Field(...)
+    parent_branch_code: str = Field(...)
+    branch_code: str = Field(...)
+    branch_name: str = Field(...)
+    section_gr_code: str = Field(...)
+    section_gr_name: str = Field(...)
+    section_name_en: str = Field(...)
+    aaa_transfer_date: str = Field(...)
+    section_name_kana: str = Field(...)
+    section_name_abbr: str = Field(...)
+    bpr_target_flag: str = Field(...)
 
     # 挙動定義
     model_config = ConfigDict(
@@ -42,19 +43,39 @@ class KanrenModel(BaseModel):
         strict=True,
     )
 
-    @field_validator('あ')
-    @classmethod
-    def is_alphabet_a(cls, v: str) -> str:
-        if not v.isalpha():
-            raise ValueError('field_a must be alphabet')
-        return v
+    ## Item定義
+    #NO: int = Field(...)
+    #あ: str = Field(...)
+    #い: str = Field(...)
+    #う: int = Field(...)
+    #え: int = Field(...)
+    #お: int = Field(...)
+    #か: int = Field(...)
+    #き: str = Field(...)
+    #く: int = Field(...)
+    #け: int = Field(...)
+    #こ: float = Field(...)
 
-    @field_validator('い')
-    @classmethod
-    def is_alphabet_b(cls, v: str) -> str:
-        if not v.isalpha():
-            raise ValueError('field_a must be alphabet')
-        return v
+    ## 挙動定義
+    #model_config = ConfigDict(
+    #    case_sensitive=True,
+    #    validate_assignment=True,
+    #    strict=True,
+    #)
+
+    #@field_validator('あ')
+    #@classmethod
+    #def is_alphabet_a(cls, v: str) -> str:
+    #    if not v.isalpha():
+    #        raise ValueError('field_a must be alphabet')
+    #    return v
+
+    #@field_validator('い')
+    #@classmethod
+    #def is_alphabet_b(cls, v: str) -> str:
+    #    if not v.isalpha():
+    #        raise ValueError('field_a must be alphabet')
+    #    return v
 
 
 # classで書いたValidatorもインスタンス生成して使えば良い話

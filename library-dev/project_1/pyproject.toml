@@ -1,39 +1,39 @@
-[tool.poetry]
-name = "poetry-test"
-version = "0.1.0"
-description = ""
-authors = ["AAAA <AAAA@AAAA.net>"]
-readme = "README.md"
-packages = [{include = "poetry_test"}]
-
-[tool.poetry.dependencies]
-python = "3.11.6"
-requests = "^2.31.0"
-numpy = "^1.26.2"
-pandas = "^2.1.4"
-pydantic = "^2.5.2"
-ruff = "^0.1.7"
-logger = "^1.4"
-logging = "^0.4.9.6"
-pytest = "^7.4.3"
-pytest-mock = "^3.12.0"
-tabulate = "^0.9.0"
-unittest = "^0.0"
-toml = "^0.10.2"
-openpyxl = "^3.1.2"
-pandera = "^0.18.0"
-PyYAML = "^6.0.1"
-jaconv = "^0.3.4"
-pykakasi = "^2.2.1"
-kanjize = "^1.5.0"
-ulid-py = "^1.1.0"
-
-[tool.poetry.group.dev.dependencies]
-ipykernel = "^6.27.1"
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+#[tool.poetry]
+#name = "poetry-test"
+#version = "0.1.0"
+#description = ""
+#authors = ["AAAA <AAAA@AAAA.net>"]
+#readme = "README.md"
+#packages = [{include = "poetry_test"}]
+#
+#[tool.poetry.dependencies]
+#python = "3.11.6"
+#requests = "^2.31.0"
+#numpy = "^1.26.2"
+#pandas = "^2.1.4"
+#pydantic = "^2.5.2"
+#ruff = "^0.1.7"
+#logger = "^1.4"
+#logging = "^0.4.9.6"
+#pytest = "^7.4.3"
+#pytest-mock = "^3.12.0"
+#tabulate = "^0.9.0"
+#unittest = "^0.0"
+#toml = "^0.10.2"
+#openpyxl = "^3.1.2"
+#pandera = "^0.18.0"
+#PyYAML = "^6.0.1"
+#jaconv = "^0.3.4"
+#pykakasi = "^2.2.1"
+#kanjize = "^1.5.0"
+#ulid-py = "^1.1.0"
+#
+#[tool.poetry.group.dev.dependencies]
+#ipykernel = "^6.27.1"
+#
+#[build-system]
+#requires = ["poetry-core"]
+#build-backend = "poetry.core.masonry.api"
 
 ################################################################
 # ruff
@@ -81,7 +81,7 @@ ignore = [
 #    "D400", # 
 #    "TRY003", # 
 #    "TRY200", # 
-#    "EM102", # 
+#    "EM102",   # f-string-in-exceptionを許容
 ]
 
 #######################################################
@@ -101,7 +101,10 @@ ignore = [
     "D103",   # DocStringの代わりにtest_docとしてテスト説明文字列とする運用
     "ANN201", # 関数名の途中に大文字を許容,イベントを表す際に回避不能 
     "PT011",  # test処理で出力MSGとマッチする、テストで完全一致MSGを定義するのは困難
-    "B017",  # test処理で出力MSGとマッチする、テストで完全一致MSGを定義するのは困難
+    "B017",   # test処理で出力MSGとマッチする、テストで完全一致MSGを定義するのは困難
+    "PLR2004",# testでは固定値直接比較許容
+    "E731",   # testではlamba直接指定許容
+    "ANN202", # testでは関数説明省略を許容
 ]
 
 [tool.ruff.format]

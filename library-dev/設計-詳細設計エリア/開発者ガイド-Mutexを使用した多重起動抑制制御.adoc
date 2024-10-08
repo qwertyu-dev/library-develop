@@ -1,0 +1,105 @@
+= Mutexを使用した多重起動制御ガイド
+
+== 概要
+
+このガイドでは、Windowsシステムにおいて、Mutexを使用してアプリケーションの多重起動を制御する方法について説明します。この手法により、同一プロセスが複数同時に実行されることを防ぎ、データの整合性を保ち、リソースの競合を避けることができます。
+
+== 目的
+
+リファレンスではファイルベースのデータ更新となるため、データに対する多重更新許容を想定していません。同時更新が発生しないよう運用設計が必要となりますが、アプリケーション側でも多重起動抑制が必要な処理は回避実装する必要があります。
+
+* アプリケーションの多重起動を防止する
+* データの整合性を確保する
+* システムリソースの効率的な利用を促進する
+
+== 実装方法
+
+=== 共通ライブラリ
+
+多重起動制御のための共通ライブラリ `MutexManager` を使用します。
+
+.MutexManager
+[source,python]
+----
+# src/lib/common_utils/mutex_control.py
+
+from types import TracebackType
+import win32api
+import win32event
+import winerror
+from src.lib.common_utils.ibr_enums import LogLevel
+from src.lib.common_utils.ibr_logger_package import LoggerPackage
+
+class ProcessAlreadyRunningError(RuntimeError):
+    def __init__(self, process_name: str):
+        super().__init__(f'Already running: {process_name}')
+
+class MutexManager:
+    def __init__(self, caller_package_name: str) -> None:
+        self.mutex = win32event.CreateMutex(None, False, caller_package_name)
+        if win32api.GetLastError() == winerror.ERROR_ALREADY_EXISTS:
+            raise ProcessAlreadyRunningError(caller_package_name)
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type: type[BaseException]|None, exc_value: BaseException|None, traceback:TracebackType|None) -> None:
+        if self.mutex:
+            try:
+                win32api.CloseHandle(self.mutex)
+            except Exception as e:
+                # エラーログ出力
+                raise
+----
+
+=== メインスクリプトでの使用
+
+アプリケーションのメインスクリプトで `MutexManager` を使用して多重起動を制御します。
+
+[source,python]
+----
+# main.py
+
+from src.lib.common_utils.mutex_control import MutexManager, ProcessAlreadyRunningError
+from package.main_module import MainModule
+
+if __name__ == "__main__":
+    try:
+        with MutexManager(__package__):
+            MainModule.start()
+    except ProcessAlreadyRunningError:
+        print(f"{__package__}は既に実行中です。")
+    except Exception as e:
+        print(f"エラーが発生しました: {e}")
+        # 必要に応じてログ出力やエラー通知を行う
+----
+
+== 使用上の注意点
+
+* `__package__` が一意であることを確認してください。重複すると意図しない動作を引き起こす可能性があります。
+* この実装は Windows 環境専用です。他の OS で使用する場合は、適切な代替手段を検討してください。
+* 例外処理を適切に行い、ユーザーに分かりやすい形でエラーを通知してください。
+
+== ベストプラクティス
+
+* メインスクリプトで `MutexManager` を使用し、アプリケーション全体の多重起動を制御します。
+* 個々のモジュールやクラスでは多重起動制御のロジックを実装せず、ビジネスロジックに集中します。
+* ログ出力を適切に行い、多重起動の試行や例外の発生を記録します。
+
+== テストと検証
+
+以下のテストケースを実施し、多重起動制御が正しく機能していることを確認してください：
+
+. 通常の起動: プロセスが正常に起動することを確認
+. 多重起動試行: 既に起動しているプロセスがある状態で再度起動を試み、適切なエラーメッセージが表示されることを確認
+. 異常終了後の再起動: プロセスを強制終了させた後、再度正常に起動できることを確認
+
+== トラブルシューティング
+
+ProcessAlreadyRunningError が発生した場合::
+* タスクマネージャーで同名のプロセスが既に実行されていないか確認してください。
+* プロセスが存在しない場合は、Mutexが正しく解放されていない可能性があります。システムの再起動を試みてください。
+
+その他の例外が発生した場合::
+* ログを確認し、エラーの詳細を調査してください。
+* Windows APIの呼び出しに問題がある場合は、必要なライブラリが正しくインストールされているか確認してください。

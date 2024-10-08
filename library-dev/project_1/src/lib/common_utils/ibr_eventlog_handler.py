@@ -186,11 +186,11 @@ class WindowsEventLogger:
         # イベントログに書き出し
         try:
             win32evtlogutil.ReportEvent(
-                Source=_src,
-                EventID=_evt_id,
-                EventType=_evt_type,
-                Strings=_strings,
-                Data=_data,
+                appName=_src,
+                eventID=_evt_id,
+                eventType=_evt_type,
+                string=_strings,
+                data=_data,
             )
         except pywintypes.error as e:
             log_msg(f'eventlog write error: {e}')

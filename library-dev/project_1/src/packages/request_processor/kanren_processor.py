@@ -21,7 +21,7 @@ from .excel_to_dataframe_mapper import (
 class KanrenPreProcessor(PreProcessor):
     def chain_pre_process(self) -> list[PreProcessor]:
         return [
-            #MapperProcessExcelColtoPythonColKanren(),
+            MapperProcessExcelColtoPythonColKanren(),
             #DummyPreProcess1(),
             #DummyPreProcess2(),
         ]

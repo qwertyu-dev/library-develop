@@ -23,17 +23,25 @@ from src.lib.validator_utils.ibr_model_validator import (
 class JinjiModel(BaseModel):
     """人事レイアウト: Validator,整合性チェック"""
     # Item定義
-    NO: int = Field(...)
-    あ: str = Field(...)
-    い: str = Field(...)
-    う: int = Field(...)
-    え: int = Field(...)
-    お: int = Field(...)
-    か: int = Field(...)
-    き: str = Field(...)
-    く: int = Field(...)
-    け: int = Field(...)
-    こ: float = Field(...)
+    report_date: str = Field(...)
+    application_number: str = Field(...)
+    effective_date: str = Field(...)
+    application_type: str = Field(...)
+    target_org: str = Field(...)
+    business_unit_code: str = Field(...)
+    parent_branch_code: str = Field(...)
+    branch_code: str = Field(...)
+    branch_name: str = Field(...)
+    branch_name_en: str = Field(...)
+    section_area_code: str = Field(...)
+    section_area_name: str = Field(...)
+    section_area_name_en: str = Field(...)
+    resident_branch_code: str = Field(...)
+    resident_branch_name: str = Field(...)
+    new_org_info_transfer_date: str = Field(...)
+    aaa_transfer_date: str = Field(...)
+    remarks: str = Field(...)
+    organizaion_name_kana: str = Field(...)
 
     # 挙動定義
     model_config = ConfigDict(
@@ -42,21 +50,36 @@ class JinjiModel(BaseModel):
         strict=True,
     )
 
-    @field_validator('あ')
-    @classmethod
-    def is_alphabet_a(cls, v: str) -> str:
-        if not v.isalpha():
-            raise ValueError('field_a must be alphabet')
-        return v
+# sampleでの記述
+#    # Item定義
+#    NO: int = Field(...)
+#    あ: str = Field(...)
+#    い: str = Field(...)
+#    う: int = Field(...)
+#    え: int = Field(...)
+#    お: int = Field(...)
+#    か: int = Field(...)
+#    き: str = Field(...)
+#    く: int = Field(...)
+#    け: int = Field(...)
+#    こ: float = Field(...)
 
-    @field_validator('い')
-    @classmethod
-    def is_alphabet_b(cls, v: str) -> str:
-        if not v.isalpha():
-            raise ValueError('field_a must be alphabet')
-        return v
 
-
+#    @field_validator('あ')
+#    @classmethod
+#    def is_alphabet_a(cls, v: str) -> str:
+#        if not v.isalpha():
+#            raise ValueError('field_a must be alphabet')
+#        return v
+#
+#    @field_validator('い')
+#    @classmethod
+#    def is_alphabet_b(cls, v: str) -> str:
+#        if not v.isalpha():
+#            raise ValueError('field_a must be alphabet')
+#        return v
+#
+#
 # classで書いたValidatorもインスタンス生成して使えば良い話
 #    import →　StringValidatorクラスの上で以下実装
 #    sample

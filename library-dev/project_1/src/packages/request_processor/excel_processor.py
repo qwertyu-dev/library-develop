@@ -29,9 +29,16 @@ class ExcelProcessor:
             err_msg = "Invalid file pattern: None"
             raise ExcelProcessorError(err_msg) from None
         self.excel_sheet_name = file_configuration_factory.create_sheet_name()
-        self.log_msg(f"excel file pattern: {self.excel_file_pattern}", LogLevel.DEBUG)
+        self.excel_sheet_skiprows = file_configuration_factory.create_sheet_skiprows()
+        self.excel_sheet_usecols = file_configuration_factory.create_sheet_usecols()
 
-    def load(self) -> tuple[pd.DataFrame, list[str]]:
+        self.log_msg(f"excel file pattern: {self.excel_file_pattern}", LogLevel.DEBUG)
+        self.log_msg(f"excel sheet_name: {self.excel_sheet_name}", LogLevel.DEBUG)
+        self.log_msg(f"excel sheet_skiprows: {self.excel_sheet_skiprows}", LogLevel.DEBUG)
+        self.log_msg(f"excel sheet_usecols: {self.excel_sheet_usecols}", LogLevel.DEBUG)
+
+    #def load(self) -> tuple[pd.DataFrame, list[str]]:
+    def load(self) -> pd.DataFrame:
         dataframes = []
         common_columns = None
 
@@ -40,6 +47,8 @@ class ExcelProcessor:
             try:
                 _df = self._load_single_file(file_path)
                 df, common_columns = self._validate_and_align_columns(_df, file_path, common_columns)
+                #df_str = df.astype(str).replace('nan', '') # 全ての属性を文字列属性に変換i
+                #dataframes.append(df_str)
                 dataframes.append(df)
             except Exception as e:
                 raise ExcelProcessorError from e
@@ -48,7 +57,11 @@ class ExcelProcessor:
 
     def _load_single_file(self, file_path: Path) -> pd.DataFrame:
         excel_loader = ExcelDataLoader(file_path)
-        return excel_loader.read_excel_one_sheet(sheet_name=self.excel_sheet_name)
+        return excel_loader.read_excel_one_sheet(
+            sheet_name=self.excel_sheet_name,
+            skiprows=self.excel_sheet_skiprows,
+            usecols=self.excel_sheet_usecols,
+            )
 
     def _validate_and_align_columns(self, df: pd.DataFrame, file_path: Path, common_columns: list[str] | None) -> tuple[pd.DataFrame, list[str]]:
         common_columns = common_columns or list(df.columns)

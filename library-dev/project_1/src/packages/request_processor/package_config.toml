@@ -22,20 +22,20 @@
 # リファレンス更新明細ファイル
 [local]
 [local.excel_definition]
-UPDATE_RECORD_JINJI = '一括申請/人事/人事データのコード情報報告*.xlsx'  # TODO 然るべき名前に変更する
-UPDATE_RECORD_JINJI_SHEET_NAME = 'SLKBTNJH'                              # TODO 然るべき名前に変更する
-UPDATE_RECORD_KOKUKI = '一括申請/国企/海外組織情報報告*.xlsx'           # TODO 然るべき名前に変更する
-UPDATE_RECORD_KOKUKI_SHEET_NAME = '海外組織入力シート(変更登録)'         # TODO 然るべき名前に変更する
-UPDATE_RECORD_KANREN = '一括申請/関連/関連*一括申請フォーム*.xlsx'      # TODO 然るべき名前に変更する
-UPDATE_RECORD_KANREN_SHEET_NAME = '関連会社入力シート'                   # TODO 然るべき名前に変更する
-
-# sample
-# UPDATE_RECORD_JINJI = 'input_data_validator.xlsx'   # TODO 然るべき名前に変更する
-# UPDATE_RECORD_JINJI_SHEET_NAME = 'Sheet1'           # TODO 然るべき名前に変更する
-# UPDATE_RECORD_KOKUKI = 'input_data_validator.xlsx'  # TODO 然るべき名前に変更する
-# UPDATE_RECORD_KOKUKI_SHEET_NAME = 'Sheet1'          # TODO 然るべき名前に変更する
-# UPDATE_RECORD_KANREN = 'input_data_validator.xlsx'  # TODO 然るべき名前に変更する
-# UPDATE_RECORD_KANREN_SHEET_NAME = 'Sheet1'          # TODO 然るべき名前に変更する
+UPDATE_RECORD_JINJI = '一括申請/人事/人事データのコード情報報告*.xlsx'
+UPDATE_RECORD_JINJI_SHEET_NAME = 'SLKBTNJH'
+UPDATE_RECORD_JINJI_SHEET_SKIPROWS = 0
+UPDATE_RECORD_JINJI_SHEET_USECOLS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
+#
+UPDATE_RECORD_KOKUKI = '一括申請/国企/海外組織情報報告*.xlsx'
+UPDATE_RECORD_KOKUKI_SHEET_NAME = '海外組織入力シート(変更登録)'
+UPDATE_RECORD_KOKUKI_SHEET_SKIPROWS = 0
+UPDATE_RECORD_KOKUKI_SHEET_USECOLS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+#
+UPDATE_RECORD_KANREN = '一括申請/関連/関連*一括申請フォーム*.xlsx'
+UPDATE_RECORD_KANREN_SHEET_NAME = '関連会社入力シート'
+UPDATE_RECORD_KANREN_SHEET_SKIPROWS = 0
+UPDATE_RECORD_KANREN_SHEET_USECOLS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
 
 # 日本語ExcelColumnをPythonColumnに変換/人事
 [local.excel_definition_mapping_jinji]
@@ -57,6 +57,7 @@ UPDATE_RECORD_KANREN_SHEET_NAME = '関連会社入力シート'                 
 '純新規店の組織情報受渡し予定日(開店日基準)' = 'new_org_info_transfer_date'
 '共通認証受渡し予定日(人事データ反映基準)' = 'aaa_transfer_date'
 '備考' = 'remarks'
+'部店ｶﾅ' = 'organizaion_name_kana'
 
 # 日本語ExcelColumnをPythonColumnに変換/国企
 [local.excel_definition_mapping_kokuki]
@@ -92,9 +93,9 @@ UPDATE_RECORD_KANREN_SHEET_NAME = '関連会社入力シート'                 
 '課Gr名称' = 'section_gr_name'
 '課名称(英語)' = 'section_name_en'
 '共通認証受渡し予定日' = 'aaa_transfer_date'
-'部店カナ' = 'orgnization_name_kana'
-'課Gr名称(カナ)' = 'section_name_kana'
-'課Gr名称(略称)' = 'section_name_abbr'
+#'部店カナ' = 'orgnization_name_kana'
+'課名称(カナ)' = 'section_name_kana'
+'課名称(略称)' = 'section_name_abbr'
 'BPR対象/対象外フラグ' = 'bpr_target_flag'
 
 # 一括申請データを統合レイアウトへ変換定義,column順定義 
@@ -116,13 +117,13 @@ unified_layout = [
 'aaa_transfer_date',
 'internal_sales_dept_code',
 'internal_sales_dept_name',
-'area_code',
+'business_area_code',
 'area_name',
 'remarks',
-'orgnization_name_kana',
 'section_name_kana',
 'section_name_abbr',
 'bpr_target_flag',
+'orgnization_name_kana',
 ]
 
 # Factory定義/class動的生成
