@@ -68,6 +68,8 @@ a|
 
 ==== シナリオ1: クラスに設定
 
+注: 以下のコード例では、 `LogLevel` がすでにインポートされていることを前提としています。
+
 [source,python]
 ----
 from src.lib.common_utils.ibr_decorator_config import with_config
@@ -90,6 +92,8 @@ my_instance.do_something()
 ----
 
 ==== シナリオ2: モジュールレベルで設定/関数のみ,関数Class混在など
+
+注: 以下のコード例では、 `LogLevel` がすでにインポートされていることを前提としています。
 
 [source,python]
 ----
