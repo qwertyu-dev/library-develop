@@ -1,0 +1,117 @@
+= ibr_dataframe_helper ライブラリ利用ガイド
+
+== ライブラリ概要
+
+=== 目的と主要機能の簡潔な説明
+
+ibr_dataframe_helper は、Pandas DataFrameの操作と出力を支援するPythonライブラリです。主な機能は以下の通りです：
+
+* DataFrameの内容を整形された表形式で出力
+* tabulateライブラリを利用した柔軟な表形式出力
+
+=== 想定される主な利用シーン
+
+* データ分析結果のレポート作成
+* DataFrameの内容を読みやすく表示する必要がある場合
+* ログ出力やデバッグ時のDataFrame内容の確認
+
+== クイックスタートガイド
+
+=== import方法
+
+[source,python]
+----
+from src.lib.common_utils.ibr_dataframe_helper import tabulate_dataframe
+----
+
+== 基本的な使用例
+
+=== 主要機能と利用パターン
+[options='header', cols='2,1,3']
+|===
+|機能 |関数名 |説明
+
+|DataFrame表形式出力
+|`tabulate_dataframe`
+a|
+* DataFrameの内容をtabluateライブラリで整形したテキスト表形式で文字列として出力します
+* テーブルログ出力可視性を向上させます
+|===
+
+=== 各主要機能の詳細説明
+
+==== tabulate_dataframe
+
+DataFrameの内容を整形された表形式で文字列として出力します。
+
+* 引数:
+** `df`: 出力対象のDataFrame
+** `headers`: 表のヘッダー（オプション、デフォルトは'keys'）
+** `tablefmt`: 表のフォーマット（オプション、デフォルトは'pipe'）
+
+* 戻り値: 整形された表形式の文字列
+
+=== 具体的な使用シナリオとコード例
+
+==== シナリオ1: 基本的なDataFrame出力
+
+注: 以下のコード例では、カスタムロガー `log_msg` が設定済であること、 `LogLevel` がすでにインポートされていることを前提としています。
+
+[source,python]
+----
+import pandas as pd
+from src.lib.common_utils.ibr_dataframe_helper import tabulate_dataframe
+
+# サンプルDataFrameの作成
+df = pd.DataFrame({
+    'Name': ['Alice', 'Bob', 'Charlie'],
+    'Age': [25, 30, 35],
+    'City': ['New York', 'London', 'Paris']
+})
+
+# DataFrameの内容を表形式で出力
+output = tabulate_dataframe(df)
+log_msg(f"\nDataFrame表示:\n{output}", LogLevel.INFO)
+----
+
+==== シナリオ2: カスタムヘッダーとフォーマットを使用したDataFrame出力
+
+注: 以下のコード例では、カスタムロガー `log_msg` が設定済であること、 `LogLevel` がすでにインポートされていることを前提としています。
+
+[source,python]
+----
+import pandas as pd
+from src.lib.common_utils.ibr_dataframe_helper import tabulate_dataframe
+
+# サンプルDataFrameの作成
+df = pd.DataFrame({
+    'product_id': [1, 2, 3],
+    'product_name': ['Apple', 'Banana', 'Cherry'],
+    'price': [100, 80, 120]
+})
+
+# カスタムヘッダーとgrid形式を使用してDataFrameを出力
+custom_headers = ['ID', '商品名', '価格']
+output = tabulate_dataframe(df, headers=custom_headers, tablefmt='grid')
+log_msg(f"\n商品リスト:\n{output}", LogLevel.INFO)
+----
+
+==== シナリオ3: 大きなDataFrameの一部を出力
+
+注: 以下のコード例では、カスタムロガー `log_msg` が設定済であること、 `LogLevel` がすでにインポートされていることを前提としています。
+
+[source,python]
+----
+import pandas as pd
+import numpy as np
+from src.lib.common_utils.ibr_dataframe_helper import tabulate_dataframe
+
+# 大きなサンプルDataFrameの作成
+df = pd.DataFrame(np.random.randn(100, 5), columns=['A', 'B', 'C', 'D', 'E'])
+
+# 最初の10行だけを出力
+output = tabulate_dataframe(df.head(10))
+log_msg(f"\n大きなDataFrameの最初の10行:\n{output}", LogLevel.INFO)
+----
+
+これらの例は、ibr_dataframe_helperライブラリの基本的な使用方法を示しています。実際の使用時には、出力形式やヘッダーの調整、大きなDataFrameの効率的な表示など、状況に応じて適切に利用することが重要です。また、エラーハンドリングやログレベルの調整なども考慮に入れてください。

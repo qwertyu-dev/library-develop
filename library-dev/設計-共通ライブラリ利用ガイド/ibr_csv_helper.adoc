@@ -1,0 +1,161 @@
+= ibr_csv_helper ライブラリ利用ガイド
+
+== ライブラリ概要
+
+=== 目的と主要機能の簡潔な説明
+
+ibr_csv_helper は、CSVファイルの処理を支援するPythonライブラリです。主な機能には以下が含まれます：
+
+* CSVファイルの読み込みとデータの抽出
+* CSVファイルのデータをPandas DataFrameへの変換
+* ファイルのレコード数のカウント
+* ファイル転送用の制御ファイル（CNTファイル）の作成
+
+=== 想定される主な利用シーン
+
+* データ分析や処理のためのCSVファイルの読み込み
+* 大量のCSVファイルの効率的な処理
+* ファイル転送システムにおける制御ファイルの自動生成
+
+== クイックスタートガイド
+
+=== import方法
+
+[source,python]
+----
+from src.lib.common_utils.ibr_csv_helper import (
+    import_csv_to_row,
+    import_csv_to_dataframe,
+    get_file_record_count,
+    create_cnt_file
+)
+----
+
+== 基本的な使用例
+
+=== 主要機能と利用パターン
+[options='header', cols='2,1,3']
+|===
+|機能 |関数名 |説明
+
+|CSVファイルの読み込み（リスト形式）
+|`import_csv_to_row`
+a|
+* CSVファイルの内容を2次元リストとして読み込みます
+
+|CSVファイルの読み込み（DataFrame形式）
+|`import_csv_to_dataframe`
+a|
+* CSVファイルの内容をDataFrameとして読み込みます
+
+|ファイルのレコード数カウント
+|`get_file_record_count`
+a|
+* ファイル内のレコード数（行数）を取得します
+
+|制御ファイル（CNTファイル）の作成
+|`create_cnt_file`
+a|
+* ファイル転送用の制御ファイルを作成します
+|===
+
+=== 各主要機能の詳細説明
+
+==== import_csv_to_row
+
+CSVファイルの内容を2次元リストとして読み込みます。
+
+* 引数:
+** `file_path`: CSVファイルのパス（文字列またはPathオブジェクト）
+** `delimiter`: 区切り文字（デフォルトはカンマ）
+
+* 戻り値: 2次元文字列リスト
+
+==== import_csv_to_dataframe
+
+CSVファイルの内容をPandas DataFrameとして読み込みます。
+
+* 主な引数:
+** `file_path`: CSVファイルのパス
+** `sep`: 区切り文字（デフォルトはカンマ）
+** `header`: ヘッダー行の指定
+** `encoding`: 文字エンコーディング
+** `usecols`: 読み込む列の指定
+
+* 戻り値: Pandas DataFrame
+
+==== get_file_record_count
+
+ファイル内のレコード数（行数）を取得します。
+
+* 引数:
+** `file_path`: ファイルパス
+** `header`: ヘッダー行数（デフォルトは0）
+
+* 戻り値: レコード数（整数）またはNone（エラー時）
+
+==== create_cnt_file
+
+ファイル転送用の制御ファイル（CNTファイル）を作成します。
+
+* 引数:
+** `csv_file_path`: 制御対象のCSVファイルパス
+** `cnt_file_path`: 作成する制御ファイルのパス
+** `csv_header_record`: CSVファイルのヘッダー行数（デフォルトは1）
+
+* 戻り値: 成功時True、失敗時False
+
+=== 具体的な使用シナリオとコード例
+
+==== シナリオ1: CSVファイルの内容をリストとして読み込む
+
+注: 以下のコード例では、カスタムロガー `log_msg` が設定済であること、 `LogLevel` がすでにインポートされていることを前提としています。
+
+[source,python]
+----
+from pathlib import Path
+from src.lib.common_utils.ibr_csv_helper import import_csv_to_row
+
+csv_path = Path("./data/sample.csv")
+csv_data = import_csv_to_row(csv_path)
+
+log_msg(f"\nCSVデータ（最初の5行）:\n{csv_data[:5]}", LogLevel.INFO)
+----
+
+==== シナリオ2: CSVファイルをDataFrameとして読み込み、基本的な分析を行う
+
+注: 以下のコード例では、カスタムロガー `log_msg` が設定済であること、 `LogLevel` がすでにインポートされていることを前提としています。
+
+[source,python]
+----
+from src.lib.common_utils.ibr_csv_helper import import_csv_to_dataframe
+
+csv_path = "./data/sales_data.csv"
+df = import_csv_to_dataframe(csv_path, usecols=['Date', 'Product', 'Sales'])
+
+summary = df.groupby('Product')['Sales'].sum().sort_values(ascending=False)
+
+log_msg(f"\n製品別売上サマリー:\n{summary}", LogLevel.INFO)
+----
+
+==== シナリオ3: ファイルのレコード数を確認し、制御ファイルを作成する
+
+注: 以下のコード例では、カスタムロガー `log_msg` が設定済であること、 `LogLevel` がすでにインポートされていることを前提としています。
+
+[source,python]
+----
+from src.lib.common_utils.ibr_csv_helper import get_file_record_count, create_cnt_file
+
+data_file = "./data/large_dataset.csv"
+cnt_file = "./data/large_dataset.cnt"
+
+record_count = get_file_record_count(data_file, header=1)
+log_msg(f"\nデータファイルのレコード数: {record_count}", LogLevel.INFO)
+
+if create_cnt_file(data_file, cnt_file):
+    log_msg("制御ファイルの作成に成功しました", LogLevel.INFO)
+else:
+    log_msg("制御ファイルの作成に失敗しました", LogLevel.ERROR)
+----
+
+これらの例は、ibr_csv_helperライブラリの基本的な使用方法を示しています。実際の使用時には、エラーハンドリングやログ出力などを適切に行うことが重要です。

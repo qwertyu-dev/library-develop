@@ -1,0 +1,112 @@
+ibr_decorator_config.pyのコードについて、利用ガイドを作成いたします。
+
+= ibr_decorator_config ライブラリ利用ガイド
+
+== ライブラリ概要
+
+=== 目的と主要機能の簡潔な説明
+
+ibr_decorator_configは、Pythonクラスやモジュールに設定を簡単に追加するためのデコレータと初期化関数を提供するライブラリです。主な機能は以下の通りです：
+
+* クラスに設定を自動的に追加するデコレータ
+* モジュールレベルで設定を初期化する関数
+
+=== 想定される主な利用シーン
+
+* 複数のクラスやモジュールで共通の設定を使用する場合
+* プロジェクト全体で一貫した設定管理が必要な場合
+* 設定ファイルを使用して動的に設定を変更したい場合
+
+== クイックスタートガイド
+
+=== import方法
+
+[source,python]
+----
+from src.lib.common_utils.ibr_decorator_config import with_config, initialize_config
+----
+
+== 基本的な使用例
+
+=== 主要機能と利用パターン
+[options='header', cols='2,1,3']
+|===
+|機能 |関数/デコレータ名 |説明
+
+|クラスへの設定追加
+|`@with_config`
+a|
+* クラスに設定を自動的に追加するデコレータ
+
+|モジュールレベルの設定初期化
+|`initialize_config`
+a|
+* モジュールレベルで設定を初期化する関数
+|===
+
+=== 各主要機能の詳細説明
+
+==== @with_config
+
+クラスに設定を自動的に追加するデコレータです。
+
+* 使用方法: クラス定義の直前に `@with_config` を付けます。
+* 動作: クラスの `__init__` メソッドを拡張し、自動的に設定を読み込みます。
+* 設定ファイル: クラスファイルと同じディレクトリにある `package_config.toml` を読み込みます
+** 利用時には `package_config.toml` の配置が必須になります
+
+==== initialize_config
+
+モジュールレベルで設定を初期化する関数です。
+
+* 引数: `calling_module` - 通常は `sys.modules[__name__]` を使用します。
+* 戻り値: 設定オブジェクト
+* 動作: モジュールファイルと同じディレクトリにある `package_config.toml` を読み込みます
+** 利用時には `package_config.toml` の配置が必須になります
+
+=== 具体的な使用シナリオとコード例
+
+==== シナリオ1: クラスに設定
+
+[source,python]
+----
+from src.lib.common_utils.ibr_decorator_config import with_config
+
+@with_config
+class MyClass:
+    def __init__(self):
+        self.log_msg = self.config.log_message
+        self.log_msg(f"設定値: {self.config.some_value}", LogLevel.INFO)
+
+    def do_something(self):
+        if self.config.feature_enabled:
+            self.log_msg("機能が有効です", LogLevel.INFO)
+        else:
+            self.log_msg("機能が無効です", LogLevel.INFO)
+
+# 使用例
+my_instance = MyClass()
+my_instance.do_something()
+----
+
+==== シナリオ2: モジュールレベルで設定/関数のみ,関数Class混在など
+
+[source,python]
+----
+import sys
+from src.lib.common_utils.ibr_decorator_config import initialize_config
+
+config = initialize_config(sys.modules[__name__])
+log_msg = config.log_message
+
+def main():
+    log_msg(f"アプリケーション名: {config.app_name}", LogLevel.INFO)
+    log_msg(f"デバッグモード: {'有効' if config.debug_mode else '無効'}", LogLevel.INFO)
+
+if __name__ == "__main__":
+    main()
+----
+
+これらの例は、ibr_decorator_configライブラリの基本的な使用方法を示しています。実際の使用時には、適切な`package_config.toml`ファイルを各クラスやモジュールと同じディレクトリに配置する必要があります。また、設定値へのアクセスは`self.config`（クラス内）や`config`（モジュールレベル）を通じて行います。
+
+設定ファイルの管理や、異なる環境（開発、テスト、本番など）での設定の切り替えなども考慮に入れると、より柔軟で堅牢なアプリケーション設計が可能になります。

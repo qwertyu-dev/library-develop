@@ -1,0 +1,123 @@
+= ibr_excel_reader ライブラリ利用ガイド
+
+== ライブラリ概要
+
+=== 目的と主要機能の簡潔な説明
+
+ibr_excel_readerは、Excelファイルからデータを効率的に読み込み、Pandas DataFrameに変換するためのPythonライブラリです。主な機能は以下の通りです：
+
+* 単一のExcelシートからデータを読み込む
+* 複数のExcelシートからデータを読み込み、結合する
+* 特定の行や列をスキップしてデータを読み込む
+* 特定のシートを除外してデータを読み込む
+
+=== 想定される主な利用シーン
+
+* データ分析プロジェクトでのExcelデータの取り込み
+* 複数シートに分散したデータの統合
+* Excelベースの帳票データの処理自動化
+* 大規模なExcelファイルからの効率的なデータ抽出
+
+== クイックスタートガイド
+
+=== import方法
+
+[source,python]
+----
+from src.lib.common_utils.ibr_excel_reader import ExcelDataLoader
+----
+
+== 基本的な使用例
+
+=== 主要機能と利用パターン
+[options='header', cols='2,1,3']
+|===
+|機能 |メソッド名 |説明
+
+|単一シート読み込み
+|`read_excel_one_sheet`
+a|
+* 指定したExcelシートからデータを読み込む
+
+|全シート読み込み
+|`read_excel_all_sheets`
+a|
+* Excelブック内の全シート（または指定したシートを除く全シート）からデータを読み込み、結合する
+|===
+
+=== 各主要機能の詳細説明
+
+==== read_excel_one_sheet
+
+指定したExcelシートからデータを読み込み、DataFrameとして返します。
+
+* 主な引数:
+** `sheet_name`: 読み込むシート名
+** `skiprows`: スキップする行数（デフォルト: 0）
+** `skiprecords`: DataFrame取り込み後にスキップする行数（デフォルト: 0）
+** `usecols`: 読み込む列のリスト（デフォルト: None、全列読み込み）
+
+* 戻り値: 読み込んだデータを含むPandas DataFrame
+
+==== read_excel_all_sheets
+
+Excelブック内の全シートからデータを読み込み、結合したDataFrameを返します。
+
+* 主な引数:
+** `skiprows`: スキップする行数（デフォルト: 0）
+** `skiprecords`: DataFrame取り込み後にスキップする行数（デフォルト: 0）
+** `usecols`: 読み込む列のリスト（デフォルト: None、全列読み込み）
+** `exclusion_sheets`: 除外するシート名のリスト（デフォルト: None）
+
+* 戻り値: 全シートのデータを結合したPandas DataFrame
+
+=== 具体的な使用シナリオとコード例
+
+==== シナリオ1: 単一シートからデータを読み込む
+
+注: 以下のコード例では、カスタムロガー `log_msg` が設定済であること、 `LogLevel` がすでにインポートされていることを前提としています。
+
+[source,python]
+----
+from src.lib.common_utils.ibr_excel_reader import ExcelDataLoader
+
+# ExcelDataLoaderのインスタンスを作成
+data_loader = ExcelDataLoader('./data/sales_report.xlsx')
+
+# 'Monthly Sales'シートからデータを読み込む
+df = data_loader.read_excel_one_sheet('Monthly Sales', skiprows=1, usecols=[0, 1, 2, 3])
+
+log_msg(f"\n読み込んだデータ:\n{df.head()}", LogLevel.INFO)
+----
+
+==== シナリオ2: 全シートから同一フォーマットのデータを読み込み、結合する
+
+注: 以下のコード例では、カスタムロガー `log_msg` が設定済であること、 `LogLevel` がすでにインポートされていることを前提としています。
+
+[source,python]
+----
+from src.lib.common_utils.ibr_excel_reader import ExcelDataLoader
+
+# ExcelDataLoaderのインスタンスを作成
+data_loader = ExcelDataLoader('./data/yearly_report.xlsx')
+
+# 全シートからデータを読み込み、'Summary'シートを除外
+df_all = data_loader.read_excel_all_sheets(skiprows=1, exclusion_sheets=['Summary'])
+
+log_msg(f"\n全シートの結合データ:\n{df_all.head()}", LogLevel.INFO)
+log_msg(f"総行数: {len(df_all)}", LogLevel.INFO)
+----
+
+このライブラリを使用する際は、以下の点に注意してください：
+
+1. エラーハンドリング：ファイルが見つからない、権限がない、メモリ不足など、様々な例外が発生する可能性があります。適切に例外をキャッチし、ログに記録してください。
+
+2. データ型： `デフォルトでは全ての列object型` として読み込まれます。必要に応じて、データ型の変換を行ってください。
+
+3. 大きなファイルの処理：非常に大きなExcelファイルを処理する場合は、メモリ使用量に注意してください。必要に応じて、データを分割して処理することを検討してください。
+
+4. シート名の確認： `read_excel_one_sheet` メソッドを使用する際は、指定したシート名が実際にExcelファイルに存在することを確認してください。
+
+5. 列の一貫性： `read_excel_all_sheets` メソッドを使用する場合、全てのシートの列構造が一致している必要があります。一致しない場合、空のDataFrameが返されます。
+
+このライブラリを活用することで、Excelファイルからのデータ読み込みと処理を効率化し、データ分析や自動化プロセスを迅速に進めることができます。

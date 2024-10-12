@@ -1,0 +1,193 @@
+= ibr_sqlite3_manager ライブラリ利用ガイド
+
+== ライブラリ概要
+
+=== 目的と主要機能の簡潔な説明
+
+ibr_sqlite3_managerは、SQLite3データベースの操作を簡素化し、Pandas DataFrameとの連携を容易にするPythonライブラリです。主な機能は以下の通りです：
+
+* DataFrameからSQLite3テーブルへのデータロード
+* SQLクエリの実行
+* SQLite3テーブルからのデータ取得
+
+=== 想定される主な利用シーン
+
+* データ分析プロジェクトでのローカルデータベース操作
+* 小規模アプリケーションのデータ永続化
+* データの一時保存や中間処理
+* プロトタイピングや開発段階でのデータベース操作
+
+== クイックスタートガイド
+
+=== import方法
+
+[source,python]
+----
+from src.lib.common_utils.ibr_sqlite3_manager import Sqlite3Manager
+----
+
+== 基本的な使用例
+
+=== 主要機能と利用パターン
+[options='header', cols='2,1,3']
+|===
+|機能 |メソッド名 |説明
+
+|DataFrameのロード
+|`load_dataframe_to_sqlite3`
+a|
+* Pandas DataFrameをSQLite3テーブルにロードする
+
+|SQL実行
+|`execute_sql_sqlite3`
+a|
+* 任意のSQLクエリを実行する
+
+|データ取得
+|`fetch_sql_sqlite3`
+a|
+* SQLクエリを実行し、結果を取得する
+|===
+
+=== 各主要機能の詳細説明
+
+==== load_dataframe_to_sqlite3
+
+Pandas DataFrameをSQLite3テーブルにロードします。
+
+* 主な引数:
+** `df`: ロードするDataFrame
+** `tablename`: テーブル名
+** `if_exists`: 既存テーブルがある場合の動作（デフォルトは'replace'）
+
+* 戻り値: 
+** `bool`: ロード成功時はTrue、失敗時はFalse
+
+==== execute_sql_sqlite3
+
+指定されたSQLクエリを実行します。
+
+* 主な引数:
+** `sqltext`: 実行するSQLクエリ
+
+* 戻り値:
+** `bool`: 実行成功時はTrue、失敗時はFalse
+
+==== fetch_sql_sqlite3
+
+SQLクエリを実行し、結果を取得します。
+
+* 主な引数:
+** `sqltext`: 実行するSQLクエリ
+
+* 戻り値:
+** `list[list[str]]|None`: クエリ結果のリスト、失敗時はNone
+
+=== 具体的な使用シナリオとコード例
+
+==== シナリオ1: DataFrameをSQLite3テーブルにロードする
+
+注: 以下のコード例では、カスタムロガー `log_msg` が設定済であること、 `LogLevel` がすでにインポートされていることを前提としています。
+
+[source,python]
+----
+import pandas as pd
+from src.lib.common_utils.ibr_sqlite3_manager import Sqlite3Manager
+
+# DataFrameの作成
+df = pd.DataFrame({
+    'name': ['Alice', 'Bob', 'Charlie'],
+    'age': [25, 30, 35],
+    'city': ['New York', 'London', 'Paris']
+})
+
+# Sqlite3Managerのインスタンスを作成
+sqlite_manager = Sqlite3Manager('./example.db')
+
+# DataFrameをSQLite3テーブルにロード
+success = sqlite_manager.load_dataframe_to_sqlite3(df, 'users')
+
+if success:
+    log_msg("DataFrameが正常にロードされました", LogLevel.INFO)
+else:
+    log_msg("DataFrameのロードに失敗しました", LogLevel.ERROR)
+----
+
+==== シナリオ2: SQLクエリの実行
+
+注: 以下のコード例では、カスタムロガー `log_msg` が設定済であること、 `LogLevel` がすでにインポートされていることを前提としています。
+
+[source,python]
+----
+from src.lib.common_utils.ibr_sqlite3_manager import Sqlite3Manager
+
+sqlite_manager = Sqlite3Manager('./example.db')
+
+# テーブルの作成
+create_table_sql = """
+CREATE TABLE IF NOT EXISTS products (
+    id INTEGER PRIMARY KEY,
+    name TEXT NOT NULL,
+    price REAL NOT NULL
+)
+"""
+
+success = sqlite_manager.execute_sql_sqlite3(create_table_sql)
+
+if success:
+    log_msg("テーブルが正常に作成されました", LogLevel.INFO)
+else:
+    log_msg("テーブルの作成に失敗しました", LogLevel.ERROR)
+
+# データの挿入
+insert_data_sql = """
+INSERT INTO products (name, price) VALUES
+('Product A', 19.99),
+('Product B', 29.99),
+('Product C', 39.99)
+"""
+
+success = sqlite_manager.execute_sql_sqlite3(insert_data_sql)
+
+if success:
+    log_msg("データが正常に挿入されました", LogLevel.INFO)
+else:
+    log_msg("データの挿入に失敗しました", LogLevel.ERROR)
+----
+
+==== シナリオ3: データの取得と表示
+
+注: 以下のコード例では、カスタムロガー `log_msg` が設定済であること、 `LogLevel` がすでにインポートされていることを前提としています。
+
+[source,python]
+----
+from src.lib.common_utils.ibr_sqlite3_manager import Sqlite3Manager
+
+sqlite_manager = Sqlite3Manager('./example.db')
+
+# データの取得
+fetch_sql = "SELECT * FROM products WHERE price > 25.00"
+
+results = sqlite_manager.fetch_sql_sqlite3(fetch_sql)
+
+if results is not None:
+    log_msg("取得されたデータ:", LogLevel.INFO)
+    for row in results:
+        log_msg(f"ID: {row[0]}, Name: {row[1]}, Price: {row[2]}", LogLevel.INFO)
+else:
+    log_msg("データの取得に失敗しました", LogLevel.ERROR)
+----
+
+このライブラリを使用する際は、以下の点に注意してください：
+
+1. データベースファイルの管理: SQLite3データベースファイルの保存場所と権限に注意してください。
+
+2. トランザクション管理: `execute_sql_sqlite3`メソッドは自動的にコミットを行います。複数のクエリを1つのトランザクションとして扱いたい場合は、適切にトランザクション管理を行ってください。
+
+3. セキュリティ: SQL文を直接実行するため、SQLインジェクション攻撃に注意してください。ユーザー入力を直接SQLに組み込まないようにしてください。
+
+4. パフォーマンス: 大量のデータを扱う場合、バッチ処理やインデックスの使用を検討してください。
+
+5. エラーハンドリング: 各メソッドは操作の成功/失敗を示す値を返します。適切にエラーハンドリングを行い、問題が発生した場合はログに記録してください。
+
+このライブラリを活用することで、SQLite3データベースの操作を簡単に行うことができ、小規模なアプリケーションやデータ分析プロジェクトでのデータ管理を効率化することができます。

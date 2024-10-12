@@ -1,0 +1,139 @@
+= ibr_toml_parser ライブラリ利用ガイド
+
+== ライブラリ概要
+
+=== 目的と主要機能の簡潔な説明
+
+ibr_toml_parserは、TOML（Tom's Obvious, Minimal Language）形式のファイルを読み込み、その内容をPythonの辞書（dict）形式に変換するためのライブラリです。主な機能は以下の通りです：
+
+* TOML形式のファイルを読み込む
+* TOML内容をPythonの辞書（dict）に変換する
+* エラーハンドリングとログ出力
+
+=== 想定される主な利用シーン
+
+* アプリケーションの設定ファイルの読み込み
+* プロジェクトの構成情報の管理
+* 簡易的なデータストレージとしての利用
+* 異なるプログラミング言語間でのデータ交換
+
+== クイックスタートガイド
+
+=== import方法
+
+[source,python]
+----
+from src.lib.common_utils.ibr_toml_parser import TomlParser
+----
+
+== 基本的な使用例
+
+=== 主要機能と利用パターン
+[headers='options', cols='2,1,3']
+|===
+|機能 |メソッド名 |説明
+
+|TOML解析
+|`parse_toml_file`
+a|
+* TOML形式のファイルを読み込み、その内容を辞書形式で返す
+|===
+
+=== 各主要機能の詳細説明
+
+==== parse_toml_file
+
+TOML形式のファイルを読み込み、その内容を辞書形式で返します。
+
+* 引数:
+** `toml_path`: TOML形式ファイルのパス（文字列またはPathオブジェクト）
+
+* 戻り値: 
+** `dict|None`: TOML内容を表す辞書。エラー時はNone
+
+* 主な例外:
+** `FileNotFoundError`: ファイルが見つからない場合
+** `PermissionError`: ファイルの読み取り権限がない場合
+** `IsADirectoryError`: 指定されたパスがディレクトリの場合
+** `TypeError`: TOMLファイル内に無効な文字が含まれている場合
+
+=== 具体的な使用シナリオとコード例
+
+==== シナリオ1: アプリケーション設定の読み込み
+
+注: 以下のコード例では、カスタムロガー `log_msg` が設定済であること、 `LogLevel` がすでにインポートされていることを前提としています。
+
+[source,python]
+----
+from src.lib.common_utils.ibr_toml_parser import TomlParser
+
+# TOML形式の設定ファイルを読み込む
+config_path = "./config/app_config.toml"
+
+try:
+    config = TomlParser.parse_toml_file(config_path)
+    if config:
+        log_msg("設定ファイルを正常に読み込みました", LogLevel.INFO)
+        log_msg(f"アプリケーション名: {config.get('app_name', '')}", LogLevel.INFO)
+        log_msg(f"バージョン: {config.get('version', '')}", LogLevel.INFO)
+        log_msg(f"デバッグモード: {'有効' if config.get('debug', False) else '無効'}", LogLevel.INFO)
+    else:
+        log_msg("設定ファイルの読み込みに失敗しました", LogLevel.ERROR)
+except Exception as e:
+    log_msg(f"エラーが発生しました: {str(e)}", LogLevel.ERROR)
+----
+
+==== シナリオ2: 複雑な構造を持つTOMLファイルの解析
+
+注: 以下のコード例では、カスタムロガー `log_msg` が設定済であること、 `LogLevel` がすでにインポートされていることを前提としています。
+
+[source,python]
+----
+from src.lib.common_utils.ibr_toml_parser import TomlParser
+
+# 複雑な構造を持つTOMLファイルを読み込む
+project_config_path = "./project_config.toml"
+
+try:
+    project_config = TomlParser.parse_toml_file(project_config_path)
+    if project_config:
+        log_msg("プロジェクト設定を正常に読み込みました", LogLevel.INFO)
+        
+        # データベース設定の取得
+        db_config = project_config.get('database', {})
+        log_msg(f"データベースホスト: {db_config.get('host')}", LogLevel.INFO)
+        log_msg(f"データベースポート: {db_config.get('port')}", LogLevel.INFO)
+        
+        # APIエンドポイントの取得
+        api_endpoints = project_config.get('api_endpoints', [])
+        log_msg("API エンドポイント:", LogLevel.INFO)
+        for endpoint in api_endpoints:
+            log_msg(f"  - {endpoint.get('name')}: {endpoint.get('url')}", LogLevel.INFO)
+        
+        # 環境別設定の取得
+        environments = project_config.get('environments', {})
+        for env, env_config in environments.items():
+            log_msg(f"{env} 環境の設定:", LogLevel.INFO)
+            log_msg(f"  ログレベル: {env_config.get('log_level')}", LogLevel.INFO)
+            log_msg(f"  デバッグモード: {'有効' if env_config.get('debug', False) else '無効'}", LogLevel.INFO)
+    else:
+        log_msg("プロジェクト設定の読み込みに失敗しました", LogLevel.ERROR)
+except Exception as e:
+    log_msg(f"エラーが発生しました: {str(e)}", LogLevel.ERROR)
+----
+
+このライブラリを使用する際は、以下の点に注意してください：
+
+1. ファイルパスの指定: 相対パスや絶対パスを正確に指定してください。
+
+2. 文字エンコーディング: TOMLファイルはUTF-8でエンコードされていることを確認してください。
+
+3. TOML形式の正確性: 読み込むファイルが正しいTOML形式であることを確認してください。不正な形式はTypeErrorを引き起こす可能性があります。
+
+4. エラーハンドリング: ファイルの読み込みに関連する様々な例外に対処できるよう、適切な例外処理を行ってください。
+
+5. セキュリティ: 設定ファイルに機密情報が含まれる場合、適切なアクセス制御と暗号化を行ってください。
+
+6. 大きなファイルの扱い: 非常に大きなTOMLファイルを扱う場合、メモリ使用量に注意してください。
+
+このライブラリを活用することで、TOML形式の設定ファイルやデータファイルを簡単に読み込み、Pythonプログラム内で利用することができます。設定管理やデータ交換のシナリオで特に有用です。

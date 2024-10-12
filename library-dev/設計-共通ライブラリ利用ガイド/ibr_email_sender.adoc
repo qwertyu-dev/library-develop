@@ -1,0 +1,147 @@
+= ibr_email_helper ライブラリ利用ガイド
+
+== ライブラリ概要
+
+=== 目的と主要機能の簡潔な説明
+
+ibr_email_helperは、SMTPプロトコルを使用してメールを送信するためのPythonライブラリです。主な機能は以下の通りです：
+
+* SMTPサーバーへの接続と認証
+* メール作成と送信
+
+=== 想定される主な利用シーン
+
+* アプリケーションからの自動メール送信
+* システム通知やアラートの送信
+* ユーザーへの情報提供や確認メールの送信
+
+== クイックスタートガイド
+
+=== import方法
+
+[source,python]
+----
+from src.lib.common_utils.ibr_email_helper import SmtpConnection, EmailSender
+----
+
+== 基本的な使用例
+
+=== 主要機能と利用パターン
+
+[options='header', cols='2,1,3']
+|===
+|機能 |クラス名 |説明
+
+|SMTPサーバー接続
+|`SmtpConnection`
+a|
+* SMTPサーバーへの接続と認証を管理
+
+|メール送信
+|`EmailSender`
+a|
+* メールの作成と送信を行う
+|===
+
+=== 各主要機能の詳細説明
+
+==== SmtpConnection
+
+SMTPサーバーへの接続と認証を管理するクラスです。
+
+* 主な引数:
+** `email_server_host`: SMTPサーバーのホスト名
+** `email_server_port`: SMTPサーバーのポート番号
+** `user_id`: 認証用のユーザーID（オプション）
+** `password`: 認証用のパスワード（オプション）
+
+* 使用方法: コンテキストマネージャーとして使用します。
+
+==== EmailSender
+
+メールの作成と送信を行うクラスです。
+
+* 主な引数:
+** `email_server_host`: SMTPサーバーのホスト名
+** `email_server_port`: SMTPサーバーのポート番号
+** `user_id`: 認証用のユーザーID（オプション）
+** `password`: 認証用のパスワード（オプション）
+
+* 主なメソッド:
+** `send_email_via_smtp`: メールを作成し、SMTPサーバーを使用して送信します。
+
+=== 具体的な使用シナリオとコード例
+
+==== シナリオ1: 基本的なメール送信
+
+注: 以下のコード例では、カスタムロガー `log_msg` が設定済であること、 `LogLevel` がすでにインポートされていることを前提としています。
+
+[source,python]
+----
+from src.lib.common_utils.ibr_email_helper import EmailSender
+
+# SMTPサーバー設定
+email_server_host = "smtp.example.com"
+email_server_port = 587
+user_id = "your_username"
+password = "your_password"
+
+# EmailSenderインスタンスの作成
+email_sender = EmailSender(email_server_host, email_server_port, user_id, password)
+
+# メール送信
+try:
+    email_sender.send_email_via_smtp(
+        sender_email="sender@example.com",
+        recipient_email="recipient@example.com",
+        subject="テストメール",
+        body="これはテストメールです。"
+    )
+    log_msg("メールが正常に送信されました。", LogLevel.INFO)
+except Exception as e:
+    log_msg(f"メール送信中にエラーが発生しました: {e}", LogLevel.ERROR)
+----
+
+==== シナリオ2: SmtpConnectionの直接使用
+
+注: 以下のコード例では、カスタムロガー `log_msg` が設定済であること、 `LogLevel` がすでにインポートされていることを前提としています。
+
+[source,python]
+----
+from src.lib.common_utils.ibr_email_helper import SmtpConnection
+from email.mime.text import MIMEText
+
+# SMTPサーバー設定
+email_server_host = "smtp.example.com"
+email_server_port = 587
+user_id = "your_username"
+password = "your_password"
+
+# メール作成
+msg = MIMEText("これはテストメールです。")
+msg['Subject'] = "テストメール"
+msg['From'] = "sender@example.com"
+msg['To'] = "recipient@example.com"
+
+# SmtpConnectionを使用してメール送信
+try:
+    with SmtpConnection(email_server_host, email_server_port, user_id, password) as server:
+        server.send_message(msg)
+    log_msg("メールが正常に送信されました。", LogLevel.INFO)
+except Exception as e:
+    log_msg(f"メール送信中にエラーが発生しました: {e}", LogLevel.ERROR)
+----
+
+これらの例は、ibr_email_helperライブラリの基本的な使用方法を示しています。実際の使用時には、以下の点に注意してください：
+
+1. セキュリティ：パスワードなどの機密情報は、環境変数や安全な設定ファイルから読み込むようにしてください。
+
+2. エラーハンドリング：ネットワークの問題や認証エラーなど、様々な例外が発生する可能性があります。適切にエラーをキャッチし、ログに記録してください。
+
+3. MIME対応：添付ファイルや HTML 形式のメールを送信する場合は、適切な MIME タイプを使用してください。
+
+4. スロットリング：大量のメールを送信する場合は、SMTPサーバーの制限に注意し、必要に応じて送信間隔を設けてください。
+
+5. テスト：実際の運用前に、テスト環境でメール送信のテストを十分に行ってください。
+
+このライブラリを使用することで、Pythonアプリケーションから簡単にメール送信機能を実装することができます。

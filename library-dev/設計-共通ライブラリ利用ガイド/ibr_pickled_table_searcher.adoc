@@ -1,0 +1,219 @@
+= ibr_pickled_table_searcher ライブラリ利用ガイド
+
+== ライブラリ概要
+
+=== 目的と主要機能の簡潔な説明
+
+ibr_pickled_table_searcherは、pickleファイルとして保存されたテーブルデータを効率的に検索するためのPythonライブラリです。主な機能は以下の通りです：
+
+* シンプルな条件での検索（等値検索、前方一致検索）
+* 高度な条件での検索（カスタム関数による複雑な条件指定）
+* キャッシュ機能によるパフォーマンス最適化
+* ファイルの更新検知と自動キャッシュ更新
+
+=== 想定される主な利用シーン
+
+* 大規模なデータセットからの高速データ検索
+* 複雑な条件を用いたデータフィルタリング
+* 頻繁に更新されるデータの効率的な検索
+* データ分析やレポート生成のためのデータ抽出
+
+== クイックスタートガイド
+
+=== import方法
+
+[source,python]
+----
+from src.lib.common_utils.ibr_pickled_table_searcher import TableSearcher
+----
+
+== 基本的な使用例
+
+=== 主要機能と利用パターン
+
+[options='header', cols='2,1,3']
+|===
+|機能 |メソッド名 |説明
+
+|シンプル検索
+|`simple_search`
+a|
+* 基本的な条件（等値、前方一致）での検索を行う
+* 定形パターン
+
+|高度な検索
+|`advanced_search`
+a|
+* カスタム関数を使用した複雑な条件での検索を行う
+* 条件抽出判定関数を定義(->bool)、結果を得る
+|===
+
+=== 各主要機能の詳細説明
+
+==== simple_search
+
+シンプルな条件での検索を行います。
+
+* 主な引数:
+** `conditions`: 検索条件（辞書または辞書のリスト）
+** `operator`: 'AND'または'OR'（デフォルトは'AND'）
+
+* 戻り値: 
+** `pd.DataFrame`: 条件に合致するデータ
+
+==== advanced_search
+
+高度な条件での検索を行います。
+
+* 主な引数:
+** `condition_func`: DataFrameを引数に取り、ブールのSeriesを返す関数
+
+* 戻り値:
+** `pd.DataFrame`: 条件に合致するデータ
+
+=== 具体的な使用シナリオとコード例
+
+==== シナリオ1: シンプルな等値検索
+
+注: 以下のコード例では、カスタムロガー `log_msg` が設定済であること、 `LogLevel` がすでにインポートされていることを前提としています。
+
+[source,python]
+----
+from src.lib.common_utils.ibr_pickled_table_searcher import TableSearcher
+
+# TableSearcherのインスタンスを作成
+searcher = TableSearcher("users_table.pkl")
+
+# 年齢が30歳のユーザーを検索
+result = searcher.simple_search({"age": "30"})
+
+log_msg(f"\n検索結果:\n{result}", LogLevel.INFO)
+----
+
+==== シナリオ2: 複数条件の組み合わせ検索
+
+注: 以下のコード例では、カスタムロガー `log_msg` が設定済であること、 `LogLevel` がすでにインポートされていることを前提としています。
+
+[source,python]
+----
+from src.lib.common_utils.ibr_pickled_table_searcher import TableSearcher
+
+searcher = TableSearcher("products_table.pkl")
+
+# カテゴリが'電子機器'で、価格が50000円未満の商品を検索
+result = searcher.simple_search([
+    {"category": "電子機器"},
+    {"price": "startswith:4"}
+], operator='AND')
+
+log_msg(f"\n検索結果:\n{result}", LogLevel.INFO)
+----
+
+==== シナリオ3-0: 高度な条件での検索
+
+注: 以下のコード例では、カスタムロガー `log_msg` が設定済であること、 `LogLevel` がすでにインポートされていることを前提としています。
+
+[source,python]
+----
+from src.lib.common_utils.ibr_pickled_table_searcher import TableSearcher
+
+def complex_condition(df):
+    return (df['age'] > 25) & (df['salary'] > 50000) & (df['department'].isin(['営業', 'マーケティング']))
+
+searcher = TableSearcher("employees_table.pkl")
+
+result = searcher.advanced_search(complex_condition)
+
+log_msg(f"\n検索結果:\n{result}", LogLevel.INFO)
+----
+
+
+==== シナリオ3-1: 日付範囲と複数条件の組み合わせ検索
+
+注: 以下のコード例では、カスタムロガー `log_msg` が設定済であること、 `LogLevel` がすでにインポートされていることを前提としています。
+
+[source,python]
+----
+from src.lib.common_utils.ibr_pickled_table_searcher import TableSearcher
+import pandas as pd
+
+def date_range_and_status_condition(df):
+    start_date = pd.to_datetime('2024-01-01')
+    end_date = pd.to_datetime('2024-12-31')
+    return (
+        (df['order_date'].between(start_date, end_date)) &
+        (df['status'].isin(['shipped', 'delivered'])) &
+        (df['total_amount'] > 10000)
+    )
+
+searcher = TableSearcher("orders_table.pkl")
+
+result = searcher.advanced_search(date_range_and_status_condition)
+
+log_msg(f"\n2024年の配送済み・届け済みで合計金額が10000円を超える注文:\n{result}", LogLevel.INFO)
+----
+
+このシナリオでは、特定の日付範囲内の注文で、特定のステータスと金額条件を満たすものを検索しています。
+
+==== シナリオ3-2: 文字列処理と数値計算を組み合わせた検索
+
+注: 以下のコード例では、カスタムロガー `log_msg` が設定済であること、 `LogLevel` がすでにインポートされていることを前提としています。
+
+[source,python]
+----
+from src.lib.common_utils.ibr_pickled_table_searcher import TableSearcher
+
+def complex_string_and_numeric_condition(df):
+    return (
+        df['product_name'].str.contains('iPhone|Galaxy') &
+        (df['stock_quantity'] < df['reorder_level']) &
+        (df['price'] > df['average_cost'] * 1.5)
+    )
+
+searcher = TableSearcher("inventory_table.pkl")
+
+result = searcher.advanced_search(complex_string_and_numeric_condition)
+
+log_msg(f"\n在庫が少なく、利益率の高いスマートフォン商品:\n{result}", LogLevel.INFO)
+----
+
+このシナリオでは、商品名に特定の文字列が含まれ、在庫が少なく、かつ利益率が高い商品を検索しています。
+
+==== シナリオ3-3: グループ化と集計を用いた条件検索
+
+注: 以下のコード例では、カスタムロガー `log_msg` が設定済であること、 `LogLevel` がすでにインポートされていることを前提としています。
+
+[source,python]
+----
+from src.lib.common_utils.ibr_pickled_table_searcher import TableSearcher
+
+def aggregate_condition(df):
+    # 部門ごとの平均給与を計算
+    dept_avg_salary = df.groupby('department')['salary'].transform('mean')
+    
+    return (
+        (df['salary'] > dept_avg_salary * 1.2) &  # 部門平均の20%以上
+        (df['years_of_service'] >= 5) &  # 勤続年数5年以上
+        (df['performance_rating'] >= 4)  # 評価4以上
+    )
+
+searcher = TableSearcher("employees_table.pkl")
+
+result = searcher.advanced_search(aggregate_condition)
+
+log_msg(f"\n部門平均より20%以上高給で、勤続5年以上、高評価の従業員:\n{result}", LogLevel.INFO)
+----
+
+このシナリオでは、グループ化と集計を用いて、各部門の平均給与を超える高給で、一定以上の勤続年数と高評価を持つ従業員を検索しています。
+
+これらの例は、`advanced_search` メソッドの柔軟性と強力さを示しています。複雑なビジネスロジック、データ分析、レポート生成などの場面で、このような高度な検索条件を活用することができます。以下の点に注意してください：
+
+1. パフォーマンス: 複雑な条件や大量のデータを扱う場合、検索に時間がかかる可能性があります。必要に応じてインデックスの使用や条件の最適化を検討してください。
+
+2. メモリ使用: 大規模なデータセットや複雑な集計操作を行う場合、メモリ使用量に注意してください。
+
+3. データ型の一貫性: 日付や数値を扱う場合、適切なデータ型変換が行われていることを確認してください。
+
+4. エラーハンドリング: 複雑な条件では予期せぬエラーが発生する可能性があります。適切な例外処理を行ってください。
+
+これらの高度な検索機能を活用することで、複雑なデータ分析タスクやビジネスレポートの生成を効率的に行うことができます。

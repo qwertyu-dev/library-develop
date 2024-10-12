@@ -1,0 +1,169 @@
+= ibr_enums ライブラリ利用ガイド
+
+== ライブラリ概要
+
+=== 目的と主要機能の簡潔な説明
+
+ibr_enumsは、プロジェクト全体で使用される共通の列挙型（Enum）を定義するPythonライブラリです。主な機能は以下の通りです：
+
+* ログレベルの定義
+* 実行環境の定義
+* UNIXタイムスタンプの桁数定義
+
+=== 想定される主な利用シーン
+
+* ロギング機能の実装時
+* 環境依存の処理を行う際の環境判別
+* UNIXタイムスタンプを扱う処理での桁数判別
+
+== クイックスタートガイド
+
+=== import方法
+
+[source,python]
+----
+from src.lib.common_utils.ibr_enums import LogLevel, ExecEnvironment, DigitsNumberforUnixtime
+----
+
+== 基本的な使用例
+
+=== 主要機能と利用パターン
+
+[options='header', cols='2,1,3']
+|===
+|機能 |Enum名 |説明
+
+|ログレベル定義
+|`LogLevel`
+a|
+* カスタムロガーのログレベルを定義
+
+|実行環境定義
+|`ExecEnvironment`
+a|
+* パッケージの実行環境を判別するラベルを定義
+
+|UNIXタイムスタンプ桁数定義
+|`DigitsNumberforUnixtime`
+a|
+* UNIXタイムスタンプの桁数を定義
+|===
+
+=== 各主要機能の詳細説明
+
+==== LogLevel
+
+カスタムロガーのログレベルを定義するEnumです。
+
+* 値:
+** `DEBUG`: logging.DEBUG
+** `INFO`: logging.INFO
+** `WARNING`: logging.WARNING
+** `ERROR`: logging.ERROR
+** `CRITICAL`: logging.CRITICAL
+
+==== ExecEnvironment
+
+パッケージの実行環境を判別するラベルを定義するEnumです。
+
+* 値:
+** `HOSTNAME_PRODUCTION`: 'production'
+** `HOSTNAME_REGRESSION`: 'regression'
+** `HOSTNAME_DEVELOP`: 'develop'
+** `HOSTNAME_LOCAL`: 'local'
+
+注: 実際の使用時には、`HOSTNAME_XXXX`を実際のサーバホスト名に置き換える必要があります。
+
+==== DigitsNumberforUnixtime
+
+UNIXタイムスタンプの桁数を定義するEnumです。
+
+* 値:
+** `DIGITS_10`: 10
+** `DIGITS_13`: 13
+** `DIGITS_16`: 16
+
+=== 具体的な使用シナリオとコード例
+
+==== シナリオ1: ログレベルの使用
+
+注: 以下のコード例では、カスタムロガー `log_msg` が設定済であること、 `LogLevel` がすでにインポートされていることを前提としています。
+
+[source,python]
+----
+from src.lib.common_utils.ibr_enums import LogLevel
+
+def process_data(data):
+    log_msg("データ処理を開始します", LogLevel.INFO)
+    try:
+        # データ処理ロジック
+        result = perform_complex_operation(data)
+        log_msg(f"処理結果: {result}", LogLevel.DEBUG)
+    except Exception as e:
+        log_msg(f"エラーが発生しました: {e}", LogLevel.ERROR)
+    finally:
+        log_msg("データ処理を終了します", LogLevel.INFO)
+----
+
+==== シナリオ2: 実行環境に応じた処理
+
+注: 以下のコード例では、カスタムロガー `log_msg` が設定済であること、 `LogLevel` がすでにインポートされていることを前提としています。
+
+[source,python]
+----
+import os
+from src.lib.common_utils.ibr_enums import ExecEnvironment
+
+def get_database_config():
+    hostname = os.environ.get('HOSTNAME', 'local').lower()
+    
+    if hostname == ExecEnvironment.HOSTNAME_PRODUCTION.value:
+        log_msg("本番環境の設定を使用します", LogLevel.INFO)
+        return ProductionDatabaseConfig()
+    elif hostname == ExecEnvironment.HOSTNAME_REGRESSION.value:
+        log_msg("回帰テスト環境の設定を使用します", LogLevel.INFO)
+        return RegressionDatabaseConfig()
+    elif hostname == ExecEnvironment.HOSTNAME_DEVELOP.value:
+        log_msg("開発環境の設定を使用します", LogLevel.INFO)
+        return DevelopmentDatabaseConfig()
+    else:
+        log_msg("ローカル環境の設定を使用します", LogLevel.INFO)
+        return LocalDatabaseConfig()
+----
+
+==== シナリオ3: UNIXタイムスタンプの桁数判別
+
+注: 以下のコード例では、カスタムロガー `log_msg` が設定済であること、 `LogLevel` がすでにインポートされていることを前提としています。
+
+[source,python]
+----
+from src.lib.common_utils.ibr_enums import DigitsNumberforUnixtime
+
+def process_timestamp(timestamp_str):
+    timestamp_length = len(timestamp_str)
+    
+    if timestamp_length == DigitsNumberforUnixtime.DIGITS_10.value:
+        log_msg("秒単位のUNIXタイムスタンプです", LogLevel.INFO)
+        return int(timestamp_str)
+    elif timestamp_length == DigitsNumberforUnixtime.DIGITS_13.value:
+        log_msg("ミリ秒単位のUNIXタイムスタンプです", LogLevel.INFO)
+        return int(timestamp_str) // 1000
+    elif timestamp_length == DigitsNumberforUnixtime.DIGITS_16.value:
+        log_msg("マイクロ秒単位のUNIXタイムスタンプです", LogLevel.INFO)
+        return int(timestamp_str) // 1000000
+    else:
+        log_msg(f"不正なUNIXタイムスタンプ形式です: {timestamp_str}", LogLevel.ERROR)
+        raise ValueError("Invalid timestamp format")
+----
+
+これらの例は、ibr_enumsライブラリの基本的な使用方法を示しています。実際の使用時には、以下の点に注意してください：
+
+1. 環境設定：`ExecEnvironment` の値は、実際の環境に合わせて適切に設定する必要があります。
+
+2. ログレベルの一貫性： `LogLevel` を使用する際は、プロジェクト全体で一貫したログレベルの使用を心がけてください。
+
+3. UNIXタイムスタンプの扱い： `DigitsNumberforUnixtime` を使用する際は、入力値のバリデーションを適切に行ってください。
+
+4. 拡張性：新しい列挙型が必要になった場合は、このファイルに追加することで、プロジェクト全体で一貫して使用できます。
+
+このライブラリを使用することで、プロジェクト全体で一貫した列挙型の使用が可能になり、コードの可読性と保守性が向上します。

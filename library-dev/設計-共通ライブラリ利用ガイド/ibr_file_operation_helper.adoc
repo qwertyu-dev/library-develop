@@ -1,0 +1,181 @@
+
+= ibr_file_operations ライブラリ利用ガイド
+
+== ライブラリ概要
+
+=== 目的と主要機能の簡潔な説明
+
+ibr_file_operationsは、ファイル操作を安全に行うためのPythonライブラリです。主な機能は以下の通りです：
+
+* ファイルの削除
+* ファイルの移動
+* ファイルのリネーム
+* ファイルのコピー
+
+これらの操作には事前チェックが含まれており、権限や既存ファイルの存在などを確認してから実行します。
+
+=== 想定される主な利用シーン
+
+* データ処理パイプラインでのファイル管理
+* バッチ処理での一時ファイルの操作
+* アプリケーションのファイル管理機能
+* システムメンテナンス作業の自動化
+
+== クイックスタートガイド
+
+=== import方法
+
+[source,python]
+----
+from src.lib.common_utils.ibr_file_operations import delete_file, move_file, rename_file, copy_file
+----
+
+== 基本的な使用例
+
+=== 主要機能と利用パターン
+[options='header', cols='2,1,3']
+|===
+|機能 |関数名 |説明
+
+|ファイル削除
+|`delete_file`
+a|
+* 指定されたファイルを安全に削除します
+
+|ファイル移動
+|`move_file`
+a|
+* ファイルを別のディレクトリに移動します
+* 上書き判定
+* タイムスタンプ付与判定
+
+|ファイルリネーム
+|`rename_file`
+a|
+* ファイルの名前を変更します
+* 上書き判定
+
+|ファイルコピー
+|`copy_file`
+a|
+* ファイルを別のディレクトリにコピーします
+* 上書き判定
+* タイムスタンプ付与判定
+|===
+
+=== 各主要機能の詳細説明
+
+==== delete_file
+
+指定されたファイルを削除します。
+
+* 引数:
+** `file_path`: 削除するファイルのパス
+
+* 戻り値: 
+** `bool`: 削除成功時はTrue、失敗時はFalse
+
+==== move_file
+
+ファイルを指定されたディレクトリに移動します。
+
+* 主な引数:
+** `old_file_path`: 移動元ファイルパス
+** `destination_directory`: 移動先ディレクトリパス
+** `overwrite`: 上書きを許可するかどうか（デフォルト: False）
+** `with_timestamp`: タイムスタンプを付与するかどうか（デフォルト: True）
+
+* 戻り値:
+** `tuple`: (bool, Path|None) 移動成功時は(True, 新しいファイルパス)、失敗時は(False, None)
+
+==== rename_file
+
+ファイルの名前を変更します。
+
+* 主な引数:
+** `old_file_path`: リネーム対象のファイルパス
+** `new_file_name`: 新しいファイル名
+** `overwrite`: 上書きを許可するかどうか（デフォルト: False）
+
+* 戻り値:
+** `tuple`: (bool, Path|None) リネーム成功時は(True, 新しいファイルパス)、失敗時は(False, None)
+
+==== copy_file
+
+ファイルを指定されたディレクトリにコピーします。
+
+* 主な引数:
+** `source_file_path`: コピー元ファイルパス
+** `destination_directory`: コピー先ディレクトリパス
+** `overwrite`: 上書きを許可するかどうか（デフォルト: False）
+** `with_timestamp`: タイムスタンプを付与するかどうか（デフォルト: False）
+
+* 戻り値:
+** `tuple`: (bool, Path|None) コピー成功時は(True, 新しいファイルパス)、失敗時は(False, None)
+
+=== 具体的な使用シナリオとコード例
+
+==== シナリオ1: ファイルの削除
+
+注: 以下のコード例では、カスタムロガー `log_msg` が設定済であること、 `LogLevel` がすでにインポートされていることを前提としています。
+
+[source,python]
+----
+from src.lib.common_utils.ibr_file_operations import delete_file
+
+file_to_delete = "/path/to/file.txt"
+if delete_file(file_to_delete):
+    log_msg(f"ファイル {file_to_delete} を削除しました", LogLevel.INFO)
+else:
+    log_msg(f"ファイル {file_to_delete} の削除に失敗しました", LogLevel.ERROR)
+----
+
+==== シナリオ2: ファイルの移動（タイムスタンプ付き）
+
+注: 以下のコード例では、カスタムロガー `log_msg` が設定済であること、 `LogLevel` がすでにインポートされていることを前提としています。
+
+[source,python]
+----
+from src.lib.common_utils.ibr_file_operations import move_file
+
+source_file = "/path/to/source/file.txt"
+destination_dir = "/path/to/destination/"
+
+success, new_path = move_file(source_file, destination_dir, with_timestamp=True)
+if success:
+    log_msg(f"ファイルを {new_path} に移動しました", LogLevel.INFO)
+else:
+    log_msg("ファイルの移動に失敗しました", LogLevel.ERROR)
+----
+
+==== シナリオ3: ファイルのコピー（上書き許可）
+
+注: 以下のコード例では、カスタムロガー `log_msg` が設定済であること、 `LogLevel` がすでにインポートされていることを前提としています。
+
+[source,python]
+----
+from src.lib.common_utils.ibr_file_operations import copy_file
+
+source_file = "/path/to/source/file.txt"
+destination_dir = "/path/to/destination/"
+
+success, new_path = copy_file(source_file, destination_dir, overwrite=True)
+if success:
+    log_msg(f"ファイルを {new_path} にコピーしました", LogLevel.INFO)
+else:
+    log_msg("ファイルのコピーに失敗しました", LogLevel.ERROR)
+----
+
+このライブラリを使用する際は、以下の点に注意してください：
+
+1. 権限: ファイル操作には適切な権限が必要です。権限がない場合、操作は失敗します。
+
+2. 上書き: デフォルトでは上書きは許可されていません。必要に応じて `overwrite=True` を指定してください。
+
+3. タイムスタンプ: `move_file` と `copy_file` では、ファイル名にタイムスタンプを付与するオプションがあります。
+
+4. エラーハンドリング: 各関数は操作の成功/失敗を示す値を返します。適切にエラーハンドリングを行ってください。
+
+5. ログ: 操作の結果は自動的にログに記録されます。必要に応じて追加のログ出力を行ってください。
+
+このライブラリを活用することで、ファイル操作を安全かつ効率的に行うことができ、データ処理や自動化スクリプトの信頼性を向上させることができます。

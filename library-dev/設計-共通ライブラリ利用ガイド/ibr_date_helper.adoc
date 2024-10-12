@@ -1,0 +1,156 @@
+= ibr_date_helper ライブラリ利用ガイド
+
+== ライブラリ概要
+
+=== 目的と主要機能の簡潔な説明
+
+ibr_date_helper は、日付処理をサポートするPythonライブラリです。主な機能は以下の通りです：
+
+* UTC日付文字列からJST（日本標準時）への変換
+* UNIXタイムスタンプからJSTへの変換
+* 銀行営業日の判定
+
+=== 想定される主な利用シーン
+
+* 異なるタイムゾーンのデータを日本時間に統一する場合
+* UNIXタイムスタンプを人間が読める形式に変換する場合
+* 銀行システムにおける営業日判定が必要な場合
+
+== クイックスタートガイド
+
+=== import方法
+
+[source,python]
+----
+from src.lib.common_utils.ibr_date_helper import (
+    convert_with_no_timezone_to_jst,
+    convert_with_timezone_to_jst,
+    convert_unixtime_to_jst,
+    is_bank_business_day
+)
+----
+
+== 基本的な使用例
+
+=== 主要機能と利用パターン
+
+[options='header', cols='2,1,3']
+|===
+|機能 |関数名 |説明
+
+|タイムゾーンなしUTC→JST変換
+|`convert_with_no_timezone_to_jst`
+a|
+* タイムゾーン情報のないUTC日付文字列をJST datetimeに変換
+
+|タイムゾーンありUTC→JST変換
+|`convert_with_timezone_to_jst`
+a|
+* タイムゾーン情報のあるUTC日付文字列をJST datetimeに変換
+
+|UNIXTIME→JST変換
+|`convert_unixtime_to_jst`
+a|
+* UNIXタイムスタンプをJST datetimeに変換
+
+|銀行営業日判定
+|`is_bank_business_day`
+a|
+* 指定された日付が銀行営業日かどうかを判定
+** (仮の仕様で作成、実装側と協議が必要)
+|===
+
+=== 各主要機能の詳細説明
+
+==== convert_with_no_timezone_to_jst
+
+タイムゾーン情報のないUTC日付文字列をJST datetimeに変換します。
+
+* 引数:
+** `date_str`: UTC基準の日付文字列（タイムゾーンなし）
+** `date_format`: 日付フォーマット（デフォルト: '%Y/%m/%d %H:%M:%S'）
+
+* 戻り値: JST変換後のdatetime（失敗時はNone）
+
+==== convert_with_timezone_to_jst
+
+タイムゾーン情報のあるUTC日付文字列をJST datetimeに変換します。
+
+* 引数:
+** `date_str`: UTC基準の日付文字列（タイムゾーンあり）
+** `date_format`: 日付フォーマット（デフォルト: '%Y/%m/%d %H:%M:%S%z'）
+
+* 戻り値: JST変換後のdatetime（失敗時はNone）
+
+==== convert_unixtime_to_jst
+
+UNIXタイムスタンプをJST datetimeに変換します。
+
+* 引数:
+** `unixtime_str`: UNIXタイムスタンプ（文字列、10/13/16桁）
+
+* 戻り値: JST変換後のdatetime（失敗時はNone）
+
+==== is_bank_business_day
+
+指定された日付が銀行営業日かどうかを判定します。
+
+* 引数:
+** `date`: 判定対象の日付（文字列またはdatetime）
+** `calendar_file_path`: 銀行カレンダーファイルのパス
+
+* 戻り値: True（営業日）、False（休業日）、None（判定不能）
+
+=== 具体的な使用シナリオとコード例
+
+==== シナリオ1: タイムゾーンなしUTC日付文字列をJSTに変換
+
+注: 以下のコード例では、カスタムロガー `log_msg` が設定済であること、 `LogLevel` がすでにインポートされていることを前提としています。
+
+[source,python]
+----
+from src.lib.common_utils.ibr_date_helper import convert_with_no_timezone_to_jst
+
+utc_date_str = "2024/01/01 00:00:00"
+jst_datetime = convert_with_no_timezone_to_jst(utc_date_str)
+
+log_msg(f"\nUTC: {utc_date_str}\nJST: {jst_datetime}", LogLevel.INFO)
+----
+
+==== シナリオ2: UNIXタイムスタンプをJSTに変換
+
+注: 以下のコード例では、カスタムロガー `log_msg` が設定済であること、 `LogLevel` がすでにインポートされていることを前提としています。
+
+[source,python]
+----
+from src.lib.common_utils.ibr_date_helper import convert_unixtime_to_jst
+
+unixtime = "1615860122"  # 2021-03-16 10:02:02 UTC
+jst_datetime = convert_unixtime_to_jst(unixtime)
+
+log_msg(f"\nUNIXTIME: {unixtime}\nJST: {jst_datetime}", LogLevel.INFO)
+----
+
+==== シナリオ3: 銀行営業日の判定
+
+注: 以下のコード例では、カスタムロガー `log_msg` が設定済であること、 `LogLevel` がすでにインポートされていることを前提としています。
+
+[source,python]
+----
+from datetime import datetime
+from src.lib.common_utils.ibr_date_helper import is_bank_business_day
+
+calendar_file = "/path/to/bank_calendar.txt"
+date_to_check = datetime(2024, 1, 1)
+
+is_business_day = is_bank_business_day(date_to_check, calendar_file)
+
+if is_business_day:
+    log_msg(f"{date_to_check.date()} は銀行営業日です", LogLevel.INFO)
+elif is_business_day is False:
+    log_msg(f"{date_to_check.date()} は銀行休業日です", LogLevel.INFO)
+else:
+    log_msg(f"{date_to_check.date()} の営業日判定ができませんでした", LogLevel.WARNING)
+----
+
+これらの例は、ibr_date_helperライブラリの基本的な使用方法を示しています。実際の使用時には、エラーハンドリングや適切なログレベルの設定、銀行カレンダーファイルの正確な管理などに注意を払う必要があります。また、タイムゾーンの扱いには特に注意が必要で、システム全体で一貫したタイムゾーン管理を行うことが重要です。

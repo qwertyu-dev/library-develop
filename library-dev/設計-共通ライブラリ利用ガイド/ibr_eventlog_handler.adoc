@@ -1,0 +1,130 @@
+ibr_windows_eventlogのコードに基づいて、利用ガイドを作成いたします。
+
+= ibr_windows_eventlog ライブラリ利用ガイド
+
+== ライブラリ概要
+
+=== 目的と主要機能の簡潔な説明
+
+ibr_windows_eventlogは、Windowsイベントログにメッセージを出力するためのPythonライブラリです。主な機能は以下の通りです：
+
+* 情報レベルのイベントログ出力
+* エラーレベルのイベントログ出力
+
+=== 想定される主な利用シーン
+
+* Windowsサーバー上で動作するアプリケーションのログ記録
+* システムの重要なイベントや障害情報の記録
+* アプリケーションの動作状況のモニタリング
+
+== クイックスタートガイド
+
+=== import方法
+
+[source,python]
+----
+from src.lib.common_utils.ibr_windows_eventlog import WindowsEventLogger
+----
+
+== 基本的な使用例
+
+=== 主要機能と利用パターン
+[options='header', cols='2,1,3']
+|===
+|機能 |メソッド名 |説明
+
+|情報レベルログ出力
+|`WindowsEventLogger.write_info_log`
+a|
+* 情報レベルのイベントをWindowsイベントログに出力
+
+|エラーレベルログ出力
+|`WindowsEventLogger.write_error_log`
+a|
+* エラーレベルのイベントをWindowsイベントログに出力
+|===
+
+=== 各主要機能の詳細説明
+
+==== write_info_log
+
+情報レベルのイベントをWindowsイベントログに出力します。
+
+* 引数:
+** `src`: イベントソース（文字列）
+** `evt_id`: イベントID（整数）
+** `strings`: イベントの説明（リスト形式）
+
+==== write_error_log
+
+エラーレベルのイベントをWindowsイベントログに出力します。
+
+* 引数:
+** `src`: イベントソース（文字列）
+** `evt_id`: イベントID（整数）
+** `strings`: イベントの説明（リスト形式）
+
+=== 具体的な使用シナリオとコード例
+
+==== シナリオ1: 情報レベルのイベントログ出力
+
+注: 以下のコード例では、カスタムロガー `log_msg` が設定済であること、 `LogLevel` がすでにインポートされていることを前提としています。
+
+[source,python]
+----
+from src.lib.common_utils.ibr_windows_eventlog import WindowsEventLogger
+
+def log_application_start():
+    try:
+        WindowsEventLogger.write_info_log(
+            src='リファレンスアプリケーション',
+            evt_id=1001,
+            strings=['アプリケーションが正常に起動しました', '起動時刻: ' + str(datetime.now())]
+        )
+        log_msg("イベントログに起動情報を記録しました", LogLevel.INFO)
+    except Exception as e:
+        log_msg(f"イベントログの記録に失敗しました: {e}", LogLevel.ERROR)
+
+log_application_start()
+----
+
+==== シナリオ2: エラーレベルのイベントログ出力
+
+注: 以下のコード例では、カスタムロガー `log_msg` が設定済であること、 `LogLevel` がすでにインポートされていることを前提としています。
+
+[source,python]
+----
+from src.lib.common_utils.ibr_windows_eventlog import WindowsEventLogger
+
+def log_critical_error(error_message):
+    try:
+        WindowsEventLogger.write_error_log(
+            src='ID管理アプリケーション',
+            evt_id=5001,
+            strings=['クリティカルエラーが発生しました', f'エラー詳細: {error_message}']
+        )
+        log_msg(f"エラーイベントをログに記録しました: {error_message}", LogLevel.ERROR)
+    except Exception as e:
+        log_msg(f"イベントログの記録に失敗しました: {e}", LogLevel.CRITICAL)
+
+# 使用例
+try:
+    # 何らかの処理
+    raise Exception("データベース接続エラー")
+except UserIDManagementException as e:
+    log_critical_error(str(e))
+----
+
+これらの例は、ibr_windows_eventlogライブラリの基本的な使用方法を示しています。実際の使用時には、以下の点に注意してください：
+
+1. Windows環境依存：このライブラリはWindows環境でのみ正常に動作します。非Windows環境では、ダミーの実装が使用されます。
+
+2. エラーハンドリング：イベントログの書き込みに失敗する可能性があるため、適切な例外処理を行ってください。
+
+3. イベントソースとID：適切なイベントソースとイベントIDを使用することで、イベントビューアーでの管理が容易になります。
+
+4. セキュリティ：センシティブな情報をイベントログに記録する際は、適切なセキュリティ対策を講じてください。
+
+5. パフォーマンス：頻繁なイベントログの書き込みはシステムのパフォーマンスに影響を与える可能性があるため、重要なイベントのみを記録するようにしてください。
+
+このライブラリを使用することで、Windowsアプリケーションの動作状況や重要なイベントを簡単にシステムイベントログに記録することができます。これにより、トラブルシューティングやシステム監視が容易になります。

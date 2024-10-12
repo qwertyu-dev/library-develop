@@ -1,0 +1,128 @@
+= ibr_mutex_manager ライブラリ利用ガイド
+
+== ライブラリ概要
+
+=== 目的と主要機能の簡潔な説明
+
+ibr_mutex_managerは、Windowsシステムにおいてプロセスの多重起動を防ぐためのPythonライブラリです。主な機能は以下の通りです：
+
+* プロセスの多重起動チェック
+* 多重起動の防止
+* コンテキストマネージャを使用した安全なリソース管理
+
+=== 想定される主な利用シーン
+
+* バッチ処理プログラムの実行
+* 定期的に実行されるスクリプト
+* 同時に1つのインスタンスしか実行できないアプリケーション
+* データ整合性を保つ必要があるプロセス
+
+== クイックスタートガイド
+
+=== import方法
+
+[source,python]
+----
+from src.lib.common_utils.ibr_mutex_manager import MutexManager
+----
+
+== 基本的な使用例
+
+=== 主要機能と利用パターン
+
+[options='header', cols='2,1,3']
+|===
+|機能 |クラス名 |説明
+
+|多重起動制御
+|`MutexManager`
+a|
+* プロセスの多重起動をチェックし、防止します
+|===
+
+=== 各主要機能の詳細説明
+
+==== MutexManager
+
+プロセスの多重起動を制御するクラスです。
+
+* 主な引数:
+** `caller_package_name`: 呼び出し元パッケージの名前（一意の識別子として使用）
+
+* 使用方法:
+** コンテキストマネージャ（`with`文）で使用します
+
+* 例外:
+** `ProcessAlreadyRunningError`: 同じプロセスが既に実行中の場合に発生
+
+=== 具体的な使用シナリオとコード例
+
+==== シナリオ1: 単一インスタンスアプリケーション
+
+注: 以下のコード例では、カスタムロガー `log_msg` が設定済であること、 `LogLevel` がすでにインポートされていることを前提としています。
+
+[source,python]
+----
+from src.lib.common_utils.ibr_mutex_manager import MutexManager, ProcessAlreadyRunningError
+
+def main():
+    try:
+        with MutexManager("MyUniqueAppName"):
+            log_msg("アプリケーションが開始しました", LogLevel.INFO)
+            # アプリケーションのメイン処理をここに記述
+            perform_main_task()
+    except ProcessAlreadyRunningError:
+        log_msg("アプリケーションは既に実行中です", LogLevel.WARNING)
+    except Exception as e:
+        log_msg(f"予期せぬエラーが発生しました: {e}", LogLevel.ERROR)
+    else:
+        log_msg("アプリケーションが正常に終了しました", LogLevel.INFO)
+
+if __name__ == "__main__":
+    main()
+----
+
+==== シナリオ2: 定期的なバッチ処理
+
+注: 以下のコード例では、カスタムロガー `log_msg` が設定済であること、 `LogLevel` がすでにインポートされていることを前提としています。
+
+[source,python]
+----
+import time
+from src.lib.common_utils.ibr_mutex_manager import MutexManager, ProcessAlreadyRunningError
+
+def batch_process():
+    try:
+        with MutexManager("DailyBatchProcess"):
+            log_msg("バッチ処理を開始します", LogLevel.INFO)
+            # バッチ処理のメイン処理をここに記述
+            perform_batch_operations()
+    except ProcessAlreadyRunningError:
+        log_msg("別のバッチ処理が実行中です。スキップします。", LogLevel.WARNING)
+    except Exception as e:
+        log_msg(f"バッチ処理中にエラーが発生しました: {e}", LogLevel.ERROR)
+    else:
+        log_msg("バッチ処理が正常に完了しました", LogLevel.INFO)
+
+def main():
+    while True:
+        batch_process()
+        time.sleep(3600)  # 1時間ごとに実行
+
+if __name__ == "__main__":
+    main()
+----
+
+このライブラリを使用する際は、以下の点に注意してください：
+
+1. Windows専用: このライブラリはWindows専用です。他のOSでは動作しません。
+
+2. 一意の識別子: `MutexManager` のコンストラクタに渡す `caller_package_name` は、アプリケーションやプロセスを一意に識別するものである必要があります。
+
+3. リソース管理: `with` 文を使用することで、Mutexの適切な解放が保証されます。
+
+4. エラーハンドリング: `ProcessAlreadyRunningError` を適切に処理することで、多重起動を検出し対応することができます。
+
+5. ログ出力: ライブラリは内部でログを出力しますが、アプリケーション側でも適切なログ出力を行うことをお勧めします。
+
+このライブラリを活用することで、Windowsシステム上でのプロセスの多重起動を効果的に防ぎ、データの整合性を保ちながら安全にアプリケーションを実行することができます。
