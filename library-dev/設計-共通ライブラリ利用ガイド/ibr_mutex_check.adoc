@@ -75,6 +75,7 @@ def main():
         log_msg("アプリケーションは既に実行中です", LogLevel.WARNING)
     except Exception as e:
         log_msg(f"予期せぬエラーが発生しました: {e}", LogLevel.ERROR)
+        # カスタム例外を記述する
     else:
         log_msg("アプリケーションが正常に終了しました", LogLevel.INFO)
 
@@ -101,6 +102,7 @@ def batch_process():
         log_msg("別のバッチ処理が実行中です。スキップします。", LogLevel.WARNING)
     except Exception as e:
         log_msg(f"バッチ処理中にエラーが発生しました: {e}", LogLevel.ERROR)
+        # カスタム例外を記述する
     else:
         log_msg("バッチ処理が正常に完了しました", LogLevel.INFO)
 
