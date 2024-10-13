@@ -4,6 +4,7 @@ import pandas as pd
 from src.lib.common_utils.ibr_dataframe_helper import tabulate_dataframe
 from src.lib.common_utils.ibr_decorator_config import with_config
 from src.lib.common_utils.ibr_enums import LogLevel
+from src.lib.common_utils.ibr_excel_reader import ExcelDataLoader
 from src.model.factory.column_edit_facade_controller import (
     create_editor_factory,
     process_row,
@@ -19,6 +20,84 @@ class PreparatonExecutor:
         self.common_config = self.config.common_config
         self.package_config = self.config.package_config
         self.log_msg = self.config.log_message
+
+        # decision table book path
+        self.decition_table_path = Path(
+            f"{self.common_config.get('decision_table_path', []).get('DECISION_TABLE_APTH', '')}/"
+            f"{self.package_config.get('decision_table_file', []).get('DECISION_TABLE_PTN_BOOK_NAME', '')}",
+        )
+
+        # decision table sheet name
+        self.decision_table_sheet_name = (
+            f"{self.package_config.get('decision_table_file', []).get('DECISION_PTN_SHEET_NAME','')}"
+        )
+
+        # Facade指定(受付orパターン編集をpackage_configで指定)
+        self.pattern_import_facade = self.package_config.get('import_editor_facade', []).get('FACADE_IMPORT_PATH', '')
+
+        self.log_msg(f'decision table book path: {self.decition_table_path}', LogLevel.DEBUG)
+        self.log_msg(f'decision table sheet name : {self.decision_table_sheet_name}', LogLevel.DEBUG)
+        self.log_msg(f'pattern import facade : {self.pattern_import_facade}', LogLevel.DEBUG)
+
+    def get_decision_table(self)-> pd.DataFrame:
+        excel_data_loader = ExcelDataLoader(
+            self.decision_table_path,
+        )
+        _df = excel_data_loader.read_excel_one_sheet(
+            self.decision_table_sheet_name,
+            skiprows=1,
+            usecols=[1, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+        )
+        self.log_msg(f'decition_table: \n\n{tabulate_dataframe(_df)}')
+
+        # column mapping
+        decision_table_columns = [
+            'facade_name_jp',
+            'branch_code',
+            'branch_code_first_digit',
+            'business_code_digit',
+            'internal_sales_dept_code',
+            'section_gr_code',
+            'parent_branch_code',
+            'business_and_area_code',
+            'bpr_target_flag',
+            'other_conditions',
+            'facade_name',
+        ]
+        _df.columns = decision_table_columns
+        self.log_msg(f'decition_table: \n\n{tabulate_dataframe(_df)}')
+
+        # definition mapping
+        # チェック条件を関数名変換
+        def replace_values(column):
+            column = column.replace('4桁', 'is_4digits')
+            column = column.replace('5桁', 'is_5digits')
+            column = column.replace('なし', 'is_empy')
+            column = column.replace('あり', 'is_not_empty')
+            column = column.replace('あり、＝部店コード前方4桁', 'has_parent_code_and_matching_first_4_digits')
+            column = column.replace('あり、≠部店コード前方4桁', 'has_parent_code_and_not_matching_first_4_digits')
+            column = column.replace('BPR・AD対象外', 'is_not_bpr_ad_target')
+            column = column.replace('BPR・AD対象', 'is_bpr_ad_target')
+            column = column.replace('ADのみ対象', 'is_ad_only')
+            column = column.replace('^-$', 'any', regex=True)
+            return column
+        
+        # 変換指定列に対してtransform
+        columns_to_transform = [
+            'branch_code',
+            'branch_code_first_digit',
+            'business_code_digit',
+            'internal_sales_dept_code',
+            'section_gr_code',
+            'parent_branch_code',
+            'business_and_area_code',
+            'bpr_target_flag',
+            'other_conditions',
+        ]
+        for col in columns_to_transform:
+            _df[col] = replace_values(_df[col])
+        
+        return _df
 
     def start(self) -> None:
         """アプリケーションのメイン処理を実行する。"""

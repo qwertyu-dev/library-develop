@@ -23,6 +23,11 @@ x = 'x'
 # local定義 local
 #############################
 [local]
+[local.decision_table_file]
+DECISION_PRE_BOOK_NAME = '受付処理Facade一覧.xlsx'
+DECISION_PRE_SHEET_NAME = '受付処理Facade一覧'
+#DECISION_PTN_BOOK_NAME = 'パターン編集処理Facade一覧.xlsx'
+#DECISION_PTN_SHEET_NAME = 'パターン編集処理Facade一覧'
 
 # sample
 [local.decision_table_book_name]

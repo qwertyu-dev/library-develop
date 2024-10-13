@@ -1,0 +1,549 @@
+= Python実装の原則ガイダンス
+
+== はじめに
+
+=== 本ガイダンスの目的
+本ガイダンスは、Pythonを使用したプロジェクトにおいて、一貫性のある高品質なコードを書くための指針を提供することを目的としています。
+
+=== 対象読者
+Pythonの基本的な知識を持ち、実際のプロジェクトでの開発経験を積もうとしている開発者を主な対象としています。
+
+=== 使用方法
+本ガイダンスは、基本的な構成パターンでの実装サンプルを題材とした  `開発ガイド` のエッセンス版です。記載事項の詳細確認にあたっては `開発ガイド` を読んで理解を深めてください。
+
+== プロジェクト構成
+
+=== ファイル構造
+推奨されるプロジェクト及びパッケージの基本構造は以下の通り:
+
+----
+project_root/
+│
+├── src/
+│   ├── lib/
+│   │   └── common_utils/
+│   │       ├── __init__.py
+│   │       ├── ibr_decorator_config.py
+│   │       ├── ibr_enums.py
+│   │       ├── ibr_logger_helper.py
+│   │       ├── ... 
+│   │   └── validator_utils/
+│   │   └── converter_utils/
+│   │
+│   └── packages/
+│       └── your_package/
+│           ├── __init__.py
+│           ├── main.py
+│           ├── ...
+│           └── package_config.toml
+│
+├── tests/
+│   └── packages/
+│       └── your_package/
+│           ├── __init__.py
+│           ├── test_main.py
+│           ├── test_...
+│           └── package_config.toml
+│
+├── pyproject.toml
+└── README.md
+----
+
+== テンプレートコード
+
+=== パッケージファイルの構造
+* DocStringなど、一部記載を省略している
+
+.\__main__.pyテンプレート
+[source,python]
+----
+# インポート文（後述のインポート順序に従う）
+
+# 設定の初期化
+config = initialize_config(sys.modules[__name__])
+log_msg = config.log_message
+
+class SamplePackageProcessError(Exception):
+    pass
+
+# パッケージ関数
+def package_xxxxx() -> Any:
+    return a
+
+def package_yyyyy() -> Any:
+    return b 
+
+class Main:
+    """アプリケーションのメインクラス"""
+
+    def __init__(self, conf: dict|None=None):
+        """初期化メソッド"""
+        self.config = conf or config
+        self.env = self.config.env
+        self.common_config = self.config.common_config
+        self.package_config = self.config.package_config
+        self.log_msg = self.config.log_message
+
+    # class内関数
+    def class_xxxxx(self) -> Any:
+        a = self._class_inner_yyyy()
+        return a
+    
+    # class内非公開関数
+    def _class_inner_yyyyy(self) -> Any:
+        return b 
+
+    # 起動
+    def start(self) -> None:
+        """メイン処理を実行する"""
+        self.log_msg("IBRDEV-I-0000001")  # 処理開始ログ
+        
+        # メイン処理のロジック
+
+        self.log_msg("IBRDEV-I-0000002")  # 処理終了ログ
+
+if __name__ == "__main__":
+    try:
+        with MutexManager(__package__):
+            Main().start()
+    except ProcessAlreadyRunningError:
+        log_msg(f"{__package__}は既に実行中です", LogLevel.WARNING)
+    except Exception as e:
+        # WindowsEventLog出力→E-HUB検出
+        WindowsEventLogger.write_error_log(
+            src="アプリケーション名",
+            evt_id="3001",
+            strings=["重大エラー", str(e)],
+        )
+        # カスタム例外により制御
+        log_msg(f"エラーが発生しました: {e}", LogLevel.ERROR)
+        raise SamplePackageProcessError from None
+
+log_msg(f"\nアプリケーションが終了しました。", LogLevel.INFO)
+----
+
+.package内モジュールテンプレート
+[source, python]
+----
+# インポート文（後述のインポート順序に従う）
+
+@with_config
+class DataValidator:
+    def __init__(self, config: dict, validation_model: type[BaseModel]):
+        if not isinstance(validation_model, type) or not issubclass(validation_model, BaseModel):
+            err_msg = "validation_model must be a subclass of BaseModel"
+            raise TypeError(err_msg) from None
+
+        # DI config
+        self.config = config or self.config
+
+        self.validation_model = validation_model
+        self.log_msg = self.config.log_message
+        self.error_manager = ValidationErrorManager()
+
+    def validate(self, df: pd.DataFrame) -> None:
+        if df.empty:
+            self.log_msg("Validation skipped: Empty DataFrame", LogLevel.INFO)
+            return
+
+        # validation実行制御
+        df.apply(self._validate_row, axis=1)
+        if self.error_manager.has_errors():
+            self.result_validation_errors()
+            self.log_msg(f'ValidateProcess completed with {len(self.error_manager.get_errors())} line validation errors', LogLevel.INFO)
+        else:
+            self.log_msg("Validation completed: No errors found", LogLevel.INFO)
+
+    def _validate_row(self, row: pd.Series) -> None:
+        # Validation実体
+        try:
+            self.validation_model(**row.to_dict())
+        except ValidationError as e:
+            self.error_manager.add_validation_error(row.name if row.name is not None else 0, e)
+        except Exception as e:
+            self.log_msg(f"Unexpected error during validation at row {row.name if row.name is not None else 0}: {str(e)}", LogLevel.ERROR)
+            self.error_manager.add_error(row.name if row.name is not None else 0, {"type": "unexpected_error", "msg": str(e)})
+
+    def result_validation_errors(self) -> None:
+        self.log_msg("result_validation_errors method called", LogLevel.DEBUG)
+        self.error_manager.log_errors()
+
+
+----
+
+== クラス設計の基本
+* 単一責任の原則を守る
+* パブリックメソッドとプライベートメソッドを適切に分ける
+* インスタンス変数の初期化は `__init__() イニシャライザ` で行う
+* クラスとメソッドにはDocStringを付ける
+
+== `ruff` ルールの適用
+* ruffは自動的にコードスタイルをチェックし、修正します
+* ruffによるチェックは `絶対遵守` とすることで人によるレビュー負荷を軽減する目的があります
+* ただし適用ルールの改善提案をしたい場合はライブラリアンに相談することで採択される場合があります
+
+== インポートの原則
+=== インポート順序
+特性によりライブラリを区別し、以下順序でimportします(ruffルール適用事項)
+
+. 標準ライブラリ
+. サードパーティライブラリ
+. ローカルアプリケーション/ライブラリの特定のインポート
+
+=== インポート記述例
+
+注: 以下のコード例では、カスタムロガー `log_msg` が設定済であること、 `LogLevel` がすでにインポートされていることを前提としています。
+
+[source,python]
+----
+# 標準ライブラリ
+import sys
+from pathlib import Path
+
+# サードパーティライブラリ
+import pandas as pd
+
+# プロジェクト共通ライブラリ
+from src.lib.common_utils.ibr_dataframe_helper import tabulate_dataframe
+from src.lib.common_utils.ibr_decorator_config import initialize_config, with_config
+from src.lib.common_utils.ibr_enums import LogLevel
+
+# パッケージ固有のライブラリ
+from .model_factory import ModelFactory
+from .validation_error_manager import ValidationErrorManager
+
+log_msg(f"\nインポートが完了しました。", LogLevel.DEBUG)
+----
+
+== 設定管理
+
+=== package_configの活用
+* `package_config.toml` ファイルを使用して、環境ごとの設定を管理する
+* `package_config.toml` は各パッケージ直下ディレクトリに配置する、必須ファイル
+
+.package_config.tomlサンプル
+[source,toml]
+----
+#############################
+# 本番定義 production
+#############################
+[production]
+[production.database]
+host = "prod.example.com"
+port = 5432
+
+#############################
+# リグレ定義 regression
+#############################
+[regression]
+[regression.database]
+host = "prod.example.com"
+port = 5432
+
+#############################
+
+#############################
+# 開発定義 develop
+#############################
+[develop]
+[develop.database]
+host = "dev.example.com"
+port = 5432
+
+#############################
+# local定義 local
+#############################
+[local]
+[local.database]
+host = "localhost"
+port = 5432
+----
+
+== ロギング
+
+* カスタムロガーを使用しロギングを行う
+* 直接の `logger` 使用は禁止
+
+=== カスタムロガーの初期化
+
+パッケージ全体への適用：
+
+[source,python]
+----
+import sys
+from src.lib.common_utils.ibr_decorator_config import initialize_config
+from src.lib.common_utils.ibr_enums import LogLevel
+
+config = initialize_config(sys.modules[__name__])
+log_msg = config.messages
+
+log_msg(f"\nカスタムロガーが初期化されました。", LogLevel.INFO)
+----
+
+クラス全体への適用：
+
+[source,python]
+----
+from src.lib.common_utils.ibr_decorator_config import with_config
+from src.lib.common_utils.ibr_enums import LogLevel
+
+@with_config
+class PreparationExecutor:
+    def __init__(self):
+        self.log_msg = self.config.log_message
+        self.log_msg(f"\nPreparationExecutorが初期化されました。", LogLevel.INFO)
+
+    def execute(self):
+        self.log_msg(f"\n処理を実行します。", LogLevel.DEBUG)
+        # 処理のロジック
+----
+
+=== ログレベルの適切な使用
+* 詳細設計者で判断すること
+* 障害検知させる場合は `WindowsEventlog出力` と連携すること
+
+[options="header", cols='1, 3', width='75%']
+|===
+|ログレベル|説明
+|DEBUG     |詳細なデバッグ情報, ログファイルへ出力
+|INFO      |一般的な情報
+|WARNING   |警告（エラーではないが注意が必要）
+|ERROR     |エラー（プログラムは続行可能）
+|CRITICAL  |重大なエラー（プログラムの続行が困難）
+|===
+
+== エラーハンドリング
+=== 例外処理の基本
+
+[source,python]
+----
+try:
+    # 潜在的に例外を発生させる可能性のあるコード
+    result = some_risky_operation()
+except SpecificException as e:
+    log_msg(f"特定の例外が発生しました: {e}", LogLevel.ERROR)
+    # 適切なエラーハンドリング
+except Exception as e:
+    log_msg(f"予期しない例外が発生しました: {e}", LogLevel.CRITICAL)
+    # より一般的なエラーハンドリング
+    raise  xxxxxxxError # パッケージ定義のカスタム例外を定義しraiseすること(ruff規程)
+else:
+    log_msg("操作が成功しました", LogLevel.INFO)
+finally:
+    # クリーンアップコード（常に実行される）
+----
+
+=== カスタム例外の定義と使用
+
+[source,python]
+----
+class CustomError(Exception):
+    """カスタムエラーの基底クラス"""
+    pass
+
+class ValueTooLargeError(CustomError):
+    """値が大きすぎる場合のエラー"""
+    pass
+
+class XxxxxxxPackageError(CustomError):
+    """その他、想定外エラー"""
+    pass
+
+
+def process_value(value):
+    if value > 100:
+        raise ValueTooLargeError("値が100を超えています")
+    # 処理続行
+
+try:
+    process_value(150)
+except ValueTooLargeError as e:
+    log_msg(f"値が大きすぎます: {e}", LogLevel.ERROR)
+except Exception as e:
+    log_msg(f"予期しない例外が発生しました: {e}", LogLevel.CRITICAL)
+    # WindowsEvelntLog出力のよう批判団の上実装
+    # パッケージ定義例外 raise/ Exceptionを素のままでraiseしない
+    raise XxxxxxxPackageError
+----
+
+
+
+== pytestの使用
+* pytestを使用してユニットテストを実行する
+* テストコードDocStringにテストシナリオの分析結果を記載し鳥瞰性を保つ
+** テストケース分析結果を記載し一覧化する
+** テスト構造鳥瞰はTree形式で表現する
+** ディシジョンテーブル・網羅ケースはテーブル形式で表現する
+
+[source,python]
+----
+import pytest
+from your_module import YourClass
+
+def test_your_function():
+    # テストのセットアップ
+    instance = YourClass()
+    
+    # テスト実行
+    result = instance.your_function()
+    
+    # アサーション
+    assert result == expected_value
+----
+
+=== テストケースの設計（C0, C1+ディシジョンテーブル, C2, 境界値）
+以下観点でテストケース分析を行いテストメソッドを作成する。
+
+詳細については開発者ガイドを参照のこと
+
+[options="header", cols='1,2,4']
+|===
+|項目|目的|説明
+|C0（命令網羅）|すべての命令が少なくとも1回は実行されることを確認する
+a|
+* コードの各行が少なくとも1回は実行されることを保証する基本的なカバレッジテスト
+* しかし、これだけでは十分な品質を保証できない
+|C1（分岐網羅）|すべての分岐が少なくとも1回は実行されることを確認する
+a|
+* if文やswitch文などの分岐がすべてテストされることを保証
+* コードの各実行パスが少なくとも1回はテストされる
+|C1ディシジョンテーブル|C1で不足するケースをカバーし、複雑な条件分岐を系統的にテストする
+a|
+* 複数の条件が組み合わさる場合に特に有効
+* すべての条件の組み合わせを網羅的にテストできる
+|C2（条件網羅）|すべての条件の組み合わせが少なくとも1回は実行されることを確認する
+a|
+* 最も網羅的なテスト手法
+* ただし、条件の数が多い場合はテストケースが爆発的に増加する可能性がある
+|境界値テスト|入力の境界値でのテストを行い、エッジケースや特殊なケースを検出する
+a|
+* 入力値の範囲の端や特殊な値（最小値、最大値、null値など）でのテストを行う
+* 業務シナリオに応じて追加、修正を想定する
+|===
+
+
+=== Mockの効果的な使用
+
+[source,python]
+----
+from unittest.mock import Mock, patch
+
+@patch('your_module.external_function')
+def test_function_with_mock(mock_external):
+    mock_external.return_value = 'mocked_result'
+    
+    result = your_function()
+    
+    assert result == 'expected_result'
+    mock_external.assert_called_once()
+----
+
+[source,python]
+----
+# Mock/side_effectを使用したfixture構築例
+# MockによりClass内依存のあるメソッドを現物から分離する`
+class TestTableSearcherNormalizeConditions:
+    @pytest.fixture()
+    def mock_searcher(self):
+        # Class内のget_file_modified_time()メソッドをMock化定義
+        def mock_get_file_modified_time():
+            timestamp = 12345.0
+            log_msg(f"Mock _default_get_file_modified_time called, returning {timestamp}", LogLevel.DEBUG)
+            return timestamp
+
+        def mock_load_table():
+        # Class内の_load_table()メソッドをMock化定義
+            _df = pd.DataFrame({'test_column': [1, 2, 3]})
+            log_msg(f"Mock _default_load_table called, returning DataFrame with shape {_df.shape}", LogLevel.DEBUG)
+            return _df
+
+        # Mock化したメソッド定義を具体的にPatch適用
+        with patch('src.lib.common_utils.ibr_pickled_table_searcher.TableSearcher._default_get_file_modified_time',
+                side_effect=mock_get_file_modified_time) as mock_get_time, \
+            patch('src.lib.common_utils.ibr_pickled_table_searcher.TableSearcher._default_load_table',
+                side_effect=mock_load_table) as mock_load:
+
+            # TeableSearcherインスタンス生成、従来の呼び出し通りに
+            log_msg("Creating mock TableSearcher instance", LogLevel.DEBUG)
+            searcher = TableSearcher("test_table.pkl")
+
+            # パッチが適用されたことを確認(.calledで評価)
+            log_msg(f"_default_get_file_modified_time called: {mock_get_time.called}", LogLevel.DEBUG)
+            log_msg(f"_default_load_table called: {mock_load.called}", LogLevel.DEBUG)
+
+            # 実際に返された値を確認(Mock適用による保有値確認)
+            if mock_get_time.called:
+                log_msg(f"default_get_file_modified_time: {searcher.last_modified_time}", LogLevel.DEBUG)
+            if mock_load.called:
+                log_msg(f"default_load_table: shape {searcher.df.shape}, columns {searcher.df.columns}", LogLevel.DEBUG)
+
+            # Mockで差替えたsearcherオブジェクトを返す
+            yield searcher
+----
+
+== 共通ライブラリの活用
+
+=== 利用可能な共通ライブラリの概要
+* `ibr_dataframe_helper`: DataFrameの操作に関するユーティリティ
+* `ibr_decorator_config`: 設定の取得と適用に関するデコレータ
+* `ibr_enums`: 共通の列挙型定義
+* `ibr_eventlog_handler`: Windowsイベントログへメッセージ出力
+* `ibr_mutex_check`: 多重起動の抑制
+
+など,ガイダンス・コードを適宜確認すること
+
+=== 共通ライブラリの適切な選択と使用
+* 汎用的に書ける、使いまわし要素がある実装要件がある場合は、まず `共通ライブラリにすでにあるか？` を確認する
+* 共通ライブラリにないもので、他でも使う要素があるメソッド実装を考えてる場合は、PMもしくはライブラリアンにエスカレーションすること
+
+== コード品質の維持
+
+=== コードレビューの重要性
+* 定期的にコードレビューを実施する
+* レビューではコードの機能性、可読性、保守性に注目する
+* 建設的なフィードバックを心がける
+
+=== カバレッジ・Metrics評価
+カバレッジ、Metricsに関する説明は開発者ガイドを参照のこと
+
+* UTではカバレッジ観点でまずは100%を前提とするが、費用対効果ふまえてレビュー担当者と協議すること
+** 特にC2ケースにおけるケース数とテスト実装効果の評価は慎重に判断すること
+* UTフェーズ以降、テストコードについては再編・スリム化を検討するフェーズを設定する
+** 意味合いの薄いテストについては削除する
+** 自動テストでのコスト/パフォーマンス効果をふまえて取捨選択する
+* Metrics評価により複雑度・保守容易性などに問題があると判断した場合は速やかにリファクタリングにより対処すること
+
+== Jenkinsを利用してのテスト自動実行
+
+
+== リファクタリングの原則
+* コードの重複を避ける（DRY原則）
+* 関数やクラスは単一の責任を持つようにする（単一責任の原則）
+* 頻繁に小さなリファクタリングを行う
+** これまでも頻出の話、タスクは１日で完結するサイズに分割すること
+** 「今週中」などという、一週間単位の活動は例外なく認めない運営ルール
+
+== トラブルシューティング
+
+=== よくある問題とその解決方法
+* インポートエラー: パスが正しく設定されているか確認
+* 型エラー: 期待される型と実際の型が一致しているか確認
+* 設定エラー: 環境に応じた正しい設定ファイルが読み込まれているか確認
+
+=== デバッグ技術
+* カスタムログを活用したデバッグ、print文の使用は厳禁
+* デバッガの使用（VSCode）
+* テストコードを活用したデバッグ
+
+== 付録
+
+=== 用語集
+* DI: Dependency Injection（依存性の注入）
+** DIによる外部依存要素分離を設計に盛り込むこと
+** 詳細は開発者ガイド参照
+
+=== 参考リソース
+* Python公式ドキュメント: https://docs.python.org/
+* Effective Python: https://effectivepython.com/
+
+このガイダンスを参考に、一貫性のある高品質なPythonコードを書くことができます。プロジェクトの特性や要件に応じて、適宜カスタマイズしてください。

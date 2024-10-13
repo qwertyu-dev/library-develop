@@ -132,6 +132,10 @@ class Config:
         # 3.package_config(動的)
         package_current_dir = package_path.parent
         package_toml_path = package_current_dir / 'package_config.toml'
+        # TODO(suzuki): package_config配置なしを許容するシナリオ
+        #if not Path(package_toml_path).exists():
+        #    return {}
+        # package_configがある
         try:
             package_config = TomlParser.parse_toml_file(package_toml_path)
         except Exception as e:
@@ -154,7 +158,7 @@ class Config:
         # 5.Mutexは入れない
 
         # 押し込めて返す
-        # envにより指定環境定義ブロックを返す
+        # envにより指定環境定義ブロックレイヤー(2階層目以降)を返す
         return Config(
             env,
             common_config[env],
