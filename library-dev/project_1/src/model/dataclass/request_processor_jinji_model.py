@@ -41,7 +41,7 @@ class JinjiModel(BaseModel):
     new_org_info_transfer_date: str = Field(...)
     aaa_transfer_date: str = Field(...)
     remarks: str = Field(...)
-    organizaion_name_kana: str = Field(...)
+    organization_name_kana: str = Field(...)
 
     # 挙動定義
     model_config = ConfigDict(

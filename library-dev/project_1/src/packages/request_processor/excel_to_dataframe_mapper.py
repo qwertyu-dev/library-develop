@@ -1,14 +1,17 @@
+import sys
+
 import pandas as pd
 import ulid
 
-from src.lib.common_utils.ibr_enums import LogLevel
+from src.lib.common_utils.ibr_decorator_config import initialize_config
+from src.lib.common_utils.ibr_logger_helper import format_config
 
 # config共有
-from src.lib.common_utils.ibr_decorator_config import with_config
-#import sys
-#from src.lib.common_utils.ibr_decorator_config import initialize_config
-#config = initialize_config(sys.modules[__name__])
+#from src.lib.common_utils.ibr_decorator_config import with_config
+from src.lib.common_utils.ibr_enums import LogLevel
 
+config = initialize_config(sys.modules[__name__])
+log_msg = config.log_message
 
 # def. module Exception
 class ExcelMappingError(Exception):
@@ -59,7 +62,7 @@ class ExcelMapping:
     | v0.1 | 初期定義作成 | 新規作成 | 2024/07/20 |      |
 
     """
-    def __init__(self, config: dict|None = None) -> None:
+    def __init__(self, conf: dict|None = None) -> None:
         """統合レイアウトをインスタンス共有します
 
         Arguments:
@@ -72,24 +75,31 @@ class ExcelMapping:
         なし
         """
         # DI
-        self.config = config or self.config
+        self.config = conf or config
         self.log_msg = self.config.log_message
-        self.unified_layout = self.config.package_config['unified_layout']
+        self._column_mapping = None
+        self.unified_layout = self.config.package_config.get('layout', []).get('unified_layout', {})
+        log_msg(f'\n\nunified_layout: {format_config(self.unified_layout)}', LogLevel.INFO)
 
-    def column_map(self, df: pd.DataFrame) -> pd.DataFrame:  # noqa: ARG002 interface定義上の引数定義でありinterface上で使用されないため
-        """Excelファイルを読み込み、列名をマッピングします
+    @property
+    def column_mappig(self) -> dict:
+        if self._column_mapping is None:
+            err_msg = 'Subclass Must implement column_mapping'
+            raise NotImplementedError(err_msg) from None
+        return self._column_mapping
 
-        Arguments:
-        file_path (str): 読み込むExcelファイルのパス
+    @column_mappig.setter
+    def column_mapping(self, value: dict) -> pd.DataFrame:
+        self._column_mapping = value
+        log_msg(f'\n\ncolumn_mapping: {format_config(self._column_mapping)}', LogLevel.INFO)
 
-        Return Value:
-        pd.DataFrame: マッピング後のデータフレーム
-
-        Exceptions:
-        NotImplementedError: このメソッドはサブクラスで実装する必要があります
-        """
-        err_msg = "Subclasses must implement read_and_map method"
-        raise NotImplementedError(err_msg)
+    def column_map(self, df: pd.DataFrame) -> pd.DataFrame:
+        _df = df.copy()
+        if not all(col in _df.columns for col in self.column_mapping):
+            err_msg = "Excel file does not contain all required columns"
+            self.log_msg(err_msg, LogLevel.ERROR)
+            raise InvalidDataError(err_msg) from None
+        return _df.rename(columns=self.column_mapping)
 
     def map_to_unified_layout(self, df: pd.DataFrame) -> pd.DataFrame: # noqa: ARG002 interface定義上の引数定義
         """データを統一レイアウトにマッピングします
@@ -106,7 +116,6 @@ class ExcelMapping:
         err_msg = "Subclasses must implement map_to_unified_layout method"
         raise NotImplementedError(err_msg)
 
-@with_config
 class JinjiExcelMapping(ExcelMapping):
     """人事部門用Excelファイル処理クラス
 
@@ -145,39 +154,9 @@ class JinjiExcelMapping(ExcelMapping):
     | v0.1 | 初期定義作成 | 新規作成 | 2024/07/20 | John Doe |
 
     """
-    def __init__(self, config: dict | None=None):
-        # DI
-        self.config = config or self.config
-        self.log_msg = self.config.log_message
-
-    def column_map(self, df: pd.DataFrame) -> pd.DataFrame:
-        """人事部門のExcelファイルを読み込み、列名をマッピングします
-
-        Arguments:
-            なし
-
-        Return Value:
-        pd.DataFrame: マッピング後のデータフレーム
-
-        Exceptions:
-        InvalidFileError: ファイルの読み込みに失敗した場合
-        InvalidDataError: 必要な列が存在しない場合
-
-        Algorithm:
-            1. Excelファイルを読み込む
-            2. 列名のマッピングを適用
-            3. 必要な列の存在を確認
-        """
-        column_mapping = self.config.package_config['excel_definition_mapping_jinji']
-        _df = df.copy()
-
-        if not all(col in _df.columns for col in column_mapping):
-            err_msg = "Excel file does not contain all required columns"
-            self.log_msg(err_msg, LogLevel.ERROR)
-            raise InvalidDataError(err_msg) from None
-
-        return _df.rename(columns=column_mapping)
-
+    def __init__(self, conf: dict | None=None):
+        super().__init__(conf)
+        self.column_mapping = self.config.package_config['excel_definition_mapping_jinji']
 
     def map_to_unified_layout(self, df: pd.DataFrame) -> pd.DataFrame:
         """人事データを統一レイアウトに変換します
@@ -217,7 +196,7 @@ class JinjiExcelMapping(ExcelMapping):
             unified_df['business_and_area_code'] = df.apply(lambda row: row['section_area_code'] if row['target_org'] == 'エリア' else '', axis=1)
             unified_df['area_name'] = df.apply(lambda row: row['section_area_name'] if row['target_org'] == 'エリア' else '', axis=1)
             unified_df['remarks'] = df['remarks']
-            unified_df['organizaion_name_kana'] = df['organizaion_name_kana']
+            unified_df['organization_name_kana'] = df['organization_name_kana']
 
         except Exception as e:
             err_msg = f"Error occurred while mapping to unified layout: {str(e)}"
@@ -226,7 +205,6 @@ class JinjiExcelMapping(ExcelMapping):
         else:
             return unified_df[self.unified_layout].fillna("")
 
-@with_config
 class KokukiExcelMapping(ExcelMapping):
     """国際事務企画部門用Excelファイル処理クラス
 
@@ -265,38 +243,9 @@ class KokukiExcelMapping(ExcelMapping):
     | v0.1 | 初期定義作成 | 新規作成 | 2024/07/20 | John Doe |
 
     """
-    def __init__(self, config: dict|None = None):
-        # DI
-        self.config = config or self.config
-        self.log_msg = self.config.log_message
-
-    def column_map(self, df: pd.DataFrame) -> pd.DataFrame:
-        """国際事務企画部門のExcelファイルを読み込み、列名をマッピングします
-
-        Arguments:
-        file_path (str): 読み込むExcelファイルのパス
-
-        Return Value:
-        pd.DataFrame: マッピング後のデータフレーム
-
-        Exceptions:
-        InvalidFileError: ファイルの読み込みに失敗した場合
-        InvalidDataError: 必要な列が存在しない場合
-
-        Algorithm:
-            1. Excelファイルを読み込む
-            2. 列名のマッピングを適用
-            3. 必要な列の存在を確認
-        """
-        column_mapping = self.config.package_config['excel_definition_mapping_kokuki']
-        _df = df.copy()
-
-        if not all(col in _df.columns for col in column_mapping):
-            err_msg = "Excel file does not contain all required columns"
-            self.log_msg(err_msg, LogLevel.ERROR)
-            raise InvalidDataError(err_msg) from None
-
-        return _df.rename(columns=column_mapping)
+    def __init__(self, conf: dict|None = None):
+        super().__init__(conf)
+        self.column_mapping = self.config.package_config['excel_definition_mapping_kokuki']
 
     def map_to_unified_layout(self, df: pd.DataFrame) -> pd.DataFrame:
         """国際事務企画データを統一レイアウトに変換します
@@ -337,7 +286,6 @@ class KokukiExcelMapping(ExcelMapping):
         else:
             return unified_df[self.unified_layout].fillna("")
 
-@with_config
 class KanrenExcelMappingWithDummy(ExcelMapping):
     """関連会社用Excelファイル処理クラス
 
@@ -376,37 +324,9 @@ class KanrenExcelMappingWithDummy(ExcelMapping):
     | v0.1 | 初期定義作成 | 新規作成 | 2024/07/20 | John Doe |
 
     """
-    def __init__(self, config: dict|None = None):
-        self.config = config or self.config
-        self.log_msg = self.config.log_message
-
-    def column_map(self, df: pd.DataFrame) -> pd.DataFrame:
-        """関連会社のExcelファイルを読み込み、列名をマッピングします
-
-        Arguments:
-        file_path (str): 読み込むExcelファイルのパス
-
-        Return Value:
-        pd.DataFrame: マッピング後のデータフレーム
-
-        Exceptions:
-        InvalidFileError: ファイルの読み込みに失敗した場合
-        InvalidDataError: 必要な列が存在しない場合
-
-        Algorithm:
-            1. Excelファイルを読み込む
-            2. 列名のマッピングを適用
-            3. 必要な列の存在を確認
-        """
-        column_mapping = self.config.package_config['excel_definition_mapping_kanren']
-        _df = df.copy()
-
-        if not all(col in _df.columns for col in column_mapping):
-            err_msg = "Excel file does not contain all required columns"
-            self.log_msg(err_msg, LogLevel.ERROR)
-            raise InvalidDataError(err_msg) from None
-
-        return _df.rename(columns=column_mapping)
+    def __init__(self, conf: dict|None = None):
+        super().__init__(conf)
+        self.column_mapping = self.config.package_config['excel_definition_mapping_kanren']
 
     def map_to_unified_layout(self, df: pd.DataFrame) -> pd.DataFrame:
         """関連会社データを統一レイアウトに変換します
@@ -455,7 +375,6 @@ class KanrenExcelMappingWithDummy(ExcelMapping):
         else:
             return unified_df[self.unified_layout].fillna("")
 
-@with_config
 class KanrenExcelMappingWithoutDummy(ExcelMapping):
     """関連会社用Excelファイル処理クラス
 
@@ -494,37 +413,9 @@ class KanrenExcelMappingWithoutDummy(ExcelMapping):
     | v0.1 | 初期定義作成 | 新規作成 | 2024/07/20 | John Doe |
 
     """
-    def __init__(self, config: dict|None=None):
-        self.config = config or self.config
-        self.log_msg = self.config.log_message
-
-    def column_map(self, df: pd.DataFrame) -> pd.DataFrame:
-        """関連会社のExcelファイルを読み込み、列名をマッピングします
-
-        Arguments:
-        file_path (str): 読み込むExcelファイルのパス
-
-        Return Value:
-        pd.DataFrame: マッピング後のデータフレーム
-
-        Exceptions:
-        InvalidFileError: ファイルの読み込みに失敗した場合
-        InvalidDataError: 必要な列が存在しない場合
-
-        Algorithm:
-            1. Excelファイルを読み込む
-            2. 列名のマッピングを適用
-            3. 必要な列の存在を確認
-        """
-        _df = df.copy()
-
-        column_mapping = self.config.package_config['excel_definition_mapping_jinji']
-        if not all(col in _df.columns for col in column_mapping):
-            err_msg = "Excel file does not contain all required columns"
-            self.log_msg(err_msg, LogLevel.ERROR)
-            raise InvalidDataError(err_msg) from None
-
-        return _df.rename(columns=column_mapping)
+    def __init__(self, conf: dict|None=None):
+        super().__init__(conf)
+        self.column_mapping = self.config.package_config['excel_definition_mapping_jinji']
 
     def map_to_unified_layout(self, df: pd.DataFrame) -> pd.DataFrame:
         """関連会社データを統一レイアウトに変換します
@@ -568,7 +459,7 @@ class KanrenExcelMappingWithoutDummy(ExcelMapping):
             unified_df['business_and_area_code'] = df.apply(lambda row: row['section_area_code'] if row['target_org'] == 'エリア' else '', axis=1)
             unified_df['area_name'] = df.apply(lambda row: row['section_area_name'] if row['target_org'] == 'エリア' else '', axis=1)
             unified_df['remarks'] = df['remarks']
-            unified_df['organizaion_name_kana'] = df['organizaion_name_kana']
+            unified_df['organization_name_kana'] = df['organization_name_kana']
 
         except Exception as e:
             err_msg = f"Error occurred while mapping to unified layout: {str(e)}"
@@ -577,28 +468,3 @@ class KanrenExcelMappingWithoutDummy(ExcelMapping):
         else:
             return unified_df[self.unified_layout].fillna("")
 
-        #try:
-        #    unified_df = pd.DataFrame(columns=self.unified_layout)
-
-        #    unified_df['ulid'] = [str(ulid.new()) for _ in range(len(df))]
-        #    unified_df['applicant_info'] = '4'  # ダミー課なし
-        #    unified_df['application_type'] = df['application_type']
-        #    unified_df['business_unit_code'] = df['business_unit_code']
-        #    unified_df['parent_branch_code'] = df['parent_branch_code']
-        #    unified_df['branch_code'] = df['branch_code']
-        #    unified_df['branch_name'] = df['branch_name']
-        #    unified_df['section_gr_code'] = df['section_gr_code']
-        #    unified_df['section_gr_name'] = df['section_gr_name']
-        #    unified_df['section_name_en'] = df['section_name_en']
-        #    unified_df['aaa_transfer_date'] = df['aaa_transfer_date']
-        #    unified_df['orgnization_name_kana'] = df['orgnization_name_kana']
-        #    unified_df['section_name_kana'] = df['section_name_kana']
-        #    unified_df['section_name_abbr'] = df['section_name_abbr']
-        #    unified_df['bpr_target_flag'] = df['bpr_target_flag']
-
-        #except Exception as e:
-        #    err_msg = f"Error occurred while mapping to unified layout: {str(e)}"
-        #    self.log_msg(err_msg, LogLevel.ERROR)
-        #    raise ExcelMappingError(err_msg) from None
-        #else:
-        #    return unified_df[self.unified_layout].fillna("")

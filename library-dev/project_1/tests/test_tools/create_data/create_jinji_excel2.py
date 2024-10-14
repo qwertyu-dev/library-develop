@@ -49,7 +49,7 @@ def generate_random_data(include_errors: bool = False) -> Dict[str, str]:
         'new_org_info_transfer_date': generate_random_date(),
         'aaa_transfer_date': generate_random_date(),
         'remarks': f"備考{random.randint(1, 100)}",
-        'organizaion_name_kana': f"シテン{branch_number}",
+        'organization_name_kana': f"シテン{branch_number}",
     }
 
     if include_errors and random.random() < 0.2:  # 20%の確率でエラーデータを含める

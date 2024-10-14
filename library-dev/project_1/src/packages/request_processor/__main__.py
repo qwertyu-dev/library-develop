@@ -147,7 +147,7 @@ if __name__ == '__main__':
     for process in processes:
         executor.execute(process)
         # 各区分での結果を蓄積
-        total_dataframe.append(executor.get_total_dataframe())
+        total_dataframe.append(executor.get_integrated_dataframe())
 
     # ファイルのマージ(jinji, kokuki, kanren処理結果)
     ## 人事・国企・関連の統合レイアウト変換碁データを１つのファイルにマージする
