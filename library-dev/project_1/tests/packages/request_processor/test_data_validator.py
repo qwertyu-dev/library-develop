@@ -1,20 +1,19 @@
-import pandas as pd
-import pytest
-from unittest.mock import MagicMock, patch, Mock
-from pydantic import BaseModel
-from src.packages.request_processor.data_validator import DataValidator
-from src.packages.request_processor.validation_error_manager import ValidationErrorManager
-from src.lib.common_utils.ibr_enums import LogLevel
-
-from src.lib.common_utils.ibr_dataframe_helper import tabulate_dataframe 
-from src.lib.common_utils.ibr_logger_helper import (
-    format_dict,
-    format_config,
-)
-
 # テストに依存しないカスタムロガー
 import sys
+from unittest.mock import MagicMock, patch
+
+import pandas as pd
+import pytest
+from pydantic import BaseModel
+
+from src.lib.common_utils.ibr_dataframe_helper import tabulate_dataframe
 from src.lib.common_utils.ibr_decorator_config import initialize_config
+from src.lib.common_utils.ibr_enums import LogLevel
+from src.lib.common_utils.ibr_logger_helper import (
+    format_dict,
+)
+from src.packages.request_processor.data_validator import DataValidator
+
 config = initialize_config(sys.modules[__name__])
 log_msg = config.log_message
 
@@ -43,7 +42,7 @@ class TestDataValidatorInit:
     | validation_modelが有効 | Y       | Y       | Y       | N       |
     | 結果                   | 成功    | 成功    | 成功    | 失敗    |
 
-    境界値検証ケース一覧：
+    境界値検証ケース一覧:
     | ケースID | 入力パラメータ     | テスト値                   | 期待される結果 | テストの目的/検証ポイント           | 実装状況 | 対応するテストケース              |
     |----------|--------------------|----------------------------|----------------|--------------------------------------|----------|-----------------------------------|
     | BVT_001  | config             | {}                         | 成功           | 空の設定での動作確認                | 実装済み | test_init_BVT_empty_config         |
@@ -53,12 +52,12 @@ class TestDataValidatorInit:
     | BVT_005  | config             | {'key': 'value'}           | 成功           | 有効な設定での動作確認              | 実装済み | test_init_C0_valid_inputs          |
     | BVT_006  | validation_model   | int                        | 失敗           | BaseModelでないクラスでの例外確認   | 実装済み | test_init_C2_invalid_model_type    |
 
-    境界値検証ケースの実装状況サマリー：
+    境界値検証ケースの実装状況サマリー:
     - 実装済み: 6
     - 未実装: 0
     - 一部実装: 0
 
-    注記：
+    注記:
     全ての境界値ケースが実装されています。追加のエッジケースが必要な場合は、さらなるテストケースを追加することができます。
     """
 
@@ -69,7 +68,7 @@ class TestDataValidatorInit:
     def teardown_method(self):
         log_msg(f"test end\n{'-'*80}\n", LogLevel.INFO)
 
-    @pytest.fixture
+    @pytest.fixture()
     def valid_model(self):
         class TestModel(BaseModel):
             field: str
@@ -77,7 +76,7 @@ class TestDataValidatorInit:
 
     def test_init_C0_valid_inputs(self, valid_model):
         test_doc = """テスト内容:
-        
+
         - テストカテゴリ: C0
         - テスト区分: 正常系
         - テストシナリオ: 有効なconfigとvalidation_modelでインスタンス生成
@@ -91,7 +90,7 @@ class TestDataValidatorInit:
 
     def test_init_C0_invalid_model(self):
         test_doc = """テスト内容:
-        
+
         - テストカテゴリ: C0
         - テスト区分: 異常系
         - テストシナリオ: 無効なvalidation_modelでTypeError
@@ -106,7 +105,7 @@ class TestDataValidatorInit:
 
     def test_init_C1_None_config(self, valid_model):
         test_doc = """テスト内容:
-        
+
         - テストカテゴリ: C1
         - テスト区分: 正常系
         - テストシナリオ: configがNoneの場合
@@ -119,7 +118,7 @@ class TestDataValidatorInit:
 
     def test_init_C2_config_combinations(self, valid_model):
         test_doc = """テスト内容:
-        
+
         - テストカテゴリ: C2
         - テスト区分: 正常系/異常系
         - テストシナリオ: configの様々な組み合わせでの初期化
@@ -143,7 +142,7 @@ class TestDataValidatorInit:
 
     def test_init_C2_invalid_model_type(self):
         test_doc = """テスト内容:
-        
+
         - テストカテゴリ: C2
         - テスト区分: 異常系
         - テストシナリオ: BaseModelでないクラスでの初期化
@@ -159,7 +158,7 @@ class TestDataValidatorInit:
 
     def test_init_BVT_empty_config(self, valid_model):
         test_doc = """テスト内容:
-        
+
         - テストカテゴリ: BVT
         - テスト区分: 正常系
         - テストシナリオ: 空のconfigでの初期化
@@ -173,7 +172,7 @@ class TestDataValidatorInit:
 
     def test_init_BVT_minimal_model(self):
         test_doc = """テスト内容:
-        
+
         - テストカテゴリ: BVT
         - テスト区分: 正常系
         - テストシナリオ: 最小限のモデル定義での初期化
@@ -213,30 +212,30 @@ class TestDataValidatorValidate:
     | エラーが発生する     | N       | Y       |
     | 結果                 | ログなし | エラーログ |
 
-    境界値検証ケース一覧：
+    境界値検証ケース一覧:
     | ケースID | 入力パラメータ | テスト値           | 期待される結果     | テストの目的/検証ポイント       | 実装状況 | 対応するテストケース              |
     |----------|----------------|--------------------|--------------------|----------------------------------|----------|-----------------------------------|
     | BVT_001  | df             | 空のDataFrame      | エラーなし         | 空のDataFrameの処理を確認        | 実装済み | test_validate_BVT_empty_dataframe  |
     | BVT_002  | df             | 1行のDataFrame     | 正常に処理         | 最小データセットの処理を確認     | 実装済み | test_validate_BVT_single_row      |
     | BVT_003  | df             | 大量データ(1万行)  | 正常に処理         | 大量データの処理を確認           | 実装済み | test_validate_BVT_large_dataframe |
 
-    境界値検証ケースの実装状況サマリー：
+    境界値検証ケースの実装状況サマリー:
     - 実装済み: 3
     - 未実装: 0
     - 一部実装: 0
 
-    注記：
+    注記:
     すべての境界値ケースが実装されています。パフォーマンスの観点から、大量データのテストケースは実行時間が長くなる可能性があります。
     """
 
-    @pytest.fixture
+    @pytest.fixture()
     def valid_model(self):
         class TestModel(BaseModel):
             field1: str
             field2: int
         return TestModel
 
-    @pytest.fixture
+    @pytest.fixture()
     def data_validator(self, valid_model):
         mock_config = MagicMock()
         return DataValidator(mock_config, valid_model)
@@ -249,71 +248,57 @@ class TestDataValidatorValidate:
 
     def test_validate_C0_no_errors(self, data_validator):
         test_doc = """テスト内容:
-        
-        - テストカテゴリ: C0
-        - テスト区分: 正常系
-        - テストシナリオ: エラーなしのDataFrame
-        """
-        log_msg(f"\n{test_doc}", LogLevel.INFO)
-    
-        df = pd.DataFrame({'field1': ['test'], 'field2': [1]})
-        with patch.object(data_validator, 'log_msg') as mock_log:
-            data_validator.validate(df)
-        mock_log.assert_called_with("Validation completed: No errors found", LogLevel.INFO)
-        assert not data_validator.error_manager.has_errors()
 
-    def test_validate_C0_no_errors(self, data_validator):
-        test_doc = """テスト内容:
-    
         - テストカテゴリ: C0
         - テスト区分: 正常系
         - テストシナリオ: エラーなしのDataFrame
         """
         log_msg(f"\n{test_doc}", LogLevel.INFO)
-    
-        df = pd.DataFrame({'field1': ['test'], 'field2': [1]})
+
+        _df = pd.DataFrame({'field1': ['test'], 'field2': [1]})
+
         with patch.object(data_validator, 'log_msg') as mock_log:
-            data_validator.validate(df)
+            data_validator.validate(_df)
         mock_log.assert_called_with("Validation completed: No errors found", LogLevel.INFO)
         assert not data_validator.error_manager.has_errors()
 
     def test_validate_C1_no_errors(self, data_validator):
         test_doc = """テスト内容:
-        
+
         - テストカテゴリ: C1
         - テスト区分: 正常系
         - テストシナリオ: エラーがない場合
         """
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
-        df = pd.DataFrame({'field1': ['test1', 'test2'], 'field2': [1, 2]})
-        log_msg(f'df: \n{tabulate_dataframe(df)}')
+        _df = pd.DataFrame({'field1': ['test1', 'test2'], 'field2': [1, 2]})
+        log_msg(f'_df: \n{tabulate_dataframe(_df)}')
 
         with patch.object(data_validator, 'log_msg') as mock_log:
-            data_validator.validate(df)
+            data_validator.validate(_df)
         assert not data_validator.error_manager.has_errors()
         mock_log.assert_called_with("Validation completed: No errors found", LogLevel.INFO)
-        #mock_log.assert_not_called()
+        mock_log.assert_called_once()
 
 
     def test_validate_C1_with_errors(self, data_validator):
         test_doc = """テスト内容:
-        
+
         - テストカテゴリ: C1
         - テスト区分: 異常系
         - テストシナリオ: エラーがある場合
         """
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
-        df = pd.DataFrame({'field1': ['test1', 'test2'], 'field2': ['invalid', 2]})
-        log_msg(f'df: \n{tabulate_dataframe(df)}')
+        _df = pd.DataFrame({'field1': ['test1', 'test2'], 'field2': ['invalid', 2]})
+        log_msg(f'_df: \n{tabulate_dataframe(_df)}')
 
         with patch.object(data_validator, 'log_msg') as mock_log:
-            data_validator.validate(df)
+            data_validator.validate(_df)
         assert data_validator.error_manager.has_errors()
         mock_log.assert_called_with('ValidateProcess completed with 1 line validation errors', LogLevel.INFO)
 
-    @pytest.mark.parametrize("df, expected_errors, expected_log", [
+    @pytest.mark.parametrize(("df", "expected_errors", "expected_log"), [
         (pd.DataFrame(), 0, "Validation skipped: Empty DataFrame"),
         (pd.DataFrame({'field1': ['test'], 'field2': [1]}), 0, "Validation completed: No errors found"),
         (pd.DataFrame({'field1': ['test1', 'test2'], 'field2': [1, 'invalid']}), 1, "ValidateProcess completed with 1 line validation errors"),
@@ -321,60 +306,60 @@ class TestDataValidatorValidate:
     ])
     def test_validate_C2_combinations(self, data_validator, df, expected_errors, expected_log):
         test_doc = """テスト内容:
-    
+
         - テストカテゴリ: C2
         - テスト区分: 正常系/異常系
         - テストシナリオ: DataFrameの行数とバリデーション結果の組み合わせ
         """
         log_msg(f"\n{test_doc}", LogLevel.INFO)
-    
+
         with patch.object(data_validator, 'log_msg') as mock_log:
             data_validator.validate(df)
-    
+
         assert data_validator.error_manager.has_errors() == (expected_errors > 0)
         mock_log.assert_any_call(expected_log, LogLevel.INFO)
 
     def test_validate_BVT_empty_dataframe(self, data_validator):
         test_doc = """テスト内容:
-        
+
         - テストカテゴリ: BVT
         - テスト区分: 正常系
         - テストシナリオ: 空のDataFrame
         """
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
-        df = pd.DataFrame()
-        data_validator.validate(df)
+        _df = pd.DataFrame()
+        data_validator.validate(_df)
         assert not data_validator.error_manager.has_errors()
 
     def test_validate_BVT_single_row(self, data_validator):
         test_doc = """テスト内容:
-        
+
         - テストカテゴリ: BVT
         - テスト区分: 正常系
         - テストシナリオ: 1行のDataFrame
         """
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
-        df = pd.DataFrame({'field1': ['test'], 'field2': [1]})
-        data_validator.validate(df)
+        _df = pd.DataFrame({'field1': ['test'], 'field2': [1]})
+        data_validator.validate(_df)
         assert not data_validator.error_manager.has_errors()
 
     def test_validate_BVT_large_dataframe(self, data_validator):
         test_doc = """テスト内容:
-        
+
         - テストカテゴリ: BVT
         - テスト区分: 正常系
         - テストシナリオ: 大量データ(1万行)のDataFrame
         """
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
-        df = pd.DataFrame({'field1': ['test'] * 10000, 'field2': range(10000)})
+        _df = pd.DataFrame({'field1': ['test'] * 10000, 'field2': range(10000)})
         with patch.object(data_validator, 'log_msg') as mock_log:
-            data_validator.validate(df)
+            data_validator.validate(_df)
         assert not data_validator.error_manager.has_errors()
         mock_log.assert_called_with("Validation completed: No errors found", LogLevel.INFO)
-        #mock_log.assert_not_called()
+        mock_log.assert_called_once()
 
 class TestDataValidatorValidateRow:
     """DataValidatorの_validate_rowメソッドのテスト
@@ -404,30 +389,30 @@ class TestDataValidatorValidateRow:
     | その他の例外発生     | N       | N       | Y       |
     | 結果                 | 成功    | エラー追加 | エラー追加 |
 
-    境界値検証ケース一覧：
+    境界値検証ケース一覧:
     | ケースID | 入力パラメータ | テスト値           | 期待される結果     | テストの目的/検証ポイント       | 実装状況 | 対応するテストケース              |
     |----------|----------------|--------------------|--------------------|----------------------------------|----------|-----------------------------------|
     | BVT_001  | row            | 最小有効データ     | バリデーション成功 | 最小限の有効なデータを確認       | 実装済み | test_validate_row_BVT_min_valid    |
     | BVT_002  | row            | 最大有効データ     | バリデーション成功 | 最大限の有効なデータを確認       | 実装済み | test_validate_row_BVT_max_valid    |
     | BVT_003  | row            | 無効なデータ型     | ValidationError   | 無効なデータ型の処理を確認       | 実装済み | test_validate_row_BVT_invalid_type |
 
-    境界値検証ケースの実装状況サマリー：
+    境界値検証ケースの実装状況サマリー:
     - 実装済み: 3
     - 未実装: 0
     - 一部実装: 0
 
-    注記：
+    注記:
     すべての境界値ケースが実装されています。さらなるエッジケースの検討が必要な場合は、追加のテストケースを実装することを検討してください。
     """
 
-    @pytest.fixture
+    @pytest.fixture()
     def valid_model(self):
         class TestModel(BaseModel):
             field1: str
             field2: int
         return TestModel
 
-    @pytest.fixture
+    @pytest.fixture()
     def data_validator(self, valid_model):
         mock_config = MagicMock()
         return DataValidator(mock_config, valid_model)
@@ -440,7 +425,7 @@ class TestDataValidatorValidateRow:
 
     def test_validate_row_C0_success(self, data_validator):
         test_doc = """テスト内容:
-        
+
         - テストカテゴリ: C0
         - テスト区分: 正常系
         - テストシナリオ: バリデーション成功
@@ -455,7 +440,7 @@ class TestDataValidatorValidateRow:
 
     def test_validate_row_C0_validation_error(self, data_validator):
         test_doc = """テスト内容:
-        
+
         - テストカテゴリ: C0
         - テスト区分: 異常系
         - テストシナリオ: ValidationError発生
@@ -471,7 +456,7 @@ class TestDataValidatorValidateRow:
 
     def test_validate_row_C0_unexpected_error(self, data_validator):
         test_doc = """テスト内容:
-    
+
         - テストカテゴリ: C0
         - テスト区分: 異常系
         - テストシナリオ: 予期せぬ例外発生
@@ -511,14 +496,14 @@ class TestDataValidatorValidateRow:
             LogLevel.ERROR,
         )
 
-    @pytest.mark.parametrize("row, expected_error", [
+    @pytest.mark.parametrize(("row", "expected_error"), [
         (pd.Series({'field1': 'test', 'field2': 1}), False),
         (pd.Series({'field1': 'test', 'field2': 'invalid'}), True),
         (pd.Series({'field1': None, 'field2': None}), True),
     ])
     def test_validate_row_C2_combinations(self, data_validator, row, expected_error):
         test_doc = """テスト内容:
-        
+
         - テストカテゴリ: C2
         - テスト区分: 正常系/異常系
         - テストシナリオ: 入力データと例外の種類の組み合わせ
@@ -530,7 +515,7 @@ class TestDataValidatorValidateRow:
 
     def test_validate_row_BVT_min_valid(self, data_validator):
         test_doc = """テスト内容:
-        
+
         - テストカテゴリ: BVT
         - テスト区分: 正常系
         - テストシナリオ: 最小有効データ
@@ -543,7 +528,7 @@ class TestDataValidatorValidateRow:
 
     def test_validate_row_BVT_max_valid(self, data_validator):
         test_doc = """テスト内容:
-        
+
         - テストカテゴリ: BVT
         - テスト区分: 正常系
         - テストシナリオ: 最大有効データ
@@ -556,7 +541,7 @@ class TestDataValidatorValidateRow:
 
     def test_validate_row_BVT_invalid_type(self, data_validator):
         test_doc = """テスト内容:
-        
+
         - テストカテゴリ: BVT
         - テスト区分: 異常系
         - テストシナリオ: 無効なデータ型
@@ -614,4 +599,3 @@ class TestDataValidatorResultValidationErrors:
 
         log_msg(f'result_validation_errors method called: {mock_log_msg.called}', LogLevel.INFO)
         log_msg(f'error_manager.log_errors called: {mock_error_manager.log_errors.called}', LogLevel.INFO)
-        

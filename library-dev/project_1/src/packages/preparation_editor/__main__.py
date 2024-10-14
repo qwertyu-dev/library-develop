@@ -22,9 +22,9 @@ class PreparatonExecutor:
         self.log_msg = self.config.log_message
 
         # decision table book path
-        self.decition_table_path = Path(
-            f"{self.common_config.get('decision_table_path', []).get('DECISION_TABLE_APTH', '')}/"
-            f"{self.package_config.get('decision_table_file', []).get('DECISION_TABLE_PRE_BOOK_NAME', '')}",
+        self.decision_table_path = Path(
+            f"{self.common_config.get('decision_table_path', []).get('DECISION_TABLE_PATH', '')}/"
+            f"{self.package_config.get('decision_table_file', []).get('DECISION_PRE_BOOK_NAME', '')}",
         )
 
         # decision table sheet name
@@ -35,9 +35,9 @@ class PreparatonExecutor:
         # Facade指定(受付orパターン編集をpackage_configで指定)
         self.preparation_import_facade = self.package_config.get('import_editor_facade', []).get('FACADE_IMPORT_PATH', '')
 
-        self.log_msg(f'decision table book path: {self.decition_table_path}', LogLevel.DEBUG)
-        self.log_msg(f'decision table sheet name : {self.decision_table_sheet_name}', LogLevel.DEBUG)
-        self.log_msg(f'preparation import facade : {self.preparation_import_facade}', LogLevel.DEBUG)
+        self.log_msg(f'decision table book path: {self.decision_table_path}', LogLevel.INFO)
+        self.log_msg(f'decision table sheet name : {self.decision_table_sheet_name}', LogLevel.INFO)
+        self.log_msg(f'preparation import facade : {self.preparation_import_facade}', LogLevel.INFO)
 
     def get_decision_table(self)-> pd.DataFrame:
         excel_data_loader = ExcelDataLoader(
@@ -48,6 +48,8 @@ class PreparatonExecutor:
             skiprows=1,
             usecols=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
         )
+
+        # データ取り込みそのまま結果
         self.log_msg(f'decition_table: \n\n{tabulate_dataframe(_df)}')
 
         # column mapping
@@ -61,9 +63,11 @@ class PreparatonExecutor:
             'section_gr_code',
             'branch_code_first_digit',
             'branch_code_4_digits_application_status',
-            'facade_name',
+            'DecisionResult',
         ]
         _df.columns = decision_table_columns
+
+        # 日本語Column→python Columnマッピング
         self.log_msg(f'decition_table: \n\n{tabulate_dataframe(_df)}')
 
         # definition mapping
@@ -75,7 +79,7 @@ class PreparatonExecutor:
             column = column.replace('あり', 'is_not_empty')
             column = column.replace('^-$', 'any', regex=True)
             return column
-        
+
         # 変換指定列に対してtransform
         columns_to_transform = [
             'branch_code_digit',
@@ -87,7 +91,9 @@ class PreparatonExecutor:
         ]
         for col in columns_to_transform:
             _df[col] = replace_values(_df[col])
-        
+
+        # 判定関数pythonへマッピング
+        self.log_msg(f'decition_table: \n\n{tabulate_dataframe(_df)}')
         return _df
 
     def start(self) -> None:
@@ -95,14 +101,17 @@ class PreparatonExecutor:
         try:
             self.log_msg("IBRDEV-I-0000001")  # 処理開始ログ
 
+            # Facade定義読み込み
+            decision_table = self.get_decision_table()
+
             # path生成
             # TODO(suzuki); 受付入力pickleファイルへのPathへ
             sample_data_path = Path(
                 f"{self.common_config.get('optional_path', []).get('SHARE_RECEIVE_PATH', '')}/"
                 f"{self.package_config.get('preparation_sample_data', []).get('PREPARATION_SAMPLE_DATA', '')}",
                 )
-            # TODO(suzuki); ディシジョンテーブルpickleファイルへのPathへ
-            decision_table_path = Path(
+            ## TODO(suzuki); ディシジョンテーブルpickleファイルへのPathへ
+            self.decision_table_path = Path(
                 f"{self.common_config.get('decision_table_path', []).get('DECISION_TABLE_PATH', '')}/"
                 f"{self.package_config.get('decision_table_book_name', []).get('DECISION_TABLE_BOOK_NANE', '')}",
                 )
@@ -110,14 +119,16 @@ class PreparatonExecutor:
             # Facade指定(受付orパターン編集をpackage_configで指定)
             preparation_import_facade = self.package_config.get('import_editor_facade', []).get('FACADE_IMPORT_PATH','')
 
-            self.log_msg(f'sample data path: {sample_data_path}', LogLevel.INFO)
-            self.log_msg(f'sample decision table path: {decision_table_path}', LogLevel.INFO)
-            self.log_msg(f'preparation import facade: {preparation_import_facade}', LogLevel.INFO)
+            #self.log_msg(f'sample data path: {sample_data_path}', LogLevel.INFO)
+            #self.log_msg(f'sample decision table path: {decision_table_path}', LogLevel.INFO)
+            #self.log_msg(f'preparation import facade: {preparation_import_facade}', LogLevel.INFO)
 
             # データ取り込み
             # TODO(suzuki): read_pickleに置き換え
             data_sample = pd.read_excel(sample_data_path)
-            decision_table = pd.read_excel(decision_table_path)
+
+            # sample decision table
+            decision_table = pd.read_excel(self.decision_table_path)
 
             # 全ての列のデータ型を object に変更
             data_sample = data_sample.astype(object)

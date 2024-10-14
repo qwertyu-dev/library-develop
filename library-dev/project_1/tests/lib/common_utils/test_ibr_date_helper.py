@@ -9,6 +9,7 @@ $ pytest -lv ./tests/lib/common_utils/test_ibr_csv_helper.py > tests/log/pytest_
 # pytest結果を標準出力する場合
 $ pytest -lv ./tests/lib/common_utils/test_ibr_csv_helper.py
 """
+import sys
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from unittest.mock import MagicMock
@@ -19,25 +20,22 @@ import pytest
 # テスト対象モジュール import, プロジェクトTopディレクトリから起動する
 #####################################################################
 from src.lib.common_utils.ibr_date_helper import (
+    _convert_date_to_string,
     convert_unixtime_to_jst,
     convert_with_no_timezone_to_jst,
     convert_with_timezone_to_jst,
-    load_calendar_file,
-    _convert_date_to_string,
     is_bank_business_day,
+    load_calendar_file,
 )
 
-#####################################################################
-# テスト実行環境セットアップ
-#####################################################################
+# config共有
+from src.lib.common_utils.ibr_decorator_config import (
+    initialize_config,
+)
 from src.lib.common_utils.ibr_enums import LogLevel
-from src.lib.common_utils.ibr_get_config import Config
 
-package_path = Path(__file__)
-config = Config.load(package_path)
-
+config = initialize_config(sys.modules[__name__])
 log_msg = config.log_message
-log_msg(str(config), LogLevel.DEBUG)
 
 JST = timezone(timedelta(hours=+9), 'JST')
 

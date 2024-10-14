@@ -14,7 +14,7 @@ from pathlib import Path
 from unittest.mock import MagicMock
 
 import pytest
-import toml
+
 from src.lib.common_utils.ibr_enums import LogLevel
 
 #####################################################################

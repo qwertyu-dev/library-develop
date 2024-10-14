@@ -3,19 +3,18 @@
 import sys
 from unittest.mock import (
     MagicMock,
-    patch,
     call,
+    patch,
 )
 
 import pandas as pd
 import pytest
 
-from src.lib.common_utils.ibr_decorator_config import with_config
 from src.lib.common_utils.ibr_dataframe_helper import tabulate_dataframe
-from src.lib.common_utils.ibr_decorator_config import initialize_config
+from src.lib.common_utils.ibr_decorator_config import initialize_config, with_config
 from src.lib.common_utils.ibr_enums import LogLevel
-from src.model.facade.base_facade import DataFrameEditor
 from src.lib.converter_utils.ibr_basic_column_editor import ColumnEditor
+from src.model.facade.base_facade import DataFrameEditor
 
 config = initialize_config(sys.modules[__name__])
 log_msg = config.log_message
@@ -117,7 +116,7 @@ class Test_DataFrameEditor_init:
     #    - DTケース: 2
     #    """
     #    log_msg(f"\n{test_doc}", LogLevel.INFO)
-    # 
+    #
     #    with patch('src.model.facade.base_facade.DataFrameEditor.__init__', return_value=None):
     #        editor = DataFrameEditor()
     #        with patch.object(editor, 'config', new_callable=MagicMock) as mock_config:
@@ -208,19 +207,19 @@ class Test_DataFrameEditor_edit_series:
     | 結果                     | 編集    | 変更    |
     |                          | される  | なし    |
 
-    境界値検証ケース一覧：
+    境界値検証ケース一覧:
     | ケースID | 入力パラメータ | テスト値              | 期待される結果           | テストの目的/検証ポイント    | 実装状況 | 対応するテストケース              |
     |----------|----------------|------------------------|--------------------------|-------------------------------|----------|-----------------------------------|
     | BVT_001  | series         | 空のSeries             | 空のSeriesが返される     | 空入力の処理を確認           | 実装済み | test_edit_series_C0_empty_series   |
     | BVT_002  | series         | 最大長の列名を持つSeries | 正常に処理される      | 最大長の列名での動作を確認   | 実装済み | test_edit_series_BVT_max_length_name |
     | BVT_003  | series         | 特殊文字を含む列名のSeries | 正常に処理される   | 特殊文字を含む列名の処理を確認 | 実装済み | test_edit_series_BVT_special_chars |
 
-    境界値検証ケースの実装状況サマリー：
+    境界値検証ケースの実装状況サマリー:
     - 実装済み: 3
     - 未実装: 0
     - 一部実装: 0
 
-    注記：
+    注記:
     - 全ての境界値ケースが実装されています。
     - 最大長の列名や特殊文字を含む列名のテストは、システムの制限や要件に応じて調整が必要な場合があります。
     """
@@ -231,13 +230,13 @@ class Test_DataFrameEditor_edit_series:
     def teardown_method(self):
         log_msg(f"test end\n{'-'*80}\n", LogLevel.INFO)
 
-    @pytest.fixture
+    @pytest.fixture()
     def mock_config(self):
         mock_config = MagicMock()
         mock_config.log_message = MagicMock()
         return mock_config
 
-    @pytest.fixture
+    @pytest.fixture()
     def test_editor(self, mock_config):
         @with_config
         class TestDataFrameEditor(DataFrameEditor):
@@ -252,7 +251,7 @@ class Test_DataFrameEditor_edit_series:
         with patch('src.lib.common_utils.ibr_decorator_config.initialize_config', return_value=mock_config):
             return TestDataFrameEditor()
 
-    @pytest.fixture
+    @pytest.fixture()
     def test_editor_with_mocks(self, mock_config):
         @with_config
         class TestDataFrameEditor(DataFrameEditor):
@@ -275,7 +274,7 @@ class Test_DataFrameEditor_edit_series:
 
         input_series = pd.Series({'col1': 'test', 'col2': 'TEST', 'col3': 'Unchanged'})
         result = test_editor.edit_series(input_series)
-        
+
         assert result['col1'] == 'test'
         assert result['col2'] == 'TEST'
         assert result['col3'] == 'Unchanged'
@@ -290,7 +289,7 @@ class Test_DataFrameEditor_edit_series:
 
         input_series = pd.Series({})
         result = test_editor.edit_series(input_series)
-        
+
         assert result.empty
 
     def test_edit_series_C1_DT_01_existing_columns(self, test_editor):
@@ -304,7 +303,7 @@ class Test_DataFrameEditor_edit_series:
 
         input_series = pd.Series({'col1': 'test', 'col2': 'TEST'})
         result = test_editor.edit_series(input_series)
-        
+
         assert result['col1'] == 'test'
         assert result['col2'] == 'TEST'
 
@@ -319,9 +318,9 @@ class Test_DataFrameEditor_edit_series:
 
         input_series = pd.Series({'col3': 'Unchanged', 'col4': 'UNCHANGED'})
         result = test_editor.edit_series(input_series)
-        
+
         assert result.equals(input_series)
-        
+
     def test_edit_series_C2_multiple_editors(self, test_editor):
         test_doc = """テスト内容:
         - テストカテゴリ: C2
@@ -332,7 +331,7 @@ class Test_DataFrameEditor_edit_series:
 
         input_series = pd.Series({'col1': 'test', 'col2': 'TEST', 'col3': 'Mixed'})
         result = test_editor.edit_series(input_series)
-        
+
         assert result['col1'] == 'test'
         assert result['col2'] == 'TEST'
         assert result['col3'] == 'Mixed'
@@ -347,7 +346,7 @@ class Test_DataFrameEditor_edit_series:
 
         input_series = pd.Series({'col1': 'TEST', 'col3': 'Unchanged'})
         result = test_editor.edit_series(input_series)
-        
+
         assert result['col1'] == 'TEST'
         assert result['col3'] == 'Unchanged'
 
@@ -361,7 +360,7 @@ class Test_DataFrameEditor_edit_series:
 
         input_series = pd.Series({'col3': 'Unchanged', 'col4': 'UNCHANGED'})
         result = test_editor.edit_series(input_series)
-        
+
         assert result.equals(input_series)
 
     def test_edit_series_BVT_max_length_name(self, test_editor):
@@ -375,7 +374,7 @@ class Test_DataFrameEditor_edit_series:
         max_length_name = 'a' * 63  # Assuming 63 is the max length
         input_series = pd.Series({max_length_name: 'test'})
         result = test_editor.edit_series(input_series)
-        
+
         assert result[max_length_name] == 'test'
 
     def test_edit_series_BVT_special_chars(self, test_editor):
@@ -389,7 +388,7 @@ class Test_DataFrameEditor_edit_series:
         special_char_name = 'col1!@#$%^&*()_+'
         input_series = pd.Series({special_char_name: 'TEST'})
         result = test_editor.edit_series(input_series)
-        
+
         assert result[special_char_name] == 'TEST'
 
     def test_edit_series_C0_mock_editors_called(self, test_editor_with_mocks):
@@ -402,7 +401,7 @@ class Test_DataFrameEditor_edit_series:
 
         input_series = pd.Series({'col1': 'test1', 'col2': 'test2', 'col3': 'test3'})
         test_editor_with_mocks.edit_series(input_series)
-        
+
         test_editor_with_mocks.column_editors['col1'].edit.assert_called_once_with('test1')
         test_editor_with_mocks.column_editors['col2'].edit.assert_called_once_with('test2')
         assert test_editor_with_mocks.column_editors['col1'].edit.call_count == 1
@@ -418,7 +417,7 @@ class Test_DataFrameEditor_edit_series:
 
         input_series = pd.Series({'col1': 'test1', 'col3': 'test3'})
         test_editor_with_mocks.edit_series(input_series)
-        
+
         test_editor_with_mocks.column_editors['col1'].edit.assert_called_once_with('test1')
         test_editor_with_mocks.column_editors['col2'].edit.assert_not_called()
 
@@ -429,17 +428,17 @@ class Test_DataFrameEditor_edit_series:
         - テストシナリオ: 列エディタの呼び出し順序の確認
         """
         log_msg(f"\n{test_doc}", LogLevel.INFO)
-    
+
         input_series = pd.Series({'col1': 'test1', 'col2': 'test2'})
         test_editor_with_mocks.edit_series(input_series)
-        
+
         # 期待される呼び出しのシーケンスを定義
         expected_calls = [call('test1'), call('test2')]
-        
+
         # 実際の呼び出しが期待通りの順序で行われたかを検証
         assert test_editor_with_mocks.column_editors['col1'].edit.call_args_list == [expected_calls[0]]
         assert test_editor_with_mocks.column_editors['col2'].edit.call_args_list == [expected_calls[1]]
-    
+
         # または、より厳密な順序の検証が必要な場合
         mock_calls = (
             test_editor_with_mocks.column_editors['col1'].edit.call_args_list +

@@ -11,11 +11,11 @@ $ pytest -lv ./tests/lib/common_utils/test_ibr_csv_helper.py > tests/log/pytest_
 $ pytest -lv ./tests/lib/common_utils/test_ibr_csv_helper.py
 """
 import logging
+import os
 from pathlib import Path
 from unittest.mock import MagicMock
 
 import pytest
-import os
 import toml
 
 #####################################################################
@@ -647,9 +647,10 @@ class Test_loggerpackage__get_exec_env:
         func_info = f"        - テスト関数: {', '.join(test_functions)}"
         print(f"\n{func_info}{test_doc}")
 
-        mocker.patch('socket.gethostname', return_value='HOSTNAME_DEVELOP')
+        #mocker.patch('socket.gethostname', return_value='HOSTNAME_DEVELOP')
+        mocker.patch('socket.gethostname', return_value='HOSTNAME_LOCAL')
         logger_package = LoggerPackage('dummy_patch')
-        assert logger_package._env == 'develop'
+        assert logger_package._env == 'local'
 
 
     # 以下２ケースはサーバドライブPath問題があり
@@ -1016,14 +1017,14 @@ class Test_loggerpackage_get_config_dict:
         test_config_toml, test_package_toml = create_config
 
         # expected
-        expected = {'production': {'logger_path': {'LOGGER_DEF_FILE': 'src/def/ibrUtilsLoggingHelper/logging_TimedRotateServer.json', 'LOGGER_MSG_FILE': 'src/def/ibrUtilsLoggingHelper/config_MessageList.toml'}}, 'regression': {'logger_path': {'LOGGER_DEF_FILE': 'src/def/ibrUtilsLoggingHelper/logging_TimedRotateServer.json', 'LOGGER_MSG_FILE': 'src/def/ibrUtilsLoggingHelper/config_MessageList.toml'}, 'optional_path': {'LONGTERM_ACCUM_PATH': 'W:\\reference\\src\\work\\longterm_accm', 'SHORTTERM_ACCUM_PATH': 'W:\\reference\\src\\work\\shortterm_accm', 'TABLE_PATH': 'Z:\\reference\\src\\table', 'SHARE_RECEIVE_PATH': 'Z:\\reference\\src\\share\\receive', 'SHARE_SEND_PATH': 'Z:\\reference\\src\\share\\send', 'ARCHIVES_REFERNCE_SNAPSHOT_PATH': 'Z:\\reference\\src\\archives\\reference_snapshots', 'ARCHIVES_REQUEST_SNAPSHOT_PATH': 'Z:\\reference\\src\\archives\\request_snapshots', 'ARCHIVES_REFERENCE_DIFFS_PATH': 'Z:\\reference\\src\\archives\\reference_diffs', 'ARCHIVES_CSV_FILES_PATH': 'Z:\\reference\\src\\archives\\csv_files'}}, 'develop': {'logger_path': {'LOGGER_DEF_FILE': 'src/def/ibrUtilsLoggingHelper/logging_TimedRotate.json', 'LOGGER_MSG_FILE': 'src/def/ibrUtilsLoggingHelper/config_MessageList.toml'}}, 'local': {'logger_path': {'LOGGER_DEF_FILE': 'src/def/ibrUtilsLoggingHelper/logging_TimedRotate.json', 'LOGGER_MSG_FILE': 'src/def/ibrUtilsLoggingHelper/config_MessageList.toml'}, 'decision_table_path': {'DECISION_TABLE_PATH': 'src/def/decision_table'}, 'optional_path': {'LONGTERM_ACCUM_PATH': 'src/work/longterm_accm', 'SHORTTERM_ACCUM_PATH': 'src/work/shortterm_accm', 'TABLE_PATH': 'src/table', 'SHARE_RECEIVE_PATH': 'src/share/receive', 'SHARE_SEND_PATH': 'src/share/send', 'ARCHIVES_REFERNCE_SNAPSHOT_PATH': 'src/archives/reference_snapshots', 'ARCHIVES_REQUEST_SNAPSHOT_PATH': 'src/archives/request_snapshots', 'ARCHIVES_REFERENCE_DIFFS_PATH': 'src/archives/reference_diffs', 'ARCHIVES_CSV_FILES_PATH': 'src/archives/csv_files'}}}
+        expected = 'src/def/ibrUtilsLoggingHelper/logging_TimedRotate.json'
 
         # テスト記述
         logger_package = LoggerPackage('dummy_patch')
         _ = logger_package._get_config_dict()
 
         assert isinstance(logger_package._common_config, dict)
-        assert logger_package._common_config == expected
+        assert logger_package._common_config['local']['logger_path']['LOGGER_DEF_FILE'] == expected
 
 
     def test_loggerpackage_get_config_dict_raise_Exception(

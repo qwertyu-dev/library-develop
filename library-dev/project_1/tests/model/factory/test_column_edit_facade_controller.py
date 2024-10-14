@@ -1,24 +1,25 @@
-import pytest
-import pandas as pd
-from src.model.factory.column_edit_facade_controller import (
-    create_editor_factory,
-    process_row,
-    CreateEditorFactoryError,
-    ProcessRowError,
-    ImportFacadeNullError,
-)
-from src.model.factory.editor_factory import EditorFactory
-from unittest.mock import Mock, MagicMock
-from src.model.facade.base_facade import DataFrameEditor
-
-from src.lib.common_utils.ibr_dataframe_helper import tabulate_dataframe
-
 # config共有
 import sys
+from unittest.mock import MagicMock, Mock
+
+import pandas as pd
+import pytest
+
+from src.lib.common_utils.ibr_dataframe_helper import tabulate_dataframe
 from src.lib.common_utils.ibr_decorator_config import initialize_config
+from src.lib.common_utils.ibr_enums import LogLevel
+from src.model.facade.base_facade import DataFrameEditor
+from src.model.factory.column_edit_facade_controller import (
+    CreateEditorFactoryError,
+    ImportFacadeNullError,
+    ProcessRowError,
+    create_editor_factory,
+    process_row,
+)
+from src.model.factory.editor_factory import EditorFactory
+
 config = initialize_config(sys.modules[__name__])
 log_msg = config.log_message
-from src.lib.common_utils.ibr_enums import LogLevel
 
 class TestCreateEditorFactory:
     """create_editor_factory関数のテスト
@@ -32,7 +33,7 @@ class TestCreateEditorFactory:
     | import_facadeが有効                      | Y     | Y     | Y     | Y     | N     |
     | 結果                                     | 成功  | 例外  | 成功  | 例外  | 例外  |
 
-    境界値検証ケース一覧：
+    境界値検証ケース一覧:
     | ケースID | 入力パラメータ   | テスト値                               | 期待される結果           | テストの目的/検証ポイント                     | 実装状況 | 対応するテストケース                    |
     |----------|-----------------|-----------------------------------------|--------------------------|-----------------------------------------------|----------|-----------------------------------------|
     | BVT_001  | decision_table  | 最小有効DataFrame (2行2列)              | EditorFactory            | 最小サイズの有効なDataFrameの処理を確認       | 実装済み | test_create_editor_factory_BVT_minimal_valid_decision_table |
@@ -41,13 +42,13 @@ class TestCreateEditorFactory:
     | BVT_004  | import_facade   | ""                                      | CreateEditorFactoryError | 空文字列の処理を確認                          | 実装済み | test_create_editor_factory_C2_empty_import_facade |
     | BVT_005  | import_facade   | None                                    | TypeError                | Noneの処理を確認                              | 実装済み | test_create_editor_factory_BVT_none_import_facade |
 
-    境界値検証ケースの実装状況サマリー：
+    境界値検証ケースの実装状況サマリー:
     - 実装済み: 5
     - 未実装: 1
     - 一部実装: 0
 
-    注記：
-    - BVT_003（大規模なDataFrame）は現在未実装です。これは実行時間とリソース消費の観点から、実際の運用環境に近い形でテストする必要があります。
+    注記:
+    - BVT_003(大規模なDataFrame)は現在未実装です。これは実行時間とリソース消費の観点から、実際の運用環境に近い形でテストする必要があります。
     - 他のすべての境界値ケースは実装されており、様々な入力条件下での関数の動作を確認しています。
     """
 
@@ -57,7 +58,7 @@ class TestCreateEditorFactory:
     def teardown_method(self):
         log_msg(f"test end\n{'-'*80}\n", LogLevel.INFO)
 
-    @pytest.fixture
+    @pytest.fixture()
     def valid_decision_table(self):
         return pd.DataFrame({
             'DecisionResult': ['DataFrameEditor1', 'DataFrameEditor2', 'DataFrameEditorDefault'],
@@ -251,7 +252,7 @@ class TestProcessRow:
     | edit_seriesが成功         | Y     | Y     | Y     | Y     |
     | 結果                      | 成功  | 例外  | 例外  | 例外  |
 
-    境界値検証ケース一覧：
+    境界値検証ケース一覧:
     | ケースID | 入力パラメータ | テスト値                             | 期待される結果    | テストの目的/検証ポイント                  | 実装状況 | 対応するテストケース                    |
     |----------|----------------|--------------------------------------|-------------------|-------------------------------------------|----------|----------------------------------------|
     | BVT_001  | row            | 空のSeries                           | ProcessRowError   | 空のSeriesの処理を確認                    | 実装済み | test_process_row_BVT_empty_series       |
@@ -268,7 +269,7 @@ class TestProcessRow:
     def teardown_method(self):
         log_msg(f"test end\n{'-'*80}\n", LogLevel.INFO)
 
-    @pytest.fixture
+    @pytest.fixture()
     def mock_decision_table(self):
         return pd.DataFrame({
             'DecisionResult': ['DataFrameEditor1', 'DataFrameEditorDefault'],
@@ -276,15 +277,15 @@ class TestProcessRow:
             'col2': ['a', 'any'],
         })
 
-    @pytest.fixture
+    @pytest.fixture()
     def mock_editor_factory(self, mock_decision_table):
         editor_factory = EditorFactory(mock_decision_table, "mock_import_facade")
         editor_factory.condition_evaluator = Mock()
         editor_factory.condition_evaluator.evaluate_conditions.return_value = 'DataFrameEditor1'
-        
+
         mock_editor = Mock()
         mock_editor.edit_series.return_value = pd.Series({'col1': 'edited', 'col2': 'edited'})
-        
+
         editor_factory.create_editor = Mock(return_value=mock_editor)
         return editor_factory
 
@@ -301,7 +302,7 @@ class TestProcessRow:
         result = process_row(row, mock_editor_factory)
         assert isinstance(result, pd.Series)
         assert result.equals(pd.Series({'col1': 'edited', 'col2': 'edited'}))
-        
+
         mock_editor_factory.create_editor.assert_called_once()
         mock_editor_factory.create_editor.return_value.edit_series.assert_called_once_with(row)
 

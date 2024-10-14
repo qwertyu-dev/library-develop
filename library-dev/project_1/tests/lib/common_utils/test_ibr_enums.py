@@ -10,7 +10,15 @@ $ pytest -lv ./tests/lib/common_utils/test_ibr_csv_helper.py > tests/log/pytest_
 $ pytest -lv ./tests/lib/common_utils/test_ibr_csv_helper.py
 """
 import logging
-from pathlib import Path
+import sys
+
+#####################################################################
+# テスト実行環境セットアップ
+#####################################################################
+# config共有
+from src.lib.common_utils.ibr_decorator_config import (
+    initialize_config,
+)
 
 #####################################################################
 # テスト対象モジュール import, project ディレクトリから起動する
@@ -21,16 +29,8 @@ from src.lib.common_utils.ibr_enums import (
     LogLevel,
 )
 
-#####################################################################
-# テスト実行環境セットアップ
-#####################################################################
-from src.lib.common_utils.ibr_get_config import Config
-
-package_path = Path(__file__)
-config = Config.load(package_path)
-
+config = initialize_config(sys.modules[__name__])
 log_msg = config.log_message
-log_msg(str(config), LogLevel.DEBUG)
 
 #####################################################################
 # データ作成

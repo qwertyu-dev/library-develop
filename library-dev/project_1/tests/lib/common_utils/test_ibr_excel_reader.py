@@ -10,29 +10,34 @@ $ pytest -lv ./tests/lib/common_utils/test_ibr_csv_helper.py > tests/log/pytest_
 $ pytest -lv ./tests/lib/common_utils/test_ibr_csv_helper.py
 """
 
+import sys
 from pathlib import Path
 from unittest.mock import MagicMock
 
 import pandas as pd
 import pytest
+
 from src.lib.common_utils.ibr_dataframe_helper import tabulate_dataframe
+
+#####################################################################
+# テスト実行環境セットアップ
+#####################################################################
+# config共有
+from src.lib.common_utils.ibr_decorator_config import (
+    initialize_config,
+)
 from src.lib.common_utils.ibr_enums import LogLevel
 
 #####################################################################
 # テスト対象モジュール import, project ディレクトリから起動する
 #####################################################################
-from src.lib.common_utils.ibr_excel_reader import ExcelDataLoader
+from src.lib.common_utils.ibr_excel_reader import (
+    ExcelDataLoader,
+    ExcelDataLoaderError,
+)
 
-#####################################################################
-# テスト実行環境セットアップ
-#####################################################################
-from src.lib.common_utils.ibr_get_config import Config
-
-package_path = Path(__file__)
-config = Config.load(package_path)
-
+config = initialize_config(sys.modules[__name__])
 log_msg = config.log_message
-log_msg(str(config), LogLevel.DEBUG)
 
 #####################################################################
 # データ作成
@@ -1286,7 +1291,8 @@ class Test_read_excel_all_sheets:
         )
         # 結果定義,関数実行
         # excel sheet to DataFrame
-        with pytest.raises(ValueError):
+        #with pytest.raises(ValueError):
+        with pytest.raises(ExcelDataLoaderError):
             assert excel_instance.read_excel_all_sheets() is True
         # キャプチャされたログメッセージを取得
 
@@ -1369,7 +1375,8 @@ class Test_read_excel_all_sheets:
         excel_instance = ExcelDataLoader(
             file_path = Path('test_excel_book_normal'),
         )
-        with pytest.raises(FileNotFoundError):
+        #with pytest.raises(FileNotFoundError):
+        with pytest.raises(ExcelDataLoaderError):
             # 結果定義,関数実行
             # excel sheet to DataFrame
             assert excel_instance.read_excel_all_sheets() is True
@@ -1418,7 +1425,8 @@ class Test_read_excel_all_sheets:
         excel_instance = ExcelDataLoader(
             file_path = Path('test_excel_book_normal'),
         )
-        with pytest.raises(PermissionError):
+        #with pytest.raises(PermissionError):
+        with pytest.raises(ExcelDataLoaderError):
             # 結果定義,関数実行
             # excel sheet to DataFrame
             assert excel_instance.read_excel_all_sheets() is True
@@ -1467,7 +1475,8 @@ class Test_read_excel_all_sheets:
         excel_instance = ExcelDataLoader(
             file_path = Path('test_excel_book_normal'),
         )
-        with pytest.raises(IsADirectoryError):
+        #with pytest.raises(IsADirectoryError):
+        with pytest.raises(ExcelDataLoaderError):
             # 結果定義,関数実行
             # excel sheet to DataFrame
             assert excel_instance.read_excel_all_sheets() is True
@@ -1516,7 +1525,8 @@ class Test_read_excel_all_sheets:
         excel_instance = ExcelDataLoader(
             file_path = Path('test_excel_book_normal'),
         )
-        with pytest.raises(pd.errors.ParserError):
+        #with pytest.raises(pd.errors.ParserError):
+        with pytest.raises(ExcelDataLoaderError):
             # 結果定義,関数実行
             # excel sheet to DataFrame
             assert excel_instance.read_excel_all_sheets() is True
@@ -1614,7 +1624,8 @@ class Test_read_excel_all_sheets:
         excel_instance = ExcelDataLoader(
             file_path = Path('test_excel_book_normal'),
         )
-        with pytest.raises(MemoryError):
+        #with pytest.raises(MemoryError):
+        with pytest.raises(ExcelDataLoaderError):
             # 結果定義,関数実行
             # excel sheet to DataFrame
             assert excel_instance.read_excel_all_sheets() is True
@@ -1871,7 +1882,8 @@ class Test_read_excel_all_sheets:
         )
         # 結果定義,関数実行
         # excel sheet to DataFrame
-        with pytest.raises(pd.errors.ParserError):
+        #with pytest.raises(pd.errors.ParserError):
+        with pytest.raises(ExcelDataLoaderError):
             assert excel_instance.read_excel_all_sheets(
                 usecols=[0, 5],
             ) is True

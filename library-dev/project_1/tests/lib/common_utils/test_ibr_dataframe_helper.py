@@ -11,29 +11,26 @@ $ pytest -lv ./tests/lib/common_utils/test_ibr_csv_helper.py > tests/log/pytest_
 $ pytest -lv ./tests/lib/common_utils/test_ibr_csv_helper.py
 """
 
-from pathlib import Path
+import sys
 from unittest.mock import MagicMock
 
 import pandas as pd
 import pytest
+from tabulate import tabulate
 
 #####################################################################
 # テスト対象モジュール import, project ディレクトリから起動する
 #####################################################################
 from src.lib.common_utils.ibr_dataframe_helper import tabulate_dataframe
 
-#####################################################################
-# テスト実行環境セットアップ
-#####################################################################
+# config共有
+from src.lib.common_utils.ibr_decorator_config import (
+    initialize_config,
+)
 from src.lib.common_utils.ibr_enums import LogLevel
-from src.lib.common_utils.ibr_get_config import Config
-from tabulate import tabulate
 
-package_path = Path(__file__)
-config = Config.load(package_path)
-
+config = initialize_config(sys.modules[__name__])
 log_msg = config.log_message
-log_msg(str(config), LogLevel.DEBUG)
 
 #####################################################################
 # データ作成

@@ -36,6 +36,9 @@ class DT:
     """
     constants = DTConstants()
 
+    ############################################
+    # preparation editor/pattern editor 共通
+    ############################################
     @staticmethod
     def is_4digits(value: str|int) -> bool:
         """値が4桁の文字列/数値かどうかを判定"""
@@ -63,4 +66,47 @@ class DT:
     def is_not_empty(value) -> bool:
         """値が空でないかどうかを判定"""
         return not DT.is_empty(value)
+
+    ############################################
+    # for preparation editor
+    ############################################
+    # preparation: 個別のものはないのです
+
+    ############################################
+    # for pattern editor
+    ############################################
+    # TODO(member): 各判定関数の実装
+    @staticmethod
+    def has_parent_code_and_matching_first_4_digits(value) -> bool:
+        """あり、＝部店コード前方4桁"""
+        # valueに対し,親部店判定により存在確認
+        # 親部店に対し,value前方4桁が一致する
+        return True
+
+    @staticmethod
+    def has_parent_code_and_not_matching_first_4_digits(value) -> bool:
+        """あり、≠部店コード前方4桁"""
+        # valueに対し,親部店判定により存在確認
+        # 親部店に対し,value前方4桁が一致しない
+        return True
+
+    @staticmethod
+    def is_bpr_ad_target(value) -> bool:
+        """BPR・AD対象"""
+        # valueの値比較
+        return True
+
+    @staticmethod
+    def is_not_bpr_ad_target(value) -> bool:
+        """BPR・AD対象外"""
+        # valueの値比較
+        return True
+
+    @staticmethod
+    def is_not_bpr_ad_target_and_is_ad_only_target(value) -> bool:
+        """BPR・AD対象外,ADのみ対象"""
+        # valueの値比較
+        return True
+
+
 

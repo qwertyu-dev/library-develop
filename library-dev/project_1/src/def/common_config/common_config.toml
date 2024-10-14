@@ -3,9 +3,7 @@
 ##############################
 [production]
 [production.logger_path]
-# Server向けlogger定義
-LOGGER_DEF_FILE = 'src/def/ibrUtilsLoggingHelper/logging_TimedRotateServer.json'
-LOGGER_MSG_FILE = 'src/def/ibrUtilsLoggingHelper/config_MessageList.toml'
+x = 'x'
 
 ##############################
 # リグレ定義 regression
@@ -34,9 +32,7 @@ ARCHIVES_CSV_FILES_PATH = 'Z:\reference\src\archives\csv_files'
 ##############################
 [develop]
 [develop.logger_path]
-# 開発機/local向けlogger定義
-LOGGER_DEF_FILE = 'src/def/ibrUtilsLoggingHelper/logging_TimedRotate.json'
-LOGGER_MSG_FILE = 'src/def/ibrUtilsLoggingHelper/config_MessageList.toml'
+x = 'x'
 
 ##############################
 # local定義 local

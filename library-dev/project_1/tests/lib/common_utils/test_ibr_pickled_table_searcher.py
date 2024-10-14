@@ -6,10 +6,10 @@ from unittest.mock import MagicMock, patch
 import pandas as pd
 import pytest
 
+from src.lib.common_utils.ibr_dataframe_helper import tabulate_dataframe
 from src.lib.common_utils.ibr_decorator_config import initialize_config
 from src.lib.common_utils.ibr_enums import LogLevel
 from src.lib.common_utils.ibr_pickled_table_searcher import ErrorMessages, TableSearcher
-from src.lib.common_utils.ibr_dataframe_helper import tabulate_dataframe
 
 # config共有
 config = initialize_config(sys.modules[__name__])
@@ -387,19 +387,19 @@ class TestTableSearcherShouldUpdateCache:
     | current_modified_time > self.last_modified_time | Y       | N       | -       |
     | 期待される戻り値                                | True    | False   | True    |
 
-    境界値検証ケース一覧：
+    境界値検証ケース一覧:
     | ケースID | 入力パラメータ               | テスト値                             | 期待される結果 | テストの目的/検証ポイント           | 実装状況 | 対応するテストケース                    |
     |----------|-----------------------------|--------------------------------------|----------------|-------------------------------------|----------|----------------------------------------|
     | BVT_001  | current_modified_time       | self.last_modified_time              | False          | 等しい時間の処理を確認              | 実装済み | test_should_update_cache_BVT_equal_time |
     | BVT_002  | current_modified_time       | self.last_modified_time + 1          | True           | わずかに新しい時間の処理を確認      | 実装済み | test_should_update_cache_BVT_slightly_newer |
     | BVT_003  | current_modified_time       | self.last_modified_time - 1          | False          | わずかに古い時間の処理を確認        | 実装済み | test_should_update_cache_BVT_slightly_older |
 
-    境界値検証ケースの実装状況サマリー：
+    境界値検証ケースの実装状況サマリー:
     - 実装済み: 3
     - 未実装: 0
     - 一部実装: 0
 
-    注記：
+    注記:
     すべての境界値検証ケースが実装されています。これにより、_should_update_cacheメソッドの
     境界条件での動作が適切にテストされ、メソッドの堅牢性が確保されています。
     """
@@ -410,7 +410,7 @@ class TestTableSearcherShouldUpdateCache:
     def teardown_method(self):
         log_msg(f"test end\n{'-'*80}\n", LogLevel.INFO)
 
-    @pytest.fixture
+    @pytest.fixture()
     def mock_searcher(self):
         searcher = MagicMock()
         searcher.last_modified_time = 1000.0
@@ -594,18 +594,18 @@ class TestTableSearcherDefaultLoadTable:
     | ファイルが正常         | Y       | Y       |
     | 期待される動作         | 読み込み| キャッシュ使用 |
 
-    境界値検証ケース一覧：
-    | ケースID | 入力パラメータ | テスト値                    | 期待される結果  | テストの目的/検証ポイント                   | 実装状況 | 対応するテストケース                    |
+    境界値検証ケース一覧:
+    | ケースID | 入力パラメータ | テスト値                  | 期待される結果  | テストの目的/検証ポイント                 | 実装状況 | 対応するテストケース                   |
     |----------|----------------|---------------------------|-----------------|-------------------------------------------|----------|----------------------------------------|
-    | BVT_001  | DataFrame      | 空のDataFrame             | 正常終了        | 空のDataFrameの処理を確認                   | 実装済み | test_default_load_table_BVT_empty_df   |
-    | BVT_002  | DataFrame      | 100万行のDataFrame        | 正常終了        | 大規模DataFrameの処理を確認                 | 実装済み | test_default_load_table_BVT_large_df   |
+    | BVT_001  | DataFrame      | 空のDataFrame             | 正常終了        | 空のDataFrameの処理を確認                 | 実装済み | test_default_load_table_BVT_empty_df   |
+    | BVT_002  | DataFrame      | 100万行のDataFrame        | 正常終了        | 大規模DataFrameの処理を確認               | 実装済み | test_default_load_table_BVT_large_df   |
 
-    境界値検証ケースの実装状況サマリー：
+    境界値検証ケースの実装状況サマリー:
     - 実装済み: 2
     - 未実装: 0
     - 一部実装: 0
 
-    注記：
+    注記:
     すべての境界値検証ケースが実装されています。これにより、_default_load_tableメソッドの
     極端な状況での動作が適切にテストされ、メソッドの堅牢性が確保されています。
     """
@@ -691,7 +691,6 @@ class TestTableSearcherDefaultLoadTable:
             mock_searcher._should_update_cache.return_value = True
             TableSearcher._default_load_table(mock_searcher)
 
-        #assert str(excinfo.value) == ErrorMessages.TABLE_LOAD_ERROR.format(error="Invalid pickle")
         assert str(excinfo.value) == ErrorMessages.TABLE_LOAD_ERROR
 
     def test_default_load_table_C1_cache_update_needed(self, mock_config, pickle_file, sample_dataframe):
@@ -744,20 +743,20 @@ class TestTableSearcherDefaultLoadTable:
     #    テスト内容: キャッシュ更新:{should_update}, ファイル存在:{file_exists}, ファイル有効:{file_valid}, 期待結果:{expected_result}
     #    """
     #    log_msg(f"\n{test_doc}", LogLevel.DEBUG)
-    
+
     #    mock_df = pd.DataFrame({'col1': [1, 2, 3], 'col2': ['a', 'b', 'c']})
     #    mock_searcher._should_update_cache = MagicMock(return_value=should_update)
-    
+
     #    if not file_exists:
     #        side_effect = FileNotFoundError(ErrorMessages.FILE_NOT_FOUND)
     #    elif not file_valid:
     #        side_effect = Exception(ErrorMessages.TABLE_LOAD_ERROR.format(error="Invalid pickle"))
     #    else:
     #        side_effect = None
-    
+
     #    with patch('pandas.read_pickle', return_value=mock_df, side_effect=side_effect), \
     #         patch.object(TableSearcher._default_load_table, 'cache_clear') as mock_cache_clear:
-    #        
+    #
     #        if expected_result == "file_not_found":
     #            with pytest.raises(FileNotFoundError) as excinfo:
     #                TableSearcher._default_load_table(mock_searcher)
@@ -775,7 +774,7 @@ class TestTableSearcherDefaultLoadTable:
     #                mock_cache_clear.assert_called_once()
     #            else:
     #                mock_cache_clear.assert_not_called()
-    
+
     #    log_msg(f"Test completed: {test_doc}", LogLevel.DEBUG)
 
     def test_default_load_table_BVT_empty_df(self, mock_searcher):
@@ -790,7 +789,7 @@ class TestTableSearcherDefaultLoadTable:
         with patch('pandas.read_pickle', return_value=empty_df):
             mock_searcher._should_update_cache.return_value = True
             result = TableSearcher._default_load_table(mock_searcher)
-        
+
         pd.testing.assert_frame_equal(result, empty_df)
         assert result.empty
 
@@ -806,7 +805,7 @@ class TestTableSearcherDefaultLoadTable:
         with patch('pandas.read_pickle', return_value=large_df):
             mock_searcher._should_update_cache.return_value = True
             result = TableSearcher._default_load_table(mock_searcher)
-        
+
         pd.testing.assert_frame_equal(result, large_df)
         assert len(result) == 1000000
 
@@ -844,19 +843,19 @@ class TestTableSearcherDefaultLoadTable:
 #    | AND演算子        | Y       | Y       | N       | N       |
 #    | 期待される動作   | AND検索 | AND検索 | OR検索  | OR検索  |
 #
-#    境界値検証ケース一覧：
+#    境界値検証ケース一覧:
 #    | ケースID | 入力パラメータ | テスト値                             | 期待される結果  | テストの目的/検証ポイント                        | 実装状況 | 対応するテストケース             |
 #    |----------|----------------|--------------------------------------|-----------------|--------------------------------------------------|----------|----------------------------------|
 #    | BVT_001  | conditions     | {}                                   | 空のDataFrame   | 空の条件での動作確認                             | 実装済み | test_simple_search_BVT_empty_condition |
 #    | BVT_002  | conditions     | {"column1": "value1", "column2": "value2"} | 全行を返す     | 全ての行にマッチする条件の確認                   | 実装済み | test_simple_search_BVT_all_match  |
 #    | BVT_003  | conditions     | {"column1": "non_existent_value"}    | 空のDataFrame   | どの行にもマッチしない条件の確認                 | 実装済み | test_simple_search_BVT_no_match   |
 #
-#    境界値検証ケースの実装状況サマリー：
+#    境界値検証ケースの実装状況サマリー:
 #    - 実装済み: 3
 #    - 未実装: 0
 #    - 一部実装: 0
 #
-#    注記：
+#    注記:
 #    すべての境界値検証ケースが実装されています。これにより、simple_searchメソッドの
 #    極端な入力や特殊なケースでの動作が適切にテストされ、メソッドの堅牢性が確保されています。
 #    """
@@ -959,20 +958,20 @@ class TestTableSearcherNormalizeConditions:
     | 条件が辞書型     | Y       | N       |
     | 期待される結果   | リスト化 | そのまま |
 
-    境界値検証ケース一覧：
+    境界値検証ケース一覧:
     | ケースID | 入力パラメータ | テスト値                             | 期待される結果  | テストの目的/検証ポイント                        | 実装状況 | 対応するテストケース             |
     |----------|----------------|--------------------------------------|-----------------|--------------------------------------------------|----------|----------------------------------|
     | BVT_001  | conditions     | {}                                   | [{}]            | 空の辞書の処理を確認                             | 実装済み | test_normalize_conditions_BVT_empty_dict |
     | BVT_002  | conditions     | []                                   | []              | 空のリストの処理を確認                           | 実装済み | test_normalize_conditions_BVT_empty_list |
-    | BVT_003  | conditions     | {"key": "value"}                     | [{"key": "value"}] | 1つの条件を持つ辞書の処理を確認                  | 実装済み | test_normalize_conditions_BVT_single_condition |
+    | BVT_003  | conditions     | {"key": "value"}                     | [{"key": "value"}] | 1つの条件を持つ辞書の処理を確認               | 実装済み | test_normalize_conditions_BVT_single_condition |
     | BVT_004  | conditions     | {"k1": "v1", "k2": "v2", ..., "k100": "v100"} | [{"k1": "v1", "k2": "v2", ..., "k100": "v100"}] | 多数の条件を持つ辞書の処理を確認 | 実装済み | test_normalize_conditions_BVT_many_conditions |
 
-    境界値検証ケースの実装状況サマリー：
+    境界値検証ケースの実装状況サマリー:
     - 実装済み: 4
     - 未実装: 0
     - 一部実装: 0
 
-    注記：
+    注記:
     すべての境界値検証ケースが実装されています。これにより、_normalize_conditionsメソッドの
     様々な入力パターンに対する動作が適切にテストされ、メソッドの堅牢性が確保されています。
     """
@@ -993,6 +992,7 @@ class TestTableSearcherNormalizeConditions:
         def mock_load_table():
             _df = pd.DataFrame({'test_column': [1, 2, 3]})
             log_msg(f"Mock _default_load_table called, returning DataFrame with shape {_df.shape}", LogLevel.INFO)
+            log_msg(f"\n\n mocked dataframe: \n{tabulate_dataframe(_df)}", LogLevel.INFO)
             return _df
 
         with patch('src.lib.common_utils.ibr_pickled_table_searcher.TableSearcher._default_get_file_modified_time',

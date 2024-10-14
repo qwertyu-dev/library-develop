@@ -1,9 +1,10 @@
-from dataclasses import dataclass
 import os
 import sys
+from dataclasses import dataclass
 
-from src.lib.common_utils.ibr_enums import LogLevel
 from src.lib.common_utils.ibr_decorator_config import initialize_config
+from src.lib.common_utils.ibr_enums import LogLevel
+
 config = initialize_config(sys.modules[__name__])
 log_msg = config.log_message
 

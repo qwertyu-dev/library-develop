@@ -3,12 +3,11 @@ import traceback
 from pathlib import Path
 
 import toml
+
 from src.lib.common_utils.ibr_enums import LogLevel
 from src.lib.common_utils.ibr_logger_package import LoggerPackage
 
-################################
-# logger
-################################
+# 循環importとなるため ibr_decorator_config.pyは使用できない
 logger = LoggerPackage(__package__)
 log_msg = logger.log_message
 

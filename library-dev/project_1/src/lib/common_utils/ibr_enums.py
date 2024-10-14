@@ -16,9 +16,9 @@ class ExecEnvironment(Enum):
     # TODO(me): HOSTNAME_XXXXXは実際のサーバホスト名に書き換える -> upper(_hostname)
     # issue-001
     # ただしHOSTNAME_LOCALはそのまま
-    HOSTNAME_PRODUCTION = 'production'
-    HOSTNAME_REGRESSION = 'regression'
-    HOSTNAME_DEVELOP = 'develop'
+    HOSTNAME_PRODUCTION = 'production'  # HOSTNAME_PRODUCTIONを実ホスト名@本番に書き換える
+    HOSTNAME_REGRESSION = 'regression'  # HOSTNAME_REGRESSION
+    HOSTNAME_DEVELOP = 'develop'        # HOSTNAME_DEVELOP
     HOSTNAME_LOCAL = 'local'
 
 class DigitsNumberforUnixtime(Enum):

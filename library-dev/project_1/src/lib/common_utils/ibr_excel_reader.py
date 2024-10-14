@@ -1,22 +1,26 @@
 """Excelファイル取得サポートライブラリ"""
+import sys
 import traceback
 from pathlib import Path
-from typing import Any
 
 import pandas as pd
-from src.lib.common_utils.ibr_dataframe_helper import tabulate_dataframe
-from src.lib.common_utils.ibr_enums import LogLevel
-from src.lib.common_utils.ibr_logger_package import LoggerPackage
 
-################################
-# logger
-################################
-logger = LoggerPackage(__package__)
-log_msg = logger.log_message
+from src.lib.common_utils.ibr_dataframe_helper import tabulate_dataframe
+
+# config共有
+from src.lib.common_utils.ibr_decorator_config import (
+    initialize_config,
+)
+from src.lib.common_utils.ibr_enums import LogLevel
+
+config = initialize_config(sys.modules[__name__])
+log_msg = config.log_message
 
 ################################
 # class
 ################################
+class ExcelDataLoaderError(Exception):
+    """カスタム例外"""
 class ExcelDataLoader:
     """ExcelBookをDataFrameに取り込むサポートライブラリ
 
@@ -121,7 +125,7 @@ class ExcelDataLoader:
         except Exception as e:
             tb = traceback.TracebackException.from_exception(e)
             log_msg(''.join(tb.format()), LogLevel.ERROR)
-            raise
+            raise ExcelDataLoaderError from e
 
 
     def read_excel_all_sheets(self, skiprows: int=0, skiprecords: int=0, usecols: list[int]|None=None, exclusion_sheets: list[str]|None=None) -> pd.DataFrame|None:
@@ -171,7 +175,7 @@ class ExcelDataLoader:
             with pd.ExcelFile(self.file_path) as target_excel:
                 if len(target_excel.sheet_names) == 1:
                     log_msg('BookのSheet数が1枚の場合は read_excel_one_sheet()を使用してください', LogLevel.ERROR)
-                    # raise ValueError
+                    # raise ValueError Ruff TRY301
                     _ = self.function_select_error()
                 all_sheets = {sheet_name: self.read_excel_one_sheet(sheet_name=sheet_name, skiprows=skiprows, skiprecords=skiprecords,  usecols=usecols) \
                     for sheet_name in target_excel.sheet_names if sheet_name not in exclusion_sheets}
@@ -185,7 +189,9 @@ class ExcelDataLoader:
                     return pd.DataFrame()
 
                 # 全DataFrameのcolumns数が一致判定
-                base_df_columns = list(all_sheets.values())[0].columns
+                #base_df_columns = list(all_sheets.values())[0].columns
+                base_df_columns = next(iter(all_sheets.values())).columns
+
                 # すべてのDataFrameの列が一致するか確認
                 for df in list(all_sheets.values())[1:]:
                     if not df.columns.equals(base_df_columns):
@@ -203,7 +209,8 @@ class ExcelDataLoader:
         except Exception as e:
             tb = traceback.TracebackException.from_exception(e)
             log_msg(''.join(tb.format()), LogLevel.ERROR)
-            raise
+            #raise
+            raise ExcelDataLoaderError from e
 
         return df_cum_excel
 

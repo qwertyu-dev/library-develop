@@ -1,21 +1,18 @@
-import pytest
+import sys
 from pathlib import Path
-from typing import Generator
-from unittest.mock import MagicMock,Mock, patch
+from unittest.mock import MagicMock, patch
 
-from src.packages.request_processor.file_configuration_factory import FileConfigurationFactory
+import pytest
 
+from src.lib.common_utils.ibr_decorator_config import initialize_config
+from src.lib.common_utils.ibr_enums import LogLevel
 from src.packages.request_processor.file_configuration_factory import (
+    FileConfigurationFactory,
     JinjiFileConfigurationFactory,
-    KokukiFileConfigurationFactory,
     KanrenFileConfigurationFactory,
+    KokukiFileConfigurationFactory,
 )
 
-
-# config共有
-import sys
-from src.lib.common_utils.ibr_enums import LogLevel
-from src.lib.common_utils.ibr_decorator_config import initialize_config
 config = initialize_config(sys.modules[__name__])
 log_msg = config.log_message
 log_msg(str(config), LogLevel.DEBUG)
@@ -39,19 +36,19 @@ class TestFileConfigurationFactory:
     | create_sheet_name の戻り値型が str    | Y       | N       |
     | 出力                                  | 正常    | 型エラー |
 
-    境界値検証ケース一覧：
+    境界値検証ケース一覧:
     | ケースID | 入力パラメータ | テスト値 | 期待される結果 | テストの目的/検証ポイント | 実装状況 |
     |----------|---------------|---------|----------------|--------------------------|----------|
     | BVT_001  | N/A           | N/A     | クラスが存在する | クラスの存在確認         | 実装済み |
     | BVT_002  | N/A           | N/A     | メソッドが存在する | create_file_path メソッドの存在確認 | 実装済み |
     | BVT_003  | N/A           | N/A     | メソッドが存在する | create_sheet_name メソッドの存在確認 | 実装済み |
-    
-    境界値検証ケースの実装状況サマリー：
+
+    境界値検証ケースの実装状況サマリー:
     - 実装済み: 3
     - 未実装: 0
     - 一部実装: 0
-    
-    注記：
+
+    注記:
     このクラスは抽象基底クラスのような役割を果たしているため、
     実際の値を返すメソッドは実装されていません。そのため、
     境界値テストは基本的な構造の確認に限定されています。
@@ -117,7 +114,7 @@ class TestJinjiFileConfigurationFactoryInit:
     │   └── 正常系: 有効なconfigでインスタンス生成
     ├── C1: 分岐カバレッジ
     │   ├── 正常系: configパラメータあり
-    │   └── 正常系: configパラメータなし（デフォルト設定使用）
+    │   └── 正常系: configパラメータなし(デフォルト設定使用)
     ├── C2: 条件組み合わせ
     │   ├── 正常系: configが完全な構造を持つ
     │   └── 正常系: configが一部の設定のみを持つ
@@ -131,19 +128,19 @@ class TestJinjiFileConfigurationFactoryInit:
     | configパラメータあり   | Y       | N       |
     | 出力                   | 正常    | 正常    |
 
-    境界値検証ケース一覧：
+    境界値検証ケース一覧:
     | ケースID | 入力パラメータ | テスト値              | 期待される結果 | テストの目的/検証ポイント | 実装状況 | 対応するテストケース            |
     |----------|----------------|----------------------|----------------|---------------------------|----------|---------------------------------|
     | BVT_001  | config         | {}                   | 正常           | 空の辞書での初期化        | 実装済み | test_init_BVT_empty_config      |
     | BVT_002  | config         | None                 | 正常           | Noneでの初期化            | 実装済み | test_init_C1_no_config          |
     | BVT_003  | config         | 最小限の有効なconfig | 正常           | 最小構成での初期化        | 実装済み | test_init_BVT_minimal_config    |
 
-    境界値検証ケースの実装状況サマリー：
+    境界値検証ケースの実装状況サマリー:
     - 実装済み: 3
     - 未実装: 0
     - 一部実装: 0
 
-    注記：
+    注記:
     すべての境界値検証ケースが実装されています。テストケースは、空の辞書、None、
     最小限の有効なconfigなど、様々な入力に対するJinjiFileConfigurationFactoryの
     初期化動作を検証します。
@@ -155,14 +152,14 @@ class TestJinjiFileConfigurationFactoryInit:
             'common_config': {
                 'optional_path': {
                     'SHARE_RECEIVE_PATH': '/path/to/share'
-                }
+                },
             },
             'package_config': {
                 'excel_definition': {
                     'UPDATE_RECORD_JINJI': 'jinji_*.xlsx',
                     'UPDATE_RECORD_JINJI_SHEET_NAME': 'Sheet1'
-                }
-            }
+                },
+            },
         }
 
     def teardown_method(self):
@@ -225,7 +222,7 @@ class TestJinjiFileConfigurationFactoryInit:
 
         partial_config = {
             'common_config': {'optional_path': {}},
-            'package_config': {}
+            'package_config': {},
         }
         factory = JinjiFileConfigurationFactory(config=partial_config)
         assert factory.config == partial_config
@@ -283,7 +280,7 @@ class TestJinjiFileConfigurationFactoryCreateFilePattern:
     | UPDATE_RECORD_JINJIが設定されている | Y       | Y       | N       | N       |
     | 出力                           | 正常    | 空リスト | 空リスト | 空リスト |
 
-    境界値検証ケース一覧：
+    境界値検証ケース一覧:
     | ケースID | 入力パラメータ      | テスト値                    | 期待される結果                | テストの目的/検証ポイント           | 実装状況 | 対応するテストケース                    |
     |----------|--------------------|---------------------------|-------------------------------|-------------------------------------|----------|----------------------------------------|
     | BVT_001  | SHARE_RECEIVE_PATH | ""                        | 空のリスト                     | 空文字列の処理を確認                 | 実装済み | test_create_file_pattern_BVT_empty_path |
@@ -291,12 +288,12 @@ class TestJinjiFileConfigurationFactoryCreateFilePattern:
     | BVT_003  | SHARE_RECEIVE_PATH | "a" * 255                 | 非常に長いパスを含むリスト      | 最大長のパス処理を確認               | 実装済み | test_create_file_pattern_BVT_max_length_path |
     | BVT_004  | UPDATE_RECORD_JINJI| "a" * 255                 | 非常に長いパターンを含むリスト  | 最大長のパターン処理を確認           | 実装済み | test_create_file_pattern_BVT_max_length_pattern |
 
-    境界値検証ケースの実装状況サマリー：
+    境界値検証ケースの実装状況サマリー:
     - 実装済み: 4
     - 未実装: 0
     - 一部実装: 0
 
-    注記：
+    注記:
     すべての境界値検証ケースが実装されています。テストケースは、空文字列や最大長の文字列など、
     様々な入力に対するcreate_file_patternメソッドの動作を検証します。
     """
@@ -306,13 +303,13 @@ class TestJinjiFileConfigurationFactoryCreateFilePattern:
         self.mock_config = MagicMock()
         self.mock_config.common_config = {
             'optional_path': {
-                'SHARE_RECEIVE_PATH': '/path/to/share'
-            }
+                'SHARE_RECEIVE_PATH': '/path/to/share',
+            },
         }
         self.mock_config.package_config = {
             'excel_definition': {
-                'UPDATE_RECORD_JINJI': 'jinji_*.xlsx'
-            }
+                'UPDATE_RECORD_JINJI': 'jinji_*.xlsx',
+            },
         }
         self.factory = JinjiFileConfigurationFactory(config=self.mock_config)
 
@@ -362,7 +359,7 @@ class TestJinjiFileConfigurationFactoryCreateFilePattern:
             result = self.factory.create_file_pattern()
             assert len(result) == 0
 
-    @pytest.mark.parametrize("share_path,update_record,expected", [
+    @pytest.mark.parametrize(("share_path","update_record","expected"), [
         ('/path/to/share', 'jinji_*.xlsx', ['/path/to/share/jinji_001.xlsx']),
         ('/path/to/share', '', []),
         ('', 'jinji_*.xlsx', []),
@@ -465,18 +462,18 @@ class TestJinjiFileConfigurationFactoryCreateSheetName:
     | UPDATE_RECORD_JINJI_SHEET_NAMEが設定されている | Y       | N       |
     | 出力                                      | 設定値   | 空文字列 |
 
-    境界値検証ケース一覧：
+    境界値検証ケース一覧:
     | ケースID | 入力パラメータ                  | テスト値   | 期待される結果 | テストの目的/検証ポイント | 実装状況 | 対応するテストケース                    |
     |----------|--------------------------------|------------|----------------|---------------------------|----------|-----------------------------------------|
     | BVT_001  | UPDATE_RECORD_JINJI_SHEET_NAME | ""         | 空文字列        | 空文字列の処理を確認       | 実装済み | test_create_sheet_name_BVT_empty_name   |
     | BVT_002  | UPDATE_RECORD_JINJI_SHEET_NAME | "a" * 255  | 255文字の文字列 | 最大長の処理を確認         | 実装済み | test_create_sheet_name_BVT_max_length_name |
 
-    境界値検証ケースの実装状況サマリー：
+    境界値検証ケースの実装状況サマリー:
     - 実装済み: 2
     - 未実装: 0
     - 一部実装: 0
 
-    注記：
+    注記:
     すべての境界値検証ケースが実装されています。テストケースは、空文字列や最大長の文字列など、
     様々な入力に対するcreate_sheet_nameメソッドの動作を検証します。
     """
@@ -486,8 +483,8 @@ class TestJinjiFileConfigurationFactoryCreateSheetName:
         self.mock_config = MagicMock()
         self.mock_config.package_config = {
             'excel_definition': {
-                'UPDATE_RECORD_JINJI_SHEET_NAME': 'Sheet1'
-            }
+                'UPDATE_RECORD_JINJI_SHEET_NAME': 'Sheet1',
+            },
         }
         self.factory = JinjiFileConfigurationFactory(config=self.mock_config)
 
@@ -528,7 +525,7 @@ class TestJinjiFileConfigurationFactoryCreateSheetName:
         result = self.factory.create_sheet_name()
         assert result == ''
 
-    @pytest.mark.parametrize("sheet_name,expected", [
+    @pytest.mark.parametrize(("sheet_name","expected"), [
         ('Sheet1', 'Sheet1'),
         ('CustomSheet', 'CustomSheet'),
         ('', ''),
@@ -581,7 +578,7 @@ class TestKokukiFileConfigurationFactory:
     │   │   └── 正常系: 有効なconfigでインスタンス生成
     │   ├── C1: 分岐カバレッジ
     │   │   ├── 正常系: configパラメータあり
-    │   │   └── 正常系: configパラメータなし（デフォルト設定使用）
+    │   │   └── 正常系: configパラメータなし(デフォルト設定使用)
     │   ├── C2: 条件組み合わせ
     │   │   ├── 正常系: configが完全な構造を持つ
     │   │   └── 正常系: configが一部の設定のみを持つ
@@ -615,7 +612,7 @@ class TestKokukiFileConfigurationFactory:
     | UPDATE_RECORD_KOKUKIが設定されている | Y       | Y       | N       | N       |
     | 出力                           | 正常    | 空リスト | 空リスト | 空リスト |
 
-    境界値検証ケース一覧：
+    境界値検証ケース一覧:
     | ケースID | 入力パラメータ      | テスト値                    | 期待される結果                | テストの目的/検証ポイント           | 実装状況 | 対応するテストケース                    |
     |----------|--------------------|---------------------------|-------------------------------|-------------------------------------|----------|----------------------------------------|
     | BVT_001  | config             | {}                        | 正常                           | 空の辞書での初期化                   | 実装済み | test_init_BVT_empty_config             |
@@ -625,12 +622,12 @@ class TestKokukiFileConfigurationFactory:
     | BVT_005  | SHARE_RECEIVE_PATH | "a" * 255                 | 非常に長いパスを含むリスト      | 最大長のパス処理を確認               | 実装済み | test_create_file_pattern_BVT_max_length_path |
     | BVT_006  | UPDATE_RECORD_KOKUKI| "a" * 255                | 非常に長いパターンを含むリスト  | 最大長のパターン処理を確認           | 実装済み | test_create_file_pattern_BVT_max_length_pattern |
 
-    境界値検証ケースの実装状況サマリー：
+    境界値検証ケースの実装状況サマリー:
     - 実装済み: 6
     - 未実装: 0
     - 一部実装: 0
 
-    注記：
+    注記:
     すべての境界値検証ケースが実装されています。テストケースは、空の辞書、None、
     空文字列や最大長の文字列など、様々な入力に対するKokukiFileConfigurationFactoryの
     動作を検証します。
@@ -641,13 +638,13 @@ class TestKokukiFileConfigurationFactory:
         self.mock_config = MagicMock()
         self.mock_config.common_config = {
             'optional_path': {
-                'SHARE_RECEIVE_PATH': '/path/to/share'
-            }
+                'SHARE_RECEIVE_PATH': '/path/to/share',
+            },
         }
         self.mock_config.package_config = {
             'excel_definition': {
-                'UPDATE_RECORD_KOKUKI': 'kokuki_*.xlsx'
-            }
+                'UPDATE_RECORD_KOKUKI': 'kokuki_*.xlsx',
+            },
         }
 
     def teardown_method(self):
@@ -687,7 +684,7 @@ class TestKokukiFileConfigurationFactory:
 
         partial_config = {
             'common_config': {'optional_path': {}},
-            'package_config': {}
+            'package_config': {},
         }
         factory = KokukiFileConfigurationFactory(config=partial_config)
         assert factory.config == partial_config
@@ -736,7 +733,7 @@ class TestKokukiFileConfigurationFactory:
             result = factory.create_file_pattern()
             assert len(result) == 0
 
-    @pytest.mark.parametrize("share_path,update_record,expected", [
+    @pytest.mark.parametrize(("share_path","update_record","expected"), [
         ('/path/to/share', 'kokuki_*.xlsx', ['/path/to/share/kokuki_001.xlsx']),
         ('/path/to/share', '', []),
         ('', 'kokuki_*.xlsx', []),
@@ -801,7 +798,7 @@ class TestKanrenFileConfigurationFactory:
     │   │   └── 正常系: 有効なconfigでインスタンス生成
     │   ├── C1: 分岐カバレッジ
     │   │   ├── 正常系: configパラメータあり
-    │   │   └── 正常系: configパラメータなし（デフォルト設定使用）
+    │   │   └── 正常系: configパラメータなし(デフォルト設定使用)
     │   ├── C2: 条件組み合わせ
     │   │   ├── 正常系: configが完全な構造を持つ
     │   │   └── 正常系: configが一部の設定のみを持つ
@@ -835,7 +832,7 @@ class TestKanrenFileConfigurationFactory:
     | UPDATE_RECORD_KANRENが設定されている | Y       | Y       | N       | N       |
     | 出力                           | 正常    | 空リスト | 空リスト | 空リスト |
 
-    境界値検証ケース一覧：
+    境界値検証ケース一覧:
     | ケースID | 入力パラメータ      | テスト値                    | 期待される結果                | テストの目的/検証ポイント           | 実装状況 | 対応するテストケース                    |
     |----------|--------------------|---------------------------|-------------------------------|-------------------------------------|----------|----------------------------------------|
     | BVT_001  | config             | {}                        | 正常                           | 空の辞書での初期化                   | 実装済み | test_init_BVT_empty_config             |
@@ -845,12 +842,12 @@ class TestKanrenFileConfigurationFactory:
     | BVT_005  | SHARE_RECEIVE_PATH | "a" * 255                 | 非常に長いパスを含むリスト      | 最大長のパス処理を確認               | 実装済み | test_create_file_pattern_BVT_max_length_path |
     | BVT_006  | UPDATE_RECORD_KANREN| "a" * 255                | 非常に長いパターンを含むリスト  | 最大長のパターン処理を確認           | 実装済み | test_create_file_pattern_BVT_max_length_pattern |
 
-    境界値検証ケースの実装状況サマリー：
+    境界値検証ケースの実装状況サマリー:
     - 実装済み: 6
     - 未実装: 0
     - 一部実装: 0
 
-    注記：
+    注記:
     すべての境界値検証ケースが実装されています。テストケースは、空の辞書、None、
     空文字列や最大長の文字列など、様々な入力に対するKanrenFileConfigurationFactoryの
     動作を検証します。
@@ -861,13 +858,13 @@ class TestKanrenFileConfigurationFactory:
         self.mock_config = MagicMock()
         self.mock_config.common_config = {
             'optional_path': {
-                'SHARE_RECEIVE_PATH': '/path/to/share'
-            }
+                'SHARE_RECEIVE_PATH': '/path/to/share',
+            },
         }
         self.mock_config.package_config = {
             'excel_definition': {
-                'UPDATE_RECORD_KANREN': 'kanren_*.xlsx'
-            }
+                'UPDATE_RECORD_KANREN': 'kanren_*.xlsx',
+            },
         }
 
     def teardown_method(self):
@@ -907,7 +904,7 @@ class TestKanrenFileConfigurationFactory:
 
         partial_config = {
             'common_config': {'optional_path': {}},
-            'package_config': {}
+            'package_config': {},
         }
         factory = KanrenFileConfigurationFactory(config=partial_config)
         assert factory.config == partial_config
@@ -956,7 +953,7 @@ class TestKanrenFileConfigurationFactory:
             result = factory.create_file_pattern()
             assert len(result) == 0
 
-    @pytest.mark.parametrize("share_path,update_record,expected", [
+    @pytest.mark.parametrize(("share_path","update_record","expected"), [
         ('/path/to/share', 'kanren_*.xlsx', ['/path/to/share/kanren_001.xlsx']),
         ('/path/to/share', '', []),
         ('', 'kanren_*.xlsx', []),

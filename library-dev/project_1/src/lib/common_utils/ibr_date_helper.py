@@ -1,20 +1,22 @@
 """日付処理サポートライブラリ"""
 
+import sys
 import traceback
 from datetime import datetime
 from pathlib import Path
+
 from dateutil import tz
+
+from src.lib.common_utils.ibr_decorator_config import (
+    initialize_config,
+)
 from src.lib.common_utils.ibr_enums import (
     DigitsNumberforUnixtime,
     LogLevel,
 )
-from src.lib.common_utils.ibr_logger_package import LoggerPackage
 
-################################
-# logger
-################################
-logger = LoggerPackage(__package__)
-log_msg = logger.log_message
+config = initialize_config(sys.modules[__name__])
+log_msg = config.log_message
 
 ################################
 # tz生成
@@ -25,6 +27,10 @@ JST = tz.gettz('Aaia/Tokyo')
 ################################
 # 関数定義
 ################################
+
+class ConvertWithTimezoneError(Exception):
+    """date_helperに関する独自例外定義"""
+
 def convert_with_no_timezone_to_jst(
     date_str: str,
     date_format: str='%Y/%m/%d %H:%M:%S',
@@ -59,7 +65,7 @@ def convert_with_no_timezone_to_jst(
     """
     try:
         return datetime.strptime(date_str, date_format).replace(tzinfo=UTC).astimezone(JST)
-    except Exception as e: # noqa: BLE001 exception最終句に設定
+    except Exception as e:
         tb = traceback.TracebackException.from_exception(e)
         log_msg(''.join(tb.format()), LogLevel.ERROR)
         return None
@@ -99,7 +105,7 @@ def convert_with_timezone_to_jst(
     """
     try:
         return datetime.strptime(date_str, date_format).astimezone(JST)
-    except Exception as e: # noqa: BLE001 exception最終句に設定
+    except Exception as e:
         tb = traceback.TracebackException.from_exception(e)
         log_msg(''.join(tb.format()), LogLevel.ERROR)
         return None
@@ -154,15 +160,14 @@ def convert_unixtime_to_jst(unixtime_str: str) -> datetime|None:
     try:
         log_msg(f'unixtime: {unixtime}', LogLevel.INFO)
         return _fromtimestamp_wrapper(unixtime, tz=UTC).astimezone(JST)
-    except Exception as e: # noqa: BLE001 exception最終句に設定
+    except Exception as e:
         tb = traceback.TracebackException.from_exception(e)
         log_msg(''.join(tb.format()), LogLevel.ERROR)
         return None
 
 # add 2024/05/04
 def load_calendar_file(calendar_file_path: str | Path) -> tuple[set[str], set[str]]:
-    """
-    銀行カレンダーファイルを読み込み、休業日と営業日のセットを返す
+    """銀行カレンダーファイルを読み込み、休業日と営業日のセットを返す
 
     Args:
         calendar_file_path (str | Path): 銀行カレンダーファイルのパス
@@ -176,7 +181,8 @@ def load_calendar_file(calendar_file_path: str | Path) -> tuple[set[str], set[st
     """
     calendar_file_path = Path(calendar_file_path)
     if not calendar_file_path.exists():
-        raise FileNotFoundError(f"銀行カレンダーファイルが見つかりません: {calendar_file_path}")
+        log_msg = f"銀行カレンダーファイルが見つかりません: {calendar_file_path}"
+        raise FileNotFoundError(log_msg)
 
     closed_days = set()
     operation_days = set()
@@ -195,8 +201,7 @@ def load_calendar_file(calendar_file_path: str | Path) -> tuple[set[str], set[st
 
 
 def _convert_date_to_string(date: str | datetime) -> str:
-    """
-    日付をYYYY/MM/DD形式の文字列に変換する
+    """日付をYYYY/MM/DD形式の文字列に変換する
 
     Args:
         date (str | datetime): 変換する日付
@@ -210,17 +215,16 @@ def _convert_date_to_string(date: str | datetime) -> str:
     """
     if isinstance(date, datetime):
         return date.strftime('%Y/%m/%d')
-    elif isinstance(date, str):
-        datetime.strptime(date, '%Y/%m/%d')
+    if isinstance(date, str):
+        datetime.strptime(date, '%Y/%m/%d').replace(tzinfo=UTC).astimezone(JST)
         return date
-    else:
-        msg = f"日付は文字列もしくはdatetime型でなければなりません: {type(date)}"
-        raise TypeError(msg)
+    msg = f"日付は文字列もしくはdatetime型でなければなりません: {type(date)}"
+    raise TypeError(msg)
 
 
 def is_bank_business_day(date: str | datetime, calendar_file_path: str | Path) -> bool | None:
-    """
-    銀行営業日判定関数
+    """銀行営業日判定関数
+
     JP1提供銀行カレンダーに基づき、指定日付が銀行営業日であるかの判定を行う
 
     Args:

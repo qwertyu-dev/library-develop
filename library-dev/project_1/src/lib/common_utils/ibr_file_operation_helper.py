@@ -1,23 +1,32 @@
 """危険なファイル操作サポートライブラリ"""
-from datetime import datetime
 import os
 import shutil
+import sys
 import traceback
+from datetime import datetime
 from pathlib import Path
-from dateutil import tz
-from src.lib.common_utils.ibr_enums import LogLevel
-from src.lib.common_utils.ibr_logger_package import LoggerPackage
 
-################################
-# logger
-################################
-logger = LoggerPackage(__package__)
-log_msg = logger.log_message
+from dateutil import tz
+
+# config共有
+from src.lib.common_utils.ibr_decorator_config import (
+    initialize_config,
+)
+from src.lib.common_utils.ibr_enums import LogLevel
+
+config = initialize_config(sys.modules[__name__])
+log_msg = config.log_message
 
 ################################
 # tz生成
 ################################
 JST = tz.gettz('Aaia/Tokyo')
+
+################################
+# class
+################################
+class FileOperationHelperError(Exception):
+    """カスタム例外"""
 
 ################################
 # function
@@ -88,12 +97,14 @@ def delete_file(file_path: str|Path) -> bool:
     except Exception as e:
         tb = traceback.TracebackException.from_exception(e)
         log_msg(''.join(tb.format()), LogLevel.ERROR)
-        raise
+        #raise
+        raise FileOperationHelperError from None
     else:
         return True
 
 
-def move_file(old_file_path: str|Path, destination_directory: str|Path, overwrite: bool=False, with_timestamp: bool=True) -> bool | Path|None:
+#def move_file(old_file_path: str|Path, destination_directory: str|Path, overwrite: bool=False, with_timestamp: bool=True) -> bool | Path|None:
+def move_file(old_file_path: str|Path, destination_directory: str|Path, *, overwrite: bool=False, with_timestamp: bool=True) -> bool | Path|None:
     """ファイル移動操作
 
     ファイル移動操作には危険が伴う
@@ -165,7 +176,8 @@ def move_file(old_file_path: str|Path, destination_directory: str|Path, overwrit
     except Exception as e:
         tb = traceback.TracebackException.from_exception(e)
         log_msg(''.join(tb.format()), LogLevel.ERROR)
-        raise
+        #raise
+        raise FileOperationHelperError from None
     else:
         return (True, new_file_path)
 
@@ -228,12 +240,14 @@ def rename_file(old_file_path: str|Path, new_file_name: str, overwrite:int=0) ->
     except Exception as e:
         tb = traceback.TracebackException.from_exception(e)
         log_msg(''.join(tb.format()), LogLevel.ERROR)
-        raise
+        #raise
+        raise FileOperationHelperError from None
     else:
         return (True, new_file_path)
 
 
-def copy_file(source_file_path: str|Path, destination_directory: str|Path, overwrite: bool=False, with_timestamp: bool=False) -> bool |  Path|None:
+#def copy_file(source_file_path: str|Path, destination_directory: str|Path, overwrite: bool=False, with_timestamp: bool=False) -> bool |  Path|None:
+def copy_file(source_file_path: str|Path, destination_directory: str|Path, *, overwrite: bool=False, with_timestamp: bool=False) -> bool |  Path|None:
     """ファイルコピー操作
 
     ファイルコピー操作には危険が伴う
@@ -303,6 +317,7 @@ def copy_file(source_file_path: str|Path, destination_directory: str|Path, overw
     except Exception as e:
         tb = traceback.TracebackException.from_exception(e)
         log_msg(''.join(tb.format()), LogLevel.ERROR)
-        raise
+        #raise
+        raise FileOperationHelperError from None
     else:
         return (True, new_file_path)

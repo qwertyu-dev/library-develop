@@ -71,17 +71,15 @@ class Test_mutex_check:
         ## test2: Mutex作成時にエラーが発生する場合
         mocker.patch('win32event.CreateMutex', return_value=MagicMock())
         mocker.patch('win32api.GetLastError', return_value=winerror.ERROR_ALREADY_EXISTS)
-        with pytest.raises(Exception):
-            with MutexManager('test_package'):
-                pass
+        with pytest.raises(Exception), MutexManager('test_package'):
+            pass
 
         ## test: Mutex開放時にエラーが発生する場合
         mocker.patch('win32event.CreateMutex', return_value=MagicMock())
         mocker.patch('win32api.GetLastError', return_value=0)
         mocker.patch('win32api.CloseHandle', side_effect=Exception())
-        with pytest.raises(Exception):
-            with MutexManager('test_package'):
-                pass
+        with pytest.raises(Exception), MutexManager('test_package'):
+            pass
 
 
     def test_mutex_manager_UT_C0_normal_multiprocess(self, mocker) -> None:

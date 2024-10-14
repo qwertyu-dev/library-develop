@@ -1,17 +1,19 @@
 """多重起動制御ライブラリ"""
+import sys
 from types import TracebackType
 
 import win32api
 import win32event
 import winerror
-from src.lib.common_utils.ibr_enums import LogLevel
-from src.lib.common_utils.ibr_logger_package import LoggerPackage
 
-################################
-# logger
-################################
-logger = LoggerPackage(__package__)
-log_msg = logger.log_message
+# config共有
+from src.lib.common_utils.ibr_decorator_config import (
+    initialize_config,
+)
+from src.lib.common_utils.ibr_enums import LogLevel
+
+config = initialize_config(sys.modules[__name__])
+log_msg = config.log_message
 
 # 個別例外定義
 class ProcessAlreadyRunningError(RuntimeError):

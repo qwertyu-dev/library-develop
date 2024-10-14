@@ -11,6 +11,9 @@ from src.lib.common_utils.ibr_decorator_config import with_config
 #from src.lib.common_utils.ibr_decorator_config import initialize_config
 #config = initialize_config(sys.modules[__name__])
 
+class DataValidatorError(Exception):
+    pass
+
 @with_config
 class DataValidator:
     def __init__(self, config: dict, validation_model: type[BaseModel]):
@@ -40,6 +43,7 @@ class DataValidator:
 
     def _validate_row(self, row: pd.Series) -> None:
         # Validation実体
+        # Error発生しても処理は継続(ValidationError,Exception)
         try:
             self.validation_model(**row.to_dict())
         except ValidationError as e:

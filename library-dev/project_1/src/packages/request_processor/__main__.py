@@ -1,3 +1,5 @@
+import pandas as pd
+
 from src.lib.common_utils.ibr_enums import LogLevel
 from src.lib.common_utils.ibr_dataframe_helper import tabulate_dataframe
 from src.lib.common_utils.ibr_logger_helper import format_config
@@ -55,6 +57,9 @@ class RequestProcessExecutor:
             for key in self.factory_registry.config.package_config['file_configuration_factory']
         }
         self.log_msg(f'{self.file_configuration_factory}', LogLevel.DEBUG)
+
+    def get_integrated_dataframe(self) -> pd.DataFrame:
+        return self._df
 
     def execute(self, department: str) -> None:
         """アプリケーションのメイン処理を実行する"""
@@ -120,15 +125,17 @@ class RequestProcessExecutor:
         ## 統合レイアウト変換
         ## 受付向けの編集処理(ULID,申請部署情報)
         ## 動的ブラックリストチェック
-        _df = processor_chain.execute_post_processor(_df)
+        self._df = processor_chain.execute_post_processor(_df)
 
-        ## ファイルのマージ(jinji, kokuki, kanren処理結果)
 
         # 処理終了ログ
         self.log_msg(f'\n{tabulate_dataframe(_df)}', LogLevel.INFO)
         self.log_msg("IBRDEV-I-0000002")
 
 if __name__ == '__main__':
+    # 入れ物
+    total_dataframe = []
+
     # 一括申請実行
     executor = RequestProcessExecutor()
     processes = [
@@ -139,3 +146,9 @@ if __name__ == '__main__':
 
     for process in processes:
         executor.execute(process)
+        # 各区分での結果を蓄積
+        total_dataframe.append(executor.get_total_dataframe())
+
+    # ファイルのマージ(jinji, kokuki, kanren処理結果)
+    ## 人事・国企・関連の統合レイアウト変換碁データを１つのファイルにマージする
+    ## total_dataframeに人事・国企・関連それぞれの統合レイアウトDataFrameが最大1つづつ格納されて入れる

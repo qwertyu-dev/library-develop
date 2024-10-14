@@ -1,18 +1,21 @@
-import pytest
-from pydantic import BaseModel
+import sys
 from typing import Type
 
-from src.packages.request_processor.model_factory import (
-    ModelFactory, JinjiModelFactory, KokukiModelFactory, KanrenModelFactory
-)
-from src.model.dataclass.request_processor_jinji_model import JinjiModel
-from src.model.dataclass.request_processor_kokuki_model import KokukiModel
-from src.model.dataclass.request_processor_kanren_model import KanrenModel
+import pytest
+from pydantic import BaseModel
 
-# config共有
-import sys
-from src.lib.common_utils.ibr_enums import LogLevel
 from src.lib.common_utils.ibr_decorator_config import initialize_config
+from src.lib.common_utils.ibr_enums import LogLevel
+from src.model.dataclass.request_processor_jinji_model import JinjiModel
+from src.model.dataclass.request_processor_kanren_model import KanrenModel
+from src.model.dataclass.request_processor_kokuki_model import KokukiModel
+from src.packages.request_processor.model_factory import (
+    JinjiModelFactory,
+    KanrenModelFactory,
+    KokukiModelFactory,
+    ModelFactory,
+)
+
 config = initialize_config(sys.modules[__name__])
 log_msg = config.log_message
 log_msg(str(config), LogLevel.DEBUG)
@@ -29,10 +32,10 @@ class TestModelFactory:
     └── C1: 分岐カバレッジ (該当なし)
 
     C1のディシジョンテーブル:
-    該当なし（条件分岐がないため）
+    該当なし(条件分岐がないため)
 
-    境界値検証ケース一覧：
-    該当なし（入力パラメータがないため）
+    境界値検証ケース一覧:
+    該当なし(入力パラメータがないため)
     """
 
     def setup_method(self):
@@ -54,7 +57,7 @@ class TestModelFactory:
         with pytest.raises(NotImplementedError):
             factory.create_model()
 
-    @pytest.mark.parametrize("factory_class, expected_model", [
+    @pytest.mark.parametrize(("factory_class", "expected_model"), [
         (JinjiModelFactory, JinjiModel),
         (KokukiModelFactory, KokukiModel),
         (KanrenModelFactory, KanrenModel),
@@ -75,42 +78,29 @@ class TestModelFactory:
         log_msg(f"Returned model: {model}", LogLevel.DEBUG)
 
     def test_model_factory_create_model_existence_C0(self):
-        """
+        test_doc = """
         テスト区分: UT
         テストケース: C0
         テストシナリオ: ModelFactoryクラスにcreate_modelメソッドが存在することを確認
         期待結果: create_modelメソッドが存在し、呼び出し可能であること
         """
+        log_msg(f"\n{test_doc}", LogLevel.DEBUG)
+
         assert hasattr(ModelFactory, 'create_model')
-        assert callable(getattr(ModelFactory, 'create_model'))
+        assert callable(ModelFactory.create_model)
 
     def test_model_factory_create_model_not_implemented_C0(self):
-        """
+        test_doc = """
         テスト区分: UT
         テストケース: C0
         テストシナリオ: ModelFactoryのcreate_modelメソッドを呼び出す
         期待結果: NotImplementedErrorが発生すること
         """
+        log_msg(f"\n{test_doc}", LogLevel.DEBUG)
+
         factory = ModelFactory()
         with pytest.raises(NotImplementedError):
             factory.create_model()
-
-    @pytest.mark.parametrize("factory_class, expected_model", [
-        (JinjiModelFactory, JinjiModel),
-        (KokukiModelFactory, KokukiModel),
-        (KanrenModelFactory, KanrenModel),
-    ])
-    def test_concrete_factory_create_model_C0(self, factory_class, expected_model):
-        """
-        テスト区分: UT
-        テストケース: C0
-        テストシナリオ: 具象ファクトリークラスのcreate_modelメソッドを呼び出す
-        期待結果: 対応するモデルクラスが返されること
-        """
-        factory = factory_class()
-        model = factory.create_model()
-        assert model == expected_model
-        assert issubclass(model, BaseModel)
 
 class TestJinjiModelFactory:
     """JinjiModelFactoryクラスのテスト
@@ -119,17 +109,17 @@ class TestJinjiModelFactory:
     ├── C0: 基本機能テスト
     │   └── create_model: JinjiModelを返すことの確認
     ├── C1: 分岐カバレッジ
-    │   └── 該当なし（分岐がないため）
+    │   └── 該当なし(分岐がないため)
     ├── C2: 条件カバレッジ
-    │   └── 該当なし（条件分岐がないため）
+    │   └── 該当なし(条件分岐がないため)
     └── BVT: 境界値テスト
-        └── 該当なし（入力パラメータがないため）
+        └── 該当なし(入力パラメータがないため)
 
     C1のディシジョンテーブル:
-    該当なし（条件分岐がないため）
+    該当なし(条件分岐がないため)
 
-    境界値検証ケース一覧：
-    該当なし（入力パラメータがないため）
+    境界値検証ケース一覧:
+    該当なし(入力パラメータがないため)
     """
 
     def setup_method(self):
@@ -150,10 +140,10 @@ class TestJinjiModelFactory:
 
         factory = JinjiModelFactory()
         model = factory.create_model()
-        
+
         assert model == JinjiModel
         assert issubclass(model, BaseModel)
-        
+
         log_msg(f"Returned model: {model}", LogLevel.DEBUG)
 
     def test_create_model_C0_instance_check(self):
@@ -168,10 +158,10 @@ class TestJinjiModelFactory:
 
         factory = JinjiModelFactory()
         model = factory.create_model()
-        
+
         assert isinstance(model, type)
         assert issubclass(model, BaseModel)
-        
+
         log_msg(f"Model type: {type(model)}", LogLevel.DEBUG)
 
 class TestKokukiModelFactory:
@@ -181,17 +171,17 @@ class TestKokukiModelFactory:
     ├── C0: 基本機能テスト
     │   └── create_model: KokukiModelを返すことの確認
     ├── C1: 分岐カバレッジ
-    │   └── 該当なし（分岐がないため）
+    │   └── 該当なし(分岐がないため)
     ├── C2: 条件カバレッジ
-    │   └── 該当なし（条件分岐がないため）
+    │   └── 該当なし(条件分岐がないため)
     └── BVT: 境界値テスト
-        └── 該当なし（入力パラメータがないため）
+        └── 該当なし(入力パラメータがないため)
 
     C1のディシジョンテーブル:
-    該当なし（条件分岐がないため）
+    該当なし(条件分岐がないため)
 
-    境界値検証ケース一覧：
-    該当なし（入力パラメータがないため）
+    境界値検証ケース一覧:
+    該当なし(入力パラメータがないため)
     """
 
     def setup_method(self):
@@ -212,10 +202,10 @@ class TestKokukiModelFactory:
 
         factory = KokukiModelFactory()
         model = factory.create_model()
-        
+
         assert model == KokukiModel
         assert issubclass(model, BaseModel)
-        
+
         log_msg(f"Returned model: {model}", LogLevel.DEBUG)
 
     def test_create_model_C0_instance_check(self):
@@ -230,10 +220,10 @@ class TestKokukiModelFactory:
 
         factory = KokukiModelFactory()
         model = factory.create_model()
-        
+
         assert isinstance(model, type)
         assert issubclass(model, BaseModel)
-        
+
         log_msg(f"Model type: {type(model)}", LogLevel.DEBUG)
 
 class TestKanrenModelFactory:
@@ -243,17 +233,17 @@ class TestKanrenModelFactory:
     ├── C0: 基本機能テスト
     │   └── create_model: KanrenModelを返すことの確認
     ├── C1: 分岐カバレッジ
-    │   └── 該当なし（分岐がないため）
+    │   └── 該当なし(分岐がないため)
     ├── C2: 条件カバレッジ
-    │   └── 該当なし（条件分岐がないため）
+    │   └── 該当なし(条件分岐がないため)
     └── BVT: 境界値テスト
-        └── 該当なし（入力パラメータがないため）
+        └── 該当なし(入力パラメータがないため)
 
     C1のディシジョンテーブル:
-    該当なし（条件分岐がないため）
+    該当なし(条件分岐がないため)
 
-    境界値検証ケース一覧：
-    該当なし（入力パラメータがないため）
+    境界値検証ケース一覧:
+    該当なし(入力パラメータがないため)
     """
 
     def setup_method(self):
@@ -274,10 +264,10 @@ class TestKanrenModelFactory:
 
         factory = KanrenModelFactory()
         model = factory.create_model()
-        
+
         assert model == KanrenModel
         assert issubclass(model, BaseModel)
-        
+
         log_msg(f"Returned model: {model}", LogLevel.DEBUG)
 
     def test_create_model_C0_instance_check(self):
@@ -292,9 +282,9 @@ class TestKanrenModelFactory:
 
         factory = KanrenModelFactory()
         model = factory.create_model()
-        
+
         assert isinstance(model, type)
         assert issubclass(model, BaseModel)
-        
+
         log_msg(f"Model type: {type(model)}", LogLevel.DEBUG)
 

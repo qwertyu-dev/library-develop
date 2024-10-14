@@ -1,18 +1,19 @@
-import pandas as pd
-import pytest
+import sys
 from pathlib import Path
 from unittest.mock import Mock, patch
+
+import pandas as pd
+import pytest
+
+from src.lib.common_utils.ibr_dataframe_helper import tabulate_dataframe
+from src.lib.common_utils.ibr_decorator_config import initialize_config
+from src.lib.common_utils.ibr_enums import LogLevel
 from src.packages.request_processor.excel_processor import (
     ExcelProcessor,
     ExcelProcessorError,
     ExcelSheetColumnsUnmatchError,
 )
-from src.lib.common_utils.ibr_enums import LogLevel
-from src.lib.common_utils.ibr_dataframe_helper import tabulate_dataframe
 
-# テストに依存しないカスタムロガー
-import sys
-from src.lib.common_utils.ibr_decorator_config import initialize_config
 config = initialize_config(sys.modules[__name__])
 log_msg = config.log_message
 
@@ -41,7 +42,7 @@ class TestExcelProcessorInit:
         ├── 最小限の設定での初期化
         └── 複雑な設定での初期化
 
-    境界値検証ケース一覧：
+    境界値検証ケース一覧:
     | ケースID | 入力パラメータ              | テスト値                             | 期待される結果 | テストの目的/検証ポイント            | 実装状況 | 対応するテストケース              |
     |----------|-----------------------------|--------------------------------------|----------------|---------------------------------------|----------|-----------------------------------|
     | BVT_001  | file_configuration_factory  | 最小限の設定                         | 正常初期化     | 最小限の設定での動作確認             | 実装済み | test_init_BVT_minimal_configuration|
@@ -50,12 +51,12 @@ class TestExcelProcessorInit:
     | BVT_004  | config                      | None                                 | 正常初期化     | Noneの設定での動作確認               | 実装済み | test_init_C1_none_config           |
     | BVT_005  | file_configuration_factory  | create_file_pattern()がNoneを返す    | エラー発生     | 無効なファクトリーでのエラー処理確認 | 実装済み | test_init_C2_invalid_factory       |
 
-    境界値検証ケースの実装状況サマリー：
+    境界値検証ケースの実装状況サマリー:
     - 実装済み: 5
     - 未実装: 0
     - 一部実装: 0
 
-    注記：
+    注記:
     すべての境界値検証ケースが実装されています。テストケースは、最小限の設定から複雑な設定、
     無効な設定まで幅広くカバーしています。
     """
@@ -89,7 +90,8 @@ class TestExcelProcessorInit:
         processor = ExcelProcessor(valid_factory, config=mock_config)
         assert processor.excel_file_pattern == [Path('test.xlsx')]
         assert processor.excel_sheet_name == 'Sheet1'
-        mock_config.log_message.assert_called_once()
+        #mock_config.log_message.assert_called_once()    # Debug込で合計4回Callあり
+        assert mock_config.log_message.call_count == 4
 
     def test_init_C0_invalid_configuration(self):
         test_doc = """
@@ -242,7 +244,7 @@ class TestExcelProcessorLoad:
         ├── 大量のデータを含むファイルの処理
         └── 特殊文字を含むファイル名の処理
 
-    境界値検証ケース一覧：
+    境界値検証ケース一覧:
     | ケースID | 入力パラメータ | テスト値                    | 期待される結果     | テストの目的/検証ポイント        | 実装状況 | 対応するテストケース              |
     |----------|----------------|-----------------------------|--------------------|-----------------------------------|----------|-----------------------------------|
     | BVT_001  | ファイル内容   | 空のデータフレーム          | 空のデータフレーム | 空ファイルの処理確認             | 実装済み | test_load_BVT_empty_file          |
@@ -251,12 +253,12 @@ class TestExcelProcessorLoad:
     | BVT_004  | ファイルパス   | 最大長のファイルパス        | 正常読み込み       | 最大長パスの処理確認             | 未実装   | -                                 |
     | BVT_005  | シート名       | 最大長のシート名            | 正常読み込み       | 最大長シート名の処理確認         | 未実装   | -                                 |
 
-    境界値検証ケースの実装状況サマリー：
+    境界値検証ケースの実装状況サマリー:
     - 実装済み: 3
     - 未実装: 2
     - 一部実装: 0
 
-    注記：
+    注記:
     - BVT_004とBVT_005は、システムの制限に依存するため未実装です。実際の環境でテストする必要があります。
     - 大量データのテスト（BVT_002）は、テスト環境のリソースに応じて行数を調整する必要があるかもしれません。
     """
@@ -481,7 +483,7 @@ class TestExcelProcessor_LoadSingleFile:
         ├── 最小サイズのファイル処理
         └── 最大サイズのファイル処理
 
-    境界値検証ケース一覧：
+    境界値検証ケース一覧:
     | ケースID | 入力パラメータ | テスト値                 | 期待される結果     | テストの目的/検証ポイント    | 実装状況 | 対応するテストケース              |
     |----------|----------------|--------------------------|--------------------|-----------------------------|----------|-----------------------------------|
     | BVT_001  | ファイル内容   | 空のデータフレーム       | 空のデータフレーム | 最小サイズファイルの処理確認 | 実装済み | test_load_single_file_BVT_empty_file |
@@ -489,12 +491,12 @@ class TestExcelProcessor_LoadSingleFile:
     | BVT_003  | ファイルパス   | 最大長のファイルパス     | 正常読み込み       | 最大長パスの処理確認         | 未実装   | -                                 |
     | BVT_004  | シート名       | 最大長のシート名         | 正常読み込み       | 最大長シート名の処理確認     | 未実装   | -                                 |
 
-    境界値検証ケースの実装状況サマリー：
+    境界値検証ケースの実装状況サマリー:
     - 実装済み: 2
     - 未実装: 2
     - 一部実装: 0
 
-    注記：
+    注記:
     - BVT_003とBVT_004は、システムの制限に依存するため未実装です。実際の環境でテストする必要があります。
     - 大量データのテスト（BVT_002）は、テスト環境のリソースに応じて行数を調整する必要があるかもしれません。
     """
@@ -686,7 +688,7 @@ class TestExcelProcessor_ValidateAndAlignColumns:
         ├── 最小限のカラム数
         └── 大量のカラム数
 
-    境界値検証ケース一覧：
+    境界値検証ケース一覧:
     | ケースID | 入力パラメータ    | テスト値               | 期待される結果  | テストの目的/検証ポイント        | 実装状況 | 対応するテストケース                    |
     |----------|--------------------|------------------------|-----------------|-----------------------------------|----------|-------------------------------------------|
     | BVT_001  | DataFrame          | 1列のDataFrame        | 正常処理        | 最小カラム数の処理確認           | 実装済み | test_validate_and_align_columns_BVT_min_columns |
@@ -695,12 +697,12 @@ class TestExcelProcessor_ValidateAndAlignColumns:
     | BVT_004  | DataFrame          | 空のDataFrame         | 正常処理        | 空のDataFrameの処理確認          | 実装済み | test_validate_and_align_columns_BVT_empty_dataframe |
     | BVT_005  | カラム名           | 最大長のカラム名      | 正常処理        | 最大長カラム名の処理確認         | 未実装   | -                                         |
 
-    境界値検証ケースの実装状況サマリー：
+    境界値検証ケースの実装状況サマリー:
     - 実装済み: 4
     - 未実装: 1
     - 一部実装: 0
 
-    注記：
+    注記:
     - BVT_005は、システムの制限に依存するため未実装です。実際の環境でテストする必要があります。
     """
 
@@ -938,7 +940,7 @@ class TestExcelProcessor_CombineDataframes:
         ├── 単一のDataFrameの処理
         └── 大量のDataFrameの結合
 
-    境界値検証ケース一覧：
+    境界値検証ケース一覧:
     | ケースID | 入力パラメータ | テスト値                     | 期待される結果     | テストの目的/検証ポイント        | 実装状況 | 対応するテストケース                 |
     |----------|----------------|------------------------------|--------------------|---------------------------------|----------|--------------------------------------|
     | BVT_001  | dataframes     | 空のリスト                   | 空のDataFrame      | 空のリスト処理の確認             | 実装済み | test_combine_dataframes_BVT_empty_list |
@@ -947,12 +949,12 @@ class TestExcelProcessor_CombineDataframes:
     | BVT_004  | dataframes     | 1000個の小さなDataFrame      | 結合されたDataFrame | 大量のDataFrame結合処理の確認    | 実装済み | test_combine_dataframes_BVT_many_dataframes |
     | BVT_005  | dataframes     | カラム数が異なるDataFrame    | 結合されたDataFrame | 異なる構造のDataFrame結合の確認  | 実装済み | test_combine_dataframes_BVT_different_columns |
 
-    境界値検証ケースの実装状況サマリー：
+    境界値検証ケースの実装状況サマリー:
     - 実装済み: 5
     - 未実装: 0
     - 一部実装: 0
 
-    注記：
+    注記:
     全ての境界値検証ケースが実装されています。
     """
 
@@ -1144,7 +1146,7 @@ class TestExcelProcessor_LogDataframeInfo:
         ├── 最小サイズのDataFrame処理
         └── 最大サイズのDataFrame処理
 
-    境界値検証ケース一覧：
+    境界値検証ケース一覧:
     | ケースID | 入力パラメータ | テスト値                   | 期待される結果 | テストの目的/検証ポイント      | 実装状況 | 対応するテストケース                 |
     |----------|----------------|----------------------------|----------------|--------------------------------|----------|--------------------------------------|
     | BVT_001  | DataFrame      | 空のDataFrame              | 正常ログ出力   | 空のDataFrame処理の確認        | 実装済み | test_log_dataframe_info_BVT_empty_df |
@@ -1152,26 +1154,25 @@ class TestExcelProcessor_LogDataframeInfo:
     | BVT_003  | DataFrame      | 1000行1000列のDataFrame    | 正常ログ出力   | 大規模DataFrameの処理確認      | 実装済み | test_log_dataframe_info_BVT_large_df |
     | BVT_004  | DataFrame      | 複数のデータ型を含むDataFrame | 正常ログ出力   | 多様なデータ型の処理確認       | 実装済み | test_log_dataframe_info_C2_various_datatypes |
 
-    境界値検証ケースの実装状況サマリー：
+    境界値検証ケースの実装状況サマリー:
     - 実装済み: 4
     - 未実装: 0
     - 一部実装: 0
 
-    注記：
+    注記:
     全ての境界値検証ケースが実装されています。
     """
 
-    @pytest.fixture
+    @pytest.fixture()
     def mock_config(self):
         return Mock(log_message=Mock())
 
-    @pytest.fixture
+    @pytest.fixture()
     def excel_processor(self, mock_config):
         with patch('src.packages.request_processor.excel_processor.FileConfigurationFactory') as mock_factory:
             mock_factory.return_value.create_file_pattern.return_value = [Path('test.xlsx')]
             mock_factory.return_value.create_sheet_name.return_value = 'Sheet1'
-            processor = ExcelProcessor(mock_factory.return_value, config=mock_config)
-            return processor
+            return ExcelProcessor(mock_factory.return_value, config=mock_config)
 
     def setup_method(self):
         log_msg("test start", LogLevel.INFO)
@@ -1189,11 +1190,11 @@ class TestExcelProcessor_LogDataframeInfo:
         """
         log_msg(f"\n{test_doc}", LogLevel.DEBUG)
 
-        df = pd.DataFrame({'A': [1, 2], 'B': [3, 4]})
-        excel_processor._log_dataframe_info(df)
+        _df = pd.DataFrame({'A': [1, 2], 'B': [3, 4]})
+        excel_processor._log_dataframe_info(_df)
 
         excel_processor.config.log_message.assert_called()
-        assert excel_processor.config.log_message.call_count == 3  # info_type と info_dataframe の2回 + 1回
+        assert excel_processor.config.log_message.call_count == 6  # info_type と info_dataframe の2回 + 1回 + Debug
 
     def test_log_dataframe_info_DT_single_cell(self, excel_processor):
         test_doc = """
@@ -1205,11 +1206,11 @@ class TestExcelProcessor_LogDataframeInfo:
         """
         log_msg(f"\n{test_doc}", LogLevel.DEBUG)
 
-        df = pd.DataFrame({'A': [1]})
-        excel_processor._log_dataframe_info(df)
+        _df = pd.DataFrame({'A': [1]})
+        excel_processor._log_dataframe_info(_df)
 
         excel_processor.config.log_message.assert_called()
-        assert excel_processor.config.log_message.call_count == 3  # 呼び出し回数は実際の実装に合わせて調整
+        assert excel_processor.config.log_message.call_count == 6  # 呼び出し回数は実際の実装に合わせて調整 + Debug
 
     def test_log_dataframe_info_DT_multiple_rows_cols_single_type(self, excel_processor):
         test_doc = """
@@ -1225,7 +1226,7 @@ class TestExcelProcessor_LogDataframeInfo:
         excel_processor._log_dataframe_info(df)
 
         excel_processor.config.log_message.assert_called()
-        assert excel_processor.config.log_message.call_count == 3  # 呼び出し回数は実際の実装に合わせて調整
+        assert excel_processor.config.log_message.call_count == 6  # 呼び出し回数は実際の実装に合わせて調整 + Debug
 
     def test_log_dataframe_info_DT_multiple_rows_cols_multiple_types(self, excel_processor):
         test_doc = """
@@ -1237,16 +1238,16 @@ class TestExcelProcessor_LogDataframeInfo:
         """
         log_msg(f"\n{test_doc}", LogLevel.DEBUG)
 
-        df = pd.DataFrame({
+        _df = pd.DataFrame({
             'A': [1, 2, 3],
             'B': ['a', 'b', 'c'],
             'C': [1.1, 2.2, 3.3],
-            'D': [True, False, True]
+            'D': [True, False, True],
         })
-        excel_processor._log_dataframe_info(df)
+        excel_processor._log_dataframe_info(_df)
 
         excel_processor.config.log_message.assert_called()
-        assert excel_processor.config.log_message.call_count == 3  # 呼び出し回数は実際の実装に合わせて調整
+        assert excel_processor.config.log_message.call_count == 6  # 呼び出し回数は実際の実装に合わせて調整 + Debug
 
     def test_log_dataframe_info_DT_invalid_input(self, excel_processor):
         test_doc = """
@@ -1261,4 +1262,3 @@ class TestExcelProcessor_LogDataframeInfo:
         invalid_df = "Not a DataFrame"
         with pytest.raises(AttributeError):
             excel_processor._log_dataframe_info(invalid_df)
-    

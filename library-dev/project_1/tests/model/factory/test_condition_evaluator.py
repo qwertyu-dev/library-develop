@@ -1,6 +1,6 @@
 # config共有
-import sys
 import re
+import sys
 from unittest.mock import (
     MagicMock,
     Mock,
@@ -14,12 +14,7 @@ from src.lib.common_utils.ibr_dataframe_helper import tabulate_dataframe
 from src.lib.common_utils.ibr_decorator_config import initialize_config
 from src.lib.common_utils.ibr_enums import LogLevel
 from src.lib.common_utils.ibr_logger_helper import format_dict
-
-#from src.lib.validator_utils.ibr_decision_table_validator import DT
-#from src.model.facade.base_facade import DataFrameEditor
 from src.model.factory.condition_evaluator import ConditionEvaluator
-
-#from src.model.factory.editor_factory import EditorFactory
 
 config = initialize_config(sys.modules[__name__])
 log_msg = config.log_message
@@ -160,9 +155,9 @@ class TestConditionEvaluatorInit:
         assert mangled_methods[0] == '_MockDT__private_method'
 
         # メソッドの動作検証 オプション
-        assert evaluator.dt_functions['method1'](5) == 5                   # noqa:PLR2004
-        assert evaluator.dt_functions['method2'](10) == 10                 # noqa:PLR2004
-        assert evaluator.dt_functions['_MockDT__private_method'](15) == 15 # noqa:PLR2004
+        assert evaluator.dt_functions['method1'](5) == 5
+        assert evaluator.dt_functions['method2'](10) == 10
+        assert evaluator.dt_functions['_MockDT__private_method'](15) == 15
 
     def test_init_BVT_no_methods(self):
         test_doc = """
@@ -220,7 +215,7 @@ class TestConditionEvaluatorInit:
         with patch('src.model.factory.condition_evaluator.DT', ManyMethodsDT):
             evaluator = ConditionEvaluator()
             log_msg(f"dt_functions content: {format_dict(evaluator.dt_functions)}", LogLevel.INFO)
-            assert len(evaluator.dt_functions) == 100 # noqa:PLR2004
+            assert len(evaluator.dt_functions) == 100
             for i in range(100):
                 assert f'method_{i}' in evaluator.dt_functions
                 assert callable(evaluator.dt_functions[f'method_{i}'])
@@ -1030,7 +1025,7 @@ class TestConditionEvaluatorIsRegex:
     すべての境界値検証ケースが実装されています。これらのテストにより、is_regex関数の動作が様々な条件下で正しく機能することを確認しています。
     """
 
-    @pytest.fixture
+    @pytest.fixture()
     def evaluator(self):
         return ConditionEvaluator()
 
@@ -1209,7 +1204,7 @@ class TestConditionEvaluatorCheckRegex:
     すべての境界値検証ケースが実装されています。これらのテストにより、_check_regex関数の動作が様々な条件下で正しく機能することを確認しています。
     """
 
-    @pytest.fixture
+    @pytest.fixture()
     def evaluator(self):
         return ConditionEvaluator()
 
@@ -1477,7 +1472,7 @@ class TestConditionEvaluatorCheckDtFunction:
         """
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
-        evaluator.dt_functions = {"is_long": lambda x: len(x) > 100}      # noqa:PLR2004
+        evaluator.dt_functions = {"is_long": lambda x: len(x) > 100}
         assert evaluator._check_dt_function("a" * 101, "is_long")
         assert not evaluator._check_dt_function("short", "is_long")
 
@@ -1567,7 +1562,7 @@ class TestConditionEvaluatorCheckOrCondition:
     正規表現を含むOR条件の処理が新たに追加され、テストされています。
     """
 
-    @pytest.fixture
+    @pytest.fixture()
     def evaluator(self):
         return ConditionEvaluator()
 
@@ -1658,7 +1653,7 @@ class TestConditionEvaluatorCheckOrCondition:
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
         evaluator.dt_functions = {"is_numeric": lambda x: str(x).isdigit()}
-    
+
         def is_regex_side_effect(condition):
             if condition in ["is_numeric", "abc", "123"]:
                 return False

@@ -1,9 +1,16 @@
 """WindowsEventlog出力ライブラリ"""
-import traceback
-from pathlib import Path
 import sys
+import traceback
 
+# config共有
+from src.lib.common_utils.ibr_decorator_config import (
+    initialize_config,
+)
+from src.lib.common_utils.ibr_enums import LogLevel
+
+# 実行環境によりimport切替
 if sys.platform == 'win32':
+    # Windowsライブラリインポート
     import pywintypes
     import win32con
     import win32evtlogutil
@@ -14,11 +21,11 @@ else:
         EVENTLOG_WARNING_TYPE = 0x0002
         EVENTLOG_ERROR_TYPE = 0x0003
 
-        # ダミーの例外クラスを定義
+        ## ダミーの例外クラスを定義
         class error(Exception):
             pass
 
-        # ダミーの関数を定義
+        ## ダミーの関数を定義
         @staticmethod
         def ReportEvent(*args, **kwargs):
             pass
@@ -27,19 +34,14 @@ else:
     win32con = DummyModule()
     win32evtlogutil = DummyModule()
 
-from src.lib.common_utils.ibr_enums import LogLevel
-from src.lib.common_utils.ibr_logger_package import LoggerPackage
-
-################################
-# logger
-################################
-logger = LoggerPackage(__package__)
-log_msg = logger.log_message
-
+config = initialize_config(sys.modules[__name__])
+log_msg = config.log_message
 
 ################################
 # class
 ################################
+class WindowsEventLoggerError(Exception):
+    """WindowsEventLoggerパッケージ例外定義"""
 class WindowsEventLogger:
     """WindowsEventlogへの出力を担当するクラス"""
 
@@ -92,7 +94,7 @@ class WindowsEventLogger:
         except Exception as e:
             tb = traceback.TracebackException.from_exception(e)
             log_msg(''.join(tb.format()), LogLevel.ERROR)
-            raise
+            raise WindowsEventLoggerError from e
 
 
     @classmethod
@@ -139,7 +141,7 @@ class WindowsEventLogger:
         except Exception as e:
             tb = traceback.TracebackException.from_exception(e)
             log_msg(''.join(tb.format()), LogLevel.ERROR)
-            raise
+            raise WindowsEventLoggerError from e
 
     @staticmethod
     def _write_eventlog(src: str, evt_id: int, evt_type: int, strings: list, data: str) -> None:
@@ -198,6 +200,4 @@ class WindowsEventLogger:
         except Exception as e:
             tb = traceback.TracebackException.from_exception(e)
             log_msg (''.join(tb.format()), LogLevel.ERROR)
-            raise
-
-
+            raise WindowsEventLoggerError from e

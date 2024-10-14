@@ -1,23 +1,18 @@
-import pytest
+import sys
+
 import pandas as pd
-from src.model.processor_chain.processor_interface import Processor
+import pytest
+
+from src.lib.common_utils.ibr_decorator_config import initialize_config
+from src.lib.common_utils.ibr_enums import LogLevel
 from src.model.processor_chain.processor_interface import (
-    ProcessorChain,
-    PreProcessor,
     PostProcessor,
+    PreProcessor,
+    Processor,
+    ProcessorChain,
+    Validator,
 )
 
-
-from typing import Any
-from src.model.processor_chain.processor_interface import Validator
-
-####################################
-# テストサポートモジュールimport
-####################################
-# config共有
-import sys
-from src.lib.common_utils.ibr_enums import LogLevel
-from src.lib.common_utils.ibr_decorator_config import initialize_config
 config = initialize_config(sys.modules[__name__])
 log_msg = config.log_message
 log_msg(str(config), LogLevel.DEBUG)
@@ -39,19 +34,19 @@ class TestProcessor:
     | process メソッドを呼び出す | Y       |
     | 出力                     | 例外発生 |
 
-    境界値検証ケース一覧：
+    境界値検証ケース一覧:
     | ケースID | 入力パラメータ | テスト値          | 期待される結果      | テストの目的/検証ポイント           | 実装状況 | 対応するテストケース              |
     |----------|----------------|-------------------|---------------------|-------------------------------------|----------|-----------------------------------|
     | BVT_001  | df             | 空のDataFrame     | NotImplementedError | 空のDataFrameでの動作確認           | 実装済み | test_process_BVT_various_inputs   |
     | BVT_002  | df             | 1行のDataFrame    | NotImplementedError | 最小のDataFrameでの動作確認         | 実装済み | test_process_BVT_various_inputs   |
     | BVT_003  | df             | 大規模なDataFrame | NotImplementedError | 大規模なDataFrameでの動作確認       | 実装済み | test_process_BVT_various_inputs   |
 
-    境界値検証ケースの実装状況サマリー：
+    境界値検証ケースの実装状況サマリー:
     - 実装済み: 4
     - 未実装: 0
     - 一部実装: 0
 
-    注記：
+    注記:
     - すべての境界値検証ケースが実装されています。
     - BVT_004は、型チェックが行われることを前提としています。実際の実装によっては、この動作が異なる可能性があります。
     """
@@ -72,7 +67,7 @@ class TestProcessor:
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
         assert hasattr(self.processor, 'process')
-        assert callable(getattr(self.processor, 'process'))
+        assert callable(self.processor.process)
         log_msg("process メソッドが存在し、呼び出し可能です", LogLevel.DEBUG)
 
     def test_process_C1_not_implemented(self):
@@ -83,9 +78,9 @@ class TestProcessor:
         """
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
-        df = pd.DataFrame()
+        _df = pd.DataFrame()
         with pytest.raises(NotImplementedError):
-            self.processor.process(df)
+            self.processor.process(_df)
         log_msg("NotImplementedErrorが正しく発生しました", LogLevel.DEBUG)
 
     def test_process_C2_with_config_decorator(self):
@@ -155,7 +150,7 @@ class TestValidator:
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
         assert hasattr(self.validator, 'validate')
-        assert callable(getattr(self.validator, 'validate'))
+        assert callable(self.validator.validate)
         log_msg("validate メソッドが存在し、呼び出し可能です", LogLevel.DEBUG)
 
     def test_validate_C1_no_exception(self):
@@ -203,17 +198,17 @@ class TestProcessorChainInit:
     | インスタンスを生成する        | Y       |
     | 出力                          | 空リスト |
 
-    境界値検証ケース一覧：
+    境界値検証ケース一覧:
     | ケースID | 入力パラメータ | テスト値 | 期待される結果 | テストの目的/検証ポイント      | 実装状況 | 対応するテストケース              |
     |----------|----------------|----------|----------------|--------------------------------|----------|-----------------------------------|
     | BVT_001  | N/A            | N/A      | 空リスト       | インスタンス生成時の初期状態確認 | 実装済み | test_init_C0_empty_lists          |
 
-    境界値検証ケースの実装状況サマリー：
+    境界値検証ケースの実装状況サマリー:
     - 実装済み: 1
     - 未実装: 0
     - 一部実装: 0
 
-    注記：
+    注記:
     - __init__メソッドは引数を取らないため、境界値テストのケースは限定的です。
     - 主に、初期化後の状態が期待通りであることを確認するテストとなっています。
     """
@@ -309,19 +304,19 @@ class TestProcessorChainAddPreProcessor:
     | 複数のプリプロセッサを追加            | N       | Y       | -       |
     | 出力                                  | 追加成功 | 追加成功 | 追加成功 |
 
-    境界値検証ケース一覧：
+    境界値検証ケース一覧:
     | ケースID | 入力パラメータ     | テスト値                     | 期待される結果            | テストの目的/検証ポイント                  | 実装状況 | 対応するテストケース                    |
     |----------|--------------------|------------------------------|---------------------------|-------------------------------------------|----------|-----------------------------------------|
     | BVT_001  | processor          | PreProcessor()               | リストに1つ追加           | 単一のプリプロセッサ追加の確認             | 実装済み | test_add_pre_processor_C0_single_add    |
     | BVT_002  | processor (複数回) | [PreProcessor() for _ in range(1000)] | リストに1000個追加 | 大量のプリプロセッサ追加時の動作確認       | 実装済み | test_add_pre_processor_BVT_many_processors |
     | BVT_003  | processor (重複)   | 同じPreProcessorインスタンス | リストに重複して追加      | 同一プリプロセッサの重複追加の動作確認     | 実装済み | test_add_pre_processor_BVT_duplicate_add |
 
-    境界値検証ケースの実装状況サマリー：
+    境界値検証ケースの実装状況サマリー:
     - 実装済み: 3
     - 未実装: 0
     - 一部実装: 0
 
-    注記：
+    注記:
     - 本件はInterfaceの責務検証であり,委譲先が担当する責務はこのテストでは実施していません
     - すべての境界値検証ケースが実装されています。
     - BVT_002の1000という数値は例示的なものであり、実際のシステム要件に応じて適切な値に調整する必要があります。
@@ -371,7 +366,7 @@ class TestProcessorChainAddPreProcessor:
         - PreProcesssor/PostProcessor型チェックは実装側の責務とする
         """
         log_msg(f"\n{test_doc}", LogLevel.INFO)
-    
+
         non_processor = "not a processor"
         self.processor_chain.add_pre_processor(non_processor)
         assert self.processor_chain.pre_processors[-1] == non_processor
@@ -428,19 +423,19 @@ class TestProcessorChainAddPostProcessor:
     | 複数のポストプロセッサを追加           | N       | Y       | -       |
     | 出力                                   | 追加成功 | 追加成功 | 追加成功 |
 
-    境界値検証ケース一覧：
+    境界値検証ケース一覧:
     | ケースID | 入力パラメータ     | テスト値                     | 期待される結果            | テストの目的/検証ポイント                  | 実装状況 | 対応するテストケース                    |
     |----------|--------------------|------------------------------|---------------------------|-------------------------------------------|----------|-----------------------------------------|
     | BVT_001  | processor          | PostProcessor()              | リストに1つ追加           | 単一のポストプロセッサ追加の確認           | 実装済み | test_add_post_processor_C0_single_add   |
     | BVT_002  | processor (複数回) | [PostProcessor() for _ in range(1000)] | リストに1000個追加 | 大量のポストプロセッサ追加時の動作確認     | 実装済み | test_add_post_processor_BVT_many_processors |
     | BVT_003  | processor (重複)   | 同じPostProcessorインスタンス | リストに重複して追加      | 同一ポストプロセッサの重複追加の動作確認   | 実装済み | test_add_post_processor_BVT_duplicate_add |
 
-    境界値検証ケースの実装状況サマリー：
+    境界値検証ケースの実装状況サマリー:
     - 実装済み: 3
     - 未実装: 0
     - 一部実装: 0
 
-    注記：
+    注記:
     - すべての境界値検証ケースが実装されています。
     - BVT_002の1000という数値は例示的なものであり、実際のシステム要件に応じて適切な値に調整する必要があります。
     """

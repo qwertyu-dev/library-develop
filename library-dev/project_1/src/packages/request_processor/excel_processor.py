@@ -22,8 +22,13 @@ class ExcelProcessor:
     """Excelファイルの処理とバリデーションを行うクラス"""
 
     def __init__(self, file_configuration_factory: FileConfigurationFactory, config: dict|None = None):
+        # DI
         self.config = config or self.config
+        
+        # カスタムロガー設定
         self.log_msg = self.config.log_message
+
+        # Excel情報取得
         self.excel_file_pattern = file_configuration_factory.create_file_pattern()
         if not self.excel_file_pattern:
             err_msg = "Invalid file pattern: None"
@@ -37,7 +42,6 @@ class ExcelProcessor:
         self.log_msg(f"excel sheet_skiprows: {self.excel_sheet_skiprows}", LogLevel.DEBUG)
         self.log_msg(f"excel sheet_usecols: {self.excel_sheet_usecols}", LogLevel.DEBUG)
 
-    #def load(self) -> tuple[pd.DataFrame, list[str]]:
     def load(self) -> pd.DataFrame:
         dataframes = []
         common_columns = None
@@ -47,15 +51,16 @@ class ExcelProcessor:
             try:
                 _df = self._load_single_file(file_path)
                 df, common_columns = self._validate_and_align_columns(_df, file_path, common_columns)
-                #df_str = df.astype(str).replace('nan', '') # 全ての属性を文字列属性に変換i
-                #dataframes.append(df_str)
                 dataframes.append(df)
             except Exception as e:
+                err_msg = f'カラム構造が一致しないExcelBookがあります: {file_path}::{self.excel_sheet_name}'
+                self.log_msg(err_msg, LogLevel.ERROR)
                 raise ExcelProcessorError from e
 
         return self._combine_dataframes(dataframes)
 
     def _load_single_file(self, file_path: Path) -> pd.DataFrame:
+        """単一ExcelSheetをDataFrameへロード"""
         excel_loader = ExcelDataLoader(file_path)
         return excel_loader.read_excel_one_sheet(
             sheet_name=self.excel_sheet_name,
@@ -64,6 +69,7 @@ class ExcelProcessor:
             )
 
     def _validate_and_align_columns(self, df: pd.DataFrame, file_path: Path, common_columns: list[str] | None) -> tuple[pd.DataFrame, list[str]]:
+        """読み込み対象ExcelSheetが全て同一フォーマットであるチェク"""
         common_columns = common_columns or list(df.columns)
         self.log_msg(f'common_columns: {common_columns}', LogLevel.INFO)
         self.log_msg(f'df.columns; {df.columns}', LogLevel.INFO)
@@ -74,6 +80,7 @@ class ExcelProcessor:
         return df[common_columns], common_columns
 
     def _combine_dataframes(self, dataframes: list[pd.DataFrame]) -> pd.DataFrame:
+        # 複数の対象データを蓄積
         if not dataframes:
             return pd.DataFrame()
         combined_df = pd.concat(dataframes, ignore_index=True)
@@ -81,6 +88,7 @@ class ExcelProcessor:
         return combined_df
 
     def _log_dataframe_info(self, df: pd.DataFrame) -> None:
+        # 取得情報ログ出力
         info_type = tabulate_dataframe(df.dtypes.reset_index(), headers=['Columns', 'Type'])
         info_df = tabulate_dataframe(df)
         self.log_msg(f"DataFrame info_type:\n{info_type}", LogLevel.DEBUG)

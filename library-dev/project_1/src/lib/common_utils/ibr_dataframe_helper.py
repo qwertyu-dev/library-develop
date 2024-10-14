@@ -1,17 +1,19 @@
 """DataFrame操作サポートライブラリ"""
 
+import sys
 import traceback
 
 import pandas as pd
-from src.lib.common_utils.ibr_enums import LogLevel
-from src.lib.common_utils.ibr_logger_package import LoggerPackage
 from tabulate import tabulate
 
-################################
-# logger
-################################
-logger = LoggerPackage(__package__)
-log_msg = logger.log_message
+# config共有
+from src.lib.common_utils.ibr_decorator_config import (
+    initialize_config,
+)
+from src.lib.common_utils.ibr_enums import LogLevel
+
+config = initialize_config(sys.modules[__name__])
+log_msg = config.log_message
 
 ################################
 # 関数定義
@@ -19,7 +21,6 @@ log_msg = logger.log_message
 def _tabulate_wrapper(df, headers, tablefmt) -> str:
     """tabulate出力ヘルパー関数"""
     return tabulate(df, headers=headers, tablefmt=tablefmt)
-
 
 def tabulate_dataframe(df: pd.DataFrame, headers: list|None=None, tablefmt:str|None=None) -> str:
     """DataFrame出力サポート

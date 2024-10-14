@@ -1,19 +1,21 @@
-import pytest
-
-from src.model.processor_chain.processor_interface import PreProcessor, PostProcessor
-from src.packages.request_processor.processor_factory import ProcessorFactory
-from src.packages.request_processor.processor_factory import JinjiProcessorFactory
-from src.packages.request_processor.jinji_processor import JinjiPreProcessor, JinjiPostProcessor
-from src.packages.request_processor.processor_factory import KokukiProcessorFactory
-from src.packages.request_processor.kokuki_processor import KokukiPreProcessor, KokukiPostProcessor
-from src.packages.request_processor.processor_factory import KanrenProcessorFactory
-from src.packages.request_processor.kanren_processor import KanrenPreProcessor, KanrenPostProcessor
-
-
 # config共有
 import sys
-from src.lib.common_utils.ibr_enums import LogLevel
+
+import pytest
+
 from src.lib.common_utils.ibr_decorator_config import initialize_config
+from src.lib.common_utils.ibr_enums import LogLevel
+from src.model.processor_chain.processor_interface import PostProcessor, PreProcessor
+from src.packages.request_processor.jinji_processor import JinjiPostProcessor, JinjiPreProcessor
+from src.packages.request_processor.kanren_processor import KanrenPostProcessor, KanrenPreProcessor
+from src.packages.request_processor.kokuki_processor import KokukiPostProcessor, KokukiPreProcessor
+from src.packages.request_processor.processor_factory import (
+    JinjiProcessorFactory,
+    KanrenProcessorFactory,
+    KokukiProcessorFactory,
+    ProcessorFactory,
+)
+
 config = initialize_config(sys.modules[__name__])
 log_msg = config.log_message
 log_msg(str(config), LogLevel.DEBUG)
@@ -29,7 +31,7 @@ class TestProcessorFactory:
     # C1のディシジョンテーブル
     C1テストは適用されないため、ディシジョンテーブルはありません。
 
-    境界値検証ケース一覧：
+    境界値検証ケース一覧:g
     このクラスには境界値テストを適用する数値パラメータや範囲を持つ入力がないため、
     境界値検証ケースはありません。
     """
@@ -40,7 +42,7 @@ class TestProcessorFactory:
     def teardown_method(self):
         log_msg(f"test end\n{'-'*80}\n", LogLevel.INFO)
 
-    @pytest.fixture
+    @pytest.fixture()
     def processor_factory(self):
         return ProcessorFactory()
 
@@ -79,7 +81,7 @@ class TestJinjiProcessorFactory:
     # C1のディシジョンテーブル
     C1テストは適用されないため、ディシジョンテーブルはありません。
 
-    境界値検証ケース一覧：
+    境界値検証ケース一覧:g
     このクラスには境界値テストを適用する数値パラメータや範囲を持つ入力がないため、
     境界値検証ケースはありません。
     """
@@ -90,7 +92,7 @@ class TestJinjiProcessorFactory:
     def teardown_method(self):
         log_msg(f"test end\n{'-'*80}\n", LogLevel.INFO)
 
-    @pytest.fixture
+    @pytest.fixture()
     def jinji_processor_factory(self):
         return JinjiProcessorFactory()
 
@@ -105,7 +107,7 @@ class TestJinjiProcessorFactory:
 
         result = jinji_processor_factory.create_pre_processor()
         assert isinstance(result, JinjiPreProcessor), f"Expected JinjiPreProcessor, got {type(result)}"
-        assert isinstance(result, PreProcessor), f"JinjiPreProcessor does not inherit from PreProcessor"
+        assert isinstance(result, PreProcessor), "JinjiPreProcessor does not inherit from PreProcessor"
         assert hasattr(result, 'chain_pre_process'), "JinjiPreProcessor does not have 'chain_pre_process' method"
         assert isinstance(result.chain_pre_process(), list), "chain_pre_process method should return a list"
 
@@ -120,7 +122,7 @@ class TestJinjiProcessorFactory:
 
         result = jinji_processor_factory.create_post_processor()
         assert isinstance(result, JinjiPostProcessor), f"Expected JinjiPostProcessor, got {type(result)}"
-        assert isinstance(result, PostProcessor), f"JinjiPostProcessor does not inherit from PostProcessor"
+        assert isinstance(result, PostProcessor), "JinjiPostProcessor does not inherit from PostProcessor"
         assert hasattr(result, 'chain_post_process'), "JinjiPostProcessor does not have 'chain_post_process' method"
         assert isinstance(result.chain_post_process(), list), "chain_post_process method should return a list"
 
@@ -135,7 +137,7 @@ class TestKokukiProcessorFactory:
     # C1のディシジョンテーブル
     C1テストは適用されないため、ディシジョンテーブルはありません。
 
-    境界値検証ケース一覧：
+    境界値検証ケース一覧:g
     このクラスには境界値テストを適用する数値パラメータや範囲を持つ入力がないため、
     境界値検証ケースはありません。
     """
@@ -146,7 +148,7 @@ class TestKokukiProcessorFactory:
     def teardown_method(self):
         log_msg(f"test end\n{'-'*80}\n", LogLevel.INFO)
 
-    @pytest.fixture
+    @pytest.fixture()
     def kokuki_processor_factory(self):
         return KokukiProcessorFactory()
 
@@ -161,7 +163,7 @@ class TestKokukiProcessorFactory:
 
         result = kokuki_processor_factory.create_pre_processor()
         assert isinstance(result, KokukiPreProcessor), f"Expected KokukiPreProcessor, got {type(result)}"
-        assert isinstance(result, PreProcessor), f"KokukiPreProcessor does not inherit from PreProcessor"
+        assert isinstance(result, PreProcessor), "KokukiPreProcessor does not inherit from PreProcessor"
         assert hasattr(result, 'chain_pre_process'), "KokukiPreProcessor does not have 'chain_pre_process' method"
         assert isinstance(result.chain_pre_process(), list), "chain_pre_process method should return a list"
 
@@ -176,7 +178,7 @@ class TestKokukiProcessorFactory:
 
         result = kokuki_processor_factory.create_post_processor()
         assert isinstance(result, KokukiPostProcessor), f"Expected KokukiPostProcessor, got {type(result)}"
-        assert isinstance(result, PostProcessor), f"KokukiPostProcessor does not inherit from PostProcessor"
+        assert isinstance(result, PostProcessor), "KokukiPostProcessor does not inherit from PostProcessor"
         assert hasattr(result, 'chain_post_process'), "KokukiPostProcessor does not have 'chain_post_process' method"
         assert isinstance(result.chain_post_process(), list), "chain_post_process method should return a list"
 
@@ -191,7 +193,7 @@ class TestKanrenProcessorFactory:
     # C1のディシジョンテーブル
     C1テストは適用されないため、ディシジョンテーブルはありません。
 
-    境界値検証ケース一覧：
+    境界値検証ケース一覧:g
     このクラスには境界値テストを適用する数値パラメータや範囲を持つ入力がないため、
     境界値検証ケースはありません。
     """
@@ -202,7 +204,7 @@ class TestKanrenProcessorFactory:
     def teardown_method(self):
         log_msg(f"test end\n{'-'*80}\n", LogLevel.INFO)
 
-    @pytest.fixture
+    @pytest.fixture()
     def kanren_processor_factory(self):
         return KanrenProcessorFactory()
 
@@ -217,7 +219,7 @@ class TestKanrenProcessorFactory:
 
         result = kanren_processor_factory.create_pre_processor()
         assert isinstance(result, KanrenPreProcessor), f"Expected KanrenPreProcessor, got {type(result)}"
-        assert isinstance(result, PreProcessor), f"KanrenPreProcessor does not inherit from PreProcessor"
+        assert isinstance(result, PreProcessor), "KanrenPreProcessor does not inherit from PreProcessor"
         assert hasattr(result, 'chain_pre_process'), "KanrenPreProcessor does not have 'chain_pre_process' method"
         assert isinstance(result.chain_pre_process(), list), "chain_pre_process method should return a list"
 
@@ -232,6 +234,6 @@ class TestKanrenProcessorFactory:
 
         result = kanren_processor_factory.create_post_processor()
         assert isinstance(result, KanrenPostProcessor), f"Expected KanrenPostProcessor, got {type(result)}"
-        assert isinstance(result, PostProcessor), f"KanrenPostProcessor does not inherit from PostProcessor"
+        assert isinstance(result, PostProcessor), "KanrenPostProcessor does not inherit from PostProcessor"
         assert hasattr(result, 'chain_post_process'), "KanrenPostProcessor does not have 'chain_post_process' method"
         assert isinstance(result.chain_post_process(), list), "chain_post_process method should return a list"

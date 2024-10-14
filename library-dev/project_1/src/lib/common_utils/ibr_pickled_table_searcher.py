@@ -129,7 +129,6 @@ class TableSearcher:
         config: configのDI
         """
         # configのDI
-        #self.config = config or Config.load(__file__)
         self.config = config or self.config
         self.env = self.config.env
         self.common_config = self.config.common_config
@@ -170,7 +169,7 @@ class TableSearcher:
             raise FileNotFoundError(err_msg) from None
         except Exception as e:
             err_msg = f"{ErrorMessages.FILE_UPDATE_TIME_ERROR}"
-            raise Exception(err_msg) from e
+            raise PickledTableSearchError(err_msg) from e
 
     def _should_update_cache(self) -> bool:
         """キャッシュを更新すべきかどうかを判定する"""
@@ -195,7 +194,7 @@ class TableSearcher:
             raise FileNotFoundError(err_msg) from e
         except Exception as e:
             err_msg = f"{ErrorMessages.TABLE_LOAD_ERROR}"
-            raise Exception(err_msg) from e
+            raise PickledTableSearchError(err_msg) from e
 
     def simple_search(self, conditions: ConditionDict | ConditionList, operator: str = 'AND') -> pd.DataFrame:
         """シンプルな条件での検索を行う

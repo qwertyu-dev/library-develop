@@ -349,7 +349,7 @@ class TestEditorFactoryLoadFacade:
     ├── C1: 分岐カバレッジ
     │   ├── モジュールのインポートに成功する場合
     │   ├── モジュールのインポートに失敗する場合
-    │   └── 属性（クラス）が存在しない場合
+    │   └── 属性(クラス)が存在しない場合
     ├── C2: 条件組み合わせ
     │   ├── 異なるimport_facadeとfacade_nameの組み合わせ
     │   ├── 存在しないモジュールのテスト
@@ -365,10 +365,10 @@ class TestEditorFactoryLoadFacade:
     | 条件                      | DT1 | DT2 | DT3 |
     |---------------------------|-----|-----|-----|
     | モジュールが存在する      | Y   | N   | Y   |
-    | 属性（クラス）が存在する  | Y   | -   | N   |
+    | 属性(クラス)が存在する    | Y   | -   | N   |
     | 結果                      | OK  | Err | Err |
 
-    境界値検証ケース一覧：
+    境界値検証ケース一覧:
     | ケースID | 入力パラメータ | テスト値                      | 期待される結果 | テストの目的/検証ポイント                 | 実装状況 | 対応するテストケース                    |
     |----------|----------------|-------------------------------|----------------|------------------------------------------|----------|----------------------------------------|
     | BVT_001  | import_facade  | 最大長の文字列                | ImportError    | 長い import_facade の処理を確認          | 実装済み | test_load_facade_BVT_edge_cases         |
@@ -429,7 +429,7 @@ class TestEditorFactoryLoadFacade:
         assert "Failed to import Facade" in str(exc_info.value)
         log_msg("DT2: ImportError raised for non-existent module", LogLevel.DEBUG)
 
-        # DT3: 属性（クラス）が存在しない
+        # DT3: 属性(クラス)が存在しない
         with pytest.raises(AttributeError) as exc_info:
             editor_factory._load_facade("tests.model.factory.dummy_editor_facade", "NonExistentClass")
         assert "Failed to import Facade" in str(exc_info.value)

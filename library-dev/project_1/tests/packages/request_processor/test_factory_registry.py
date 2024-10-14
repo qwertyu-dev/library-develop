@@ -1,11 +1,13 @@
-import pytest
-from unittest.mock import MagicMock, patch
-from src.packages.request_processor.factory_registry import FactoryRegistry, FactoryRegistryError
-from src.lib.common_utils.ibr_enums import LogLevel
-
 # config共有
 import sys
+from unittest.mock import MagicMock, patch
+
+import pytest
+
 from src.lib.common_utils.ibr_decorator_config import initialize_config
+from src.lib.common_utils.ibr_enums import LogLevel
+from src.packages.request_processor.factory_registry import FactoryRegistry, FactoryRegistryError
+
 config = initialize_config(sys.modules[__name__])
 log_msg = config.log_message
 
@@ -36,7 +38,7 @@ class TestFactoryRegistry__init__:
     | file_configuration_factoryロード成功| Y     | Y     | Y     | N     |
     | 結果                     | 成功   | 成功   | 一部失敗| 全て失敗 |
 
-    境界値検証ケース一覧：
+    境界値検証ケース一覧:
     | ケースID | 入力パラメータ | テスト値                   | 期待される結果 | テストの目的/検証ポイント       | 実装状況 | 対応するテストケース     |
     |----------|----------------|----------------------------|----------------|----------------------------------|----------|--------------------------|
     | BVT_001  | config         | None                       | 成功           | Noneの場合のデフォルト動作確認   | 実装済み | test_init_C1_DT_01_config_none |
@@ -174,7 +176,7 @@ class TestFactoryRegistry_load_factories:
     | AttributeError発生   | N     | Y     | N     | N     |
     | 結果                 | 成功   | 失敗   | 失敗   | 成功   |
 
-    境界値検証ケース一覧：
+    境界値検証ケース一覧:
     | ケースID | 入力パラメータ | テスト値                   | 期待される結果 | テストの目的/検証ポイント     | 実装状況 | 対応するテストケース     |
     |----------|----------------|----------------------------|----------------|------------------------------|----------|--------------------------|
     | BVT_001  | factory_type   | 空の辞書                   | 空の辞書       | 空のファクトリー定義の処理   | 実装済み | test_load_factories_BVT_empty_definition |
@@ -334,7 +336,7 @@ class TestFactoryRegistry_get_processor_factory:
     | キーが存在する     | Y     | N     |
     | 結果               | 成功   | None  |
 
-    境界値検証ケース一覧：
+    境界値検証ケース一覧:
     | ケースID | 入力パラメータ | テスト値                   | 期待される結果 | テストの目的/検証ポイント     | 実装状況 | 対応するテストケース     |
     |----------|----------------|----------------------------|----------------|------------------------------|----------|--------------------------|
     | BVT_001  | key            | ""                         | None           | 空文字列キーの処理           | 実装済み | test_get_processor_factory_BVT_empty_key |
@@ -447,7 +449,7 @@ class TestFactoryRegistry_get_model_factory:
     | キーが存在する     | Y     | N     |
     | 結果               | 成功   | None  |
 
-    境界値検証ケース一覧：
+    境界値検証ケース一覧:
     | ケースID | 入力パラメータ | テスト値                   | 期待される結果 | テストの目的/検証ポイント     | 実装状況 | 対応するテストケース     |
     |----------|----------------|----------------------------|----------------|------------------------------|----------|--------------------------|
     | BVT_001  | key            | ""                         | None           | 空文字列キーの処理           | 実装済み | test_get_model_factory_BVT_empty_key |
@@ -573,7 +575,7 @@ class TestFactoryRegistry_get_file_configuration_factory:
     | キーが存在する     | Y     | N     |
     | 結果               | 成功   | None  |
 
-    境界値検証ケース一覧：
+    境界値検証ケース一覧:
     | ケースID | 入力パラメータ | テスト値                   | 期待される結果 | テストの目的/検証ポイント     | 実装状況 | 対応するテストケース     |
     |----------|----------------|----------------------------|----------------|------------------------------|----------|--------------------------|
     | BVT_001  | key            | ""                         | None           | 空文字列キーの処理           | 実装済み | test_get_file_configuration_factory_BVT_empty_key |
@@ -586,22 +588,22 @@ class TestFactoryRegistry_get_file_configuration_factory:
         self.mock_config.package_config = {
             'model_factory': {
                 'key1': 'module1.class1',
-                'key2': 'module2.class2'
+                'key2': 'module2.class2',
             },
             'processor_factory': {
                 'key3': 'module3.class3',
-                'key4': 'module4.class4'
+                'key4': 'module4.class4',
             },
             'file_configuration_factory': {
                 'key5': 'module5.class5',
-                'key6': 'module6.class6'
-            }
+                'key6': 'module6.class6',
+            },
         }
         with patch.object(FactoryRegistry, '_load_factories') as mock_load_factories:
             mock_load_factories.side_effect = lambda factory_type: {
                 'model_factory': {'key1': MagicMock(), 'key2': MagicMock()},
                 'processor_factory': {'key3': MagicMock(), 'key4': MagicMock()},
-                'file_configuration_factory': {'key5': MagicMock(), 'key6': MagicMock()}
+                'file_configuration_factory': {'key5': MagicMock(), 'key6': MagicMock()},
             }[factory_type]
             self.registry = FactoryRegistry(self.mock_config)
 

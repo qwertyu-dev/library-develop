@@ -74,6 +74,8 @@ ignore = [
     "TRY002",  # exceptionに対して独自のエラーClass作成は必須でない 
     "S301",    # pickleのloadは許容
     "ERA001",  # コメントにコードと思われるものは許容 
+    "ANN002",  # argsに型定義宣言不要
+    "ANN003",  # kwargsに型宣言定義不要
 
 #    "B008", # do not perform function calls in argument defaults
 #    "C901", # too complex

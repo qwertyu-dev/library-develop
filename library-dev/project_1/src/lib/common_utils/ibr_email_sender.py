@@ -1,19 +1,19 @@
 """email送信サポートライブラリ"""
 import smtplib
+import sys
 import traceback
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
+from src.lib.common_utils.ibr_decorator_config import (
+    initialize_config,
+)
 from src.lib.common_utils.ibr_enums import (
     LogLevel,
 )
-from src.lib.common_utils.ibr_logger_package import LoggerPackage
 
-################################
-# logger
-################################
-logger = LoggerPackage(__package__)
-log_msg = logger.log_message
+config = initialize_config(sys.modules[__name__])
+log_msg = config.log_message
 
 ################################
 # class定義
@@ -67,8 +67,8 @@ class SmtpConnection:
             raise
 
         # デバッグ設定
-        #if self._connection:
-        #    self._connection.debuglevel(1)
+        if self._connection:
+            log_msg(f'connection debug level: {self._connection.debuglevel(1)}', LogLevel.DEBUG)
 
         # 環境によってtls及びAUTH提供されていない可能性あり
         self._connection.ehlo()
@@ -216,8 +216,8 @@ class EmailSender:
             ) as email_server:
 
             # デバッグ設定
-            #if email_server:
-            #    email_server.debuglevel(1)
+            if email_server:
+                log_msg(f'email debug level: {email_server.debuglevel(1)}', LogLevel.DEBUG)
 
             # mail送信
             try:

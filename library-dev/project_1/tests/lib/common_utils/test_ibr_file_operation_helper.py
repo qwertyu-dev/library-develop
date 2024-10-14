@@ -12,10 +12,19 @@ $ pytest -lv ./tests/lib/common_utils/test_ibr_csv_helper.py
 import platform
 import re
 import stat
+import sys
 from pathlib import Path
 from unittest.mock import MagicMock
 
 import pytest
+
+#####################################################################
+# テスト実行環境セットアップ
+#####################################################################
+# config共有
+from src.lib.common_utils.ibr_decorator_config import (
+    initialize_config,
+)
 from src.lib.common_utils.ibr_enums import LogLevel
 
 #####################################################################
@@ -30,16 +39,8 @@ from src.lib.common_utils.ibr_file_operation_helper import (
     rename_file,
 )
 
-#####################################################################
-# テスト実行環境セットアップ
-#####################################################################
-from src.lib.common_utils.ibr_get_config import Config
-
-package_path = Path(__file__)
-config = Config.load(package_path)
-
+config = initialize_config(sys.modules[__name__])
 log_msg = config.log_message
-log_msg(str(config), LogLevel.DEBUG)
 
 #####################################################################
 # データ作成
@@ -1261,7 +1262,7 @@ class Test_copy_file:
         log_msg(f'file_path.name : {file_path.name}', LogLevel.INFO)
         log_msg(f'original_filename : {original_filename}', LogLevel.INFO)
         log_msg(f'new_filename_path : {_new_file_path}', LogLevel.INFO)
-        log_msg(f'^{original_file_name}_(\d{{8}}_\d{{6}})\.{original_file_extension}$', LogLevel.INFO)
+        log_msg(rf'^{original_file_name}_(\d{{8}}_\d{{6}})\.{original_file_extension}$', LogLevel.INFO)   # \に対して row を指定してruff指摘回避
 
         # ログメッセージが期待通りのものか確認
         assert rc is True

@@ -11,7 +11,7 @@ from src.model.factory.column_edit_facade_controller import (
 )
 
 @with_config
-class PreparatonExecutor:
+class PatternExecutor:
     """アプリケーションのメインクラス"""
 
     def __init__(self):
@@ -22,9 +22,9 @@ class PreparatonExecutor:
         self.log_msg = self.config.log_message
 
         # decision table book path
-        self.decition_table_path = Path(
-            f"{self.common_config.get('decision_table_path', []).get('DECISION_TABLE_APTH', '')}/"
-            f"{self.package_config.get('decision_table_file', []).get('DECISION_TABLE_PTN_BOOK_NAME', '')}",
+        self.decision_table_path = Path(
+            f"{self.common_config.get('decision_table_path', []).get('DECISION_TABLE_PATH', '')}/"
+            f"{self.package_config.get('decision_table_file', []).get('DECISION_PTN_BOOK_NAME', '')}",
         )
 
         # decision table sheet name
@@ -35,9 +35,9 @@ class PreparatonExecutor:
         # Facade指定(受付orパターン編集をpackage_configで指定)
         self.pattern_import_facade = self.package_config.get('import_editor_facade', []).get('FACADE_IMPORT_PATH', '')
 
-        self.log_msg(f'decision table book path: {self.decition_table_path}', LogLevel.DEBUG)
-        self.log_msg(f'decision table sheet name : {self.decision_table_sheet_name}', LogLevel.DEBUG)
-        self.log_msg(f'pattern import facade : {self.pattern_import_facade}', LogLevel.DEBUG)
+        self.log_msg(f'decision table book path: {self.decision_table_path}', LogLevel.INFO)
+        self.log_msg(f'decision table sheet name : {self.decision_table_sheet_name}', LogLevel.INFO)
+        self.log_msg(f'pattern import facade : {self.pattern_import_facade}', LogLevel.INFO)
 
     def get_decision_table(self)-> pd.DataFrame:
         excel_data_loader = ExcelDataLoader(
@@ -48,6 +48,8 @@ class PreparatonExecutor:
             skiprows=1,
             usecols=[1, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
         )
+
+        # データ取り込みそのまま結果
         self.log_msg(f'decition_table: \n\n{tabulate_dataframe(_df)}')
 
         # column mapping
@@ -65,6 +67,8 @@ class PreparatonExecutor:
             'facade_name',
         ]
         _df.columns = decision_table_columns
+
+        # 日本語Column→python Columnマッピング
         self.log_msg(f'decition_table: \n\n{tabulate_dataframe(_df)}')
 
         # definition mapping
@@ -76,12 +80,12 @@ class PreparatonExecutor:
             column = column.replace('あり', 'is_not_empty')
             column = column.replace('あり、＝部店コード前方4桁', 'has_parent_code_and_matching_first_4_digits')
             column = column.replace('あり、≠部店コード前方4桁', 'has_parent_code_and_not_matching_first_4_digits')
-            column = column.replace('BPR・AD対象外', 'is_not_bpr_ad_target')
             column = column.replace('BPR・AD対象', 'is_bpr_ad_target')
-            column = column.replace('ADのみ対象', 'is_ad_only')
+            column = column.replace('BPR・AD対象外', 'is_not_bpr_ad_target')
+            column = column.replace('BPR・AD対象外,ADのみ対象', 'is_not_bpr_ad_target_and_is_ad_only_target')
             column = column.replace('^-$', 'any', regex=True)
             return column
-        
+
         # 変換指定列に対してtransform
         columns_to_transform = [
             'branch_code',
@@ -96,13 +100,18 @@ class PreparatonExecutor:
         ]
         for col in columns_to_transform:
             _df[col] = replace_values(_df[col])
-        
+
+        # 判定関数pythonへマッピング
+        self.log_msg(f'decition_table: \n\n{tabulate_dataframe(_df)}')
         return _df
 
     def start(self) -> None:
         """アプリケーションのメイン処理を実行する。"""
         try:
             self.log_msg("IBRDEV-I-0000001")  # 処理開始ログ
+
+            # 現物読み込み
+            _df = self.get_decision_table()
 
             # path生成
             # TODO(suzuki); 受付入力pickleファイルへのPathへ
@@ -147,4 +156,4 @@ class PreparatonExecutor:
             self.log_msg("IBRDEV-I-0000002")  # 処理終了ログ
 
 if __name__ == '__main__':
-    PreparatonExecutor().start()
+    PatternExecutor().start()
