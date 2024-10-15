@@ -419,7 +419,7 @@ class TestTableSearcherShouldUpdateCache:
 
     #@pytest.fixture
     #def mock_searcher(self):
-    #    searcher = MagicMock(spec=TableSearcher)
+    #    searcher = MagicMock(=TableSearcher)
     #    searcher.last_modified_time = 1000.0
     #    searcher.get_file_modified_time = MagicMock()
     #    return searcher
@@ -618,7 +618,7 @@ class TestTableSearcherDefaultLoadTable:
 
     @pytest.fixture()
     def mock_searcher(self):
-        #searcher = MagicMock(spec=TableSearcher)
+        #searcher = MagicMock(=TableSearcher)
         searcher = MagicMock()
         searcher.file_path = MagicMock()
         searcher._should_update_cache = MagicMock()
@@ -876,7 +876,7 @@ class TestTableSearcherDefaultLoadTable:
 #
 #    @pytest.fixture
 #    def mock_searcher(self, sample_df):
-#        #searcher = MagicMock(spec=TableSearcher)
+#        #searcher = MagicMock(=TableSearcher)
 #        searcher = MagicMock()
 #        searcher.df = sample_df
 #        searcher._normalize_conditions.return_value = [{'column1': 'value1'}]

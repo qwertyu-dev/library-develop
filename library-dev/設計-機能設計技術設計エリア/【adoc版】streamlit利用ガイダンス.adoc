@@ -1,0 +1,252 @@
+= Streamlitを使用したマニュアル運用管理
+
+== 概要
+
+=== 目的
+本セクションでは、Streamlitフレームワークを利用したマニュアル運用管理システムの設計と実装について説明する。複数の業務プロセスを効率的に管理し、ユーザーフレンドリーなWebインターフェースを提供することを目的としている。
+
+=== Streamlitとは
+Streamlitは、データ分析や機械学習の結果を簡単にウェブアプリケーションとして公開できるツールである。
+
+==== よくある質問 (Q&A)
+
+Q: Streamlitは難しいプログラミングが必要ですか？ +
+A: いいえ、基本的なPythonの知識があれば、簡単なアプリケーションを作ることができます。
+
+Q: Streamlitで何ができますか？ +
+A: データの可視化、機械学習モデルのデモンストレーション、簡単なツールの作成などができます。
+
+Q: 通常のウェブサイトとの違いは何ですか？ +
+A: Streamlitは特にデータ分析や機械学習の結果を共有するために最適化されています。一般的なウェブサイトよりも、これらの用途に特化した機能が簡単に実装できます。
+
+=== システム構成
+本システムは以下の主要コンポーネントで構成する:
+
+* Streamlitアプリケーション群
+* 共通ユーティリティライブラリ
+* 設定管理システム
+
+== アプリケーション構造
+
+=== ディレクトリ構成
+プロジェクトのディレクトリ構造は以下の通り：
+
+[source]
+----
+src/
+├── lib/  # 共通ユーティリティ関数など
+│   ├── db_operations.py
+│   ├── data_processing.py
+│   └── security.py
+├── model/  # model定義など 
+├── ... 
+└── packages/
+    └── manual_operation/
+        ├── run_apps.py  # Streamlitアプリ 一括起動スクリプト（run_apps.py）
+        ├── app_xxxx.py  # xxxxのStreamlitアプリ
+        ├── app_yyyy.py  # yyyyのStreamlitアプリ
+        ├── app_zzzz.py  # zzzzのStreamlitアプリ
+        ├── __init__.py  
+        └── package_config.toml
+----
+== 設定管理
+
+=== package_config.tomlの構成
+`package_config.toml` ファイルは、アプリケーション単位の設定を一元管理します。
+
+.構成例：
+[source,toml]
+----
+[apps]
+xxxx = { port = 8501, description = "XXXX Application" }
+yyyy = { port = 8502, description = "YYYY Application" }
+zzzz = { port = 8503, description = "ZZZZ Application" }
+
+[common]
+host = "0.0.0.0"
+----
+
+=== 設定の読み込みと使用方法
+設定は以下のように読み込み、使用します：
+
+[source,python]
+----
+# 共通ライブラリサポートによりconfigオブジェクトに設定情報格納状態
+app_name = 'xxxx'
+app_config = config['apps'].get(app_name, {})
+port = app_config.get('port', 8501)
+----
+
+この例では、`config` オブジェクトから特定のアプリケーション（ここでは'xxxx'）の設定を取得し、ポート番号を取得している。
+
+== ポート管理
+
+=== ポート割り当ての方針
+各アプリケーションには一意のポート番号を割り当てる。ポート番号は `package_config.toml` で一元管理する。
+
+=== ポート設定の実装
+
+.アプリケーション内でのポート設定の使用例：
+[source,python]
+----
+import streamlit as st
+
+# 共通ライブラリサポートによりconfigオブジェクトに設定情報格納状態
+app_name = __file__.split('_')[-1].split('.')[0]
+app_config = config.package_config['apps'].get(app_name, {})
+port = app_config.get('port', 8501)
+
+st.write(f"This app is running on port: {port}")
+----
+
+* ファイル名からアプリケーション名を抽出し設定を取得
+* ポート番号をStreamlitアプリケーション内で表示す
+* 現在の実行環境を確認
+
+== Streamlit/application起動フロー
+
+[plantuml]
+----
+@startuml
+skinparam actorStyle awesome
+
+actor User
+participant "run_apps.py" as RunApps
+participant "Streamlit CLI" as StreamlitCLI
+participant "app_xxxx.py" as App
+participant "config.py" as Config
+database "package_config.toml" as ConfigFile
+
+User -> RunApps : 実行
+activate RunApps
+
+RunApps -> Config : 設定読み込み
+activate Config
+Config -> ConfigFile : 設定ファイル読み込み
+ConfigFile --> Config : 設定データ
+Config --> RunApps : 設定情報
+deactivate Config
+
+loop 各アプリケーション
+    RunApps -> StreamlitCLI : アプリ起動コマンド実行
+    activate StreamlitCLI
+    
+    StreamlitCLI -> App : アプリケーション読み込み
+    activate App
+    
+    App -> Config : 設定読み込み
+    activate Config
+    Config -> ConfigFile : 設定ファイル読み込み
+    ConfigFile --> Config : 設定データ
+    Config --> App : アプリケーション設定
+    deactivate Config
+    
+    App -> App : Streamlitアプリ初期化
+    App -> App : ページレイアウト設定
+    App -> App : コンポーネント表示
+    
+    StreamlitCLI --> User : ブラウザでアプリ表示
+    deactivate App
+    deactivate StreamlitCLI
+end
+
+deactivate RunApps
+
+User -> App : アプリケーション操作
+activate App
+App -> App : 状態更新
+App --> User : UI更新
+deactivate App
+
+@enduml
+----
+
+== 個別アプリケーションの実装
+
+=== 基本構造
+各Streamlitアプリケーションの基本構造:
+
+[source,python]
+----
+import streamlit as st
+
+# 共通ライブラリサポートによりconfigオブジェクトに設定情報格納状態
+
+def main():
+    app_name = __file__.split('_')[-1].split('.')[0]
+    app_config = config.package_config['apps'].get(app_name, {})
+    
+    st.set_page_config(page_title=app_config.get('description', 'Streamlit App'))
+    st.title(app_config.get('description', 'Streamlit App'))
+    
+    # アプリケーションの主要なロジックをここに実装
+
+if __name__ == "__main__":
+    main()
+----
+
+* アプリケーション名を動的に取得,基づいて設定を読み込み
+* ページタイトルやアプリケーションタイトルも設定から取得
+* 設定ファイルの変更だけで簡単にカスタマイズ
+
+=== 共通コンポーネントの利用
+
+.共通ライブラリの機能を利用する例：
+[source,python]
+----
+from src.lib import db_operations, data_processing
+
+data = db_operations.fetch_data()
+processed_data = data_processing.process(data)
+----
+
+* 共通ライブラリから `db_operations` と `data_processing` モジュールをインポート
+* データの取得と処理
+
+== アプリケーションの起動と管理
+
+=== 個別アプリケーションの起動方法
+個別アプリケーションの起動コマンド：
+
+[source,bash]
+----
+streamlit run src/packages/manual_operation/app_xxxx.py --server.port=8501
+----
+
+* 特定のアプリケーション（ここでは`app_xxxx.py`）を指定のポート（8501）で起動
+
+=== 一括起動スクリプト（run_apps.py）
+
+.すべてのアプリケーションを一括で起動するスクリプト：
+[source,python]
+----
+import subprocess
+from config import config
+
+def run_apps():
+    for app_name, app_config in config['apps'].items():
+        port = app_config['port']
+        command = f"streamlit run app_{app_name}.py --server.port={port}"
+        subprocess.Popen(command, shell=True)
+
+if __name__ == "__main__":
+    run_apps()
+----
+
+* 設定ファイルに定義されたすべてのアプリケーションを自動的に起動
+
+=== 環境変数の利用
+
+.環境変数を使用してポート番号をオーバーライドする例：
+[source,python]
+----
+import os
+from config import config
+
+app_name = 'xxxx'
+app_config = config['apps'].get(app_name, {})
+port = os.environ.get('APP_PORT', app_config.get('port', 8501))
+----
+
+* 環境変数 `APP_PORT` が設定されている場合はそれを使用
+* 設定されていない場合は設定ファイルの値またはデフォルト値を使用

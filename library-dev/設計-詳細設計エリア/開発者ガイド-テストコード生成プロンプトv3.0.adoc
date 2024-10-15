@@ -513,7 +513,14 @@ ibr_mapping_layout_excel_to_integrated.py
 
 ## テスト対象モジュール +
 ↓テスト対象コードを貼り付けてください +
-（ここにテストコードをベタッと貼り付け）
+（ここにテスト対象コードをベタッと貼り付け）
+
+## common_config.toml
+（ここに貼り付け）
+
+## package_config.toml
+（ここに貼り付け）
+
 
 ====
 

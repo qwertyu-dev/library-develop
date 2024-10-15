@@ -1,12 +1,15 @@
 
 # config共有
 import sys
+from pathlib import Path
 from unittest.mock import (
     MagicMock,
+    Mock,
     call,
     patch,
 )
 
+import numpy as np
 import pandas as pd
 import pytest
 
@@ -223,7 +226,6 @@ class Test_DataFrameEditor_edit_series:
     - 全ての境界値ケースが実装されています。
     - 最大長の列名や特殊文字を含む列名のテストは、システムの制限や要件に応じて調整が必要な場合があります。
     """
-
     def setup_method(self):
         log_msg("test start", LogLevel.INFO)
 
@@ -232,9 +234,7 @@ class Test_DataFrameEditor_edit_series:
 
     @pytest.fixture()
     def mock_config(self):
-        mock_config = MagicMock()
-        mock_config.log_message = MagicMock()
-        return mock_config
+        return Mock(log_message=Mock())
 
     @pytest.fixture()
     def test_editor(self, mock_config):
@@ -242,8 +242,6 @@ class Test_DataFrameEditor_edit_series:
         class TestDataFrameEditor(DataFrameEditor):
             def initialize_editors(self):
                 return {
-                    #'col1': ColumnEditor(lambda x: x.upper()),
-                    #'col2': ColumnEditor(lambda x: x.lower()),
                     'col1': ColumnEditor(),
                     'col2': ColumnEditor(),
                 }
@@ -257,8 +255,8 @@ class Test_DataFrameEditor_edit_series:
         class TestDataFrameEditor(DataFrameEditor):
             def initialize_editors(self):
                 return {
-                    'col1': MagicMock(spec=ColumnEditor),
-                    'col2': MagicMock(spec=ColumnEditor),
+                    'col1': Mock(),
+                    'col2': Mock(),
                 }
 
         with patch('src.lib.common_utils.ibr_decorator_config.initialize_config', return_value=mock_config):
@@ -432,16 +430,13 @@ class Test_DataFrameEditor_edit_series:
         input_series = pd.Series({'col1': 'test1', 'col2': 'test2'})
         test_editor_with_mocks.edit_series(input_series)
 
-        # 期待される呼び出しのシーケンスを定義
         expected_calls = [call('test1'), call('test2')]
 
-        # 実際の呼び出しが期待通りの順序で行われたかを検証
         assert test_editor_with_mocks.column_editors['col1'].edit.call_args_list == [expected_calls[0]]
         assert test_editor_with_mocks.column_editors['col2'].edit.call_args_list == [expected_calls[1]]
 
-        # または、より厳密な順序の検証が必要な場合
         mock_calls = (
             test_editor_with_mocks.column_editors['col1'].edit.call_args_list +
             test_editor_with_mocks.column_editors['col2'].edit.call_args_list
-            )
+        )
         assert mock_calls == expected_calls

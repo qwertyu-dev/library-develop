@@ -12,7 +12,7 @@ $ pytest -lv ./tests/lib/common_utils/test_ibr_csv_helper.py
 """
 import base64
 import sys
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, Mock, patch
 
 import pytest
 
@@ -39,9 +39,20 @@ log_msg = config.log_message
 #####################################################################
 # データ作成
 #####################################################################
+#@pytest.fixture(scope='function')
+#def mock_smtp_connection():
+#    return MagicMock(=SmtpConnection)
+
 @pytest.fixture(scope='function')
 def mock_smtp_connection():
-    return MagicMock(spec=SmtpConnection)
+    mock = Mock()
+    # SmtpConnectionの必要なメソッドやプロパティを手動で設定
+    mock.send_mail = Mock()
+    mock.connect = Mock()
+    mock.disconnect = Mock()
+    mock.__enter__ = Mock(return_value=mock)
+    mock.__exit__ = Mock()
+    return mock
 
 class Test_email_sender_smptconnection:
     """ibr_email_sender SmptConnectionクラスのテスト全体をまとめたClass
