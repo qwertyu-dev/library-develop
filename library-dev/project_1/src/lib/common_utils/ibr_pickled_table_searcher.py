@@ -157,7 +157,19 @@ class TableSearcher:
         self.last_modified_time = self.get_file_modified_time()
 
         # テーブル読み込み
-        self.df = self._default_load_table()
+        #self.df = self._default_load_table()
+        self._df = self._default_load_table()
+
+    # インスタンス生成後にpickleからloadしたDataFrame取得できることを明示する
+    @property
+    def df(self) -> pd.DataFrame:
+        if self._should_update_cache():
+            self._df = self._default_load_table()
+        return self._df
+
+    @df.setter
+    def df(self, value: pd.DataFrame) -> None:
+        self._df = value
 
     def _default_get_file_modified_time(self) -> float:
         """ファイルの最終更新時刻を取得する"""
