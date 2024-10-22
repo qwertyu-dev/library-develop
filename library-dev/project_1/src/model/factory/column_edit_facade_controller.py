@@ -18,7 +18,11 @@ class ImportFacadeNullError(Exception):
     pass
 
 def create_editor_factory(decision_table: pd.DataFrame, import_facade: str) -> EditorFactory:
-    """EditorFactoryインスタンスを生成するだけの役割"""
+    """EditorFactoryインスタンスを生成するだけの役割
+
+    どのFacade(Editor)を呼出・動的生成の決定,現状では受付?パターン編集?
+    EditorFactory.create_editor()
+    """
     if not import_facade:
         err_msg = f'import_facade is null: {import_facade}'
         raise ImportFacadeNullError(err_msg) from None
@@ -30,6 +34,9 @@ def create_editor_factory(decision_table: pd.DataFrame, import_facade: str) -> E
         err_msg = f'EditorFactory生成に失敗しました: {import_facade}'
         raise CreateEditorFactoryError(err_msg) from e
 
+
+# TODO(suzuki): output_layoutを引数追加、mainからの呼び出し対応
+#def process_row(row: pd.Series, factory: EditorFactory, output_layout: list[str]) -> pd.Series:
 def process_row(row: pd.Series, factory: EditorFactory) -> pd.Series:
     """データ編集処理を実行する"""
     if not isinstance(row, pd.Series):
@@ -45,6 +52,10 @@ def process_row(row: pd.Series, factory: EditorFactory) -> pd.Series:
     try:
         # Editor生成
         editor = factory.create_editor(row)
+
+        # TODO(suzuki):editorにoutput 定義を渡す
+        #editor.output_columns = output_layout
+
         # Seriesに対する編集処理呼び出し
         return editor.edit_series(row)
     except Exception as e:

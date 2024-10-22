@@ -10,6 +10,14 @@ from src.model.factory.column_edit_facade_controller import (
     process_row,
 )
 
+def add_decision_table_columns(df):
+    df['branch_code_first_digit'] = df['branch_code'].astype('str').str[0]
+    df['branch_code_4_digit_application_status'] = df.apply(
+        lambda row: f"{row['branch_code']}_{row['remarks']}", axis=1,
+    )
+    return df
+
+
 @with_config
 class PreparatonExecutor:
     """アプリケーションのメインクラス"""
@@ -129,21 +137,35 @@ class PreparatonExecutor:
 
             # sample decision table
             decision_table = pd.read_excel(self.decision_table_path)
+            self.log_msg(f'sample data: {data_sample}', LogLevel.INFO)
 
             # 全ての列のデータ型を object に変更
             data_sample = data_sample.astype(object)
             decision_table = decision_table.astype(object)
 
+            # 判定関数情報を付与
+            data_sample = add_decision_table_columns(data_sample)
+            self.log_msg(f'sample data: {data_sample}', LogLevel.INFO)
+
             # factory生成
             factory = create_editor_factory(decision_table, preparation_import_facade)
 
             # 編集定義適用
+            # TODO(suzuki): outputレイアウトを渡す, outputレイアウトはpackage_configから取得
+            # TODO(suzuki): フェーズまたがりのインターフェース定義はcommon_configでよいのでは、の議論
+            #processed_data = data_sample.apply(lambda row: process_row(row, factory, output_layout), axis=1)
             processed_data = data_sample.apply(lambda row: process_row(row, factory), axis=1)
+
+            # 付与した判定情報Columnを落とす
+            add_judge_columns = [
+                'branch_code_first_digit',
+                'branch_code_4_digits_application_status',
+            ]
 
             # 結果出力
             self.log_msg(f'\n{tabulate_dataframe(decision_table)}', LogLevel.INFO)
             self.log_msg(f'\n{tabulate_dataframe(data_sample)}', LogLevel.INFO)
-            self.log_msg(f'\n{tabulate_dataframe(processed_data)}', LogLevel.INFO)
+            self.log_msg(f'\n{tabulate_dataframe(processed_data.drop(columns=add_judge_columns))}', LogLevel.INFO)
 
         finally:
             self.log_msg("IBRDEV-I-0000002")  # 処理終了ログ

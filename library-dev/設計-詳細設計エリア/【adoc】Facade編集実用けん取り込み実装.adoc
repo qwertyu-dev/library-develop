@@ -1,0 +1,420 @@
+= DataFrame編集処理の詳細設計書
+
+== アーキテクチャ
+
+=== 全体構成
+本機能は基本編集処理と拡張編集処理を分離し、かつ出力レイアウトを外部から制御可能な構造を採用します。
+
+[source]
+----
+・BaseDataFrameEditor（親クラス）
+  - 出力レイアウト管理
+  - 基本編集処理フロー制御
+  - 共通設定・ロギング管理
+
+・DataFrameEditorN（Facade実装）
+  - 1:1基本編集の定義
+  - 固有の拡張編集処理実装
+----
+
+=== 責務分担
+
+==== 親クラスの責務
+* 出力レイアウトの準備と入力データのコピー
+* 基本編集処理の実行フロー制御
+* 設定・ログ機能の提供
+* エラー制御と例外管理
+
+==== 子クラス（Facade）の責務
+* 1:1編集定義の実装（initialize_editors）
+* 必要に応じた拡張編集処理の実装（_apply_custom_editors）
+* 親から継承した共通機能の適切な利用
+
+==== Factory/Mainの責務
+* 出力レイアウト情報の注入
+* Facadeインスタンスの生成制御
+* 編集処理の実行制御
+
+== 基本設計
+
+=== 親クラス（BaseDataFrameEditor）
+
+[source,python]
+----
+@with_config
+class DataFrameEditor:
+    def __init__(self, config: dict|None = None):
+        self.config = config or self.config
+        self.log_msg = self.config.log_message
+        self.column_editors = self.initialize_editors()
+        self.output_columns = None  # mainから注入される出力レイアウト
+
+    def initialize_editors(self) -> dict[str, ColumnEditor]:
+        """1:1基本編集定義 - 子クラスでオーバーライド"""
+        return {}
+
+    def edit_series(self, series: pd.Series) -> pd.Series:
+        """メイン処理フロー制御"""
+        edited_series = self._prepare_output_layout(series)
+        edited_series = self._apply_basic_editors(edited_series)
+        edited_series = self._apply_custom_editors(edited_series)
+        return edited_series
+----
+
+==== 構成要素の説明
+
+===== @with_config デコレータ
+* クラスレベルでの設定管理を実現
+* ログ機能など共通機能の提供
+* 子クラスでも同じ設定を利用可能
+* 設定の重複初期化を防止
+
+===== 初期化処理 (__init__)
+* config: 設定情報の保持
+* log_msg: ログ出力機能の初期化
+* column_editors: 1:1編集定義の保持
+* output_columns: 出力レイアウト情報（外部から注入）
+
+===== 基本編集定義 (initialize_editors)
+* 戻り値: Dict[カラム名, 編集処理]の形式
+* 子クラスでオーバーライドして具体的な編集を定義
+* 空の辞書を返すことで、子クラスに実装を強制
+
+===== 処理フロー制御 (edit_series)
+* 3つのフェーズで処理を実行
+* 各フェーズの順序を制御
+* エラー発生時の処理を管理
+
+=== 子クラス（具体Facade）
+
+[source,python]
+----
+class DataFrameEditor1(DataFrameEditor):
+    def __init__(self, config: dict|None = None):
+        """親クラスの初期化を継承"""
+        super().__init__(config)
+
+    def initialize_editors(self) -> dict[str, ColumnEditor]:
+        """1:1基本編集定義の実装"""
+        return {
+            'column1': Column1Editor(),
+            'column2': Column2Editor(),
+            'column3': Column3Editor(),
+        }
+
+    def _apply_custom_editors(self, series: pd.Series) -> pd.Series:
+        """Facade固有の複雑な編集処理"""
+        return series
+----
+
+==== 実装のポイント
+
+===== 初期化処理
+* 親クラスのconfigを正しく継承
+* 新たな設定構築は行わない
+* 親クラスの初期化処理を尊重
+
+===== 基本編集定義の実装
+* カラムと編集処理の明確な対応付け
+* 再利用可能な編集部品の活用
+* 1:1の単純な編集に限定
+
+===== カスタム編集の実装
+* 親クラスの処理後に実行される
+* 複数カラムを参照する複雑な編集
+* Facade固有のビジネスロジック
+* 必要な場合のみ実装（オプション）
+
+===== 処理の順序
+1. 親クラスの出力レイアウト準備
+2. initialize_editorsで定義した基本編集の適用
+3. _apply_custom_editorsによる追加編集（必要な場合）
+
+=== 処理フェーズの詳細
+
+==== 出力レイアウト準備 (_prepare_output_layout)
+
+[source,python]
+----
+def _prepare_output_layout(self, series: pd.Series) -> pd.Series:
+    # 出力用の空のSeriesを作成
+    edited_series = pd.Series(index=self.output_columns)
+    
+    # 入力データから一致するカラムの値をコピー
+    for col in self.output_columns:
+        if col in series.index:
+            edited_series[col] = series[col]
+            self._log_change(col, series[col], edited_series[col])
+    
+    return edited_series
+----
+
+===== 主な役割
+* 出力レイアウトの構造定義
+** 外部から注入されたoutput_columnsに基づく
+** 全ての出力カラムを確保
+
+* 入力データの初期コピー
+** 入出力で一致するカラムの値を保持
+** 値の変更履歴をログに記録
+
+* データの整合性確保
+** 出力フォーマットの統一
+** 後続処理のための基盤準備
+
+==== 基本編集適用 (_apply_basic_editors)
+
+[source,python]
+----
+def _apply_basic_editors(self, edited_series: pd.Series) -> pd.Series:
+    # 編集対象のカラムとエディタの抽出
+    valid_editors = {
+        col: editor 
+        for col, editor in self.column_editors.items() 
+        if col in edited_series.index
+    }
+    
+    # 各カラムに対して編集処理を適用
+    for col, editor in valid_editors.items():
+        original_value = edited_series[col]
+        edited_value = editor.edit(original_value)
+        edited_series[col] = edited_value
+        self._log_change(col, original_value, edited_value)
+    
+    return edited_series
+----
+
+===== 主な役割
+* 編集対象の特定
+** initialize_editorsで定義された編集器の適用
+** 出力レイアウトに存在するカラムのみを処理
+
+* 値の変換処理
+** カラム単位での独立した編集
+** 1:1の単純な変換ロジック適用
+
+* 変更管理
+** 編集前後の値の記録
+** 処理結果の検証サポート
+
+==== カスタム編集適用 (_apply_custom_editors)
+
+[source,python]
+----
+def _apply_custom_editors(self, series: pd.Series) -> pd.Series:
+    try:
+        # Facadeごとの固有編集処理
+        if 'input_col_a' in series and 'input_col_b' in series:
+            series['output_col_x'] = ComplexEditor().edit(
+                series['input_col_a'],
+                series['input_col_b']
+            )
+        
+        if some_business_condition(series):
+            apply_special_rules(series)
+        
+        return series
+        
+    except Exception as e:
+        self.log_msg(f"Error in custom editing: {str(e)}", LogLevel.ERROR)
+        raise
+----
+
+===== 主な役割
+* 複雑な編集ロジック
+** 複数カラムの参照
+** 条件分岐を伴う処理
+** ビジネスルールの適用
+
+* Facade固有の処理
+** 特定のユースケースに対応
+** 柔軟な拡張ポイント
+** データ変換の最終調整
+
+* エラー処理
+** 業務例外の適切な処理
+** ログ記録による追跡可能性
+** データ整合性の確保
+
+== 実装上の注意点
+
+=== Config管理のポイント
+
+==== デコレータの役割
+[source,python]
+----
+@with_config  # クラスレベルでconfigを初期化
+class DataFrameEditor:
+    pass
+----
+
+==== 子クラスでの設定継承
+[source,python]
+----
+class DataFrameEditor1(DataFrameEditor):
+    def __init__(self, config: dict|None = None):
+        super().__init__(config)  # 親のconfigを使用
+        # ここで新たにconfigを構築してはいけない
+----
+
+==== 設定変更の影響
+* ロガー設定の競合
+* シングルトン性の破壊
+* 設定の一貫性喪失
+
+== 実装例
+
+=== Main/Factory連携
+
+[source,python]
+----
+def process_row(
+    row: pd.Series, 
+    factory: EditorFactory, 
+    output_layout: list[str]
+) -> pd.Series:
+    """データ編集処理を実行する"""
+    try:
+        editor = factory.create_editor(row)
+        editor.output_columns = output_layout
+        return editor.edit_series(row)
+    except Exception as e:
+        err_msg = f'column編集に失敗しました row: {row}'
+        raise ProcessRowError(err_msg) from e
+
+# 利用例
+output_layout = ['col1', 'col2', 'col3']
+factory = create_editor_factory(decision_table, import_facade)
+result = process_row(row, factory, output_layout)
+----
+
+== クラス図
+[plantuml]
+----
+@startuml DataFrame Editor Class Diagram
+
+' Class definitions
+abstract class DataFrameEditor {
+  # config: dict
+  # log_msg: function
+  # column_editors: dict
+  # output_columns: list
+  + __init__(config: dict)
+  + initialize_editors(): dict
+  + edit_series(series: Series): Series
+  # _prepare_output_layout(series: Series): Series
+  # _apply_basic_editors(series: Series): Series
+  # _apply_custom_editors(series: Series): Series
+  - _log_change(col: str, old: Any, new: Any)
+}
+
+class DataFrameEditor1 {
+  + initialize_editors(): dict
+  # _apply_custom_editors(series: Series): Series
+}
+
+abstract class ColumnEditor {
+  + edit(value: Any): Any
+}
+
+class Column1Editor {
+  + edit(value: Any): Any
+}
+
+class Column2Editor {
+  + edit(value: Any): Any
+}
+
+class EditorFactory {
+  - decision_table: DataFrame
+  - import_facade: str
+  + create_editor(row: Series): DataFrameEditor
+}
+
+' Relationships
+DataFrameEditor <|-- DataFrameEditor1
+DataFrameEditor *-- "*" ColumnEditor : column_editors
+ColumnEditor <|-- Column1Editor
+ColumnEditor <|-- Column2Editor
+EditorFactory ..> DataFrameEditor : creates
+DataFrameEditor1 o-- "*" Column1Editor
+DataFrameEditor1 o-- "*" Column2Editor
+
+@enduml
+----
+
+== シーケンス図
+
+[plantuml]
+----
+@startuml DataFrame Editor Sequence Diagram
+
+participant Main
+participant Factory as "EditorFactory"
+participant Editor as "DataFrameEditor1"
+participant BaseEditor as "DataFrameEditor"
+
+' Main processing flow
+Main -> Factory : create_editor_factory(decision_table, import_facade)
+activate Factory
+Factory --> Main : factory
+deactivate Factory
+
+Main -> Factory : process_row(row, factory, output_layout)
+activate Factory
+
+Factory -> Editor : create_editor(row)
+activate Editor
+Editor -> BaseEditor : __init__(config)
+BaseEditor --> Editor : initialized
+Editor --> Factory : editor instance
+deactivate Editor
+
+Factory -> Editor : editor.output_columns = output_layout
+Factory -> Editor : edit_series(row)
+activate Editor
+
+' Edit series flow
+Editor -> BaseEditor : edit_series(row)
+activate BaseEditor
+
+BaseEditor -> BaseEditor : _prepare_output_layout(series)
+note right: 出力レイアウト準備\n入力値のコピー
+
+BaseEditor -> BaseEditor : _apply_basic_editors(edited_series)
+note right: 1:1基本編集の適用
+
+BaseEditor -> Editor : _apply_custom_editors(edited_series)
+activate Editor
+note right: Facade固有の\n複雑な編集処理
+Editor --> BaseEditor : edited_series
+deactivate Editor
+
+BaseEditor --> Editor : edited_series
+deactivate BaseEditor
+
+Editor --> Factory : edited_series
+deactivate Editor
+
+Factory --> Main : result
+deactivate Factory
+
+@enduml
+----
+
+=== 図の説明
+
+==== クラス図のポイント
+* DataFrameEditorを基底クラスとし、共通機能を提供
+* DataFrameEditor1が具体的なFacade実装を提供
+* ColumnEditorによる編集処理の抽象化
+* EditorFactoryによるインスタンス生成の制御
+
+==== シーケンス図のポイント
+* Mainからの処理開始とFactory経由のEditor生成
+* 出力レイアウト設定の注入
+* 3段階の編集処理フロー
+** _prepare_output_layout
+** _apply_basic_editors
+** _apply_custom_editors
+* 親子クラス間の処理移譲

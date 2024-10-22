@@ -7,7 +7,7 @@ from src.model.facade.base_facade import DataFrameEditor
 from src.lib.common_utils.ibr_enums import LogLevel
 
 # config共有
-from src.lib.common_utils.ibr_decorator_config import with_config
+#from src.lib.common_utils.ibr_decorator_config import with_config
 #import sys
 #from src.lib.common_utils.ibr_decorator_config import initialize_config
 #config = initialize_config(sys.modules[__name__])
@@ -40,6 +40,9 @@ def format_series_for_log(series: pd.Series) -> str:
 
 # どのcolumnに何の編集処理を適用するか定義している、Facadeそのもの
 class DataFrameEditor1(DataFrameEditor):
+    def __init__(self, config: dict|None = None):  # 引数を追加
+        super().__init__(config)
+
     def initialize_editors(self) -> dict[str, ColumnEditor]:
         return {
             'column1': Column1Editor(),
@@ -47,69 +50,7 @@ class DataFrameEditor1(DataFrameEditor):
             'column3': Column3Editor(),
         }
 
-class DataFrameEditor2(DataFrameEditor):
-    def initialize_editors(self) -> dict[str, ColumnEditor]:
-        return {
-            'column4': Column4Editor(),
-            'column5': Column5Editor(),
-            'column6': Column8Editor(),
-        }
-
-class DataFrameEditor3(DataFrameEditor):
-    def initialize_editors(self) -> dict[str, ColumnEditor]:
-        return {
-            'column7': Column8Editor(),
-        }
-
-class DataFrameEditor4(DataFrameEditor):
-    def initialize_editors(self) -> dict[str, ColumnEditor]:
-        return {
-            'column4': Column4Editor(),
-            'column5': Column5Editor(),
-            'column6': Column6Editor(),
-            'column7': Column7Editor(),
-        }
-
-class DataFrameEditor5(DataFrameEditor):
-    def initialize_editors(self) -> dict[str, ColumnEditor]:
-        return {
-            'column5': Column5Editor(),
-            'column6': Column6Editor(),
-            'column7': Column8Editor(),
-        }
-
-class DataFrameEditor6(DataFrameEditor):
-    def initialize_editors(self) -> dict[str, ColumnEditor]:
-        return {
-            'column7': Column7Editor(),
-        }
-
-class DataFrameEditor7(DataFrameEditor):
-    def initialize_editors(self) -> dict[str, ColumnEditor]:
-        return {
-            'column7': Column7Editor(),
-        }
-
-class DataFrameEditor8(DataFrameEditor):
-    def initialize_editors(self) -> dict[str, ColumnEditor]:
-        return {
-            'column7': Column7Editor(),
-        }
-
-class DataFrameEditor9(DataFrameEditor):
-    def initialize_editors(self) -> dict[str, ColumnEditor]:
-        return {
-            'column7': Column7Editor(),
-        }
-
-class DataFrameEditor10(DataFrameEditor):
-    def initialize_editors(self) -> dict[str, ColumnEditor]:
-        return {
-            'column7': Column7Editor(),
-        }
-
-class DataFrameEditorDefault(DataFrameEditor):
-    def initialize_editors(self) -> dict[str, ColumnEditor]:
-        return {
-            'column7': Column8Editor(),
-        }
+    # TODO(suzuki): 個別編集をそれぞれ定義
+    def _apply_custom_editors(self, series: pd.Series) -> pd.Series:
+        """Facade固有の複雑な編集処理"""
+        return series

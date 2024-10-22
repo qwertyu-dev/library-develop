@@ -34,7 +34,7 @@ DECISION_PRE_SHEET_NAME = '受付処理Facade一覧'
 DECISION_TABLE_BOOK_NANE = 'decision_table.xlsx'
 
 [local.preparation_sample_data]
-PREPARATION_SAMPLE_DATA = 'data_sample.xlsx'
+PREPARATION_SAMPLE_DATA = 'data_sample1.xlsx'
 
 # 受付Facade
 [local.import_editor_facade]
