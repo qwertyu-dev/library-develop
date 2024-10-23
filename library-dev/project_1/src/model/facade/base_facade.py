@@ -33,11 +33,13 @@ class DataFrameEditor:
 
     #TODO(suzuki): 出力レイアウト準備
     def _prepare_output_layout(self, series: pd.Series) -> pd.Series:
-        edited_series = pd.Series(index=self.output_columns)
+        edited_series = pd.Series(index=self.output_columns, dtype='object')
         for col in self.output_columns:
             if col in series.index:
                 edited_series[col] = series[col]
                 self._log_change(col, series[col], edited_series[col])
+        
+        return edited_series
 
     # TODO(suzuki): 基本編集適用
     def _apply_basic_editors(self, edited_series: pd.Series) -> pd.Series:
@@ -58,27 +60,27 @@ class DataFrameEditor:
 
         return edited_series
 
-    ##TODO(suzuki):
+    # 使用しない
     #def _apply_custom_editors(self, edited_series: pd.Series) -> pd.Series:
     #    """カスタム編集処理 - 子クラスでオーバーライド"""
     #    return edited_series
 
+    ##TODO(suzuki): 削除
+    #def edit_series(self, series: pd.Series) -> pd.Series:
+    #    edited_series = series.copy()
 
-    def edit_series(self, series: pd.Series) -> pd.Series:
-        edited_series = series.copy()
+    #    # 対象を絞った上で適用
+    #    valid_editors = {col: editor for col, editor in self.column_editors.items() if col in series.index}
+    #    self.log_msg(f'valid_editors: {valid_editors}', LogLevel.INFO)
 
-        # 対象を絞った上で適用
-        valid_editors = {col: editor for col, editor in self.column_editors.items() if col in series.index}
-        self.log_msg(f'valid_editors: {valid_editors}', LogLevel.INFO)
+    #    for col, editor in valid_editors.items():
+    #        original_value = series[col]
+    #        edited_value = editor.edit(original_value)
+    #        edited_series[col] = edited_value
+    #        # 前後比較でログ出力
+    #        self._log_change(col, original_value, edited_value)
 
-        for col, editor in valid_editors.items():
-            original_value = series[col]
-            edited_value = editor.edit(original_value)
-            edited_series[col] = edited_value
-            # 前後比較でログ出力
-            self._log_change(col, original_value, edited_value)
-
-        return edited_series
+    #    return edited_series
 
 
     # 結局Seriesで廻すことになるので使用しない
