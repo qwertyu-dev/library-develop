@@ -111,7 +111,7 @@ unified_layout = [
 'branch_name',
 'section_gr_code',
 'section_gr_name',
-'section_name_en',
+'organization_name_kana',
 'resident_branch_code',
 'resident_branch_name',
 'aaa_transfer_date',
@@ -120,10 +120,10 @@ unified_layout = [
 'business_and_area_code',
 'area_name',
 'remarks',
+'section_name_en',
 'section_name_kana',
 'section_name_abbr',
 'bpr_target_flag',
-'organization_name_kana',
 ]
 
 # Factory定義/class動的生成
