@@ -39,9 +39,9 @@ def format_series_for_log(series: pd.Series) -> str:
     return str(series.to_numpy().tolist())
 
 # どのcolumnに何の編集処理を適用するか定義している、Facadeそのもの
-class DataFrameEditor1(DataFrameEditor):
-    def __init__(self, config: dict|None = None):  # 引数を追加
-        super().__init__(config)
+class DataFrameEditorDefault(DataFrameEditor):
+    def __init__(self):
+        super().__init__()
 
     def initialize_editors(self) -> dict[str, ColumnEditor]:
         return {
@@ -49,8 +49,19 @@ class DataFrameEditor1(DataFrameEditor):
             'column2': Column2Editor(),
             'column3': Column3Editor(),
         }
+    # Facade個別編集を定義
+    def edit_series(self, series: pd.Series) -> pd.Series:
+        # 親クラス担当タスク実施
+        result = super().edit_series(series)
+        self.log_msg(f'super edit series call result: {result}', LogLevel.INFO)
+        self.log_msg(f'super edit series call result row.index: {result.index}', LogLevel.INFO)
 
-    # TODO(suzuki): 個別編集をそれぞれ定義
-    def _apply_custom_editors(self, series: pd.Series) -> pd.Series:
-        """Facade固有の複雑な編集処理"""
-        return series
+        # ここに各Facade個別Facade個別編集実装を列挙していく
+        self.log_msg(f'\n\n個別編集 resut row.index: {result.index}', LogLevel.INFO)
+
+        # sample edit
+        result['xxx'] = 'abc'
+
+        # 編集結果を返す
+        return result
+

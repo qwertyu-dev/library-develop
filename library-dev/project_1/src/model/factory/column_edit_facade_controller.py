@@ -7,6 +7,7 @@ from src.model.factory.editor_factory import EditorFactory
 import sys
 from src.lib.common_utils.ibr_decorator_config import initialize_config
 config = initialize_config(sys.modules[__name__])
+log_msg = config.log_message
 
 # モジュール例外
 class CreateEditorFactoryError(Exception):
@@ -36,8 +37,8 @@ def create_editor_factory(decision_table: pd.DataFrame, import_facade: str) -> E
 
 
 # TODO(suzuki): output_layoutを引数追加、mainからの呼び出し対応
-#def process_row(row: pd.Series, factory: EditorFactory, output_layout: list[str]) -> pd.Series:
-def process_row(row: pd.Series, factory: EditorFactory) -> pd.Series:
+def process_row(row: pd.Series, factory: EditorFactory, output_layout: list[str]) -> pd.Series:
+#def process_row(row: pd.Series, factory: EditorFactory) -> pd.Series:
     """データ編集処理を実行する"""
     if not isinstance(row, pd.Series):
         err_msg = f'rowはpd.Seriesでなければなりません: {row}'
@@ -47,6 +48,15 @@ def process_row(row: pd.Series, factory: EditorFactory) -> pd.Series:
         err_msg = f'空のrowは許容されません: {row}'
         raise ProcessRowError(err_msg) from None
 
+    # output_layoutに関するチェックを追加
+    if output_layout is None:
+        err_msg = f'空のlayout定義は許容されません: {output_layout}'
+        raise ProcessRowError(err_msg) from None
+
+    if len(output_layout) == 0:
+        err_msg = f'空のlayout定義は許容されません: {output_layout}'
+        raise ProcessRowError(err_msg) from None
+
 
     # contollerサポート
     try:
@@ -54,7 +64,8 @@ def process_row(row: pd.Series, factory: EditorFactory) -> pd.Series:
         editor = factory.create_editor(row)
 
         # TODO(suzuki):editorにoutput 定義を渡す
-        #editor.output_columns = output_layout
+        log_msg(f'output layout: {output_layout}', LogLevel.INFO)
+        editor.output_columns = output_layout
 
         # Seriesに対する編集処理呼び出し
         return editor.edit_series(row)

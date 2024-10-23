@@ -39,77 +39,28 @@ def format_series_for_log(series: pd.Series) -> str:
     return str(series.to_numpy().tolist())
 
 # どのcolumnに何の編集処理を適用するか定義している、Facadeそのもの
-class DataFrameEditor1(DataFrameEditor):
-    def initialize_editors(self) -> dict[str, ColumnEditor]:
-        return {
-            'column1': Column1Editor(),
-            'column2': Column2Editor(),
-            'column3': Column3Editor(),
-        }
-
-class DataFrameEditor2(DataFrameEditor):
-    def initialize_editors(self) -> dict[str, ColumnEditor]:
-        return {
-            'column4': Column4Editor(),
-            'column5': Column5Editor(),
-            'column6': Column8Editor(),
-        }
-
-class DataFrameEditor3(DataFrameEditor):
-    def initialize_editors(self) -> dict[str, ColumnEditor]:
-        return {
-            'column7': Column8Editor(),
-        }
-
-class DataFrameEditor4(DataFrameEditor):
-    def initialize_editors(self) -> dict[str, ColumnEditor]:
-        return {
-            'column4': Column4Editor(),
-            'column5': Column5Editor(),
-            'column6': Column6Editor(),
-            'column7': Column7Editor(),
-        }
-
-class DataFrameEditor5(DataFrameEditor):
-    def initialize_editors(self) -> dict[str, ColumnEditor]:
-        return {
-            'column5': Column5Editor(),
-            'column6': Column6Editor(),
-            'column7': Column8Editor(),
-        }
-
-class DataFrameEditor6(DataFrameEditor):
-    def initialize_editors(self) -> dict[str, ColumnEditor]:
-        return {
-            'column7': Column7Editor(),
-        }
-
-class DataFrameEditor7(DataFrameEditor):
-    def initialize_editors(self) -> dict[str, ColumnEditor]:
-        return {
-            'column7': Column7Editor(),
-        }
-
-class DataFrameEditor8(DataFrameEditor):
-    def initialize_editors(self) -> dict[str, ColumnEditor]:
-        return {
-            'column7': Column7Editor(),
-        }
-
-class DataFrameEditor9(DataFrameEditor):
-    def initialize_editors(self) -> dict[str, ColumnEditor]:
-        return {
-            'column7': Column7Editor(),
-        }
-
-class DataFrameEditor10(DataFrameEditor):
-    def initialize_editors(self) -> dict[str, ColumnEditor]:
-        return {
-            'column7': Column7Editor(),
-        }
-
 class DataFrameEditorDefault(DataFrameEditor):
+    def __init__(self):
+        super().__init__()
+
     def initialize_editors(self) -> dict[str, ColumnEditor]:
         return {
-            'column7': Column8Editor(),
+            'ulid':            Column1Editor(),
+            'update_type':     Column2Editor(),
+            'branch_code_bpr': Column3Editor(),
         }
+
+    def edit_series(self, series: pd.Series) -> pd.Series:
+        # 親クラス担当実施
+        result = super().edit_series(series)
+        self.log_msg(f'super edit series call result: {result}', LogLevel.INFO)
+        self.log_msg(f'super edit series call result row.index: {result.index}', LogLevel.INFO)
+
+        # ここに各Facade個別編集実装を列挙していく
+        self.log_msg(f'\n\n個別Facade編集 result row.index: {result.index}', LogLevel.INFO)
+
+        # sample edit
+        result['xxxx'] = '荻野'
+
+        # 結果を返す
+        return result

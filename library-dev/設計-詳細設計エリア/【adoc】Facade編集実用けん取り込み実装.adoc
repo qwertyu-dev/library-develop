@@ -387,11 +387,6 @@ note right: 1:1基本編集の適用
 BaseEditor -> Editor : _apply_custom_editors(edited_series)
 activate Editor
 note right: Facade固有の\n複雑な編集処理
-Editor --> BaseEditor : edited_series
-deactivate Editor
-
-BaseEditor --> Editor : edited_series
-deactivate BaseEditor
 
 Editor --> Factory : edited_series
 deactivate Editor
