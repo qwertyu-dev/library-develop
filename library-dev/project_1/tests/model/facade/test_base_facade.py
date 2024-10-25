@@ -280,7 +280,9 @@ class Test_DataFrameEditor_prepare_output_layout:
 
         assert result['col1'] == 'value1'
         assert result['col2'] == 'value2'
-        assert list(result.index) == test_editor.output_columns
+        assert result['debug_applied_facade_name'] == 'TestDataFrameEditor'
+        assert len(result) == len(test_editor.output_columns) + 1  # debug_applied_facade_nameを含む
+        #assert list(result.index) == test_editor.output_columns
 
     def test_prepare_output_layout_C0_empty_input_series(self, test_editor):
         test_doc = """
@@ -294,9 +296,12 @@ class Test_DataFrameEditor_prepare_output_layout:
         input_series = pd.Series({})
         result = test_editor._prepare_output_layout(input_series)
 
-        assert len(result) == len(test_editor.output_columns)
-        assert all(pd.isna(result))
-        assert list(result.index) == test_editor.output_columns
+        assert len(result) == len(test_editor.output_columns) + 1  # debug_applied_facade_nameを含む
+        assert pd.isna(result[test_editor.output_columns]).all()  # 出力カラムのみチェック
+        assert result['debug_applied_facade_name'] == 'TestDataFrameEditor'
+        #assert len(result) == len(test_editor.output_columns)
+        #assert all(pd.isna(result))
+        #assert list(result.index) == test_editor.output_columns
 
 
     def test_prepare_output_layout_C0_missing_columns(self, test_editor):
@@ -311,12 +316,15 @@ class Test_DataFrameEditor_prepare_output_layout:
         input_series = pd.Series({'col3': 'value3'})
         result = test_editor._prepare_output_layout(input_series)
 
-        assert len(result) == len(test_editor.output_columns)
-        assert all(pd.isna(result))
-        assert list(result.index) == test_editor.output_columns
+        assert len(result) == len(test_editor.output_columns) + 1  # debug_applied_facade_nameを含む
+        assert pd.isna(result[test_editor.output_columns]).all()  # 出力カラムのみチェック
+        assert result['debug_applied_facade_name'] == 'TestDataFrameEditor'
+        #assert len(result) == len(test_editor.output_columns)
+        #assert all(pd.isna(result))
+        #assert list(result.index) == test_editor.output_columns
 
 
-    @pytest.mark.parametrize(("input_data,expected_nulls"), [
+    @pytest.mark.parametrize(("input_data","expected_nulls"), [
         ({'col1': 'value1', 'col2': 'value2'}, 0),
         ({'col1': 'value1'}, 1),
         ({}, 2),
@@ -333,9 +341,34 @@ class Test_DataFrameEditor_prepare_output_layout:
         input_series = pd.Series(input_data)
         result = test_editor._prepare_output_layout(input_series)
 
-        assert len(result) == len(test_editor.output_columns)
+        assert len(result) == len(test_editor.output_columns) + 1  # debug_applied_facade_nameを含む
         assert pd.isna(result).sum() == expected_nulls
-        assert list(result.index) == test_editor.output_columns
+        assert result['debug_applied_facade_name'] == 'TestDataFrameEditor'
+        #assert list(result.index) == test_editor.output_columns
+
+    # 継承時のデバッグ情報テスト追加
+    def test_prepare_output_layout_debug_info_inheritance(self, mock_config):
+        test_doc = """
+        テスト区分: UT
+        テストカテゴリ: C0
+        テスト区分: 正常系
+        テストシナリオ: 継承時のクラス名取得確認
+        """
+        log_msg(f"\n{test_doc}", LogLevel.INFO)
+
+        @with_config
+        class ChildFacade(DataFrameEditor):
+            def __init__(self, config=None):
+                super().__init__(config)
+                self.output_columns = ['col1']
+
+        with patch('src.lib.common_utils.ibr_decorator_config.initialize_config', return_value=mock_config):
+            child_editor = ChildFacade()
+
+        input_series = pd.Series({'col1': 'value1'})
+        result = child_editor._prepare_output_layout(input_series)
+
+        assert result['debug_applied_facade_name'] == 'ChildFacade'
 
     @pytest.mark.parametrize("test_case", [
         ("all_exist", {'col1': 'v1', 'col2': 'v2'}, 0),
@@ -355,9 +388,12 @@ class Test_DataFrameEditor_prepare_output_layout:
         input_series = pd.Series(input_data)
         result = test_editor._prepare_output_layout(input_series)
 
-        assert len(result) == len(test_editor.output_columns)
-        assert pd.isna(result).sum() == expected_nulls
-        assert list(result.index) == test_editor.output_columns
+        assert len(result) == len(test_editor.output_columns) + 1  # debug_applied_facade_nameを含む
+        assert pd.isna(result[test_editor.output_columns]).sum() == expected_nulls
+        assert result['debug_applied_facade_name'] == 'TestDataFrameEditor'
+        #assert len(result) == len(test_editor.output_columns)
+        #assert pd.isna(result).sum() == expected_nulls
+        #assert list(result.index) == test_editor.output_columns
 
 
     def test_prepare_output_layout_BVT_large_series(self, test_editor):
@@ -376,9 +412,11 @@ class Test_DataFrameEditor_prepare_output_layout:
 
         result = test_editor._prepare_output_layout(large_series)
 
-        assert len(result) == len(test_editor.output_columns)
+        assert len(result) == len(test_editor.output_columns) + 1
         assert result['col1'] == 'specific_value1'
         assert result['col2'] == 'specific_value2'
+        assert result['debug_applied_facade_name'] == 'TestDataFrameEditor'
+        #assert len(result) == len(test_editor.output_columns)
 
     def test_prepare_output_layout_BVT_special_chars(self, test_editor):
         test_doc = """
@@ -394,9 +432,13 @@ class Test_DataFrameEditor_prepare_output_layout:
 
         result = editor._prepare_output_layout(input_series)
 
-        assert len(result) == 2
+        assert len(result) == 3
         assert result['col#1'] == 'value1'
         assert result['col@2'] == 'value2'
+        assert result['debug_applied_facade_name'] == 'TestDataFrameEditor'
+        #assert len(result) == 2
+        #assert result['col#1'] == 'value1'
+        #assert result['col@2'] == 'value2'
 
     def test_prepare_output_layout_BVT_mixed_types(self, test_editor):
         test_doc = """
@@ -416,6 +458,9 @@ class Test_DataFrameEditor_prepare_output_layout:
         # 値の確認
         assert result['col1'] == 123
         assert result['col2'] == 'text'
+        # デバッグ情報の確認
+        assert result['debug_applied_facade_name'] == 'TestDataFrameEditor'
+        assert isinstance(result['debug_applied_facade_name'], str)
 
 
 class Test_DataFrameEditor_apply_basic_editors:
