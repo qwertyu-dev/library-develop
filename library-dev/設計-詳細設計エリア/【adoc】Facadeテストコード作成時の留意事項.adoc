@@ -1,0 +1,118 @@
+= 受付・パターン編集: Facad定義に対するモックテストのノウハウ
+
+== モックの基本原則
+
+Facadeパターンのテスト実装から得られた重要な知見を整理します。
+
+=== インポート位置とモック位置の関係
+
+*重要な原則*:
+
+* Pythonでは、オブジェクトは `使用される場所` でモックする必要がある
+* オブジェクトの `定義元の場所ではない`
+
+=== 具体例
+
+.オリジナルのインポート構造
+[source,python]
+----
+# src.model.facade.preparation_editor_facade.py
+from src.lib.converter_utils.ibr_convert_western_cal_japanese_cal_to_datetime import parse_str_to_datetime
+----
+
+.誤ったアプローチ
+[source,python]
+----
+# 機能しない - 定義元をパッチしている
+@patch('src.lib.converter_utils.ibr_convert_western_cal_japanese_cal_to_datetime.parse_str_to_datetime')
+----
+
+.正しいアプローチ
+[source,python]
+----
+# 正しい - 使用箇所をパッチしている
+@patch('src.model.facade.preparation_editor_facade.parse_str_to_datetime')
+----
+
+=== なぜこれが重要か
+
+1. インポート時の挙動：
+* モジュールがインポートされた時点で、オブジェクトは `使用側の名前空間にコピー` される
+* その後の参照は全てこのコピーに対して行われるため、Mockの対象はインポートされた位置で定義する必要がある
+
+2. パッチのタイミング：
+* モックは「実際に使用される名前空間」のオブジェクトを置き換える必要がある
+* インポート済みのオブジェクトを置き換えるには、使用側の名前空間でパッチを当てる
+
+=== トラブルシューティングの手順
+
+.モックが機能しない場合：
+[cols="1,1,3",options="header"]
+|===
+|カテゴリ |確認項目 |確認内容
+
+|インポートの確認
+|インポート方式
+a|
+* テスト対象のモジュールでどのようにインポートされているか確認
+* 相対インポートか絶対インポートかの確認
+
+|パッチパスの確認
+|パス整合性
+a|
+* 実際の使用箇所（インポート先）のパスになっているか
+* パッケージ階層が正しいか
+
+|モックの動作確認
+|実行検証
+a|
+* モックの呼び出し回数を確認
+* 実際の関数が呼ばれていないか確認
+|===
+
+
+=== よくある間違いと解決策
+
+.定義元のパス指定
+[source,python]
+----
+# 間違い
+@patch('original_module.function')
+# 正しい
+@patch('using_module.function')
+----
+
+.パッケージ階層の誤り
+[source,python]
+----
+# 間違い
+@patch('facade.parse_str_to_datetime')
+# 正しい
+@patch('src.model.facade.preparation_editor_facade.parse_str_to_datetime')
+----
+
+=== ベストプラクティス
+[cols="1,1,3",options="header"]
+|===
+|カテゴリ |確認項目 |確認内容
+
+|インポートの確認
+|インポート文分析
+a|
+* テスト対象モジュールのインポート文を確認
+* インポートの方法（from import や import）を把握 
+
+|パッチ位置の明示的な指定
+|パス定義
+a|
+* フルパスで指定する
+* パッケージ階層を正確に反映する
+
+|モックの動作確認
+|実行検証
+a|
+* assert_called_once()などで呼び出しを確認
+* 戻り値が期待通り使用されているか確認
+|===
+
+NOTE: このノウハウは特にFacadeパターンのような複雑な依存関係を持つコードのテストで重要です。
