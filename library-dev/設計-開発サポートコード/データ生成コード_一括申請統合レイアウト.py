@@ -9,7 +9,7 @@ from tabulate import tabulate
 | No  | Column名称(日本語)         | column_name(python)                   | 属性 | 桁数/文字数 | Column説明(略)                                                                                              |
 |----:|:---------------------------|:--------------------------------------|:-----|:------------|:------------------------------------------------------------------------------------------------------------|
 |   1 | ULID                       | ulid                                  | str  | 26          | 明細毎にULIDを一意に設定                                                                                    |
-|   2 | 申請元情報                 | applicant_info                        | str  | 1           | ファイル取り込み時に以下いずれかを設定<br>1: 人事提出ファイル<br>2: 国際事務企画室提出ファイル<br>3: 関連会社提出ファイル<br>4: 関連ダミー課Gr |
+|   2 | 申請元情報                 | form_type                             | str  | 1           | ファイル取り込み時に以下いずれかを設定<br>1: 人事提出ファイル<br>2: 国際事務企画室提出ファイル<br>3: 関連会社提出ファイル<br>4: 関連ダミー課Gr |
 |   3 | 種類                       | application_type                      | str  | 1           | 新設/変更/廃止のいずれか                                                                                    |
 |   4 | 対象                       | target_org                            | str  | 20          | 以下いずれかを設定<br>・部店、課、エリア、拠点内営業部<br>・課/エリア、課/エリア(拠点内営業部)              |
 |   5 | 部門コード                 | business_unit_code                    | str  | 3           | -                                                                                                           |
@@ -43,7 +43,7 @@ def generate_sample_data(num_records=100):
     for _ in range(num_records):
         record = {
             "ulid": str(ulid.new()),
-            "applicant_info": np.random.choice(["1", "2", "3", "4"]),
+            "form_type": np.random.choice(["1", "2", "3", "4"]),
             "application_type": np.random.choice(["新設", "変更", "廃止"]),  # 1: 新設, 2: 変更, 3: 廃止
             "target_org": np.random.choice(["部店", "課", "エリア", "拠点内営業部", "課/エリア", "課/エリア(拠点内営業部)"]),
             "business_unit_code": f"{np.random.randint(100, 999):03d}",

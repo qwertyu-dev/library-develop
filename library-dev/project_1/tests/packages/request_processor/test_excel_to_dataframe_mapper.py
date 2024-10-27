@@ -79,7 +79,7 @@ class TestExcelMappingInit:
         # unified_layoutの内容を確認
         expected_layout = [
             'ulid',
-            'applicant_info',
+            'form_type',
             'application_type',
             'target_org',
             'business_unit_code',
@@ -118,7 +118,7 @@ class TestExcelMappingInit:
         custom_config.package_config['layout'] = {
             'unified_layout': [
                 'ulid',
-                'applicant_info',
+                'form_type',
                 'application_type',
                 'target_org',
                 'business_unit_code',
@@ -710,7 +710,7 @@ class TestJinjiExcelMappingInit:
                 'layout': {
                     'unified_layout': [
                         'ulid',
-                        'applicant_info',
+                        'form_type',
                         'application_type',
                         'target_org',
                         'business_unit_code',
@@ -781,7 +781,7 @@ class TestJinjiExcelMappingInit:
             'layout': {
                 'unified_layout': [
                     'ulid',
-                    'applicant_info',
+                    'form_type',
                     'application_type',
                     'target_org',
                     'business_unit_code',
@@ -852,7 +852,7 @@ class TestJinjiExcelMappingInit:
                 'layout': {
                     'unified_layout': [
                         'ulid',
-                        'applicant_info',
+                        'form_type',
                         'application_type',
                         'target_org',
                         'business_unit_code',
@@ -965,7 +965,7 @@ class TestJinjiExcelMapping:
 
         expected_layout = [
             'ulid',
-            'applicant_info',
+            'form_type',
             'application_type',
             'target_org',
             'business_unit_code',
@@ -991,7 +991,7 @@ class TestJinjiExcelMapping:
 
         assert list(result.columns) == expected_layout
         assert result['ulid'].iloc[0] == 'dummy_ulid'
-        assert result['applicant_info'].iloc[0] == '1'
+        assert result['form_type'].iloc[0] == '1'
         assert result['branch_name'].iloc[0] == 'テスト支店'
         assert result['section_gr_code'].iloc[0] == 'S001'
         assert result['section_gr_name'].iloc[0] == 'テスト課'
@@ -1174,7 +1174,7 @@ class TestKokukiExcelMappingInit:
                 'layout': {
                     'unified_layout': [
                         'ulid',
-                        'applicant_info',
+                        'form_type',
                         'application_type',
                         'target_org',
                         'business_unit_code',
@@ -1246,7 +1246,7 @@ class TestKokukiExcelMappingInit:
             'layout': {
                 'unified_layout': [
                     'ulid',
-                    'applicant_info',
+                    'form_type',
                     'application_type',
                     'target_org',
                     'business_unit_code',
@@ -1318,7 +1318,7 @@ class TestKokukiExcelMappingInit:
                 'layout': {
                     'unified_layout': [
                         'ulid',
-                        'applicant_info',
+                        'form_type',
                         'application_type',
                         'target_org',
                         'business_unit_code',
@@ -1428,7 +1428,7 @@ class TestKokukiExcelMapping:
 
         expected_layout = [
             'ulid',
-            'applicant_info',
+            'form_type',
             'application_type',
             'target_org',
             'business_unit_code',
@@ -1454,7 +1454,7 @@ class TestKokukiExcelMapping:
 
         assert list(result.columns) == expected_layout
         assert result['ulid'].iloc[0] == 'dummy_ulid'
-        assert result['applicant_info'].iloc[0] == '2'
+        assert result['form_type'].iloc[0] == '2'
         assert result['application_type'].iloc[0] == '新規'
         assert result['target_org'].iloc[0] == '課・エリア'
         assert result['branch_code'].iloc[0] == '1001'
@@ -1640,7 +1640,7 @@ class TestKanrenExcelMappingWithDummyInit:
                 'layout': {
                     'unified_layout': [
                         'ulid',
-                        'applicant_info',
+                        'form_type',
                         'application_type',
                         'target_org',
                         'business_unit_code',
@@ -1704,7 +1704,7 @@ class TestKanrenExcelMappingWithDummyInit:
             'layout': {
                 'unified_layout': [
                         'ulid',
-                        'applicant_info',
+                        'form_type',
                         'application_type',
                         'target_org',
                         'business_unit_code',
@@ -1768,7 +1768,7 @@ class TestKanrenExcelMappingWithDummyInit:
                 'layout': {
                     'unified_layout': [
                         'ulid',
-                        'applicant_info',
+                        'form_type',
                         'application_type',
                         'target_org',
                         'business_unit_code',
@@ -1875,7 +1875,7 @@ class TestKanrenExcelMappingWithDummy:
 
         expected_layout = [
                         'ulid',
-                        'applicant_info',
+                        'form_type',
                         'application_type',
                         'target_org',
                         'business_unit_code',
@@ -1901,7 +1901,7 @@ class TestKanrenExcelMappingWithDummy:
 
         assert list(result.columns) == expected_layout
         assert result['ulid'].iloc[0] == 'dummy_ulid'
-        assert result['applicant_info'].iloc[0] == '3'
+        assert result['form_type'].iloc[0] == '3'
         assert result['application_type'].iloc[0] == '新規'
         assert result['business_unit_code'].iloc[0] == '001'
         assert result['parent_branch_code'].iloc[0] == 'P001'
@@ -1955,7 +1955,7 @@ class TestKanrenExcelMappingWithDummy:
 
         result = kanren_mapping.map_to_unified_layout(_df)
 
-        assert result['applicant_info'].iloc[0] == '3'
+        assert result['form_type'].iloc[0] == '3'
         assert result['application_type'].iloc[0] == '新規'
         assert result['business_unit_code'].iloc[0] == '001'
         assert result['parent_branch_code'].iloc[0] == 'P001'
@@ -1987,7 +1987,7 @@ class TestKanrenExcelMappingWithDummy:
         assert len(result) == 2
         assert result['branch_code'].tolist() == ['1001', '1002']
         assert result['branch_name'].tolist() == ['テスト支店', 'テスト支店2']
-        assert all(result['applicant_info'] == '3')
+        assert all(result['form_type'] == '3')
 
         log_msg(f"Resulting DataFrame:\n{result}", LogLevel.DEBUG)
 
@@ -2079,7 +2079,7 @@ class TestKanrenExcelMappingWithoutDummy:
                 'layout': {
                     'unified_layout': [
                         'ulid',
-                        'applicant_info',
+                        'form_type',
                         'application_type',
                         'target_org',
                         'business_unit_code',
@@ -2167,7 +2167,7 @@ class TestKanrenExcelMappingWithoutDummy:
 
         expected_layout = [
                         'ulid',
-                        'applicant_info',
+                        'form_type',
                         'application_type',
                         'target_org',
                         'business_unit_code',
@@ -2193,7 +2193,7 @@ class TestKanrenExcelMappingWithoutDummy:
 
         assert list(result.columns) == expected_layout
         assert result['ulid'].iloc[0] == 'dummy_ulid'
-        assert result['applicant_info'].iloc[0] == '1'
+        assert result['form_type'].iloc[0] == '4'
         assert result['application_type'].iloc[0] == '新規'
         assert result['target_org'].iloc[0] == '課'
         assert result['business_unit_code'].iloc[0] == '001'
@@ -2253,7 +2253,8 @@ class TestKanrenExcelMappingWithoutDummy:
         result = kanren_mapping.map_to_unified_layout(_df)
 
         assert len(result) == 2
-        assert result['applicant_info'].tolist() == ['1', '1']
+        #assert result['form_type'].tolist() == ['1', '1']
+        assert result['form_type'].tolist() == ['4', '4']
         assert result['application_type'].tolist() == ['新規', '変更']
         assert result['target_org'].tolist() == ['課', 'エリア']
         assert result['section_gr_code'].tolist() == ['S001', '']
@@ -2268,6 +2269,8 @@ class TestKanrenExcelMappingWithoutDummy:
         テスト区分: UT
         テストカテゴリ: 同等性確認
         テスト内容: KanrenExcelMappingWithoutDummyとJinjiExcelMappingの同等性を確認
+                    ただしform_type以外の一致を確認
+                    form_type: jinji->1, ダミー課なし→4
         """
         log_msg(f"\n{test_doc}", LogLevel.DEBUG)
 
@@ -2288,25 +2291,29 @@ class TestKanrenExcelMappingWithoutDummy:
             'organization_name_kana': ['テストシテン'],
         })
 
-        #df = pd.DataFrame({
-        #    'application_type': ['新規'],
-        #    'target_org': ['課'],
-        #    'business_unit_code': ['001'],
-        #    'parent_branch_code': ['P001'],
-        #    'branch_code': ['1001'],
-        #    'branch_name': ['テスト支店'],
-        #    'section_area_code': ['S001'],
-        #    'section_area_name': ['テスト課'],
-        #    'section_area_name_en': ['Test Section'],
-        #    'aaa_transfer_date': ['2023-01-01']
-        #})
-
         with patch('ulid.new', return_value='dummy_ulid'):
             result_kanren = kanren_mapping.map_to_unified_layout(_df)
             result_jinji = jinji_mapping.map_to_unified_layout(_df)
 
-        # 結果を比較
-        pd.testing.assert_frame_equal(result_kanren, result_jinji)
+        # 結果を比較 form_type以外を比較して一致確認
+        log_msg("各マッピング結果のform_type値を確認", LogLevel.DEBUG)
+        log_msg(f'kanren.dtype: \n\n{result_kanren.dtypes}', LogLevel.INFO)
+        log_msg(f'kanren.info: \n\n{result_kanren.info}', LogLevel.INFO)
+        #log_msg(f'kanren.layout: \n\n{result_kanren}', LogLevel.INFO)
+        assert result_kanren['form_type'].iloc[0] == '4', "関連マッピングのform_typeが4ではありません"
+        assert result_jinji['form_type'].iloc[0] == '1', "人事マッピングのform_typeが1ではありません"
+
+        log_msg("form_type以外のカラムの同等性を確認", LogLevel.DEBUG)
+        # form_type以外の全カラムを取得
+        columns_to_compare = [col for col in result_kanren.columns if col != 'form_type']
+
+        # form_type以外のカラムについて同等性を確認
+        pd.testing.assert_frame_equal(
+            result_kanren[columns_to_compare],
+            result_jinji[columns_to_compare],
+            check_names=True,
+        )
+
 
         log_msg("KanrenExcelMappingWithoutDummy and JinjiExcelMapping produce identical results", LogLevel.INFO)
 
@@ -2341,7 +2348,7 @@ class TestKanrenExcelMappingWithoutDummy:
         log_msg(f"\n\nResulting DataFrame:\n{tabulate_dataframe(result)}", LogLevel.INFO)
 
         assert result['ulid'].iloc[0] == 'dummy_ulid'
-        assert result['applicant_info'].iloc[0] == '1'
+        assert result['form_type'].iloc[0] == '4'
         assert result['application_type'].iloc[0] == '新規'
         assert result['target_org'].iloc[0] == '課'
         assert result['business_unit_code'].iloc[0] == '001'

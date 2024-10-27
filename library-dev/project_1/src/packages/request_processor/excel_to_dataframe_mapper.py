@@ -180,7 +180,7 @@ class JinjiExcelMapping(ExcelMapping):
             unified_df = pd.DataFrame(columns=self.unified_layout)
 
             unified_df['ulid'] = [str(ulid.new()) for _ in range(len(df))]
-            unified_df['applicant_info'] = '1'
+            unified_df['form_type'] = '1'
             unified_df['application_type'] = df['application_type']
             unified_df['target_org'] = df['target_org']
             unified_df['business_unit_code'] = df['business_unit_code']
@@ -270,7 +270,7 @@ class KokukiExcelMapping(ExcelMapping):
             unified_df = pd.DataFrame(columns=self.unified_layout)
 
             unified_df['ulid'] = [str(ulid.new()) for _ in range(len(df))]
-            unified_df['applicant_info'] = '2'
+            unified_df['form_type'] = '2'
             unified_df['application_type'] = df['application_type']
             unified_df['target_org'] = df['target_org']
             unified_df['branch_code'] = df['branch_code']
@@ -354,7 +354,7 @@ class KanrenExcelMappingWithDummy(ExcelMapping):
             unified_df = pd.DataFrame(columns=self.unified_layout)
 
             unified_df['ulid'] = [str(ulid.new()) for _ in range(len(df))]
-            unified_df['applicant_info'] = '3'  # ダミー課あり
+            unified_df['form_type'] = '3'  # ダミー課あり
             unified_df['application_type'] = df['application_type']
             unified_df['business_unit_code'] = df['business_unit_code']
             unified_df['parent_branch_code'] = df['parent_branch_code']
@@ -443,7 +443,7 @@ class KanrenExcelMappingWithoutDummy(ExcelMapping):
             unified_df = pd.DataFrame(columns=self.unified_layout)
 
             unified_df['ulid'] = [str(ulid.new()) for _ in range(len(df))]
-            unified_df['applicant_info'] = '1'
+            unified_df['form_type'] = '4'
             unified_df['application_type'] = df['application_type']
             unified_df['target_org'] = df['target_org']
             unified_df['business_unit_code'] = df['business_unit_code']

@@ -102,7 +102,7 @@ UPDATE_RECORD_KANREN_SHEET_NAME = '関連会社入力シート'                 
 [local.layout]
 unified_layout = [
 'ulid',
-'applicant_info',
+'form_type',
 'application_type',
 'target_org',
 'business_unit_code',
