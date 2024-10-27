@@ -114,9 +114,13 @@ class RemarksParser:
 
             (?:営業部|営業第[一二三四五六七八九十]+部): 営業部署名。「営業部」または「営業第」に続く漢数字と「部」
             ただし中間に「営業部」が組み込まれる可能性があり、最後の指定判別文字列にマッチするよう制御する
+
+            備考欄解析によりマッチグループパターン全てに該当しないレコードに対しては
+            request_type解析結果は格納されるが、department_name及びbranch_nameには値が格納されない
+            つまり、department_name,branch_nameには両方とも値を持つもしくは両方とも空文字であるのどちらかになる
         """
         self.result["request_type"] = "営業部傘下"
-        match = re.match(r"(.+?支店|.+?営業部)(営業部|(?:(?!営業部).)+営業部|営業第.*部)$", line)
+        match = re.match(r"(.+?支店|.+?営業部)(営業部|(?:(?!営業部).)+営業部|営業第[一二三四五六七八九十]部)$", line)
 
         if match:
             log_msg("Regex match details:", LogLevel.DEBUG)

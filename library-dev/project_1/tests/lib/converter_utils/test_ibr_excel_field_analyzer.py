@@ -1116,7 +1116,8 @@ class Test_RemarksParser_process_sales_department:
         ("八重洲通支店営業部", "八重洲通支店", "営業部"),
         ("ヨコハマ支店営業第一部", "ヨコハマ支店", "営業第一部"),
         ("ABC営業部営業部", "ABC営業部", "営業部"),
-        ("新宿営業部営業第123部", "新宿営業部", "営業第123部"),
+        ("新宿営業部営業第123部", "", ""),   # match(2)に空振り,値取得なし/インプット想定外
+        ("新宿営業部", "", ""),              # match(2)に空振り,値取得なし/インプット想定外
     ])
     def test_process_sales_department_C2_combinations(self, input_text, expected_branch, expected_dept):
         """テスト区分: UT
@@ -1244,14 +1245,14 @@ class Test_RemarksParser_process_area_group:
     | 4  | 正しい区切り文字               | Y     | Y     | -     | -     | -     |
     |出力| 解析成功                       | Y     | Y     | N     | N     | N     |
 
-    境界値検証ケース一覧：
-    | ID     | パラメータ | テスト値                      | 期待される結果              | テストの目的                | 実装状況 |
-    |--------|------------|------------------------------|---------------------------|---------------------------|----------|
-    | BVT_001| line      | ""                          | 解析失敗                  | 空文字列の処理             | test_process_area_group_BVT_empty_string |
-    | BVT_002| line      | "1234 TestGr"               | 解析失敗                  | 4桁コードの処理            | test_process_area_group_BVT_short_code |
-    | BVT_003| line      | "123456 TestGr"             | 解析失敗                  | 6桁コードの処理            | test_process_area_group_BVT_long_code |
-    | BVT_004| line      | "12345　TestGr"             | 解析成功                  | 全角スペースの処理         | test_process_area_group_BVT_full_space |
-    | BVT_005| line      | "12345TestGr"               | 解析失敗                  | スペースなしの処理         | test_process_area_group_BVT_no_space |
+    境界値検証ケース一覧:
+    | ID     | パラメータ | テスト値                    | 期待される結果            | テストの目的              | 実装状況                                 |
+    |--------|------------|-----------------------------|---------------------------|---------------------------|------------------------------------------|
+    | BVT_001| line       | ""                          | 解析失敗                  | 空文字列の処理            | test_process_area_group_BVT_empty_string |
+    | BVT_002| line       | "1234 TestGr"               | 解析失敗                  | 4桁コードの処理           | test_process_area_group_BVT_short_code   |
+    | BVT_003| line       | "123456 TestGr"             | 解析失敗                  | 6桁コードの処理           | test_process_area_group_BVT_long_code    |
+    | BVT_004| line       | "12345　TestGr"             | 解析成功                  | 全角スペースの処理        | test_process_area_group_BVT_full_space   |
+    | BVT_005| line       | "12345TestGr"               | 解析失敗                  | スペースなしの処理        | test_process_area_group_BVT_no_space     |
     """
 
     def setup_method(self):
@@ -1264,8 +1265,8 @@ class Test_RemarksParser_process_area_group:
         log_msg(f"test end\n{'-'*80}\n", LogLevel.INFO)
 
     def test_process_area_group_C0_basic(self):
-        """
-        テスト区分: UT
+        """テスト区分: UT
+
         テストカテゴリ: C0
         テストシナリオ: 基本的なエリアグループパターンの処理確認
         """
@@ -1293,8 +1294,8 @@ class Test_RemarksParser_process_area_group:
         ("41002　東日本第一Gr", "41002", "東日本第一Gr", ""),  # 全角スペース
     ])
     def test_process_area_group_C1_branches(self, input_text, expected_code, expected_name, expected_date):
-        """
-        テスト区分: UT
+        """テスト区分: UT
+
         テストカテゴリ: C1
         テストシナリオ: エリアグループパターンの分岐確認
         """
