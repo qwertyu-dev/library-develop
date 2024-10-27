@@ -1,32 +1,27 @@
 # Facade定義
+import sys
+
 import pandas as pd
+
+from src.lib.common_utils.ibr_decorator_config import initialize_config
+from src.lib.common_utils.ibr_enums import LogLevel
+
+config = initialize_config(sys.modules[__name__])
+log_msg = config.log_message
+
+from src.lib.converter_utils.ibr_basic_column_editor import (
+    Column1Editor,
+    Column2Editor,
+    Column3Editor,
+    ColumnEditor,
+)
 
 # base facade
 from src.model.facade.base_facade import DataFrameEditor
 
-from src.lib.common_utils.ibr_enums import LogLevel
-
-# config共有
-#from src.lib.common_utils.ibr_decorator_config import with_config
-#import sys
-#from src.lib.common_utils.ibr_decorator_config import initialize_config
-#config = initialize_config(sys.modules[__name__])
-
-from src.lib.converter_utils.ibr_basic_column_editor import (
-    ColumnEditor,
-    Column1Editor,
-    Column2Editor,
-    Column3Editor,
-    Column4Editor,
-    Column5Editor,
-    Column6Editor,
-    Column7Editor,
-    Column8Editor,
-)
-
-# 個別のColumnEditorを呼ぶ
-# TODO(Suzuki): 個別編集部品をimportする
-
+# 個別編集部品をimportする
+# 各Facade要件及び編集部品品揃えからimport判断する
+from src.lib.converter_utils.ibr_convert_western_cal_japanese_cal_to_datetime import parse_str_to_datetime
 
 
 #TODO(suzuki): commonに入れるかどうかの判断
@@ -60,7 +55,10 @@ class DataFrameEditorDefault(DataFrameEditor):
         self.log_msg(f'\n\n個別編集 resut row.index: {result.index}', LogLevel.INFO)
 
         # sample edit
-        result['xxx'] = 'abc'
+        result['x1'] = 'abc'
+        result['x2'] = parse_str_to_datetime('2024/10/24')   # importしたものを想定,サンプル編集
+        result['x3'] = 1
+        result['x4'] = series['aaa'] + series['bbbb']
 
         # 編集結果を返す
         return result

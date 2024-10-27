@@ -1,32 +1,24 @@
 # Facade定義
+import sys
+
 import pandas as pd
 
-# base facade
-from src.model.facade.base_facade import DataFrameEditor
-
-from src.lib.common_utils.ibr_enums import LogLevel
-
 # config共有
-from src.lib.common_utils.ibr_decorator_config import with_config
-#import sys
-#from src.lib.common_utils.ibr_decorator_config import initialize_config
-#config = initialize_config(sys.modules[__name__])
-
+from src.lib.common_utils.ibr_decorator_config import initialize_config, with_config
+from src.lib.common_utils.ibr_enums import LogLevel
 from src.lib.converter_utils.ibr_basic_column_editor import (
-    ColumnEditor,
     Column1Editor,
     Column2Editor,
     Column3Editor,
-    Column4Editor,
-    Column5Editor,
-    Column6Editor,
-    Column7Editor,
-    Column8Editor,
+    ColumnEditor,
 )
 
-# 個別のColumnEditorを呼ぶ
-# TODO(Suzuki): 個別編集部品をimportする
+# 個別編集部品をimportする
+# 各Facade要件及び編集部品品揃えからimport判断する
+from src.lib.converter_utils.ibr_convert_western_cal_japanese_cal_to_datetime import parse_str_to_datetime
 
+# base facade
+from src.model.facade.base_facade import DataFrameEditor
 
 
 #TODO(suzuki): commonに入れるかどうかの判断
@@ -37,6 +29,9 @@ def format_series_for_log(series: pd.Series) -> str:
     インデックス、dtype情報、Name情報を除去します。
     """
     return str(series.to_numpy().tolist())
+
+config = initialize_config(sys.modules[__name__])
+log_msg = config.log_message
 
 # どのcolumnに何の編集処理を適用するか定義している、Facadeそのもの
 class DataFrameEditorDefault(DataFrameEditor):
@@ -61,6 +56,10 @@ class DataFrameEditorDefault(DataFrameEditor):
 
         # sample edit
         result['xxxx'] = '荻野'
+        result['xxxy'] = '斉藤'
+        result['xxxz'] = '豊田'
+        result['x2'] = parse_str_to_datetime('2024/10/25')   # importしたものを想定,サンプル編集
+        result['x4'] = series['aaa'] + series['bbbb']
 
         # 結果を返す
         return result
