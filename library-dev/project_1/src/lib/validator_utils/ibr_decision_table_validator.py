@@ -40,22 +40,19 @@ class DT:
     # preparation editor/pattern editor 共通
     ############################################
     @staticmethod
-    def is_4digits(value: str|int) -> bool:
+    def is_4digits(value: str|int|float) -> bool:
         """値が4桁の文字列/数値かどうかを判定"""
         if isinstance(value, str):
             return len(value) == DT.constants.DIGIT4_LEN and value.isdigit()
-        if isinstance(value, int|float):
-            return DT.constants.DIGIT4_MIN <= value <= DT.constants.DIGIT4_MAX
-        return False
+        value = int(value)
+        return DT.constants.DIGIT4_MIN <= value <= DT.constants.DIGIT4_MAX
 
     @staticmethod
     def is_5digits(value: str|int) -> bool:
         """値が5桁の文字列/数値かどうかを判定"""
         if isinstance(value, str):
             return len(value) == DT.constants.DIGIT5_LEN and value.isdigit()
-        if isinstance(value, int|float):
-            return DT.constants.DIGIT5_MIN <= value <= DT.constants.DIGIT5_MAX
-        return False
+        return DT.constants.DIGIT5_MIN <= value <= DT.constants.DIGIT5_MAX
 
     @staticmethod
     def is_empty(value) -> bool:

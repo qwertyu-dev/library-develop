@@ -17,18 +17,136 @@ class ConditionEvaluator:
         self.log_msg = self.config.log_message
 
     def evaluate_conditions(self, row: pd.Series, decision_table: pd.DataFrame) -> str:
+        # original
+        #if row.empty:
+        #    return 'DataFrameEditorDefault'
+
+        #for _, decision_row in decision_table.iterrows():
+        #    if all(self._check_condition(row.get(col, pd.NA), decision_row[col]) for col in row.index):
+        #        result = decision_row['DecisionResult']
+        #        msg = f"All conditions met, returning DecisionResult: {result}"
+        #        self.log_msg(msg, LogLevel.INFO)
+        #        return result
+        #msg = "No matching conditions found, returning DataFrameEditorDefault"
+        #self.log_msg(msg, LogLevel.INFO)
+        #return 'DataFrameEditorDefault'
+
+        # debug add v1
+        #if row.empty:
+        #    return 'DataFrameEditorDefault'
+
+        #for idx, decision_row in decision_table.iterrows():
+        #    # 各列の条件チェック結果を収集
+        #    conditions_results = {}
+        #    all_matched = True
+        #    
+        #    for col in row.index:
+        #        value = row.get(col, pd.NA)
+        #        condition = decision_row[col]
+        #        is_matched = self._check_condition(value, condition)
+        #        
+        #        conditions_results[col] = {
+        #            'value': value,
+        #            'condition': condition,
+        #            'matched': is_matched
+        #        }
+        #        
+        #        if not is_matched:
+        #            all_matched = False
+        #            break
+        #    
+        #    # デバッグ情報をログ出力
+        #    self.log_msg(f"\nDecision table row {idx} evaluation:", LogLevel.DEBUG)
+        #    for col, result in conditions_results.items():
+        #        self.log_msg(
+        #            f"Column: {col} - Value: {result['value']} vs. "
+        #            f"Condition: {result['condition']} -->  Matched: {result['matched']}", 
+        #            LogLevel.DEBUG
+        #        )
+        #    
+        #    if all_matched:
+        #        result = decision_row['DecisionResult']
+        #        self.log_msg(f"All conditions met for row {idx}, result: {result}", LogLevel.INFO)
+        #        return result
+
+        #return 'DataFrameEditorDefault'
+
+        # debug add v2
         if row.empty:
+            self.log_msg("Empty row received, returning default", LogLevel.INFO)
             return 'DataFrameEditorDefault'
 
-        for _, decision_row in decision_table.iterrows():
-            if all(self._check_condition(row.get(col, pd.NA), decision_row[col]) for col in row.index):
+        for idx, decision_row in decision_table.iterrows():
+            conditions_results = {}
+            all_matched = True
+            
+            # 条件チェック結果の収集
+            for col in row.index:
+                value = row.get(col, pd.NA)
+                condition = decision_row[col]
+                
+                try:
+                    is_matched = self._check_condition(value, condition)
+                    check_method = self._get_check_method_name(condition)
+                    
+                    conditions_results[col] = {
+                        'value': value,
+                        'condition': condition,
+                        'matched': is_matched,
+                        'check_method': check_method
+                    }
+                    
+                    if not is_matched:
+                        all_matched = False
+                        break
+                        
+                except Exception as e:
+                    self.log_msg(f"Error checking condition for column {col}: {str(e)}", LogLevel.ERROR)
+                    raise
+
+            # デバッグ情報のログ出力
+            self._log_evaluation_results(idx, conditions_results)
+            
+            if all_matched:
                 result = decision_row['DecisionResult']
-                msg = f"All conditions met, returning DecisionResult: {result}"
-                self.log_msg(msg, LogLevel.INFO)
+                self.log_msg(
+                    f"Match found in row {idx}: {result}",
+                    LogLevel.INFO
+                )
                 return result
-        msg = "No matching conditions found, returning DataFrameEditorDefault"
-        self.log_msg(msg, LogLevel.INFO)
+
+        self.log_msg("No matching conditions found, returning default", LogLevel.INFO)
         return 'DataFrameEditorDefault'
+
+    def _get_check_method_name(self, condition: str|int) -> str:
+        """条件チェックの種類を判定して返す"""
+        if pd.isna(condition):
+            return 'na_check'
+        if condition == "any":
+            return 'any_check'
+        if isinstance(condition, str):
+            if "," in condition:
+                return 'or_condition'
+            if condition in self.dt_functions:
+                return 'dt_function'
+            if self.is_regex(condition):
+                return 'regex'
+        return 'direct_comparison'
+
+    def _log_evaluation_results(self, idx: int, results: dict) -> None:
+        """評価結果のログ出力を行う"""
+        self.log_msg(f"\nDecision table row {idx} evaluation:", LogLevel.DEBUG)
+        for col, result in results.items():
+            self.log_msg(
+                f"Column: {col} | "
+                f"Value: {result['value']} | "
+                f"Condition: {result['condition']} | "
+                f"Method: {result['check_method']} | "
+                f"Matched: {result['matched']}", 
+                LogLevel.DEBUG
+            )
+
+
 
     def _check_condition(self, value: str|int, condition: str|int) -> bool:
         if pd.isna(condition) :

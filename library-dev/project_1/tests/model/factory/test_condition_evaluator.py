@@ -466,6 +466,384 @@ class TestConditionEvaluatorEvaluateConditions:
         result = evaluator.evaluate_conditions(row, decision_table)
         assert result == 'Result9999'
 
+
+    def test_evaluate_conditions_check_types_na_condition(self, evaluator):
+        """
+        テスト内容:
+        - テストカテゴリ: C3
+        - テスト区分: 正常系
+        - テストシナリオ: NA条件のチェック
+        """
+        log_msg("\nTesting NA condition check", LogLevel.INFO)
+    
+        row = pd.Series({'A': 1, 'B': None})
+        decision_table = pd.DataFrame({
+            'A': [1],
+            'B': [pd.NA],  # NAの条件
+            'DecisionResult': ['Result1'],
+        })
+    
+        log_msg(f'row: \n{row}', LogLevel.INFO)
+        #log_msg(f'decision_table: \n{tabulate_dataframe(decision_table)}', LogLevel.INFO)
+    
+        result = evaluator.evaluate_conditions(row, decision_table)
+        assert result == 'DataFrameEditorDefault'  # NA条件は常にFalseを返す
+    
+    def test_evaluate_conditions_check_types_any_condition(self, evaluator):
+        """
+        テスト内容:
+        - テストカテゴリ: C3
+        - テスト区分: 正常系
+        - テストシナリオ: any条件のチェック
+        """
+        log_msg("\nTesting 'any' condition check", LogLevel.INFO)
+    
+        row = pd.Series({'A': 1, 'B': 'test'})
+        decision_table = pd.DataFrame({
+            'A': [1],
+            'B': ['any'],  # any条件
+            'DecisionResult': ['Result1'],
+        })
+    
+        log_msg(f'row: \n{row}', LogLevel.INFO)
+        log_msg(f'decision_table: \n{tabulate_dataframe(decision_table)}', LogLevel.INFO)
+    
+        result = evaluator.evaluate_conditions(row, decision_table)
+        assert result == 'Result1'  # any条件は常にTrueを返す
+    
+    def test_evaluate_conditions_check_types_or_condition(self, evaluator):
+        """
+        テスト内容:
+        - テストカテゴリ: C3
+        - テスト区分: 正常系
+        - テストシナリオ: OR条件のチェック
+        """
+        log_msg("\nTesting OR condition check", LogLevel.INFO)
+    
+        row = pd.Series({'A': 1, 'B': 'test2'})
+        decision_table = pd.DataFrame({
+            'A': [1],
+            'B': ['test1,test2,test3'],  # OR条件
+            'DecisionResult': ['Result1'],
+        })
+    
+        log_msg(f'row: \n{row}', LogLevel.INFO)
+        log_msg(f'decision_table: \n{tabulate_dataframe(decision_table)}', LogLevel.INFO)
+    
+        result = evaluator.evaluate_conditions(row, decision_table)
+        assert result == 'Result1'
+
+    def test_evaluate_conditions_dt_is_4digits(self, evaluator):
+        """
+        テスト内容:
+        - テストカテゴリ: C3
+        - テスト区分: 正常系
+        - テストシナリオ: DT.is_4digits関数のチェック
+        """
+        log_msg("\nTesting DT.is_4digits check", LogLevel.INFO)
+    
+        # 4桁の数値
+        row = pd.Series({'A': 1234})
+        decision_table = pd.DataFrame({
+            'A': ['is_4digits'],
+            'DecisionResult': ['Result1'],
+        })
+    
+        log_msg(f'row: \n{row}', LogLevel.INFO)
+        log_msg(f'decision_table: \n{tabulate_dataframe(decision_table)}', LogLevel.INFO)
+    
+        result = evaluator.evaluate_conditions(row, decision_table)
+        assert result == 'Result1'
+    
+        # 4桁以外の数値
+        row = pd.Series({'A': 123})
+        result = evaluator.evaluate_conditions(row, decision_table)
+        assert result == 'DataFrameEditorDefault'
+    
+    def test_evaluate_conditions_dt_is_5digits(self, evaluator):
+        """
+        テスト内容:
+        - テストカテゴリ: C3
+        - テスト区分: 正常系
+        - テストシナリオ: DT.is_5digits関数のチェック
+        """
+        log_msg("\nTesting DT.is_5digits check", LogLevel.INFO)
+    
+        # 5桁の数値
+        row = pd.Series({'A': 12345})
+        decision_table = pd.DataFrame({
+            'A': ['is_5digits'],
+            'DecisionResult': ['Result1'],
+        })
+    
+        log_msg(f'row: \n{row}', LogLevel.INFO)
+        log_msg(f'decision_table: \n{tabulate_dataframe(decision_table)}', LogLevel.INFO)
+    
+        result = evaluator.evaluate_conditions(row, decision_table)
+        assert result == 'Result1'
+    
+        # 5桁以外の数値
+        row = pd.Series({'A': 1234})
+        result = evaluator.evaluate_conditions(row, decision_table)
+        assert result == 'DataFrameEditorDefault'
+    
+    def test_evaluate_conditions_dt_is_empty(self, evaluator):
+        """
+        テスト内容:
+        - テストカテゴリ: C3
+        - テスト区分: 正常系
+        - テストシナリオ: DT.is_empty関数のチェック
+        """
+        log_msg("\nTesting DT.is_empty check", LogLevel.INFO)
+    
+        # 空文字列、None、NAのケース
+        test_cases = [
+            ('', True),
+            ('  ', True),
+            (None, True),
+            (pd.NA, True),
+            ('value', False),
+            (123, False)
+        ]
+    
+        decision_table = pd.DataFrame({
+            'A': ['is_empty'],
+            'DecisionResult': ['Result1'],
+        })
+    
+        log_msg(f'decision_table: \n{tabulate_dataframe(decision_table)}', LogLevel.INFO)
+    
+        for value, should_match in test_cases:
+            row = pd.Series({'A': value})
+            log_msg(f'Testing value: {value}', LogLevel.INFO)
+            result = evaluator.evaluate_conditions(row, decision_table)
+            expected = 'Result1' if should_match else 'DataFrameEditorDefault'
+            assert result == expected, f"Failed for value: {value}"
+    
+    def test_evaluate_conditions_dt_is_not_empty(self, evaluator):
+        """
+        テスト内容:
+        - テストカテゴリ: C3
+        - テスト区分: 正常系
+        - テストシナリオ: DT.is_not_empty関数のチェック
+        """
+        log_msg("\nTesting DT.is_not_empty check", LogLevel.INFO)
+    
+        # 空文字列、None、NAのケース
+        test_cases = [
+            ('', False),
+            ('  ', False),
+            (None, False),
+            (pd.NA, False),
+            ('value', True),
+            (123, True)
+        ]
+    
+        decision_table = pd.DataFrame({
+            'A': ['is_not_empty'],
+            'DecisionResult': ['Result1'],
+        })
+    
+        log_msg(f'decision_table: \n{tabulate_dataframe(decision_table)}', LogLevel.INFO)
+    
+        for value, should_match in test_cases:
+            row = pd.Series({'A': value})
+            log_msg(f'Testing value: {value}', LogLevel.INFO)
+            result = evaluator.evaluate_conditions(row, decision_table)
+            expected = 'Result1' if should_match else 'DataFrameEditorDefault'
+            assert result == expected, f"Failed for value: {value}"
+    
+    def test_evaluate_conditions_dt_mixed_conditions(self, evaluator):
+        """
+        テスト内容:
+        - テストカテゴリ: C3
+        - テスト区分: 正常系
+        - テストシナリオ: 複数のDT関数を組み合わせたチェック
+        """
+        log_msg("\nTesting mixed DT functions", LogLevel.INFO)
+    
+        row = pd.Series({
+            'code': 12345,      # 5桁
+            'name': 'Test',     # 非空
+            'optional': '',     # 空
+            'id': 1234         # 4桁
+        })
+    
+        decision_table = pd.DataFrame({
+            'code': ['is_5digits'],
+            'name': ['is_not_empty'],
+            'optional': ['is_empty'],
+            'id': ['is_4digits'],
+            'DecisionResult': ['Result1'],
+        })
+    
+        log_msg(f'row: \n{row}', LogLevel.INFO)
+        log_msg(f'decision_table: \n{tabulate_dataframe(decision_table)}', LogLevel.INFO)
+    
+        result = evaluator.evaluate_conditions(row, decision_table)
+        assert result == 'Result1'
+
+
+
+    
+    
+    
+    
+    
+    
+    
+
+    
+    def test_evaluate_conditions_check_types_regex(self, evaluator):
+        """
+        テスト内容:
+        - テストカテゴリ: C3
+        - テスト区分: 正常系
+        - テストシナリオ: 正規表現のチェック
+        """
+        log_msg("\nTesting regex condition check", LogLevel.INFO)
+    
+        row = pd.Series({'A': 1, 'B': 'test123'})
+        decision_table = pd.DataFrame({
+            'A': [1],
+            'B': ['^test\\d+$'],  # 正規表現
+            'DecisionResult': ['Result1'],
+        })
+    
+        log_msg(f'row: \n{row}', LogLevel.INFO)
+        log_msg(f'decision_table: \n{tabulate_dataframe(decision_table)}', LogLevel.INFO)
+    
+        result = evaluator.evaluate_conditions(row, decision_table)
+        assert result == 'Result1'
+    
+    def test_evaluate_conditions_check_types_direct_comparison(self, evaluator):
+        """
+        テスト内容:
+        - テストカテゴリ: C3
+        - テスト区分: 正常系
+        - テストシナリオ: 直接比較のチェック
+        """
+        log_msg("\nTesting direct comparison check", LogLevel.INFO)
+    
+        row = pd.Series({'A': 1, 'B': 'exact_match'})
+        decision_table = pd.DataFrame({
+            'A': [1],
+            'B': ['exact_match'],  # 直接比較
+            'DecisionResult': ['Result1'],
+        })
+    
+        log_msg(f'row: \n{row}', LogLevel.INFO)
+        log_msg(f'decision_table: \n{tabulate_dataframe(decision_table)}', LogLevel.INFO)
+    
+        result = evaluator.evaluate_conditions(row, decision_table)
+        assert result == 'Result1'
+    
+
+    def test_evaluate_conditions_check_types_mixed(self, evaluator):
+        """
+        テスト内容:
+        - テストカテゴリ: C3
+        - テスト区分: 正常系
+        - テストシナリオ: 複数の条件タイプの組み合わせ
+        """
+        log_msg("\nTesting mixed condition types", LogLevel.INFO)
+    
+        row = pd.Series({
+            'col1': 'test123',          # regex用の値
+            'col2': 'any_value',        # any条件用の値
+            'col3': 'option2',          # OR条件用の値
+            'col4': 1234,               # DT関数(is_4digits)用の値
+            'col5': '',                 # DT関数(is_empty)用の値
+            'col6': 'exact_match'       # 直接比較用の値
+        })
+        
+        decision_table = pd.DataFrame({
+            'col1': ['^test\\d+$'],          # regex
+            'col2': ['any'],                 # any
+            'col3': ['option1,option2'],     # or_condition
+            'col4': ['is_4digits'],          # dt_function
+            'col5': ['is_empty'],            # dt_function
+            'col6': ['exact_match'],         # direct_comparison
+            'DecisionResult': ['Result1'],
+        })
+    
+        log_msg(f'row: \n{row}', LogLevel.INFO)
+        log_msg(f'decision_table: \n{tabulate_dataframe(decision_table)}', LogLevel.INFO)
+    
+        result = evaluator.evaluate_conditions(row, decision_table)
+        assert result == 'Result1'
+    
+    def test_evaluate_conditions_check_types_mixed_negative(self, evaluator):
+        """
+        テスト内容:
+        - テストカテゴリ: C3
+        - テスト区分: 異常系
+        - テストシナリオ: 複数の条件タイプの組み合わせ（1つ条件不一致）
+        """
+        log_msg("\nTesting mixed condition types with one mismatch", LogLevel.INFO)
+    
+        # 各パターンで失敗するケース
+        test_cases = [
+            {
+                'col1': 'invalid',           # regex不一致
+                'col2': 'any_value',         # any
+                'col3': 'option2',           # or_condition
+                'col4': 1234,                # is_4digits
+                'col5': '',                  # is_empty
+                'col6': 'exact_match'        # exact
+            },
+            {
+                'col1': 'test123',           # regex
+                'col2': 'any_value',         # any
+                'col3': 'invalid',           # or_condition不一致
+                'col4': 1234,                # is_4digits
+                'col5': '',                  # is_empty
+                'col6': 'exact_match'        # exact
+            },
+            {
+                'col1': 'test123',           # regex
+                'col2': 'any_value',         # any
+                'col3': 'option2',           # or_condition
+                'col4': 12345,               # is_4digits不一致
+                'col5': '',                  # is_empty
+                'col6': 'exact_match'        # exact
+            },
+            {
+                'col1': 'test123',           # regex
+                'col2': 'any_value',         # any
+                'col3': 'option2',           # or_condition
+                'col4': 1234,                # is_4digits
+                'col5': 'not empty',         # is_empty不一致
+                'col6': 'exact_match'        # exact
+            },
+            {
+                'col1': 'test123',           # regex
+                'col2': 'any_value',         # any
+                'col3': 'option2',           # or_condition
+                'col4': 1234,                # is_4digits
+                'col5': '',                  # is_empty
+                'col6': 'mismatch'           # exact不一致
+            }
+        ]
+        
+        decision_table = pd.DataFrame({
+            'col1': ['^test\\d+$'],          # regex
+            'col2': ['any'],                 # any
+            'col3': ['option1,option2'],     # or_condition
+            'col4': ['is_4digits'],          # dt_function
+            'col5': ['is_empty'],            # dt_function
+            'col6': ['exact_match'],         # direct_comparison
+            'DecisionResult': ['Result1'],
+        })
+    
+        for test_case in test_cases:
+            row = pd.Series(test_case)
+            log_msg(f'Testing case:\n{row}', LogLevel.INFO)
+            result = evaluator.evaluate_conditions(row, decision_table)
+            assert result == 'DataFrameEditorDefault'
+
+
+
 class TestConditionEvaluatorCheckCondition:
     """ConditionEvaluatorの_check_condition関数のテスト
 
