@@ -44,15 +44,14 @@ class DT:
         """値が4桁の文字列/数値かどうかを判定"""
         if isinstance(value, str):
             return len(value) == DT.constants.DIGIT4_LEN and value.isdigit()
-        value = int(value)
-        return DT.constants.DIGIT4_MIN <= value <= DT.constants.DIGIT4_MAX
+        return DT.constants.DIGIT4_MIN <= int(value) <= DT.constants.DIGIT4_MAX
 
     @staticmethod
     def is_5digits(value: str|int) -> bool:
         """値が5桁の文字列/数値かどうかを判定"""
         if isinstance(value, str):
             return len(value) == DT.constants.DIGIT5_LEN and value.isdigit()
-        return DT.constants.DIGIT5_MIN <= value <= DT.constants.DIGIT5_MAX
+        return DT.constants.DIGIT5_MIN <= int(value) <= DT.constants.DIGIT5_MAX
 
     @staticmethod
     def is_empty(value) -> bool:
