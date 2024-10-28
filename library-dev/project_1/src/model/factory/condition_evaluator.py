@@ -1,14 +1,15 @@
-import pandas as pd
 import re
 
-from src.lib.common_utils.ibr_enums import LogLevel
+import pandas as pd
+
 from src.lib.common_utils.ibr_decorator_config import with_config
+from src.lib.common_utils.ibr_enums import LogLevel
 from src.lib.validator_utils.ibr_decision_table_validator import DT
 
 
 class ReExceptionError(Exception):
     pass
-    
+
 @with_config
 class ConditionEvaluator:
     def __init__(self, config: dict|None = None):
@@ -79,39 +80,39 @@ class ConditionEvaluator:
         for idx, decision_row in decision_table.iterrows():
             conditions_results = {}
             all_matched = True
-            
+
             # 条件チェック結果の収集
             for col in row.index:
                 value = row.get(col, pd.NA)
                 condition = decision_row[col]
-                
+
                 try:
                     is_matched = self._check_condition(value, condition)
                     check_method = self._get_check_method_name(condition)
-                    
+
                     conditions_results[col] = {
                         'value': value,
                         'condition': condition,
                         'matched': is_matched,
-                        'check_method': check_method
+                        'check_method': check_method,
                     }
-                    
+
                     if not is_matched:
                         all_matched = False
                         break
-                        
+
                 except Exception as e:
                     self.log_msg(f"Error checking condition for column {col}: {str(e)}", LogLevel.ERROR)
                     raise
 
             # デバッグ情報のログ出力
             self._log_evaluation_results(idx, conditions_results)
-            
+
             if all_matched:
                 result = decision_row['DecisionResult']
                 self.log_msg(
                     f"Match found in row {idx}: {result}",
-                    LogLevel.INFO
+                    LogLevel.INFO,
                 )
                 return result
 
@@ -131,22 +132,19 @@ class ConditionEvaluator:
                 return 'dt_function'
             if self.is_regex(condition):
                 return 'regex'
-        return 'direct_comparison'
+        return 'simple_compare'
 
     def _log_evaluation_results(self, idx: int, results: dict) -> None:
         """評価結果のログ出力を行う"""
         self.log_msg(f"\nDecision table row {idx} evaluation:", LogLevel.DEBUG)
         for col, result in results.items():
             self.log_msg(
-                f"Column: {col} | "
-                f"Value: {result['value']} | "
-                f"Condition: {result['condition']} | "
+                f"Column: {col}: "
+                f"(Value : Condition) -> ({result['value']} : {result['condition']}) | "
                 f"Method: {result['check_method']} | "
-                f"Matched: {result['matched']}", 
-                LogLevel.DEBUG
+                f"Matched: {result['matched']}",
+                LogLevel.DEBUG,
             )
-
-
 
     def _check_condition(self, value: str|int, condition: str|int) -> bool:
         if pd.isna(condition) :
