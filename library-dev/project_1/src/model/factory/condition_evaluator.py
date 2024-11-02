@@ -77,12 +77,22 @@ class ConditionEvaluator:
             self.log_msg("Empty row received, returning default", LogLevel.INFO)
             return 'DataFrameEditorDefault'
 
+        # ディシジョン定義で評価に使用しないColumnを判定処理から取り除く
+        excluted_columns = [
+            'DecisionResult',
+            'facade_name_jp',
+        ]
+
+        # 判定に使用するColumnを選定
+        decision_columns = [col for col in decision_table.columns if col not in excluted_columns]
+        evaluation_columns = [col for col in decision_columns if col in row.index]
+
         for idx, decision_row in decision_table.iterrows():
             conditions_results = {}
             all_matched = True
 
             # 条件チェック結果の収集
-            for col in row.index:
+            for col in evaluation_columns:
                 value = row.get(col, pd.NA)
                 condition = decision_row[col]
 
