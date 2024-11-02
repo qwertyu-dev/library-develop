@@ -57,8 +57,8 @@ class RemarksParser:
         Returns:
             Dict[str, Dict[str, str]]: 解析結果を格納した辞書
                 - "request_type": 申請の種類("営業部傘下", "エリア", "その他")
-                - "sales_department": 営業部署の情報を格納した辞書。
-                    - "department_name": 営業部署名,支店名・営業部名は含まない
+                - "sales_department": 拠点内営業部名の情報を格納した辞書。
+                    - "department_name": 拠点内営業部名,支店名・営業部名は含まない
                     - "branch_name": 支店名
                 - "area_group": エリアグループの情報を格納した辞書
                     - "group_code": エリアグループコード

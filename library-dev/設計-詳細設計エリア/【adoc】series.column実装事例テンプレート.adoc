@@ -1,0 +1,200 @@
+= Pandas Series単一カラム操作ガイド
+
+== 基本概念
+Series操作における重要な実装ポイントを以下の表にまとめます。これらのポイントは、後続の実装パターンすべてに共通する基本原則となります:
+
+[cols="1,2,3", options="header"]
+|===
+|項目 |実装ポイント |実装例
+
+|順序保存
+|更新前に必ずインデックス順序を保存
+|`original_index = series.index.tolist()`
+
+|更新方法
+|更新はコピーに対して行う
+|`updated_series = series.copy()`
+
+|型チェック
+|型チェックを適切に行う
+|`if isinstance(series[column], str):`
+
+|順序復元
+|更新後はreindexで順序を復元
+|`return updated_series.reindex(original_index)`
+
+|値処理
+|単一カラムの値は直接メソッドを適用
+|`value = series['name'].strip().lower()`
+|===
+
+=== 単一カラムアクセスと値の更新
+以下のサンプルコードは、基本概念で示した実装ポイントに従って実装されています:
+
+[source,python]
+----
+# サンプルデータ
+series = pd.Series({
+    'name': '  John Doe  ',
+    'email': 'JOHN@example.com',
+    'tags': 'python, pandas, data'
+})
+
+# カラム値の取得と処理
+name_value = series['name'].strip()
+
+# カラム値を複数適用、改行でそれぞれ記述
+cleaned = (
+    series['name']
+    .strip()
+    .lower()
+    .replace('o', 'x')
+)
+
+# インデックス順序を保持しつつ更新
+original_index = series.index.tolist()
+updated_series = series.copy()
+updated_series['name'] = name_value
+maintained_series = updated_series.reindex(original_index)
+----
+
+== 実装パターン
+基本概念で示した実装ポイントを活用した、一般的なユースケースにおける実装パターンを示します:
+
+=== テキスト処理の基本パターン
+
+[source,python]
+----
+def clean_column_text(series: pd.Series, column: str) -> pd.Series:
+    """
+    特定カラムのテキストクリーニング
+    """
+    original_index = series.index.tolist()
+    updated_series = series.copy()
+
+    if isinstance(updated_series[column], str):
+        # 文字列型の場合のみ処理
+        value = (
+            updated_series[column]
+            .strip()
+            .lower()
+            )
+        updated_series[column] = value
+
+    return updated_series.reindex(original_index)
+
+# 使用例
+cleaned_series = clean_column_text(series, 'name')
+----
+
+=== メールアドレス処理
+
+[source,python]
+----
+def normalize_email_column(series: pd.Series, email_column: str) -> pd.Series:
+    """
+    メールアドレスカラムの正規化
+    """
+    original_index = series.index.tolist()
+    updated_series = series.copy()
+
+    if isinstance(updated_series[email_column], str):
+        value = (
+            updated_series[email_column]
+            .strip()
+            .lower()
+            )
+        updated_series[email_column] = value
+
+    return updated_series.reindex(original_index)
+----
+
+=== 条件付き更新
+
+[source,python]
+----
+def update_column_conditional(
+    series: pd.Series,
+    column: str,
+    condition: callable,
+    update_func: callable
+) -> pd.Series:
+    """
+    条件に基づくカラム値の更新
+    
+    Args:
+        series: 対象のSeries
+        column: 更新対象のカラム名
+        condition: 条件を判定する関数
+        update_func: 更新処理を行う関数
+    """
+    original_index = series.index.tolist()
+    updated_series = series.copy()
+    
+    if condition(updated_series[column]):
+        updated_series[column] = update_func(updated_series[column])
+    
+    return updated_series.reindex(original_index)
+
+# 使用例
+is_email = lambda x: isinstance(x, str) and '@' in x
+normalize = lambda x: x.strip().lower()
+
+updated = update_column_conditional(
+    series, 
+    'email',
+    is_email,
+    normalize
+)
+----
+
+=== 複数ステップの処理
+
+[source,python]
+----
+def process_column_steps(
+    series: pd.Series,
+    column: str,
+    steps: list
+) -> pd.Series:
+    """
+    特定カラムに対して複数の処理を順次適用
+    
+    Args:
+        series: 対象のSeries
+        column: 処理対象のカラム名
+        steps: 適用する処理関数のリスト
+    """
+    original_index = series.index.tolist()
+    updated_series = series.copy()
+    
+    value = updated_series[column]
+    for step in steps:
+        if isinstance(value, str):
+            value = step(value)
+    
+    updated_series[column] = value
+    return updated_series.reindex(original_index)
+
+# 使用例
+steps = [
+    str.strip,
+    str.lower,
+    lambda x: x.replace(' ', '_')
+]
+
+processed = process_column_steps(series, 'name', steps)
+----
+
+[IMPORTANT]
+====
+*重要なポイント:*
+
+* 更新前に必ずインデックス順序を保存
+* 更新はコピーに対して行う
+* 型チェックを適切に行う
+* 更新後はreindexで順序を復元
+* 単一カラムの値は直接メソッドを適用
+====
+
+NOTE: 各処理関数は、入力値の型を適切に確認し、安全に処理を行うように実装することが重要です。

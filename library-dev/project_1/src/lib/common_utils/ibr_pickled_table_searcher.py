@@ -135,22 +135,23 @@ class TableSearcher:
         self.package_config = self.config.package_config
         self.log_msg = self.config.log_message
 
-        self.log_msg(f"TableSearcher.__init__ called. self.config: {getattr(self, 'config', 'Not set')}", LogLevel.INFO)
+        self.log_msg(f"TableSearcher.__init__ called.", LogLevel.INFO)
+        self.log_msg(f"TableSearcher.__init__ called. self.config: {getattr(self, 'config', 'Not set')}", LogLevel.DEBUG)
 
         # table_name
-        self.log_msg(f'table_name: {table_name}', LogLevel.INFO)
+        self.log_msg(f'picked file name: {table_name}', LogLevel.INFO)
         if not table_name or not table_name.strip():
             msg = f"{ErrorMessages.EMPTY_TABLE_NAME}"
             raise ValueError(msg) from None
         self.table_name = table_name
 
         # file_path
-        self.log_msg(f'file_path: {file_path}', LogLevel.INFO)
+        self.log_msg(f'file_path: {file_path}', LogLevel.DEBUG)
         if file_path:
             self.file_path = Path(file_path) / self.table_name
         else:
             self.file_path = Path(self.common_config.get('optional_path', []).get('TABLE_PATH', '')) / self.table_name
-        self.log_msg(f'self.file_path: {self.file_path}', LogLevel.INFO)
+        self.log_msg(f'pickled_table file_path: {self.file_path}', LogLevel.INFO)
 
         # ファイルの最終更新時刻を取得
         self.get_file_modified_time = get_file_modified_time or self._default_get_file_modified_time
@@ -174,7 +175,7 @@ class TableSearcher:
     def _default_get_file_modified_time(self) -> float:
         """ファイルの最終更新時刻を取得する"""
         try:
-            self.log_msg(f'pickle_file_path: {self.file_path}', LogLevel.INFO)
+            self.log_msg(f'pickle_file_path: {self.file_path}', LogLevel.DEBUG)
             return self.file_path.stat().st_mtime
         except FileNotFoundError:
             err_msg = f"{ErrorMessages.FILE_NOT_FOUND}"
@@ -195,7 +196,7 @@ class TableSearcher:
     @cached(cache=TTLCache(maxsize=FileConfig.CACHE_MAXSIZE, ttl=FileConfig.CACHE_TTL))
     def _default_load_table(self) -> pd.DataFrame:
         """テーブルファイルを読み込む"""
-        self.log_msg('load pickle: {self.file_path}', LogLevel.INFO)
+        self.log_msg('load pickle: {self.file_path}', LogLevel.DEBUG)
         try:
             if self._should_update_cache():
                 self._default_load_table.cache_clear()
