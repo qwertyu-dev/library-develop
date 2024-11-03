@@ -19,11 +19,13 @@ def main():
     log_msg(f'start: import')
     # デフォルト位置のpickle読み込みケース
     jinji = TableSearcher('jinji_requests.pkl')
-    log_msg(f'\n\n{tabulate_dataframe(jinji.df)}')
+    jinji_df = jinji.df.copy()
+    log_msg(f'\n\n{tabulate_dataframe(jinji_df)}', LogLevel.INFO)
 
     # path指定してのpickle読み込みケース
     integrated = TableSearcher('integrated_layout.pkl', file_path='tests/table')
-    log_msg(f'\n\n{tabulate_dataframe(integrated.df)}')
+    integrated_df = integrated.df.copy()
+    log_msg(f'\n\n{tabulate_dataframe(integrated_df)}', LogLevel.INFO)
 
 if __name__ == "__main__":
     main()
