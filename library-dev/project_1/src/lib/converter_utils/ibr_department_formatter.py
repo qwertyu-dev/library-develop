@@ -2,6 +2,15 @@
 
 import re
 
+# config共有
+import sys
+from src.lib.common_utils.ibr_decorator_config import initialize_config
+from src.lib.common_utils.ibr_enums import LogLevel
+config = initialize_config(sys.modules[__name__])
+
+package_config = config.package_config
+log_msg = config.log_message
+
 def format_department_name(department_name: str) -> str:
     r"""部署名を標準的な形式に整形する
 
@@ -42,8 +51,9 @@ def format_department_name(department_name: str) -> str:
                 - "部 部 " → "部部 "
                 - "部 門" → "部門"
                 - "部部門" → "部 部門"
-                - "部門 (" → "部門("
+                - "部門（" → "部門（"
                 - "部 ·" → "部·"
+                - "部 （" → "部（"
 
         5. 分割した部分を再結合
 
@@ -77,35 +87,18 @@ def format_department_name(department_name: str) -> str:
     |------|--------------|----------|------------|---------------|
     | v0.1 | 初期定義作成 | 新規作成 | 2024/07/20 | xxxx aaa.bbb  |
 
-    """
+    """ # noqa: RUF002 条件判定に全角カッコを含むため
     # 個別要件リスト 完全一致でバイパス
-    individual_requirements = [
-        "営業本部業務部",
-        "内部監査部業務監査グループ第三ユニット",
-        "成田加良部社宅（６９１０）人事室",
-        "葉山倶楽部（６９１０）人事室",
-        "軽井沢倶楽部（６９１０）人事室",
-    ]
+    individual_requirements = package_config.get('ibr_department_formatter',{}).get('ExactRequixrementsMatcher','')
+    log_msg(f"個別要件リスト 完全一致でバイパス定義: {individual_requirements}", LogLevel.DEBUG)
 
     # 全体マッチの例外ケース 完全一致でバイパス
-    full_match_exceptions = [
-        "本部審議役",
-        "本部審議役（大阪）",
-        "本部審議役（名古屋）",
-        "本部賛事役",
-        "本部賛事役（大阪）",
-        "本部賛事役（名古屋）",
-    ]
+    full_match_exceptions = package_config.get('ibr_department_formatter',{}).get('GlobalMatchExceptions','')
+    log_msg(f"全体マッチの例外ケース 完全一致でバイパス定義: {full_match_exceptions}", LogLevel.DEBUG)
 
     # 部分マッチの例外ケース 部分一致で処理
-    partial_match_exceptions = [
-        "中部",
-        "東部",
-        "西部",
-        "春日部",
-        "宇部",
-        "内部",
-    ]
+    partial_match_exceptions = package_config.get('ibr_department_formatter',{}).get('SubsetMatchExceptions','')
+    log_msg(f"部分マッチの例外ケース 部分一致でバイパス定義: {partial_match_exceptions}", LogLevel.DEBUG)
 
     # 個別要件チェック
     if department_name in individual_requirements:
@@ -115,12 +108,8 @@ def format_department_name(department_name: str) -> str:
     if department_name in full_match_exceptions:
         return department_name
 
-    # 「〜部(拠点名)」パターンのチェック
-    if re.search(r'部\([^)]*\)$', department_name):
-        return department_name
-
     # 括弧内の処理を避けるため、括弧内外で分割
-    parts = re.split(r'(\([^)]*\))', department_name)
+    parts = re.split(r'(\（[^)]*\）)', department_name)  # noqa: RUF001 条件判定に全角カッコを含むため
 
     # 括弧の外側の部分のみ処理
     for i in range(0, len(parts), 2):
@@ -133,10 +122,12 @@ def format_department_name(department_name: str) -> str:
         parts[i] = parts[i].replace("部 部 ", "部部 ")
         parts[i] = parts[i].replace("部 門", "部門")
         parts[i] = parts[i].replace("部部門", "部 部門")
-        parts[i] = parts[i].replace("部門 (", "部門(")
+        parts[i] = parts[i].replace("部門 （", "部門（")  # noqa: RUF001 条件判定に全角カッコを含むため
         parts[i] = parts[i].replace("部 ·", "部·")
         parts[i] = parts[i].replace("部 ・", "部・")
+        parts[i] = parts[i].replace("部 （", "部（")      # noqa: RUF001 条件判定に全角カッコを含むため
 
+    # 処理結果を再度組み立て、文字列に
     department_name = ''.join(parts)
 
     # 部分マッチの例外処理 ブランク戻し
