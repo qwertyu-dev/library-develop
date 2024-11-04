@@ -108,3 +108,50 @@ df.to_pickle('tests/table/integrated_layout.pkl')
 # pickle file 読み込み確認
 integrated = TableSearcher('integrated_layout.pkl', 'tests/table/')
 log_msg(f'\n\n{tabulate_dataframe(integrated.df)}')
+
+
+########################################################################
+@pytest.fixture(scope="session")
+def temp_data_dir(tmp_path_factory) -> Path:
+    """Create a temporary directory for test data"""
+    return tmp_path_factory.mktemp("test_data")
+
+@pytest.fixture(scope="function")
+def integrated_request_from_docstring(temp_data_dir) -> pd.DataFrame:
+    """Load reference table data from docstring"""
+    docstring = """
+    # ここにExcelからコピーしたデータを貼り付ける
+    """
+    if docstring.isspace():
+        return pd.DataFrame()
+
+    return pd.read_csv(
+        StringIO(docstring),
+        header=0,
+        sep=r'\s+',
+        dtype='object',
+    )
+
+@pytest.fixture(scope="function")
+def integrated_request_from_docstring_testdata_nnn(temp_data_dir) -> pd.DataFrame:
+    """Load reference table data from docstring"""
+    docstring = """
+    # ここにExcelからコピーしたデータを貼り付ける
+    """
+    if docstring.isspace():
+        return pd.DataFrame()
+
+    _df = pd.read_csv(
+        StringIO(docstring),
+        header=0,
+        sep=r'\s+',
+        dtype='object',
+    )
+    file_name = 'integrated_request_testdata_nnn.pkl'
+    pickle_file_path = Path(temp_data_dir) / file_name
+    _df.to_pickle(pickle_file_path)
+
+    # 利用方法
+    # reference = TableSearcher('integrated_request_testdata_nnn.pkl', pickle_file_path)
+
+    return _df

@@ -57,3 +57,7 @@ SubsetMatchExceptions = [
     "内部",
 ]
 
+[local.ibr_bpr_flag_determiner]
+SpecificWords = ['米州', '欧州', 'アジア']
+reference_data = 'reference.pkl'
+request_data = 'request.pkl'
