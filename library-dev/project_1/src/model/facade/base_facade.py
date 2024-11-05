@@ -30,6 +30,11 @@ class DataFrameEditor:
         edited_series = self._apply_basic_editors(edited_series)
         #edited_series = self._apply_custom_editors(edited_series)
         return edited_series
+    
+    # reindex
+    def reindex_series(self, series: pd.Series) -> pd.Series:
+        _series = series.copy()
+        return _series.reindex(self.output_columns)
 
     # 出力レイアウト準備
     def _prepare_output_layout(self, series: pd.Series) -> pd.Series:

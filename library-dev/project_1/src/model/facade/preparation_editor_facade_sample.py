@@ -61,5 +61,6 @@ class DataFrameEditorDefault(DataFrameEditor):
         result['x4'] = series['aaa'] + series['bbbb']
 
         # 編集結果を返す
-        return result
+        #return result
+        return self.reindex_series(result)
 

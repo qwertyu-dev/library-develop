@@ -27,7 +27,7 @@ class Test_DataFrameEditor_init:
 
     テスト構造:
     ├── C0: 基本機能テスト
-    │   ├── 正常系: configを渡してインス���ンス生成
+    │   ├── 正常系: configを渡してインスタンス生成
     │   └── 正常系: configを渡さずにインスタンス生成
     ├── C1: 分岐カバレッジ
     │   ├── 正常系: configが提供される場合
@@ -62,7 +62,7 @@ class Test_DataFrameEditor_init:
         test_doc = """テスト内容:
         - テストカテゴリ: C0
         - テスト区分: 正常系
-        - ���ストシナリオ: configを渡してインスタンス生成
+        - テストシナリオ: configを渡してインスタンス生成
         """
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
@@ -234,7 +234,7 @@ class Test_DataFrameEditor_prepare_output_layout:
     | 出力series作成                 | X     | X     | X     |
     | 値のコピー                     | X     | X     | -     |
     | NaN設定                        | -     | X     | X     |
-    
+
     境界値検証ケース一覧:
     | ケースID | 入力パラメータ | テスト値                           | 期待される結果                | テストの目的/検証ポイント            | 実装状況 |
     |----------|----------------|-----------------------------------|------------------------------|---------------------------------------|----------|
@@ -244,17 +244,17 @@ class Test_DataFrameEditor_prepare_output_layout:
     | BVT_004  | series         | 数値型カラム名のSeries            | 正しくコピー                  | 数値型カラム名の処理確認              | 実装済み |
     | BVT_005  | series         | 異なる型の値を含むSeries          | 型を保持してコピー            | 異なるデータ型の処理確認              | 実装済み |
     """
-    
+
     def setup_method(self):
         log_msg("test start", LogLevel.INFO)
-    
+
     def teardown_method(self):
         log_msg(f"test end\n{'-'*80}\n", LogLevel.INFO)
-    
+
     @pytest.fixture()
     def mock_config(self):
         return Mock(log_message=Mock())
-    
+
     @pytest.fixture()
     def test_editor(self, mock_config):
         @with_config
@@ -805,3 +805,200 @@ class Test_DataFrameEditor_edit_series:
         assert not prepare_result.equals(input_series)
         assert not basic_result.equals(prepare_result)
         assert result.equals(basic_result)
+
+class Test_DataFrameEditor_reindex_series:
+    """DataFrameEditorのreindex_seriesメソッドのテスト
+
+    テスト構造:
+    ├── C0: 基本機能テスト
+    │   ├── 正常系: 基本的なreindex処理
+    │   └── 正常系: 入力Seriesが変更されないことの確認
+    ├── C1: 分岐カバレッジ
+    │   ├── 正常系: output_columnsが設定されている場合
+    │   └── 正常系: output_columnsがNoneの場合
+    ├── C2: インデックスパターンの組み合わせ
+    │   ├── 正常系: 全列が存在する場合
+    │   ├── 正常系: 一部の列のみ存在する場合
+    │   └── 正常系: 全く異なる列の場合
+    └── BVT: 境界値テスト
+        ├── 正常系: 空のSeriesの処理
+        ├── 正常系: 大きなSeriesの処理
+        └── 正常系: 特殊文字を含む列名の処理
+
+    C1のディシジョンテーブル:
+    | 条件                           | ケース1 | ケース2  |
+    |--------------------------------|---------|----------|
+    | output_columnsが設定されている | Y       | N        |
+    | 結果                           | reindex | 元のまま |
+
+    境界値検証ケース一覧:
+    | ケースID | 入力パラメータ    | テスト値                | 期待される結果        | テストの目的/検証ポイント         | 実装状況 |
+    |----------|-------------------|-------------------------|-----------------------|-----------------------------------|----------|
+    | BVT_001  | series            | 空のSeries              | 空のSeries            | 空入力の処理確認                  | 実装済み |
+    | BVT_002  | series            | 1000列のSeries          | 指定列のみのSeries    | 大規模データの処理確認            | 実装済み |
+    | BVT_003  | series            | 特殊文字を含む列名      | 正常にreindex         | 特殊文字の処理確認                | 実装済み |
+    | BVT_004  | output_columns    | []                      | 空のSeries            | 空のoutput_columnsの処理確認      | 実装済み |
+    | BVT_005  | output_columns    | None                    | 入力と同じSeries      | Noneの処理確認                    | 実装済み |
+    """
+
+    def setup_method(self):
+        log_msg("test start", LogLevel.INFO)
+
+    def teardown_method(self):
+        log_msg(f"test end\n{'-'*80}\n", LogLevel.INFO)
+
+    @pytest.fixture()
+    def mock_config(self):
+        return Mock(log_message=Mock())
+
+    @pytest.fixture()
+    def test_editor(self, mock_config):
+        @with_config
+        class TestDataFrameEditor(DataFrameEditor):
+            def __init__(self, output_columns=None, config=None):
+                super().__init__(config)
+                self.output_columns = output_columns or ['col1', 'col2']
+
+        with patch('src.lib.common_utils.ibr_decorator_config.initialize_config', return_value=mock_config):
+            return TestDataFrameEditor()
+
+    def test_reindex_series_C0_basic_reindex(self, test_editor):
+        test_doc = """
+        テスト区分: UT
+        テストカテゴリ: C0
+        テスト区分: 正常系
+        テストシナリオ: 基本的なreindex処理の確認
+        """
+        log_msg(f"\n{test_doc}", LogLevel.INFO)
+
+        input_series = pd.Series({'col1': 'val1', 'col3': 'val3'})
+        result = test_editor.reindex_series(input_series)
+
+        assert isinstance(result, pd.Series)
+        assert list(result.index) == test_editor.output_columns
+        assert result['col1'] == 'val1'
+        assert pd.isna(result['col2'])
+
+    def test_reindex_series_C0_input_unchanged(self, test_editor):
+        test_doc = """
+        テスト区分: UT
+        テストカテゴリ: C0
+        テスト区分: 正常系
+        テストシナリオ: 入力Seriesが変更されないことの確認
+        """
+        log_msg(f"\n{test_doc}", LogLevel.INFO)
+
+        input_series = pd.Series({'col1': 'val1', 'col3': 'val3'})
+        original_series = input_series.copy()
+        test_editor.reindex_series(input_series)
+
+        assert input_series.equals(original_series)
+
+    def test_reindex_series_C1_DT_01_with_output_columns(self, test_editor):
+        test_doc = """
+        テスト区分: UT
+        テストカテゴリ: C1
+        テスト区分: 正常系
+        テストシナリオ: output_columnsが設定されている場合
+        DTケース: 1
+        """
+        log_msg(f"\n{test_doc}", LogLevel.INFO)
+
+        input_series = pd.Series({'col1': 'val1', 'col3': 'val3'})
+        result = test_editor.reindex_series(input_series)
+
+        assert list(result.index) == test_editor.output_columns
+        assert len(result) == len(test_editor.output_columns)
+
+    def test_reindex_series_C1_DT_02_without_output_columns(self, test_editor):
+        test_doc = """
+        テスト区分: UT
+        テストカテゴリ: C1
+        テスト区分: 正常系
+        テストシナリオ: output_columnsがNoneの場合
+        DTケース: 2
+        """
+        log_msg(f"\n{test_doc}", LogLevel.INFO)
+
+        test_editor.output_columns = None
+        input_series = pd.Series({'col1': 'val1', 'col3': 'val3'})
+        result = test_editor.reindex_series(input_series)
+
+        assert result.equals(input_series)
+        assert id(result) != id(input_series)  # 別オブジェクトであることを確認
+
+    @pytest.mark.parametrize(("input_data","expected_nulls"), [
+        ({'col1': 'val1', 'col2': 'val2'}, 0),
+        ({'col1': 'val1'}, 1),
+        ({'col3': 'val3', 'col4': 'val4'}, 2),
+    ])
+    def test_reindex_series_C2_index_patterns(self, test_editor, input_data, expected_nulls):
+        test_doc = """
+        テスト区分: UT
+        テストカテゴリ: C2
+        テスト区分: 正常系
+        テストシナリオ: 様々なインデックスパターンの確認
+        """
+        log_msg(f"\n{test_doc}", LogLevel.INFO)
+
+        input_series = pd.Series(input_data)
+        result = test_editor.reindex_series(input_series)
+
+        assert list(result.index) == test_editor.output_columns
+        assert pd.isna(result).sum() == expected_nulls
+
+    def test_reindex_series_BVT_empty_series(self, test_editor):
+        test_doc = """
+        テスト区分: UT
+        テストカテゴリ: BVT
+        テスト区分: 正常系
+        テストシナリオ: 空のSeriesの処理確認
+        """
+        log_msg(f"\n{test_doc}", LogLevel.INFO)
+
+        input_series = pd.Series({})
+        result = test_editor.reindex_series(input_series)
+
+        assert list(result.index) == test_editor.output_columns
+        assert pd.isna(result).all()
+
+    def test_reindex_series_BVT_large_series(self, test_editor):
+        test_doc = """
+        テスト区分: UT
+        テストカテゴリ: BVT
+        テスト区分: 正常系
+        テストシナリオ: 大きなSeriesの処理確認
+        """
+        log_msg(f"\n{test_doc}", LogLevel.INFO)
+
+        input_data = {f'col{i}': f'val{i}' for i in range(1000)}
+        input_series = pd.Series(input_data)
+        result = test_editor.reindex_series(input_series)
+
+        assert list(result.index) == test_editor.output_columns
+        assert len(result) == len(test_editor.output_columns)
+
+    def test_reindex_series_BVT_special_chars(self, mock_config):
+        test_doc = """
+        テスト区分: UT
+        テストカテゴリ: BVT
+        テスト区分: 正常系
+        テストシナリオ: 特殊文字を含む列名の処理確認
+        """
+        log_msg(f"\n{test_doc}", LogLevel.INFO)
+
+        @with_config
+        class TestDataFrameEditor(DataFrameEditor):
+            def __init__(self, config=None):
+                super().__init__(config)
+                self.output_columns = ['col#1', 'col@2']
+
+        with patch('src.lib.common_utils.ibr_decorator_config.initialize_config', return_value=mock_config):
+            editor = TestDataFrameEditor()
+
+        input_series = pd.Series({'col#1': 'val1', 'col@2': 'val2', 'col3': 'val3'})
+        result = editor.reindex_series(input_series)
+
+        assert list(result.index) == editor.output_columns
+        assert result['col#1'] == 'val1'
+        assert result['col@2'] == 'val2'
