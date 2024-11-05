@@ -179,6 +179,7 @@ class JinjiExcelMapping(ExcelMapping):
         try:
             unified_df = pd.DataFrame(columns=self.unified_layout)
 
+            # 固定設定
             unified_df['ulid'] = [str(ulid.new()) for _ in range(len(df))]
             unified_df['form_type'] = '1'
             unified_df['application_type'] = df['application_type']
@@ -187,16 +188,27 @@ class JinjiExcelMapping(ExcelMapping):
             unified_df['parent_branch_code'] = df['parent_branch_code']
             unified_df['branch_code'] = df['branch_code']
             unified_df['branch_name'] = df['branch_name']
+
+            # 課Grコード,課Gr名称の設定振り分け
             unified_df['section_gr_code'] = df.apply(lambda row: row['section_area_code'] if row['target_org'] == '課' else '', axis=1)
             unified_df['section_gr_name'] = df.apply(lambda row: row['section_area_name'] if row['target_org'] == '課' else '', axis=1)
-            unified_df['section_name_en'] = df['section_area_name_en']
-            unified_df['resident_branch_code'] = df['resident_branch_code']
-            unified_df['resident_branch_name'] = df['resident_branch_name']
+            # 常駐部店コード,常駐部店名称の設定振り分け
+            unified_df['resident_branch_code'] = df.apply(lambda row: row['resident_branch_code'] if row['target_org'] == 'エリア' else '', axis=1)
+            unified_df['resident_branch_name'] = df.apply(lambda row: row['resident_branch_name'] if row['target_org'] == 'エリア' else '', axis=1)
+            #
             unified_df['aaa_transfer_date'] = df['aaa_transfer_date']
+            # 拠点内営業部コード,拠点内営業部名称の設定振り分け
+            unified_df['internal_sales_dept_code'] = df.apply(lambda row: row['branch_code'] if row['target_org'] == '拠点内営業部' else '', axis=1)
+            unified_df['internal_sales_dept_name'] = df.apply(lambda row: row['branch_name'] if row['target_org'] == '拠点内営業部' else '', axis=1)
+            # エリアコード,エリア名称の設定振り分け
             unified_df['business_and_area_code'] = df.apply(lambda row: row['section_area_code'] if row['target_org'] == 'エリア' else '', axis=1)
             unified_df['area_name'] = df.apply(lambda row: row['section_area_name'] if row['target_org'] == 'エリア' else '', axis=1)
-            unified_df['remarks'] = df['remarks']
+            # TODO():要確認
+            # 部店カナを統合レイアウトに伝搬しないとあるが,入力データには設定されている仕様(マニュアル対応フェーズ,記載ケース条件は有り)
             unified_df['organization_name_kana'] = df['organization_name_kana']
+            # 備考は編集セずそのままセット
+            unified_df['remarks'] = df['remarks']
+
 
         except Exception as e:
             err_msg = f"Error occurred while mapping to unified layout: {str(e)}"
@@ -272,11 +284,17 @@ class KokukiExcelMapping(ExcelMapping):
             unified_df['ulid'] = [str(ulid.new()) for _ in range(len(df))]
             unified_df['form_type'] = '2'
             unified_df['application_type'] = df['application_type']
+            #TODO(): 統合レイアウトマッピング時点で部門コード・親部店コードは設定していない,どこで対処するかと仕様の詰めが必要
+            #TODO(): 部店コードに対するリファレンスデータがある前提での処理になっている(現行仕様) 一括申請国企用のマクロ参照
+            # unified_df['business_unit_code']  // 申請データには属性保有なし
+            # unified_df['parent_branch_code']  // 申請データには属性保有なし
             unified_df['target_org'] = df['target_org']
             unified_df['branch_code'] = df['branch_code']
+            unified_df['branch_name'] = df['branch_name_ja']
+            # 課Grコード,課Gr名称
             unified_df['section_gr_code'] = df['section_area_code']
             unified_df['section_gr_name'] = df['section_area_name_ja']
-            unified_df['section_name_en'] = df['section_area_name_en']
+            #
             unified_df['aaa_transfer_date'] = df['aaa_transfer_date']
 
         except Exception as e:
@@ -356,17 +374,23 @@ class KanrenExcelMappingWithDummy(ExcelMapping):
             unified_df['ulid'] = [str(ulid.new()) for _ in range(len(df))]
             unified_df['form_type'] = '3'  # ダミー課あり
             unified_df['application_type'] = df['application_type']
+            # 「対象」は関連/ダミー課ありケースは入力値属性で持っていないことを再確認
             unified_df['business_unit_code'] = df['business_unit_code']
             unified_df['parent_branch_code'] = df['parent_branch_code']
             unified_df['branch_code'] = df['branch_code']
             unified_df['branch_name'] = df['branch_name']
+            # 課Grコード,課Gr名称
             unified_df['section_gr_code'] = df['section_gr_code']
             unified_df['section_gr_name'] = df['section_gr_name']
-            unified_df['section_name_en'] = df['section_name_en']
+            #
             unified_df['aaa_transfer_date'] = df['aaa_transfer_date']
+            # 課名称(英語,カナ,略称)
+            unified_df['section_name_en'] = df['section_name_en']
             unified_df['section_name_kana'] = df['section_name_kana']
             unified_df['section_name_abbr'] = df['section_name_abbr']
-            unified_df['bpr_target_flag'] = df['bpr_target_flag']
+            # シンクラ/ネットPCが利用可能フラグはこの時点で設定していない
+            # BPRAD初期値判定フラグで対応であることは再確認
+            # unified_df['bpr_target_flag'] // 設定なし
 
         except Exception as e:
             err_msg = f"Error occurred while mapping to unified layout: {str(e)}"
@@ -450,16 +474,12 @@ class KanrenExcelMappingWithoutDummy(ExcelMapping):
             unified_df['parent_branch_code'] = df['parent_branch_code']
             unified_df['branch_code'] = df['branch_code']
             unified_df['branch_name'] = df['branch_name']
-            unified_df['section_gr_code'] = df.apply(lambda row: row['section_area_code'] if row['target_org'] == '課' else '', axis=1)
-            unified_df['section_gr_name'] = df.apply(lambda row: row['section_area_name'] if row['target_org'] == '課' else '', axis=1)
-            unified_df['section_name_en'] = df['section_area_name_en']
-            unified_df['resident_branch_code'] = df['resident_branch_code']
-            unified_df['resident_branch_name'] = df['resident_branch_name']
+            # 課Grコード,課名称
+            unified_df['section_gr_code'] = df['section_area_code']
+            unified_df['section_gr_name'] = df['section_area_name']
+            #
             unified_df['aaa_transfer_date'] = df['aaa_transfer_date']
-            unified_df['business_and_area_code'] = df.apply(lambda row: row['section_area_code'] if row['target_org'] == 'エリア' else '', axis=1)
-            unified_df['area_name'] = df.apply(lambda row: row['section_area_name'] if row['target_org'] == 'エリア' else '', axis=1)
             unified_df['remarks'] = df['remarks']
-            unified_df['organization_name_kana'] = df['organization_name_kana']
 
         except Exception as e:
             err_msg = f"Error occurred while mapping to unified layout: {str(e)}"
