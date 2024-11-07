@@ -5,6 +5,7 @@
 """
 import re
 import sys
+import unicodedata
 
 from src.lib.common_utils.ibr_decorator_config import initialize_config
 from src.lib.common_utils.ibr_enums import LogLevel
@@ -77,7 +78,8 @@ class RemarksParser:
                     self._process_sales_department(line)
                     continue
 
-                if "Gr" in line:
+                #if "Gr" in line:
+                if self._contains_gr(line):  # 全角半角Grを対象とする
                     self._process_area_group(line)
                     continue
 
@@ -98,6 +100,19 @@ class RemarksParser:
             str: 行頭のドットを削除した行。
         """
         return re.sub(r"^・", "", line)
+
+    def _contains_gr(self, line: str) -> bool:
+        """文字列内にGr(全角/半角)が含まれているかチェックする
+
+        Args:
+            line (str): チェック対象の文字列
+
+        Returns:
+            bool: Grが含まれている場合はTrue
+        """
+        # 全角のＧｒを半角に正規化
+        normalized = unicodedata.normalize('NFKC', line)
+        return 'Gr' in normalized
 
     def _process_sales_department(self, line: str) -> None:
         """営業部署の情報を処理し、解析結果に追加する。
@@ -136,6 +151,10 @@ class RemarksParser:
             log_msg(f"  Input text       : '{line}'", LogLevel.DEBUG)
             log_msg("Resetting area group values to empty", LogLevel.DEBUG)
 
+        # 状況に関わらず other_infoに追加
+        self.result["other_info"] += line + "\n"
+
+
     def _process_area_group(self, line: str) -> None:
         r"""エリアグループの情報を処理し、解析結果に追加する。
 
@@ -158,7 +177,8 @@ class RemarksParser:
             - "A1B2C 営業部-1Gr"
         """
         self.result["request_type"] = "エリア"
-        match = re.match(r"^(\w{5})[ \u3000]([^\s]+?Gr)\s*(\(.*?\))?$", line)
+        #match = re.match(r"^(\w{5})[ \u3000]([^\s]+?Gr)\s*(\(.*?\))?$", line)
+        match = re.match(r"^(\w{5})[ \u3000]([^\s]+?(?:Gr|Ｇｒ))\s*(\(.*?\))?$", line)
         if match:
             log_msg("Regex match details:", LogLevel.DEBUG)
             log_msg(f"  Full match       : '{match.group(0)}'", LogLevel.DEBUG)
@@ -169,7 +189,12 @@ class RemarksParser:
             self.result["area_group"]["group_code"] = match.group(1)
             self.result["area_group"]["group_name"] = match.group(2)
             self.result["area_group"]["established_date"] = match.group(3)[1:-1] if match.group(3) else ""
+
         else:
             log_msg("Regex match failed:", LogLevel.DEBUG)
             log_msg(f"  Input text       : '{line}'", LogLevel.DEBUG)
             log_msg("Resetting area group values to empty", LogLevel.DEBUG)
+
+        # 状況に関わらず other_infoに追加
+        self.result["other_info"] += line + "\n"
+
