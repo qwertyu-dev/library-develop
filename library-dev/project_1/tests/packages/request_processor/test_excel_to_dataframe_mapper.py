@@ -1,4 +1,4 @@
-# config共有
+# 統合レイアウトへのデータマッピングテストコード
 import sys
 from unittest.mock import MagicMock, patch
 
@@ -21,63 +21,10 @@ from src.packages.request_processor.excel_to_dataframe_mapper import (
 config = initialize_config(sys.modules[__name__])
 log_msg = config.log_message
 
-class TestExcelMappingInit:
-    """ExcelMappingの__init__メソッドのテスト
-
-    テスト構造:
-    ├── C0: 基本機能テスト
-    │   ├── 正常系: 有効な設定でインスタンス生成
-    │   └── 正常系: デフォルト設定でインスタンス生成
-    └── C1: 分岐カバレッジ
-        ├── 正常系: confがNoneの場合
-        └── 正常系: confが指定されている場合
-
-    C1のディシジョンテーブル:
-    | 条件           | ケース1 | ケース2 |
-    |----------------|---------|---------|
-    | confがNone     | Y       | N       |
-    | 出力           | デフォルトconfig使用 | 指定されたconfig使用 |
-
-    境界値検証ケース一覧:
-    | ケースID | 入力パラメータ | テスト値 | 期待される結果 | テストの目的/検証ポイント | 実装状況 |
-    |----------|----------------|----------|----------------|---------------------------|----------|
-    | BVT_001  | conf           | None     | デフォルトconfigが使用される | Noneが正しく処理されることを確認 | 実装済み (test_init_C0_default_configuration) |
-    | BVT_002  | conf           | {}       | 空のdictが正しく処理される | 最小の有効な入力を確認 | 実装済み (test_init_C1_with_empty_conf) |
-    | BVT_003  | conf           | 大きな辞書 | 大きな辞書が正しく処理される | 大量のデータの処理を確認 | 未実装 |
-
-    注記:
-    BVT_003は現在未実装です。大量のデータを含む辞書での動作確認が必要な場合は、
-    このテストケースを追加することを検討してください。
-    """
-
-    def setup_method(self):
-        log_msg("test start", LogLevel.INFO)
-
-    def teardown_method(self):
-        log_msg(f"test end\n{'-'*80}\n", LogLevel.INFO)
-
-    @pytest.fixture()
-    def mock_config(self):
-        return MagicMock(log_message=MagicMock())
-
-    def test_init_C0_default_configuration(self):
-        test_doc = """
-        テスト区分: UT
-        テストカテゴリ: C0
-        テスト内容: デフォルト設定でインスタンス生成
-        """
-        log_msg(f"\n{test_doc}", LogLevel.DEBUG)
-
-        excel_mapping = ExcelMapping()
-
-        assert excel_mapping.config is not None
-        assert callable(excel_mapping.log_msg)
-        assert excel_mapping._column_mapping is None
-        assert isinstance(excel_mapping.unified_layout, list)
-        assert 'unified_layout' in excel_mapping.config.package_config.get('layout', {})
-
+@pytest.fixture(scope='module')
+def unified_output_layout():
         # unified_layoutの内容を確認
-        expected_layout = [
+        return  [
             'ulid',
             'form_type',
             'application_type',
@@ -102,6 +49,130 @@ class TestExcelMappingInit:
             'section_name_abbr',
             'bpr_target_flag',
         ]
+
+@pytest.fixture(scope="module")
+def jinji_output_map():
+    return  {
+        '報告日': 'report_date',
+        'no': 'application_number',
+        '有効日付': 'effective_date',
+        '種類': 'application_type',
+        '対象': 'target_org',
+        '部門コード': 'business_unit_code',
+        '親部店コード': 'parent_branch_code',
+        '部店コード': 'branch_code',
+        '部店名称': 'branch_name',
+        '部店名称(英語)': 'branch_name_en',
+        '課/エリアコード': 'section_area_code',
+        '課/エリア名称': 'section_area_name',
+        '課/エリア名称(英語)': 'section_area_name_en',
+        '常駐部店コード': 'resident_branch_code',
+        '常駐部店名称': 'resident_branch_name',
+        '純新規店の組織情報受渡し予定日(開店日基準)': 'new_org_info_transfer_date',
+        '共通認証受渡し予定日(人事データ反映基準)': 'aaa_transfer_date',
+        '備考': 'remarks',
+        '部店ｶﾅ': 'organization_name_kana',
+        }
+
+@pytest.fixture(scope="module")
+def kokuki_output_map():
+    return {
+        '報告日': 'report_date',
+        'no': 'application_number',
+        '登録予定日(yyyy/mm/dd)': 'effective_date',
+        '種類(新規変更廃止)': 'application_type',
+        '対象(課・エリア/中間階層)': 'target_org',
+        '部店店番': 'branch_code',
+        '部店名称 日本語': 'branch_name_ja',
+        '部店名称 英語': 'branch_name_en',
+        '中間階層コード': 'intermediate_level_code',
+        '中間階層名称:日本語': 'intermediate_level_name_ja',
+        '中間階層名称:英語': 'intermediate_level_name_en',
+        '中間階層略称:日本語': 'intermediate_level_abbr_ja',
+        '中間階層略称:英語': 'intermediate_level_abbr_en',
+        '課・エリアコード': 'section_area_code',
+        '課・エリア名称:日本語': 'section_area_name_ja',
+        '課・エリア名称:英語': 'section_area_name_en',
+        '課・エリア略称:日本語': 'section_area_abbr_ja',
+        '課・エリア略称:英語': 'section_area_abbr_en',
+        '共通認証受渡予定日': 'aaa_transfer_date',
+        '変更種別・詳細旧名称・略語': 'change_details',
+    }
+
+@pytest.fixture(scope="module")
+def kanren_output_map():
+    return  {
+        '種類': 'application_type',
+        '部門コード': 'business_unit_code',
+        '親部店コード': 'parent_branch_code',
+        '部店コード': 'branch_code',
+        '部店名称': 'branch_name',
+        '課Grコード': 'section_gr_code',
+        '課Gr名称': 'section_gr_name',
+        '課名称(英語)': 'section_name_en',
+        '共通認証受渡し予定日': 'aaa_transfer_date',
+        '課名称(カナ)': 'section_name_kana',
+        '課名称(略称)': 'section_name_abbr',
+        'BPR対象/対象外フラグ': 'bpr_target_flag',
+    }
+
+class TestExcelMappingInit:
+    """ExcelMappingの__init__メソッドのテスト
+
+    テスト構造:
+    ├── C0: 基本機能テスト
+    │   ├── 正常系: 有効な設定でインスタンス生成
+    │   └── 正常系: デフォルト設定でインスタンス生成
+    └── C1: 分岐カバレッジ
+        ├── 正常系: confがNoneの場合
+        └── 正常系: confが指定されている場合
+
+    C1のディシジョンテーブル:
+    | 条件           | ケース1              | ケース2              |
+    |----------------|----------------------|----------------------|
+    | confがNone     | Y                    | N                    |
+    | 出力           | デフォルトconfig使用 | 指定されたconfig使用 |
+
+    境界値検証ケース一覧:
+    | ケースID | 入力パラメータ | テスト値   | 期待される結果               | テストの目的/検証ポイント        | 実装状況 |
+    |----------|----------------|------------|------------------------------|----------------------------------|----------|
+    | BVT_001  | conf           | None       | デフォルトconfigが使用される | Noneが正しく処理されることを確認 | 実装済み (test_init_C0_default_configuration) |
+    | BVT_002  | conf           | {}         | 空のdictが正しく処理される   | 最小の有効な入力を確認           | 実装済み (test_init_C1_with_empty_conf) |
+    | BVT_003  | conf           | 大きな辞書 | 大きな辞書が正しく処理される | 大量のデータの処理を確認         | 未実装   |
+
+    注記:
+    BVT_003は現在未実装です。大量のデータを含む辞書での動作確認が必要な場合は、
+    このテストケースを追加することを検討してください。
+    """
+
+    def setup_method(self):
+        log_msg("test start", LogLevel.INFO)
+
+    def teardown_method(self):
+        log_msg(f"test end\n{'-'*80}\n", LogLevel.INFO)
+
+    @pytest.fixture()
+    def mock_config(self):
+        return MagicMock(log_message=MagicMock())
+
+    def test_init_C0_default_configuration(self, unified_output_layout):
+        test_doc = """
+        テスト区分: UT
+        テストカテゴリ: C0
+        テスト内容: デフォルト設定でインスタンス生成
+        """
+        log_msg(f"\n{test_doc}", LogLevel.DEBUG)
+
+        excel_mapping = ExcelMapping()
+
+        assert excel_mapping.config is not None
+        assert callable(excel_mapping.log_msg)
+        assert excel_mapping._column_mapping is None
+        assert isinstance(excel_mapping.unified_layout, list)
+        assert 'unified_layout' in excel_mapping.config.package_config.get('layout', {})
+
+        # unified_layoutの内容を確認
+        expected_layout = unified_output_layout
         assert excel_mapping.unified_layout == expected_layout
 
         log_msg(f"unified_layout: {excel_mapping.unified_layout}", LogLevel.DEBUG)
@@ -191,17 +262,17 @@ class TestExcelMappingColumnMapping:
         └── 異常系: _column_mappingがNoneの場合
 
     C1のディシジョンテーブル:
-    | 条件                      | ケース1 | ケース2 |
-    |---------------------------|---------|---------|
-    | _column_mappingがNone     | N       | Y       |
+    | 条件                      | ケース1 | ケース2  |
+    |---------------------------|---------|----------|
+    | _column_mappingがNone     | N       | Y        |
     | 出力                      | dict    | 例外発生 |
 
     境界値検証ケース一覧:
-    | ケースID | 入力パラメータ | テスト値 | 期待される結果 | テストの目的/検証ポイント | 実装状況 |
-    |----------|----------------|----------|----------------|---------------------------|----------|
-    | BVT_001  | _column_mapping | None    | NotImplementedError | Noneの場合の例外発生を確認 | 実装済み (test_column_mapping_C0_not_implemented) |
-    | BVT_002  | _column_mapping | {}      | 空の辞書が返される | 最小の有効な入力を確認 | 実装済み (test_column_mapping_C0_empty_dict) |
-    | BVT_003  | _column_mapping | 大きな辞書 | 大きな辞書が正しく返される | 大量のデータの処理を確認 | 実装済み (test_column_mapping_C0_large_dict) |
+    | ケースID | 入力パラメータ  | テスト値   | 期待される結果             | テストの目的/検証ポイント  | 実装状況 |
+    |----------|-----------------|------------|----------------------------|----------------------------|----------|
+    | BVT_001  | _column_mapping | None       | NotImplementedError        | Noneの場合の例外発生を確認 | 実装済み (test_column_mapping_C0_not_implemented) |
+    | BVT_002  | _column_mapping | {}         | 空の辞書が返される         | 最小の有効な入力を確認     | 実装済み (test_column_mapping_C0_empty_dict) |
+    | BVT_003  | _column_mapping | 大きな辞書 | 大きな辞書が正しく返される | 大量のデータの処理を確認   | 実装済み (test_column_mapping_C0_large_dict) |
 
     注記:
     全てのケースが実装されています。大きな辞書のケース(BVT_003)は、実際のユースケースに
@@ -304,17 +375,17 @@ class TestExcelMappingColumnMappingSetter:
         └── 正常系: 大きな辞書で設定
 
     C1のディシジョンテーブル:
-    | 条件           | ケース1 |
-    |----------------|---------|
+    | 条件             | ケース1 |
+    |------------------|---------|
     | 辞書が設定される | Y       |
-    | 出力           | 成功     |
+    | 出力             | 成功    |
 
     境界値検証ケース一覧:
-    | ケースID | 入力パラメータ | テスト値 | 期待される結果 | テストの目的/検証ポイント | 実装状況 |
-    |----------|----------------|----------|----------------|---------------------------|----------|
-    | BVT_001  | value          | {}       | 空の辞書が設定される | 最小の有効な入力を確認 | 実装済み (test_column_mapping_setter_C0_empty_dict) |
-    | BVT_002  | value          | {'a': 'b'} | 単一要素の辞書が設定される | 最小の非空辞書を確認 | 実装済み (test_column_mapping_setter_C2_small_dict) |
-    | BVT_003  | value          | 大きな辞書 | 大きな辞書が正しく設定される | 大量のデータの処理を確認 | 実装済み (test_column_mapping_setter_C2_large_dict) |
+    | ケースID | 入力パラメータ | テスト値   | 期待される結果               | テストの目的/検証ポイント | 実装状況 |
+    |----------|----------------|------------|------------------------------|---------------------------|----------|
+    | BVT_001  | value          | {}         | 空の辞書が設定される         | 最小の有効な入力を確認    | 実装済み (test_column_mapping_setter_C0_empty_dict) |
+    | BVT_002  | value          | {'a': 'b'} | 単一要素の辞書が設定される   | 最小の非空辞書を確認      | 実装済み (test_column_mapping_setter_C2_small_dict) |
+    | BVT_003  | value          | 大きな辞書 | 大きな辞書が正しく設定される | 大量のデータの処理を確認  | 実装済み (test_column_mapping_setter_C2_large_dict) |
 
     注記:
     全てのケースが実装されています。大きな辞書のケース(BVT_003)は、実際のユースケースに
@@ -420,17 +491,17 @@ class TestExcelMappingColumnMap:
         └── 正常系: 大量の行を持つDataFrame
 
     C1のディシジョンテーブル:
-    | 条件                   | ケース1 | ケース2 |
-    |------------------------|---------|---------|
-    | 全ての必要な列が存在する | Y       | N       |
-    | 出力                   | 成功     | 例外発生 |
+    | 条件                     | ケース1 | ケース2  |
+    |--------------------------|---------|----------|
+    | 全ての必要な列が存在する | Y       | N        |
+    | 出力                     | 成功    | 例外発生 |
 
     境界値検証ケース一覧:
-    | ケースID | 入力パラメータ | テスト値 | 期待される結果 | テストの目的/検証ポイント | 実装状況 |
-    |----------|----------------|----------|----------------|---------------------------|----------|
-    | BVT_001  | df             | 空のDataFrame | InvalidDataError | 最小の無効な入力を確認 | 実装済み (test_column_map_C0_empty_dataframe) |
-    | BVT_002  | df             | 1行のDataFrame | マッピングされたDataFrame | 最小の有効な入力を確認 | 実装済み (test_column_map_BVT_one_row) |
-    | BVT_003  | df             | 大量の行を持つDataFrame | マッピングされたDataFrame | 大量のデータの処理を確認 | 実装済み (test_column_map_BVT_many_rows) |
+    | ケースID | 入力パラメータ | テスト値                | 期待される結果            | テストの目的/検証ポイント | 実装状況 |
+    |----------|----------------|-------------------------|---------------------------|---------------------------|----------|
+    | BVT_001  | df             | 空のDataFrame           InvalidDataError            | 最小の無効な入力を確認    | 実装済み (test_column_map_C0_empty_dataframe) |
+    | BVT_002  | df             | 1行のDataFrame          | マッピングされたDataFrame | 最小の有効な入力を確認    | 実装済み (test_column_map_BVT_one_row) |
+    | BVT_003  | df             | 大量の行を持つDataFrame | マッピングされたDataFrame | 大量のデータの処理を確認  | 実装済み (test_column_map_BVT_many_rows) |
 
     注記:
     全てのケースが実装されています。大量の行を持つDataFrameのケース(BVT_003)は、
@@ -599,14 +670,14 @@ class TestExcelMappingMapToUnifiedLayout:
         └── 異常系: NotImplementedErrorが発生する
 
     C1のディシジョンテーブル:
-    | 条件           | ケース1 |
-    |----------------|---------|
-    | メソッド呼び出し | Y       |
-    | 出力           | 例外発生 |
+    | 条件             | ケース1  |
+    |------------------|----------|
+    | メソッド呼び出し | Y        |
+    | 出力             | 例外発生 |
 
     境界値検証ケース一覧:
-    | ケースID | 入力パラメータ | テスト値 | 期待される結果 | テストの目的/検証ポイント | 実装状況 |
-    |----------|----------------|----------|----------------|---------------------------|----------|
+    | ケースID | 入力パラメータ | テスト値      | 期待される結果      | テストの目的/検証ポイント    | 実装状況 |
+    |----------|----------------|---------------|---------------------|------------------------------|----------|
     | BVT_001  | df             | 空のDataFrame | NotImplementedError | 最小の入力での例外発生を確認 | 実装済み (test_map_to_unified_layout_C0_not_implemented) |
 
     注記:
@@ -656,11 +727,11 @@ class TestJinjiExcelMappingInit:
     | 出力           | デフォルトconfig使用 | 指定されたconfig使用 |
 
     境界値検証ケース一覧:
-    | ケースID | 入力パラメータ | テスト値 | 期待される結果 | テストの目的/検証ポイント | 実装状況 |
-    |----------|----------------|----------|----------------|---------------------------|----------|
-    | BVT_001  | conf           | None     | デフォルトconfigが使用される | Noneが正しく処理されることを確認 | 実装済み (test_init_C0_default_configuration) |
-    | BVT_002  | conf           | 最小限の設定 | 最小限の設定が正しく処理される | 最小の有効な入力を確認 | 実装済み (test_init_C1_with_minimal_conf) |
-    | BVT_003  | conf           | 完全な設定 | 完全な設定が正しく処理される | 全ての設定が正しく処理されることを確認 | 実装済み (test_init_C0_full_configuration) |
+    | ケースID | 入力パラメータ | テスト値     | 期待される結果                 | テストの目的/検証ポイント              | 実装状況 |
+    |----------|----------------|--------------|--------------------------------|----------------------------------------|----------|
+    | BVT_001  | conf           | None         | デフォルトconfigが使用される   | Noneが正しく処理されることを確認       | 実装済み (test_init_C0_default_configuration) |
+    | BVT_002  | conf           | 最小限の設定 | 最小限の設定が正しく処理される | 最小の有効な入力を確認                 | 実装済み (test_init_C1_with_minimal_conf) |
+    | BVT_003  | conf           | 完全な設定   | 完全な設定が正しく処理される   | 全ての設定が正しく処理されることを確認 | 実装済み (test_init_C0_full_configuration) |
 
     注記:
     全てのケースが実装されています。完全な設定のケース(BVT_003)は、実際のユースケースに
@@ -673,7 +744,7 @@ class TestJinjiExcelMappingInit:
     def teardown_method(self):
         log_msg(f"test end\n{'-'*80}\n", LogLevel.INFO)
 
-    def test_init_C0_default_configuration(self):
+    def test_init_C0_default_configuration_jinji(self, jinji_output_map):
         test_doc = """
         テスト区分: UT
         テストカテゴリ: C0
@@ -681,59 +752,13 @@ class TestJinjiExcelMappingInit:
         """
         log_msg(f"\n{test_doc}", LogLevel.DEBUG)
 
-        expected_mapping = {
-            '報告日': 'report_date',
-            'no': 'application_number',
-            '有効日付': 'effective_date',
-            '種類': 'application_type',
-            '対象': 'target_org',
-            '部門コード': 'business_unit_code',
-            '親部店コード': 'parent_branch_code',
-            '部店コード': 'branch_code',
-            '部店名称': 'branch_name',
-            '部店名称(英語)': 'branch_name_en',
-            '課/エリアコード': 'section_area_code',
-            '課/エリア名称': 'section_area_name',
-            '課/エリア名称(英語)': 'section_area_name_en',
-            '常駐部店コード': 'resident_branch_code',
-            '常駐部店名称': 'resident_branch_name',
-            '純新規店の組織情報受渡し予定日(開店日基準)': 'new_org_info_transfer_date',
-            '共通認証受渡し予定日(人事データ反映基準)': 'aaa_transfer_date',
-            '備考': 'remarks',
-            '部店ｶﾅ': 'organization_name_kana',
-        }
+        expected_mapping = jinji_output_map
 
         with patch('src.packages.request_processor.excel_to_dataframe_mapper.initialize_config') as mock_init_config:
             mock_config = MagicMock()
             mock_config.package_config = {
                 'excel_definition_mapping_jinji': expected_mapping,
-                'layout': {
-                    'unified_layout': [
-                        'ulid',
-                        'form_type',
-                        'application_type',
-                        'target_org',
-                        'business_unit_code',
-                        'parent_branch_code',
-                        'branch_code',
-                        'branch_name',
-                        'section_gr_code',
-                        'section_gr_name',
-                        'organization_name_kana',
-                        'resident_branch_code',
-                        'resident_branch_name',
-                        'aaa_transfer_date',
-                        'internal_sales_dept_code',
-                        'internal_sales_dept_name',
-                        'business_and_area_code',
-                        'area_name',
-                        'remarks',
-                        'section_name_en',
-                        'section_name_kana',
-                        'section_name_abbr',
-                        'bpr_target_flag',
-                    ],
-                },
+                'layout': unified_output_layout,
             }
             mock_init_config.return_value = mock_config
 
@@ -745,7 +770,7 @@ class TestJinjiExcelMappingInit:
 
         log_msg(f"column_mapping: {jinji_mapping.column_mapping}", LogLevel.DEBUG)
 
-    def test_init_C0_full_configuration(self):
+    def test_init_C0_full_configuration_jinji(self, jinji_output_map):
         test_doc = """
         テスト区分: UT
         テストカテゴリ: C0
@@ -753,57 +778,13 @@ class TestJinjiExcelMappingInit:
         """
         log_msg(f"\n{test_doc}", LogLevel.DEBUG)
 
-        expected_mapping = {
-            '報告日': 'report_date',
-            'no': 'application_number',
-            '有効日付': 'effective_date',
-            '種類': 'application_type',
-            '対象': 'target_org',
-            '部門コード': 'business_unit_code',
-            '親部店コード': 'parent_branch_code',
-            '部店コード': 'branch_code',
-            '部店名称': 'branch_name',
-            '部店名称(英語)': 'branch_name_en',
-            '課/エリアコード': 'section_area_code',
-            '課/エリア名称': 'section_area_name',
-            '課/エリア名称(英語)': 'section_area_name_en',
-            '常駐部店コード': 'resident_branch_code',
-            '常駐部店名称': 'resident_branch_name',
-            '純新規店の組織情報受渡し予定日(開店日基準)': 'new_org_info_transfer_date',
-            '共通認証受渡し予定日(人事データ反映基準)': 'aaa_transfer_date',
-            '備考': 'remarks',
-            '部店ｶﾅ': 'organization_name_kana',
-        }
+        expected_mapping = jinji_output_map
 
         custom_config = MagicMock()
         custom_config.package_config = {
             'excel_definition_mapping_jinji': expected_mapping,
             'layout': {
-                'unified_layout': [
-                    'ulid',
-                    'form_type',
-                    'application_type',
-                    'target_org',
-                    'business_unit_code',
-                    'parent_branch_code',
-                    'branch_code',
-                    'branch_name',
-                    'section_gr_code',
-                    'section_gr_name',
-                    'organization_name_kana',
-                    'resident_branch_code',
-                    'resident_branch_name',
-                    'aaa_transfer_date',
-                    'internal_sales_dept_code',
-                    'internal_sales_dept_name',
-                    'business_and_area_code',
-                    'area_name',
-                    'remarks',
-                    'section_name_en',
-                    'section_name_kana',
-                    'section_name_abbr',
-                    'bpr_target_flag',
-                ],
+                'layout': unified_output_layout,
             },
         }
 
@@ -815,67 +796,20 @@ class TestJinjiExcelMappingInit:
 
         log_msg(f"column_mapping: {jinji_mapping.column_mapping}", LogLevel.DEBUG)
 
-    def test_init_C1_with_none_conf(self):
+    def test_init_C1_with_none_conf_jinji(self, jinji_output_map):
         test_doc = """
         テスト区分: UT
         テストカテゴリ: C1
         テスト内容: confがNoneの場合のテスト
         """
         log_msg(f"\n{test_doc}", LogLevel.DEBUG)
-
-        expected_mapping = {
-            '報告日': 'report_date',
-            'no': 'application_number',
-            '有効日付': 'effective_date',
-            '種類': 'application_type',
-            '対象': 'target_org',
-            '部門コード': 'business_unit_code',
-            '親部店コード': 'parent_branch_code',
-            '部店コード': 'branch_code',
-            '部店名称': 'branch_name',
-            '部店名称(英語)': 'branch_name_en',
-            '課/エリアコード': 'section_area_code',
-            '課/エリア名称': 'section_area_name',
-            '課/エリア名称(英語)': 'section_area_name_en',
-            '常駐部店コード': 'resident_branch_code',
-            '常駐部店名称': 'resident_branch_name',
-            '純新規店の組織情報受渡し予定日(開店日基準)': 'new_org_info_transfer_date',
-            '共通認証受渡し予定日(人事データ反映基準)': 'aaa_transfer_date',
-            '備考': 'remarks',
-            '部店ｶﾅ': 'organization_name_kana',
-        }
+        expected_mapping = jinji_output_map
 
         with patch('src.packages.request_processor.excel_to_dataframe_mapper.initialize_config') as mock_init_config:
             mock_config = MagicMock()
             mock_config.package_config = {
                 'excel_definition_mapping_jinji': expected_mapping,
-                'layout': {
-                    'unified_layout': [
-                        'ulid',
-                        'form_type',
-                        'application_type',
-                        'target_org',
-                        'business_unit_code',
-                        'parent_branch_code',
-                        'branch_code',
-                        'branch_name',
-                        'section_gr_code',
-                        'section_gr_name',
-                        'organization_name_kana',
-                        'resident_branch_code',
-                        'resident_branch_name',
-                        'aaa_transfer_date',
-                        'internal_sales_dept_code',
-                        'internal_sales_dept_name',
-                        'business_and_area_code',
-                        'area_name',
-                        'remarks',
-                        'section_name_en',
-                        'section_name_kana',
-                        'section_name_abbr',
-                        'bpr_target_flag',
-                    ],
-                },
+                'layout': unified_output_layout,
             }
             mock_init_config.return_value = mock_config
 
@@ -887,7 +821,7 @@ class TestJinjiExcelMappingInit:
 
         log_msg(f"column_mapping: {jinji_mapping.column_mapping}", LogLevel.DEBUG)
 
-    def test_init_C1_with_minimal_conf(self):
+    def test_init_C1_with_minimal_conf_jinji(self):
         test_doc = """
         テスト区分: UT
         テストカテゴリ: C1
@@ -950,7 +884,7 @@ class TestJinjiExcelMapping:
             'organization_name_kana': ['テストシテン'],
         })
 
-    def test_map_to_unified_layout_C0_all_columns_exist(self, jinji_mapping):
+    def test_map_to_unified_layout_C0_all_columns_exist_jinji(self, jinji_mapping, unified_output_layout):
         test_doc = """
         テスト区分: UT
         テストカテゴリ: C0
@@ -963,44 +897,22 @@ class TestJinjiExcelMapping:
         with patch('ulid.new', return_value='dummy_ulid'):
             result = jinji_mapping.map_to_unified_layout(_df)
 
-        expected_layout = [
-            'ulid',
-            'form_type',
-            'application_type',
-            'target_org',
-            'business_unit_code',
-            'parent_branch_code',
-            'branch_code',
-            'branch_name',
-            'section_gr_code',
-            'section_gr_name',
-            'organization_name_kana',
-            'resident_branch_code',
-            'resident_branch_name',
-            'aaa_transfer_date',
-            'internal_sales_dept_code',
-            'internal_sales_dept_name',
-            'business_and_area_code',
-            'area_name',
-            'remarks',
-            'section_name_en',
-            'section_name_kana',
-            'section_name_abbr',
-            'bpr_target_flag',
-        ]
+        expected_layout = unified_output_layout
 
         assert list(result.columns) == expected_layout
         assert result['ulid'].iloc[0] == 'dummy_ulid'
         assert result['form_type'].iloc[0] == '1'
+        assert result['application_type'].iloc[0] == '新規'
         assert result['branch_name'].iloc[0] == 'テスト支店'
         assert result['section_gr_code'].iloc[0] == 'S001'
         assert result['section_gr_name'].iloc[0] == 'テスト課'
+        assert result['organization_name_kana'].iloc[0] == '' # 課設定なのでセットされない
         assert result['business_and_area_code'].iloc[0] == ''
         assert result['area_name'].iloc[0] == ''
 
         log_msg(f"Resulting DataFrame:\n{result}", LogLevel.DEBUG)
 
-    def test_map_to_unified_layout_C0_missing_columns(self, jinji_mapping):
+    def test_map_to_unified_layout_C0_missing_columns_jinji(self, jinji_mapping):
         test_doc = """
         テスト区分: UT
         テストカテゴリ: C0
@@ -1020,7 +932,74 @@ class TestJinjiExcelMapping:
         assert "Error occurred while mapping to unified layout" in str(exc_info.value)
         log_msg(f"Raised exception: {exc_info.value}", LogLevel.DEBUG)
 
-    def test_map_to_unified_layout_C1_target_org_ka(self, jinji_mapping):
+    def test_map_to_unified_layout_C0_target_org_bu_jinji(self, jinji_mapping):
+        test_doc = """
+        テスト区分: UT
+        テストカテゴリ: C0
+        テスト内容: target_orgがその他の場合のmap_to_unified_layout
+        """
+        log_msg(f"\n{test_doc}", LogLevel.DEBUG)
+
+        _df = self.create_base_dataframe()
+        _df['target_org'] = ['部']
+
+        result = jinji_mapping.map_to_unified_layout(_df)
+
+        # 部
+        assert result['branch_code'].iloc[0] == '1001'
+        assert result['branch_name'].iloc[0] == 'テスト支店'
+        # 課
+        assert result['section_gr_code'].iloc[0] == ''
+        assert result['section_gr_name'].iloc[0] == ''
+        # 常駐部店
+        assert result['resident_branch_code'].iloc[0] == ''
+        assert result['resident_branch_name'].iloc[0] == ''
+        # 拠点内営業部
+        assert result['internal_sales_dept_code'].iloc[0] == ''
+        assert result['internal_sales_dept_name'].iloc[0] == ''
+        # エリア
+        assert result['business_and_area_code'].iloc[0] == ''
+        assert result['area_name'].iloc[0] == ''
+        # 部店カナ
+        assert result['organization_name_kana'].iloc[0] == 'テストシテン'
+
+        log_msg(f"Resulting DataFrame:\n{result}", LogLevel.DEBUG)
+
+    def test_map_to_unified_layout_C1_target_org_internal_sales_jinji(self, jinji_mapping):
+        test_doc = """
+        テスト区分: UT
+        テストカテゴリ: C1
+        テスト内容: target_orgが'課'の場合のmap_to_unified_layout
+        """
+        log_msg(f"\n{test_doc}", LogLevel.DEBUG)
+
+        _df = self.create_base_dataframe()
+        _df['target_org'] = ['拠点内営業部']
+
+        result = jinji_mapping.map_to_unified_layout(_df)
+
+        # 部
+        assert result['branch_code'].iloc[0] == '1001'
+        assert result['branch_name'].iloc[0] == 'テスト支店'
+        # 課
+        assert result['section_gr_code'].iloc[0] == ''
+        assert result['section_gr_name'].iloc[0] == ''
+        # 常駐部店
+        assert result['resident_branch_code'].iloc[0] == ''
+        assert result['resident_branch_name'].iloc[0] == ''
+        # 拠点内営業部
+        assert result['internal_sales_dept_code'].iloc[0] == '1001'
+        assert result['internal_sales_dept_name'].iloc[0] == 'テスト支店'
+        # エリア
+        assert result['business_and_area_code'].iloc[0] == ''
+        assert result['area_name'].iloc[0] == ''
+        # 部店カナ
+        assert result['organization_name_kana'].iloc[0] == ''
+
+
+        log_msg(f"Resulting DataFrame:\n{result}", LogLevel.DEBUG)
+
+    def test_map_to_unified_layout_C1_target_org_ka_jinji(self, jinji_mapping):
         test_doc = """
         テスト区分: UT
         テストカテゴリ: C1
@@ -1032,15 +1011,27 @@ class TestJinjiExcelMapping:
         _df['target_org'] = ['課']
 
         result = jinji_mapping.map_to_unified_layout(_df)
-
+        # 部
+        assert result['branch_code'].iloc[0] == '1001'
+        assert result['branch_name'].iloc[0] == 'テスト支店'
+        # 課
         assert result['section_gr_code'].iloc[0] == 'S001'
         assert result['section_gr_name'].iloc[0] == 'テスト課'
+        # 常駐部店
+        assert result['resident_branch_code'].iloc[0] == ''
+        assert result['resident_branch_name'].iloc[0] == ''
+        # 拠点内営業部
+        assert result['internal_sales_dept_code'].iloc[0] == ''
+        assert result['internal_sales_dept_name'].iloc[0] == ''
+        # エリア
         assert result['business_and_area_code'].iloc[0] == ''
         assert result['area_name'].iloc[0] == ''
+        # 部店カナ
+        assert result['organization_name_kana'].iloc[0] == ''
 
         log_msg(f"Resulting DataFrame:\n{result}", LogLevel.DEBUG)
 
-    def test_map_to_unified_layout_C1_target_org_area(self, jinji_mapping):
+    def test_map_to_unified_layout_C1_target_org_area_jinji(self, jinji_mapping):
         test_doc = """
         テスト区分: UT
         テストカテゴリ: C1
@@ -1052,35 +1043,27 @@ class TestJinjiExcelMapping:
         _df['target_org'] = ['エリア']
 
         result = jinji_mapping.map_to_unified_layout(_df)
-
+        # 部
+        assert result['branch_code'].iloc[0] == '1001'
+        assert result['branch_name'].iloc[0] == 'テスト支店'
+        # 課
         assert result['section_gr_code'].iloc[0] == ''
         assert result['section_gr_name'].iloc[0] == ''
+        # 常駐部店
+        assert result['resident_branch_code'].iloc[0] == 'R001'
+        assert result['resident_branch_name'].iloc[0] == '常駐支店'
+        # 拠点内営業部
+        assert result['internal_sales_dept_code'].iloc[0] == ''
+        assert result['internal_sales_dept_name'].iloc[0] == ''
+        # エリア
         assert result['business_and_area_code'].iloc[0] == 'S001'
         assert result['area_name'].iloc[0] == 'テスト課'
+        # 部店カナ
+        assert result['organization_name_kana'].iloc[0] == ''
 
         log_msg(f"Resulting DataFrame:\n{result}", LogLevel.DEBUG)
 
-    def test_map_to_unified_layout_C1_target_org_other(self, jinji_mapping):
-        test_doc = """
-        テスト区分: UT
-        テストカテゴリ: C1
-        テスト内容: target_orgがその他の場合のmap_to_unified_layout
-        """
-        log_msg(f"\n{test_doc}", LogLevel.DEBUG)
-
-        _df = self.create_base_dataframe()
-        _df['target_org'] = ['部']
-
-        result = jinji_mapping.map_to_unified_layout(_df)
-
-        assert result['section_gr_code'].iloc[0] == ''
-        assert result['section_gr_name'].iloc[0] == ''
-        assert result['business_and_area_code'].iloc[0] == ''
-        assert result['area_name'].iloc[0] == ''
-
-        log_msg(f"Resulting DataFrame:\n{result}", LogLevel.DEBUG)
-
-    def test_map_to_unified_layout_C2_multiple_rows(self, jinji_mapping):
+    def test_map_to_unified_layout_C2_multiple_rows_jinji(self, jinji_mapping):
         test_doc = """
         テスト区分: UT
         テストカテゴリ: C2
@@ -1119,11 +1102,11 @@ class TestKokukiExcelMappingInit:
     | 出力           | デフォルトconfig使用 | 指定されたconfig使用 |
 
     境界値検証ケース一覧:
-    | ケースID | 入力パラメータ | テスト値 | 期待される結果 | テストの目的/検証ポイント | 実装状況 |
-    |----------|----------------|----------|----------------|---------------------------|----------|
-    | BVT_001  | conf           | None     | デフォルトconfigが使用される | Noneが正しく処理されることを確認 | 実装済み (test_init_C0_default_configuration) |
-    | BVT_002  | conf           | 最小限の設定 | 最小限の設定が正しく処理される | 最小の有効な入力を確認 | 実装済み (test_init_C1_with_minimal_conf) |
-    | BVT_003  | conf           | 完全な設定 | 完全な設定が正しく処理される | 全ての設定が正しく処理されることを確認 | 実装済み (test_init_C0_full_configuration) |
+    | ケースID | 入力パラメータ | テスト値     | 期待される結果                 | テストの目的/検証ポイント              | 実装状況 |
+    |----------|----------------|--------------|--------------------------------|----------------------------------------|----------|
+    | BVT_001  | conf           | None         | デフォルトconfigが使用される   | Noneが正しく処理されることを確認       | 実装済み (test_init_C0_default_configuration) |
+    | BVT_002  | conf           | 最小限の設定 | 最小限の設定が正しく処理される | 最小の有効な入力を確認                 | 実装済み (test_init_C1_with_minimal_conf) |
+    | BVT_003  | conf           | 完全な設定   | 完全な設定が正しく処理される   | 全ての設定が正しく処理されることを確認 | 実装済み (test_init_C0_full_configuration) |
 
     注記:
     全てのケースが実装されています。完全な設定のケース(BVT_003)は、実際のユースケースに
@@ -1136,7 +1119,7 @@ class TestKokukiExcelMappingInit:
     def teardown_method(self):
         log_msg(f"test end\n{'-'*80}\n", LogLevel.INFO)
 
-    def test_init_C0_default_configuration(self):
+    def test_init_C0_default_configuration_kokuki(self, kokuki_output_map):
         test_doc = """
         テスト区分: UT
         テストカテゴリ: C0
@@ -1144,60 +1127,13 @@ class TestKokukiExcelMappingInit:
         """
         log_msg(f"\n{test_doc}", LogLevel.DEBUG)
 
-        expected_mapping = {
-            '報告日': 'report_date',
-            'no': 'application_number',
-            '登録予定日(yyyy/mm/dd)': 'effective_date',
-            '種類(新規変更廃止)': 'application_type',
-            '対象(課・エリア/中間階層)': 'target_org',
-            '部店店番': 'branch_code',
-            '部店名称 日本語': 'branch_name_ja',
-            '部店名称 英語': 'branch_name_en',
-            '中間階層コード': 'intermediate_level_code',
-            '中間階層名称:日本語': 'intermediate_level_name_ja',
-            '中間階層名称:英語': 'intermediate_level_name_en',
-            '中間階層略称:日本語': 'intermediate_level_abbr_ja',
-            '中間階層略称:英語': 'intermediate_level_abbr_en',
-            '課・エリアコード': 'section_area_code',
-            '課・エリア名称:日本語': 'section_area_name_ja',
-            '課・エリア名称:英語': 'section_area_name_en',
-            '課・エリア略称:日本語': 'section_area_abbr_ja',
-            '課・エリア略称:英語': 'section_area_abbr_en',
-            '共通認証受渡予定日': 'aaa_transfer_date',
-            '変更種別・詳細旧名称・略語': 'change_details',
-        }
+        expected_mapping = kokuki_output_map
 
         with patch('src.packages.request_processor.excel_to_dataframe_mapper.initialize_config') as mock_init_config:
             mock_config = MagicMock()
             mock_config.package_config = {
                 'excel_definition_mapping_kokuki': expected_mapping,
-                'layout': {
-                    'unified_layout': [
-                        'ulid',
-                        'form_type',
-                        'application_type',
-                        'target_org',
-                        'business_unit_code',
-                        'parent_branch_code',
-                        'branch_code',
-                        'branch_name',
-                        'section_gr_code',
-                        'section_gr_name',
-                        'organization_name_kana',
-                        'resident_branch_code',
-                        'resident_branch_name',
-                        'aaa_transfer_date',
-                        'internal_sales_dept_code',
-                        'internal_sales_dept_name',
-                        'business_and_area_code',
-                        'area_name',
-                        'remarks',
-                        'section_name_en',
-                        'section_name_kana',
-                        'section_name_abbr',
-                        'bpr_target_flag',
-                    ],
-                },
+                'layout': unified_output_layout,
             }
             mock_init_config.return_value = mock_config
 
@@ -1209,7 +1145,7 @@ class TestKokukiExcelMappingInit:
 
         log_msg(f"column_mapping: {kokuki_mapping.column_mapping}", LogLevel.DEBUG)
 
-    def test_init_C0_full_configuration(self):
+    def test_init_C0_full_configuration_kokuki(self, kokuki_output_map):
         test_doc = """
         テスト区分: UT
         テストカテゴリ: C0
@@ -1217,58 +1153,13 @@ class TestKokukiExcelMappingInit:
         """
         log_msg(f"\n{test_doc}", LogLevel.DEBUG)
 
-        expected_mapping = {
-            '報告日': 'report_date',
-            'no': 'application_number',
-            '登録予定日(yyyy/mm/dd)': 'effective_date',
-            '種類(新規変更廃止)': 'application_type',
-            '対象(課・エリア/中間階層)': 'target_org',
-            '部店店番': 'branch_code',
-            '部店名称 日本語': 'branch_name_ja',
-            '部店名称 英語': 'branch_name_en',
-            '中間階層コード': 'intermediate_level_code',
-            '中間階層名称:日本語': 'intermediate_level_name_ja',
-            '中間階層名称:英語': 'intermediate_level_name_en',
-            '中間階層略称:日本語': 'intermediate_level_abbr_ja',
-            '中間階層略称:英語': 'intermediate_level_abbr_en',
-            '課・エリアコード': 'section_area_code',
-            '課・エリア名称:日本語': 'section_area_name_ja',
-            '課・エリア名称:英語': 'section_area_name_en',
-            '課・エリア略称:日本語': 'section_area_abbr_ja',
-            '課・エリア略称:英語': 'section_area_abbr_en',
-            '共通認証受渡予定日': 'aaa_transfer_date',
-            '変更種別・詳細旧名称・略語': 'change_details',
-        }
+        expected_mapping = kokuki_output_map
 
         custom_config = MagicMock()
         custom_config.package_config = {
             'excel_definition_mapping_kokuki': expected_mapping,
             'layout': {
-                'unified_layout': [
-                    'ulid',
-                    'form_type',
-                    'application_type',
-                    'target_org',
-                    'business_unit_code',
-                    'parent_branch_code',
-                    'branch_code',
-                    'branch_name',
-                    'section_gr_code',
-                    'section_gr_name',
-                    'organization_name_kana',
-                    'resident_branch_code',
-                    'resident_branch_name',
-                    'aaa_transfer_date',
-                    'internal_sales_dept_code',
-                    'internal_sales_dept_name',
-                    'business_and_area_code',
-                    'area_name',
-                    'remarks',
-                    'section_name_en',
-                    'section_name_kana',
-                    'section_name_abbr',
-                    'bpr_target_flag',
-                ],
+                'unified_layout': unified_output_layout,
             },
         }
 
@@ -1280,7 +1171,7 @@ class TestKokukiExcelMappingInit:
 
         log_msg(f"column_mapping: {kokuki_mapping.column_mapping}", LogLevel.DEBUG)
 
-    def test_init_C1_with_none_conf(self):
+    def test_init_C1_with_none_conf_kokuki(self, kokuki_output_map):
         test_doc = """
         テスト区分: UT
         テストカテゴリ: C1
@@ -1288,60 +1179,13 @@ class TestKokukiExcelMappingInit:
         """
         log_msg(f"\n{test_doc}", LogLevel.DEBUG)
 
-        expected_mapping = {
-            '報告日': 'report_date',
-            'no': 'application_number',
-            '登録予定日(yyyy/mm/dd)': 'effective_date',
-            '種類(新規変更廃止)': 'application_type',
-            '対象(課・エリア/中間階層)': 'target_org',
-            '部店店番': 'branch_code',
-            '部店名称 日本語': 'branch_name_ja',
-            '部店名称 英語': 'branch_name_en',
-            '中間階層コード': 'intermediate_level_code',
-            '中間階層名称:日本語': 'intermediate_level_name_ja',
-            '中間階層名称:英語': 'intermediate_level_name_en',
-            '中間階層略称:日本語': 'intermediate_level_abbr_ja',
-            '中間階層略称:英語': 'intermediate_level_abbr_en',
-            '課・エリアコード': 'section_area_code',
-            '課・エリア名称:日本語': 'section_area_name_ja',
-            '課・エリア名称:英語': 'section_area_name_en',
-            '課・エリア略称:日本語': 'section_area_abbr_ja',
-            '課・エリア略称:英語': 'section_area_abbr_en',
-            '共通認証受渡予定日': 'aaa_transfer_date',
-            '変更種別・詳細旧名称・略語': 'change_details',
-        }
+        expected_mapping = kokuki_output_map
 
         with patch('src.packages.request_processor.excel_to_dataframe_mapper.initialize_config') as mock_init_config:
             mock_config = MagicMock()
             mock_config.package_config = {
                 'excel_definition_mapping_kokuki': expected_mapping,
-                'layout': {
-                    'unified_layout': [
-                        'ulid',
-                        'form_type',
-                        'application_type',
-                        'target_org',
-                        'business_unit_code',
-                        'parent_branch_code',
-                        'branch_code',
-                        'branch_name',
-                        'section_gr_code',
-                        'section_gr_name',
-                        'organization_name_kana',
-                        'resident_branch_code',
-                        'resident_branch_name',
-                        'aaa_transfer_date',
-                        'internal_sales_dept_code',
-                        'internal_sales_dept_name',
-                        'business_and_area_code',
-                        'area_name',
-                        'remarks',
-                        'section_name_en',
-                        'section_name_kana',
-                        'section_name_abbr',
-                        'bpr_target_flag',
-                    ],
-                },
+                'layout': unified_output_layout,
             }
             mock_init_config.return_value = mock_config
 
@@ -1353,7 +1197,7 @@ class TestKokukiExcelMappingInit:
 
         log_msg(f"column_mapping: {kokuki_mapping.column_mapping}", LogLevel.DEBUG)
 
-    def test_init_C1_with_minimal_conf(self):
+    def test_init_C1_with_minimal_conf_kokuiki(self):
         test_doc = """
         テスト区分: UT
         テストカテゴリ: C1
@@ -1413,7 +1257,7 @@ class TestKokukiExcelMapping:
             'change_details': ['詳細変更'],
         })
 
-    def test_map_to_unified_layout_C0_all_columns_exist(self, kokuki_mapping):
+    def test_map_to_unified_layout_C0_all_columns_exist_kokuki(self, kokuki_mapping, unified_output_layout):
         test_doc = """
         テスト区分: UT
         テストカテゴリ: C0
@@ -1426,55 +1270,35 @@ class TestKokukiExcelMapping:
         with patch('ulid.new', return_value='dummy_ulid'):
             result = kokuki_mapping.map_to_unified_layout(_df)
 
-        expected_layout = [
-            'ulid',
-            'form_type',
-            'application_type',
-            'target_org',
-            'business_unit_code',
-            'parent_branch_code',
-            'branch_code',
-            'branch_name',
-            'section_gr_code',
-            'section_gr_name',
-            'organization_name_kana',
-            'resident_branch_code',
-            'resident_branch_name',
-            'aaa_transfer_date',
-            'internal_sales_dept_code',
-            'internal_sales_dept_name',
-            'business_and_area_code',
-            'area_name',
-            'remarks',
-            'section_name_en',
-            'section_name_kana',
-            'section_name_abbr',
-            'bpr_target_flag',
-        ]
+        expected_layout = unified_output_layout
 
         assert list(result.columns) == expected_layout
-        assert result['ulid'].iloc[0] == 'dummy_ulid'
         assert result['form_type'].iloc[0] == '2'
         assert result['application_type'].iloc[0] == '新規'
         assert result['target_org'].iloc[0] == '課・エリア'
+        assert result['business_unit_code'].iloc[0] == ''   # 国企固有事情
+        assert result['parent_branch_code'].iloc[0] == ''   # 国企固有事情
         assert result['branch_code'].iloc[0] == '1001'
-        #assert result['branch_name'].iloc[0] == 'テスト支店'
+        assert result['branch_name'].iloc[0] == 'テスト支店'
         assert result['section_gr_code'].iloc[0] == 'S001'
         assert result['section_gr_name'].iloc[0] == 'テスト課'
-        assert result['section_name_en'].iloc[0] == 'Test Section'
+        assert result['organization_name_kana'].iloc[0] == ''
+        assert result['resident_branch_code'].iloc[0] == ''
+        assert result['resident_branch_name'].iloc[0] == ''
         assert result['aaa_transfer_date'].iloc[0] == '2023-01-01'
-
-        # マッピングされていないカラムがNaNまたは空文字列であることを確認
-        for col in ['business_unit_code', 'parent_branch_code', 'resident_branch_code',
-                    'resident_branch_name', 'internal_sales_dept_code',
-                    'internal_sales_dept_name', 'business_and_area_code', 'area_name',
-                    'remarks', 'section_name_kana', 'section_name_abbr',
-                    'bpr_target_flag', 'organization_name_kana']:
-            assert pd.isna(result[col].iloc[0]) or result[col].iloc[0] == ''
+        assert result['internal_sales_dept_code'].iloc[0] == ''
+        assert result['internal_sales_dept_name'].iloc[0] == ''
+        assert result['business_and_area_code'].iloc[0] == ''
+        assert result['area_name'].iloc[0] == ''
+        assert result['remarks'].iloc[0] == ''
+        assert result['section_name_en'].iloc[0] == ''
+        assert result['section_name_kana'].iloc[0] == ''
+        assert result['section_name_abbr'].iloc[0] == ''
+        assert result['bpr_target_flag'].iloc[0] == ''
 
         log_msg(f"Resulting DataFrame:\n{result}", LogLevel.DEBUG)
 
-    def test_map_to_unified_layout_C0_missing_columns(self, kokuki_mapping):
+    def test_map_to_unified_layout_C0_missing_columns_kokuki(self, kokuki_mapping):
         test_doc = """
         テスト区分: UT
         テストカテゴリ: C0
@@ -1494,7 +1318,7 @@ class TestKokukiExcelMapping:
         assert "Error occurred while mapping to unified layout" in str(exc_info.value)
         log_msg(f"Raised exception: {exc_info.value}", LogLevel.DEBUG)
 
-    def test_map_to_unified_layout_C1_target_org_ka_area(self, kokuki_mapping):
+    def test_map_to_unified_layout_C1_target_org_ka_area_kokuki(self, kokuki_mapping):
         test_doc = """
         テスト区分: UT
         テストカテゴリ: C1
@@ -1506,15 +1330,32 @@ class TestKokukiExcelMapping:
         _df['target_org'] = ['課・エリア']
 
         result = kokuki_mapping.map_to_unified_layout(_df)
-
+        assert result['form_type'].iloc[0] == '2'
+        assert result['application_type'].iloc[0] == '新規'
         assert result['target_org'].iloc[0] == '課・エリア'
+        assert result['business_unit_code'].iloc[0] == ''   # 国企固有事情
+        assert result['parent_branch_code'].iloc[0] == ''   # 国企固有事情
+        assert result['branch_code'].iloc[0] == '1001'
+        assert result['branch_name'].iloc[0] == 'テスト支店'
         assert result['section_gr_code'].iloc[0] == 'S001'
         assert result['section_gr_name'].iloc[0] == 'テスト課'
-        assert result['section_name_en'].iloc[0] == 'Test Section'
+        assert result['organization_name_kana'].iloc[0] == ''
+        assert result['resident_branch_code'].iloc[0] == ''
+        assert result['resident_branch_name'].iloc[0] == ''
+        assert result['aaa_transfer_date'].iloc[0] == '2023-01-01'
+        assert result['internal_sales_dept_code'].iloc[0] == ''
+        assert result['internal_sales_dept_name'].iloc[0] == ''
+        assert result['business_and_area_code'].iloc[0] == ''
+        assert result['area_name'].iloc[0] == ''
+        assert result['remarks'].iloc[0] == ''
+        assert result['section_name_en'].iloc[0] == ''
+        assert result['section_name_kana'].iloc[0] == ''
+        assert result['section_name_abbr'].iloc[0] == ''
+        assert result['bpr_target_flag'].iloc[0] == ''
 
         log_msg(f"Resulting DataFrame:\n{result}", LogLevel.DEBUG)
 
-    def test_map_to_unified_layout_C1_target_org_intermediate(self, kokuki_mapping):
+    def test_map_to_unified_layout_C1_target_org_intermediate_kokuki(self, kokuki_mapping):
         test_doc = """
         テスト区分: UT
         テストカテゴリ: C1
@@ -1527,14 +1368,33 @@ class TestKokukiExcelMapping:
 
         result = kokuki_mapping.map_to_unified_layout(_df)
 
+        assert result['form_type'].iloc[0] == '2'
+        assert result['application_type'].iloc[0] == '新規'
         assert result['target_org'].iloc[0] == '中間階層'
+        assert result['business_unit_code'].iloc[0] == ''   # 国企固有事情
+        assert result['parent_branch_code'].iloc[0] == ''   # 国企固有事情
+        assert result['branch_code'].iloc[0] == '1001'
+        assert result['branch_name'].iloc[0] == 'テスト支店'
         assert result['section_gr_code'].iloc[0] == 'S001'
         assert result['section_gr_name'].iloc[0] == 'テスト課'
-        assert result['section_name_en'].iloc[0] == 'Test Section'
+        assert result['organization_name_kana'].iloc[0] == ''
+        assert result['resident_branch_code'].iloc[0] == ''
+        assert result['resident_branch_name'].iloc[0] == ''
+        assert result['aaa_transfer_date'].iloc[0] == '2023-01-01'
+        assert result['internal_sales_dept_code'].iloc[0] == ''
+        assert result['internal_sales_dept_name'].iloc[0] == ''
+        assert result['business_and_area_code'].iloc[0] == ''
+        assert result['area_name'].iloc[0] == ''
+        assert result['remarks'].iloc[0] == ''
+        assert result['section_name_en'].iloc[0] == ''
+        assert result['section_name_kana'].iloc[0] == ''
+        assert result['section_name_abbr'].iloc[0] == ''
+        assert result['bpr_target_flag'].iloc[0] == ''
+
 
         log_msg(f"Resulting DataFrame:\n{result}", LogLevel.DEBUG)
 
-    def test_map_to_unified_layout_C1_target_org_other(self, kokuki_mapping):
+    def test_map_to_unified_layout_C1_target_org_other_kokuki(self, kokuki_mapping):
         test_doc = """
         テスト区分: UT
         テストカテゴリ: C1
@@ -1547,14 +1407,32 @@ class TestKokukiExcelMapping:
 
         result = kokuki_mapping.map_to_unified_layout(_df)
 
+        assert result['form_type'].iloc[0] == '2'
+        assert result['application_type'].iloc[0] == '新規'
         assert result['target_org'].iloc[0] == 'その他'
+        assert result['business_unit_code'].iloc[0] == ''   # 国企固有事情
+        assert result['parent_branch_code'].iloc[0] == ''   # 国企固有事情
+        assert result['branch_code'].iloc[0] == '1001'
+        assert result['branch_name'].iloc[0] == 'テスト支店'
         assert result['section_gr_code'].iloc[0] == 'S001'
         assert result['section_gr_name'].iloc[0] == 'テスト課'
-        assert result['section_name_en'].iloc[0] == 'Test Section'
+        assert result['organization_name_kana'].iloc[0] == ''
+        assert result['resident_branch_code'].iloc[0] == ''
+        assert result['resident_branch_name'].iloc[0] == ''
+        assert result['aaa_transfer_date'].iloc[0] == '2023-01-01'
+        assert result['internal_sales_dept_code'].iloc[0] == ''
+        assert result['internal_sales_dept_name'].iloc[0] == ''
+        assert result['business_and_area_code'].iloc[0] == ''
+        assert result['area_name'].iloc[0] == ''
+        assert result['remarks'].iloc[0] == ''
+        assert result['section_name_en'].iloc[0] == ''
+        assert result['section_name_kana'].iloc[0] == ''
+        assert result['section_name_abbr'].iloc[0] == ''
+        assert result['bpr_target_flag'].iloc[0] == ''
 
         log_msg(f"Resulting DataFrame:\n{result}", LogLevel.DEBUG)
 
-    def test_map_to_unified_layout_C2_multiple_rows(self, kokuki_mapping):
+    def test_map_to_unified_layout_C2_multiple_rows_kokui(self, kokuki_mapping):
         test_doc = """
         テスト区分: UT
         テストカテゴリ: C2
@@ -1571,7 +1449,6 @@ class TestKokukiExcelMapping:
         assert result['target_org'].tolist() == ['課・エリア', '中間階層', 'その他']
         assert result['section_gr_code'].tolist() == ['S001', 'S001', 'S001']
         assert result['section_gr_name'].tolist() == ['テスト課', 'テスト課', 'テスト課']
-        assert result['section_name_en'].tolist() == ['Test Section', 'Test Section', 'Test Section']
 
         log_msg(f"Resulting DataFrame:\n{result}", LogLevel.DEBUG)
 
@@ -1593,11 +1470,11 @@ class TestKanrenExcelMappingWithDummyInit:
     | 出力           | デフォルトconfig使用 | 指定されたconfig使用 |
 
     境界値検証ケース一覧:
-    | ケースID | 入力パラメータ | テスト値 | 期待される結果 | テストの目的/検証ポイント | 実装状況 |
-    |----------|----------------|----------|----------------|---------------------------|----------|
-    | BVT_001  | conf           | None     | デフォルトconfigが使用される | Noneが正しく処理されることを確認 | 実装済み (test_init_C0_default_configuration) |
-    | BVT_002  | conf           | 最小限の設定 | 最小限の設定が正しく処理される | 最小の有効な入力を確認 | 実装済み (test_init_C1_with_minimal_conf) |
-    | BVT_003  | conf           | 完全な設定 | 完全な設定が正しく処理される | 全ての設定が正しく処理されることを確認 | 実装済み (test_init_C0_full_configuration) |
+    | ケースID | 入力パラメータ | テスト値     | 期待される結果                 | テストの目的/検証ポイント              | 実装状況 |
+    |----------|----------------|--------------|--------------------------------|----------------------------------------|----------|
+    | BVT_001  | conf           | None         | デフォルトconfigが使用される   | Noneが正しく処理されることを確認       | 実装済み (test_init_C0_default_configuration) |
+    | BVT_002  | conf           | 最小限の設定 | 最小限の設定が正しく処理される | 最小の有効な入力を確認                 | 実装済み (test_init_C1_with_minimal_conf) |
+    | BVT_003  | conf           | 完全な設定   | 完全な設定が正しく処理される   | 全ての設定が正しく処理されることを確認 | 実装済み (test_init_C0_full_configuration) |
 
     注記:
     全てのケースが実装されています。完全な設定のケース(BVT_003)は、実際のユースケースに
@@ -1610,7 +1487,7 @@ class TestKanrenExcelMappingWithDummyInit:
     def teardown_method(self):
         log_msg(f"test end\n{'-'*80}\n", LogLevel.INFO)
 
-    def test_init_C0_default_configuration(self):
+    def test_init_C0_default_configuration_with_dummy(self, kanren_output_map):
         test_doc = """
         テスト区分: UT
         テストカテゴリ: C0
@@ -1618,52 +1495,13 @@ class TestKanrenExcelMappingWithDummyInit:
         """
         log_msg(f"\n{test_doc}", LogLevel.DEBUG)
 
-        expected_mapping = {
-            '種類': 'application_type',
-            '部門コード': 'business_unit_code',
-            '親部店コード': 'parent_branch_code',
-            '部店コード': 'branch_code',
-            '部店名称': 'branch_name',
-            '課Grコード': 'section_gr_code',
-            '課Gr名称': 'section_gr_name',
-            '課名称(英語)': 'section_name_en',
-            '共通認証受渡し予定日': 'aaa_transfer_date',
-            '課名称(カナ)': 'section_name_kana',
-            '課名称(略称)': 'section_name_abbr',
-            'BPR対象/対象外フラグ': 'bpr_target_flag',
-        }
+        expected_mapping = kanren_output_map
 
         with patch('src.packages.request_processor.excel_to_dataframe_mapper.initialize_config') as mock_init_config:
             mock_config = MagicMock()
             mock_config.package_config = {
                 'excel_definition_mapping_kanren': expected_mapping,
-                'layout': {
-                    'unified_layout': [
-                        'ulid',
-                        'form_type',
-                        'application_type',
-                        'target_org',
-                        'business_unit_code',
-                        'parent_branch_code',
-                        'branch_code',
-                        'branch_name',
-                        'section_gr_code',
-                        'section_gr_name',
-                        'organization_name_kana',
-                        'resident_branch_code',
-                        'resident_branch_name',
-                        'aaa_transfer_date',
-                        'internal_sales_dept_code',
-                        'internal_sales_dept_name',
-                        'business_and_area_code',
-                        'area_name',
-                        'remarks',
-                        'section_name_en',
-                        'section_name_kana',
-                        'section_name_abbr',
-                        'bpr_target_flag',
-                    ],
-                },
+                'layout': unified_output_layout,
             }
             mock_init_config.return_value = mock_config
 
@@ -1675,7 +1513,7 @@ class TestKanrenExcelMappingWithDummyInit:
 
         log_msg(f"column_mapping: {kanren_mapping.column_mapping}", LogLevel.DEBUG)
 
-    def test_init_C0_full_configuration(self):
+    def test_init_C0_full_configuration_with_dummy(self, kanren_output_map):
         test_doc = """
         テスト区分: UT
         テストカテゴリ: C0
@@ -1683,50 +1521,13 @@ class TestKanrenExcelMappingWithDummyInit:
         """
         log_msg(f"\n{test_doc}", LogLevel.DEBUG)
 
-        expected_mapping = {
-            '種類': 'application_type',
-            '部門コード': 'business_unit_code',
-            '親部店コード': 'parent_branch_code',
-            '部店コード': 'branch_code',
-            '部店名称': 'branch_name',
-            '課Grコード': 'section_gr_code',
-            '課Gr名称': 'section_gr_name',
-            '課名称(英語)': 'section_name_en',
-            '共通認証受渡し予定日': 'aaa_transfer_date',
-            '課名称(カナ)': 'section_name_kana',
-            '課名称(略称)': 'section_name_abbr',
-            'BPR対象/対象外フラグ': 'bpr_target_flag',
-        }
+        expected_mapping = kanren_output_map
 
         custom_config = MagicMock()
         custom_config.package_config = {
             'excel_definition_mapping_kanren': expected_mapping,
             'layout': {
-                'unified_layout': [
-                        'ulid',
-                        'form_type',
-                        'application_type',
-                        'target_org',
-                        'business_unit_code',
-                        'parent_branch_code',
-                        'branch_code',
-                        'branch_name',
-                        'section_gr_code',
-                        'section_gr_name',
-                        'organization_name_kana',
-                        'resident_branch_code',
-                        'resident_branch_name',
-                        'aaa_transfer_date',
-                        'internal_sales_dept_code',
-                        'internal_sales_dept_name',
-                        'business_and_area_code',
-                        'area_name',
-                        'remarks',
-                        'section_name_en',
-                        'section_name_kana',
-                        'section_name_abbr',
-                        'bpr_target_flag',
-                ],
+                'unified_layout': unified_output_layout,
             },
         }
 
@@ -1738,7 +1539,7 @@ class TestKanrenExcelMappingWithDummyInit:
 
         log_msg(f"column_mapping: {kanren_mapping.column_mapping}", LogLevel.DEBUG)
 
-    def test_init_C1_with_none_conf(self):
+    def test_init_C1_with_none_conf_with_dummy(self, kanren_output_map):
         test_doc = """
         テスト区分: UT
         テストカテゴリ: C1
@@ -1746,52 +1547,13 @@ class TestKanrenExcelMappingWithDummyInit:
         """
         log_msg(f"\n{test_doc}", LogLevel.DEBUG)
 
-        expected_mapping = {
-            '種類': 'application_type',
-            '部門コード': 'business_unit_code',
-            '親部店コード': 'parent_branch_code',
-            '部店コード': 'branch_code',
-            '部店名称': 'branch_name',
-            '課Grコード': 'section_gr_code',
-            '課Gr名称': 'section_gr_name',
-            '課名称(英語)': 'section_name_en',
-            '共通認証受渡し予定日': 'aaa_transfer_date',
-            '課名称(カナ)': 'section_name_kana',
-            '課名称(略称)': 'section_name_abbr',
-            'BPR対象/対象外フラグ': 'bpr_target_flag',
-        }
+        expected_mapping = kanren_output_map
 
         with patch('src.packages.request_processor.excel_to_dataframe_mapper.initialize_config') as mock_init_config:
             mock_config = MagicMock()
             mock_config.package_config = {
                 'excel_definition_mapping_kanren': expected_mapping,
-                'layout': {
-                    'unified_layout': [
-                        'ulid',
-                        'form_type',
-                        'application_type',
-                        'target_org',
-                        'business_unit_code',
-                        'parent_branch_code',
-                        'branch_code',
-                        'branch_name',
-                        'section_gr_code',
-                        'section_gr_name',
-                        'organization_name_kana',
-                        'resident_branch_code',
-                        'resident_branch_name',
-                        'aaa_transfer_date',
-                        'internal_sales_dept_code',
-                        'internal_sales_dept_name',
-                        'business_and_area_code',
-                        'area_name',
-                        'remarks',
-                        'section_name_en',
-                        'section_name_kana',
-                        'section_name_abbr',
-                        'bpr_target_flag',
-                    ],
-                },
+                'layout': unified_output_layout,
             }
             mock_init_config.return_value = mock_config
 
@@ -1803,7 +1565,7 @@ class TestKanrenExcelMappingWithDummyInit:
 
         log_msg(f"column_mapping: {kanren_mapping.column_mapping}", LogLevel.DEBUG)
 
-    def test_init_C1_with_minimal_conf(self):
+    def test_init_C1_with_minimal_conf_with_dummy(self):
         test_doc = """
         テスト区分: UT
         テストカテゴリ: C1
@@ -1860,7 +1622,7 @@ class TestKanrenExcelMappingWithDummy:
             'bpr_target_flag': ['1'],
         })
 
-    def test_map_to_unified_layout_C0_all_columns_exist(self, kanren_mapping):
+    def test_map_to_unified_layout_C0_all_columns_exist_with_dummy(self, kanren_mapping, unified_output_layout):
         test_doc = """
         テスト区分: UT
         テストカテゴリ: C0
@@ -1873,57 +1635,42 @@ class TestKanrenExcelMappingWithDummy:
         with patch('ulid.new', return_value='dummy_ulid'):
             result = kanren_mapping.map_to_unified_layout(_df)
 
-        expected_layout = [
-                        'ulid',
-                        'form_type',
-                        'application_type',
-                        'target_org',
-                        'business_unit_code',
-                        'parent_branch_code',
-                        'branch_code',
-                        'branch_name',
-                        'section_gr_code',
-                        'section_gr_name',
-                        'organization_name_kana',
-                        'resident_branch_code',
-                        'resident_branch_name',
-                        'aaa_transfer_date',
-                        'internal_sales_dept_code',
-                        'internal_sales_dept_name',
-                        'business_and_area_code',
-                        'area_name',
-                        'remarks',
-                        'section_name_en',
-                        'section_name_kana',
-                        'section_name_abbr',
-                        'bpr_target_flag',
-        ]
+        expected_layout = unified_output_layout
 
         assert list(result.columns) == expected_layout
         assert result['ulid'].iloc[0] == 'dummy_ulid'
         assert result['form_type'].iloc[0] == '3'
         assert result['application_type'].iloc[0] == '新規'
+        assert result['target_org'].iloc[0] == '課'
         assert result['business_unit_code'].iloc[0] == '001'
         assert result['parent_branch_code'].iloc[0] == 'P001'
         assert result['branch_code'].iloc[0] == '1001'
         assert result['branch_name'].iloc[0] == 'テスト支店'
         assert result['section_gr_code'].iloc[0] == 'S001'
         assert result['section_gr_name'].iloc[0] == 'テスト課'
-        assert result['section_name_en'].iloc[0] == 'Test Section'
+        assert result['organization_name_kana'].iloc[0] == ''
+        assert result['resident_branch_code'].iloc[0] == ''
+        assert result['resident_branch_name'].iloc[0] == ''
         assert result['aaa_transfer_date'].iloc[0] == '2023-01-01'
+        assert result['internal_sales_dept_code'].iloc[0] == ''
+        assert result['internal_sales_dept_name'].iloc[0] == ''
+        assert result['business_and_area_code'].iloc[0] == ''
+        assert result['area_name'].iloc[0] == ''
+        assert result['remarks'].iloc[0] == ''
+        assert result['section_name_en'].iloc[0] == 'Test Section'
         assert result['section_name_kana'].iloc[0] == 'テストカ'
         assert result['section_name_abbr'].iloc[0] == 'テスト'
-        assert result['bpr_target_flag'].iloc[0] == '1'
+        assert result['bpr_target_flag'].iloc[0] == ''
 
         # マッピングされていないカラムがNaNまたは空文字列であることを確認
-        for col in ['target_org', 'resident_branch_code', 'resident_branch_name',
+        for col in ['resident_branch_code', 'resident_branch_name',
                     'internal_sales_dept_code', 'internal_sales_dept_name',
                     'business_and_area_code', 'area_name', 'remarks', 'organization_name_kana']:
             assert pd.isna(result[col].iloc[0]) or result[col].iloc[0] == ''
 
         log_msg(f"Resulting DataFrame:\n{result}", LogLevel.DEBUG)
 
-    def test_map_to_unified_layout_C0_missing_columns(self, kanren_mapping):
+    def test_map_to_unified_layout_C0_missing_columns_with_dummy(self, kanren_mapping):
         test_doc = """
         テスト区分: UT
         テストカテゴリ: C0
@@ -1943,7 +1690,7 @@ class TestKanrenExcelMappingWithDummy:
         assert "Error occurred while mapping to unified layout" in str(exc_info.value)
         log_msg(f"Raised exception: {exc_info.value}", LogLevel.DEBUG)
 
-    def test_map_to_unified_layout_C1_basic_mapping(self, kanren_mapping):
+    def test_map_to_unified_layout_C1_basic_mapping_with_dummy(self, kanren_mapping):
         test_doc = """
         テスト区分: UT
         テストカテゴリ: C1
@@ -1957,21 +1704,30 @@ class TestKanrenExcelMappingWithDummy:
 
         assert result['form_type'].iloc[0] == '3'
         assert result['application_type'].iloc[0] == '新規'
+        assert result['target_org'].iloc[0] == '課'
         assert result['business_unit_code'].iloc[0] == '001'
         assert result['parent_branch_code'].iloc[0] == 'P001'
         assert result['branch_code'].iloc[0] == '1001'
         assert result['branch_name'].iloc[0] == 'テスト支店'
         assert result['section_gr_code'].iloc[0] == 'S001'
         assert result['section_gr_name'].iloc[0] == 'テスト課'
-        assert result['section_name_en'].iloc[0] == 'Test Section'
+        assert result['organization_name_kana'].iloc[0] == ''
+        assert result['resident_branch_code'].iloc[0] == ''
+        assert result['resident_branch_name'].iloc[0] == ''
         assert result['aaa_transfer_date'].iloc[0] == '2023-01-01'
+        assert result['internal_sales_dept_code'].iloc[0] == ''
+        assert result['internal_sales_dept_name'].iloc[0] == ''
+        assert result['business_and_area_code'].iloc[0] == ''
+        assert result['area_name'].iloc[0] == ''
+        assert result['remarks'].iloc[0] == ''
+        assert result['section_name_en'].iloc[0] == 'Test Section'
         assert result['section_name_kana'].iloc[0] == 'テストカ'
         assert result['section_name_abbr'].iloc[0] == 'テスト'
-        assert result['bpr_target_flag'].iloc[0] == '1'
+        assert result['bpr_target_flag'].iloc[0] == ''
 
         log_msg(f"Resulting DataFrame:\n{result}", LogLevel.DEBUG)
 
-    def test_map_to_unified_layout_C2_multiple_rows(self, kanren_mapping):
+    def test_map_to_unified_layout_C2_multiple_rows_with_dummy(self, kanren_mapping):
         test_doc = """
         テスト区分: UT
         テストカテゴリ: C2
@@ -2018,11 +1774,11 @@ class TestKanrenExcelMappingWithoutDummy:
     | 出力           | デフォルトconfig使用 | 指定されたconfig使用 |
 
     境界値検証ケース一覧:
-    | ケースID | 入力パラメータ | テスト値 | 期待される結果 | テストの目的/検証ポイント | 実装状況 |
-    |----------|----------------|----------|----------------|---------------------------|----------|
-    | BVT_001  | conf           | None     | デフォルトconfigが使用される | Noneが正しく処理されることを確認 | 実装済み (test_init_C0_default_configuration) |
-    | BVT_002  | conf           | 最小限の設定 | 最小限の設定が正しく処理される | 最小の有効な入力を確認 | 実装済み (test_init_C1_with_minimal_conf) |
-    | BVT_003  | conf           | 完全な設定 | 完全な設定が正しく処理される | 全ての設定が正しく処理されることを確認 | 実装済み (test_init_C0_full_configuration) |
+    | ケースID | 入力パラメータ | テスト値     | 期待される結果                 | テストの目的/検証ポイント              | 実装状況 |
+    |----------|----------------|--------------|--------------------------------|----------------------------------------|----------|
+    | BVT_001  | conf           | None         | デフォルトconfigが使用される   | Noneが正しく処理されることを確認       | 実装済み (test_init_C0_default_configuration) |
+    | BVT_002  | conf           | 最小限の設定 | 最小限の設定が正しく処理される | 最小の有効な入力を確認                 | 実装済み (test_init_C1_with_minimal_conf) |
+    | BVT_003  | conf           | 完全な設定   | 完全な設定が正しく処理される   | 全ての設定が正しく処理されることを確認 | 実装済み (test_init_C0_full_configuration) |
 
     注記:
     KanrenExcelMappingWithoutDummyはJinjiExcelMappingと同じ動作をするため、テストケースも類似しています。
@@ -2042,7 +1798,7 @@ class TestKanrenExcelMappingWithoutDummy:
     def jinji_mapping(self):
         return JinjiExcelMapping()
 
-    def test_init_C0_default_configuration(self):
+    def test_init_C0_default_configuration_without_dummy(self, jinji_output_map):
         test_doc = """
         テスト区分: UT
         テストカテゴリ: C0
@@ -2050,59 +1806,13 @@ class TestKanrenExcelMappingWithoutDummy:
         """
         log_msg(f"\n{test_doc}", LogLevel.DEBUG)
 
-        expected_mapping = {
-            '報告日': 'report_date',
-            'no': 'application_number',
-            '有効日付': 'effective_date',
-            '種類': 'application_type',
-            '対象': 'target_org',
-            '部門コード': 'business_unit_code',
-            '親部店コード': 'parent_branch_code',
-            '部店コード': 'branch_code',
-            '部店名称': 'branch_name',
-            '部店名称(英語)': 'branch_name_en',
-            '課/エリアコード': 'section_area_code',
-            '課/エリア名称': 'section_area_name',
-            '課/エリア名称(英語)': 'section_area_name_en',
-            '常駐部店コード': 'resident_branch_code',
-            '常駐部店名称': 'resident_branch_name',
-            '純新規店の組織情報受渡し予定日(開店日基準)': 'new_org_info_transfer_date',
-            '共通認証受渡し予定日(人事データ反映基準)': 'aaa_transfer_date',
-            '備考': 'remarks',
-            '部店ｶﾅ': 'organization_name_kana',
-        }
+        expected_mapping = jinji_output_map
 
         with patch('src.packages.request_processor.excel_to_dataframe_mapper.initialize_config') as mock_init_config:
             mock_config = MagicMock()
             mock_config.package_config = {
                 'excel_definition_mapping_jinji': expected_mapping,
-                'layout': {
-                    'unified_layout': [
-                        'ulid',
-                        'form_type',
-                        'application_type',
-                        'target_org',
-                        'business_unit_code',
-                        'parent_branch_code',
-                        'branch_code',
-                        'branch_name',
-                        'section_gr_code',
-                        'section_gr_name',
-                        'organization_name_kana',
-                        'resident_branch_code',
-                        'resident_branch_name',
-                        'aaa_transfer_date',
-                        'internal_sales_dept_code',
-                        'internal_sales_dept_name',
-                        'business_and_area_code',
-                        'area_name',
-                        'remarks',
-                        'section_name_en',
-                        'section_name_kana',
-                        'section_name_abbr',
-                        'bpr_target_flag',
-                    ],
-                },
+                'layout': unified_output_layout,
             }
             mock_init_config.return_value = mock_config
 
@@ -2114,7 +1824,65 @@ class TestKanrenExcelMappingWithoutDummy:
 
         log_msg(f"column_mapping: {kanren_mapping.column_mapping}", LogLevel.DEBUG)
 
-    def test_init_C1_with_minimal_conf(self):
+    def test_map_to_unified_layout_C1_basic_mapping_without_dummy(self, kanren_mapping):
+
+        test_doc = """
+        テスト区分: UT
+        テストカテゴリ: C1
+        テスト内容: 基本的なマッピングのテスト
+        """
+        log_msg(f"\n{test_doc}", LogLevel.DEBUG)
+
+        _df = pd.DataFrame({
+            'application_type': ['新規'],
+            'target_org': ['課'],
+            'business_unit_code': ['001'],
+            'parent_branch_code': ['P001'],
+            'branch_code': ['1001'],
+            'branch_name': ['テスト支店'],
+            'branch_name_en': ['test branch'],
+            'section_area_code': ['S001'],
+            'section_area_name': ['テスト課'],
+            'section_area_name_en': ['Test Section'],   # マッピング対象外
+            'resident_branch_code': ['R001'],
+            'resident_branch_name': ['常駐支店'],
+            'new_org_info_transfer_date': ['yyyy-mm-xx'],
+            'aaa_transfer_date': ['2023-01-01'],
+            'remarks': ['備考'],
+            'organization_name_kana': ['テストシテン'],
+        })
+
+        with patch('ulid.new', return_value='dummy_ulid'):
+            result = kanren_mapping.map_to_unified_layout(_df)
+        log_msg(f"\n\nResulting DataFrame:\n{tabulate_dataframe(result)}", LogLevel.INFO)
+
+        assert result['ulid'].iloc[0] == 'dummy_ulid'
+        assert result['form_type'].iloc[0] == '4'
+        assert result['application_type'].iloc[0] == '新規'
+        assert result['target_org'].iloc[0] == '課'
+        assert result['business_unit_code'].iloc[0] == '001'
+        assert result['parent_branch_code'].iloc[0] == 'P001'
+        assert result['branch_code'].iloc[0] == '1001'
+        assert result['branch_name'].iloc[0] == 'テスト支店'
+        assert result['section_gr_code'].iloc[0] == 'S001'
+        assert result['section_gr_name'].iloc[0] == 'テスト課'
+        assert result['organization_name_kana'].iloc[0] == ''
+        assert result['resident_branch_code'].iloc[0] == ''
+        assert result['resident_branch_name'].iloc[0] == ''
+        assert result['aaa_transfer_date'].iloc[0] == '2023-01-01'
+        assert result['internal_sales_dept_code'].iloc[0] == ''
+        assert result['internal_sales_dept_name'].iloc[0] == ''
+        assert result['business_and_area_code'].iloc[0] == ''
+        assert result['area_name'].iloc[0] == ''
+        assert result['remarks'].iloc[0] == '備考'
+        assert result['section_name_en'].iloc[0] == ''
+        assert result['section_name_kana'].iloc[0] == ''
+        assert result['section_name_abbr'].iloc[0] == ''
+        assert result['bpr_target_flag'].iloc[0] == ''
+
+        log_msg(f"Resulting DataFrame:\n{result}", LogLevel.INFO)
+
+    def test_init_C1_with_minimal_conf_without_dummy(self):
         test_doc = """
         テスト区分: UT
         テストカテゴリ: C1
@@ -2137,7 +1905,7 @@ class TestKanrenExcelMappingWithoutDummy:
 
         log_msg(f"column_mapping: {kanren_mapping.column_mapping}", LogLevel.DEBUG)
 
-    def test_map_to_unified_layout_C0_all_columns_exist(self, kanren_mapping):
+    def test_map_to_unified_layout_C0_all_columns_exist_without_dummy(self, kanren_mapping, unified_output_layout):
         test_doc = """
         テスト区分: UT
         テストカテゴリ: C0
@@ -2165,31 +1933,7 @@ class TestKanrenExcelMappingWithoutDummy:
         with patch('ulid.new', return_value='dummy_ulid'):
             result = kanren_mapping.map_to_unified_layout(_df)
 
-        expected_layout = [
-                        'ulid',
-                        'form_type',
-                        'application_type',
-                        'target_org',
-                        'business_unit_code',
-                        'parent_branch_code',
-                        'branch_code',
-                        'branch_name',
-                        'section_gr_code',
-                        'section_gr_name',
-                        'organization_name_kana',
-                        'resident_branch_code',
-                        'resident_branch_name',
-                        'aaa_transfer_date',
-                        'internal_sales_dept_code',
-                        'internal_sales_dept_name',
-                        'business_and_area_code',
-                        'area_name',
-                        'remarks',
-                        'section_name_en',
-                        'section_name_kana',
-                        'section_name_abbr',
-                        'bpr_target_flag',
-        ]
+        expected_layout = unified_output_layout
 
         assert list(result.columns) == expected_layout
         assert result['ulid'].iloc[0] == 'dummy_ulid'
@@ -2205,7 +1949,7 @@ class TestKanrenExcelMappingWithoutDummy:
 
         log_msg(f"Resulting DataFrame:\n{result}", LogLevel.DEBUG)
 
-    def test_map_to_unified_layout_C0_missing_columns(self, kanren_mapping):
+    def test_map_to_unified_layout_C0_missing_columns_without_dummy(self, kanren_mapping):
         test_doc = """
         テスト区分: UT
         テストカテゴリ: C0
@@ -2225,7 +1969,7 @@ class TestKanrenExcelMappingWithoutDummy:
         assert "Error occurred while mapping to unified layout" in str(exc_info.value)
         log_msg(f"Raised exception: {exc_info.value}", LogLevel.DEBUG)
 
-    def test_map_to_unified_layout_C2_multiple_rows(self, kanren_mapping):
+    def test_map_to_unified_layout_C2_multiple_rows_without_dummy(self, kanren_mapping):
         test_doc = """
         テスト区分: UT
         テストカテゴリ: C2
@@ -2235,7 +1979,7 @@ class TestKanrenExcelMappingWithoutDummy:
 
         _df = pd.DataFrame({
             'application_type': ['新規', '変更'],
-            'target_org': ['課', 'エリア'],
+            'target_org': ['課', '課'],
             'business_unit_code': ['001', '002'],
             'parent_branch_code': ['P001', 'P002'],
             'branch_code': ['1001', '1002'],
@@ -2253,18 +1997,17 @@ class TestKanrenExcelMappingWithoutDummy:
         result = kanren_mapping.map_to_unified_layout(_df)
 
         assert len(result) == 2
-        #assert result['form_type'].tolist() == ['1', '1']
         assert result['form_type'].tolist() == ['4', '4']
         assert result['application_type'].tolist() == ['新規', '変更']
-        assert result['target_org'].tolist() == ['課', 'エリア']
-        assert result['section_gr_code'].tolist() == ['S001', '']
-        assert result['section_gr_name'].tolist() == ['テスト課', '']
-        assert result['business_and_area_code'].tolist() == ['', 'A001']
-        assert result['area_name'].tolist() == ['', 'テストエリア']
+        assert result['target_org'].tolist() == ['課', '課']
+        assert result['section_gr_code'].tolist() == ['S001', 'A001']
+        assert result['section_gr_name'].tolist() == ['テスト課', 'テストエリア']
+        assert result['business_and_area_code'].tolist() == ['', '']
+        assert result['area_name'].tolist() == ['', '']
 
         log_msg(f"Resulting DataFrame:\n{result}", LogLevel.DEBUG)
 
-    def test_mapping_equivalence(self, kanren_mapping, jinji_mapping):
+    def test_mapping_equivalence_without_dummy(self, kanren_mapping, jinji_mapping):
         test_doc = """
         テスト区分: UT
         テストカテゴリ: 同等性確認
@@ -2299,70 +2042,17 @@ class TestKanrenExcelMappingWithoutDummy:
         log_msg("各マッピング結果のform_type値を確認", LogLevel.DEBUG)
         log_msg(f'kanren.dtype: \n\n{result_kanren.dtypes}', LogLevel.INFO)
         log_msg(f'kanren.info: \n\n{result_kanren.info}', LogLevel.INFO)
-        #log_msg(f'kanren.layout: \n\n{result_kanren}', LogLevel.INFO)
         assert result_kanren['form_type'].iloc[0] == '4', "関連マッピングのform_typeが4ではありません"
         assert result_jinji['form_type'].iloc[0] == '1', "人事マッピングのform_typeが1ではありません"
 
-        log_msg("form_type以外のカラムの同等性を確認", LogLevel.DEBUG)
+        log_msg("form_type,部店カナ以外のカラムの同等性を確認", LogLevel.DEBUG)
         # form_type以外の全カラムを取得
-        columns_to_compare = [col for col in result_kanren.columns if col != 'form_type']
+        columns_to_compare = [col for col in result_kanren.columns if col not in ['form_type', 'organization_name_kana']]
 
-        # form_type以外のカラムについて同等性を確認
+        # form_type,部店カナ以外のカラムについて同等性を確認
         pd.testing.assert_frame_equal(
             result_kanren[columns_to_compare],
             result_jinji[columns_to_compare],
             check_names=True,
         )
 
-
-        log_msg("KanrenExcelMappingWithoutDummy and JinjiExcelMapping produce identical results", LogLevel.INFO)
-
-    def test_map_to_unified_layout_C1_basic_mapping(self, kanren_mapping):
-
-        test_doc = """
-        テスト区分: UT
-        テストカテゴリ: C1
-        テスト内容: 基本的なマッピングのテスト
-        """
-        log_msg(f"\n{test_doc}", LogLevel.DEBUG)
-
-        _df = pd.DataFrame({
-            'application_type': ['新規'],
-            'target_org': ['課'],
-            'business_unit_code': ['001'],
-            'parent_branch_code': ['P001'],
-            'branch_code': ['1001'],
-            'branch_name': ['テスト支店'],
-            'section_area_code': ['S001'],
-            'section_area_name': ['テスト課'],
-            'section_area_name_en': ['Test Section'],
-            'resident_branch_code': ['R001'],
-            'resident_branch_name': ['常駐支店'],
-            'aaa_transfer_date': ['2023-01-01'],
-            'remarks': ['備考'],
-            'organization_name_kana': ['テストシテン'],
-        })
-
-        with patch('ulid.new', return_value='dummy_ulid'):
-            result = kanren_mapping.map_to_unified_layout(_df)
-        log_msg(f"\n\nResulting DataFrame:\n{tabulate_dataframe(result)}", LogLevel.INFO)
-
-        assert result['ulid'].iloc[0] == 'dummy_ulid'
-        assert result['form_type'].iloc[0] == '4'
-        assert result['application_type'].iloc[0] == '新規'
-        assert result['target_org'].iloc[0] == '課'
-        assert result['business_unit_code'].iloc[0] == '001'
-        assert result['parent_branch_code'].iloc[0] == 'P001'
-        assert result['branch_code'].iloc[0] == '1001'
-        assert result['branch_name'].iloc[0] == 'テスト支店'
-        assert result['section_gr_code'].iloc[0] == 'S001'
-        assert result['section_gr_name'].iloc[0] == 'テスト課'
-        assert result['section_name_en'].iloc[0] == 'Test Section'
-        assert result['resident_branch_code'].iloc[0] == 'R001'
-        assert result['resident_branch_name'].iloc[0] == '常駐支店'
-        assert result['aaa_transfer_date'].iloc[0] == '2023-01-01'
-        assert result['remarks'].iloc[0] == '備考'
-        assert result['organization_name_kana'].iloc[0] == 'テストシテン'
-
-        #log_msg(f"Resulting DataFrame:\n{result}", LogLevel.DEBUG)
-        log_msg(f"Resulting DataFrame:\n{result}", LogLevel.INFO)
