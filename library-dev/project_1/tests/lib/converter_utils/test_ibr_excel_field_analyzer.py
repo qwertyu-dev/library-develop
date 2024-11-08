@@ -502,6 +502,22 @@ class Test_RemarksParser_parse:
                 "other_info": "",
             },
         ),
+        (
+            "41002 東日本第一Ｇｒ",
+            {
+                "request_type": "エリア",
+                "sales_department": {
+                    "department_name": "",
+                    "branch_name": "",
+                },
+                "area_group": {
+                    "group_code": "41002",
+                    "group_name": "東日本第一Ｇｒ",
+                    "established_date": "",
+                },
+                "other_info": "",
+            },
+        ),
     ])
     def test_parse_C0_basic_patterns(self, remarks_text, expected):
         """テスト区分: UT
@@ -525,6 +541,7 @@ class Test_RemarksParser_parse:
     @pytest.mark.parametrize(("remarks_text", "expected_type"), [
         ("八重洲通支店営業部", "営業部傘下"),
         ("41002 東日本第一Gr", "エリア"),
+        ("41002 東日本第一Ｇｒ", "エリア"),
         ("変更申請", "その他"),
         ("廃止予定", "その他"),
         ("共通認証対応", "その他"),

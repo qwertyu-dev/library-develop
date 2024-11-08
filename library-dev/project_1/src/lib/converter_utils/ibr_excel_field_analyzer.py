@@ -151,8 +151,8 @@ class RemarksParser:
             log_msg(f"  Input text       : '{line}'", LogLevel.DEBUG)
             log_msg("Resetting area group values to empty", LogLevel.DEBUG)
 
-        # 状況に関わらず other_infoに追加
-        self.result["other_info"] += line + "\n"
+            # 関わらず other_infoに追加
+            self.result["other_info"] += line + "\n"
 
 
     def _process_area_group(self, line: str) -> None:
@@ -195,6 +195,6 @@ class RemarksParser:
             log_msg(f"  Input text       : '{line}'", LogLevel.DEBUG)
             log_msg("Resetting area group values to empty", LogLevel.DEBUG)
 
-        # 状況に関わらず other_infoに追加
-        self.result["other_info"] += line + "\n"
+            # other_infoに追加
+            self.result["other_info"] += line + "\n"
 
