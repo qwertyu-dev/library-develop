@@ -1609,6 +1609,7 @@ class TestKanrenExcelMappingWithDummy:
     def create_base_dataframe(self):
         return pd.DataFrame({
             'application_type': ['新規'],
+            'target_org': ['課'],
             'business_unit_code': ['001'],
             'parent_branch_code': ['P001'],
             'branch_code': ['1001'],

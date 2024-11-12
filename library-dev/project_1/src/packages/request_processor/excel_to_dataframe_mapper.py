@@ -374,8 +374,8 @@ class KanrenExcelMappingWithDummy(ExcelMapping):
             unified_df['ulid'] = [str(ulid.new()) for _ in range(len(df))]
             unified_df['form_type'] = '3'  # ダミー課あり
             unified_df['application_type'] = df['application_type']
-            # 「対象」は関連/ダミー課ありケースは入力値属性で持っていないことを再確認,'課' を固定設定
-            unified_df['target_org'] = '課'
+            # 「対象」は関連/ダミー課ありケースは移植後は入力される運営に変更
+            unified_df['target_org'] = df['target_org']
             #
             unified_df['business_unit_code'] = df['business_unit_code']
             unified_df['parent_branch_code'] = df['parent_branch_code']
