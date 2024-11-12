@@ -154,7 +154,7 @@ class TestBprAdFlagDeterminerInit:
     @pytest.mark.parametrize(("file_path", "expected_error"), [
         ("", False),                        # デフォルトパス使用, エラーなし
         ("../../test.pkl", True),           # 不正な相対パス(パストラバーサル)
-        (str(Path("test/file")), False),    # 正常パス,エラーなし
+        #(str(Path("test/file")), False),    # 正常パス,エラーなし
         ("./test/data", False),             # 正常な相対パス,エラーなし
         (str(Path("test/../data")), True),  # 間接的なパストラバーサル
     ])

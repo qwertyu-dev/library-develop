@@ -155,7 +155,7 @@ class RemarksParser:
             log_msg(f"  Input text       : '{line}'", LogLevel.DEBUG)
             log_msg("Resetting area group values to empty", LogLevel.DEBUG)
 
-            # 関わらず other_infoに追加
+            # other_infoに追加
             self.result["other_info"] += line + "\n"
 
 

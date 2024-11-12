@@ -172,13 +172,15 @@ class BprAdFlagDeterminer:
                 # self.reference_dfに対して探索が必要となるが
                 # 事前にmerger処理によりリファレンスから取得したBPRADフラグ情報.reference_bpr_target_flagが付与されているため
                 # これを使用する
-                return np.where('reference_bpr_target_flag' in series.index, series['reference_bpr_target_flag'].to_numpy()[0], '')
+                #return np.where('reference_bpr_target_flag' in series.index, series['reference_bpr_target_flag'], '')
+                return series.get('reference_bpr_target_flag', '')
 
             case ApplicationType.DISCONTINUE.value: # 廃止
                 # self.reference_dfに対して探索実施するが
                 # 事前にmerger処理によりリファレンスから取得したBPRADフラグ情報.reference_bpr_target_flagが付与されているため
                 # これを使用する
-                return np.where('reference_bpr_target_flag' in series.index, series['reference_bpr_target_flag'].to_numpy()[0], '')
+                #return np.where('reference_bpr_target_flag' in series.index, series['reference_bpr_target_flag'], '')
+                return series.get('reference_bpr_target_flag', '')
 
             case _:
                 # 想定外の値の場合の処理
