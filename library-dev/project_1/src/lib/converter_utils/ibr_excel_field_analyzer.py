@@ -67,6 +67,10 @@ class RemarksParser:
                     - "established_date": 設立日
                 - "other_info": その他の情報
         """
+        if remarks_text == '':
+            self.result["request_type"] = "その他"
+            return self.result
+
         lines = [self._remove_leading_dot(line) for line in remarks_text.split("\n")]
         for line in lines:
             if any(keyword in line for keyword in ["変更", "廃止", "共通認証"]):

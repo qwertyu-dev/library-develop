@@ -137,6 +137,10 @@ class BprAdFlagDeterminer:
 
         Arguments:
             series(pd.Series): 編集対象series,outputレイアウト構造と初期値設定状態
+
+        See:
+            src/lib/convert_utils/ibr_reference_marger.py
+                └ add_bpr_target_flag_from_reference()
         """
         # 種類 | application_type により分岐する / 新設 or 変更 or 削除
         log_msg(f"series.application_type: {series['application_type']}", LogLevel.INFO)
@@ -147,8 +151,9 @@ class BprAdFlagDeterminer:
                     return BprADFlagResults.AD_ONLY
 
                 # 課Grコード0部店の存在チェック
+                # 対象条件を満たす探索グループを生成する Case2/Case3で使用する
                 result_df = (self._exists_branch_code_with_zero_group_code(series))
-                log_msg(f'\n課Grコード"0"部店の存在チェック 探索結果: \n{tabulate_dataframe(result_df)}', LogLevel.INFO)
+                log_msg(f'\n課Grコード"2"部店の存在チェック 探索結果: \n{tabulate_dataframe(result_df)}', LogLevel.INFO)
 
                 # Case.2 課Grコード0部店有り,探索結果のBPR_ADフラグをセットする
                 if len(result_df):
@@ -164,14 +169,16 @@ class BprAdFlagDeterminer:
                 return self._ensure_new_division_bprad_flag_config(series)
 
             case ApplicationType.MODIFY.value: # 変更
-                # self.reference_dfに対して探索実施
-                # TODO():edited_seriesの探索キー
-                # TODO():referenceテーブルの対となる探索キー
-                return 'リファレンステーブルからの情報取得'
+                # self.reference_dfに対して探索が必要となるが
+                # 事前にmerger処理によりリファレンスから取得したBPRADフラグ情報.reference_bpr_target_flagが付与されているため
+                # これを使用する
+                return np.where('reference_bpr_target_flag' in series.index, series['reference_bpr_target_flag'].to_numpy()[0], '')
 
             case ApplicationType.DISCONTINUE.value: # 廃止
-                # TODO(): 変更でも廃止でも同じ処理、どう実装するか
-                return 'リファレンステーブルからの情報取得'
+                # self.reference_dfに対して探索実施するが
+                # 事前にmerger処理によりリファレンスから取得したBPRADフラグ情報.reference_bpr_target_flagが付与されているため
+                # これを使用する
+                return np.where('reference_bpr_target_flag' in series.index, series['reference_bpr_target_flag'].to_numpy()[0], '')
 
             case _:
                 # 想定外の値の場合の処理
@@ -245,20 +252,34 @@ class BprAdFlagDeterminer:
         log_msg(f'debug---mask\n\n{mask}', LogLevel.DEBUG)
         return self.request_df[mask]
 
+    def _filter_zero_group_codes(self, df: pd.DataFrame) -> pd.DataFrame:
+        """課Grコードまたはエリアコードがゼロのレコードをフィルタリング"""
+        zero_code = ValidationConfig.ZERO_CODE
+        columns_to_check = ['section_gr_code', 'business_and_area_code']
+
+        # 存在するカラムのみをフィルタリング
+        existing_columns = [col for col in columns_to_check if col in df.columns]
+        if not existing_columns:  # 対象カラムが1つも存在しない場合
+            return df[pd.Series(False, index=df.index)]
+
+        mask = df[existing_columns].eq(zero_code).any(axis=1)
+        return df[mask]
+
+
     #def _filter_zero_group_codes(self, df: pd.DataFrame) -> pd.DataFrame:
     #    """課Grコードまたはエリアコードがゼロのレコードをフィルタリング"""
     #    return df[
     #        (df['section_gr_code'] == ValidationConfig.ZERO_CODE) |
     #        (df['business_and_area_code'] == ValidationConfig.ZERO_CODE)
     #    ]
-    def _filter_zero_group_codes(self, df: pd.DataFrame) -> pd.DataFrame:
-        """課Grコードまたはエリアコードがゼロのレコードをフィルタリング"""
-        mask = pd.Series(False, index=df.index)
-        if 'section_gr_code' in df.columns:
-            mask |= (df['section_gr_code'] == ValidationConfig.ZERO_CODE)
-        if 'business_and_area_code' in df.columns:
-            mask |= (df['business_and_area_code'] == ValidationConfig.ZERO_CODE)
-        return df[mask]
+    #def _filter_zero_group_codes(self, df: pd.DataFrame) -> pd.DataFrame:
+    #    """課Grコードまたはエリアコードがゼロのレコードをフィルタリング"""
+    #    mask = pd.Series(False, index=df.index)
+    #    if 'section_gr_code' in df.columns:
+    #        mask |= (df['section_gr_code'] == ValidationConfig.ZERO_CODE)
+    #    if 'business_and_area_code' in df.columns:
+    #        mask |= (df['business_and_area_code'] == ValidationConfig.ZERO_CODE)
+    #    return df[mask]
 
     def _is_specific_word_in_name(self, name: str) -> bool:
         """(内部関数)部名/課G名(name: str)に特定の単語が含まれているかをチェックする
