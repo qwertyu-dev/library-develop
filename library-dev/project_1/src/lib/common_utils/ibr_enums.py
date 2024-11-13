@@ -55,7 +55,7 @@ class RelatedCompanyType(StrEnum):
 
 class OrganizationType(StrEnum):
     """組織区分を表す列挙型"""
-    BRANCH = "部"                    # 部
+    BRANCH = "部店"                  # 部店
     INTERNAL_SALES = "拠点内営業部"  # 拠点内営業部
     SECTION_GROUP = "課"             # 課
     AREA = "エリア"                  # エリア

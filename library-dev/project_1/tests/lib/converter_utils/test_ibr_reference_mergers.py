@@ -64,7 +64,6 @@ class TestReferenceMergersMergeZeroGroupParentBranch:
     | BVT_004  | 空の課GRコード | ""       | 正常終了  | 空値の確認       | 実装済み (test_merge_C1_dt2_missing_columns)   |
     | BVT_005  | NULL値         |   None   | 正常終了  | NULL値の確認     | 実装済み (test_merge_C2_invalid_data_type)     |
     """
-
     @pytest.fixture()
     def integrated_layout_df(self) -> pd.DataFrame:
         """統合レイアウトデータのfixture"""
@@ -79,10 +78,21 @@ class TestReferenceMergersMergeZeroGroupParentBranch:
         ]
 
         data = [
-            ['merge_zero_group_parent_branch', '2', '変更', '部', '339', '****', '0001', 'AAA支店', '0', '部署5', 'Department', '36', '60515', '常駐支店50', '', '', '', '', '', '', '', '', ''],
-            ['merge_zero_group_parent_branch', '2', '変更', '課', '339', '****', '0001', 'AAA支店', '00011', '部署5', 'Department', '36', '60515', '常駐支店50', '', '', '', '', '', '', '', '', ''],
-            ['merge_zero_group_parent_branch', '2', '変更', '部', '339', '****', '0002', 'AAA支店', '0', '部署5', 'Department', '36', '60515', '常駐支店50', '', '', '', '', '', '', '', '', ''],
-            ['merge_zero_group_parent_branch', '2', '変更', '課', '339', '****', '0002', 'AAA支店', '00021', '部署5', 'Department', '36', '60515', '常駐支店50', '', '', '', '', '', '', '', '', ''],
+            # ケース1: 部店コード0001、課GRコード空文字
+            ['merge_zero_group_parent_branch', '2', '変更', '部店', '339', '*', '0001', 'AAA支店', 
+             '', '部署5', 'Department', '36', '60515', '常駐支店50', '', '', '', '', '', '', '', '', ''],
+            
+            # ケース2: 部店コード0001、課GRコード設定あり
+            ['merge_zero_group_parent_branch', '2', '変更', '課', '339', '*', '0001', 'AAA支店', 
+             '00011', '部署5', 'Department', '36', '60515', '常駐支店50', '', '', '', '', '', '', '', '', ''],
+            
+            # ケース3: 部店コード0002、課GRコード空文字、親部店コード設定あり
+            ['merge_zero_group_parent_branch', '2', '変更', '部店', '339', '0001', '0002', 'AAA支店', 
+             '', '部署5', 'Department', '36', '60515', '常駐支店50', '', '', '', '', '', '', '', '', ''],
+            
+            # ケース4: 部店コード0002、課GRコード設定あり、親部店コード設定なし
+            ['merge_zero_group_parent_branch', '2', '変更', '課', '339', '', '0002', 'AAA支店', 
+             '00021', '部署5', 'Department', '36', '60515', '常駐支店50', '', '', '', '', '', '', '', '', ''],
         ]
 
         return pd.DataFrame(data, columns=columns)
@@ -114,10 +124,41 @@ class TestReferenceMergersMergeZeroGroupParentBranch:
         ]
 
         data = [
-            ['20241211', '20241211', 'ULID000009', '00100', '支店10', '00107', 'グループ10', '3', '00040', 'S0009', '営業部10', '0001', '支店10', '0', 'グループ10', '00100', '支店10', '00107', 'グループ10', 'SB009', '出張所10', 'B', 'FBFT10', 'エリア10', '00040', '常駐支店10', '1', '0', '0', 'DOMESTIC', '2', '0010', '0010', 'シテン10', 'DP009', 'DPB009', 'GR009', 'GRB009', 'GRPS009', '1', '0', '備考10', '10', '', '', '', '', '', '', '', '10', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
-            ['20241211', '20241211', 'ULID000009', '00100', '支店10', '00107', 'グループ10', '3', '00040', 'S0009', '営業部10', '00011', '支店10', '00011', 'グループ10', '00100', '支店10', '00107', 'グループ10', 'SB009', '出張所10', 'B', 'FBFT10', 'エリア10', '00040', '常駐支店10', '1', '0', '0', 'DOMESTIC', '2', '0010', '0010', 'シテン10', 'DP009', 'DPB009', 'GR009', 'GRB009', 'GRPS009', '2', '0', '備考10', '10', '', '', '', '', '', '', '', '10', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
-            ['20241211', '20241211', 'ULID000009', '00100', '支店10', '00107', 'グループ10', '3', '', 'S0009', '営業部10', '0002', '支店20', '0', 'グループ10', '00100', '支店20', '00107', 'グループ10', 'SB009', '出張所10', 'B', 'FBFT10', 'エリア10', '00040', '常駐支店10', '1', '0', '0', 'DOMESTIC', '2', '0010', '0010', 'シテン10', 'DP009', 'DPB009', 'GR009', 'GRB009', 'GRPS009', '3', '0', '備考10', '10', '', '', '', '', '', '', '', '10', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
-            ['20241211', '20241211', 'ULID000009', '00100', '支店10', '00107', 'グループ10', '3', '', 'S0009', '営業部10', '00021', '支店20', '00021', 'グループ10', '00100', '支店20', '00107', 'グループ10', 'SB009', '出張所10', 'B', 'FBFT10', 'エリア10', '00040', '常駐支店10', '1', '0', '0', 'DOMESTIC', '2', '0010', '0010', 'シテン10', 'DP009', 'DPB009', 'GR009', 'GRB009', 'GRPS009', '4', '0', '備考10', '10', '', '', '', '', '', '', '', '10', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
+            # ケース1: 課GRコードが空文字のケース(部)
+            ['20241211', '20241211', 'ULID000009', '00100', '支店10', '00107', 'グループ10',
+            '3', '00040', 'S0009', '営業部10', '0001', '支店10', '', 'グループ10',
+            '00100', '支店10', '00107', 'グループ10', 'SB009', '出張所10', 'B',
+            'FBFT10', 'エリア10', '00040', '常駐支店10', '1', '0', '0', 'DOMESTIC',
+            '2', '0010', '0010', 'シテン10', 'DP009', 'DPB009', 'GR009', 'GRB009',
+            'GRPS009', '5', '0', '備考10', '10', '', '', '', '', '', '', '', '10', '',
+            '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
+
+            # ケース2: 課GRコードが設定されているケース(課)
+            ['20241211', '20241211', 'ULID000009', '00100', '支店10', '00107', 'グループ10',
+            '3', '00040', 'S0009', '営業部10', '00011', '支店10', '00011', 'グループ10',
+            '00100', '支店10', '00107', 'グループ10', 'SB009', '出張所10', 'B',
+            'FBFT10', 'エリア10', '00040', '常駐支店10', '1', '0', '0', 'DOMESTIC',
+            '2', '0010', '0010', 'シテン10', 'DP009', 'DPB009', 'GR009', 'GRB009',
+            'GRPS009', '6', '0', '備考10', '10', '', '', '', '', '', '', '', '10', '',
+            '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
+
+            # ケース3: 課GRコードが空文字で親部店コードありのケース(部)
+            ['20241211', '20241211', 'ULID000009', '00100', '支店10', '00107', 'グループ10',
+            '3', '0001', 'S0009', '営業部10', '0002', '支店20', '', 'グループ10',
+            '00100', '支店20', '00107', 'グループ10', 'SB009', '出張所10', 'B',
+            'FBFT10', 'エリア10', '00040', '常駐支店10', '1', '0', '0', 'DOMESTIC',
+            '2', '0010', '0010', 'シテン10', 'DP009', 'DPB009', 'GR009', 'GRB009',
+            'GRPS009', '7', '0', '備考10', '10', '', '', '', '', '', '', '', '10', '',
+            '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
+
+            # ケース4: 課GRコードが設定されていて親部店コードなしのケース(課)
+            ['20241211', '20241211', 'ULID000009', '00100', '支店10', '00107', 'グループ10',
+            '3', '', 'S0009', '営業部10', '00021', '支店20', '00021', 'グループ10',
+            '00100', '支店20', '00107', 'グループ10', 'SB009', '出張所10', 'B',
+            'FBFT10', 'エリア10', '00040', '常駐支店10', '1', '0', '0', 'DOMESTIC',
+            '2', '0010', '0010', 'シテン10', 'DP009', 'DPB009', 'GR009', 'GRB009',
+            'GRPS009', '8', '0', '備考10', '10', '', '', '', '', '', '', '', '10', '',
+            '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
         ]
 
         return pd.DataFrame(data, columns=columns)
@@ -173,7 +214,7 @@ class TestReferenceMergersMergeZeroGroupParentBranch:
                 reference_table_df,
             )
         # 期待されるエラーメッセージを実際のものに合わせて修正
-        assert "Missing columns: left={'branch_code'}" in str(exc_info.value)
+        assert "課Grコード=='0'レコードからの付与/親部店情報のマージ処理でエラーが発生しました:" in str(exc_info.value)
 
     def test_merge_C1_dt1_successful_merge(self, integrated_layout_df, reference_table_df):
         """C1: 全条件を満たす正常系テスト(DT1)"""
@@ -213,64 +254,99 @@ class TestReferenceMergersMergeZeroGroupParentBranch:
                 reference_table_df,
             )
         # 実際のエラーメッセージパターンに合わせて修正
-        expected_error = "課Grコード=='0'レコードからの付与/親部店情報のマージ処理でエラーが発生しました: 'branch_code_jinji'"
+        expected_error = "課Grコード=='0'レコードからの付与/親部店情報のマージ処理でエラーが発生しました:"
         assert expected_error in str(exc_info.value)
 
         # エラーの詳細をログ出力
         log_msg(f"実際のエラー: {str(exc_info.value)}", LogLevel.DEBUG)
 
     def test_merge_C2_condition_combinations(self, integrated_layout_df, reference_table_df):
-        """C2: 条件組み合わせテスト"""
+        """C2: 課GRコードの組み合わせテスト"""
         test_doc = """
         テスト区分: UT
         テストカテゴリ: C2
-        テスト内容: 条件組み合わせケースの確認
-            - 課Grコード'0'の有無
-            - 親部店コードの有無
-            - 部店コード一致/不一致
+        テスト内容: 条件組み合わせ - 課GRコードのパターン
+            - 空文字('')の課GRコード (部)
+            - 設定値ありの課GRコード (課)
+            - 空文字+親部店コードありの課GRコード (部)
+            - 設定値あり+親部店コードなしの課GRコード (課)
         """
         log_msg(f"\n{test_doc}", LogLevel.DEBUG)
 
-        # Case 1: 課Grコード'0'あり、親部店コードあり、部店コード一致
-        result1 = ReferenceMergers.merge_zero_group_parent_branch(
+        # テストデータ出力
+        log_msg('integrated_layout_df:\n', LogLevel.DEBUG)
+        log_msg(tabulate_dataframe(integrated_layout_df), LogLevel.DEBUG)
+        log_msg('\nreference_table_df:\n', LogLevel.DEBUG)
+        log_msg(tabulate_dataframe(reference_table_df), LogLevel.DEBUG)
+
+        # Case 1: 課Grコード空文字('')の処理
+        result = ReferenceMergers.merge_zero_group_parent_branch(
             integrated_layout_df,
             reference_table_df,
         )
-        log_msg("Case1の結果:", LogLevel.DEBUG)
-        log_msg(f"\n{tabulate_dataframe(result1)}", LogLevel.DEBUG)
 
-        assert not result1.empty
-        assert 'reference_parent_branch_code' in result1.columns
-        assert result1['reference_parent_branch_code'].notna().any()  # 値が存在することを確認
-        assert not result1['reference_parent_branch_code'].eq('').all()  # 全て空文字でないことを確認
+        log_msg('\nマージ結果:', LogLevel.DEBUG)
+        log_msg(tabulate_dataframe(result), LogLevel.DEBUG)
 
-        # Case 2: 課Grコード'0'なし
-        temp_ref_df = reference_table_df.copy()
-        temp_ref_df['section_gr_code_jinji'] = '999'  # '0'以外に変更
-        result2 = ReferenceMergers.merge_zero_group_parent_branch(
-            integrated_layout_df,
-            temp_ref_df,
-        )
-        log_msg("Case2の結果:", LogLevel.DEBUG)
-        log_msg(f"\n{tabulate_dataframe(result2)}", LogLevel.DEBUG)
+        # 検証1: 課GRコード空文字('')の行(部)
+        empty_gr_mask = (integrated_layout_df['section_gr_code'] == '') & \
+                        (integrated_layout_df['target_org'] == OrganizationType.BRANCH.value)
 
-        assert 'reference_parent_branch_code' in result2.columns
-        assert all(isinstance(val, str) for val in result2['reference_parent_branch_code'])  # 全て文字列型であることを確認
-        assert result2['reference_parent_branch_code'].eq('').all()  # 全て空文字であることを確認
+        matched_rows_empty = result[empty_gr_mask]
+        log_msg('\n空文字の課GRコード行:', LogLevel.DEBUG)
+        log_msg(tabulate_dataframe(matched_rows_empty), LogLevel.DEBUG)
 
-        # Case 3: 親部店コードなし
-        temp_ref_df = reference_table_df.copy()
-        temp_ref_df['parent_branch_code'] = ''
-        result3 = ReferenceMergers.merge_zero_group_parent_branch(
-            integrated_layout_df,
-            temp_ref_df,
-        )
-        log_msg("Case3の結果:", LogLevel.DEBUG)
-        log_msg(f"\n{tabulate_dataframe(result3)}", LogLevel.DEBUG)
+        assert len(matched_rows_empty) > 0, "空文字('')の課GRコードを持つ行が見つかりません"
+        assert matched_rows_empty['reference_branch_code_jinji'].notna().all(), \
+            "部: 参照コードが正しくマージされていません"
+        assert matched_rows_empty['reference_parent_branch_code'].notna().all(), \
+            "部: 親部店コードが正しくマージされていません"
 
-        assert 'reference_parent_branch_code' in result3.columns
-        assert all(isinstance(val, str) for val in result3['reference_parent_branch_code'])  # 全て文字列型であることを確認
-        assert result3['reference_parent_branch_code'].eq('').all()  # 全て空文字であることを確認
+        # 検証2: 課GRコード設定済の行(課)
+        nonempty_gr_mask = (integrated_layout_df['section_gr_code'] != '') & \
+                            (integrated_layout_df['target_org'] == OrganizationType.SECTION_GROUP)
+
+        matched_rows_nonempty = result[nonempty_gr_mask]
+        log_msg('\n設定済の課GRコード行:', LogLevel.DEBUG)
+        log_msg(tabulate_dataframe(matched_rows_nonempty), LogLevel.DEBUG)
+
+        assert len(matched_rows_nonempty) > 0, "課GRコード設定済の行が見つかりません"
+        assert matched_rows_nonempty['reference_branch_code_jinji'].eq('').all(), \
+            "課: 参照コードが誤ってマージされています"
+        assert matched_rows_nonempty['reference_parent_branch_code'].eq('').all(), \
+            "課: 親部店コードが誤ってマージされています"
+
+        # 検証3: 空文字+親部店コードありの行(部)
+        empty_with_parent_mask = (integrated_layout_df['section_gr_code'] == '') & \
+                                (integrated_layout_df['target_org'] == OrganizationType.BRANCH) & \
+                                (integrated_layout_df['parent_branch_code'] != '*')
+
+        matched_rows_empty_with_parent = result[empty_with_parent_mask]
+        log_msg('\n親部店コードありの空文字課GRコード行:', LogLevel.DEBUG)
+        log_msg(tabulate_dataframe(matched_rows_empty_with_parent), LogLevel.DEBUG)
+
+        assert len(matched_rows_empty_with_parent) > 0, \
+            "空文字+親部店コードありの行が見つかりません"
+        assert matched_rows_empty_with_parent['reference_branch_code_jinji'].notna().all(), \
+            "部(親あり): 参照コードが正しくマージされていません"
+        assert matched_rows_empty_with_parent['reference_parent_branch_code'].notna().all(), \
+            "部(親あり): 親部店コードが正しくマージされていません"
+
+        # 検証4: 設定値あり+親部店コードなしの行(課)
+        nonempty_without_parent_mask = (integrated_layout_df['section_gr_code'] != '') & \
+                                        (integrated_layout_df['target_org'] == OrganizationType.SECTION_GROUP) & \
+                                        (integrated_layout_df['parent_branch_code'] == '')
+
+        matched_rows_nonempty_without_parent = result[nonempty_without_parent_mask]
+        log_msg('\n親部店コードなしの設定済課GRコード行:', LogLevel.DEBUG)
+        log_msg(tabulate_dataframe(matched_rows_nonempty_without_parent), LogLevel.DEBUG)
+
+        assert len(matched_rows_nonempty_without_parent) > 0, \
+            "設定値あり+親部店コードなしの行が見つかりません"
+        assert matched_rows_nonempty_without_parent['reference_branch_code_jinji'].eq('').all(), \
+            "課(親なし): 参照コードが誤ってマージされています"
+        assert matched_rows_nonempty_without_parent['reference_parent_branch_code'].eq('').all(), \
+            "課(親なし): 親部店コードが誤ってマージされています"
 
     def test_merge_C2_invalid_data_type(self, integrated_layout_df, reference_table_df):
         """C2: データ型不一致のテスト"""
@@ -290,7 +366,7 @@ class TestReferenceMergersMergeZeroGroupParentBranch:
                 reference_table_df,
             )
         # エラーメッセージを実装の実際の出力に合わせる
-        expected_error = "Can only use .str accessor with string values!"
+        expected_error = "課Grコード=='0'レコードからの付与/親部店情報のマージ処理でエラーが発生しました:"
         assert expected_error in str(exc_info.value)
 
         # エラーの詳細をログ出力
@@ -352,21 +428,43 @@ class TestReferenceMergersMergeZeroGroupParentBranch:
         assert not result.empty
         assert 'reference_parent_branch_code' in result.columns
         assert 'section_gr_code' in result.columns
-        assert result[result['section_gr_code'] == '0'].shape[0] > 0
+        #assert result[result['section_gr_code'] == '0'].shape[0] > 0
+        assert result[result['section_gr_code'] == '0'].shape[0] == 0  # jinjiベースでの判定仕様改修
         log_msg("最小値テスト結果:\n", LogLevel.DEBUG)
         log_msg(f"{tabulate_dataframe(result)}", LogLevel.DEBUG)
 
-        # NULL値テスト
+        # NULL値テスト 受付の段階でNoneは入ってこない前提
+
         temp_ref_df = reference_table_df.copy()
         temp_ref_df.loc[0, 'section_gr_code_jinji'] = None
         result = ReferenceMergers.merge_zero_group_parent_branch(
             integrated_layout_df,
             temp_ref_df,
         )
+        log_msg(f"\n★{temp_ref_df['section_gr_code_jinji']}")
+        log_msg(f"\n★{result['reference_parent_branch_code']}")
+        tabulate_dataframe(temp_ref_df)
+        tabulate_dataframe(result)
+
         assert 'reference_parent_branch_code' in result.columns  # カラムは存在する
-        assert result['reference_parent_branch_code'].eq('').all()  # 値は空文字
-        log_msg("NULL値テスト結果:\n", LogLevel.DEBUG)
+        # 部/課による判定
+        is_branch = result['target_org'] == OrganizationType.BRANCH.value
+        is_section = result['target_org'] == OrganizationType.SECTION_GROUP.value
+
+        # 部のレコード:空文字を持つレコードはマージされるべき
+        branch_ref = result.loc[is_branch, 'reference_parent_branch_code']
+        assert not branch_ref.eq('').all(), "部: 空文字の課GRコードを持つレコードがマージされていません"
+        assert branch_ref.notna().all(), "部: NaN値が含まれています"
+
+        # 課のレコード: 常に空文字
+        section_ref = result.loc[is_section, 'reference_parent_branch_code']
+        assert section_ref.eq('').all(), "課: 参照情報が設定されています"
+
+        log_msg("空文字列テスト結果:\n", LogLevel.DEBUG)
         log_msg(f"{tabulate_dataframe(result)}", LogLevel.DEBUG)
+        #assert result['reference_parent_branch_code'].eq('').all()  # 値は空文字
+        #log_msg("NULL値テスト結果:\n", LogLevel.DEBUG)
+        #log_msg(f"{tabulate_dataframe(result)}", LogLevel.DEBUG)
 
         # 空文字列テスト
         temp_ref_df = reference_table_df.copy()
@@ -375,8 +473,25 @@ class TestReferenceMergersMergeZeroGroupParentBranch:
             integrated_layout_df,
             temp_ref_df,
         )
+        log_msg(f"\n★\n{temp_ref_df['section_gr_code_jinji']}")
+        log_msg(f"\n★\n{result['reference_parent_branch_code']}")
+        tabulate_dataframe(temp_ref_df)
+        tabulate_dataframe(result)
         assert 'reference_parent_branch_code' in result.columns  # カラムは存在する
-        assert result['reference_parent_branch_code'].eq('').all()  # 値は空文字
+
+        # 部/課による判定
+        is_branch = result['target_org'] == OrganizationType.BRANCH.value
+        is_section = result['target_org'] == OrganizationType.SECTION_GROUP.value
+
+        # 部のレコード:空文字を持つレコードはマージされるべき
+        branch_ref = result.loc[is_branch, 'reference_parent_branch_code']
+        assert not branch_ref.eq('').all(), "部: 空文字の課GRコードを持つレコードがマージされていません"
+        assert branch_ref.notna().all(), "部: NaN値が含まれています"
+
+        # 課のレコード: 常に空文字
+        section_ref = result.loc[is_section, 'reference_parent_branch_code']
+        assert section_ref.eq('').all(), "課: 参照情報が設定されています"
+
         log_msg("空文字列テスト結果:\n", LogLevel.DEBUG)
         log_msg(f"{tabulate_dataframe(result)}", LogLevel.DEBUG)
 

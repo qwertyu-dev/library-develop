@@ -84,12 +84,11 @@ class ReferenceMergers:
     def merge_zero_group_parent_branch(integrated_layout: pd.DataFrame, reference_table: pd.DataFrame) -> pd.DataFrame:
         """統合レイアウトデータにリファレンステーブルの情報をマージする
 
-        * 部店グループ: 課Grコード'0'を保有する明細の情報を取得する
-        * 該当するリファレンスレコードの部店コードColumnを申請レコードに付与する
-        * 該当するリファレンスレコードの部名称Columnを申請レコードに付与する
-        * 該当するリファレンスレコードの親部店コード値があれば申請レコードをColumn付与する、なければブランク
-        * 申請レコードに追加するColumnには一律reference_接頭辞を付与する
-        * reference_parent_branch_codeとreference_parent_branch_codeが無い場合は空文字で列生成する
+        * 部店グループ: 課Grコード''を保有する明細の情報を取得する
+        * 部のみが対象、課には情報を設定しない
+        * 該当する部のリファレンス情報(部店コード、部名称、親部店コード)をマージ
+        * マージする列名には一律reference_接頭辞を付与
+        * reference系の列がない場合は空文字で生成
 
         Args:
             integrated_layout: 統合レイアウトデータ
@@ -104,23 +103,31 @@ class ReferenceMergers:
         try:
             # データの検証
             required_columns = {
-                'left': ['branch_code'],
-                'right': ['branch_code_bpr', 'section_gr_code_bpr'],
+                'left': ['branch_code', 'target_org'],
+                'right': ['branch_code_jinji', 'section_gr_code_jinji'],
             }
             ReferenceMergers._validate_merge_data(integrated_layout, reference_table, required_columns)
 
-            # 部店コードの上位4桁を取得
+            # コピーを作成
             result_df = integrated_layout.copy()
-            result_df['branch_code_prefix'] = ReferenceMergers._extract_branch_code_prefix(result_df, 'branch_code')
-            reference_table['branch_code_prefix'] = ReferenceMergers._extract_branch_code_prefix(reference_table, 'branch_code_jinji')
 
-            # リファレンステーブルのフィルタリングとリネーム
+            # マスクの作成: NoneとNaNと空文字を同等に扱う
+            reference_table_work = reference_table.copy()
+            reference_table_work['section_gr_code_jinji'] = reference_table_work['section_gr_code_jinji'].fillna('')
+            ref_empty_gr_mask = reference_table_work['section_gr_code_jinji'] == ''
+
+            # 部店コードの準備
+            result_df['branch_code_prefix'] = result_df['branch_code'].str[:4]
+            reference_table_work['branch_code_prefix'] = reference_table_work['branch_code_jinji'].str[:4]
+
+            # マージ対象データの抽出とリネーム
             filtered_reference = (
-                reference_table[reference_table['section_gr_code_jinji'] == '0']
+                reference_table_work[ref_empty_gr_mask]
                 .rename(columns=MergerConfig.REFERENCE_COLUMNS_MAPPING_JINJI)
             )
-            log_msg('課Grコード=="0"抽出\n')
-            log_msg(f'{tabulate_dataframe(filtered_reference)}', LogLevel.DEBUG)
+
+            log_msg('課Grコード==""抽出\n', LogLevel.DEBUG)
+            tabulate_dataframe(filtered_reference)
 
             # マージ処理
             merge_columns = [
@@ -131,9 +138,18 @@ class ReferenceMergers:
                 filtered_reference[merge_columns],
                 on='branch_code_prefix',
                 how='left',
-            ).fillna('')
+            )
 
-            # reference_parent_branch_codeとreference_parent_branch_codeが無い場合は空文字で列生成
+            # NaN値を空文字に変換
+            merged_df = merged_df.fillna('')
+
+            # 課のレコードは参照情報をクリア
+            is_section = merged_df['target_org'] != OrganizationType.BRANCH
+            merged_df.loc[is_section, 'reference_branch_code_jinji'] = ''
+            merged_df.loc[is_section, 'reference_branch_name_jinji'] = ''
+            merged_df.loc[is_section, 'reference_parent_branch_code'] = ''
+
+            # reference_parent_branch_codeが無い場合は空文字で列生成
             if 'reference_parent_branch_code' not in merged_df.columns:
                 merged_df['reference_parent_branch_code'] = ''
 
@@ -144,10 +160,9 @@ class ReferenceMergers:
             tabulate_dataframe(result_df)
 
         except Exception as e:
-            err_msg = f"課Grコード=='0'レコードからの付与/親部店情報のマージ処理でエラーが発生しました: {str(e)}"
+            err_msg = "課Grコード=='0'レコードからの付与/親部店情報のマージ処理でエラーが発生しました:"
             log_msg(err_msg, LogLevel.ERROR)
             raise DataMergeError(err_msg) from e
-
         else:
             return result_df
 
