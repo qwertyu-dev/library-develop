@@ -22,9 +22,9 @@ package_config = config.package_config
 log_msg = config.log_message
 
 class TestReferenceMergersMergeZeroGroupParentBranch:
-    """ReferenceMergersクラスのmerge_zero_group_parent_branchメソッドのテスト
+    """ReferenceMergersクラスのmerge_zero_group_parent_branch_with_referenceメソッドのテスト
 
-        テスト対象: ReferenceMergers.merge_zero_group_parent_branch()
+        テスト対象: ReferenceMergers.merge_zero_group_parent_branch_with_reference()
     │   ├── C0: 基本機能テスト
     │   │   ├── 正常系: 部店グループ課Grコード'0'の情報を取得・マージ
     │   │   ├── 異常系: 必須カラム不足
@@ -144,7 +144,7 @@ class TestReferenceMergersMergeZeroGroupParentBranch:
         tabulate_dataframe(reference_table_df)
 
         # 実行
-        result = ReferenceMergers.merge_zero_group_parent_branch(
+        result = ReferenceMergers.merge_zero_group_parent_branch_with_reference(
             integrated_layout_df,
             reference_table_df,
         )
@@ -170,7 +170,7 @@ class TestReferenceMergersMergeZeroGroupParentBranch:
 
         # 実行と検証
         with pytest.raises(DataMergeError) as exc_info:
-            ReferenceMergers.merge_zero_group_parent_branch(
+            ReferenceMergers.merge_zero_group_parent_branch_with_reference(
                 integrated_layout_df,
                 reference_table_df,
             )
@@ -186,7 +186,7 @@ class TestReferenceMergersMergeZeroGroupParentBranch:
         """
         log_msg(f"\n{test_doc}", LogLevel.DEBUG)
 
-        result = ReferenceMergers.merge_zero_group_parent_branch(
+        result = ReferenceMergers.merge_zero_group_parent_branch_with_reference(
             integrated_layout_df,
             reference_table_df,
         )
@@ -213,7 +213,7 @@ class TestReferenceMergersMergeZeroGroupParentBranch:
         #del reference_table_df['branch_code_jinji']
 
         with pytest.raises(DataMergeError) as exc_info:
-            ReferenceMergers.merge_zero_group_parent_branch(
+            ReferenceMergers.merge_zero_group_parent_branch_with_reference(
                 integrated_layout_df,
                 reference_table_df,
             )
@@ -237,7 +237,7 @@ class TestReferenceMergersMergeZeroGroupParentBranch:
         log_msg(f"\n{test_doc}", LogLevel.DEBUG)
 
         # Case 1: 課Grコード'0'あり、親部店コードあり、部店コード一致
-        result1 = ReferenceMergers.merge_zero_group_parent_branch(
+        result1 = ReferenceMergers.merge_zero_group_parent_branch_with_reference(
             integrated_layout_df,
             reference_table_df,
         )
@@ -254,7 +254,7 @@ class TestReferenceMergersMergeZeroGroupParentBranch:
         temp_ref_df['section_gr_code_bpr'] = '999'  # ''以外に変更
         log_msg("データ置き換え結果:", LogLevel.DEBUG)
         log_msg(f"\n{tabulate_dataframe(temp_ref_df)}", LogLevel.DEBUG)
-        result2 = ReferenceMergers.merge_zero_group_parent_branch(
+        result2 = ReferenceMergers.merge_zero_group_parent_branch_with_reference(
             integrated_layout_df,
             temp_ref_df,
         )
@@ -268,7 +268,7 @@ class TestReferenceMergersMergeZeroGroupParentBranch:
         # Case 3: 親部店コードなし
         temp_ref_df = reference_table_df.copy()
         temp_ref_df['parent_branch_code'] = ''
-        result3 = ReferenceMergers.merge_zero_group_parent_branch(
+        result3 = ReferenceMergers.merge_zero_group_parent_branch_with_reference(
             integrated_layout_df,
             temp_ref_df,
         )
@@ -292,7 +292,7 @@ class TestReferenceMergersMergeZeroGroupParentBranch:
         integrated_layout_df['branch_code'] = integrated_layout_df['branch_code'].astype(int)
 
         with pytest.raises(DataMergeError) as exc_info:
-            ReferenceMergers.merge_zero_group_parent_branch(
+            ReferenceMergers.merge_zero_group_parent_branch_with_reference(
                 integrated_layout_df,
                 reference_table_df,
             )
@@ -317,7 +317,7 @@ class TestReferenceMergersMergeZeroGroupParentBranch:
 
         # 最小値テスト
         integrated_layout_df.loc[0, 'branch_code'] = '0000'
-        result = ReferenceMergers.merge_zero_group_parent_branch(
+        result = ReferenceMergers.merge_zero_group_parent_branch_with_reference(
             integrated_layout_df,
             reference_table_df,
         )
@@ -325,7 +325,7 @@ class TestReferenceMergersMergeZeroGroupParentBranch:
 
         # 最大値テスト
         integrated_layout_df.loc[0, 'branch_code'] = '9999'
-        result = ReferenceMergers.merge_zero_group_parent_branch(
+        result = ReferenceMergers.merge_zero_group_parent_branch_with_reference(
             integrated_layout_df,
             reference_table_df,
         )
@@ -333,7 +333,7 @@ class TestReferenceMergersMergeZeroGroupParentBranch:
 
         # 無効値テスト (桁数不足)だが、3桁部店コードを許容
         integrated_layout_df.loc[0, 'branch_code'] = '000'
-        result = ReferenceMergers.merge_zero_group_parent_branch(
+        result = ReferenceMergers.merge_zero_group_parent_branch_with_reference(
             integrated_layout_df,
             reference_table_df,
         )
@@ -352,7 +352,7 @@ class TestReferenceMergersMergeZeroGroupParentBranch:
         log_msg(f"\n{test_doc}", LogLevel.DEBUG)
 
         # 最小値 "0" のテスト
-        result = ReferenceMergers.merge_zero_group_parent_branch(
+        result = ReferenceMergers.merge_zero_group_parent_branch_with_reference(
             integrated_layout_df,
             reference_table_df,
         )
@@ -366,7 +366,7 @@ class TestReferenceMergersMergeZeroGroupParentBranch:
         # NULL値テスト
         temp_ref_df = reference_table_df.copy()
         temp_ref_df.loc[0, 'section_gr_code_bpr'] = None
-        result = ReferenceMergers.merge_zero_group_parent_branch(
+        result = ReferenceMergers.merge_zero_group_parent_branch_with_reference(
             integrated_layout_df,
             temp_ref_df,
         )
@@ -378,7 +378,7 @@ class TestReferenceMergersMergeZeroGroupParentBranch:
         # 0文字列テスト JINJIとBPRを誤った想定→空振りする
         temp_ref_df = reference_table_df.copy()
         temp_ref_df.loc[:, 'section_gr_code_bpr'] = ''
-        result = ReferenceMergers.merge_zero_group_parent_branch(
+        result = ReferenceMergers.merge_zero_group_parent_branch_with_reference(
             integrated_layout_df,
             temp_ref_df,
         )
