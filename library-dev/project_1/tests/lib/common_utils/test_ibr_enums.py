@@ -93,8 +93,8 @@ class Test_import_csv_to_row:
         log_msg(f"\n{func_info}{test_doc}", LogLevel.DEBUG)
 
         assert ExecEnvironment.HOSTNAME_PRODUCTION.value == 'production'
-        assert ExecEnvironment.HOSTNAME_REGRESSION.value == 'regression'
-        assert ExecEnvironment.HOSTNAME_DEVELOP.value == 'develop'
+        assert ExecEnvironment.ASBKIBR0BM001F0.value == 'regression'
+        assert ExecEnvironment.ASBKIBR0BM002F0.value == 'local'
         assert ExecEnvironment.HOSTNAME_LOCAL.value == 'local'
 
 
@@ -142,7 +142,7 @@ class Test_import_csv_to_row:
         log_msg(f"\n{func_info}{test_doc}", LogLevel.DEBUG)
 
         assert len(LogLevel) == 5                 # noqa: PLR2004
-        assert len(ExecEnvironment) == 4          # noqa: PLR2004
+        assert len(ExecEnvironment) == 3          # noqa: PLR2004  開発機をlocal定義したことにより重複判定となる
         assert len(DigitsNumberforUnixtime) == 3  # noqa: PLR2004
 
 

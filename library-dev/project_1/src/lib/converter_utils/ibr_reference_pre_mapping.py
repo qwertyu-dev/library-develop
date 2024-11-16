@@ -47,19 +47,18 @@ class MergerConfig:
     REFERENCE_PREFIX: ClassVar[str] = 'branch_reference_'
 
     # リファレンステーブルのカラム名マッピング
-    REFERENCE_COLUMNS_MAPPING_BPR: ClassVar[dict[str, str]] = {
-        'branch_code_bpr': f'{REFERENCE_PREFIX}branch_code_bpr',
-        'branch_name_bpr': f'{REFERENCE_PREFIX}branch_name_bpr',
+    #REFERENCE_COLUMNS_MAPPING_BPR: ClassVar[dict[str, str]] = {
+    #    'branch_code_bpr': f'{REFERENCE_PREFIX}branch_code_bpr',
+    #    'branch_name_bpr': f'{REFERENCE_PREFIX}branch_name_bpr',
+    #    'parent_branch_code': f'{REFERENCE_PREFIX}parent_branch_code',
+    #}
+
+    REFERENCE_COLUMNS_MAPPING_JINJI: ClassVar[dict[str, str]] = {
+        'branch_code_jinji': f'{REFERENCE_PREFIX}branch_code_jinji',
+        'branch_name_jinji': f'{REFERENCE_PREFIX}branch_name_jinji',
         'parent_branch_code': f'{REFERENCE_PREFIX}parent_branch_code',
         'organization_name_kana': f'{REFERENCE_PREFIX}organization_name_kana',
     }
-
-    #REFERENCE_COLUMNS_MAPPING_JINJI: ClassVar[dict[str, str]] = {
-    #    'branch_code_jinji': f'{REFERENCE_PREFIX}branch_code_jinji',
-    #    'branch_name_jinji': f'{REFERENCE_PREFIX}branch_name_jinji',
-    #    'parent_branch_code': f'{REFERENCE_PREFIX}parent_branch_code',
-    #    'organization_name_kana': f'{REFERENCE_PREFIX}organization_name_kana',
-    #}
 
 class ReferenceMergersError(Exception):
     """ReferenceMergerの基底例外クラス"""
@@ -79,80 +78,80 @@ class RemarksParseError(ReferenceMergersError):
 class ReferenceMergers:
     """統合レイアウトデータとリファレンステーブルのマージを行うクラス"""
 
-    #######################################################
-    # データ編集 提供メソッド群
-    #######################################################
-    @staticmethod
-    def merge_zero_group_parent_branch(integrated_layout: pd.DataFrame, reference_table: pd.DataFrame) -> pd.DataFrame:
-        """統合レイアウトデータにリファレンステーブルの情報をマージする
-
-        * 部店グループ: 課Grコード'0'を保有する明細の情報を取得する
-        * 該当するリファレンスレコードの部店コードColumnを申請レコードに付与する
-        * 該当するリファレンスレコードの部名称Columnを申請レコードに付与する
-        * 該当するリファレンスレコードの親部店コード値があれば申請レコードをColumn付与する、なければブランク
-        * 申請レコードに追加するColumnには一律reference_接頭辞を付与する
-        * reference_parent_branch_codeとreference_parent_branch_codeが無い場合は空文字で列生成する
-
-        Args:
-            integrated_layout: 統合レイアウトデータ
-            reference_table: リファレンステーブル
-
-        Returns:
-            pd.DataFrame: マージされたデータフレーム
-
-        Raises:
-            DataMergeError: マージ処理に失敗した場合
-        """
-        try:
-            # データの検証
-            required_columns = {
-                'left': ['branch_code'],
-                'right': ['branch_code_bpr', 'section_gr_code_bpr'],
-            }
-            ReferenceMergers._validate_merge_data(integrated_layout, reference_table, required_columns)
-
-            # 部店コードの上位4桁を取得
-            result_df = integrated_layout.copy()
-            result_df['branch_code_prefix'] = ReferenceMergers._extract_branch_code_prefix(result_df, 'branch_code')
-            reference_table['branch_code_prefix'] = ReferenceMergers._extract_branch_code_prefix(reference_table, 'branch_code_bpr')
-
-            # リファレンステーブルのフィルタリングとリネーム
-            filtered_reference = (
-                reference_table[reference_table['section_gr_code_bpr'] == '0']
-                .rename(columns=MergerConfig.REFERENCE_COLUMNS_MAPPING_BPR)
-            )
-            log_msg('リファンレンス.課Grコード=="0"抽出\n')
-            log_msg(f'{tabulate_dataframe(filtered_reference)}', LogLevel.DEBUG)
-
-            # マージ処理
-            merge_columns = [
-                'branch_code_prefix',
-                *MergerConfig.REFERENCE_COLUMNS_MAPPING_BPR.values(),
-            ]
-            merged_df = result_df.merge(
-                filtered_reference[merge_columns],
-                on='branch_code_prefix',
-                how='left',
-            ).fillna('')
-
-            # reference_parent_branch_codeとreference_parent_branch_codeが無い場合は空文字で列生成
-            if 'branch_reference_parent_branch_code' not in merged_df.columns:
-                merged_df['branch_reference_parent_branch_code'] = ''
-
-            # 不要カラムの削除
-            result_df = merged_df.drop(columns=['branch_code_prefix'])
-
-            log_msg("マージ結果:\n", LogLevel.DEBUG)
-            tabulate_dataframe(result_df)
-
-        except Exception as e:
-            err_msg = f"課Grコード=='0'レコードからの付与/親部店情報のマージ処理でエラーが発生しました: {str(e)}"
-            log_msg(err_msg, LogLevel.ERROR)
-            raise DataMergeError(err_msg) from e
-
-        else:
-            return result_df
-
+#    #######################################################
+#    # データ編集 提供メソッド群
+#    #######################################################
+#    @staticmethod
+#    def merge_zero_group_parent_branch(integrated_layout: pd.DataFrame, reference_table: pd.DataFrame) -> pd.DataFrame:
+#        """統合レイアウトデータにリファレンステーブルの情報をマージする
+#
+#        * 部店グループ: 課Grコード'0'を保有する明細の情報を取得する
+#        * 該当するリファレンスレコードの部店コードColumnを申請レコードに付与する
+#        * 該当するリファレンスレコードの部名称Columnを申請レコードに付与する
+#        * 該当するリファレンスレコードの親部店コード値があれば申請レコードをColumn付与する、なければブランク
+#        * 申請レコードに追加するColumnには一律reference_接頭辞を付与する
+#        * reference_parent_branch_codeとreference_parent_branch_codeが無い場合は空文字で列生成する
+#
+#        Args:
+#            integrated_layout: 統合レイアウトデータ
+#            reference_table: リファレンステーブル
+#
+#        Returns:
+#            pd.DataFrame: マージされたデータフレーム
+#
+#        Raises:
+#            DataMergeError: マージ処理に失敗した場合
+#        """
+#        try:
+#            # データの検証
+#            required_columns = {
+#                'left': ['branch_code'],
+#                'right': ['branch_code_bpr', 'section_gr_code_bpr'],
+#            }
+#            ReferenceMergers._validate_merge_data(integrated_layout, reference_table, required_columns)
+#
+#            # 部店コードの上位4桁を取得
+#            result_df = integrated_layout.copy()
+#            result_df['branch_code_prefix'] = ReferenceMergers._extract_branch_code_prefix(result_df, 'branch_code')
+#            reference_table['branch_code_prefix'] = ReferenceMergers._extract_branch_code_prefix(reference_table, 'branch_code_jinji')
+#
+#            # リファレンステーブルのフィルタリングとリネーム
+#            filtered_reference = (
+#                reference_table[reference_table['section_gr_code_jinji'] == '']
+#                .rename(columns=MergerConfig.REFERENCE_COLUMNS_MAPPING_JINJI)
+#            )
+#            log_msg('課Grコード==""抽出\n')
+#            log_msg(f'{tabulate_dataframe(filtered_reference)}', LogLevel.DEBUG)
+#
+#            # マージ処理
+#            merge_columns = [
+#                'branch_code_prefix',
+#                *MergerConfig.REFERENCE_COLUMNS_MAPPING_JINJI.values(),
+#            ]
+#            merged_df = result_df.merge(
+#                filtered_reference[merge_columns],
+#                on='branch_code_prefix',
+#                how='left',
+#            ).fillna('')
+#
+#            # reference_parent_branch_codeとreference_parent_branch_codeが無い場合は空文字で列生成
+#            if 'branch_reference_parent_branch_code' not in merged_df.columns:
+#                merged_df['branch_reference_parent_branch_code'] = ''
+#
+#            # 不要カラムの削除
+#            result_df = merged_df.drop(columns=['branch_code_prefix'])
+#
+#            log_msg("マージ結果:\n", LogLevel.DEBUG)
+#            tabulate_dataframe(result_df)
+#
+#        except Exception as e:
+#            err_msg = f"課Grコード==''レコードからの付与/親部店情報のマージ処理でエラーが発生しました: {str(e)}"
+#            log_msg(err_msg, LogLevel.ERROR)
+#            raise DataMergeError(err_msg) from e
+#
+#        else:
+#            return result_df
+#
     @staticmethod
     def add_bpr_target_flag_from_reference( integrated_df: pd.DataFrame | None = None, reference_df: pd.DataFrame | None = None) -> pd.DataFrame:
         """申請明細データに対して、リファレンス.BPRADフラグColumnを付与する

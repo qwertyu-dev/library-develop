@@ -29,9 +29,12 @@ class DigitsNumberforUnixtime(Enum):
 
 class BprADFlagResults(Enum):
     """BPR ADフラグ定義"""
-    AD_ONLY: str =  'ADのみ'
-    BPR_TARGET: str =  'BPR対象'
-    NOT_BPR_TARGET: str = 'BPR対象外'
+    NOT_BPR_TARGET: str = '0'
+    BPR_TARGET: str =  '1'
+    AD_ONLY: str =  '2'
+    #NOT_BPR_TARGET: str = 'BPR対象外'
+    #BPR_TARGET: str =  'BPR対象'
+    #AD_ONLY: str =  'ADのみ'
 
 class ApplicationType(Enum):
     """申請区分"""
@@ -59,3 +62,32 @@ class OrganizationType(StrEnum):
     INTERNAL_SALES = "拠点内営業部"  # 拠点内営業部
     SECTION_GROUP = "課"             # 課
     AREA = "エリア"                  # エリア
+
+class FormType(StrEnum):
+    """対象組織を表す列挙型"""
+    JINJI = '1'                       # 人事
+    KOKUKI = '2'                      # 国企
+    KANREN_WITH_DUMMY = '3'           # 関連ダミー課あり
+    KANREN_WITHOUT_DUMMY = '4'        # 関連ダミー課なし
+
+class PatternID(StrEnum):
+    """マッチングパターンIDを表す列挙型"""
+    BRANCH_4DIGIT = '1'
+    BRANCH_5DIGIT_NON7 = '2'
+    BRANCH_5DIGIT_7 = '3'
+    BRANCH_7818 = '4'
+    INTERNAL_SALES = '5'
+    SECTION = '6'
+    AREA = '7'
+    RELATED_DUMMY = '8'
+
+class PatternPriority(StrEnum):
+    """パターンの優先順位を表す列挙型"""
+    BRANCH_4DIGIT = '1'
+    BRANCH_5DIGIT_NON7 = '2'
+    BRANCH_7818 = '3'      # 7818を先に処理
+    BRANCH_5DIGIT_7 = '4'  # 7始まりを後に処理
+    INTERNAL_SALES = '5'
+    SECTION = '6'
+    AREA = '7'
+    RELATED_DUMMY = '8'
