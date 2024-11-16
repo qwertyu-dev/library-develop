@@ -8,7 +8,8 @@ import pytest
 from src.lib.common_utils.ibr_dataframe_helper import tabulate_dataframe
 from src.lib.common_utils.ibr_decorator_config import initialize_config
 from src.lib.common_utils.ibr_enums import ApplicationType, LogLevel, OrganizationType
-from src.lib.converter_utils.ibr_reference_mergers import (
+#from src.lib.converter_utils.ibr_reference_mergers import (
+from src.lib.converter_utils.ibr_reference_pre_mapping import (
     BranchNameSplitError,
     DataLoadError,
     ReferenceMergers,
@@ -1322,7 +1323,7 @@ class TestReferencesMergersProcessAreaData:
     def teardown_method(self):
         log_msg(f"test end\n{'-'*80}\n", LogLevel.INFO)
 
-    @patch('src.lib.converter_utils.ibr_reference_mergers.RemarksParser')
+    @patch('src.lib.converter_utils.ibr_reference_pre_mapping.RemarksParser')
     def test_process_area_data_C0_valid_input(self, mock_parser):
         test_doc = """
         テスト内容:
@@ -1381,7 +1382,7 @@ class TestReferencesMergersProcessAreaData:
         assert 'branch_code' in result.columns
         assert 'branch_name' in result.columns
 
-    @patch('src.lib.converter_utils.ibr_reference_mergers.RemarksParser')
+    @patch('src.lib.converter_utils.ibr_reference_pre_mapping.RemarksParser')
     def test_process_area_data_C0_invalid_remarks(self, mock_parser):
         test_doc = """
         テスト内容:
@@ -1410,7 +1411,7 @@ class TestReferencesMergersProcessAreaData:
         mock_parser.assert_called_once_with()
         mock_parser_instance.parse.assert_called_once_with('invalid remarks')
 
-    @patch('src.lib.converter_utils.ibr_reference_mergers.RemarksParser')
+    @patch('src.lib.converter_utils.ibr_reference_pre_mapping.RemarksParser')
     @pytest.mark.parametrize(("remarks", "expected_branch_code", "expected_branch_name"), [
         ('区分:エリア グループコード:A001 グループ名:東京エリア 設立日:2022-01-01', 'A001', '東京エリア'),
         ('区分:エリア グループコード:A002 グループ名:大阪エリア 設立日:2023-04-15', 'A002', '大阪エリア'),
@@ -1459,7 +1460,7 @@ class TestReferencesMergersProcessAreaData:
         mock_parser.assert_called_once_with()
         mock_parser_instance.parse.assert_called_once_with(remarks)
 
-    @patch('src.lib.converter_utils.ibr_reference_mergers.RemarksParser')
+    @patch('src.lib.converter_utils.ibr_reference_pre_mapping.RemarksParser')
     def test_process_area_data_C1_DT_02_invalid_remarks(self, mock_parser):
         test_doc = """
         テスト内容:
@@ -1494,7 +1495,7 @@ class TestReferencesMergersProcessAreaData:
         mock_parser.assert_called_once_with()
         mock_parser_instance.parse.assert_called_once_with('invalid remarks')
 
-    @patch('src.lib.converter_utils.ibr_reference_mergers.RemarksParser')
+    @patch('src.lib.converter_utils.ibr_reference_pre_mapping.RemarksParser')
     def test_process_area_data_C2_valid_input(self, mock_parser):
         test_doc = """
         テスト内容:
@@ -1554,7 +1555,7 @@ class TestReferencesMergersProcessAreaData:
         assert 'branch_code' in result.columns
         assert 'branch_name' in result.columns
 
-    @patch('src.lib.converter_utils.ibr_reference_mergers.RemarksParser')
+    @patch('src.lib.converter_utils.ibr_reference_pre_mapping.RemarksParser')
     def test_process_area_data_C2_invalid_remarks(self, mock_parser):
         test_doc = """
         テスト内容:
@@ -1583,7 +1584,7 @@ class TestReferencesMergersProcessAreaData:
         mock_parser.assert_called_once_with()
         mock_parser_instance.parse.assert_called_once_with('invalid remarks')
 
-    @patch('src.lib.converter_utils.ibr_reference_mergers.RemarksParser')
+    @patch('src.lib.converter_utils.ibr_reference_pre_mapping.RemarksParser')
     @pytest.mark.parametrize(("remarks", "expected_branch_code", "expected_branch_name"), [
         ('', '', ''),
         ('区分:エリア グループコード:A001 グループ名:東京エリア 設立日:2022-01-01', 'A001', '東京エリア'),
@@ -1687,8 +1688,8 @@ class TestReferencesMergersProcessSectionUnderInternalSales:
     def teardown_method(self):
         log_msg(f"test end\n{'-'*80}\n", LogLevel.INFO)
 
-    @patch('src.lib.converter_utils.ibr_reference_mergers.RemarksParser')
-    @patch('src.lib.converter_utils.ibr_reference_mergers.ReferenceMergers._find_branch_code_from_remarks')
+    @patch('src.lib.converter_utils.ibr_reference_pre_mapping.RemarksParser')
+    @patch('src.lib.converter_utils.ibr_reference_pre_mapping.ReferenceMergers._find_branch_code_from_remarks')
     def test_process_section_under_internal_sales_C0_valid_input(self, mock_find_branch_code, mock_parser):
         test_doc = """
         テスト内容:
@@ -1747,8 +1748,8 @@ class TestReferencesMergersProcessSectionUnderInternalSales:
         mask = _df['target_org'] == OrganizationType.AREA.value
 
         # Mockの設定
-        with patch('src.lib.converter_utils.ibr_reference_mergers.RemarksParser'):
-            with patch('src.lib.converter_utils.ibr_reference_mergers.ReferenceMergers._find_branch_code_from_remarks') as mock_find_branch_code:
+        with patch('src.lib.converter_utils.ibr_reference_pre_mapping.RemarksParser'):
+            with patch('src.lib.converter_utils.ibr_reference_pre_mapping.ReferenceMergers._find_branch_code_from_remarks') as mock_find_branch_code:
                 mock_find_branch_code.return_value = ''
 
                 # 処理実行
@@ -1759,7 +1760,7 @@ class TestReferencesMergersProcessSectionUnderInternalSales:
                 assert 'internal_sales_dept_code' in result.columns
                 assert 'internal_sales_dept_name' in result.columns
 
-    @patch('src.lib.converter_utils.ibr_reference_mergers.RemarksParser')
+    @patch('src.lib.converter_utils.ibr_reference_pre_mapping.RemarksParser')
     def test_process_section_under_internal_sales_C0_invalid_remarks(self, mock_parser):
         test_doc = """
         テスト内容:
@@ -1789,8 +1790,8 @@ class TestReferencesMergersProcessSectionUnderInternalSales:
         mock_parser.assert_called_once_with()
         mock_parser_instance.parse.assert_called_once_with('invalid remarks')
 
-    @patch('src.lib.converter_utils.ibr_reference_mergers.RemarksParser')
-    @patch('src.lib.converter_utils.ibr_reference_mergers.ReferenceMergers._find_branch_code_from_remarks')
+    @patch('src.lib.converter_utils.ibr_reference_pre_mapping.RemarksParser')
+    @patch('src.lib.converter_utils.ibr_reference_pre_mapping.ReferenceMergers._find_branch_code_from_remarks')
     def test_process_section_under_internal_sales_C1_DT_01_valid_remarks(self, mock_find_branch_code, mock_parser):
         test_doc = """
         テスト内容:
@@ -1837,7 +1838,7 @@ class TestReferencesMergersProcessSectionUnderInternalSales:
         mock_parser_instance.parse.assert_called_once_with('拠点内営業部: 東京支店 営業部')
         mock_find_branch_code.assert_called_once_with(_df, mask)
 
-    @patch('src.lib.converter_utils.ibr_reference_mergers.RemarksParser')
+    @patch('src.lib.converter_utils.ibr_reference_pre_mapping.RemarksParser')
     def test_process_section_under_internal_sales_C1_DT_02_invalid_remarks(self, mock_parser):
         test_doc = """
         テスト内容:
@@ -1873,8 +1874,8 @@ class TestReferencesMergersProcessSectionUnderInternalSales:
         mock_parser.assert_called_once_with()
         mock_parser_instance.parse.assert_called_once_with('invalid remarks')
 
-    @patch('src.lib.converter_utils.ibr_reference_mergers.RemarksParser')
-    @patch('src.lib.converter_utils.ibr_reference_mergers.ReferenceMergers._find_branch_code_from_remarks')
+    @patch('src.lib.converter_utils.ibr_reference_pre_mapping.RemarksParser')
+    @patch('src.lib.converter_utils.ibr_reference_pre_mapping.ReferenceMergers._find_branch_code_from_remarks')
     def test_process_section_under_internal_sales_C2_valid_input(self, mock_find_branch_code, mock_parser):
         test_doc = """
         テスト内容:
@@ -1933,8 +1934,8 @@ class TestReferencesMergersProcessSectionUnderInternalSales:
         mask = _df['target_org'] == OrganizationType.AREA.value
 
         # Mockの設定
-        with patch('src.lib.converter_utils.ibr_reference_mergers.RemarksParser'):
-            with patch('src.lib.converter_utils.ibr_reference_mergers.ReferenceMergers._find_branch_code_from_remarks') as mock_find_branch_code:
+        with patch('src.lib.converter_utils.ibr_reference_pre_mapping.RemarksParser'):
+            with patch('src.lib.converter_utils.ibr_reference_pre_mapping.ReferenceMergers._find_branch_code_from_remarks') as mock_find_branch_code:
                 mock_find_branch_code.return_value = ''
 
                 # 処理実行
@@ -1945,8 +1946,8 @@ class TestReferencesMergersProcessSectionUnderInternalSales:
                 assert 'internal_sales_dept_code' in result.columns
                 assert 'internal_sales_dept_name' in result.columns
 
-    @patch('src.lib.converter_utils.ibr_reference_mergers.RemarksParser')
-    @patch('src.lib.converter_utils.ibr_reference_mergers.ReferenceMergers._find_branch_code_from_remarks')
+    @patch('src.lib.converter_utils.ibr_reference_pre_mapping.RemarksParser')
+    @patch('src.lib.converter_utils.ibr_reference_pre_mapping.ReferenceMergers._find_branch_code_from_remarks')
     def test_process_section_under_internal_sales_C2_invalid_remarks(self, mock_find_branch_code, mock_parser):
         test_doc = """
         テスト内容:
@@ -1978,8 +1979,8 @@ class TestReferencesMergersProcessSectionUnderInternalSales:
         mock_parser_instance.parse.assert_called_once_with('invalid remarks')
         #mock_find_branch_code.assert_called_once_with(df, mask)    # RemarkParserでエラー判定、呼ばれない
 
-    @patch('src.lib.converter_utils.ibr_reference_mergers.RemarksParser')
-    @patch('src.lib.converter_utils.ibr_reference_mergers.ReferenceMergers._find_branch_code_from_remarks')
+    @patch('src.lib.converter_utils.ibr_reference_pre_mapping.RemarksParser')
+    @patch('src.lib.converter_utils.ibr_reference_pre_mapping.ReferenceMergers._find_branch_code_from_remarks')
     @pytest.mark.parametrize(("remarks", "expected_internal_sales_dept_code", "expected_internal_sales_dept_name"), [
         ('', '', ''),
         ('拠点内営業部: 東京支店 営業部', '1001', '東京支店 営業部'),
@@ -2085,7 +2086,7 @@ class TestReferenceMergers_LoadData:
         """
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
-        with patch('src.lib.converter_utils.ibr_reference_mergers.TableSearcher') as mock_searcher:
+        with patch('src.lib.converter_utils.ibr_reference_pre_mapping.TableSearcher') as mock_searcher:
             mock_searcher.return_value.df = pd.DataFrame({'test': [1]})
             result = ReferenceMergers._load_data(None, 'test.pkl')
             assert isinstance(result, pd.DataFrame)
@@ -2125,7 +2126,7 @@ class TestReferenceMergers_LoadData:
         """
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
-        with patch('src.lib.converter_utils.ibr_reference_mergers.TableSearcher') as mock_searcher:
+        with patch('src.lib.converter_utils.ibr_reference_pre_mapping.TableSearcher') as mock_searcher:
             mock_searcher.side_effect = Exception('File read error')
             with pytest.raises(DataLoadError):
                 ReferenceMergers._load_data(None, 'error.pkl')
@@ -2139,7 +2140,7 @@ class TestReferenceMergers_LoadData:
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
         test_df = pd.DataFrame({'test': [1]})
-        with patch('src.lib.converter_utils.ibr_reference_mergers.TableSearcher') as mock_searcher:
+        with patch('src.lib.converter_utils.ibr_reference_pre_mapping.TableSearcher') as mock_searcher:
             mock_searcher.return_value.df = test_df
             result = ReferenceMergers._load_data(None)
             assert isinstance(result, pd.DataFrame)
@@ -2534,7 +2535,7 @@ class TestReferenceMergers_ParseRemarks:
     @pytest.fixture()
     def mock_remarks_parser(self):
         """RemarksParserのモック"""
-        with patch('src.lib.converter_utils.ibr_reference_mergers.RemarksParser') as mock:
+        with patch('src.lib.converter_utils.ibr_reference_pre_mapping.RemarksParser') as mock:
             parser_instance = Mock()
             mock.return_value = parser_instance
             yield parser_instance
@@ -2946,7 +2947,7 @@ class TestReferenceMergers_FindBranchCodeFromRemarks:
 
         # エラーが発生することを確認
         with pytest.raises(RemarksParseError) as exc_info, \
-            patch('src.lib.converter_utils.ibr_reference_mergers.log_msg') as mock_log:
+            patch('src.lib.converter_utils.ibr_reference_pre_mapping.log_msg') as mock_log:
             ReferenceMergers._find_branch_code_from_remarks(_df, mask)
 
         # エラーメッセージの確認
