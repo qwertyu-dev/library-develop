@@ -12,7 +12,8 @@ from src.lib.common_utils.ibr_enums import ApplicationType, LogLevel, Organizati
 from src.lib.converter_utils.ibr_reference_pre_mapping import (
     BranchNameSplitError,
     DataLoadError,
-    ReferenceMergers,
+    #ReferenceMergers,
+    PreparationPreMapping,
     RemarksParseError,
 )
 
@@ -22,9 +23,9 @@ package_config = config.package_config
 log_msg = config.log_message
 
 class TestReferenceMergersAddBprTargetFlag:
-    """ReferenceMergersクラスのadd_bpr_target_flag_from_referenceメソッドのテスト
+    """PreparationPreMappingクラスのadd_bpr_target_flag_from_referenceメソッドのテスト
 
-    テスト対象: ReferenceMergers.add_bpr_target_flag_from_reference()
+    テスト対象: PreparationPreMapping.add_bpr_target_flag_from_reference()
     │   ├── C0: 基本機能テスト
     │   │   ├── 正常系: 新設以外の申請に対するBPRADフラグ付与
     │   │   ├── 異常系: データロード失敗
@@ -129,7 +130,7 @@ class TestReferenceMergersAddBprTargetFlag:
         """
         log_msg(f"\n{test_doc}", LogLevel.DEBUG)
 
-        result = ReferenceMergers.add_bpr_target_flag_from_reference(
+        result = PreparationPreMapping.add_bpr_target_flag_from_reference(
             integrated_layout_df,
             reference_table_df,
         )
@@ -151,7 +152,7 @@ class TestReferenceMergersAddBprTargetFlag:
         """
         log_msg(f"\n{test_doc}", LogLevel.DEBUG)
 
-        result = ReferenceMergers.add_bpr_target_flag_from_reference(
+        result = PreparationPreMapping.add_bpr_target_flag_from_reference(
             integrated_layout_df,
             reference_table_df,
         )
@@ -176,7 +177,7 @@ class TestReferenceMergersAddBprTargetFlag:
         log_msg('reference_table_df', LogLevel.DEBUG)
         tabulate_dataframe(reference_table_df)
 
-        result = ReferenceMergers.add_bpr_target_flag_from_reference(
+        result = PreparationPreMapping.add_bpr_target_flag_from_reference(
             integrated_layout_df,
             reference_table_df,
         )
@@ -194,7 +195,7 @@ class TestReferenceMergersAddBprTargetFlag:
         log_msg(f"\n{test_doc}", LogLevel.DEBUG)
 
         # エリアコード一致
-        result1 = ReferenceMergers.add_bpr_target_flag_from_reference(
+        result1 = PreparationPreMapping.add_bpr_target_flag_from_reference(
             integrated_layout_df,
             reference_table_df,
         )
@@ -204,7 +205,7 @@ class TestReferenceMergersAddBprTargetFlag:
 
         # エリアコード不一致
         integrated_layout_df['area_code'] = 'XXXXX'
-        result2  = ReferenceMergers.add_bpr_target_flag_from_reference(
+        result2  = PreparationPreMapping.add_bpr_target_flag_from_reference(
                 integrated_layout_df,
                 reference_table_df,
             )
@@ -234,7 +235,7 @@ class TestReferenceMergersAddBprTargetFlag:
         # 最小値テスト
         integrated_layout_df['area_code'] = 'A0000'
         reference_table_df['area_code'] = 'A0000'
-        result = ReferenceMergers.add_bpr_target_flag_from_reference(
+        result = PreparationPreMapping.add_bpr_target_flag_from_reference(
             integrated_layout_df,
             reference_table_df,
         )
@@ -244,7 +245,7 @@ class TestReferenceMergersAddBprTargetFlag:
         # 最大値テスト
         integrated_layout_df['area_code'] = 'Z9999'
         reference_table_df['area_code'] = 'Z9999'
-        result = ReferenceMergers.add_bpr_target_flag_from_reference(
+        result = PreparationPreMapping.add_bpr_target_flag_from_reference(
             integrated_layout_df,
             reference_table_df,
         )
@@ -254,7 +255,7 @@ class TestReferenceMergersAddBprTargetFlag:
         # 空文字列テスト
         integrated_layout_df['area_code'] = ''
         reference_table_df['area_code'] = ''
-        result =   ReferenceMergers.add_bpr_target_flag_from_reference(
+        result =   PreparationPreMapping.add_bpr_target_flag_from_reference(
                 integrated_layout_df,
                 reference_table_df,
             )
@@ -279,7 +280,7 @@ class TestReferenceMergersAddBprTargetFlag:
 
         # 最小値テスト
         reference_table_df['bpr_target_flag'] = '0'
-        result = ReferenceMergers.add_bpr_target_flag_from_reference(
+        result = PreparationPreMapping.add_bpr_target_flag_from_reference(
             integrated_layout_df,
             reference_table_df,
         )
@@ -314,7 +315,7 @@ class TestReferenceMergersAddBprTargetFlag:
 
         # 最大値テスト
         reference_table_df['bpr_target_flag'] = '1'
-        result = ReferenceMergers.add_bpr_target_flag_from_reference(
+        result = PreparationPreMapping.add_bpr_target_flag_from_reference(
             integrated_layout_df,
             reference_table_df,
         )
@@ -339,7 +340,7 @@ class TestReferenceMergersAddBprTargetFlag:
 
         ## NULL値テスト
         reference_table_df['bpr_target_flag'] = None
-        result = ReferenceMergers.add_bpr_target_flag_from_reference(
+        result = PreparationPreMapping.add_bpr_target_flag_from_reference(
                 integrated_layout_df,
                 reference_table_df,
             )
@@ -348,10 +349,10 @@ class TestReferenceMergersAddBprTargetFlag:
 
         assert all(result['reference_bpr_target_flag'] == '')
 
-class TestReferenceMergersSetupInternalSales:
-    """ReferenceMergersクラスのsetup_internal_sales_to_integrated_dataメソッドのテスト
+class TestPreparationPreMappingSetupInternalSales:
+    """PreparationPreMappingクラスのsetup_internal_sales_to_integrated_dataメソッドのテスト
 
-    テスト対象: ReferenceMergers.setup_internal_sales_to_integrated_data()
+    テスト対象: PreparationPreMapping.setup_internal_sales_to_integrated_data()
     │   ├── C0: 基本機能テスト
     │   │   ├── 正常系: 拠点内営業部データの編集
     │   │   ├── 異常系: データロード失敗
@@ -423,7 +424,7 @@ class TestReferenceMergersSetupInternalSales:
         """
         log_msg(f"\n{test_doc}", LogLevel.DEBUG)
 
-        result = ReferenceMergers.setup_internal_sales_to_integrated_data(
+        result = PreparationPreMapping.setup_internal_sales_to_integrated_data(
             integrated_layout_df,
         )
 
@@ -452,7 +453,7 @@ class TestReferenceMergersSetupInternalSales:
         # データを変更して拠点内営業部を含まないようにする
         integrated_layout_df['target_org'] = OrganizationType.BRANCH.value
 
-        result = ReferenceMergers.setup_internal_sales_to_integrated_data(
+        result = PreparationPreMapping.setup_internal_sales_to_integrated_data(
             integrated_layout_df,
         )
 
@@ -472,7 +473,7 @@ class TestReferenceMergersSetupInternalSales:
         """
         log_msg(f"\n{test_doc}", LogLevel.DEBUG)
 
-        result = ReferenceMergers.setup_internal_sales_to_integrated_data(
+        result = PreparationPreMapping.setup_internal_sales_to_integrated_data(
             integrated_layout_df,
         )
 
@@ -498,7 +499,7 @@ class TestReferenceMergersSetupInternalSales:
         # データを変更して拠点内営業部を含まないようにする
         integrated_layout_df['target_org'] = '部'
 
-        result = ReferenceMergers.setup_internal_sales_to_integrated_data(
+        result = PreparationPreMapping.setup_internal_sales_to_integrated_data(
             integrated_layout_df,
         )
 
@@ -530,12 +531,12 @@ class TestReferenceMergersSetupInternalSales:
             test_df.loc[0, 'branch_name'] = branch_name
 
             if should_succeed:
-                result = ReferenceMergers.setup_internal_sales_to_integrated_data(test_df)
+                result = PreparationPreMapping.setup_internal_sales_to_integrated_data(test_df)
                 internal_sales_mask = result['target_org'] == OrganizationType.INTERNAL_SALES.value
                 assert result.loc[internal_sales_mask, 'internal_sales_dept_name'].iloc[0] == expected_dept_name
             else:
                 with pytest.raises(BranchNameSplitError):
-                    ReferenceMergers.setup_internal_sales_to_integrated_data(test_df)
+                    PreparationPreMapping.setup_internal_sales_to_integrated_data(test_df)
 
     def test_setup_internal_sales_BVT_name_boundary(self, integrated_layout_df):
         """境界値: 部店名称の境界値テスト"""
@@ -548,7 +549,7 @@ class TestReferenceMergersSetupInternalSales:
 
         # 最小長テスト
         integrated_layout_df.loc[0, 'branch_name'] = 'A支店B営業部'
-        result = ReferenceMergers.setup_internal_sales_to_integrated_data(
+        result = PreparationPreMapping.setup_internal_sales_to_integrated_data(
             integrated_layout_df,
         )
         internal_sales_mask = result['target_org'] == OrganizationType.INTERNAL_SALES
@@ -558,7 +559,7 @@ class TestReferenceMergersSetupInternalSales:
         # 最大長テスト(100文字)
         long_name = 'A' * 47 + '支店' + 'B' * 47 + '営業部'
         integrated_layout_df.loc[0, 'branch_name'] = long_name
-        result = ReferenceMergers.setup_internal_sales_to_integrated_data(
+        result = PreparationPreMapping.setup_internal_sales_to_integrated_data(
             integrated_layout_df,
         )
         assert result.loc[internal_sales_mask, 'branch_name'].str.contains('支店').all()
@@ -575,16 +576,16 @@ class TestReferenceMergersSetupInternalSales:
         for invalid_name in invalid_patterns:
             test_df = integrated_layout_df.copy()
             test_df.loc[0, 'branch_name'] = invalid_name
-            result = ReferenceMergers.setup_internal_sales_to_integrated_data(test_df)
+            result = PreparationPreMapping.setup_internal_sales_to_integrated_data(test_df)
 
         log_msg("\n処理結果:", LogLevel.DEBUG)
         log_msg(f"\n{tabulate_dataframe(result)}", LogLevel.DEBUG)
 
 
-class TestReferenceMergersSetupArea:
-    """ReferenceMergersクラスのsetup_area_to_integrated_dataメソッドのテスト
+class TestPreparationPreMappingSetupArea:
+    """PreparationPreMappingクラスのsetup_area_to_integrated_dataメソッドのテスト
 
-    テスト対象: ReferenceMergers.setup_area_to_integrated_data()
+    テスト対象: PreparationPreMapping.setup_area_to_integrated_data()
     │   ├── C0: 基本機能テスト
     │   │   ├── 正常系: エリア向けデータ編集
     │   │   ├── 異常系: データロード失敗
@@ -657,7 +658,7 @@ class TestReferenceMergersSetupArea:
         """
         log_msg(f"\n{test_doc}", LogLevel.DEBUG)
 
-        result = ReferenceMergers.setup_area_to_integrated_data(
+        result = PreparationPreMapping.setup_area_to_integrated_data(
             integrated_layout_df,
         )
 
@@ -684,7 +685,7 @@ class TestReferenceMergersSetupArea:
         # エリアデータを含まないように変更
         integrated_layout_df['target_org'] = '部'
 
-        result = ReferenceMergers.setup_area_to_integrated_data(
+        result = PreparationPreMapping.setup_area_to_integrated_data(
             integrated_layout_df,
         )
 
@@ -701,7 +702,7 @@ class TestReferenceMergersSetupArea:
         """
         log_msg(f"\n{test_doc}", LogLevel.DEBUG)
 
-        result = ReferenceMergers.setup_area_to_integrated_data(
+        result = PreparationPreMapping.setup_area_to_integrated_data(
             integrated_layout_df,
         )
 
@@ -719,7 +720,7 @@ class TestReferenceMergersSetupArea:
         log_msg(f"\n{test_doc}", LogLevel.DEBUG)
 
         integrated_layout_df['target_org'] = '部'
-        result = ReferenceMergers.setup_area_to_integrated_data(
+        result = PreparationPreMapping.setup_area_to_integrated_data(
             integrated_layout_df,
         )
 
@@ -750,13 +751,13 @@ class TestReferenceMergersSetupArea:
             test_df.loc[0, 'remarks'] = remarks
 
             if should_succeed:
-                result = ReferenceMergers.setup_area_to_integrated_data(test_df)
+                result = PreparationPreMapping.setup_area_to_integrated_data(test_df)
                 area_mask = result['target_org'] == OrganizationType.AREA.value
                 assert result.loc[area_mask, 'branch_code'].iloc[0] == expected_code
                 assert result.loc[area_mask, 'branch_name'].iloc[0] == expected_name
             else:
                 with pytest.raises(RemarksParseError):
-                    ReferenceMergers.setup_area_to_integrated_data(test_df)
+                    PreparationPreMapping.setup_area_to_integrated_data(test_df)
 
     def test_setup_area_BVT_remarks_format(self, integrated_layout_df):
         """境界値: 備考欄フォーマットの境界値テスト"""
@@ -769,7 +770,7 @@ class TestReferenceMergersSetupArea:
 
         # 最小フォーマット
         integrated_layout_df.loc[0, 'remarks'] = '00001 最小Gr'
-        result = ReferenceMergers.setup_area_to_integrated_data(
+        result = PreparationPreMapping.setup_area_to_integrated_data(
             integrated_layout_df,
         )
         area_mask = result['target_org'] == OrganizationType.AREA.value
@@ -778,7 +779,7 @@ class TestReferenceMergersSetupArea:
 
         # 最大フォーマット
         integrated_layout_df.loc[0, 'remarks'] = '99999 最大グループGr (付加情報)'
-        result = ReferenceMergers.setup_area_to_integrated_data(
+        result = PreparationPreMapping.setup_area_to_integrated_data(
             integrated_layout_df,
         )
         assert result.loc[area_mask, 'branch_code'].iloc[0] == '99999'
@@ -796,13 +797,13 @@ class TestReferenceMergersSetupArea:
         for invalid_remarks in invalid_patterns:
             test_df = integrated_layout_df.copy()
             test_df.loc[0, 'remarks'] = invalid_remarks
-            result = ReferenceMergers.setup_area_to_integrated_data(test_df)
+            result = PreparationPreMapping.setup_area_to_integrated_data(test_df)
             tabulate_dataframe(result)
 
-class TestReferenceMergersSetupSectionUnderInternalSales:
-    """ReferenceMergersクラスのsetup_section_under_internal_sales_integrated_dataメソッドのテスト
+class TestPreparationPreMappingSetupSectionUnderInternalSales:
+    """PreparationPreMappingクラスのsetup_section_under_internal_sales_integrated_dataメソッドのテスト
 
-    テスト対象: ReferenceMergers.setup_section_under_internal_sales_integrated_data()
+    テスト対象: PreparationPreMapping.setup_section_under_internal_sales_integrated_data()
     ├── C0: 基本機能テスト
     │   ├── 正常系: 拠点内営業部配下課データ編集
     │   ├── 異常系: データロード失敗
@@ -874,7 +875,7 @@ class TestReferenceMergersSetupSectionUnderInternalSales:
         """
         log_msg(f"\n{test_doc}", LogLevel.DEBUG)
 
-        result = ReferenceMergers.setup_section_under_internal_sales_integrated_data(
+        result = PreparationPreMapping.setup_section_under_internal_sales_integrated_data(
             integrated_layout_df,
         )
 
@@ -901,7 +902,7 @@ class TestReferenceMergersSetupSectionUnderInternalSales:
         # 対象データを含まないように変更
         integrated_layout_df['target_org'] = '部'
 
-        result = ReferenceMergers.setup_section_under_internal_sales_integrated_data(
+        result = PreparationPreMapping.setup_section_under_internal_sales_integrated_data(
             integrated_layout_df,
         )
 
@@ -918,7 +919,7 @@ class TestReferenceMergersSetupSectionUnderInternalSales:
         """
         log_msg(f"\n{test_doc}", LogLevel.DEBUG)
 
-        result = ReferenceMergers.setup_section_under_internal_sales_integrated_data(
+        result = PreparationPreMapping.setup_section_under_internal_sales_integrated_data(
             integrated_layout_df,
         )
 
@@ -936,7 +937,7 @@ class TestReferenceMergersSetupSectionUnderInternalSales:
         log_msg(f"\n{test_doc}", LogLevel.DEBUG)
 
         integrated_layout_df['target_org'] = OrganizationType.BRANCH.value
-        result = ReferenceMergers.setup_section_under_internal_sales_integrated_data(
+        result = PreparationPreMapping.setup_section_under_internal_sales_integrated_data(
             integrated_layout_df,
         )
 
@@ -976,11 +977,11 @@ class TestReferenceMergersSetupSectionUnderInternalSales:
             tabulate_dataframe(test_df)
 
             if should_succeed:
-                result = ReferenceMergers.setup_section_under_internal_sales_integrated_data(test_df)
+                result = PreparationPreMapping.setup_section_under_internal_sales_integrated_data(test_df)
                 assert (result.loc[mask_section_group, 'internal_sales_dept_name'] != '').all()
                 assert (result.loc[mask_section_group, 'internal_sales_dept_code'] != '').all()
             else:
-                result = ReferenceMergers.setup_section_under_internal_sales_integrated_data(test_df)
+                result = PreparationPreMapping.setup_section_under_internal_sales_integrated_data(test_df)
                 assert (result.loc[mask_section_group, 'internal_sales_dept_name'] == '').all()
 
     def test_setup_section_under_internal_sales_BVT_remarks_boundary(self, integrated_layout_df):
@@ -995,7 +996,7 @@ class TestReferenceMergersSetupSectionUnderInternalSales:
         # 最小パターン
         mask = integrated_layout_df['target_org'] == OrganizationType.SECTION_GROUP.value
         integrated_layout_df.loc[mask, 'remarks'] = '支店営業部'
-        result = ReferenceMergers.setup_section_under_internal_sales_integrated_data(
+        result = PreparationPreMapping.setup_section_under_internal_sales_integrated_data(
             integrated_layout_df,
         )
         assert result.loc[mask, 'internal_sales_dept_name'].notna().all()
@@ -1004,7 +1005,7 @@ class TestReferenceMergersSetupSectionUnderInternalSales:
         long_name = 'A' * 47 + '支店' + 'B' * 47 + '営業部'
         test_df = integrated_layout_df.copy()
         test_df.loc[mask, 'remarks'] = long_name
-        result = ReferenceMergers.setup_section_under_internal_sales_integrated_data(
+        result = PreparationPreMapping.setup_section_under_internal_sales_integrated_data(
             test_df,
         )
         assert result.loc[mask, 'internal_sales_dept_name'].notna().all()
@@ -1022,17 +1023,17 @@ class TestReferenceMergersSetupSectionUnderInternalSales:
         for invalid_remarks in invalid_patterns:
             test_df = integrated_layout_df.copy()
             test_df.loc[mask, 'remarks'] = invalid_remarks
-            result = ReferenceMergers.setup_section_under_internal_sales_integrated_data(test_df)
+            result = PreparationPreMapping.setup_section_under_internal_sales_integrated_data(test_df)
 
         log_msg("\n処理結果:", LogLevel.DEBUG)
         log_msg(f"\n{tabulate_dataframe(result)}", LogLevel.DEBUG)
 
 # 編集部品たちのテスト
 
-class TestReferenceMergersProcessInternalSales:
-    """ReferenceMergersの_process_internal_sales_dataメソッドのテスト
+class TestPreparationPreMappingProcessInternalSales:
+    """PreparationPreMappingの_process_internal_sales_dataメソッドのテスト
 
-    テスト対象: ReferenceMergers._process_internal_sales_data()
+    テスト対象: PreparationPreMapping._process_internal_sales_data()
 
     C1のディシジョンテーブル:
     | 条件                                  | DT1 | DT2 | DT3 | DT4 | DT5 |
@@ -1080,7 +1081,7 @@ class TestReferenceMergersProcessInternalSales:
         mask = base_df['target_org'] == OrganizationType.INTERNAL_SALES.value
 
         # 処理実行
-        result = ReferenceMergers._process_internal_sales_data(base_df, mask)
+        result = PreparationPreMapping._process_internal_sales_data(base_df, mask)
 
         # 検証
         assert isinstance(result, pd.DataFrame)
@@ -1099,7 +1100,7 @@ class TestReferenceMergersProcessInternalSales:
         log_msg(f"\n{test_doc}", LogLevel.DEBUG)
 
         mask = base_df['target_org'] == OrganizationType.INTERNAL_SALES.value
-        result = ReferenceMergers._process_internal_sales_data(base_df, mask)
+        result = PreparationPreMapping._process_internal_sales_data(base_df, mask)
 
         # 検証
         target_rows = result[mask]
@@ -1125,7 +1126,7 @@ class TestReferenceMergersProcessInternalSales:
         # 対象データなしのマスク
         mask = base_df['target_org'] == '存在しない区分'
 
-        result = ReferenceMergers._process_internal_sales_data(base_df, mask)
+        result = PreparationPreMapping._process_internal_sales_data(base_df, mask)
         assert result.equals(base_df)  # 入力と同じ
 
 
@@ -1157,14 +1158,14 @@ class TestReferenceMergersProcessInternalSales:
         log_msg(f"\n{tabulate_dataframe(test_df)}", LogLevel.DEBUG)
 
         if expected_success:
-            result = ReferenceMergers._process_internal_sales_data(test_df, mask)
+            result = PreparationPreMapping._process_internal_sales_data(test_df, mask)
             assert result.loc[mask, 'internal_sales_dept_name'].notna().all()
             assert result.loc[mask, 'internal_sales_dept_code'].notna().all()
             log_msg('テスト結果:', LogLevel.DEBUG)
             log_msg(f"\n{tabulate_dataframe(result)}", LogLevel.DEBUG)
         else:
             with pytest.raises(BranchNameSplitError):
-                ReferenceMergers._process_internal_sales_data(test_df, mask)
+                PreparationPreMapping._process_internal_sales_data(test_df, mask)
 
     @pytest.mark.parametrize(('branch_code','branch_name','expected_error'), [
         ('0000', 'AAA支店BBB営業部', None),         # 最小コード
@@ -1199,9 +1200,9 @@ class TestReferenceMergersProcessInternalSales:
 
         if expected_error:
             with pytest.raises(expected_error):
-                ReferenceMergers._process_internal_sales_data(test_df, mask)
+                PreparationPreMapping._process_internal_sales_data(test_df, mask)
         else:
-            result = ReferenceMergers._process_internal_sales_data(test_df, mask)
+            result = PreparationPreMapping._process_internal_sales_data(test_df, mask)
             assert result.loc[mask, 'internal_sales_dept_name'].notna().all()
             assert result.loc[mask, 'internal_sales_dept_code'].notna().all()
             log_msg('テスト結果:', LogLevel.DEBUG)
@@ -1236,7 +1237,7 @@ class TestReferenceMergersProcessInternalSales:
         log_msg(f"\n{tabulate_dataframe(original_df)}", LogLevel.DEBUG)
 
         # 処理実行
-        result = ReferenceMergers._process_internal_sales_data(test_df, mask)
+        result = PreparationPreMapping._process_internal_sales_data(test_df, mask)
 
         log_msg('テスト後のデータ:', LogLevel.DEBUG)
         log_msg(f"\n{tabulate_dataframe(result)}", LogLevel.DEBUG)
@@ -1350,7 +1351,7 @@ class TestReferencesMergersProcessAreaData:
         mock_parser.return_value = mock_parser_instance
 
         # 処理実行
-        result = ReferenceMergers._process_area_data(_df, _df['target_org'] == OrganizationType.AREA.value)
+        result = PreparationPreMapping._process_area_data(_df, _df['target_org'] == OrganizationType.AREA.value)
 
         # アサーション
         assert result['branch_code'][0] == 'A001'
@@ -1375,7 +1376,7 @@ class TestReferencesMergersProcessAreaData:
         })
 
         # 処理実行
-        result = ReferenceMergers._process_area_data(_df, _df['target_org'] == OrganizationType.AREA.value)
+        result = PreparationPreMapping._process_area_data(_df, _df['target_org'] == OrganizationType.AREA.value)
 
         # アサーション
         assert len(result) == len(_df)
@@ -1405,7 +1406,7 @@ class TestReferencesMergersProcessAreaData:
 
         # 処理実行と例外検証
         with pytest.raises(RemarksParseError):
-            ReferenceMergers._process_area_data(_df, _df['target_org'] == OrganizationType.AREA.value)
+            PreparationPreMapping._process_area_data(_df, _df['target_org'] == OrganizationType.AREA.value)
 
         # Mockの検証
         mock_parser.assert_called_once_with()
@@ -1450,7 +1451,7 @@ class TestReferencesMergersProcessAreaData:
         mock_parser.return_value = mock_parser_instance
 
         # 処理実行
-        result = ReferenceMergers._process_area_data(_df, _df['target_org'] == OrganizationType.AREA.value)
+        result = PreparationPreMapping._process_area_data(_df, _df['target_org'] == OrganizationType.AREA.value)
 
         # アサーション
         assert result['branch_code'][0] == expected_branch_code
@@ -1489,7 +1490,7 @@ class TestReferencesMergersProcessAreaData:
 
         # 処理実行と例外検証
         with pytest.raises(RemarksParseError):
-            ReferenceMergers._process_area_data(_df, _df['target_org'] == OrganizationType.AREA.value)
+            PreparationPreMapping._process_area_data(_df, _df['target_org'] == OrganizationType.AREA.value)
 
         # Mockの検証
         mock_parser.assert_called_once_with()
@@ -1522,7 +1523,7 @@ class TestReferencesMergersProcessAreaData:
         mock_parser.return_value = mock_parser_instance
 
         # 処理実行
-        result = ReferenceMergers._process_area_data(_df, _df['target_org'] == OrganizationType.AREA.value)
+        result = PreparationPreMapping._process_area_data(_df, _df['target_org'] == OrganizationType.AREA.value)
 
         # アサーション
         assert result['branch_code'][0] == 'A001'
@@ -1548,7 +1549,7 @@ class TestReferencesMergersProcessAreaData:
         })
 
         # 処理実行
-        result = ReferenceMergers._process_area_data(_df, _df['target_org'] == OrganizationType.AREA.value)
+        result = PreparationPreMapping._process_area_data(_df, _df['target_org'] == OrganizationType.AREA.value)
 
         # アサーション
         assert len(result) == len(_df)
@@ -1578,7 +1579,7 @@ class TestReferencesMergersProcessAreaData:
 
         # 処理実行と例外検証
         with pytest.raises(RemarksParseError):
-            ReferenceMergers._process_area_data(_df, _df['target_org'] == OrganizationType.AREA.value)
+            PreparationPreMapping._process_area_data(_df, _df['target_org'] == OrganizationType.AREA.value)
 
         # Mockの検証
         mock_parser.assert_called_once_with()
@@ -1620,7 +1621,7 @@ class TestReferencesMergersProcessAreaData:
         mock_parser.return_value = mock_parser_instance
 
         # 処理実行
-        result = ReferenceMergers._process_area_data(_df, _df['target_org'] == OrganizationType.AREA.value)
+        result = PreparationPreMapping._process_area_data(_df, _df['target_org'] == OrganizationType.AREA.value)
 
         # アサーション
         assert result['branch_code'][0] == expected_branch_code
@@ -1689,7 +1690,7 @@ class TestReferencesMergersProcessSectionUnderInternalSales:
         log_msg(f"test end\n{'-'*80}\n", LogLevel.INFO)
 
     @patch('src.lib.converter_utils.ibr_reference_pre_mapping.RemarksParser')
-    @patch('src.lib.converter_utils.ibr_reference_pre_mapping.ReferenceMergers._find_branch_code_from_remarks')
+    @patch('src.lib.converter_utils.ibr_reference_pre_mapping.PreparationPreMapping._find_branch_code_from_remarks')
     def test_process_section_under_internal_sales_C0_valid_input(self, mock_find_branch_code, mock_parser):
         test_doc = """
         テスト内容:
@@ -1720,7 +1721,7 @@ class TestReferencesMergersProcessSectionUnderInternalSales:
         mock_find_branch_code.return_value = '1001'
 
         # 処理実行
-        result = ReferenceMergers._process_section_under_internal_sales(_df, mask)
+        result = PreparationPreMapping._process_section_under_internal_sales(_df, mask)
 
         # アサーション
         assert result['internal_sales_dept_code'][0] == '1001'
@@ -1749,11 +1750,11 @@ class TestReferencesMergersProcessSectionUnderInternalSales:
 
         # Mockの設定
         with patch('src.lib.converter_utils.ibr_reference_pre_mapping.RemarksParser'):
-            with patch('src.lib.converter_utils.ibr_reference_pre_mapping.ReferenceMergers._find_branch_code_from_remarks') as mock_find_branch_code:
+            with patch('src.lib.converter_utils.ibr_reference_pre_mapping.PreparationPreMapping._find_branch_code_from_remarks') as mock_find_branch_code:
                 mock_find_branch_code.return_value = ''
 
                 # 処理実行
-                result = ReferenceMergers._process_section_under_internal_sales(_df, mask)
+                result = PreparationPreMapping._process_section_under_internal_sales(_df, mask)
 
                 # アサーション
                 assert len(result) == len(_df)
@@ -1784,14 +1785,14 @@ class TestReferencesMergersProcessSectionUnderInternalSales:
 
         # 処理実行と例外検証
         with pytest.raises(RemarksParseError):
-            ReferenceMergers._process_section_under_internal_sales(_df, mask)
+            PreparationPreMapping._process_section_under_internal_sales(_df, mask)
 
         # Mockの検証
         mock_parser.assert_called_once_with()
         mock_parser_instance.parse.assert_called_once_with('invalid remarks')
 
     @patch('src.lib.converter_utils.ibr_reference_pre_mapping.RemarksParser')
-    @patch('src.lib.converter_utils.ibr_reference_pre_mapping.ReferenceMergers._find_branch_code_from_remarks')
+    @patch('src.lib.converter_utils.ibr_reference_pre_mapping.PreparationPreMapping._find_branch_code_from_remarks')
     def test_process_section_under_internal_sales_C1_DT_01_valid_remarks(self, mock_find_branch_code, mock_parser):
         test_doc = """
         テスト内容:
@@ -1827,7 +1828,7 @@ class TestReferencesMergersProcessSectionUnderInternalSales:
         mock_find_branch_code.return_value = '1001'
 
         # 処理実行
-        result = ReferenceMergers._process_section_under_internal_sales(_df, mask)
+        result = PreparationPreMapping._process_section_under_internal_sales(_df, mask)
 
         # アサーション
         assert result['internal_sales_dept_code'][0] == '1001'
@@ -1868,14 +1869,14 @@ class TestReferencesMergersProcessSectionUnderInternalSales:
 
         # 処理実行と例外検証
         with pytest.raises(RemarksParseError):
-            ReferenceMergers._process_section_under_internal_sales(_df, mask)
+            PreparationPreMapping._process_section_under_internal_sales(_df, mask)
 
         # Mockの検証
         mock_parser.assert_called_once_with()
         mock_parser_instance.parse.assert_called_once_with('invalid remarks')
 
     @patch('src.lib.converter_utils.ibr_reference_pre_mapping.RemarksParser')
-    @patch('src.lib.converter_utils.ibr_reference_pre_mapping.ReferenceMergers._find_branch_code_from_remarks')
+    @patch('src.lib.converter_utils.ibr_reference_pre_mapping.PreparationPreMapping._find_branch_code_from_remarks')
     def test_process_section_under_internal_sales_C2_valid_input(self, mock_find_branch_code, mock_parser):
         test_doc = """
         テスト内容:
@@ -1906,7 +1907,7 @@ class TestReferencesMergersProcessSectionUnderInternalSales:
         mock_find_branch_code.return_value = '1001'
 
         # 処理実行
-        result = ReferenceMergers._process_section_under_internal_sales(_df, mask)
+        result = PreparationPreMapping._process_section_under_internal_sales(_df, mask)
 
         # アサーション
         assert result['internal_sales_dept_code'][0] == '1001'
@@ -1935,11 +1936,11 @@ class TestReferencesMergersProcessSectionUnderInternalSales:
 
         # Mockの設定
         with patch('src.lib.converter_utils.ibr_reference_pre_mapping.RemarksParser'):
-            with patch('src.lib.converter_utils.ibr_reference_pre_mapping.ReferenceMergers._find_branch_code_from_remarks') as mock_find_branch_code:
+            with patch('src.lib.converter_utils.ibr_reference_pre_mapping.PreparationPreMapping._find_branch_code_from_remarks') as mock_find_branch_code:
                 mock_find_branch_code.return_value = ''
 
                 # 処理実行
-                result = ReferenceMergers._process_section_under_internal_sales(_df, mask)
+                result = PreparationPreMapping._process_section_under_internal_sales(_df, mask)
 
                 # アサーション
                 assert len(result) == len(_df)
@@ -1947,7 +1948,7 @@ class TestReferencesMergersProcessSectionUnderInternalSales:
                 assert 'internal_sales_dept_name' in result.columns
 
     @patch('src.lib.converter_utils.ibr_reference_pre_mapping.RemarksParser')
-    @patch('src.lib.converter_utils.ibr_reference_pre_mapping.ReferenceMergers._find_branch_code_from_remarks')
+    @patch('src.lib.converter_utils.ibr_reference_pre_mapping.PreparationPreMapping._find_branch_code_from_remarks')
     def test_process_section_under_internal_sales_C2_invalid_remarks(self, mock_find_branch_code, mock_parser):
         test_doc = """
         テスト内容:
@@ -1972,7 +1973,7 @@ class TestReferencesMergersProcessSectionUnderInternalSales:
 
         # 処理実行と例外検証
         with pytest.raises(RemarksParseError):
-            ReferenceMergers._process_section_under_internal_sales(_df, mask)
+            PreparationPreMapping._process_section_under_internal_sales(_df, mask)
 
         # Mockの検証
         mock_parser.assert_called_once_with()
@@ -1980,7 +1981,7 @@ class TestReferencesMergersProcessSectionUnderInternalSales:
         #mock_find_branch_code.assert_called_once_with(df, mask)    # RemarkParserでエラー判定、呼ばれない
 
     @patch('src.lib.converter_utils.ibr_reference_pre_mapping.RemarksParser')
-    @patch('src.lib.converter_utils.ibr_reference_pre_mapping.ReferenceMergers._find_branch_code_from_remarks')
+    @patch('src.lib.converter_utils.ibr_reference_pre_mapping.PreparationPreMapping._find_branch_code_from_remarks')
     @pytest.mark.parametrize(("remarks", "expected_internal_sales_dept_code", "expected_internal_sales_dept_name"), [
         ('', '', ''),
         ('拠点内営業部: 東京支店 営業部', '1001', '東京支店 営業部'),
@@ -2018,7 +2019,7 @@ class TestReferencesMergersProcessSectionUnderInternalSales:
         mock_find_branch_code.return_value = expected_internal_sales_dept_code
 
         # 処理実行
-        result = ReferenceMergers._process_section_under_internal_sales(_df, mask)
+        result = PreparationPreMapping._process_section_under_internal_sales(_df, mask)
 
         # アサーション
         assert result['internal_sales_dept_code'][0] == expected_internal_sales_dept_code
@@ -2029,8 +2030,8 @@ class TestReferencesMergersProcessSectionUnderInternalSales:
         mock_parser_instance.parse.assert_called_once_with(remarks)
         mock_find_branch_code.assert_called_once_with(_df, mask)
 
-class TestReferenceMergers_LoadData:
-    """ReferenceMergersの_load_dataメソッドのテスト
+class TestPreparationPreMapping_LoadData:
+    """PreparationPreMappingの_load_dataメソッドのテスト
 
     テスト構造:
     ├── C0: 基本機能テスト
@@ -2088,7 +2089,7 @@ class TestReferenceMergers_LoadData:
 
         with patch('src.lib.converter_utils.ibr_reference_pre_mapping.TableSearcher') as mock_searcher:
             mock_searcher.return_value.df = pd.DataFrame({'test': [1]})
-            result = ReferenceMergers._load_data(None, 'test.pkl')
+            result = PreparationPreMapping._load_data(None, 'test.pkl')
             assert isinstance(result, pd.DataFrame)
             assert not result.empty
 
@@ -2100,7 +2101,7 @@ class TestReferenceMergers_LoadData:
         """
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
-        result = ReferenceMergers._load_data(sample_df)
+        result = PreparationPreMapping._load_data(sample_df)
         assert isinstance(result, pd.DataFrame)
         assert result.equals(sample_df)
         assert id(result) != id(sample_df)  # コピーされていることを確認
@@ -2114,7 +2115,7 @@ class TestReferenceMergers_LoadData:
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
         empty_df = pd.DataFrame()
-        result = ReferenceMergers._load_data(empty_df)
+        result = PreparationPreMapping._load_data(empty_df)
         assert isinstance(result, pd.DataFrame)
         assert result.empty
 
@@ -2129,7 +2130,7 @@ class TestReferenceMergers_LoadData:
         with patch('src.lib.converter_utils.ibr_reference_pre_mapping.TableSearcher') as mock_searcher:
             mock_searcher.side_effect = Exception('File read error')
             with pytest.raises(DataLoadError):
-                ReferenceMergers._load_data(None, 'error.pkl')
+                PreparationPreMapping._load_data(None, 'error.pkl')
 
     def test_load_data_C2_none_df_file_success(self):
         test_doc = """
@@ -2142,7 +2143,7 @@ class TestReferenceMergers_LoadData:
         test_df = pd.DataFrame({'test': [1]})
         with patch('src.lib.converter_utils.ibr_reference_pre_mapping.TableSearcher') as mock_searcher:
             mock_searcher.return_value.df = test_df
-            result = ReferenceMergers._load_data(None)
+            result = PreparationPreMapping._load_data(None)
             assert isinstance(result, pd.DataFrame)
             assert result.equals(test_df)
 
@@ -2155,7 +2156,7 @@ class TestReferenceMergers_LoadData:
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
         minimal_df = pd.DataFrame({'col': [1]})
-        result = ReferenceMergers._load_data(minimal_df)
+        result = PreparationPreMapping._load_data(minimal_df)
         assert isinstance(result, pd.DataFrame)
         assert len(result) == 1
         assert len(result.columns) == 1
@@ -2169,10 +2170,10 @@ class TestReferenceMergers_LoadData:
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
         with pytest.raises(DataLoadError):
-            ReferenceMergers._load_data(None, '')
+            PreparationPreMapping._load_data(None, '')
 
-class TestReferenceMergers_ExtractBranchCodePrefix:
-    """ReferenceMergersの_extract_branch_code_prefixメソッドのテスト
+class TestPreparationPreMapping_ExtractBranchCodePrefix:
+    """PreparationPreMappingの_extract_branch_code_prefixメソッドのテスト
 
     テスト構造:
     ├── C0: 基本機能テスト
@@ -2227,7 +2228,7 @@ class TestReferenceMergers_ExtractBranchCodePrefix:
         """
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
-        result = ReferenceMergers._extract_branch_code_prefix(sample_df, 'code')
+        result = PreparationPreMapping._extract_branch_code_prefix(sample_df, 'code')
         assert len(result) == 3
         assert result.iloc[0] == '1234'
         assert result.iloc[1] == '6789'
@@ -2242,7 +2243,7 @@ class TestReferenceMergers_ExtractBranchCodePrefix:
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
         _df = pd.DataFrame({'code': ['123', '45']})
-        result = ReferenceMergers._extract_branch_code_prefix(_df, 'code')
+        result = PreparationPreMapping._extract_branch_code_prefix(_df, 'code')
         assert len(result) == 2
         assert result.iloc[0] == '123'
         assert result.iloc[1] == '45'
@@ -2258,7 +2259,7 @@ class TestReferenceMergers_ExtractBranchCodePrefix:
         _df = pd.DataFrame({
             'code': ['A123', '1B2C', '12D4'],
         })
-        result = ReferenceMergers._extract_branch_code_prefix(_df, 'code')
+        result = PreparationPreMapping._extract_branch_code_prefix(_df, 'code')
         assert len(result) == 3
         assert all(len(code) <= 4 for code in result)
 
@@ -2271,7 +2272,7 @@ class TestReferenceMergers_ExtractBranchCodePrefix:
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
         _df = pd.DataFrame({'code': ['1234', 'ABCD']})
-        result = ReferenceMergers._extract_branch_code_prefix(_df, 'code')
+        result = PreparationPreMapping._extract_branch_code_prefix(_df, 'code')
         assert len(result) == 2
         assert all(len(code) == 4 for code in result)
 
@@ -2284,7 +2285,7 @@ class TestReferenceMergers_ExtractBranchCodePrefix:
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
         _df = pd.DataFrame({'code': ['']})
-        result = ReferenceMergers._extract_branch_code_prefix(_df, 'code')
+        result = PreparationPreMapping._extract_branch_code_prefix(_df, 'code')
         assert len(result) == 1
         assert result.iloc[0] == ''
 
@@ -2297,7 +2298,7 @@ class TestReferenceMergers_ExtractBranchCodePrefix:
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
         _df = pd.DataFrame({'code': [None]})
-        result = ReferenceMergers._extract_branch_code_prefix(_df, 'code')
+        result = PreparationPreMapping._extract_branch_code_prefix(_df, 'code')
         assert len(result) == 1
         assert pd.isna(result.iloc[0])
 
@@ -2312,14 +2313,14 @@ class TestReferenceMergers_ExtractBranchCodePrefix:
         _df = pd.DataFrame({
             'code': ['123', '1234', '12345'],
         })
-        result = ReferenceMergers._extract_branch_code_prefix(_df, 'code')
+        result = PreparationPreMapping._extract_branch_code_prefix(_df, 'code')
         assert len(result) == 3
         assert result.iloc[0] == '123'
         assert result.iloc[1] == '1234'
         assert result.iloc[2] == '1234'
 
-class TestReferenceMergers_SplitBranchNameRegex:
-    """ReferenceMergersの_split_branch_name_regexメソッドのテスト
+class TestPreparationPreMapping_SplitBranchNameRegex:
+    """PreparationPreMappingの_split_branch_name_regexメソッドのテスト
 
     テスト構造:
     ├── C0: 基本機能テスト
@@ -2370,7 +2371,7 @@ class TestReferenceMergers_SplitBranchNameRegex:
         """
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
-        result = ReferenceMergers._split_branch_name_regex("東京支店第一営業部")
+        result = PreparationPreMapping._split_branch_name_regex("東京支店第一営業部")
         assert result == ("東京支店", "第一営業部")
 
     def test_split_branch_name_regex_C0_branch_only(self):
@@ -2381,7 +2382,7 @@ class TestReferenceMergers_SplitBranchNameRegex:
         """
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
-        result = ReferenceMergers._split_branch_name_regex("大阪支店")
+        result = PreparationPreMapping._split_branch_name_regex("大阪支店")
         assert result == ("大阪支店", "")
 
     def test_split_branch_name_regex_C1_no_branch(self):
@@ -2393,7 +2394,7 @@ class TestReferenceMergers_SplitBranchNameRegex:
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
         test_name = "営業第一部"
-        result = ReferenceMergers._split_branch_name_regex(test_name)
+        result = PreparationPreMapping._split_branch_name_regex(test_name)
         assert result == (test_name, "")
 
     def test_split_branch_name_regex_C1_with_department(self):
@@ -2404,7 +2405,7 @@ class TestReferenceMergers_SplitBranchNameRegex:
         """
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
-        result = ReferenceMergers._split_branch_name_regex("横浜支店営業第二部")
+        result = PreparationPreMapping._split_branch_name_regex("横浜支店営業第二部")
         assert result == ("横浜支店", "営業第二部")
 
     def test_split_branch_name_regex_C2_multiple_branch(self):
@@ -2415,7 +2416,7 @@ class TestReferenceMergers_SplitBranchNameRegex:
         """
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
-        result = ReferenceMergers._split_branch_name_regex("支店支店営業部")
+        result = PreparationPreMapping._split_branch_name_regex("支店支店営業部")
         assert result == ("支店", "支店営業部")
 
     def test_split_branch_name_regex_BVT_none_value(self):
@@ -2426,7 +2427,7 @@ class TestReferenceMergers_SplitBranchNameRegex:
         """
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
-        result = ReferenceMergers._split_branch_name_regex(None)
+        result = PreparationPreMapping._split_branch_name_regex(None)
         assert result == (None, None)
 
     def test_split_branch_name_regex_BVT_empty_string(self):
@@ -2437,7 +2438,7 @@ class TestReferenceMergers_SplitBranchNameRegex:
         """
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
-        result = ReferenceMergers._split_branch_name_regex("")
+        result = PreparationPreMapping._split_branch_name_regex("")
         assert result == ("", "")
 
     def test_split_branch_name_regex_BVT_long_string(self):
@@ -2449,7 +2450,7 @@ class TestReferenceMergers_SplitBranchNameRegex:
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
         long_name = "長い支店" * 100 + "長い営業部名" * 100
-        result = ReferenceMergers._split_branch_name_regex(long_name)
+        result = PreparationPreMapping._split_branch_name_regex(long_name)
         expected_branch = "長い支店"
         expected_dept = "長い支店" * 99 + "長い営業部名" * 100
         assert result == (expected_branch, expected_dept)
@@ -2462,7 +2463,7 @@ class TestReferenceMergers_SplitBranchNameRegex:
         """
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
-        result = ReferenceMergers._split_branch_name_regex("支店")
+        result = PreparationPreMapping._split_branch_name_regex("支店")
         assert result == ("支店", "")
 
     def test_split_branch_name_regex_C2_special_characters(self):
@@ -2473,11 +2474,11 @@ class TestReferenceMergers_SplitBranchNameRegex:
         """
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
-        result = ReferenceMergers._split_branch_name_regex("東京★支店◆営業部")
+        result = PreparationPreMapping._split_branch_name_regex("東京★支店◆営業部")
         assert result == ("東京★支店", "◆営業部")
 
-class TestReferenceMergers_ParseRemarks:
-    """ReferenceMergersの_parse_remarksメソッドのテスト
+class TestPreparationPreMapping_ParseRemarks:
+    """PreparationPreMappingの_parse_remarksメソッドのテスト
 
     テスト構造:
     ├── C0: 基本機能テスト
@@ -2566,7 +2567,7 @@ class TestReferenceMergers_ParseRemarks:
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
         mock_remarks_parser.parse.return_value = valid_parsed_result
-        result = ReferenceMergers._parse_remarks("標準的な備考文")
+        result = PreparationPreMapping._parse_remarks("標準的な備考文")
 
         assert result == valid_parsed_result
         mock_remarks_parser.parse.assert_called_once_with("標準的な備考文")
@@ -2583,7 +2584,7 @@ class TestReferenceMergers_ParseRemarks:
         mock_remarks_parser.parse.return_value = self.empty_remarks_structure
 
         with patch('pandas.isna', return_value=False):  # 空文字列の場合はFalse
-            result = ReferenceMergers._parse_remarks("")
+            result = PreparationPreMapping._parse_remarks("")
             assert result == self.empty_remarks_structure
             # 空文字列の場合はparseメソッドが呼ばれることを確認
             mock_remarks_parser.parse.assert_called_once_with("")
@@ -2597,7 +2598,7 @@ class TestReferenceMergers_ParseRemarks:
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
         with patch('pandas.isna', return_value=True):  # None値の場合はTrue
-            result = ReferenceMergers._parse_remarks(None)
+            result = PreparationPreMapping._parse_remarks(None)
             assert result == self.empty_remarks_structure
             # None値の場合はparseメソッドが呼ばれないことを確認
             mock_remarks_parser.parse.assert_not_called()
@@ -2624,7 +2625,7 @@ class TestReferenceMergers_ParseRemarks:
             'other_info': '',
         }
         mock_remarks_parser.parse.return_value = partial_result
-        result = ReferenceMergers._parse_remarks("部分的な備考文")
+        result = PreparationPreMapping._parse_remarks("部分的な備考文")
         assert result == partial_result
         mock_remarks_parser.parse.assert_called_once_with("部分的な備考文")
 
@@ -2643,7 +2644,7 @@ class TestReferenceMergers_ParseRemarks:
 
         # 例外が発生することを確認
         with pytest.raises(RemarksParseError) as excinfo:
-            ReferenceMergers._parse_remarks("エラーを発生させる備考文")
+            PreparationPreMapping._parse_remarks("エラーを発生させる備考文")
 
         # エラーメッセージの検証
         assert "RemarksParse処理で異常が発生しました: Parser Error" in str(excinfo.value)
@@ -2674,7 +2675,7 @@ class TestReferenceMergers_ParseRemarks:
         }
         mock_remarks_parser.parse.return_value = minimal_result
 
-        result = ReferenceMergers._parse_remarks("最小データ")
+        result = PreparationPreMapping._parse_remarks("最小データ")
 
         assert result == minimal_result
         mock_remarks_parser.parse.assert_called_once_with("最小データ")
@@ -2703,7 +2704,7 @@ class TestReferenceMergers_ParseRemarks:
         }
         mock_remarks_parser.parse.return_value = expected_result
 
-        result = ReferenceMergers._parse_remarks(long_remarks)
+        result = PreparationPreMapping._parse_remarks(long_remarks)
 
         assert result == expected_result
         mock_remarks_parser.parse.assert_called_once_with(long_remarks)
@@ -2729,7 +2730,7 @@ class TestReferenceMergers_ParseRemarks:
 
                 # 例外が発生することを確認
                 with pytest.raises(RemarksParseError) as excinfo:
-                    ReferenceMergers._parse_remarks("エラーを発生させる備考文")
+                    PreparationPreMapping._parse_remarks("エラーを発生させる備考文")
 
                 # エラーメッセージの検証
                 expected_msg = f"RemarksParse処理で異常が発生しました: {error_msg}"
@@ -2741,8 +2742,8 @@ class TestReferenceMergers_ParseRemarks:
                 # 次のテストのためにモックをリセット
                 mock_remarks_parser.parse.reset_mock()
 
-class TestReferenceMergers_FindBranchCodeFromRemarks:
-    """ReferenceMergersの_find_branch_code_from_remarksメソッドのテスト
+class TestPreparationPreMapping_FindBranchCodeFromRemarks:
+    """PreparationPreMappingの_find_branch_code_from_remarksメソッドのテスト
 
     テスト構造:
     ├── C0: 基本機能テスト
@@ -2816,7 +2817,7 @@ class TestReferenceMergers_FindBranchCodeFromRemarks:
         """
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
-        result = ReferenceMergers._find_branch_code_from_remarks(sample_df, sample_mask)
+        result = PreparationPreMapping._find_branch_code_from_remarks(sample_df, sample_mask)
         assert isinstance(result, pd.Series)
         masked_result = result[sample_mask]
         assert len(masked_result) == 1
@@ -2837,7 +2838,7 @@ class TestReferenceMergers_FindBranchCodeFromRemarks:
         mask = pd.Series([False, False, True])
         modified_df = sample_df.copy()
         modified_df.loc[2, 'remarks'] = '福岡営業第一部'  # 存在しない拠点内営業部名
-        result = ReferenceMergers._find_branch_code_from_remarks(modified_df, mask)
+        result = PreparationPreMapping._find_branch_code_from_remarks(modified_df, mask)
         assert pd.isna(result[mask].iloc[0])
 
     def test_find_branch_code_C1_internal_sales_exists(self, sample_df):
@@ -2849,7 +2850,7 @@ class TestReferenceMergers_FindBranchCodeFromRemarks:
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
         mask = pd.Series([False, False, True])
-        result = ReferenceMergers._find_branch_code_from_remarks(sample_df, mask)
+        result = PreparationPreMapping._find_branch_code_from_remarks(sample_df, mask)
         assert result[mask].iloc[0] == 'T001'
 
     def test_find_branch_code_C2_exact_match(self, sample_df):
@@ -2863,7 +2864,7 @@ class TestReferenceMergers_FindBranchCodeFromRemarks:
         mask = pd.Series([False, False, True])
         modified_df = sample_df.copy()
         modified_df.loc[2, 'remarks'] = '東京営業'  # 部分一致
-        result = ReferenceMergers._find_branch_code_from_remarks(modified_df, mask)
+        result = PreparationPreMapping._find_branch_code_from_remarks(modified_df, mask)
         assert pd.isna(result[mask].iloc[0])
 
 
@@ -2878,7 +2879,7 @@ class TestReferenceMergers_FindBranchCodeFromRemarks:
         mask = pd.Series([False, False, True])
         modified_df = sample_df.copy()
         modified_df.loc[2, 'remarks'] = '東京営業'  # 部分一致
-        result = ReferenceMergers._find_branch_code_from_remarks(modified_df, mask)
+        result = PreparationPreMapping._find_branch_code_from_remarks(modified_df, mask)
         assert pd.isna(result[mask].iloc[0])
 
     def test_find_branch_code_BVT_empty_df(self):
@@ -2891,7 +2892,7 @@ class TestReferenceMergers_FindBranchCodeFromRemarks:
 
         empty_df = pd.DataFrame(columns=['target_org', 'branch_name', 'branch_code', 'remarks'])
         empty_mask = pd.Series([], dtype=bool)
-        result = ReferenceMergers._find_branch_code_from_remarks(empty_df, empty_mask)
+        result = PreparationPreMapping._find_branch_code_from_remarks(empty_df, empty_mask)
         assert isinstance(result, pd.Series)
         assert len(result) == 0
 
@@ -2910,7 +2911,7 @@ class TestReferenceMergers_FindBranchCodeFromRemarks:
             'remarks': ['東京営業第一部'],
         })
         mask = pd.Series([True])
-        result = ReferenceMergers._find_branch_code_from_remarks(_df, mask)
+        result = PreparationPreMapping._find_branch_code_from_remarks(_df, mask)
         assert isinstance(result, pd.Series)
         assert len(result) == 1
         assert result[mask].iloc[0] == 'T001'
@@ -2948,7 +2949,7 @@ class TestReferenceMergers_FindBranchCodeFromRemarks:
         # エラーが発生することを確認
         with pytest.raises(RemarksParseError) as exc_info, \
             patch('src.lib.converter_utils.ibr_reference_pre_mapping.log_msg') as mock_log:
-            ReferenceMergers._find_branch_code_from_remarks(_df, mask)
+            PreparationPreMapping._find_branch_code_from_remarks(_df, mask)
 
         # エラーメッセージの確認
         error_message = str(exc_info.value)
@@ -2964,7 +2965,7 @@ class TestReferenceMergers_FindBranchCodeFromRemarks:
     #    テストケース: 全てFalseのマスクの処理  -> 呼び出し元でmaskが全てFalseの場合は呼び出さない制御有り
     #    """
     #    mask = pd.Series([False, False, False])
-    #    result = ReferenceMergers._find_branch_code_from_remarks(sample_df, mask)
+    #    result = PreparationPreMapping._find_branch_code_from_remarks(sample_df, mask)
     #    assert isinstance(result, pd.Series)
     #    assert len(result) == len(sample_df)
     #    assert all(pd.isna(result))  # 全ての要素がNaN

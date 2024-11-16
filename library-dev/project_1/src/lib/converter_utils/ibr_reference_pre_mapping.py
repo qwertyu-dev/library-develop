@@ -75,7 +75,8 @@ class BranchNameSplitError(ReferenceMergersError):
 class RemarksParseError(ReferenceMergersError):
     """備考欄解析エラー"""
 
-class ReferenceMergers:
+#class ReferenceMergers:
+class PreparationPreMapping:
     """統合レイアウトデータとリファレンステーブルのマージを行うクラス"""
 
     @staticmethod
@@ -100,10 +101,10 @@ class ReferenceMergers:
         """
         try:
             # データ読み込み
-            result_df = ReferenceMergers._load_data(
+            result_df = PreparationPreMapping._load_data(
                 integrated_df, MergerConfig.DEFAULT_LAYOUT_FILE,
             )
-            reference_df = ReferenceMergers._load_data(
+            reference_df = PreparationPreMapping._load_data(
                 reference_df, MergerConfig.REFERENCE_TABLE_FILE,
             )
 
@@ -154,7 +155,7 @@ class ReferenceMergers:
                 if merged_df.empty:
                     err_msg = '変更/廃止申請にも関わらず対となる明細がリファレンス上にありません'
                     log_msg(err_msg, LogLevel.ERROR)
-                    ReferenceMergers._handle_merge_error(err_msg)
+                    PreparationPreMapping._handle_merge_error(err_msg)
 
                 # BPR/ADフラグ: column付与処理
                 result_df.loc[non_new_mask, 'reference_bpr_target_flag'] = (
@@ -165,7 +166,7 @@ class ReferenceMergers:
                 log_msg('bprad col added:\n')
                 tabulate_dataframe(result_df)
 
-            ReferenceMergers._log_bpr_flag_results(result_df)
+            PreparationPreMapping._log_bpr_flag_results(result_df)
 
         except Exception as e:
             err_msg = f"BPRADフラグ付与処理でエラーが発生しました: {str(e)}"
@@ -199,7 +200,7 @@ class ReferenceMergers:
         """
         try:
             # データ読み込み
-            result_df = ReferenceMergers._load_data(integrated_df)
+            result_df = PreparationPreMapping._load_data(integrated_df)
 
             # 対象データの抽出
             mask = (result_df['target_org'] == OrganizationType.INTERNAL_SALES.value)
@@ -209,7 +210,7 @@ class ReferenceMergers:
                 return result_df
 
             # 拠点内営業部の処理
-            result_df = ReferenceMergers._process_internal_sales_data(result_df, mask)
+            result_df = PreparationPreMapping._process_internal_sales_data(result_df, mask)
             log_msg("処理結果:\n", LogLevel.INFO)
             tabulate_dataframe(result_df)
             return result_df
@@ -240,7 +241,7 @@ class ReferenceMergers:
         """
         try:
             # データ読み込み
-            result_df = ReferenceMergers._load_data(integrated_df)
+            result_df = PreparationPreMapping._load_data(integrated_df)
 
             # 対象データの抽出
             mask = (result_df['target_org'] == OrganizationType.AREA.value)
@@ -250,7 +251,7 @@ class ReferenceMergers:
                 return result_df
 
             # エリアデータの処理
-            result_df = ReferenceMergers._process_area_data(result_df, mask)
+            result_df = PreparationPreMapping._process_area_data(result_df, mask)
 
             log_msg("処理結果:\n")
             tabulate_dataframe(result_df)
@@ -284,7 +285,7 @@ class ReferenceMergers:
         """
         try:
             # データ読み込み
-            result_df = ReferenceMergers._load_data(integrated_df)
+            result_df = PreparationPreMapping._load_data(integrated_df)
 
             # 対象データの抽出
             mask = ((result_df['target_org'] == OrganizationType.SECTION_GROUP.value) & (result_df['remarks'].notna()))
@@ -294,7 +295,7 @@ class ReferenceMergers:
                 return result_df
 
             # データの処理
-            result_df = ReferenceMergers._process_section_under_internal_sales(result_df, mask)
+            result_df = PreparationPreMapping._process_section_under_internal_sales(result_df, mask)
 
             log_msg("処理結果:\n")
             tabulate_dataframe(result_df)
@@ -410,12 +411,12 @@ class ReferenceMergers:
             df.loc[mask, 'internal_sales_dept_code'] = df.loc[mask, 'branch_code']
 
             # 部店名称の分割処理
-            split_names = df.loc[mask, 'branch_name'].apply(ReferenceMergers._split_branch_name_regex)
+            split_names = df.loc[mask, 'branch_name'].apply(PreparationPreMapping._split_branch_name_regex)
             df.loc[mask, 'branch_name'] = split_names.apply(lambda x: x[0])
             df.loc[mask, 'internal_sales_dept_name'] = split_names.apply(lambda x: x[1])
 
             # 部店コードの切り詰め
-            df.loc[mask, 'branch_code'] = ReferenceMergers._extract_branch_code_prefix(
+            df.loc[mask, 'branch_code'] = PreparationPreMapping._extract_branch_code_prefix(
                 df.loc[mask], 'branch_code',
             )
 
@@ -448,14 +449,14 @@ class ReferenceMergers:
             result_df = df.copy()
 
             # 備考欄の解析
-            parsed_series = df.loc[mask, 'remarks'].apply(ReferenceMergers._parse_remarks)
+            parsed_series = df.loc[mask, 'remarks'].apply(PreparationPreMapping._parse_remarks)
 
             # エリアグループ情報の設定
             result_df.loc[mask, 'branch_code'] = parsed_series.apply(lambda x: x['area_group']['group_code'])
             result_df.loc[mask, 'branch_name'] = parsed_series.apply(lambda x: x['area_group']['group_name'])
 
             # デバッグ情報の出力
-            ReferenceMergers._log_parsed_remarks_results(parsed_series)
+            PreparationPreMapping._log_parsed_remarks_results(parsed_series)
 
         except Exception as e:
             err_msg = f'エリア向け: 備考欄の解析処理でエラーが発生しました: {e}'
@@ -482,10 +483,10 @@ class ReferenceMergers:
         """
         try:
             # 備考欄の解析と情報の設定
-            parsed_series = df.loc[mask, 'remarks'].apply(ReferenceMergers._parse_remarks)
+            parsed_series = df.loc[mask, 'remarks'].apply(PreparationPreMapping._parse_remarks)
 
             # 拠点内営業部コードの設定
-            df.loc[mask, 'internal_sales_dept_code'] = ReferenceMergers._find_branch_code_from_remarks(df, mask)
+            df.loc[mask, 'internal_sales_dept_code'] = PreparationPreMapping._find_branch_code_from_remarks(df, mask)
 
             # 拠点内営業部名称の設定
             df.loc[mask, 'internal_sales_dept_name'] = parsed_series.apply(
@@ -493,7 +494,7 @@ class ReferenceMergers:
             )
 
             # デバッグ情報の出力
-            ReferenceMergers._log_parsed_remarks_results(parsed_series)
+            PreparationPreMapping._log_parsed_remarks_results(parsed_series)
 
         except Exception as e:
             err_msg = f'拠点内営業部配下課向け: 備考欄の解析処理でエラーが発生しました: {str(e)}'
@@ -609,7 +610,7 @@ class ReferenceMergers:
 
         for field in debug_fields:
             try:
-                value = parsed_series.apply(lambda x, f=field: ReferenceMergers._get_nested_dict_value(x, f))
+                value = parsed_series.apply(lambda x, f=field: PreparationPreMapping._get_nested_dict_value(x, f))
                 log_msg(f"{field}: {value}", LogLevel.DEBUG)
             except Exception as e:
                 err_msg = f"デバッグ情報の出力でエラーが発生しました - {field}: {str(e)}"
