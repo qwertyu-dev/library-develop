@@ -39,26 +39,11 @@ class ParsedRemarks(TypedDict):
 @dataclass(frozen=True)
 class MergerConfig:
     """ReferenceMergersの設定値"""
-    DEFAULT_LAYOUT_FILE: ClassVar[str] = 'integrated_layout.pkl'
-    REFERENCE_TABLE_FILE: ClassVar[str] = 'reference_table.pkl'
+    DEFAULT_LAYOUT_FILE: ClassVar[str] = 'integrated_layout.pkl'  # TODO(): 見直しの予定
+    REFERENCE_TABLE_FILE: ClassVar[str] = 'reference_table.pkl'   # TODO(): 見直しの予定
     BRANCH_CODE_LENGTH: ClassVar[int] = 4
     #BRANCH_NAME_PATTERN: ClassVar[str] = r'^(.+?支店)(.*)$'
     BRANCH_NAME_PATTERN: ClassVar[str] = r'^(.*?支店)(.*)$'
-    REFERENCE_PREFIX: ClassVar[str] = 'branch_reference_'
-
-    # リファレンステーブルのカラム名マッピング
-    #REFERENCE_COLUMNS_MAPPING_BPR: ClassVar[dict[str, str]] = {
-    #    'branch_code_bpr': f'{REFERENCE_PREFIX}branch_code_bpr',
-    #    'branch_name_bpr': f'{REFERENCE_PREFIX}branch_name_bpr',
-    #    'parent_branch_code': f'{REFERENCE_PREFIX}parent_branch_code',
-    #}
-
-    REFERENCE_COLUMNS_MAPPING_JINJI: ClassVar[dict[str, str]] = {
-        'branch_code_jinji': f'{REFERENCE_PREFIX}branch_code_jinji',
-        'branch_name_jinji': f'{REFERENCE_PREFIX}branch_name_jinji',
-        'parent_branch_code': f'{REFERENCE_PREFIX}parent_branch_code',
-        'organization_name_kana': f'{REFERENCE_PREFIX}organization_name_kana',
-    }
 
 class ReferenceMergersError(Exception):
     """ReferenceMergerの基底例外クラス"""
@@ -317,6 +302,8 @@ class PreparationPreMapping:
         Args:
             df: 入力DataFrame
             file_name: 読み込むファイル名
+
+            dfの指定がなければデフォルト設定ファイル名でデータ取得する
 
         Returns:
             pd.DataFrame: 処理用にコピーしたDataFrame
