@@ -1,0 +1,468 @@
+# Model Validator 実装ガイダンス
+
+== Pydantic Validatorの基礎知識
+
+=== Pydanticにおけるバリデーションの概要
+
+==== バリデーションの種類
+Pydanticには2種類のバリデーターが存在します：
+
+.バリデーションの種類
+[cols="1,2,3,2"]
+|===
+|種類 |説明 |用途 |特徴
+
+|Field Validator
+(@field_validator)
+|単一のフィールドに対するバリデーション
+a|
+* データ型の変換
+* 基本的な制約のチェック
+|他のフィールドの値を参照せずに完結する検証
+
+|Model Validator
+(@model_validator)
+|モデル全体に対するバリデーション
+a|
+* 複数フィールド間の相関チェック
+* 外部サービスを利用した検証
+|モデル全体の状態を考慮した検証が可能
+
+|===
+
+.バリデーションの実行タイミング
+[cols="1,4", width='70%']
+|===
+|順序 |実行内容
+
+|1
+|Field Validatorによるフィールドごとの検証（mode='before'）
+
+|2
+|Model Validatorによるモデル全体の検証（mode='before'）
+
+|3
+|モデルインスタンスの作成
+
+|4
+|Field Validatorによるフィールドごとの検証（デフォルト）
+
+|5
+|Model Validatorによるモデル全体の検証（mode='after'）
+
+|===
+
+
+=== Model Validatorの基本
+
+=== Field ValidatorとModel Validatorの使い分け
+
+.Validator使用ケース比較
+[cols="1,2,2"]
+|===
+|項目 |Field Validator |Model Validator
+
+|主な用途
+a|
+* 単一フィールドの形式チェック
+* 値の正規化（大文字小文字の統一など）
+* データ型の変換
+* 基本的な制約チェック（最大長、最小値など）
+a|
+* フィールド間の相関チェック
+* 条件付き必須チェック
+* 外部サービスを利用した検証
+* 複雑なビジネスルール検証
+
+|検証範囲
+a|
+* 単一のフィールド
+a|
+*モデル全体または複数のフィールド
+
+|データアクセス
+a|
+* 個別のフィールド値のみ
+a|
+* モデルの全フィールドにアクセス可能
+
+|実行タイミング
+a|
+* フィールドごとに実行
+a|
+*モデル全体の検証時に実行
+
+|===
+
+.field_valdator
+[source,python]
+----
+from pydantic import BaseModel, field_validator
+
+class UserModel(BaseModel):
+    email: str
+    
+    @field_validator('email')
+    @classmethod
+    def validate_email(cls, v: str) -> str:
+        if not '@' in v:
+            raise ValueError('メールアドレスの形式が不正です')
+        return v.lower()  # 小文字に正規化
+----
+
+.model_validator
+[source,python]
+----
+from pydantic import BaseModel, model_validator
+from enum import Enum
+
+class PaymentType(str, Enum):
+    CREDIT = "credit"
+    BANK = "bank"
+
+class PaymentModel(BaseModel):
+    payment_type: PaymentType
+    credit_card_number: Optional[str] = None
+    bank_account: Optional[str] = None
+    
+    @model_validator(mode='after')
+    def check_payment_info(self) -> 'PaymentModel':
+        if self.payment_type == PaymentType.CREDIT and not self.credit_card_number:
+            raise ValueError('クレジットカード支払いの場合、カード番号は必須です')
+        if self.payment_type == PaymentType.BANK and not self.bank_account:
+            raise ValueError('銀行振込の場合、口座情報は必須です')
+        return self
+----
+
+
+==== なぜModel Validatorが必要か
+Field Validatorだけでは実装できない以下のようなケースに対応するために使用します：
+
+* あるフィールドの値によって、他のフィールドが必須になる場合
+* 複数フィールドの値の組み合わせが妥当かチェックする場合
+* 外部システムやデータベースを参照して値の妥当性を確認する場合
+
+==== Model Validatorの2つのモード
+
+.Model Validatorのモード比較
+[cols="1,2,2"]
+|===
+|項目 |mode='before' |mode='after'
+
+|実行タイミング
+|モデルのインスタンス化前に実行される
+|モデルのインスタンス化後に実行される
+
+|入力データの形式
+|辞書形式で渡される
+|インスタンスのフィールドに直接アクセス可能
+
+|主な用途
+|データの前処理や変換に適している
+|ビジネスロジックの検証に適している
+
+|実装方法
+|@classmethodとして実装する必要がある
+|通常のインスタンスメソッドとして実装する
+
+|===
+
+
+.beforeケース
+[source,python]
+----
+from pydantic import BaseModel, model_validator
+from typing import Dict, Any
+
+class UserModel(BaseModel):
+    username: str
+    email: str
+    
+    @model_validator(mode='before')
+    @classmethod
+    def preprocess_data(cls, data: Dict[str, Any]) -> Dict[str, Any]:
+        # データの前処理
+        if 'username' in data:
+            data['username'] = data['username'].strip().lower()
+        return data
+----
+
+
+.afterケース
+[source,python]
+----
+from pydantic import BaseModel, model_validator
+
+class OrderModel(BaseModel):
+    order_date: date
+    delivery_date: date
+    
+    @model_validator(mode='after')
+    def check_dates(self) -> 'OrderModel':
+        if self.delivery_date <= self.order_date:
+            raise ValueError('配送日は注文日より後である必要があります')
+        return self
+----
+
+
+=== バリデーションエラーの取り扱い
+
+==== エラーの種類
+* ValidationError: Pydanticのバリデーションエラー
+* ValueError: バリデーターが発生させる一般的なエラー
+* TypeError: 型変換に失敗した場合のエラー
+
+==== エラーハンドリング
+[source,python]
+----
+from pydantic import ValidationError
+
+try:
+    user = UserModel(username="  TEST  ", email="invalid-email")
+except ValidationError as e:
+    for error in e.errors():
+        print(f"Field: {error['loc']}")
+        print(f"Message: {error['msg']}")
+        print(f"Type: {error['type']}")
+----
+
+=== バリデーション実装の基本パターン
+
+==== 単純な条件付き必須チェック
+[source,python]
+----
+class ApplicationModel(BaseModel):
+    application_type: ApplicationType
+    parent_code: Optional[str] = None
+    
+    @model_validator(mode='after')
+    def validate_required_fields(self) -> 'ApplicationModel':
+        if self.application_type == ApplicationType.NEW and not self.parent_code:
+            raise ValueError('新規申請の場合、親コードは必須です')
+        return self
+----
+
+==== 複数フィールドの相関チェック
+[source,python]
+----
+class DateRangeModel(BaseModel):
+    start_date: date
+    end_date: date
+    
+    @model_validator(mode='after')
+    def validate_date_range(self) -> 'DateRangeModel':
+        if self.end_date < self.start_date:
+            raise ValueError('終了日は開始日以降である必要があります')
+        if (self.end_date - self.start_date).days > 365:
+            raise ValueError('期間は1年以内である必要があります')
+        return self
+----
+
+== 業務アプリケーションにおけるModel Validator実装
+
+=== パターン1: リファレンスデータを使用した検証
+
+==== 基本的な実装パターン
+リファレンスDBなどのマスターデータを参照した検証を行う場合、mode='after'を使用します。
+これは、型変換後の確実なデータに対して検証を行うためです。
+
+[source,python]
+----
+class OrganizationModel(BaseModel):
+    busho_code: str
+    parent_busho_code: Optional[str] = None
+    effective_date: date
+
+    @model_validator(mode='after')
+    def validate_organization(self) -> 'OrganizationModel':
+        # リファレンスDBサービスのインスタンス化
+        ref_db = ReferenceDBService()
+        
+        # 親部店の存在チェック
+        if self.parent_busho_code:
+            if not ref_db.exists_busho(self.parent_busho_code, self.effective_date):
+                raise ValueError(
+                    f'親部店コード{self.parent_busho_code}は'
+                    f'指定された有効日{self.effective_date}に存在しません'
+                )
+        return self
+----
+
+==== 検証時の注意点
+* 外部サービスの呼び出しは最小限に抑える
+* キャッシュの活用を検討する
+* 適切なエラーメッセージを設定する
+
+=== パターン2: 条件分岐を含む複合チェック
+
+==== 複雑な条件分岐の整理
+業務ロジックでよくある複雑な条件分岐を整理して実装します。
+
+[source,python]
+----
+from enum import Enum
+from typing import Optional
+
+class ApplicationType(str, Enum):
+    NEW = "新設"
+    UPDATE = "変更"
+    DELETE = "廃止"
+
+class ApplicationModel(BaseModel):
+    application_type: ApplicationType
+    busho_code: str
+    karea_code: Optional[str] = None
+    effective_date: date
+
+    @model_validator(mode='after')
+    def validate_application(self) -> 'ApplicationModel':
+        # 1. 申請種別ごとの基本チェック
+        self._validate_by_application_type()
+        
+        # 2. 部店コード体系のチェック
+        self._validate_busho_code_system()
+        
+        # 3. 期間チェック
+        self._validate_date_range()
+        
+        return self
+
+    def _validate_by_application_type(self) -> None:
+        """申請種別ごとの個別チェック"""
+        if self.application_type == ApplicationType.NEW:
+            if not self._is_new_busho_code_available():
+                raise ValueError('指定された部店コードは既に使用されています')
+        elif self.application_type == ApplicationType.DELETE:
+            if self._has_active_children():
+                raise ValueError('有効な配下組織が存在する部店は廃止できません')
+
+    def _is_new_busho_code_available(self) -> bool:
+        """新規部店コードの使用可否チェック"""
+        ref_db = ReferenceDBService()
+        return not ref_db.exists_busho(self.busho_code)
+
+    def _has_active_children(self) -> bool:
+        """配下組織の有効性チェック"""
+        ref_db = ReferenceDBService()
+        return ref_db.has_active_children(self.busho_code, self.effective_date)
+----
+
+==== 実装のポイント
+* 関心事の分離（メソッドの分割）
+* 適切な粒度でのエラーメッセージ
+* 再利用可能なプライベートメソッド
+
+=== パターン3: 階層構造の検証
+
+==== 組織階層チェックの実装
+組織の親子関係や階層構造の妥当性を検証します。
+
+[source,python]
+----
+class OrganizationHierarchyModel(BaseModel):
+    busho_code: str
+    parent_busho_code: Optional[str]
+    org_level: int
+    
+    @model_validator(mode='after')
+    def validate_hierarchy(self) -> 'OrganizationHierarchyModel':
+        if not self.parent_busho_code:
+            if self.org_level != 1:
+                raise ValueError('親部店コードが未指定の場合、組織レベルは1である必要があります')
+            return self
+
+        ref_db = ReferenceDBService()
+        parent_info = ref_db.get_organization_info(self.parent_busho_code)
+        
+        # 親組織の存在チェック
+        if not parent_info:
+            raise ValueError(f'親部店コード{self.parent_busho_code}が存在しません')
+        
+        # 階層レベルの妥当性チェック
+        if self.org_level <= parent_info.org_level:
+            raise ValueError('組織レベルは親組織より大きい必要があります')
+        
+        # 部店コード体系のチェック
+        if not self._is_valid_code_system(parent_info):
+            raise ValueError('部店コード体系が不正です')
+        
+        return self
+
+    def _is_valid_code_system(self, parent_info: Any) -> bool:
+        """部店コード体系の妥当性チェック"""
+        # 実装省略
+        pass
+----
+
+=== パターン4: トランザクション整合性の検証
+
+==== 期間や日付の重複チェック
+発効日や有効期間の重複をチェックする実装例です。
+
+[source,python]
+----
+class PeriodModel(BaseModel):
+    busho_code: str
+    start_date: date
+    end_date: Optional[date] = None
+    
+    @model_validator(mode='after')
+    def validate_period(self) -> 'PeriodModel':
+        ref_db = ReferenceDBService()
+        
+        # 1. 基本的な日付チェック
+        if self.end_date and self.start_date > self.end_date:
+            raise ValueError('開始日は終了日以前である必要があります')
+        
+        # 2. 重複期間のチェック
+        overlapping = ref_db.find_overlapping_periods(
+            self.busho_code,
+            self.start_date,
+            self.end_date
+        )
+        
+        if overlapping:
+            dates = [f"{p.start_date}～{p.end_date}" for p in overlapping]
+            raise ValueError(
+                f'期間が重複する申請が存在します: {", ".join(dates)}'
+            )
+        
+        return self
+----
+
+=== 実装上の注意点
+
+.バリデーション設計の考慮点
+[cols="1,3"]
+|===
+|項目 |ポイント
+
+|エラーメッセージの設計
+a|
+* ユーザーが理解できる業務的な表現を使用
+* エラーの原因と対処方法を明確に示す
+* 必要に応じて複数言語対応を考慮
+
+|パフォーマンスの考慮
+a|
+* 外部サービスの呼び出しは最小限に
+* 必要に応じてキャッシュを活用
+* 大量データ処理時の影響を考慮
+
+|コードの保守性
+a|
+* 適切な粒度でのメソッド分割
+* 一貫性のある命名規則
+* 明確なコメントの記述
+
+|テスト容易性
+a|
+* 外部サービスのモック化
+* エラーケースの網羅
+* パラメータ化テストの活用
+
+|===
+
+これらのパターンは、実際の業務アプリケーションで頻出するケースをカバーしています。
+状況に応じて適切なパターンを選択し、必要に応じてカスタマイズすることで、
+堅牢なバリデーション処理を実装することができます。
