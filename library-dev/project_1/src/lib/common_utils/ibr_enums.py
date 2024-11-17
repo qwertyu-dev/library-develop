@@ -85,9 +85,16 @@ class PatternPriority(StrEnum):
     """パターンの優先順位を表す列挙型"""
     BRANCH_4DIGIT = '1'
     BRANCH_5DIGIT_NON7 = '2'
-    BRANCH_7818 = '3'      # 7818を先に処理
-    BRANCH_5DIGIT_7 = '4'  # 7始まりを後に処理
-    INTERNAL_SALES = '5'
-    SECTION = '6'
-    AREA = '7'
-    RELATED_DUMMY = '8'
+    BRANCH_7818_CASA1 = '3'      # 7818を先に処理
+    BRANCH_7818_CASE2 = '4'      # 7818を先に処理
+    BRANCH_5DIGIT_7 = '5'        # 7始まりを後に処理
+    INTERNAL_SALES = '6'
+    SECTION = '7'
+    AREA_CASE1 = '8'
+    AREA_CASE2 = '9'
+    RELATED_DUMMY = '10'
+
+class BranchCodeLength(StrEnum):
+    """パターンの優先順位を表す列挙型"""
+    BRANCH_LENGTH_4 = '4'
+    BRANCH_LENGTH_5 = '5'
