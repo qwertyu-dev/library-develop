@@ -1,13 +1,13 @@
-import re
+"""受付処理前のマージ処理"""
 import sys
 from dataclasses import dataclass
-from typing import ClassVar, TypedDict
+from typing import ClassVar
 
 import pandas as pd
 
 from src.lib.common_utils.ibr_dataframe_helper import tabulate_dataframe
 from src.lib.common_utils.ibr_decorator_config import initialize_config
-from src.lib.common_utils.ibr_enums import  LogLevel, OrganizationType
+from src.lib.common_utils.ibr_enums import LogLevel, OrganizationType
 
 config = initialize_config(sys.modules[__name__])
 log_msg = config.log_message
@@ -106,53 +106,6 @@ class ReferenceMergers:
         else:
             return result_df
 
-        #try:
-        #    # 部店コードの上位4桁を取得
-        #    integrated_df = integrated_layout.copy()
-        #    integrated_df['branch_code_prefix'] = ReferenceMergers._extract_branch_code_prefix(integrated_df, 'branch_code')
-
-        #    # 申請明細の抽出
-        #    filtered_result = (
-        #        integrated_df[integrated_df['target_org'] == OrganizationType.BRANCH ]
-        #        #.rename(columns=MergerConfig.REFERENCE_COLUMNS_MAPPING_BPR)
-        #        .rename(columns=MergerConfig.INTEGRATED_COLUMNS_MAPPING)
-        #    )
-        #    log_msg('一括申請.部店明細 抽出\n')
-        #    log_msg(f'{tabulate_dataframe(filtered_result)}', LogLevel.DEBUG)
-
-        #    # マージ処理
-        #    merge_columns = [
-        #        'branch_code_prefix',
-        #        #*MergerConfig.REFERENCE_COLUMNS_MAPPING_BPR.values(),
-        #        *MergerConfig.INTEGRATED_COLUMNS_MAPPING.values(),
-        #    ]
-        #    merged_df = integrated_df.merge(
-        #        filtered_result[merge_columns],
-        #        on='branch_code_prefix',
-        #        how='left',
-        #    ).fillna('')
-
-        #    ## reference_parent_branch_codeが無い場合は空文字で列生成
-        #    #if 'branch_integrated_parent_branch_code' not in merged_df.columns:
-        #    #    merged_df['branch_integrated_parent_branch_code'] = ''
-
-        #    for column in MergerConfig.INTEGRATED_COLUMNS_MAPPING.values():
-        #        if column not in merged_df.columns:
-        #            merged_df[column] = ''
-
-        #    # 不要カラムの削除
-        #    result_df = merged_df.drop(columns=['branch_code_prefix'])
-
-        #    log_msg("マージ結果:\n", LogLevel.DEBUG)
-        #    tabulate_dataframe(result_df)
-
-        #except Exception as e:
-        #    err_msg = f"所属部店レコードからの付与/親部店情報のマージ処理でエラーが発生しました: {str(e)}"
-        #    log_msg(err_msg, LogLevel.ERROR)
-        #    raise DataMergeError(err_msg) from e
-
-        #else:
-        #    return result_df
 
     @staticmethod
     def merge_zero_group_parent_branch_with_reference(
@@ -209,83 +162,6 @@ class ReferenceMergers:
         else:
             return result_df
 
-
-#    @staticmethod
-#    def merge_zero_group_parent_branch(integrated_layout: pd.DataFrame, reference_table: pd.DataFrame) -> pd.DataFrame:
-#    #def merge_zero_group_parent_branch_with_reference(integrated_layout: pd.DataFrame, reference_table: pd.DataFrame) -> pd.DataFrame:
-#        """統合レイアウトデータにリファレンステーブルの情報をマージする,明細に対する部店レコードを探索しその情報をColumn付与する
-#
-#        * 部店グループ: 課Grコード'0'を保有する明細の情報を取得する
-#        * 該当するリファレンスレコードの部店コードColumnを申請レコードに付与する
-#        * 該当するリファレンスレコードの部名称Columnを申請レコードに付与する
-#        * 該当するリファレンスレコードの親部店コード値があれば申請レコードをColumn付与する、なければブランク
-#        * 申請レコードに追加するColumnには一律 branch_reference_ 接頭辞を付与する
-#        * 付与Columnのデフォルト値は空文字で生成する
-#
-#        Args:
-#            integrated_layout: 統合レイアウトデータ
-#            reference_table: リファレンステーブル
-#
-#        Returns:
-#            pd.DataFrame: マージされたデータフレーム
-#
-#        Raises:
-#            DataMergeError: マージ処理に失敗した場合
-#        """
-#        try:
-#            # データの検証
-#            required_columns = {
-#                'left': ['branch_code'],
-#                'right': ['branch_code_bpr', 'section_gr_code_bpr'],
-#            }
-#            ReferenceMergers._validate_merge_data(integrated_layout, reference_table, required_columns)
-#
-#            # 部店コードの上位4桁を取得
-#            integrated_df = integrated_layout.copy()
-#            integrated_df['branch_code_prefix'] = ReferenceMergers._extract_branch_code_prefix(integrated_df, 'branch_code')
-#            reference_table['branch_code_prefix'] = ReferenceMergers._extract_branch_code_prefix(reference_table, 'branch_code_bpr')
-#
-#            # リファレンステーブルのフィルタリングとリネーム
-#            filtered_reference = (
-#                reference_table[reference_table['section_gr_code_bpr'] == '0']
-#                .rename(columns=MergerConfig.REFERENCE_COLUMNS_MAPPING_BPR)
-#            )
-#            log_msg('リファンレンス.課Grコード=="0"抽出\n')
-#            log_msg(f'{tabulate_dataframe(filtered_reference)}', LogLevel.DEBUG)
-#
-#            # マージ処理
-#            merge_columns = [
-#                'branch_code_prefix',
-#                *MergerConfig.REFERENCE_COLUMNS_MAPPING_BPR.values(),
-#            ]
-#            merged_df = integrated_df.merge(
-#                filtered_reference[merge_columns],
-#                on='branch_code_prefix',
-#                how='left',
-#            ).fillna('')
-#
-#            ## reference_parent_branch_codeとreference_parent_branch_codeが無い場合は空文字で列生成
-#            #if 'branch_reference_parent_branch_code' not in merged_df.columns:
-#            #    merged_df['branch_reference_parent_branch_code'] = ''
-#
-#            for column in MergerConfig.REFERENCE_COLUMNS_MAPPING_BPR.values():
-#                if column not in merged_df.columns:
-#                    merged_df[column] = ''
-#
-#            # 不要カラムの削除
-#            result_df = merged_df.drop(columns=['branch_code_prefix'])
-#
-#            log_msg("マージ結果:\n", LogLevel.DEBUG)
-#            tabulate_dataframe(result_df)
-#
-#        except Exception as e:
-#            err_msg = f"課Grコード=='0'レコードからの付与/親部店情報のマージ処理でエラーが発生しました: {str(e)}"
-#            log_msg(err_msg, LogLevel.ERROR)
-#            raise DataMergeError(err_msg) from e
-#
-#        else:
-#            return result_df
-
     #######################################################
     # マージ/データ加工のための部品群
     #######################################################
@@ -316,28 +192,6 @@ class ReferenceMergers:
         tabulate_dataframe(filtered_reference)
         return filtered_reference
 
-    #@staticmethod
-    #def _perform_merge(df: pd.DataFrame, filtered_df: pd.DataFrame) -> pd.DataFrame:
-    #    merge_columns = [
-    #        'branch_code_prefix',
-    #        *MergerConfig.INTEGRATED_COLUMNS_MAPPING.values(),
-    #    ]
-    #    result = df.merge(
-    #        filtered_df[merge_columns],
-    #        on='branch_code_prefix',
-    #        how='left',
-    #    ).fillna('')
-
-    #    # マージ後の件数チェック - 業務要件から1:1のはず
-    #    if len(result) != len(df):
-    #        error_msg = (
-    #            f"Merge violation: Record count mismatch. "
-    #            f"Expected {len(df)}, but got {len(result)}. "
-    #            "This violates the business rule of unique branch codes."
-    #        )
-    #        log_msg(error_msg, LogLevel.ERROR)
-    #        raise DataMergeError(error_msg)
-
     @staticmethod
     def _perform_merge(df: pd.DataFrame, filtered_df: pd.DataFrame) -> pd.DataFrame:
         """マージ処理の実行"""
@@ -345,44 +199,45 @@ class ReferenceMergers:
             'branch_code_prefix',
             *MergerConfig.INTEGRATED_COLUMNS_MAPPING.values(),
         ]
-    
+
         # デバッグ情報の出力
         log_msg("Merge operation debug info:", LogLevel.DEBUG)
         log_msg(f"Required merge columns: {merge_columns}", LogLevel.DEBUG)
         log_msg(f"Input df columns: {df.columns.tolist()}", LogLevel.DEBUG)
         log_msg(f"Filtered df columns: {filtered_df.columns.tolist()}", LogLevel.DEBUG)
-    
+
         # filtered_dfのスライス前の状態を確認
         log_msg("Filtered DataFrame before column selection:", LogLevel.DEBUG)
         tabulate_dataframe(filtered_df)
-    
+
         try:
             # カラム選択を試みる前に存在確認
             missing_cols = [col for col in merge_columns if col not in filtered_df.columns]
             if missing_cols:
-                raise DataMergeError(f"Missing required columns in filtered_df: {missing_cols}")
-    
+                err_msg = f"Missing required columns in filtered_df: {missing_cols}"
+                ReferenceMergers._handle_merge_error(err_msg)
+
             # カラム選択を別ステップで実行
             selected_df = filtered_df[merge_columns]
             log_msg("Selected columns for merge:", LogLevel.DEBUG)
             log_msg(f"{tabulate_dataframe(selected_df)}", LogLevel.DEBUG)
-    
+
             # マージ実行
             result = df.merge(
                 selected_df,
                 on='branch_code_prefix',
                 how='left',
             ).fillna('')
-    
+
             log_msg("Merge result:", LogLevel.DEBUG)
             tabulate_dataframe(result)
-    
-            return result
-    
+
         except Exception as e:
             error_msg = f"Merge operation failed: {str(e)}"
             log_msg(error_msg, LogLevel.ERROR)
             raise DataMergeError(error_msg) from e
+        else:
+            return result
 
     @staticmethod
     def _perform_merge_with_reference(df: pd.DataFrame, filtered_df: pd.DataFrame) -> pd.DataFrame:
@@ -398,8 +253,6 @@ class ReferenceMergers:
 
     @staticmethod
     def _clean_up_merged_data(df: pd.DataFrame) -> pd.DataFrame:
-        #if 'branch_integrated_parent_branch_code' not in df.columns:
-        #    df['branch_integrated_parent_branch_code'] = ''
         for column in MergerConfig.INTEGRATED_COLUMNS_MAPPING.values():
             if column not in df.columns:
                 df[column] = ''
@@ -407,8 +260,6 @@ class ReferenceMergers:
 
     @staticmethod
     def _clean_up_merged_data_with_reference(df: pd.DataFrame) -> pd.DataFrame:
-        #if 'branch_reference_parent_branch_code' not in df.columns:
-        #    df['branch_reference_parent_branch_code'] = ''
         for column in MergerConfig.REFERENCE_COLUMNS_MAPPING_BPR.values():
             if column not in df.columns:
                 df[column] = ''
@@ -419,6 +270,13 @@ class ReferenceMergers:
         log_msg("Merge result:\n", LogLevel.DEBUG)
         tabulate_dataframe(df)
 
+    #######################################################
+    # Helper
+    #######################################################
+    @staticmethod
+    def _handle_merge_error(err_msg: str) -> None:
+        log_msg(err_msg, LogLevel.ERROR)
+        raise DataMergeError(err_msg) from None
     #######################################################
     # Debugger
     #######################################################
