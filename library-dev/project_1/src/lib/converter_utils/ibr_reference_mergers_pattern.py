@@ -86,7 +86,7 @@ class PatternDefinitions:
                 'branch_code_jinji': 'branch_code',
             },
             fixed_conditions={'section_gr_code_jinji': ''},
-            priority=int(PatternPriority.BRANCH_7818.value),
+            priority=int(PatternPriority.BRANCH_7818_CASA1.value),
         )
 
     @staticmethod
@@ -104,7 +104,7 @@ class PatternDefinitions:
                 'branch_code_jinji': 'branch_code',
                 'section_gr_code_bpr': 'branch_code',
             },
-            priority=int(PatternPriority.BRANCH_7818.value),
+            priority=int(PatternPriority.BRANCH_7818_CASE2.value),
         )
 
     @staticmethod
@@ -168,7 +168,7 @@ class PatternDefinitions:
             description="課処理",
             target_condition=lambda df: (
                 (df['form_type'].isin(PatternDefinitions.STANDARD_FORM_TYPES)) &
-                (df['target_org'] == OrganizationType.SECTION.value)
+                (df['target_org'] == OrganizationType.SECTION_GROUP.value)
             ),
             reference_keys={
                 'branch_code_jinji': 'branch_code',
@@ -191,7 +191,7 @@ class PatternDefinitions:
                 'branch_code_jinji': 'branch_code',
                 'section_gr_code_jinji': lambda x: x['area_code'].str[0] + x['resident_branch_code'],
             },
-            priority=int(PatternPriority.AREA.value),
+            priority=int(PatternPriority.AREA_CASE1.value),
         )
 
     @staticmethod
@@ -209,7 +209,7 @@ class PatternDefinitions:
                 'business_code': lambda x: x['area_code'].str[0],
                 'area_code': lambda x: x['area_code'].str[1:],
             },
-            priority=int(PatternPriority.AREA.value),
+            priority=int(PatternPriority.AREA_CASE2.value),
         )
 
 
@@ -220,8 +220,8 @@ class PatternDefinitions:
             pattern_id=int(PatternID.RELATED_DUMMY.value),
             description="関連ダミー課処理",
             target_condition=lambda df: (
-                (df['form_type'] == FormType.RELATED_DUMMY.value) &
-                (df['target_org'] == OrganizationType.SECTION.value)
+                (df['form_type'] == FormType.KANREN_WITHOUT_DUMMY.value) &
+                (df['target_org'] == OrganizationType.SECTION_GROUP.value)
             ),
             reference_keys={
                 'branch_code_jinji': 'branch_code',

@@ -370,7 +370,7 @@ class ReferenceMergers:
 
             except Exception as e:
                 err_msg = (
-                f"パターン{pattern.pattern_id}の処理でエラー: {str(e)}\n"
+                f"パターン{pattern.pattern_id}:{pattern.description}の処理でエラー: {str(e)}\n"
                 f"対象データ件数: {len(target_df)}\n"
                 f"パターン情報: {pattern.description}")
 
@@ -411,23 +411,28 @@ class ReferenceMergers:
             pd.DataFrame: パターン適用結果
         """
         try:
-            filtered_df = reference_df.copy()
+            #filtered_df = reference_df.copy()
+            # 固定フィルターがない場合も含めて初期化
+            filtered_ref = reference_df.copy()
             # リファレンスに対する固定条件の適用/filter条件から事前抽出
             if pattern.fixed_conditions:
                 for ref_col, value in pattern.fixed_conditions.items():
                     # prefix付与状態で対象とするreference columnsを取得
                     col_name = ReferenceColumnConfig.get_prefixed_column(ref_col)
                     # 条件抽出
-                    filtered_ref = filtered_df[filtered_df[col_name] == value]
+                    #filtered_ref = filtered_df[filtered_df[col_name] == value]
+                    filtered_ref = filtered_ref[filtered_ref[col_name] == value]
 
-                log_msg( f"固定条件適用後のリファレンスデータ件数: {len(filtered_ref)}", LogLevel.DEBUG)
+                log_msg(f"固定条件適用後のリファレンスデータ件数: {len(filtered_ref)}", LogLevel.DEBUG)
 
             # マージ条件構築
             merge_key = {
-                target_col: ReferenceColumnConfig.get_prefixed_column(ref_col)
+                #target_col: ReferenceColumnConfig.get_prefixed_column(ref_col)
+                ReferenceColumnConfig.get_prefixed_column(ref_col) :target_col
                 for ref_col, target_col in pattern.reference_keys.items()
                 if not callable(target_col)
             }
+            log_msg(f"マージキー: {merge_key}", LogLevel.DEBUG)
 
             # マージ処理
             result = target_df.merge(
