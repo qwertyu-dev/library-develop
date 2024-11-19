@@ -83,9 +83,9 @@ class PatternID(StrEnum):
 
 class PatternPriority(StrEnum):
     """パターンの優先順位を表す列挙型"""
-    BRANCH_4DIGIT = '1'
-    BRANCH_5DIGIT_NON7 = '2'
-    BRANCH_7818 = '3'      # 7818を先に処理
+    BRANCH_7818 = '1'      # 7818を先に処理
+    BRANCH_4DIGIT = '2'
+    BRANCH_5DIGIT_NON7 = '3'
     BRANCH_5DIGIT_7 = '4'  # 7始まりを後に処理
     INTERNAL_SALES = '5'
     SECTION_GROUP = '6'

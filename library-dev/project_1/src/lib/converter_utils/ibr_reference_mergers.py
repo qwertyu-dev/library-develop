@@ -29,6 +29,7 @@ class MergerConfig:
         #'branch_code_jinji': f'{REFERENCE_PREFIX}branch_code_jinji',
         'branch_name_jinji': f'{REFERENCE_PREFIX}branch_name_jinji',
         #'parent_branch_code': f'{REFERENCE_PREFIX}parent_branch_code',
+        'organization_name_kana': f'{REFERENCE_PREFIX}organization_name_kana',
         #'branch_code_bpr': f'{REFERENCE_PREFIX}branch_code_bpr',
         #'branch_name_bpr': f'{REFERENCE_PREFIX}branch_name_bpr',
     }
@@ -145,10 +146,13 @@ class ReferenceMergers:
             # マージキーColumn生成
             integrated_df['branch_code_prefix'] = ReferenceMergers._extract_branch_code_prefix(integrated_df, 'branch_code')
             integrated_self_df['branch_code_prefix'] = ReferenceMergers._extract_branch_code_prefix(integrated_self_df, 'branch_code')
+
             # 対象データの絞り込み/columnリネーム
             filtered_integrated_self_df = ReferenceMergers._filter_branch_data(integrated_self_df)
+
             # マージ処理
             merged_df = ReferenceMergers._perform_merge(integrated_df, filtered_integrated_self_df)
+
             # 欠落Columnの初期値付与/不要Columnの削除
             result_df = ReferenceMergers._clean_up_merged_data(merged_df)
 
@@ -201,13 +205,16 @@ class ReferenceMergers:
 
             result_df = integrated_layout.copy()
 
-            # マージキーColumn生成
+            # マージキーColumn生成 リファレンスは部店コード.BPR
             result_df['branch_code_prefix'] = ReferenceMergers._extract_branch_code_prefix(result_df, 'branch_code')
             reference_table['branch_code_prefix'] = ReferenceMergers._extract_branch_code_prefix(reference_table, 'branch_code_bpr')
+
             # リファレンス対象データの絞り込み/columnリネーム
             filtered_reference = ReferenceMergers._filter_reference_data(reference_table)
+
             # マージ処理
             merged_df = ReferenceMergers._perform_merge_with_reference(result_df, filtered_reference)
+
             # 欠落Columnの初期値付与/不要Columnの削除
             result_df = ReferenceMergers._clean_up_merged_data_with_reference(merged_df)
 
@@ -426,7 +433,7 @@ class ReferenceMergers:
 
         Returns:
             pd.DataFrame: 前処理済みの申請データ
-                - branch_code_4digits: 部店コード4桁
+                - branch_code_digits4: 部店コード4桁
                 - area_code_first: エリアコード先頭1桁
                 - area_code_rest: エリアコード2桁目以降
         """
@@ -434,7 +441,7 @@ class ReferenceMergers:
         processed_df = df.copy()
 
         # 4桁部店コード付与
-        processed_df['branch_code_4digits'] = processed_df['branch_code'].str[:4]
+        processed_df['branch_code_digits4'] = processed_df['branch_code'].str[:4]
 
         # エリアコードがある場合のみ分割処理
         if 'area_code' in processed_df.columns:
@@ -533,25 +540,25 @@ class ReferenceMergers:
             log_msg(err_msg, LogLevel.ERROR)
             raise DataMergeError(err_msg)
 
-    @staticmethod
-    def _prepare_integrated_data(
-        integrated_df: pd.DataFrame,
-    ) -> None:
-        """申請明細に対するマージ前処理
+    #@staticmethod
+    #def _prepare_integrated_data(
+    #    integrated_df: pd.DataFrame,
+    #) -> None:
+    #    """申請明細に対するマージ前処理
 
-        4桁部店コードColumnを生成する
-        判定処理ケースに上位4桁要求するものがあるため対応
+    #    4桁部店コードColumnを生成する
+    #    判定処理ケースに上位4桁要求するものがあるため対応
 
-        Args:
-            integrated_df: 申請明細
+    #    Args:
+    #        integrated_df: 申請明細
 
-        Raises:
-            DataMergeError: 検証エラーの場合
-        """
-        _df = integrated_df.copy()
-        _df['branch_code_digits4'] = ReferenceMergers._extract_branch_code_prefix(_df, 'branch_code')
+    #    Raises:
+    #        DataMergeError: 検証エラーの場合
+    #    """
+    #    _df = integrated_df.copy()
+    #    _df['branch_code_digits4'] = ReferenceMergers._extract_branch_code_prefix(_df, 'branch_code')
 
-        return _df
+    #    return _df
 
     #@staticmethod
     #def _post_processing_merged_data(
@@ -641,11 +648,16 @@ class ReferenceMergers:
                 processed_mask = processed_mask | pattern_mask
 
             except Exception as e:
-                err_msg = (
-                #f"パターン{pattern.pattern_id}:{pattern.description}の処理でエラー: {str(e)}\n"
-                f"パターン:{pattern.description}の処理でエラー: {str(e)}\n"
-                f"対象データ件数: {len(target_df)}\n"
-                f"パターン情報: {pattern.description}")
+                if not target_df.empty:
+                    err_msg = (
+                    #f"パターン{pattern.pattern_id}:{pattern.description}の処理でエラー: {str(e)}\n"
+                    f"パターン:{pattern.description}の処理でエラー: {str(e)}\n"
+                    f"対象データ件数: {len(target_df)}\n"
+                    f"パターン情報: {pattern.description}")
+                else:
+                    err_msg = (
+                    f"パターン:{pattern.description}の処理でエラー: {str(e)}\n"
+                    f"パターン情報: {pattern.description}")
 
                 log_msg(err_msg, LogLevel.ERROR)
 
