@@ -20,7 +20,7 @@ ReferenceKeys: TypeAlias = dict[str, str | Callable]  # area_codeの処理で関
 @dataclass(frozen=True)
 class MatchingPattern:
     """マッチングパターンの定義"""
-    pattern_id: int
+    #pattern_id: int
     description: str
     target_condition: TargetCondition
     reference_keys: ReferenceKeys
@@ -42,14 +42,12 @@ class PatternDefinitions:
         """優先順位付きの全パターンの定義を取得"""
         patterns = [
             PatternDefinitions._pattern_branch_4digit(),
-            PatternDefinitions._pattern_branch_7818_case1(),  # 7818を先に配置or条件を分割
-            PatternDefinitions._pattern_branch_7818_case2(),  # 7818を先に配置or条件を分割
+            PatternDefinitions._pattern_branch_7818(),        # 7818を先に配置
             PatternDefinitions._pattern_branch_5digit_7(),
             PatternDefinitions._pattern_branch_5digit_non7(),
             PatternDefinitions._pattern_internal_sales(),
             PatternDefinitions._pattern_section(),
-            PatternDefinitions._pattern_area_case1(),         # or条件を分割
-            PatternDefinitions._pattern_area_case2(),         # or条件を分割
+            PatternDefinitions._pattern_area(),
             PatternDefinitions._pattern_related_dummy(),
         ]
         # 優先順位でソート
@@ -59,7 +57,7 @@ class PatternDefinitions:
     def _pattern_branch_4digit() -> MatchingPattern:
         """4桁部店コードのパターン"""
         return MatchingPattern(
-            pattern_id=int(PatternID.BRANCH_4DIGIT.value),
+            #pattern_id=int(PatternID.BRANCH_4DIGIT.value),
             description="4桁部店コード処理",
             target_condition=lambda df: (
                 (df['form_type'].isin(PatternDefinitions.STANDARD_FORM_TYPES)) &
@@ -72,52 +70,49 @@ class PatternDefinitions:
         )
 
     @staticmethod
-    def _pattern_branch_7818_case1() -> MatchingPattern:
+    def _pattern_branch_7818() -> MatchingPattern:
         """7818系部店コードのパターンcase1"""
         return MatchingPattern(
-            pattern_id=int(PatternID.BRANCH_7818.value),
+            #pattern_id=int(PatternID.BRANCH_7818.value),
             description="7818系部店コード処理case1",
             target_condition=lambda df: (
                 (df['form_type'].isin(PatternDefinitions.STANDARD_FORM_TYPES)) &
                 (df['target_org'] == OrganizationType.BRANCH.value) &
                 (df['branch_code'].str.startswith('7818'))
             ),
-            reference_keys={
-                'branch_code_jinji': 'branch_code',
-            },
+            reference_keys={'branch_code_jinji': 'branch_code'},
             fixed_conditions={'section_gr_code_jinji': ''},
-            priority=int(PatternPriority.BRANCH_7818_CASA1.value),
+            priority=int(PatternPriority.BRANCH_7818.value),
         )
 
     @staticmethod
-    def _pattern_branch_7818_case2() -> MatchingPattern:
-        """7818系部店コードのパターンcase2"""
+    def _pattern_branch_5digit_non7() -> MatchingPattern:
+        """5桁部店コード(7以外始まり)のパターン"""
         return MatchingPattern(
-            pattern_id=int(PatternID.BRANCH_7818.value),
-            description="7818系部店コード処理case2",
+            #pattern_id=int(PatternID.BRANCH_5DIGIT_NON7.value),
+            description="5桁部店コード(7以外始まり)処理",
             target_condition=lambda df: (
                 (df['form_type'].isin(PatternDefinitions.STANDARD_FORM_TYPES)) &
                 (df['target_org'] == OrganizationType.BRANCH.value) &
-                (df['branch_code'].str.startswith('7818'))
+                (df['branch_code'].str.len() == int(BranchCodeLength.BRANCH_LENGTH_5.value)) &
+                (~df['branch_code'].str.startswith('7')) # 7スタート以外、否定判定
             ),
-            reference_keys={
-                'branch_code_jinji': 'branch_code',
-                'section_gr_code_bpr': 'branch_code',
-            },
-            priority=int(PatternPriority.BRANCH_7818_CASE2.value),
+            reference_keys={'branch_code_jinji': 'branch_code'},
+            fixed_conditions={'section_gr_code_jinji': ''},
+        priority=int(PatternPriority.BRANCH_5DIGIT_NON7.value),
         )
 
     @staticmethod
     def _pattern_branch_5digit_7() -> MatchingPattern:
         """7始まり部店コードのパターン"""
         return MatchingPattern(
-            pattern_id=int(PatternID.BRANCH_5DIGIT_7.value),
+            #pattern_id=int(PatternID.BRANCH_5DIGIT_7.value),
             description="7始まり部店コード処理",
             target_condition=lambda df: (
                 (df['form_type'].isin(PatternDefinitions.STANDARD_FORM_TYPES)) &
                 (df['target_org'] == OrganizationType.BRANCH.value) &
                 (df['branch_code'].str.len() == int(BranchCodeLength.BRANCH_LENGTH_5.value)) &
-                (df['branch_code'].str.startswith('7'))
+                (df['branch_code'].str.startswith('7')) # 7スタート
             ),
             reference_keys={
                 'branch_code_jinji': 'branch_code',
@@ -127,35 +122,18 @@ class PatternDefinitions:
         )
 
     @staticmethod
-    def _pattern_branch_5digit_non7() -> MatchingPattern:
-        """5桁部店コード(7以外始まり)のパターン"""
-        return MatchingPattern(
-            pattern_id=int(PatternID.BRANCH_5DIGIT_NON7.value),
-            description="5桁部店コード(7以外始まり)処理",
-            target_condition=lambda df: (
-                (df['form_type'].isin(PatternDefinitions.STANDARD_FORM_TYPES)) &
-                (df['target_org'] == OrganizationType.BRANCH.value) &
-                (df['branch_code'].str.len() == int(BranchCodeLength.BRANCH_LENGTH_5.value)) &
-                (~df['branch_code'].str.startswith('7'))
-            ),
-            reference_keys={'branch_code_jinji': 'branch_code'},
-            fixed_conditions={'section_gr_code_jinji': ''},
-        priority=int(PatternPriority.BRANCH_5DIGIT_NON7.value),
-        )
-
-    @staticmethod
     def _pattern_internal_sales() -> MatchingPattern:
         """拠点内営業部のパターン"""
         return MatchingPattern(
-            pattern_id=int(PatternID.INTERNAL_SALES.value),
+            #pattern_id=int(PatternID.INTERNAL_SALES.value),
             description="拠点内営業部処理",
             target_condition=lambda df: (
                 (df['form_type'].isin(PatternDefinitions.STANDARD_FORM_TYPES)) &
                 (df['target_org'] == OrganizationType.INTERNAL_SALES.value)
             ),
             reference_keys={
-                'branch_code_jinji': 'branch_code',
-                'section_gr_code_jinji': 'section_gr_code',
+                'branch_code_jinji': 'branch_code_digits4', # 上位4桁部店コードColを生成している,これを使う
+                'section_gr_code_jinji': 'branch_code',
             },
             priority=int(PatternPriority.INTERNAL_SALES.value),
         )
@@ -164,7 +142,7 @@ class PatternDefinitions:
     def _pattern_section() -> MatchingPattern:
         """課処理のパターン"""
         return MatchingPattern(
-            pattern_id=int(PatternID.SECTION.value),
+            #pattern_id=int(PatternID.SECTION_GROUP.value),
             description="課処理",
             target_condition=lambda df: (
                 (df['form_type'].isin(PatternDefinitions.STANDARD_FORM_TYPES)) &
@@ -174,42 +152,25 @@ class PatternDefinitions:
                 'branch_code_jinji': 'branch_code',
                 'section_gr_code_jinji': 'section_gr_code',
             },
-            priority=int(PatternPriority.SECTION.value),
+            priority=int(PatternPriority.SECTION_GROUP.value),
         )
 
     @staticmethod
-    def _pattern_area_case1() -> MatchingPattern:
-        """エリア処理のパターンcase1"""
+    def _pattern_area() -> MatchingPattern:
+        """エリア処理のパターン"""
         return MatchingPattern(
-            pattern_id=int(PatternID.AREA.value),
-            description="エリア処理case1",
+            #pattern_id=int(PatternID.AREA.value),
+            description="エリア処理",
             target_condition=lambda df: (
                 (df['form_type'].isin(PatternDefinitions.STANDARD_FORM_TYPES)) &
                 (df['target_org'] == OrganizationType.AREA.value)
             ),
             reference_keys={
                 'branch_code_jinji': 'branch_code',
-                'section_gr_code_jinji': lambda x: x['area_code'].str[0] + x['resident_branch_code'],
+                'business_code': 'area_code_first',  # 分割したareaコード1桁目
+                'area_code': 'area_code_rest',       # 分割したareaコード2桁目以降
             },
-            priority=int(PatternPriority.AREA_CASE1.value),
-        )
-
-    @staticmethod
-    def _pattern_area_case2() -> MatchingPattern:
-        """エリア処理のパターンcase2"""
-        return MatchingPattern(
-            pattern_id=int(PatternID.AREA.value),
-            description="エリア処理case2",
-            target_condition=lambda df: (
-                (df['form_type'].isin(PatternDefinitions.STANDARD_FORM_TYPES)) &
-                (df['target_org'] == OrganizationType.AREA.value)
-            ),
-            reference_keys={
-                'branch_code_jinji': 'branch_code',
-                'business_code': lambda x: x['area_code'].str[0],
-                'area_code': lambda x: x['area_code'].str[1:],
-            },
-            priority=int(PatternPriority.AREA_CASE2.value),
+            priority=int(PatternPriority.AREA.value),
         )
 
 
@@ -217,7 +178,7 @@ class PatternDefinitions:
     def _pattern_related_dummy() -> MatchingPattern:
         """関連ダミー課処理のパターン"""
         return MatchingPattern(
-            pattern_id=int(PatternID.RELATED_DUMMY.value),
+            #pattern_id=int(PatternID.RELATED_DUMMY.value),
             description="関連ダミー課処理",
             target_condition=lambda df: (
                 (df['form_type'] == FormType.KANREN_WITHOUT_DUMMY.value) &
