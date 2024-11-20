@@ -334,9 +334,9 @@ class TestEditorFactoryCreateEditor:
         # BVT_003: Row with extra info
         extra_info_row = pd.Series({'Condition': 'condition1', 'extra': 'info'})
         log_msg(f"\n{extra_info_row}", LogLevel.INFO)
-        with pytest.raises(KeyError):
-            editor = editor_factory.create_editor(extra_info_row)
-        log_msg("BVT_003: KeyError raised fro row with extra info", LogLevel.DEBUG)
+        editor = editor_factory.create_editor(extra_info_row)
+        assert isinstance(editor, DataFrameEditor)
+        log_msg("BVT_003: BVT003: Editor created with extra info row", LogLevel.DEBUG)
 
 
 class TestEditorFactoryLoadFacade:

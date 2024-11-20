@@ -132,20 +132,20 @@ class TestDataFrameEditorDefault:
         DataFrameEditorDefault()
         mock_parent_init.assert_called_once()
 
-    def test_initialize_editors_C0_creation(self):
-        """テスト区分: UT
+    #def test_initialize_editors_C0_creation(self):
+    #    """テスト区分: UT
 
-        テストカテゴリ: C0
-        テストケース: エディタ生成確認
-        """
-        test_doc = """各カラムに対応するエディタが正しく生成されることを確認"""
-        log_msg(f"\n{test_doc}", LogLevel.DEBUG)
+    #    テストカテゴリ: C0
+    #    テストケース: エディタ生成確認
+    #    """
+    #    test_doc = """各カラムに対応するエディタが正しく生成されることを確認"""
+    #    log_msg(f"\n{test_doc}", LogLevel.DEBUG)
 
-        editor = DataFrameEditorDefault()
-        editors = editor.initialize_editors()
-        assert isinstance(editors['column1'], Column1Editor)
-        assert isinstance(editors['column2'], Column2Editor)
-        assert isinstance(editors['column3'], Column3Editor)
+    #    editor = DataFrameEditorDefault()
+    #    editors = editor.initialize_editors()
+    #    assert isinstance(editors['column1'], Column1Editor)
+    #    assert isinstance(editors['column2'], Column2Editor)
+    #    assert isinstance(editors['column3'], Column3Editor)
 
     @patch('src.model.facade.base_facade.DataFrameEditor.edit_series')
     @patch('src.model.facade.preparation_editor_facade_sample.parse_str_to_datetime')

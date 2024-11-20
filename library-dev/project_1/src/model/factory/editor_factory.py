@@ -70,7 +70,8 @@ class EditorFactory:
         # DI
         editor_class = self.editor_classes.get(facade_name) or self._load_facade(self.import_facade, facade_name)
         editor = editor_class()
-        self.log_msg(f"\nCreated editor: {facade_name}, \ncolumn_editors: {format_config(editor.column_editors)}", LogLevel.INFO)
+        #self.log_msg(f"\nCreated editor: {facade_name}, \ncolumn_editors: {format_config(editor.column_editors)}", LogLevel.INFO)
+        self.log_msg(f"\nCreated editor: {facade_name}", LogLevel.INFO)
         return editor
 
     def _load_facade(self, import_facade: str, facade_name: str) -> type[DataFrameEditor]:

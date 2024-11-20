@@ -38,12 +38,12 @@ class DataFrameEditorDefault(DataFrameEditor):
     def __init__(self):
         super().__init__()
 
-    def initialize_editors(self) -> dict[str, ColumnEditor]:
-        return {
-            'column1': Column1Editor(),
-            'column2': Column2Editor(),
-            'column3': Column3Editor(),
-        }
+    #def initialize_editors(self) -> dict[str, ColumnEditor]:
+        #return {
+            #'column1': Column1Editor(),
+            #'column2': Column2Editor(),
+            #'column3': Column3Editor(),
+        #}
     # Facade個別編集を定義
     def edit_series(self, series: pd.Series) -> pd.Series:
         # 親クラス担当タスク実施

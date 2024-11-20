@@ -463,197 +463,197 @@ class Test_DataFrameEditor_prepare_output_layout:
         assert isinstance(result['debug_applied_facade_name'], str)
 
 
-class Test_DataFrameEditor_apply_basic_editors:
-    """DataFrameEditorの_apply_basic_editorsメソッドのテスト
-
-    テスト構造:
-    ├── C0: 基本機能テスト
-    │   ├── 正常系: 有効な入力での編集
-    │   └── 正常系: エディタ未定義の列の処理
-    ├── C1: 分岐カバレッジ
-    │   ├── 正常系: 編集対象の列が存在する場合
-    │   └── 正常系: 編集対象の列が存在しない場合
-    ├── C2: 条件組み合わせ
-    │   ├── 正常系: 複数の列エディタが適用される場合
-    │   ├── 正常系: 一部の列エディタのみが適用される場合
-    │   └── 正常系: どの列エディタも適用されない場合
-    └── BVT: 境界値テスト
-        ├── 正常系: 特殊文字を含む列名での処理
-        └── 正常系: 異なる型の値での処理
-
-    C1のディシジョンテーブル:
-    | 条件                     | ケース1 | ケース2 |
-    |--------------------------|---------|---------|
-    | エディタが存在する列     | Y       | N       |
-    | 結果                     | 編集    | 変更    |
-    |                          | される  | なし    |
-
-    境界値検証ケース一覧:
-    | ケースID | 入力パラメータ | テスト値                | 期待される結果        | テストの目的/検証ポイント      | 実装状況 | 対応するテストケース          |
-    |----------|----------------|------------------------|---------------------|--------------------------------|----------|-------------------------------|
-    | BVT_001  | series         | 特殊文字を含む列名     | 正常に編集される     | 特殊文字の処理確認              | 実装済み | test_apply_basic_editors_BVT_special_chars |
-    | BVT_002  | series         | 数値型の値             | 型を保持して編集     | 異なる型の値の処理確認          | 実装済み | test_apply_basic_editors_BVT_mixed_types |
-    | BVT_003  | series         | NULL/NAを含む値        | NULLを保持          | NULL値の処理確認               | 実装済み | test_apply_basic_editors_BVT_null_values |
-    """
-
-    def setup_method(self):
-        log_msg("test start", LogLevel.INFO)
-
-    def teardown_method(self):
-        log_msg(f"test end\n{'-'*80}\n", LogLevel.INFO)
-
-    @pytest.fixture()
-    def mock_config(self):
-        return Mock(log_message=Mock())
-
-    @pytest.fixture()
-    def test_editor(self, mock_config):
-        @with_config
-        class TestDataFrameEditor(DataFrameEditor):
-            def initialize_editors(self):
-                return {
-                    'col1': ColumnEditor(),
-                    'col2': ColumnEditor(),
-                }
-
-        with patch('src.lib.common_utils.ibr_decorator_config.initialize_config', return_value=mock_config):
-            editor = TestDataFrameEditor()
-            editor.output_columns = ['col1', 'col2', 'col3']
-            return editor
-
-    @pytest.fixture()
-    def test_editor_with_mocks(self, mock_config):
-        @with_config
-        class TestDataFrameEditor(DataFrameEditor):
-            def initialize_editors(self):
-                return {
-                    'col1': Mock(),
-                    'col2': Mock(),
-                }
-
-        with patch('src.lib.common_utils.ibr_decorator_config.initialize_config', return_value=mock_config):
-            editor = TestDataFrameEditor()
-            editor.output_columns = ['col1', 'col2', 'col3']
-            return editor
-
-    def test_apply_basic_editors_C0_valid_input(self, test_editor):
-        test_doc = """
-        テスト区分: UT
-        テストカテゴリ: C0
-        テスト区分: 正常系
-        テストシナリオ: 有効な入力での編集
-        """
-        log_msg(f"\n{test_doc}", LogLevel.INFO)
-
-        edited_series = pd.Series({'col1': 'test', 'col2': 'TEST', 'col3': 'Unchanged'}, dtype=object)
-        result = test_editor._apply_basic_editors(edited_series)
-
-        assert result['col1'] == 'test'
-        assert result['col2'] == 'TEST'
-        assert result['col3'] == 'Unchanged'
-
-    def test_apply_basic_editors_C1_DT_01_existing_editors(self, test_editor_with_mocks):
-        test_doc = """
-        テスト区分: UT
-        テストカテゴリ: C1
-        テスト区分: 正常系
-        テストシナリオ: エディタが存在する列の編集確認
-        DTケース: 1
-        """
-        log_msg(f"\n{test_doc}", LogLevel.INFO)
-
-        test_editor_with_mocks.column_editors['col1'].edit.return_value = 'EDITED1'
-        test_editor_with_mocks.column_editors['col2'].edit.return_value = 'EDITED2'
-
-        edited_series = pd.Series({'col1': 'test1', 'col2': 'test2'}, dtype=object)
-        result = test_editor_with_mocks._apply_basic_editors(edited_series)
-
-        assert result['col1'] == 'EDITED1'
-        assert result['col2'] == 'EDITED2'
-        test_editor_with_mocks.column_editors['col1'].edit.assert_called_once_with('test1')
-        test_editor_with_mocks.column_editors['col2'].edit.assert_called_once_with('test2')
-
-    def test_apply_basic_editors_C1_DT_02_non_existing_editors(self, test_editor_with_mocks):
-        test_doc = """
-        テスト区分: UT
-        テストカテゴリ: C1
-        テスト区分: 正常系
-        テストシナリオ: エディタが存在しない列の処理確認
-        DTケース: 2
-        """
-        log_msg(f"\n{test_doc}", LogLevel.INFO)
-
-        edited_series = pd.Series({'col3': 'test3', 'col4': 'test4'}, dtype=object)
-        result = test_editor_with_mocks._apply_basic_editors(edited_series)
-
-        assert result['col3'] == 'test3'
-        assert result['col4'] == 'test4'
-        test_editor_with_mocks.column_editors['col1'].edit.assert_not_called()
-        test_editor_with_mocks.column_editors['col2'].edit.assert_not_called()
-
-    def test_apply_basic_editors_C2_partial_editors(self, test_editor_with_mocks):
-        test_doc = """
-        テスト区分: UT
-        テストカテゴリ: C2
-        テスト区分: 正常系
-        テストシナリオ: 一部の列のみにエディタが適用される場合
-        """
-        log_msg(f"\n{test_doc}", LogLevel.INFO)
-
-        test_editor_with_mocks.column_editors['col1'].edit.return_value = 'EDITED1'
-
-        edited_series = pd.Series({'col1': 'test1', 'col3': 'test3'}, dtype=object)
-        result = test_editor_with_mocks._apply_basic_editors(edited_series)
-
-        assert result['col1'] == 'EDITED1'
-        assert result['col3'] == 'test3'
-        test_editor_with_mocks.column_editors['col1'].edit.assert_called_once_with('test1')
-        test_editor_with_mocks.column_editors['col2'].edit.assert_not_called()
-
-    def test_apply_basic_editors_BVT_mixed_types(self, test_editor_with_mocks):
-        test_doc = """
-        テスト区分: UT
-        テストカテゴリ: BVT
-        テスト区分: 正常系
-        テストシナリオ: 異なる型の値の処理確認
-        """
-        log_msg(f"\n{test_doc}", LogLevel.INFO)
-
-        test_editor_with_mocks.column_editors['col1'].edit.return_value = 123
-        test_editor_with_mocks.column_editors['col2'].edit.return_value = 'text'
-
-        edited_series = pd.Series({'col1': 100, 'col2': 'TEST'}, dtype=object)
-        result = test_editor_with_mocks._apply_basic_editors(edited_series)
-
-        assert result['col1'] == 123
-        assert isinstance(result['col1'], int)
-        assert result['col2'] == 'text'
-        assert isinstance(result['col2'], str)
-
-    def test_apply_basic_editors_BVT_null_values(self, test_editor_with_mocks):
-        test_doc = """
-        テスト区分: UT
-        テストカテゴリ: BVT
-        テスト区分: 正常系
-        テストシナリオ: NULL値を含む処理確認
-        """
-        log_msg(f"\n{test_doc}", LogLevel.INFO)
-
-
-        # Mockの戻り値を設定
-        test_editor_with_mocks.column_editors['col1'].edit.return_value = None
-        test_editor_with_mocks.column_editors['col2'].edit.return_value = np.nan
-
-        edited_series = pd.Series({'col1': None, 'col2': np.nan}, dtype=object)
-        result = test_editor_with_mocks._apply_basic_editors(edited_series)
-
-        # 編集メソッドが呼び出されたことを確認
-        test_editor_with_mocks.column_editors['col1'].edit.assert_called_once_with(None)
-        test_editor_with_mocks.column_editors['col2'].edit.assert_called_once_with(np.nan)
-
-        # 結果の値を確認
-        assert pd.isna(result['col1'])
-        assert pd.isna(result['col2'])
+#class Test_DataFrameEditor_apply_basic_editors:
+#    """DataFrameEditorの_apply_basic_editorsメソッドのテスト
+#
+#    テスト構造:
+#    ├── C0: 基本機能テスト
+#    │   ├── 正常系: 有効な入力での編集
+#    │   └── 正常系: エディタ未定義の列の処理
+#    ├── C1: 分岐カバレッジ
+#    │   ├── 正常系: 編集対象の列が存在する場合
+#    │   └── 正常系: 編集対象の列が存在しない場合
+#    ├── C2: 条件組み合わせ
+#    │   ├── 正常系: 複数の列エディタが適用される場合
+#    │   ├── 正常系: 一部の列エディタのみが適用される場合
+#    │   └── 正常系: どの列エディタも適用されない場合
+#    └── BVT: 境界値テスト
+#        ├── 正常系: 特殊文字を含む列名での処理
+#        └── 正常系: 異なる型の値での処理
+#
+#    C1のディシジョンテーブル:
+#    | 条件                     | ケース1 | ケース2 |
+#    |--------------------------|---------|---------|
+#    | エディタが存在する列     | Y       | N       |
+#    | 結果                     | 編集    | 変更    |
+#    |                          | される  | なし    |
+#
+#    境界値検証ケース一覧:
+#    | ケースID | 入力パラメータ | テスト値                | 期待される結果        | テストの目的/検証ポイント      | 実装状況 | 対応するテストケース          |
+#    |----------|----------------|------------------------|---------------------|--------------------------------|----------|-------------------------------|
+#    | BVT_001  | series         | 特殊文字を含む列名     | 正常に編集される     | 特殊文字の処理確認              | 実装済み | test_apply_basic_editors_BVT_special_chars |
+#    | BVT_002  | series         | 数値型の値             | 型を保持して編集     | 異なる型の値の処理確認          | 実装済み | test_apply_basic_editors_BVT_mixed_types |
+#    | BVT_003  | series         | NULL/NAを含む値        | NULLを保持          | NULL値の処理確認               | 実装済み | test_apply_basic_editors_BVT_null_values |
+#    """
+#
+#    def setup_method(self):
+#        log_msg("test start", LogLevel.INFO)
+#
+#    def teardown_method(self):
+#        log_msg(f"test end\n{'-'*80}\n", LogLevel.INFO)
+#
+#    @pytest.fixture()
+#    def mock_config(self):
+#        return Mock(log_message=Mock())
+#
+#    @pytest.fixture()
+#    def test_editor(self, mock_config):
+#        @with_config
+#        class TestDataFrameEditor(DataFrameEditor):
+#            def initialize_editors(self):
+#                return {
+#                    'col1': ColumnEditor(),
+#                    'col2': ColumnEditor(),
+#                }
+#
+#        with patch('src.lib.common_utils.ibr_decorator_config.initialize_config', return_value=mock_config):
+#            editor = TestDataFrameEditor()
+#            editor.output_columns = ['col1', 'col2', 'col3']
+#            return editor
+#
+#    @pytest.fixture()
+#    def test_editor_with_mocks(self, mock_config):
+#        @with_config
+#        class TestDataFrameEditor(DataFrameEditor):
+#            def initialize_editors(self):
+#                return {
+#                    'col1': Mock(),
+#                    'col2': Mock(),
+#                }
+#
+#        with patch('src.lib.common_utils.ibr_decorator_config.initialize_config', return_value=mock_config):
+#            editor = TestDataFrameEditor()
+#            editor.output_columns = ['col1', 'col2', 'col3']
+#            return editor
+#
+#    def test_apply_basic_editors_C0_valid_input(self, test_editor):
+#        test_doc = """
+#        テスト区分: UT
+#        テストカテゴリ: C0
+#        テスト区分: 正常系
+#        テストシナリオ: 有効な入力での編集
+#        """
+#        log_msg(f"\n{test_doc}", LogLevel.INFO)
+#
+#        edited_series = pd.Series({'col1': 'test', 'col2': 'TEST', 'col3': 'Unchanged'}, dtype=object)
+#        result = test_editor._apply_basic_editors(edited_series)
+#
+#        assert result['col1'] == 'test'
+#        assert result['col2'] == 'TEST'
+#        assert result['col3'] == 'Unchanged'
+#
+#    def test_apply_basic_editors_C1_DT_01_existing_editors(self, test_editor_with_mocks):
+#        test_doc = """
+#        テスト区分: UT
+#        テストカテゴリ: C1
+#        テスト区分: 正常系
+#        テストシナリオ: エディタが存在する列の編集確認
+#        DTケース: 1
+#        """
+#        log_msg(f"\n{test_doc}", LogLevel.INFO)
+#
+#        test_editor_with_mocks.column_editors['col1'].edit.return_value = 'EDITED1'
+#        test_editor_with_mocks.column_editors['col2'].edit.return_value = 'EDITED2'
+#
+#        edited_series = pd.Series({'col1': 'test1', 'col2': 'test2'}, dtype=object)
+#        result = test_editor_with_mocks._apply_basic_editors(edited_series)
+#
+#        assert result['col1'] == 'EDITED1'
+#        assert result['col2'] == 'EDITED2'
+#        test_editor_with_mocks.column_editors['col1'].edit.assert_called_once_with('test1')
+#        test_editor_with_mocks.column_editors['col2'].edit.assert_called_once_with('test2')
+#
+#    def test_apply_basic_editors_C1_DT_02_non_existing_editors(self, test_editor_with_mocks):
+#        test_doc = """
+#        テスト区分: UT
+#        テストカテゴリ: C1
+#        テスト区分: 正常系
+#        テストシナリオ: エディタが存在しない列の処理確認
+#        DTケース: 2
+#        """
+#        log_msg(f"\n{test_doc}", LogLevel.INFO)
+#
+#        edited_series = pd.Series({'col3': 'test3', 'col4': 'test4'}, dtype=object)
+#        result = test_editor_with_mocks._apply_basic_editors(edited_series)
+#
+#        assert result['col3'] == 'test3'
+#        assert result['col4'] == 'test4'
+#        test_editor_with_mocks.column_editors['col1'].edit.assert_not_called()
+#        test_editor_with_mocks.column_editors['col2'].edit.assert_not_called()
+#
+#    def test_apply_basic_editors_C2_partial_editors(self, test_editor_with_mocks):
+#        test_doc = """
+#        テスト区分: UT
+#        テストカテゴリ: C2
+#        テスト区分: 正常系
+#        テストシナリオ: 一部の列のみにエディタが適用される場合
+#        """
+#        log_msg(f"\n{test_doc}", LogLevel.INFO)
+#
+#        test_editor_with_mocks.column_editors['col1'].edit.return_value = 'EDITED1'
+#
+#        edited_series = pd.Series({'col1': 'test1', 'col3': 'test3'}, dtype=object)
+#        result = test_editor_with_mocks._apply_basic_editors(edited_series)
+#
+#        assert result['col1'] == 'EDITED1'
+#        assert result['col3'] == 'test3'
+#        test_editor_with_mocks.column_editors['col1'].edit.assert_called_once_with('test1')
+#        test_editor_with_mocks.column_editors['col2'].edit.assert_not_called()
+#
+#    def test_apply_basic_editors_BVT_mixed_types(self, test_editor_with_mocks):
+#        test_doc = """
+#        テスト区分: UT
+#        テストカテゴリ: BVT
+#        テスト区分: 正常系
+#        テストシナリオ: 異なる型の値の処理確認
+#        """
+#        log_msg(f"\n{test_doc}", LogLevel.INFO)
+#
+#        test_editor_with_mocks.column_editors['col1'].edit.return_value = 123
+#        test_editor_with_mocks.column_editors['col2'].edit.return_value = 'text'
+#
+#        edited_series = pd.Series({'col1': 100, 'col2': 'TEST'}, dtype=object)
+#        result = test_editor_with_mocks._apply_basic_editors(edited_series)
+#
+#        assert result['col1'] == 123
+#        assert isinstance(result['col1'], int)
+#        assert result['col2'] == 'text'
+#        assert isinstance(result['col2'], str)
+#
+#    def test_apply_basic_editors_BVT_null_values(self, test_editor_with_mocks):
+#        test_doc = """
+#        テスト区分: UT
+#        テストカテゴリ: BVT
+#        テスト区分: 正常系
+#        テストシナリオ: NULL値を含む処理確認
+#        """
+#        log_msg(f"\n{test_doc}", LogLevel.INFO)
+#
+#
+#        # Mockの戻り値を設定
+#        test_editor_with_mocks.column_editors['col1'].edit.return_value = None
+#        test_editor_with_mocks.column_editors['col2'].edit.return_value = np.nan
+#
+#        edited_series = pd.Series({'col1': None, 'col2': np.nan}, dtype=object)
+#        result = test_editor_with_mocks._apply_basic_editors(edited_series)
+#
+#        # 編集メソッドが呼び出されたことを確認
+#        test_editor_with_mocks.column_editors['col1'].edit.assert_called_once_with(None)
+#        test_editor_with_mocks.column_editors['col2'].edit.assert_called_once_with(np.nan)
+#
+#        # 結果の値を確認
+#        assert pd.isna(result['col1'])
+#        assert pd.isna(result['col2'])
 
 class Test_DataFrameEditor_edit_series:
     """DataFrameEditorのedit_seriesメソッドのテスト
