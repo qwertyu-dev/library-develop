@@ -97,6 +97,7 @@ class ExcelDataLoader:
                     skiprows=skiprows,
                     header=0,
                     usecols=usecols,
+                    dtype='object',
                     )
                     .fillna('')
                     .astype('object')
