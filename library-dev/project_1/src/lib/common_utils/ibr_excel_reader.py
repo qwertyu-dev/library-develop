@@ -91,19 +91,18 @@ class ExcelDataLoader:
                 if sheet_name not in target_excel.sheet_names:
                     return pd.DataFrame()
 
-                _df =  target_excel.parse(
+                _df = (target_excel.parse(
                     sheet_name=sheet_name,
                     index_col=None, # 余計なColを自動生成させない
-                    na_values='',
                     skiprows=skiprows,
                     header=0,
                     usecols=usecols,
-                    dtype=object,     # デフォルトでは全てobject型で取り込み
+                    )
+                    .fillna('')
+                    .astype('object')
+                    .reset_index(drop=True)
                 )
-                # skiprowsは個別に対応する
-                _df = _df.iloc[skiprecords:]
                 log_msg(f'\nSheet_name: {sheet_name}\n{tabulate_dataframe(_df)}', LogLevel.DEBUG)
-                return _df.reset_index(drop=True)
         except FileNotFoundError as e:
             log_msg(f'can not get target files {e}', LogLevel.ERROR)
             raise
@@ -126,6 +125,8 @@ class ExcelDataLoader:
             tb = traceback.TracebackException.from_exception(e)
             log_msg(''.join(tb.format()), LogLevel.ERROR)
             raise ExcelDataLoaderError from e
+        else:
+            return _df
 
 
     def read_excel_all_sheets(self, skiprows: int=0, skiprecords: int=0, usecols: list[int]|None=None, exclusion_sheets: list[str]|None=None) -> pd.DataFrame|None:
