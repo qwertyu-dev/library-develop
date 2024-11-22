@@ -1,0 +1,499 @@
+= Pythonパッケージ管理ガイダンス
+:toc: left
+:sectnums!:
+:source-highlighter: highlightjs
+:icons: font
+:imagesdir: images
+
+== はじめに
+本ガイドラインは、Pythonパッケージの導入から運用までの標準的な手順と基準を定めたものです。品質の確保とセキュリティの担保を目的とし、開発チーム全体で共有・実践する指針として位置づけています。
+
+== パッケージ管理の基本方針
+
+=== パッケージ管理の原則
+
+==== 概要
+パッケージ管理は、アプリケーションの依存関係を明確に定義し、開発環境の再現性を確保するための重要な作業です。本プロジェクトでは、pyenvとrequirements.txtを用いた厳格な依存関係管理を行います。
+
+[plantuml]
+----
+@startuml
+skinparam activity {
+  BackgroundColor<<Management>> LightYellow
+  BorderColor<<Management>> DarkGray
+}
+
+start
+:パッケージ追加要件の発生;
+:pyenv環境の確認;
+partition "パッケージ管理プロセス" {
+  :requirements.txtの更新;
+  :依存関係の解決;
+  :テスト環境での検証;
+  if (テスト成功?) then (yes)
+    :本番環境へのデプロイ準備;
+  else (no)
+    :パッケージバージョンの見直し;
+    :requirements.txtの再調整;
+  endif
+}
+:変更のコミット;
+stop
+@enduml
+----
+
+==== 管理方針詳細
+[cols="2,5,3"]
+|===
+|項目 |説明 |備考
+
+|バージョン固定
+|全てのパッケージは明示的なバージョン指定（==）を使用
+|セキュリティパッチは例外検討可
+
+|依存関係管理
+|直接依存と間接依存の明確な区別と文書化
+|requirements.txtで管理
+
+|更新タイミング
+|セキュリティ更新は随時、機能更新は計画的に実施
+|月次でレビュー実施
+|===
+
+=== 導入判断基準
+プロジェクト固有でのpythonパッケージ導入可否判断は以下とする。
+
+[cols="1,3"]
+|===
+|項目 |基準 
+|パッケージ依存 
+a|
+* パッケージ導入依存による問題発生なし 
+
+|既存のテストコードによる検証 
+a|
+* UTテストコードをJenkinsから全量実行し、結果に問題発生なし
+* 振る舞いに変化発生なし
+
+|統合テスト
+a|
+* Jenkinsおよび手作業でのシナリオを全量実行し、結果に問題発生なし 
+* 振る舞いに変化発生なし 
+|===
+
+
+=== pyenvによる環境管理
+
+==== 環境構築フロー
+[plantuml]
+----
+@startuml
+!define RECTANGLE class
+
+RECTANGLE "開発環境構築" {
+  + pyenvインストール
+  + Pythonバージョン指定
+  + 仮想環境作成
+  + 依存パッケージインストール
+}
+
+RECTANGLE "環境管理" {
+  + バージョン切り替え
+  + 依存関係更新
+  + 環境の複製
+}
+
+RECTANGLE "品質管理" {
+  + テスト実行
+}
+
+"開発環境構築" --> "環境管理"
+"環境管理" --> "品質管理"
+@enduml
+----
+
+=== requirements.txtの運用
+
+==== 運用フロー
+[plantuml]
+----
+@startuml
+skinparam activity {
+  BackgroundColor<<Operation>> LightBlue
+  BorderColor<<Operation>> DarkBlue
+}
+
+start
+:requirements.txt更新要件;
+partition "更新プロセス" {
+  :現環境のパッケージ確認;
+  :バージョン互換性チェック;
+  fork
+    :自動テスト実行;
+  fork again
+    :手動テスト実行;
+  end fork
+  :結果の評価;
+}
+if (テスト成功?) then (yes)
+  :requirements.txt更新;
+  :変更履歴の記録;
+else (no)
+  :問題の特定と修正;
+endif
+stop
+@enduml
+----
+
+==== バージョン指定規則
+[cols="2,3,3"]
+|===
+|指定方法 |例 |用途
+
+|完全固定
+|pandas==2.0.0
+|基本方針として採用
+
+|最小バージョン
+|pandas>=2.0.0
+|セキュリティ更新時に使用
+
+|範囲指定
+|pandas>=2.0.0,<3.0.0
+|互換性を考慮する場合
+|===
+
+=== バージョン管理方針
+
+==== バージョン管理フロー
+[plantuml]
+----
+@startuml
+!define RECTANGLE class
+
+RECTANGLE "バージョン管理" {
+  + バージョン選定
+  + 依存関係確認
+  + 更新計画立案
+}
+
+RECTANGLE "検証プロセス" {
+  + 単体テスト
+  + 統合テスト
+  + 性能テスト
+}
+
+RECTANGLE "承認プロセス" {
+  + レビュー実施
+  + 承認取得
+  + 更新実施
+}
+
+"バージョン管理" --> "検証プロセス"
+"検証プロセス" --> "承認プロセス"
+@enduml
+----
+
+== パッケージ導入プロセス
+
+=== 導入検討フェーズ
+[plantuml]
+----
+@startuml
+!define RECTANGLE class
+
+RECTANGLE "要件分析" {
+  + 機能要件の整理
+  + 技術要件の確認
+  + 制約条件の特定
+}
+
+RECTANGLE "パッケージ評価" {
+  + 候補の選定
+  + 比較評価
+  + 導入コスト試算
+}
+
+RECTANGLE "導入計画" {
+  + スケジュール策定
+  + リスク評価
+  + リソース確保
+}
+
+"要件分析" --> "パッケージ評価"
+"パッケージ評価" --> "導入計画"
+@enduml
+----
+
+=== 検証フェーズ
+
+==== Jenkins自動テストフロー
+[plantuml]
+----
+@startuml
+skinparam activity {
+  BackgroundColor<<CI>> LightGreen
+  BorderColor<<CI>> DarkGreen
+}
+
+start
+:コード変更;
+partition "CI Pipeline" {
+  :環境準備;
+  fork
+    :静的解析;
+  fork again
+    :単体テスト;
+  fork again
+    :統合テスト;
+  end fork
+  :カバレッジ計測;
+  :レポート生成;
+}
+if (品質基準達成?) then (yes)
+  :ビルド/デプロイ準備;
+else (no)
+  :修正フィードバック;
+endif
+stop
+@enduml
+----
+
+[source,groovy]
+----
+// Jenkinsfile
+pipeline {
+    agent any
+    stages {
+        stage('Setup') {
+            steps {
+                sh '''
+                    pyenv local 3.11.5
+                    python -m venv .venv
+                    source .venv/bin/activate
+                    pip install -r requirements.txt
+                    pip install -r requirements-test.txt
+                '''
+            }
+        }
+        stage('Lint') {
+            steps {
+                sh '''
+                    source .venv/bin/activate
+                    flake8 .
+                    mypy .
+                '''
+            }
+        }
+        stage('Test') {
+            steps {
+                sh '''
+                    source .venv/bin/activate
+                    pytest --cov=app tests/
+                    coverage xml
+                '''
+            }
+        }
+        stage('Security') {
+            steps {
+                sh '''
+                    source .venv/bin/activate
+                    bandit -r app/
+                    safety check
+                '''
+            }
+        }
+    }
+    post {
+        always {
+            junit 'test-reports/**/*.xml'
+            publishHTML([
+                allowMissing: false,
+                alwaysLinkToLastBuild: true,
+                keepAll: true,
+                reportDir: 'coverage',
+                reportFiles: 'index.html',
+                reportName: 'Coverage Report'
+            ])
+        }
+    }
+}
+----
+
+== 品質管理
+
+=== テスト管理
+
+==== テスト実施フロー
+[plantuml]
+----
+@startuml
+start
+:テスト計画立案;
+partition "テスト実施" {
+    fork
+        :単体テスト;
+        :カバレッジ測定;
+    fork again
+        :統合テスト;
+    end fork
+}
+:結果分析;
+if (基準達成?) then (yes)
+    :承認プロセス;
+else (no)
+    :改善対応;
+    :再テスト;
+endif
+stop
+@enduml
+----
+
+==== テスト基準
+[cols="2,2,3,3"]
+|===
+|テスト種別 |カバレッジ要件 |実施タイミング |判定基準
+
+|単体テスト
+|80%以上
+|コミット時
+|全テスト成功
+
+|統合テスト
+|70%以上
+|PR作成時
+|重要機能の動作確認
+
+|性能テスト
+|N/A
+|リリース前
+|レスポンス時間基準内
+|===
+
+=== 継続的インテグレーション
+
+==== CIパイプライン構成
+[plantuml]
+----
+@startuml
+skinparam component {
+    BackgroundColor<<CI>> LightGreen
+    BorderColor<<CI>> DarkGreen
+}
+
+package "CI Pipeline" {
+    [コード変更] --> [環境準備]
+    [環境準備] --> [静的解析]
+    [環境準備] --> [単体テスト]
+    [環境準備] --> [統合テスト]
+    [静的解析] --> [品質評価]
+    [単体テスト] --> [品質評価]
+    [統合テスト] --> [品質評価]
+    [品質評価] --> [レポート生成]
+}
+
+database "テスト結果DB" {
+    [レポート生成] --> [結果保存]
+}
+
+[結果保存] --> [品質メトリクス分析]
+@enduml
+----
+
+[appendix]
+== 付録
+
+=== パッケージ導入チェックリスト
+
+==== 事前評価
+[cols="1,4,1"]
+|===
+|項目 |確認内容 |結果
+
+|要件適合性
+|・機能要件との適合確認
+・性能要件の充足確認
+・スケーラビリティの検証
+|□
+
+|技術評価
+|・アーキテクチャ適合性
+・既存システムとの互換性
+・必要リソースの見積もり
+|□
+
+|セキュリティ評価
+|・脆弱性データベース確認
+・セキュリティアップデート頻度
+・認証・認可要件の確認
+|□
+|===
+
+==== 実装評価
+[cols="1,4,1"]
+|===
+|項目 |確認内容 |結果
+
+|コード品質
+|・静的解析結果
+・複雑度メトリクス
+・コーディング規約準拠
+|□
+
+|テスト品質
+|・テストカバレッジ
+・テストケース網羅性
+・エッジケース対応
+|□
+
+|===
+
+=== テスト実施チェックリスト
+
+==== 準備フェーズ
+[cols="1,4,1"]
+|===
+|項目 |確認内容 |結果
+
+|環境準備
+|・テスト環境構築完了
+・必要ツールのインストール
+・設定ファイルの配置
+|□
+
+|データ準備
+|・テストデータセット作成
+・初期データ投入
+・データ整合性確認
+|□
+
+|テスト計画
+|・テストケース作成
+・テスト手順書作成
+・テストスケジュール確定
+|□
+|===
+
+==== 実行フェーズ
+[cols="1,4,1"]
+|===
+|項目 |確認内容 |結果
+
+|機能テスト
+|・全機能の動作確認
+・エラー処理の確認
+・境界値テスト実施
+|□
+
+|非機能テスト
+|・性能測定実施
+・負荷テスト実施
+・セキュリティテスト実施
+|□
+
+|回帰テスト
+|・既存機能への影響確認
+・データ移行テスト
+・システム統合テスト
+|□
+|===
