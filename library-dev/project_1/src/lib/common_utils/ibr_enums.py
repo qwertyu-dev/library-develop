@@ -88,9 +88,9 @@ class PatternPriority(StrEnum):
     BRANCH_5DIGIT_NON7 = '3'
     BRANCH_5DIGIT_7 = '4'  # 7始まりを後に処理
     INTERNAL_SALES = '5'
-    SECTION_GROUP = '6'
-    AREA = '7'
-    RELATED_DUMMY = '8'
+    RELATED_DUMMY = '6'
+    SECTION_GROUP = '7'
+    AREA = '8'
 
 class BranchCodeLength(StrEnum):
     """部店コード長を表す列挙型"""

@@ -8,7 +8,7 @@ import pandas as pd
 from src.lib.common_utils.ibr_dataframe_helper import tabulate_dataframe
 from src.lib.common_utils.ibr_decorator_config import initialize_config
 from src.lib.common_utils.ibr_enums import LogLevel, OrganizationType
-from src.lib.converter_utils.ibr_reference_mergers_pattern import PatternDefinitions,MatchingPattern
+from src.lib.converter_utils.ibr_reference_mergers_pattern import MatchingPattern, PatternDefinitions
 
 config = initialize_config(sys.modules[__name__])
 log_msg = config.log_message
@@ -156,6 +156,7 @@ class ReferenceMergers:
             # 欠落Columnの初期値付与/不要Columnの削除
             result_df = ReferenceMergers._clean_up_merged_data(merged_df)
 
+            log_msg("Merger Step1", LogLevel.DEBUG)
             ReferenceMergers._log_merge_result(result_df)
 
         except Exception as e:
@@ -218,6 +219,7 @@ class ReferenceMergers:
             # 欠落Columnの初期値付与/不要Columnの削除
             result_df = ReferenceMergers._clean_up_merged_data_with_reference(merged_df)
 
+            log_msg("Merger Step2", LogLevel.DEBUG)
             ReferenceMergers._log_merge_result(result_df)
 
         except Exception as e:
@@ -251,11 +253,6 @@ class ReferenceMergers:
             # 入力データの検証
             ReferenceMergers._validate_unique_reference_data(integrated_df, reference_df)
 
-            # 申請明細の前処理 部店コード4桁Columnを追加(判定のために付与)
-            #integrated_df = ReferenceMergers._prepare_integrated_data(integrated_df)
-            #log_msg('integrated_df:', LogLevel.DEBUG)
-            #tabulate_dataframe(integrated_df)
-
             # 申請データの前処理
             processed_integrated = ReferenceMergers._prepare_integrated_data(integrated_df)
 
@@ -269,17 +266,17 @@ class ReferenceMergers:
                 PatternDefinitions.get_all_patterns(),
             )
 
-            # マージ後処理 'branch_code_digits4' Columnを消す
-            #result_df = ReferenceMergers._post_processing_merged_data(result_df)
             # 作業用カラムの削除
             result_df = ReferenceMergers._cleanup_integrated_data(result_df)
+
+            log_msg("Merger Step3", LogLevel.DEBUG)
+            ReferenceMergers._log_unique_reference_result(result_df)
 
         except Exception as e:
             err_msg = f"リファレンス一意探索処理でエラーが発生しました: {str(e)}"
             log_msg(err_msg, LogLevel.ERROR)
             raise DataMergeError(err_msg) from e
         else:
-            ReferenceMergers._log_unique_reference_result(result_df)
             return result_df
 
     #######################################################
@@ -293,7 +290,7 @@ class ReferenceMergers:
     @staticmethod
     def _filter_branch_data(df: pd.DataFrame) -> pd.DataFrame:
         filtered_result = (
-            df[df['target_org'] == OrganizationType.BRANCH]
+            df[(df['target_org'] == OrganizationType.BRANCH) & (df['branch_code'].str.len()==MergerConfig.BRANCH_CODE_LENGTH)]
             .rename(columns=MergerConfig.INTEGRATED_COLUMNS_MAPPING)
             .copy()  # 明示的にコピーを作成
         )
@@ -314,7 +311,7 @@ class ReferenceMergers:
 
     @staticmethod
     def _perform_merge(df: pd.DataFrame, filtered_df: pd.DataFrame) -> pd.DataFrame:
-        """マージ処理の実行"""
+        """マージ処理の実行 df:一括申請 filterd_df:リファレンス"""
         merge_columns = [
             'branch_code_prefix',
             *MergerConfig.INTEGRATED_COLUMNS_MAPPING.values(),
@@ -358,18 +355,6 @@ class ReferenceMergers:
             raise DataMergeError(error_msg) from e
         else:
             return result
-
-#    @staticmethod
-#    def _perform_merge_with_reference(df: pd.DataFrame, filtered_df: pd.DataFrame) -> pd.DataFrame:
-#        merge_columns = [
-#            'branch_code_prefix',
-#            *MergerConfig.REFERENCE_COLUMNS_MAPPING_BPR.values(),
-#        ]
-#        return df.merge(
-#            filtered_df[merge_columns],
-#            on='branch_code_prefix',
-#            how='left',
-#        ).fillna('')
 
     @staticmethod
     def _perform_merge_with_reference(df: pd.DataFrame, filtered_df: pd.DataFrame) -> pd.DataFrame:
@@ -444,11 +429,11 @@ class ReferenceMergers:
         processed_df['branch_code_digits4'] = processed_df['branch_code'].str[:4]
 
         # エリアコードがある場合のみ分割処理
-        if 'area_code' in processed_df.columns:
+        if 'business_and_area_code' in processed_df.columns:
             # エリアコード分割(先頭1桁)
-            processed_df['area_code_first'] = processed_df['area_code'].str[0]
+            processed_df['business_and_area_code_first'] = processed_df['business_and_area_code'].str[0]
             # エリアコード分割(2桁目以降)
-            processed_df['area_code_rest'] = processed_df['area_code'].str[1:]
+            processed_df['business_and_area_code_rest'] = processed_df['business_and_area_code'].str[1:]
 
         return processed_df
 
@@ -465,8 +450,8 @@ class ReferenceMergers:
         # 削除対象カラム
         work_columns = [
             'branch_code_4digits',
-            'area_code_first',
-            'area_code_rest',
+            'business_and_area_code_first',
+            'business_and_area_code_rest',
         ]
 
         # 存在するカラムのみ削除
@@ -494,7 +479,6 @@ class ReferenceMergers:
         for column in MergerConfig.REFERENCE_COLUMNS_MAPPING_BPR.values():
             if column not in _df.columns:
                 _df[column] = ''
-        #return df.drop(columns=['branch_code_prefix'])
         if 'branch_code_prefix' in _df.columns:
             return _df.drop(columns=['branch_code_prefix'])
         return _df
@@ -539,45 +523,6 @@ class ReferenceMergers:
             )
             log_msg(err_msg, LogLevel.ERROR)
             raise DataMergeError(err_msg)
-
-    #@staticmethod
-    #def _prepare_integrated_data(
-    #    integrated_df: pd.DataFrame,
-    #) -> None:
-    #    """申請明細に対するマージ前処理
-
-    #    4桁部店コードColumnを生成する
-    #    判定処理ケースに上位4桁要求するものがあるため対応
-
-    #    Args:
-    #        integrated_df: 申請明細
-
-    #    Raises:
-    #        DataMergeError: 検証エラーの場合
-    #    """
-    #    _df = integrated_df.copy()
-    #    _df['branch_code_digits4'] = ReferenceMergers._extract_branch_code_prefix(_df, 'branch_code')
-
-    #    return _df
-
-    #@staticmethod
-    #def _post_processing_merged_data(
-    #    merged_df: pd.DataFrame,
-    #) -> None:
-    #    """マージ処理後理
-
-    #    4桁部店コードColumnを生成しているが不要のため削除する
-
-    #    Args:
-    #        merged_df: 申請明細
-
-    #    Raises:
-    #        DataMergeError: 検証エラーの場合
-    #    """
-    #    _df = merged_df.copy()
-    #    if 'branch_code_digits4' in _df.columns:
-    #        _df = _df.drop('branch_code_digits4', axis=1)
-    #    return _df
 
     @staticmethod
     def _prepare_unique_reference_data(reference_df: pd.DataFrame) -> pd.DataFrame:
@@ -625,13 +570,9 @@ class ReferenceMergers:
             try:
                 # 「パターンに合致する」かつ「まだ処理されていない」行を抽出
                 pattern_mask = pattern.target_condition(integrated_df) & ~processed_mask
-                matching_count = pattern_mask.sum()
-                log_msg(f"target_condition: {pattern.target_condition}", LogLevel.INFO)
-                log_msg(f"該当レコード数: {matching_count}件", LogLevel.INFO)
-
                 if not pattern_mask.any():
-                    #log_msg( f"パターン{pattern.pattern_id}: 該当レコードなし", LogLevel.DEBUG)
-                    log_msg( f"パターン{pattern.description}: 該当レコードなし", LogLevel.DEBUG)
+                    log_msg( f"\n=== パターン: {pattern.description}: 処理結果 ===", LogLevel.DEBUG)
+                    log_msg( "\n該当レコードなし", LogLevel.DEBUG)
                     continue
 
                 # patternの適用
@@ -696,7 +637,6 @@ class ReferenceMergers:
             pd.DataFrame: パターン適用結果
         """
         try:
-            #filtered_df = reference_df.copy()
             # 固定フィルターがない場合も含めて初期化
             filtered_ref = reference_df.copy()
             # リファレンスに対する固定条件の適用/filter条件から事前抽出
@@ -705,14 +645,12 @@ class ReferenceMergers:
                     # prefix付与状態で対象とするreference columnsを取得
                     col_name = ReferenceColumnConfig.get_prefixed_column(ref_col)
                     # 条件抽出
-                    #filtered_ref = filtered_df[filtered_df[col_name] == value]
                     filtered_ref = filtered_ref[filtered_ref[col_name] == value]
 
                 log_msg(f"固定条件適用後のリファレンスデータ件数: {len(filtered_ref)}", LogLevel.DEBUG)
 
             # マージ条件構築
             merge_key = {
-                #target_col: ReferenceColumnConfig.get_prefixed_column(ref_col)
                 ReferenceColumnConfig.get_prefixed_column(ref_col) :target_col
                 for ref_col, target_col in pattern.reference_keys.items()
                 if not callable(target_col)

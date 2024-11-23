@@ -41,14 +41,14 @@ class PatternDefinitions:
     def get_all_patterns() -> list[MatchingPattern]:
         """優先順位付きの全パターンの定義を取得"""
         patterns = [
+            PatternDefinitions._pattern_branch_7818(),
             PatternDefinitions._pattern_branch_4digit(),
-            PatternDefinitions._pattern_branch_7818(),        # 7818を先に配置
             PatternDefinitions._pattern_branch_5digit_7(),
             PatternDefinitions._pattern_branch_5digit_non7(),
             PatternDefinitions._pattern_internal_sales(),
+            PatternDefinitions._pattern_related_dummy(),
             PatternDefinitions._pattern_section(),
             PatternDefinitions._pattern_area(),
-            PatternDefinitions._pattern_related_dummy(),
         ]
         # 優先順位でソート
         return sorted(patterns, key=lambda x: x.priority)
@@ -104,10 +104,10 @@ class PatternDefinitions:
 
     @staticmethod
     def _pattern_branch_5digit_7() -> MatchingPattern:
-        """7始まり部店コードのパターン"""
+        """5桁部店コード(7始まり)のパターン"""
         return MatchingPattern(
             #pattern_id=int(PatternID.BRANCH_5DIGIT_7.value),
-            description="7始まり部店コード処理",
+            description="5桁部店コード(7始まり)処理",
             target_condition=lambda df: (
                 (df['form_type'].isin(PatternDefinitions.STANDARD_FORM_TYPES)) &
                 (df['target_org'] == OrganizationType.BRANCH.value) &
@@ -139,6 +139,24 @@ class PatternDefinitions:
         )
 
     @staticmethod
+    def _pattern_related_dummy() -> MatchingPattern:
+        """関連ダミー課なし.課処理のパターン"""
+        return MatchingPattern(
+            #pattern_id=int(PatternID.RELATED_DUMMY.value),
+            description="関連ダミー課なし.課処理",
+            target_condition=lambda df: (
+                (df['form_type'] == FormType.KANREN_WITHOUT_DUMMY.value) &
+                (df['target_org'] == OrganizationType.SECTION_GROUP.value)
+            ),
+            reference_keys={
+                'branch_code_jinji': 'branch_code',
+                'section_gr_code_bpr': 'section_gr_code',
+            },
+            priority=int(PatternPriority.RELATED_DUMMY.value),
+        )
+
+
+    @staticmethod
     def _pattern_section() -> MatchingPattern:
         """課処理のパターン"""
         return MatchingPattern(
@@ -167,26 +185,10 @@ class PatternDefinitions:
             ),
             reference_keys={
                 'branch_code_jinji': 'branch_code',
-                'business_code': 'area_code_first',  # 分割したareaコード1桁目
-                'area_code': 'area_code_rest',       # 分割したareaコード2桁目以降
+                'business_code': 'business_and_area_code_first',  # 分割したareaコード1桁目
+                'area_code': 'business_and_area_code_rest',       # 分割したareaコード2桁目以降
             },
             priority=int(PatternPriority.AREA.value),
         )
 
 
-    @staticmethod
-    def _pattern_related_dummy() -> MatchingPattern:
-        """関連ダミー課処理のパターン"""
-        return MatchingPattern(
-            #pattern_id=int(PatternID.RELATED_DUMMY.value),
-            description="関連ダミー課処理",
-            target_condition=lambda df: (
-                (df['form_type'] == FormType.KANREN_WITHOUT_DUMMY.value) &
-                (df['target_org'] == OrganizationType.SECTION_GROUP.value)
-            ),
-            reference_keys={
-                'branch_code_jinji': 'branch_code',
-                'section_gr_code_bpr': 'section_gr_code',
-            },
-            priority=int(PatternPriority.RELATED_DUMMY.value),
-        )
