@@ -110,6 +110,9 @@ class BprAdFlagDeterminer:
         新設、変更、廃止の各処理タイプに対応し、部店コードや課Gコードなどの条件に基づいて
         適切なフラグを設定します。また、特定の条件下でアラートを生成します。
 
+        一括申請データに対するプレ編集の後に実行することを前提としています
+        @See. ibr_reference_pre_mapping.py
+
     """
     def __init__(self, file_path: str|None=None):
         """コンストラクタ
@@ -172,14 +175,14 @@ class BprAdFlagDeterminer:
                 # self.reference_dfに対して探索が必要となるが
                 # 事前にmerger処理によりリファレンスから取得したBPRADフラグ情報.reference_bpr_target_flagが付与されているため
                 # これを使用する
-                #return np.where('reference_bpr_target_flag' in series.index, series['reference_bpr_target_flag'], '')
+                # @See. ibr_reference_pre_mapping.py
                 return series.get('reference_bpr_target_flag', '')
 
             case ApplicationType.DISCONTINUE.value: # 廃止
                 # self.reference_dfに対して探索実施するが
                 # 事前にmerger処理によりリファレンスから取得したBPRADフラグ情報.reference_bpr_target_flagが付与されているため
                 # これを使用する
-                #return np.where('reference_bpr_target_flag' in series.index, series['reference_bpr_target_flag'], '')
+                # @See. ibr_reference_pre_mapping.py
                 return series.get('reference_bpr_target_flag', '')
 
             case _:

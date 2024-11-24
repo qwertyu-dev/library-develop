@@ -79,6 +79,7 @@ class ReferenceColumnConfig:
         #'resident_branch_code',           # 常駐部店コード
         'resident_branch_name',           # 常駐部店名称
         #'organization_name_kana',         # カナ組織名(カナ)
+        #TODO(): bpr_target_flagはここで付与すべきなのでは(変更/削除対象)
         #'bpr_target_flag',                # BPR対象/対象外フラグ
     })
     REFERENCE_PREFIX: str = 'reference_'

@@ -42,8 +42,16 @@ class MergerConfig:
     DEFAULT_LAYOUT_FILE: ClassVar[str] = 'integrated_layout.pkl'  # TODO(): 見直しの予定
     REFERENCE_TABLE_FILE: ClassVar[str] = 'reference_table.pkl'   # TODO(): 見直しの予定
     BRANCH_CODE_LENGTH: ClassVar[int] = 4
+    # 分割パターンの定義 - タプル(パターン, 部店名グループ, 営業部名グループ)
     #BRANCH_NAME_PATTERN: ClassVar[str] = r'^(.+?支店)(.*)$'
-    BRANCH_NAME_PATTERN: ClassVar[str] = r'^(.*?支店)(.*)$'
+    #BRANCH_NAME_PATTERN: ClassVar[str] = r'^(.*?支店)(.*)$'
+    BRANCH_NAME_PATTERNS: ClassVar[list[tuple[str, str, str]]] = [
+        #(r"(.+支店)(営業第[一二三四五六七八九]+)", r"\1", r"\2"),  # 例: 渋谷支店営業第一
+        #(r"(.+営業部)(営業第[一二三四五六七八九]+)", r"\1", r"\2"), # 例: 東京営業部営業第二
+        #(r"^(.*?支店)(.*)$", r"\1", r"\2"),  # デフォルトパターン: 支店での分割
+        (r"^(.*?支店)(営業第[一二三四五六七八九]+.*)$", r"\1", r"\2"),  # 例: 渋谷支店営業第一
+        (r"^(.*?営業部)(営業第[一二三四五六七八九]+.*)$", r"\1", r"\2"), # 例: 東京営業部営業第二
+    ]
 
 class ReferenceMergersError(Exception):
     """ReferenceMergerの基底例外クラス"""
@@ -64,9 +72,15 @@ class RemarksParseError(ReferenceMergersError):
 class PreparationPreMapping:
     """統合レイアウトデータとリファレンステーブルのマージを行うクラス"""
 
+    #TODO(): mergersで一意特定したリファレンスから付与するほうが適切なのでは？の検証jj
     @staticmethod
     def add_bpr_target_flag_from_reference( integrated_df: pd.DataFrame | None = None, reference_df: pd.DataFrame | None = None) -> pd.DataFrame:
         """申請明細データに対して、リファレンス.BPRADフラグColumnを付与する
+
+        新規以外の申請種別に対して
+        予めリファレンスからBPRADフラグをColumn付与する
+        従ってBPRADフラグ付与処理の前に実行する必要が有る
+        @see ibr_bpr_flag_determiner.py
 
         * 一意Key: 部店コード,課Grコード,エリアコード(4桁, 申請データは2桁目-/リファンレンスはエリアコード)
         * 対象レコード: 種類: 新設以外
@@ -146,6 +160,8 @@ class PreparationPreMapping:
                 result_df.loc[non_new_mask, 'reference_bpr_target_flag'] = (
                     merged_df['bpr_target_flag_y']
                 )
+                # 'reference_bpr_target_flag' column名で
+                # リファレンス上のBPRADフラグ列を申請明細に追加する
                 result_df['reference_bpr_target_flag'] =  result_df['reference_bpr_target_flag'].fillna('')
 
                 log_msg('bprad col added:\n')
@@ -324,25 +340,58 @@ class PreparationPreMapping:
         """部店コードの上位4桁を取得する"""
         return df[column].str[:MergerConfig.BRANCH_CODE_LENGTH]
 
+    #@staticmethod
+    #def _split_branch_name_regex(name: str) -> tuple[str, str]:
+    #    """支店名と営業部名の分割処理
+
+    #    '支店'で支店名と営業部名を分割する
+
+    #    Args:
+    #        name: 分割対象の部店名称
+
+    #    Returns:
+    #        tuple[str, str]: (支店名, 営業部名)のtuple
+    #    """
+    #    if pd.isna(name):
+    #        return (name, name)
+
+    #    match = re.match(MergerConfig.BRANCH_NAME_PATTERN, name)
+    #    if match:
+    #        return (match.group(1), match.group(2).strip())
+    #    return (name, '')
+
     @staticmethod
     def _split_branch_name_regex(name: str) -> tuple[str, str]:
         """支店名と営業部名の分割処理
 
-        '支店'で支店名と営業部名を分割する
+        定義された複数のパターンに基づいて部店名称を分割する
 
         Args:
             name: 分割対象の部店名称
 
         Returns:
-            tuple[str, str]: (支店名, 営業部名)のtuple
+            tuple[str, str]: (部店名, 営業部名)のタプル。マッチしない場合は(元の名称, '')
+
+        Examples:
+            >>> _split_branch_name_regex("渋谷支店営業第一")
+            ("渋谷支店", "営業第一")
+            >>> _split_branch_name_regex("東京営業部営業第二")
+            ("東京営業部", "営業第二")
+            >>> _split_branch_name_regex("新宿支店")
+            ("新宿支店", "")
         """
         if pd.isna(name):
             return (name, name)
 
-        match = re.match(MergerConfig.BRANCH_NAME_PATTERN, name)
-        if match:
-            return (match.group(1), match.group(2).strip())
-        return (name, '')
+        # 各パターンでマッチを試行
+        for pattern, branch_group, dept_group in MergerConfig.BRANCH_NAME_PATTERNS:
+            match = re.match(pattern, name)
+            if match:
+                branch_name = re.sub(pattern, branch_group, name)
+                dept_name = re.sub(pattern, dept_group, name)
+                return (branch_name, dept_name.strip())
+
+        return (name, '')  # どのパターンにもマッチしない場合
 
     @staticmethod
     def _parse_remarks(remarks: str) -> ParsedRemarks:
@@ -394,15 +443,15 @@ class PreparationPreMapping:
             BranchNameSplitError: 部店名称の分割処理に失敗した場合
         """
         try:
-            # 部店コードの処理
+            # 拠点内営業部コードの処理
             df.loc[mask, 'internal_sales_dept_code'] = df.loc[mask, 'branch_code']
 
-            # 部店名称の分割処理
+            # 部店名称の分割処理/部店名称,拠点な営業部名の処理
             split_names = df.loc[mask, 'branch_name'].apply(PreparationPreMapping._split_branch_name_regex)
             df.loc[mask, 'branch_name'] = split_names.apply(lambda x: x[0])
             df.loc[mask, 'internal_sales_dept_name'] = split_names.apply(lambda x: x[1])
 
-            # 部店コードの切り詰め
+            # 上位4桁とする部店コード処理
             df.loc[mask, 'branch_code'] = PreparationPreMapping._extract_branch_code_prefix(
                 df.loc[mask], 'branch_code',
             )
@@ -438,7 +487,9 @@ class PreparationPreMapping:
             # 備考欄の解析
             parsed_series = df.loc[mask, 'remarks'].apply(PreparationPreMapping._parse_remarks)
 
-            # エリアグループ情報の設定
+            # エリア判定した備考欄情報から取得
+            # .課Grコード編集
+            # .課Gr名称編集
             result_df.loc[mask, 'branch_code'] = parsed_series.apply(lambda x: x['area_group']['group_code'])
             result_df.loc[mask, 'branch_name'] = parsed_series.apply(lambda x: x['area_group']['group_name'])
 
@@ -473,9 +524,11 @@ class PreparationPreMapping:
             parsed_series = df.loc[mask, 'remarks'].apply(PreparationPreMapping._parse_remarks)
 
             # 拠点内営業部コードの設定
+            # 備考欄そのものの値(拠点内営業部フルネーム)から申請明細.部店名称探索し
+            # 検出したレコード.部店コードを拠点内営業部コードに設定する
             df.loc[mask, 'internal_sales_dept_code'] = PreparationPreMapping._find_branch_code_from_remarks(df, mask)
 
-            # 拠点内営業部名称の設定
+            # 備考欄からの情報取得.拠点内営業部名編集
             df.loc[mask, 'internal_sales_dept_name'] = parsed_series.apply(
                 lambda x: x['sales_department']['department_name'],
             )
@@ -493,6 +546,9 @@ class PreparationPreMapping:
     @staticmethod
     def _find_branch_code_from_remarks(df: pd.DataFrame, mask: pd.Series) -> pd.Series:
         """備考欄に基づく部店コードの検索
+
+        1.備考欄にある「部店＋拠点内営業部名」でデータセット内探索(一括申請)を行い拠点内営業部レコードを特定する
+        2.該当するレコード.部店コードを拠点内営業部コードにセットする
 
         setup_section_under_internal_sales_integrated_data()データ探索処理の実体
         '名称'で探索している点に留意が必要
