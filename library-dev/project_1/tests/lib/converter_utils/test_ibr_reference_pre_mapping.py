@@ -4,6 +4,7 @@ from unittest.mock import MagicMock, Mock, patch
 
 import pandas as pd
 import pytest
+from io import StringIO
 
 from src.lib.common_utils.ibr_dataframe_helper import tabulate_dataframe
 from src.lib.common_utils.ibr_decorator_config import initialize_config
@@ -521,7 +522,7 @@ class TestPreparationPreMappingSetupInternalSales:
         test_patterns = [
             ('AAA支店営業第一部', True, '営業第一部'),
             ('AAA営業部営業第二部', True, '営業第二部'),
-            ('支店営業部', True, ''),
+            ('支店営業部', True, '営業部'),
             ('AAA支店', True, ''),
             ('AAA営業部', True, ''),
             ('AAA', True, ''),
@@ -2494,8 +2495,8 @@ class TestPreparationPreMapping_SplitBranchNameRegex:
         """
         log_msg(f"\n{test_doc}", LogLevel.INFO)
 
-        result = PreparationPreMapping._split_branch_name_regex("東京★支店営業第一部■")
-        assert result == ("東京★支店", "営業第一部■")
+        result = PreparationPreMapping._split_branch_name_regex("東京★支店営業第一部")
+        assert result == ("東京★支店", "営業第一部")
 
 class TestPreparationPreMapping_ParseRemarks:
     """PreparationPreMappingの_parse_remarksメソッドのテスト
@@ -2989,3 +2990,163 @@ class TestPreparationPreMapping_FindBranchCodeFromRemarks:
     #    assert isinstance(result, pd.Series)
     #    assert len(result) == len(sample_df)
     #    assert all(pd.isna(result))  # 全ての要素がNaN
+
+
+class TestPreparationPreMapping_ITSenario:
+    def _generate_sample_data_from_docstring(self) -> pd.DataFrame:
+        docstring = """
+ulid	form_type	application_type	target_org	branch_code	branch_name	section_gr_code	section_gr_name	internal_sales_dept_code	internal_sales_dept_name	area_code	area_name	branch_name_kana	remarks
+01FBMECHZX3TBDSZ7XRADM79XE	1	変更	部店	1234	一二三四支店							ｲﾁﾆｻﾝｼｼﾃﾝ	
+01FBMECHZX3TBD6Z7XRADM79XF	1	変更	課	1234	一二三四支店	125K1	業務課					ｲﾁﾆｻﾝｼｼﾃﾝ	
+01FBMECHZX3TBDSZ7XRADM79%G	1	変更	課	1234	一二三四支店	125K2	総務課					ｲﾁﾆｻﾝｼｼﾃﾝ	
+01FBMECHZ/3TBDSZ7XRADM79XH	1	変更	課	1234	一二三四支店	125K3	営業課					ｲﾁﾆｻﾝｼｼﾃﾝ	一二三四支店営業第一部
+01FBMECHZX3TBDSZ7XRADM79X1	1	変更	拠点内営業部	12345	一二三四支店営業第一部			12345	一二三四支店営業第一部			ｲﾁﾆｻﾝｼｼﾃﾝ	
+01FBMECHZX3TBD6Z7XRADM79%J	1	変更	エリア	1234	一二三四支店					BZ244	三四エリア課	ｲﾁﾆｻﾝｼｼﾃﾝ	234J1　業務エリアＧｒ
+01FBMECHZ/3TBD6Z7XRADM79%K	1	変更	部店	5678	五六七八支店							ｺﾞﾛｸｼﾁﾊﾁｼﾃﾝ	
+01FBMECHZX3TBD6Z7XRADM79XL	1	変更	課	5678	五六七八支店	125K1	営業課					ｺﾞﾛｸｼﾁﾊﾁｼﾃﾝ	五六七八支店営業部
+01FBMECHZX3TBDSZ7XRADM79XM	1	変更	拠点内営業部	56789	五六七八支店営業部			56789	五六七八支店営業部			ｺﾞﾛｸｼﾁﾊﾁｼﾃﾝ	
+01F8MECHZXSTBDSZ7XRADM79XN	1	変更	エリア	5678	五六七八支店					BX382	七八エリア課	ｺﾞﾛｸｼﾁﾊﾁｼﾃﾝ	234J2　営業エリアＧｒ
+        """
+        return (
+            pd.read_csv(
+                StringIO(docstring),
+                header=0,
+                sep=r'\t',
+                dtype='object',
+                engine='python',
+            )
+            .fillna('')
+            .pipe(lambda df: df.apply(lambda col: col.str.strip() if col.dtype=='object' else col))
+        )
+
+    @pytest.fixture()
+    def create_sample_integrated_data(self) -> pd.DataFrame:
+        _df = self._generate_sample_data_from_docstring()
+        _df.to_excel('tests/table/sample_一括統合レイアウト.xlsx', index=False)
+        _df.to_pickle('tests/table/integrated_request_list_table.pkl')
+        return _df
+
+    def setup_method(self):
+        """テストメソッドの前処理"""
+        log_msg("test start", LogLevel.INFO)
+
+    def teardown_method(self):
+        """テストメソッドの後処理"""
+        log_msg(f"test end\n{'-'*80}\n", LogLevel.INFO)
+
+    def test_all_IT_valid_data_check(self, create_sample_integrated_data):
+        """正常系: 有効な設定での基本機能テスト"""
+        test_doc = """
+        テスト区分: UT
+        テストカテゴリ: CD
+        テスト内容: 正常系 基本的なBPRフラグ付与処理の確認
+        """
+        log_msg(f"\n{test_doc}", LogLevel.DEBUG)
+
+        # データフレームのコピーを作成
+        integrated_df = create_sample_integrated_data.copy()
+
+        # 初期データの確認
+        tabulate_dataframe(integrated_df.head(5))
+
+        ##################################################################
+        # Step 1: 課(支店配下の営業部配下)の処理
+        ##################################################################
+        result_step1 = PreparationPreMapping.setup_section_under_internal_sales_integrated_data(
+            integrated_df,
+        )
+
+        log_msg('Step 1の処理結果', LogLevel.DEBUG)
+        tabulate_dataframe(integrated_df)
+        tabulate_dataframe(result_step1)
+
+        # Step 1の検証
+        assert result_step1.loc[3, 'target_org'] == '課'
+        assert result_step1.loc[3, 'remarks'] != ''
+        assert result_step1.loc[3, 'internal_sales_dept_code'] == '12345'
+        assert result_step1.loc[3, 'internal_sales_dept_name'] == '営業第一部'
+        assert result_step1.loc[7, 'target_org'] == '課'
+        assert result_step1.loc[7, 'remarks'] != ''
+        assert result_step1.loc[7, 'internal_sales_dept_code'] == '56789'
+        assert result_step1.loc[7, 'internal_sales_dept_name'] == '営業部'
+
+        # Step 1の不変確認
+        assert integrated_df.iloc[0].equals(result_step1.iloc[0])
+        assert integrated_df.iloc[1].equals(result_step1.iloc[1])
+        assert integrated_df.iloc[2].equals(result_step1.iloc[2])
+        # assert integrated_df.iloc[3].equals(result_step1.iloc[3])  # 変更される行
+        assert integrated_df.iloc[4].equals(result_step1.iloc[4])
+        assert integrated_df.iloc[5].equals(result_step1.iloc[5])
+        assert integrated_df.iloc[6].equals(result_step1.iloc[6])
+        # assert integrated_df.iloc[7].equals(result_step1.iloc[7])  # 変更される行
+        assert integrated_df.iloc[8].equals(result_step1.iloc[8])
+        assert integrated_df.iloc[9].equals(result_step1.iloc[9])
+
+        ##################################################################
+        # Step 2: 拠点内営業部向けのデータ編集
+        ##################################################################
+        result_step2 = PreparationPreMapping.setup_internal_sales_to_integrated_data(
+            result_step1,
+        )
+
+        log_msg('Step 2の処理結果', LogLevel.DEBUG)
+        tabulate_dataframe(result_step1)
+        tabulate_dataframe(result_step2)
+
+        # Step 2の検証
+        assert result_step2.loc[4, 'target_org'] == '拠点内営業部'
+        assert result_step2.loc[4, 'branch_code'] == '1234'
+        assert result_step2.loc[4, 'branch_name'] == '一二三四支店'
+        assert result_step2.loc[4, 'internal_sales_dept_name'] == '営業第一部'
+        assert result_step2.loc[8, 'target_org'] == '拠点内営業部'
+        assert result_step2.loc[8, 'branch_code'] == '5678'
+        assert result_step2.loc[8, 'branch_name'] == '五六七八支店'
+        assert result_step2.loc[8, 'internal_sales_dept_name'] == '営業部'
+
+        # Step 2の不変確認
+        assert result_step1.iloc[0].equals(result_step2.iloc[0])
+        assert result_step1.iloc[1].equals(result_step2.iloc[1])
+        assert result_step1.iloc[2].equals(result_step2.iloc[2])
+        assert result_step1.iloc[3].equals(result_step2.iloc[3])
+        # assert result_step1.iloc[4].equals(result_step2.iloc[4])  # 変更される行
+        assert result_step1.iloc[5].equals(result_step2.iloc[5])
+        assert result_step1.iloc[6].equals(result_step2.iloc[6])
+        assert result_step1.iloc[7].equals(result_step2.iloc[7])
+        # assert result_step1.iloc[8].equals(result_step2.iloc[8])  # 変更される行
+        assert result_step1.iloc[9].equals(result_step2.iloc[9])
+
+        ##################################################################
+        # Step 3: エリア向け編集・備考欄対応
+        ##################################################################
+        result_step3 = PreparationPreMapping.setup_area_to_integrated_data(
+            result_step2,
+        )
+
+        log_msg('エリア向け/備考欄から取得データ編集結果', LogLevel.DEBUG)
+        tabulate_dataframe(result_step2)
+        tabulate_dataframe(result_step3)
+
+        # Step 3の検証
+        assert result_step3.loc[5, 'target_org'] == 'エリア'
+        assert result_step3.loc[5, 'branch_code'] == '234J1'
+        assert result_step3.loc[5, 'branch_name'] == '業務エリアＧｒ'
+        assert result_step3.loc[9, 'target_org'] == 'エリア'
+        assert result_step3.loc[9, 'branch_code'] == '234J2'
+        assert result_step3.loc[9, 'branch_name'] == '営業エリアＧｒ'
+
+        # Step 3の不変確認
+        assert result_step2.iloc[0].equals(result_step3.iloc[0])
+        assert result_step2.iloc[1].equals(result_step3.iloc[1])
+        assert result_step2.iloc[2].equals(result_step3.iloc[2])
+        assert result_step2.iloc[3].equals(result_step3.iloc[3])
+        assert result_step2.iloc[4].equals(result_step3.iloc[4])
+        # assert result_step2.iloc[5].equals(result_step3.iloc[5])  # 変更される行
+        assert result_step2.iloc[6].equals(result_step3.iloc[6])
+        assert result_step2.iloc[7].equals(result_step3.iloc[7])
+        assert result_step2.iloc[8].equals(result_step3.iloc[8])
+        # assert result_step2.iloc[9].equals(result_step3.iloc[9])  # 変更される行
+
+        # 最終結果の確認
+        log_msg('input/マージ前個別編集結果', LogLevel.DEBUG)
+        tabulate_dataframe(integrated_df)
+        tabulate_dataframe(result_step3)

@@ -27,260 +27,6 @@ config = initialize_config(sys.modules[__name__])
 log_msg = config.log_message
 log_msg(str(config), LogLevel.DEBUG)
 
-#class Test_RemarksParser:
-#    """RemarksParser Classのテスト全体をまとめたClass
-#
-#    RemarksParser.parse()
-#    │
-#    ├─ C0(命令網羅)
-#    │   └─ 基本的な解析処理
-#    │       ├─ 営業部署情報の解析
-#    │       ├─ エリアグループ情報の解析
-#    │       └─ その他の情報の解析
-#    │
-#    ├─ C1(分岐網羅)
-#    │   ├─ 営業部署情報の分岐
-#    │   │   ├─ 通常の営業部
-#    │   │   └─ 数字付きの営業部
-#    │   ├─ エリアグループ情報の分岐
-#    │   │   ├─ 設立日あり
-#    │   │   └─ 設立日なし
-#    │   └─ その他の情報の分岐
-#    │       └─ 変更、廃止を含む情報
-#    │
-#    └─ C2(条件網羅)
-#        ├─ 入力テキストの種類
-#        │   ├─ 営業部署情報のみ
-#        │   ├─ エリアグループ情報のみ
-#        │   └─ その他の情報のみ
-#        └─ 特殊なケース
-#            ├─ 空の入力
-#            └─ 複数行の入力
-#    """
-#    def setup_method(self):
-#        log_msg("test start", LogLevel.INFO)
-#
-#    def teardown_method(self):
-#        log_msg(f"test end\n{'-'*80}\n", LogLevel.INFO)
-#
-#    @pytest.mark.parametrize(
-#        ("remarks_text", "expected_result"),
-#        [
-#            (
-#                "八重洲通支店営業部",
-#                {
-#                    "request_type": "営業部傘下",
-#                    "sales_department": {
-#                        #"department_name": "八重洲通支店営業部",
-#                        "department_name": "営業部",
-#                        "branch_name": "八重洲通支店",
-#                    },
-#                    "area_group": {
-#                        "group_code": "",
-#                        "group_name": "",
-#                        "established_date": "",
-#                    },
-#                    "other_info": "",
-#                },
-#            ),
-#            (
-#                "笹島支店営業第一部",
-#                {
-#                    "request_type": "営業部傘下",
-#                    "sales_department": {
-#                        #"department_name": "笹島支店第一営業部",
-#                        "department_name": "営業第一部",
-#                        "branch_name": "笹島支店",
-#                    },
-#                    "area_group": {
-#                        "group_code": "",
-#                        "group_name": "",
-#                        "established_date": "",
-#                    },
-#                    "other_info": "",
-#                },
-#            ),
-#
-#            # ケース1: シンプルな営業部 ○○営業部△△営業部
-#            (
-#                "大阪営業部営業部",
-#                {
-#                    "request_type": "営業部傘下",
-#                    "sales_department": {
-#                        "department_name": "営業部",
-#                        "branch_name": "大阪営業部",
-#                    },
-#                    "area_group": {
-#                        "group_code": "",
-#                        "group_name": "",
-#                        "established_date": "",
-#                    },
-#                    "other_info": "",
-#                },
-#            ),
-#            # ケース1: シンプルな営業部 ○○営業部△△営業部
-#            (
-#                "大阪営業部岸和田営業部",
-#                {
-#                    "request_type": "営業部傘下",
-#                    "sales_department": {
-#                        "department_name": "岸和田営業部",
-#                        "branch_name": "大阪営業部",
-#                    },
-#                    "area_group": {
-#                        "group_code": "",
-#                        "group_name": "",
-#                        "established_date": "",
-#                    },
-#                    "other_info": "",
-#                },
-#            ),
-#
-#            # ケース2: 営業第X部
-#            (
-#                "東京営業部営業第一部",
-#                {
-#                    "request_type": "営業部傘下",
-#                    "sales_department": {
-#                        "department_name": "営業第一部",
-#                        "branch_name": "東京営業部",
-#                    },
-#                    "area_group": {
-#                        "group_code": "",
-#                        "group_name": "",
-#                        "established_date": "",
-#                    },
-#                    "other_info": "",
-#                },
-#            ),
-#
-#            # 要件としては発生しない前提
-#            ## ケース4: 中間に営業部があるケース
-#            #(
-#            #    "大阪営業部営業部営業部",
-#            #    {
-#            #        "request_type": "営業部傘下",
-#            #        "sales_department": {
-#            #            "department_name": "営業部",
-#            #            "branch_name": "大阪営業部",
-#            #        },
-#            #        "area_group": {
-#            #            "group_code": "",
-#            #            "group_name": "",
-#            #            "established_date": "",
-#            #        },
-#            #        "other_info": "",
-#            #    },
-#            #),
-#
-#            # 要件としては発生しない前提
-#            ## ケース5: 中間に営業部があり、末尾が営業第X部
-#            #(
-#            #    "大阪営業部営業部営業第二部",
-#            #    {
-#            #        "request_type": "営業部傘下",
-#            #        "sales_department": {
-#            #            "department_name": "営業第二部",
-#            #            "branch_name": "大阪営業部",
-#            #        },
-#            #        "area_group": {
-#            #            "group_code": "",
-#            #            "group_name": "",
-#            #            "established_date": "",
-#            #        },
-#            #        "other_info": "",
-#            #    },
-#            #),
-#
-#            (
-#                "41002 東日本第一Gr",
-#                {
-#                    "request_type": "エリア",
-#                    "sales_department": {
-#                        "department_name": "",
-#                        "branch_name": "",
-#                    },
-#                    "area_group": {
-#                        "group_code": "41002",
-#                        "group_name": "東日本第一Gr",
-#                        "established_date": "",
-#                    },
-#                    "other_info": "",
-#                },
-#            ),
-#            (
-#                "41012　グローバル財務戦略Gr (4/1新設)",
-#                {
-#                    "request_type": "エリア",
-#                    "sales_department": {
-#                        "department_name": "",
-#                        "branch_name": "",
-#                    },
-#                    "area_group": {
-#                        "group_code": "41012",
-#                        "group_name": "グローバル財務戦略Gr",
-#                        "established_date": "4/1新設",
-#                    },
-#                    "other_info": "",
-#                },
-#            ),
-#            (
-#                "C1:法人・リテール部門、C1:法人・リテール部門より変更",
-#                {
-#                    "request_type": "その他",
-#                    "sales_department": {
-#                        "department_name": "",
-#                        "branch_name": "",
-#                    },
-#                    "area_group": {
-#                        "group_code": "",
-#                        "group_name": "",
-#                        "established_date": "",
-#                    },
-#                    "other_info": "C1:法人・リテール部門、C1:法人・リテール部門より変更",
-#                },
-#            ),
-#            (
-#                "2022.12.11廃止済みの課復活",
-#                {
-#                    "request_type": "その他",
-#                    "sales_department": {
-#                        "department_name": "",
-#                        "branch_name": "",
-#                    },
-#                    "area_group": {
-#                        "group_code": "",
-#                        "group_name": "",
-#                        "established_date": "",
-#                    },
-#                    "other_info": "2022.12.11廃止済みの課復活",
-#                },
-#            ),
-#        ],
-#    )
-#    def test_parse_UT_C0_normal_case(self, remarks_text, expected_result):
-#        test_doc = """テスト定義:
-#
-#        - テストカテゴリ: C0
-#        - テスト区分: 正常系/UT
-#        - テストシナリオ: RemarksParserの基本的な解析処理の確認
-#        """
-#        log_msg(f"\n{test_doc}", LogLevel.DEBUG)
-#
-#        # インスタンス生成
-#        parser = RemarksParser()
-#
-#        # 結果定義,関数実行
-#        result = parser.parse(remarks_text)
-#
-#        log_msg(f'Input text: {remarks_text}', LogLevel.DEBUG)
-#        log_msg(f'Expected result: {expected_result}', LogLevel.DEBUG)
-#        log_msg(f'Actual result: {result}', LogLevel.DEBUG)
-#
-#        # 結果評価
-#        assert result == expected_result, f"Expected {expected_result}, but got {result}"
-
-
 class Test_RemarksParser_init:
     """RemarksParserの__init__メソッドのテスト
 
@@ -770,6 +516,22 @@ class Test_RemarksParser_parse:
                         "established_date": "",
                     },
                     "other_info": "2022.12.11廃止済みの課復活",
+                },
+            ),
+            ( # 誤って営業判定されないか?改修版判定でエリア処理される
+                "234J2　営業エリアＧｒ",
+                {
+                    "request_type": "エリア",
+                    "sales_department": {
+                        "department_name": "",
+                        "branch_name": "",
+                    },
+                    "area_group": {
+                        "group_code": "234J2",
+                        "group_name": "営業エリアＧｒ",
+                        "established_date": "",
+                    },
+                    "other_info": "",
                 },
             ),
     ])

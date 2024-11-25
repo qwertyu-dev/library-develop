@@ -80,7 +80,7 @@ class ReferenceColumnConfig:
         'resident_branch_name',           # 常駐部店名称
         #'organization_name_kana',         # カナ組織名(カナ)
         #TODO(): bpr_target_flagはここで付与すべきなのでは(変更/削除対象)
-        #'bpr_target_flag',                # BPR対象/対象外フラグ
+        'bpr_target_flag',                # BPR対象/対象外フラグ
     })
     REFERENCE_PREFIX: str = 'reference_'
 
@@ -291,7 +291,7 @@ class ReferenceMergers:
     @staticmethod
     def _filter_branch_data(df: pd.DataFrame) -> pd.DataFrame:
         filtered_result = (
-            df[(df['target_org'] == OrganizationType.BRANCH) & (df['branch_code'].str.len()==MergerConfig.BRANCH_CODE_LENGTH)]
+            df[(df['target_org'] == OrganizationType.BRANCH) & (df['branch_code'].str.len() == MergerConfig.BRANCH_CODE_LENGTH)]
             .rename(columns=MergerConfig.INTEGRATED_COLUMNS_MAPPING)
             .copy()  # 明示的にコピーを作成
         )
@@ -450,7 +450,7 @@ class ReferenceMergers:
         """
         # 削除対象カラム
         work_columns = [
-            'branch_code_4digits',
+            'branch_code_digits4',
             'business_and_area_code_first',
             'business_and_area_code_rest',
         ]
@@ -469,7 +469,6 @@ class ReferenceMergers:
         for column in MergerConfig.INTEGRATED_COLUMNS_MAPPING.values():
             if column not in _df.columns:
                 _df[column] = ''
-#        return df.drop(columns=['branch_code_prefix'])
         if 'branch_code_prefix' in _df.columns:
             return _df.drop(columns=['branch_code_prefix'])
         return _df

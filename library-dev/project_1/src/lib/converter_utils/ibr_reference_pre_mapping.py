@@ -49,8 +49,12 @@ class MergerConfig:
         #(r"(.+支店)(営業第[一二三四五六七八九]+)", r"\1", r"\2"),  # 例: 渋谷支店営業第一
         #(r"(.+営業部)(営業第[一二三四五六七八九]+)", r"\1", r"\2"), # 例: 東京営業部営業第二
         #(r"^(.*?支店)(.*)$", r"\1", r"\2"),  # デフォルトパターン: 支店での分割
-        (r"^(.*?支店)(営業第[一二三四五六七八九]+.*)$", r"\1", r"\2"),  # 例: 渋谷支店営業第一
-        (r"^(.*?営業部)(営業第[一二三四五六七八九]+.*)$", r"\1", r"\2"), # 例: 東京営業部営業第二
+        #(r"^(.*?支店)(営業第[一二三四五六七八九]+.*)$", r"\1", r"\2"),  # 例: 渋谷支店営業第一
+        #(r"^(.*?営業部)(営業第[一二三四五六七八九]+.*)$", r"\1", r"\2"), # 例: 東京営業部営業第二
+        (r"^(.*?支店)(営業部)$", r"\1", r"\2"),  # 例: 渋谷支店営業第一
+        (r"^(.*?支店)(営業第[一二三四五六七八九]+部)$", r"\1", r"\2"),  # 例: 渋谷支店営業第一
+        (r"^(.*?営業部)(営業部)$", r"\1", r"\2"), # 例: 東京営業部営業第二
+        (r"^(.*?営業部)(営業第[一二三四五六七八九]+部)$", r"\1", r"\2"), # 例: 東京営業部営業第二
     ]
 
 class ReferenceMergersError(Exception):
@@ -289,7 +293,7 @@ class PreparationPreMapping:
             result_df = PreparationPreMapping._load_data(integrated_df)
 
             # 対象データの抽出
-            mask = ((result_df['target_org'] == OrganizationType.SECTION_GROUP.value) & (result_df['remarks'].notna()))
+            mask = ((result_df['target_org'] == OrganizationType.SECTION_GROUP.value) & (result_df['remarks'] != ''))
             if not mask.any():
                 err_msg = "処理対象の拠点内営業部配下課データが存在しません"
                 log_msg(err_msg, LogLevel.WARNING)

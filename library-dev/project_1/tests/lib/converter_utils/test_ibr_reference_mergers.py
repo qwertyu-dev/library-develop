@@ -3100,7 +3100,8 @@ class Test_ReferenceMergers_validate_unique_reference_data:
             'section_gr_code_jinji': ['001'], 'section_gr_name_jinji': ['第一課'],
             'section_gr_name_area': ['エリアA'],
             'business_code': ['B001'], 'area_code': ['A01'], 'area_name': ['東京'],
-            'resident_branch_name': ['本店']
+            'resident_branch_name': ['本店'],
+            'bpr_target_flag': ['0'],
         })
  
     def test_validate_unique_reference_data_C0_all_required(self, valid_integrated_df, valid_reference_df):

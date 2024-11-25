@@ -67,6 +67,9 @@ class RemarksParser:
                     - "established_date": 設立日
                 - "other_info": その他の情報
         """
+        # 正規表現パターン
+        kanji_numbers = '一二三四五六七八九十'
+        pattern = re.compile(r"営業部|営業第["+ kanji_numbers + r"]+部")
         if remarks_text == '':
             self.result["request_type"] = "その他"
             return self.result
@@ -78,7 +81,8 @@ class RemarksParser:
                 continue
 
             if self.result["request_type"] == "":
-                if "営業" in line:
+                #if "営業" in line:
+                if pattern.search(line):
                     self._process_sales_department(line)
                     continue
 
