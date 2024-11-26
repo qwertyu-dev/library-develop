@@ -455,10 +455,10 @@ class PreparationPreMapping:
             df.loc[mask, 'branch_name'] = split_names.apply(lambda x: x[0])
             df.loc[mask, 'internal_sales_dept_name'] = split_names.apply(lambda x: x[1])
 
-            # 上位4桁とする部店コード処理
-            df.loc[mask, 'branch_code'] = PreparationPreMapping._extract_branch_code_prefix(
-                df.loc[mask], 'branch_code',
-            )
+            # 上位4桁とする部店コード処理 -> 個別編集では行わずFacadeで対応する
+            #df.loc[mask, 'branch_code'] = PreparationPreMapping._extract_branch_code_prefix(
+            #    df.loc[mask], 'branch_code',
+            #)
 
         except Exception as e:
             err_msg = '拠点内営業部向け: 部店名称分割処理でエラーが発生しました'
@@ -494,8 +494,8 @@ class PreparationPreMapping:
             # エリア判定した備考欄情報から取得
             # .課Grコード編集
             # .課Gr名称編集
-            result_df.loc[mask, 'branch_code'] = parsed_series.apply(lambda x: x['area_group']['group_code'])
-            result_df.loc[mask, 'branch_name'] = parsed_series.apply(lambda x: x['area_group']['group_name'])
+            result_df.loc[mask, 'section_gr_code'] = parsed_series.apply(lambda x: x['area_group']['group_code'])
+            result_df.loc[mask, 'section_gr_name'] = parsed_series.apply(lambda x: x['area_group']['group_name'])
 
             # デバッグ情報の出力
             PreparationPreMapping._log_parsed_remarks_results(parsed_series)

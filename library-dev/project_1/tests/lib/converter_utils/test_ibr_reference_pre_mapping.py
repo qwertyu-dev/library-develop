@@ -714,8 +714,8 @@ class TestPreparationPreMappingSetupArea:
         )
 
         area_mask = result['target_org'] == OrganizationType.AREA.value
-        assert result.loc[area_mask, 'branch_code'].str.match(r'^\d{5}$').all()
-        assert result.loc[area_mask, 'branch_name'].str.contains('Gr|Ｇｒ').all()
+        assert result.loc[area_mask, 'section_gr_code'].str.match(r'^\d{5}$').all()
+        assert result.loc[area_mask, 'section_gr_name'].str.contains('Gr|Ｇｒ').all()
 
     def test_setup_area_C1_dt2_no_area_data(self, integrated_layout_df):
         """C1: エリアデータが存在しない場合のテスト(DT2)"""
@@ -760,8 +760,8 @@ class TestPreparationPreMappingSetupArea:
             if should_succeed:
                 result = PreparationPreMapping.setup_area_to_integrated_data(test_df)
                 area_mask = result['target_org'] == OrganizationType.AREA.value
-                assert result.loc[area_mask, 'branch_code'].iloc[0] == expected_code
-                assert result.loc[area_mask, 'branch_name'].iloc[0] == expected_name
+                assert result.loc[area_mask, 'section_gr_code'].iloc[0] == expected_code
+                assert result.loc[area_mask, 'section_gr_name'].iloc[0] == expected_name
             else:
                 with pytest.raises(RemarksParseError):
                     PreparationPreMapping.setup_area_to_integrated_data(test_df)
@@ -781,16 +781,16 @@ class TestPreparationPreMappingSetupArea:
             integrated_layout_df,
         )
         area_mask = result['target_org'] == OrganizationType.AREA.value
-        assert result.loc[area_mask, 'branch_code'].iloc[0] == '00001'
-        assert result.loc[area_mask, 'branch_name'].iloc[0] == '最小Gr'
+        assert result.loc[area_mask, 'section_gr_code'].iloc[0] == '00001'
+        assert result.loc[area_mask, 'section_gr_name'].iloc[0] == '最小Gr'
 
         # 最大フォーマット
         integrated_layout_df.loc[0, 'remarks'] = '99999 最大グループGr (付加情報)'
         result = PreparationPreMapping.setup_area_to_integrated_data(
             integrated_layout_df,
         )
-        assert result.loc[area_mask, 'branch_code'].iloc[0] == '99999'
-        assert result.loc[area_mask, 'branch_name'].iloc[0] == '最大グループGr'
+        assert result.loc[area_mask, 'section_gr_code'].iloc[0] == '99999'
+        assert result.loc[area_mask, 'section_gr_name'].iloc[0] == '最大グループGr'
 
         # 無効なパターン,だがエラーにはしない
         invalid_patterns = [
@@ -1069,8 +1069,8 @@ class TestPreparationPreMappingProcessInternalSales:
             'internal_sales_dept_code', 'internal_sales_dept_name',
         ]
         data = [
-            ['拠点内営業部', '0001', 'AAA支店営業第一部', '', ''],
-            ['拠点内営業部', '0002', 'AAA営業部営業第二部', '', ''],
+            ['拠点内営業部', '00011', 'AAA支店営業第一部', '', ''],
+            ['拠点内営業部', '00022', 'AAA営業部営業第二部', '', ''],
             ['部店', '0003', 'EEE支店', '', ''],
         ]
         return pd.DataFrame(data, columns=columns)
@@ -1096,10 +1096,12 @@ class TestPreparationPreMappingProcessInternalSales:
         target_rows = result[mask]
         assert '支店'   in target_rows.loc[0, 'branch_name']
         assert '営業第' in target_rows.loc[0, 'internal_sales_dept_name']
-        assert target_rows.loc[0, 'internal_sales_dept_code'] == '0001'
+        assert target_rows.loc[0, 'internal_sales_dept_code'] == '00011'
+        assert len(target_rows.loc[0, 'branch_code']) == 5
         assert '営業部' in target_rows.loc[1, 'branch_name']
         assert '営業第' in target_rows.loc[1, 'internal_sales_dept_name']
-        assert target_rows.loc[1, 'internal_sales_dept_code'] == '0002'
+        assert target_rows.loc[1, 'internal_sales_dept_code'] == '00022'
+        assert len(target_rows.loc[1, 'branch_code']) == 5
 
     def test_process_internal_sales_C1_dt1_successful(self, base_df):
         """C1: 全条件を満たす正常系テスト(DT1)"""
@@ -1126,7 +1128,7 @@ class TestPreparationPreMappingProcessInternalSales:
         assert '営業部' in target_rows.loc[1, 'branch_name']
         assert '営業第' in target_rows.loc[1, 'internal_sales_dept_name']
         assert all(
-            target_rows['branch_code'].str.match(r'^\d{4}$'),
+            target_rows['branch_code'].str.match(r'^\d{5}$'),
         )
 
     def test_process_internal_sales_C1_dt2_no_target_data(self, base_df):
@@ -1263,11 +1265,13 @@ class TestPreparationPreMappingProcessInternalSales:
             modified_rows = result[mask]
             log_msg('テスト後のデータ modified:', LogLevel.DEBUG)
             log_msg(f"\n{tabulate_dataframe(modified_rows)}", LogLevel.DEBUG)
+            assert len(modified_rows.loc[0, 'branch_code']) == 5
             assert modified_rows.loc[0, 'branch_name'] == 'AAA支店'
-            assert modified_rows.loc[0, 'internal_sales_dept_code'] == '0001'
+            assert modified_rows.loc[0, 'internal_sales_dept_code'] == '00011'
             assert modified_rows.loc[0, 'internal_sales_dept_name'] == '営業第一部'
+            assert len(modified_rows.loc[1, 'branch_code']) == 5
             assert modified_rows.loc[1, 'branch_name'] == 'AAA営業部'
-            assert modified_rows.loc[1, 'internal_sales_dept_code'] == '0002'
+            assert modified_rows.loc[1, 'internal_sales_dept_code'] == '00022'
             assert modified_rows.loc[1, 'internal_sales_dept_name'] == '営業第二部'
         else:
             # 具体的な変更の検証
@@ -1375,8 +1379,8 @@ class TestReferencesMergersProcessAreaData:
         result = PreparationPreMapping._process_area_data(_df, _df['target_org'] == OrganizationType.AREA.value)
 
         # アサーション
-        assert result['branch_code'][0] == 'A001'
-        assert result['branch_name'][0] == '東京エリア'
+        assert result['section_gr_code'][0] == 'A001'
+        assert result['section_gr_name'][0] == '東京エリア'
 
         # Mockの検証
         mock_parser.assert_called_once_with()
@@ -1401,8 +1405,8 @@ class TestReferencesMergersProcessAreaData:
 
         # アサーション
         assert len(result) == len(_df)
-        assert 'branch_code' in result.columns
-        assert 'branch_name' in result.columns
+        assert 'section_gr_code' in result.columns
+        assert 'section_gr_name' in result.columns
 
     @patch('src.lib.converter_utils.ibr_reference_pre_mapping.RemarksParser')
     def test_process_area_data_C0_invalid_remarks(self, mock_parser):
@@ -1475,8 +1479,8 @@ class TestReferencesMergersProcessAreaData:
         result = PreparationPreMapping._process_area_data(_df, _df['target_org'] == OrganizationType.AREA.value)
 
         # アサーション
-        assert result['branch_code'][0] == expected_branch_code
-        assert result['branch_name'][0] == expected_branch_name
+        assert result['section_gr_code'][0] == expected_branch_code
+        assert result['section_gr_name'][0] == expected_branch_name
 
         # Mockの検証
         mock_parser.assert_called_once_with()
@@ -1547,8 +1551,8 @@ class TestReferencesMergersProcessAreaData:
         result = PreparationPreMapping._process_area_data(_df, _df['target_org'] == OrganizationType.AREA.value)
 
         # アサーション
-        assert result['branch_code'][0] == 'A001'
-        assert result['branch_name'][0] == '東京エリア'
+        assert result['section_gr_code'][0] == 'A001'
+        assert result['section_gr_name'][0] == '東京エリア'
 
         # Mockの検証
         mock_parser.assert_called_once_with()
@@ -1574,8 +1578,8 @@ class TestReferencesMergersProcessAreaData:
 
         # アサーション
         assert len(result) == len(_df)
-        assert 'branch_code' in result.columns
-        assert 'branch_name' in result.columns
+        assert 'section_gr_code' in result.columns
+        assert 'section_gr_name' in result.columns
 
     @patch('src.lib.converter_utils.ibr_reference_pre_mapping.RemarksParser')
     def test_process_area_data_C2_invalid_remarks(self, mock_parser):
@@ -1645,8 +1649,8 @@ class TestReferencesMergersProcessAreaData:
         result = PreparationPreMapping._process_area_data(_df, _df['target_org'] == OrganizationType.AREA.value)
 
         # アサーション
-        assert result['branch_code'][0] == expected_branch_code
-        assert result['branch_name'][0] == expected_branch_name
+        assert result['section_gr_code'][0] == expected_branch_code
+        assert result['section_gr_name'][0] == expected_branch_name
 
         # Mockの検証
         mock_parser.assert_called_once_with()
@@ -3095,11 +3099,11 @@ ulid	form_type	application_type	target_org	branch_code	branch_name	section_gr_co
 
         # Step 2の検証
         assert result_step2.loc[4, 'target_org'] == '拠点内営業部'
-        assert result_step2.loc[4, 'branch_code'] == '1234'
+        assert result_step2.loc[4, 'branch_code'] == '12345'        # 5桁を維持
         assert result_step2.loc[4, 'branch_name'] == '一二三四支店'
         assert result_step2.loc[4, 'internal_sales_dept_name'] == '営業第一部'
         assert result_step2.loc[8, 'target_org'] == '拠点内営業部'
-        assert result_step2.loc[8, 'branch_code'] == '5678'
+        assert result_step2.loc[8, 'branch_code'] == '56789'        # 5桁を維持
         assert result_step2.loc[8, 'branch_name'] == '五六七八支店'
         assert result_step2.loc[8, 'internal_sales_dept_name'] == '営業部'
 
@@ -3128,11 +3132,11 @@ ulid	form_type	application_type	target_org	branch_code	branch_name	section_gr_co
 
         # Step 3の検証
         assert result_step3.loc[5, 'target_org'] == 'エリア'
-        assert result_step3.loc[5, 'branch_code'] == '234J1'
-        assert result_step3.loc[5, 'branch_name'] == '業務エリアＧｒ'
+        assert result_step3.loc[5, 'section_gr_code'] == '234J1'
+        assert result_step3.loc[5, 'section_gr_name'] == '業務エリアＧｒ'
         assert result_step3.loc[9, 'target_org'] == 'エリア'
-        assert result_step3.loc[9, 'branch_code'] == '234J2'
-        assert result_step3.loc[9, 'branch_name'] == '営業エリアＧｒ'
+        assert result_step3.loc[9, 'section_gr_code'] == '234J2'
+        assert result_step3.loc[9, 'section_gr_name'] == '営業エリアＧｒ'
 
         # Step 3の不変確認
         assert result_step2.iloc[0].equals(result_step3.iloc[0])

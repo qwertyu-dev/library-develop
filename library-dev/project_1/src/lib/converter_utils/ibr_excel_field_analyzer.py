@@ -69,7 +69,7 @@ class RemarksParser:
         """
         # 正規表現パターン
         kanji_numbers = '一二三四五六七八九十'
-        pattern = re.compile(r"営業部|営業第["+ kanji_numbers + r"]+部")
+        pattern = re.compile(r'営業部|営業第['+ kanji_numbers + r']+部')
         if remarks_text == '':
             self.result["request_type"] = "その他"
             return self.result
@@ -175,7 +175,7 @@ class RemarksParser:
 
             ^(\w{5})           : エリアグループコード。行頭から英数字5文字。
             [ \u3000]          : 半角または全角スペース。
-            ([^\s]+?Gr)        : エリアグループ名。空白文字以外の1文字以上で「Gr」で終わる。
+            ([^\s]+?Gr|Ｇｒ)   : エリアグループ名。空白文字以外の1文字以上で「Gr」で終わる。
                                 日本語や特殊文字を含む場合もあり。
             \s*(\(.*?\))?$     : 設立日。括弧内の任意の文字列。括弧は任意。行末まで。
 
@@ -185,7 +185,6 @@ class RemarksParser:
             - "A1B2C 営業部-1Gr"
         """
         self.result["request_type"] = "エリア"
-        #match = re.match(r"^(\w{5})[ \u3000]([^\s]+?Gr)\s*(\(.*?\))?$", line)
         match = re.match(r"^(\w{5})[ \u3000]([^\s]+?(?:Gr|Ｇｒ))\s*(\(.*?\))?$", line)
         if match:
             log_msg("Regex match details:", LogLevel.DEBUG)
