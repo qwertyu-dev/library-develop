@@ -151,7 +151,7 @@ class BprAdFlagDeterminer:
             case ApplicationType.NEW.value: # 新設
                 # Case.1: 申請元が国企かつ部店コード先頭1桁が6
                 if ((series['form_type'] == ValidationConfig.FORM_TYPE_KOKUKI) and (series['branch_code'].startswith('6'))):
-                    return BprADFlagResults.AD_ONLY
+                    return BprADFlagResults.AD_ONLY.value
 
                 # 課Grコード0部店の存在チェック
                 # 対象条件を満たす探索グループを生成する Case2/Case3で使用する
