@@ -114,7 +114,7 @@ class BprAdFlagDeterminer:
         @See. ibr_reference_pre_mapping.py
 
     """
-    def __init__(self, file_path: str|None=None):
+    def __init__(self, request_df: pd.DataFrame|None=None, reference_df: pd.DataFrame|None=None):
         """コンストラクタ
 
         Arguments:
@@ -122,18 +122,24 @@ class BprAdFlagDeterminer:
         """
         # 設定情報取得
         self.SPECIFIC_WORDS = package_config.get('ibr_bpr_flag_determiner',{}).get('SpecificWords','')
-        file_path = file_path if file_path else None
-        log_msg(f'init file_path: {file_path}', LogLevel.INFO)
-        reference_data = package_config.get('ibr_bpr_flag_determiner',{}).get('reference_data','')
-        request_data = package_config.get('ibr_bpr_flag_determiner',{}).get('request_data','')
 
-        # リファレンスデータ.pickle及び申請明細.pickleを取得する,読み取り専用で利用
-        reference = TableSearcher(reference_data, file_path)
-        request = TableSearcher(request_data, file_path)
-        self.reference_df = reference.df
-        self.request_df = request.df
-        log_msg(f'init self.reference_df: \n\n{tabulate_dataframe(self.reference_df.head(5))}', LogLevel.DEBUG)
-        log_msg(f'init self.request_df: \n\n{tabulate_dataframe(self.request_df)}', LogLevel.DEBUG)
+        # リファレンスデータ.pickle及び申請明細.pickleを設定する
+        self.request_df = request_df if request_df is not None else pd.DataFrame()
+        self.reference_df = reference_df if reference_df is not None else pd.DataFrame()
+
+        ## 設定情報取得
+        #self.SPECIFIC_WORDS = package_config.get('ibr_bpr_flag_determiner',{}).get('SpecificWords','')
+        #log_msg(f'init file_path: {file_path}', LogLevel.INFO)
+        #reference_data = package_config.get('ibr_bpr_flag_determiner',{}).get('reference_data','')
+        #request_data = package_config.get('ibr_bpr_flag_determiner',{}).get('request_data','')
+
+        ## リファレンスデータ.pickle及び申請明細.pickleを取得する,読み取り専用で利用
+        #reference = TableSearcher(reference_data, file_path)
+        #request = TableSearcher(request_data, file_path)
+        #self.reference_df = reference.df
+        #self.request_df = request.df
+        #log_msg(f'init self.reference_df: \n\n{tabulate_dataframe(self.reference_df.head(5))}', LogLevel.DEBUG)
+        #log_msg(f'init self.request_df: \n\n{tabulate_dataframe(self.request_df)}', LogLevel.DEBUG)
 
     def determine_bpr_ad_flag(self, series: pd.Series) -> str:
         """申請データからBPR/ADフラグ標準設定値を決定する

@@ -108,17 +108,18 @@ class TestBprAdFlagDeterminerInit:
         assert isinstance(determiner.reference_df, pd.DataFrame)
         assert isinstance(determiner.request_df, pd.DataFrame)
 
-    def test_init_C0_invalid_file_path(self, mock_config):
-        """不正なファイルパスでの初期化テスト"""
-        test_doc = """
-        テスト区分: UT
-        テストカテゴリ: C0
-        テストシナリオ: 不正なファイルパスによる初期化エラー, FileNotFoundError
-        """
-        log_msg(f"\n{test_doc}", LogLevel.INFO)
+    # パスはインターフェースから削除したためイベント対象外
+    #def test_init_C0_invalid_file_path(self, mock_config):
+    #    """不正なファイルパスでの初期化テスト"""
+    #    test_doc = """
+    #    テスト区分: UT
+    #    テストカテゴリ: C0
+    #    テストシナリオ: 不正なファイルパスによる初期化エラー, FileNotFoundError
+    #    """
+    #    log_msg(f"\n{test_doc}", LogLevel.INFO)
 
-        with pytest.raises(FileNotFoundError):
-            BprAdFlagDeterminer("invalid/path/test.pkl")
+    #    with pytest.raises(FileNotFoundError):
+    #        BprAdFlagDeterminer("invalid/path/test.pkl")
 
     def test_init_C1_DT1_with_config(self, mock_config, mock_table_searcher):
         """設定ありパターンのテスト"""
@@ -131,7 +132,8 @@ class TestBprAdFlagDeterminerInit:
 
         determiner = BprAdFlagDeterminer("test.pkl")
         assert ['米州', '欧州', 'アジア'] == determiner.SPECIFIC_WORDS
-        mock_table_searcher.assert_called()
+        # DataFrameは引数渡しに仕様変更、TableSearcherは呼び出さない
+        #mock_table_searcher.assert_called()
 
     def test_init_C2_no_specific_words(self, mock_config, mock_table_searcher):
         """SPECIFIC_WORDS未設定での初期化テスト"""
@@ -144,65 +146,66 @@ class TestBprAdFlagDeterminerInit:
 
         mock_config.get.return_value = {
             'SpecificWords': [],
-            'reference_data': 'reference.pkl',
-            'request_data': 'request.pkl',
+            #'reference_data': 'reference.pkl',
+            #'request_data': 'request.pkl',
         }
 
         determiner = BprAdFlagDeterminer()
         assert [] == determiner.SPECIFIC_WORDS
 
-    @pytest.mark.parametrize(("file_path", "expected_error"), [
-        ("", False),                        # デフォルトパス使用, エラーなし
-        ("../../test.pkl", True),           # 不正な相対パス(パストラバーサル)
-        #(str(Path("test/file")), False),    # 正常パス,エラーなし
-        ("./test/data", False),             # 正常な相対パス,エラーなし
-        (str(Path("test/../data")), True),  # 間接的なパストラバーサル
-    ])
-    def test_init_BVT_file_path(self, mock_config, mock_table_searcher, file_path, expected_error):
-        """ファイルパスの境界値テスト"""
-        test_doc = f"""
-        テスト区分: UT
-        テストカテゴリ: BVT
-        テストシナリオ: ファイルパスの境界値テスト
-        テストデータ: {file_path}
-        期待結果: {'エラー発生' if expected_error else '正常初期化'}
-        """
-        log_msg(f"\n{test_doc}", LogLevel.INFO)
+    # ファイルパスはインターフェースから除外に仕様変更、イベント不要
+    #@pytest.mark.parametrize(("file_path", "expected_error"), [
+    #    ("", False),                        # デフォルトパス使用, エラーなし
+    #    ("../../test.pkl", True),           # 不正な相対パス(パストラバーサル)
+    #    #(str(Path("test/file")), False),    # 正常パス,エラーなし
+    #    ("./test/data", False),             # 正常な相対パス,エラーなし
+    #    (str(Path("test/../data")), True),  # 間接的なパストラバーサル
+    #])
+    #def test_init_BVT_file_path(self, mock_config, mock_table_searcher, file_path, expected_error):
+    #    """ファイルパスの境界値テスト"""
+    #    test_doc = f"""
+    #    テスト区分: UT
+    #    テストカテゴリ: BVT
+    #    テストシナリオ: ファイルパスの境界値テスト
+    #    テストデータ: {file_path}
+    #    期待結果: {'エラー発生' if expected_error else '正常初期化'}
+    #    """
+    #    log_msg(f"\n{test_doc}", LogLevel.INFO)
     
-        # common_configのモック設定
-        mock_config.get.return_value = {
-            'SpecificWords': ['米州', '欧州', 'アジア'],
-            'reference_data': 'reference.pkl',
-            'request_data': 'request.pkl',
-        }
+    #    # common_configのモック設定
+    #    mock_config.get.return_value = {
+    #        'SpecificWords': ['米州', '欧州', 'アジア'],
+    #        'reference_data': 'reference.pkl',
+    #        'request_data': 'request.pkl',
+    #    }
     
-        if expected_error:
-            with pytest.raises(ValueError):
-                BprAdFlagDeterminer(file_path)
-        else:
-            determiner = BprAdFlagDeterminer(file_path)
-            assert isinstance(determiner.reference_df, pd.DataFrame)
-            assert isinstance(determiner.request_df, pd.DataFrame)
+    #    if expected_error:
+    #        with pytest.raises(ValueError):
+    #            BprAdFlagDeterminer(file_path)
+    #    else:
+    #        determiner = BprAdFlagDeterminer(file_path)
+    #        assert isinstance(determiner.reference_df, pd.DataFrame)
+    #        assert isinstance(determiner.request_df, pd.DataFrame)
     
-            # TableSearcherの呼び出し回数を検証
-            assert mock_table_searcher.call_count == 2
+    #        # TableSearcherの呼び出し回数を検証
+    #        assert mock_table_searcher.call_count == 2
 
-            # 呼び出し時の引数を記録
-            calls = mock_table_searcher.call_args_list
-            log_msg(f"TableSearcher calls: {calls}", LogLevel.DEBUG)
+    #        # 呼び出し時の引数を記録
+    #        calls = mock_table_searcher.call_args_list
+    #        log_msg(f"TableSearcher calls: {calls}", LogLevel.DEBUG)
     
-            # file_pathの有無に応じた検証
-            if not file_path:
-                # デフォルトパスケース
-                assert any('reference.pkl' in str(call) for call in calls)
-                assert any('request.pkl' in str(call) for call in calls)
-            else:
-                # カスタムパスケース
-                test_path = Path(file_path)
-                for call in mock_table_searcher.call_args_list:
-                    args = call[0]
-                    assert len(args) >= 2
-                    assert Path(args[1]).parts == test_path.parts  # パスの比較を部分的に行う
+    #        # file_pathの有無に応じた検証
+    #        if not file_path:
+    #            # デフォルトパスケース
+    #            assert any('reference.pkl' in str(call) for call in calls)
+    #            assert any('request.pkl' in str(call) for call in calls)
+    #        else:
+    #            # カスタムパスケース
+    #            test_path = Path(file_path)
+    #            for call in mock_table_searcher.call_args_list:
+    #                args = call[0]
+    #                assert len(args) >= 2
+    #                assert Path(args[1]).parts == test_path.parts  # パスの比較を部分的に行う
 
     #@pytest.mark.parametrize(("file_path", "expected_error"), [
     #    ("", False),                          # デフォルトパス使用, エラーなし
@@ -765,7 +768,8 @@ class TestBprAdFlagDeterminerDetermineBprAdFlag:
         mock_table_searcher.side_effect = mock_searcher_factory
 
         # ここでインスタンス化
-        determiner = BprAdFlagDeterminer()
+        #determiner = BprAdFlagDeterminer()
+        determiner = BprAdFlagDeterminer(request_df, reference_df)
 
 
         # テスト用の入力データ 申請玉との整合性に留意が必要な箇所,慎重に設定
@@ -793,7 +797,7 @@ class TestBprAdFlagDeterminerDetermineBprAdFlag:
         log_msg(f"Result for Case 1: {result}", LogLevel.INFO)
         assert result == BprADFlagResults.AD_ONLY.value
 
-        # _alert_case_hqメソッドが正しく,１回呼び出されたことを検証,引数は各々
+        ## _alert_case_hqメソッドが正しく,１回呼び出されたことを検証,引数は各々
         mock_bpr_ad_flag_determiner_alert_case_hq.assert_called_once_with(
             series_hq_specific['branch_code'],
             series_hq_specific['section_gr_name'],
