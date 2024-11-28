@@ -105,7 +105,7 @@ class TestBprAdFlagDeterminerInit:
 
         determiner = BprAdFlagDeterminer()
         assert ['米州', '欧州', 'アジア'] == determiner.SPECIFIC_WORDS
-        assert isinstance(determiner.reference_df, pd.DataFrame)
+        #assert isinstance(determiner.reference_df, pd.DataFrame)
         assert isinstance(determiner.request_df, pd.DataFrame)
 
     # パスはインターフェースから削除したためイベント対象外
@@ -445,7 +445,7 @@ class TestBprAdFlagDeterminerDetermineBprAdFlag:
             'business_and_area_code': '000',
             'branch_name': 'テスト支店',
         })
-        log_msg(f'{tabulate_dataframe(determiner.reference_df.head(5))}', LogLevel.INFO)
+        #log_msg(f'{tabulate_dataframe(determiner.reference_df.head(5))}', LogLevel.INFO)
         log_msg(f'{tabulate_dataframe(determiner.request_df.head(5))}', LogLevel.INFO)
 
         result = determiner.determine_bpr_ad_flag(series)
@@ -464,7 +464,7 @@ class TestBprAdFlagDeterminerDetermineBprAdFlag:
         request_df = mock_table_searcher.return_value.df
         determiner = BprAdFlagDeterminer()
 
-        log_msg(f'{tabulate_dataframe(determiner.reference_df.head(5))}', LogLevel.INFO)
+        #log_msg(f'{tabulate_dataframe(determiner.reference_df.head(5))}', LogLevel.INFO)
         log_msg(f'{tabulate_dataframe(determiner.request_df.head(5))}', LogLevel.INFO)
 
         # 各行に対してテスト
@@ -678,7 +678,7 @@ class TestBprAdFlagDeterminerDetermineBprAdFlag:
             'branch_name': 'テスト支店',
         })
 
-        log_msg(f'{tabulate_dataframe(determiner.reference_df.head(5))}', LogLevel.INFO)
+        #log_msg(f'{tabulate_dataframe(determiner.reference_df.head(5))}', LogLevel.INFO)
         log_msg(f'{tabulate_dataframe(determiner.request_df.head(5))}', LogLevel.INFO)
         log_msg(f"target series: {series}", LogLevel.INFO)
 
@@ -769,7 +769,7 @@ class TestBprAdFlagDeterminerDetermineBprAdFlag:
 
         # ここでインスタンス化
         #determiner = BprAdFlagDeterminer()
-        determiner = BprAdFlagDeterminer(request_df, reference_df)
+        determiner = BprAdFlagDeterminer(request_df)
 
 
         # テスト用の入力データ 申請玉との整合性に留意が必要な箇所,慎重に設定
@@ -786,7 +786,7 @@ class TestBprAdFlagDeterminerDetermineBprAdFlag:
         })
 
         # 入力データの確認
-        log_msg(f'{tabulate_dataframe(determiner.reference_df.head(5))}', LogLevel.INFO)
+        #log_msg(f'{tabulate_dataframe(determiner.reference_df.head(5))}', LogLevel.INFO)
         log_msg(f'{tabulate_dataframe(determiner.request_df.head(5))}', LogLevel.INFO)
         log_msg(f"Input series branch_code: {series_hq_specific['branch_code']}", LogLevel.INFO)
         log_msg(f"Input series branch_code type: {type(series_hq_specific['branch_code'])}", LogLevel.DEBUG)
@@ -870,7 +870,7 @@ class TestBprAdFlagDeterminerDetermineBprAdFlag:
         })
 
         # 入力データの確認
-        log_msg(f'{tabulate_dataframe(determiner.reference_df.head(5))}', LogLevel.INFO)
+        #log_msg(f'{tabulate_dataframe(determiner.reference_df.head(5))}', LogLevel.INFO)
         log_msg(f'{tabulate_dataframe(determiner.request_df.head(5))}', LogLevel.INFO)
         log_msg(f"Input series branch_code: {series_hq_specific['branch_code']}", LogLevel.INFO)
         log_msg(f"Input series branch_code type: {type(series_hq_specific['branch_code'])}", LogLevel.DEBUG)

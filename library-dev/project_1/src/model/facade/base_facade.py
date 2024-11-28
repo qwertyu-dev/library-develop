@@ -16,7 +16,7 @@ class DataFrameEditor:
         # DI
         self.config = config or self.config
         self.log_msg = self.config.log_message
-        self.column_editors = self.initialize_editors()
+        #self.column_editors = self.initialize_editors()
 
         # output_layout情報を受け取る
         self.output_columns = None

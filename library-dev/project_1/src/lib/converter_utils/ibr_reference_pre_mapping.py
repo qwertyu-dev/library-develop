@@ -76,109 +76,109 @@ class RemarksParseError(ReferenceMergersError):
 class PreparationPreMapping:
     """統合レイアウトデータとリファレンステーブルのマージを行うクラス"""
 
-    #TODO(): mergersで一意特定したリファレンスから付与するほうが適切なのでは？の検証jj
-    @staticmethod
-    def add_bpr_target_flag_from_reference( integrated_df: pd.DataFrame | None = None, reference_df: pd.DataFrame | None = None) -> pd.DataFrame:
-        """申請明細データに対して、リファレンス.BPRADフラグColumnを付与する
+    # mergersで一意特定したリファレンスから付与するほうが適切、提供停止
+    #@staticmethod
+    #def add_bpr_target_flag_from_reference( integrated_df: pd.DataFrame | None = None, reference_df: pd.DataFrame | None = None) -> pd.DataFrame:
+    #    """申請明細データに対して、リファレンス.BPRADフラグColumnを付与する
 
-        新規以外の申請種別に対して
-        予めリファレンスからBPRADフラグをColumn付与する
-        従ってBPRADフラグ付与処理の前に実行する必要が有る
-        @see ibr_bpr_flag_determiner.py
+    #    新規以外の申請種別に対して
+    #    予めリファレンスからBPRADフラグをColumn付与する
+    #    従ってBPRADフラグ付与処理の前に実行する必要が有る
+    #    @see ibr_bpr_flag_determiner.py
 
-        * 一意Key: 部店コード,課Grコード,エリアコード(4桁, 申請データは2桁目-/リファンレンスはエリアコード)
-        * 対象レコード: 種類: 新設以外
+    #    * 一意Key: 部店コード,課Grコード,エリアコード(4桁, 申請データは2桁目-/リファンレンスはエリアコード)
+    #    * 対象レコード: 種類: 新設以外
 
-        Args:
-            integrated_df: 申請データ DataFrame
-            reference_df: リファレンスデータ DataFrame
+    #    Args:
+    #        integrated_df: 申請データ DataFrame
+    #        reference_df: リファレンスデータ DataFrame
 
-        Returns:
-            pd.DataFrame: BPRADフラグが付与された申請データ
+    #    Returns:
+    #        pd.DataFrame: BPRADフラグが付与された申請データ
 
-        Raises:
-            DataMergeError: マージ処理に失敗した場合
+    #    Raises:
+    #        DataMergeError: マージ処理に失敗した場合
 
-        Notes:
-            BPRフラグ初期値設定部品で利用される想定,新設以外はリファレンスからBPRADフラグ取得要件
-        """
-        try:
-            # データ読み込み
-            result_df = PreparationPreMapping._load_data(
-                integrated_df, MergerConfig.DEFAULT_LAYOUT_FILE,
-            )
-            reference_df = PreparationPreMapping._load_data(
-                reference_df, MergerConfig.REFERENCE_TABLE_FILE,
-            )
+    #    Notes:
+    #        BPRフラグ初期値設定部品で利用される想定,新設以外はリファレンスからBPRADフラグ取得要件
+    #    """
+    #    try:
+    #        # データ読み込み
+    #        result_df = PreparationPreMapping._load_data(
+    #            integrated_df, MergerConfig.DEFAULT_LAYOUT_FILE,
+    #        )
+    #        reference_df = PreparationPreMapping._load_data(
+    #            reference_df, MergerConfig.REFERENCE_TABLE_FILE,
+    #        )
 
-            # マージ設定
-            merge_config = {
-                'columns': {
-                    'integrated': [
-                        'application_type', 'branch_code', 'section_gr_code',
-                        'area_code', 'area_code_sep', 'bpr_target_flag',
-                    ],
-                    'reference': [
-                        'branch_code_jinji', 'section_gr_code_jinji',
-                        'area_code', 'bpr_target_flag',
-                    ],
-                },
-                'keys': {
-                    'left': ['branch_code', 'section_gr_code', 'area_code_sep'],
-                    'right': ['branch_code_jinji', 'section_gr_code_jinji', 'area_code'],
-                },
-            }
+    #        # マージ設定
+    #        merge_config = {
+    #            'columns': {
+    #                'integrated': [
+    #                    'application_type', 'branch_code', 'section_gr_code',
+    #                    'area_code', 'area_code_sep', 'bpr_target_flag',
+    #                ],
+    #                'reference': [
+    #                    'branch_code_jinji', 'section_gr_code_jinji',
+    #                    'area_code', 'bpr_target_flag',
+    #                ],
+    #            },
+    #            'keys': {
+    #                'left': ['branch_code', 'section_gr_code', 'area_code_sep'],
+    #                'right': ['branch_code_jinji', 'section_gr_code_jinji', 'area_code'],
+    #            },
+    #        }
 
-            # マージ前処理
-            # エリアコード処理
-            # 一括申請.area_code分割, area_codeにはNaNが入っていない前提 ブランクを含むstr
-            # 一括申請.エリアコード２桁目〜 = リファレンス.エリアコード
-            result_df['area_code_sep'] = result_df['area_code'].str[1:]
+    #        # マージ前処理
+    #        # エリアコード処理
+    #        # 一括申請.area_code分割, area_codeにはNaNが入っていない前提 ブランクを含むstr
+    #        # 一括申請.エリアコード２桁目〜 = リファレンス.エリアコード
+    #        result_df['area_code_sep'] = result_df['area_code'].str[1:]
 
-            # 新設しかない場合はColumnが落ちるケースを考慮
-            result_df['reference_bpr_target_flag'] = ''
+    #        # 新設しかない場合はColumnが落ちるケースを考慮
+    #        result_df['reference_bpr_target_flag'] = ''
 
-            # マージデータの準備
-            filtered_df = result_df[merge_config['columns']['integrated']]
-            filtered_ref = reference_df[merge_config['columns']['reference']]
+    #        # マージデータの準備
+    #        filtered_df = result_df[merge_config['columns']['integrated']]
+    #        filtered_ref = reference_df[merge_config['columns']['reference']]
 
-            # 新設以外(変更/廃止)明細を対象に処理
-            non_new_mask = (filtered_df['application_type'] != ApplicationType.NEW.value)
+    #        # 新設以外(変更/廃止)明細を対象に処理
+    #        non_new_mask = (filtered_df['application_type'] != ApplicationType.NEW.value)
 
-            # マージ処理
-            if non_new_mask.any():
-                merged_df = filtered_df[non_new_mask].merge(
-                    filtered_ref,
-                    left_on=merge_config['keys']['left'],
-                    right_on=merge_config['keys']['right'],
-                    how='left',
-                )
+    #        # マージ処理
+    #        if non_new_mask.any():
+    #            merged_df = filtered_df[non_new_mask].merge(
+    #                filtered_ref,
+    #                left_on=merge_config['keys']['left'],
+    #                right_on=merge_config['keys']['right'],
+    #                how='left',
+    #            )
 
-                # 対象となる申請明細(種類: 変更/廃止)に対となるレコードがリファレンスにない
-                if merged_df.empty:
-                    err_msg = '変更/廃止申請にも関わらず対となる明細がリファレンス上にありません'
-                    log_msg(err_msg, LogLevel.ERROR)
-                    PreparationPreMapping._handle_merge_error(err_msg)
+    #            # 対象となる申請明細(種類: 変更/廃止)に対となるレコードがリファレンスにない
+    #            if merged_df.empty:
+    #                err_msg = '変更/廃止申請にも関わらず対となる明細がリファレンス上にありません'
+    #                log_msg(err_msg, LogLevel.ERROR)
+    #                PreparationPreMapping._handle_merge_error(err_msg)
 
-                # BPR/ADフラグ: column付与処理
-                result_df.loc[non_new_mask, 'reference_bpr_target_flag'] = (
-                    merged_df['bpr_target_flag_y']
-                )
-                # 'reference_bpr_target_flag' column名で
-                # リファレンス上のBPRADフラグ列を申請明細に追加する
-                result_df['reference_bpr_target_flag'] =  result_df['reference_bpr_target_flag'].fillna('')
+    #            # BPR/ADフラグ: column付与処理
+    #            result_df.loc[non_new_mask, 'reference_bpr_target_flag'] = (
+    #                merged_df['bpr_target_flag_y']
+    #            )
+    #            # 'reference_bpr_target_flag' column名で
+    #            # リファレンス上のBPRADフラグ列を申請明細に追加する
+    #            result_df['reference_bpr_target_flag'] =  result_df['reference_bpr_target_flag'].fillna('')
 
-                log_msg('bprad col added:\n')
-                tabulate_dataframe(result_df)
+    #            log_msg('bprad col added:\n')
+    #            tabulate_dataframe(result_df)
 
-            PreparationPreMapping._log_bpr_flag_results(result_df)
+    #        PreparationPreMapping._log_bpr_flag_results(result_df)
 
-        except Exception as e:
-            err_msg = f"BPRADフラグ付与処理でエラーが発生しました: {str(e)}"
-            log_msg(err_msg, LogLevel.ERROR)
-            raise DataMergeError(err_msg) from e
-        else:
-            return result_df
+    #    except Exception as e:
+    #        err_msg = f"BPRADフラグ付与処理でエラーが発生しました: {str(e)}"
+    #        log_msg(err_msg, LogLevel.ERROR)
+    #        raise DataMergeError(err_msg) from e
+    #    else:
+    #        return result_df
 
     #######################################################
     # Merge前のColumn編集 統合レイアウトのColumn加工

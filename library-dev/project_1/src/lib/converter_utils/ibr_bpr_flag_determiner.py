@@ -114,7 +114,7 @@ class BprAdFlagDeterminer:
         @See. ibr_reference_pre_mapping.py
 
     """
-    def __init__(self, request_df: pd.DataFrame|None=None, reference_df: pd.DataFrame|None=None):
+    def __init__(self, request_df: pd.DataFrame|None=None):
         """コンストラクタ
 
         Arguments:
@@ -125,7 +125,6 @@ class BprAdFlagDeterminer:
 
         # リファレンスデータ.pickle及び申請明細.pickleを設定する
         self.request_df = request_df if request_df is not None else pd.DataFrame()
-        self.reference_df = reference_df if reference_df is not None else pd.DataFrame()
 
         ## 設定情報取得
         #self.SPECIFIC_WORDS = package_config.get('ibr_bpr_flag_determiner',{}).get('SpecificWords','')

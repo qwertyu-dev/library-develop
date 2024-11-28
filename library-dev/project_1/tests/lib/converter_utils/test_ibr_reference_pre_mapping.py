@@ -23,332 +23,332 @@ config = initialize_config(sys.modules[__name__])
 package_config = config.package_config
 log_msg = config.log_message
 
-class TestReferenceMergersAddBprTargetFlag:
-    """PreparationPreMappingクラスのadd_bpr_target_flag_from_referenceメソッドのテスト
-
-    テスト対象: PreparationPreMapping.add_bpr_target_flag_from_reference()
-    │   ├── C0: 基本機能テスト
-    │   │   ├── 正常系: 新設以外の申請に対するBPRADフラグ付与
-    │   │   ├── 異常系: データロード失敗
-    │   │   └── 異常系: マージ処理失敗
-    │   ├── C1: 分岐カバレッジ
-    │   │   ├── データロード分岐
-    │   │   └── マージ処理分岐
-    │   ├── C2: 条件組み合わせ
-    │   │   ├── 新設申請
-    │   │   ├── 変更申請
-    │   │   └── 廃止申請
-    │   ├── DT: ディシジョンテーブル
-    │   │   ├── 申請種類
-    │   │   └── BPRADフラグ状態
-    │   └── BVT: 境界値テスト
-    │       ├── エリアコード境界
-    │       └── フラグ値境界
-
-    C1のディシジョンテーブル:
-    | 条件                                   | DT1 | DT2 | DT3 | DT4 | DT5 |
-    |----------------------------------------|-----|-----|-----|-----|-----|
-    | 申請種類が新設以外                     | Y   | N   | Y   | Y   | Y   |
-    | リファレンスに対応レコードが存在する   | Y   | -   | N   | Y   | Y   |
-    | エリアコードが一致する                 | Y   | -   | -   | N   | Y   |
-    | BPRフラグ値が存在する                  | Y   | -   | -   | -   | N   |
-    | 期待される動作                         | 成功| 成功| 成功| 成功| 成功|
-
-    境界値検証ケース一覧:
-    | ケースID | テストケース     | テスト値 | 期待結果 | テストの目的       | 実装状況                                       |
-    |----------|------------------|----------|----------|--------------------|------------------------------------------------|
-    | BVT_001  | 最小エリアコード | "A"      | 正常終了 | 最小有効値の確認   | 実装済み (test_add_bpr_flag_BVT_area_code_min) |
-    | BVT_002  | 最大エリアコード | "Z"      | 正常終了 | 最大有効値の確認   | 実装済み (test_add_bpr_flag_BVT_area_code_max) |
-    | BVT_003  | 空エリアコード   | ""       | 正常終了 | 空値の確認         | 実装済み (test_add_bpr_flag_BVT_area_code_empty) |
-    | BVT_004  | BPRフラグ最小値  | "0"      | 正常終了 | フラグ最小値の確認 | 実装済み (test_add_bpr_flag_BVT_flag_min) |
-    | BVT_005  | BPRフラグ最大値  | "1"      | 正常終了 | フラグ最大値の確認 | 実装済み (test_add_bpr_flag_BVT_flag_max) |
-    """
-
-    @pytest.fixture()
-    def integrated_layout_df(self) -> pd.DataFrame:
-        """統合レイアウトデータのfixture"""
-        columns = [
-            'ulid', 'form_type', 'application_type', 'target_org', 'business_unit_code',
-            'parent_branch_code', 'branch_code', 'branch_name', 'section_gr_code',
-            'section_gr_name', 'section_name_en', 'resident_branch_code',
-            'resident_branch_name', 'aaa_transfer_date', 'internal_sales_dept_code',
-            'internal_sales_dept_name', 'area_code', 'area_name', 'remarks',
-            'branch_name_kana', 'section_gr_name_kana', 'section_gr_name_abbr',
-            'bpr_target_flag',
-        ]
-
-        data = [
-            ['add_bpr_target_flag_from_reference', '2', '変更', '部', '339', '*', '0001', 'AAA支店', '0', '部署5', 'Department', '36', '60515', '常駐支店50', '', '', 'BFBFT10', 'エリア10', '', '', '', '', ''],
-            ['add_bpr_target_flag_from_reference', '2', '変更', '課', '339', '*', '0001', 'AAA支店', '00011', '部署5', 'Department', '36', '60515', '常駐支店50', '', '', 'BFBFT10', 'エリア10', '', '', '', '', ''],
-            ['add_bpr_target_flag_from_reference', '2', '削除', '部', '339', '*', '0002', 'AAA支店', '0', '部署5', 'Department', '36', '60515', '常駐支店50', '', '', 'BFBFT10', 'エリア10', '', '', '', '', ''],
-            ['add_bpr_target_flag_from_reference', '2', '新設', '課', '339', '*', '0002', 'AAA支店', '00021', '部署5', 'Department', '36', '60515', '常駐支店50', '', '', 'BFBFT10', 'エリア10', '', '', '', '', ''],
-        ]
-
-        return pd.DataFrame(data, columns=columns)
-
-    @pytest.fixture()
-    def reference_table_df(self) -> pd.DataFrame:
-        """リファレンステーブルのfixture"""
-        columns = [
-            'reference_db_update_datetime', 'organization_change_date', 'ulid',
-            'branch_code_bpr', 'branch_name_bpr', 'section_gr_code_bpr', 'section_gr_name_bpr',
-            'business_unit_code_bpr', 'parent_branch_code', 'internal_sales_dept_code',
-            'internal_sales_dept_name', 'branch_code_jinji', 'branch_name_jinji',
-            'section_gr_code_jinji', 'section_gr_name_jinji', 'branch_code_area',
-            'branch_name_area', 'section_gr_code_area', 'section_gr_name_area',
-            'sub_branch_code', 'sub_branch_name', 'business_code', 'area_code',
-            'area_name', 'resident_branch_code', 'resident_branch_name', 'portal_use',
-            'portal_send', 'hq_sales_branch_flag', 'organization_classification',
-            'organization_classification_code', 'branch_sort_number', 'branch_sort_number2',
-            'organization_name_kana', 'dp_code', 'dp_code_bp', 'gr_code', 'gr_code_bp',
-            'grps_code', 'bpr_target_flag', 'secondment_recovery_flag', 'remarks',
-            'sort',
-        ]
-
-        data = [
-            ['add_bpr_target_flag_from_reference', '20241211', 'ULID000009', '00100', '支店10', '00107', 'グループ10', '3', '00040', 'S0009', '営業部10', '0001', '支店10', '0', 'グループ10', '00100', '支店10', '00107', 'グループ10', 'SB009', '出張所10', 'B', 'FBFT10', 'エリア10', '00040', '常駐支店10', '1', '0', '0', 'DOMESTIC', '2', '0010', '0010', 'シテン10', 'DP009', 'DPB009', 'GR009', 'GRB009', 'GRPS009', '5', '0', '備考10', '10'],
-            ['add_bpr_target_flag_from_reference', '20241211', 'ULID000009', '00100', '支店10', '00107', 'グループ10', '3', '00040', 'S0009', '営業部10', '00011', '支店10', '00011', 'グループ10', '00100', '支店10', '00107', 'グループ10', 'SB009', '出張所10', 'B', 'FBFT10', 'エリア10', '00040', '常駐支店10', '1', '0', '0', 'DOMESTIC', '2', '0010', '0010', 'シテン10', 'DP009', 'DPB009', 'GR009', 'GRB009', 'GRPS009', '6', '0', '備考10', '10'],
-            ['add_bpr_target_flag_from_reference', '20241211', 'ULID000009', '00100', '支店10', '00107', 'グループ10', '3', '', 'S0009', '営業部10', '0002', '支店20', '0', 'グループ10', '00100', '支店20', '00107', 'グループ10', 'SB009', '出張所10', 'B', 'FBFT10', 'エリア10', '00040', '常駐支店10', '1', '0', '0', 'DOMESTIC', '2', '0010', '0010', 'シテン10', 'DP009', 'DPB009', 'GR009', 'GRB009', 'GRPS009', '7', '0', '備考10', '10'],
-            ['add_bpr_target_flag_from_reference', '20241211', 'ULID000009', '00100', '支店10', '00107', 'グループ10', '3', '', 'S0009', '営業部10', '00021', '支店20', '00021', 'グループ10', '00100', '支店20', '00107', 'グループ10', 'SB009', '出張所10', 'B', 'FBFT10', 'エリア10', '00040', '常駐支店10', '1', '0', '0', 'DOMESTIC', '2', '0010', '0010', 'シテン10', 'DP009', 'DPB009', 'GR009', 'GRB009', 'GRPS009', '8', '0', '備考10', '10'],
-        ]
-
-        return pd.DataFrame(data, columns=columns)
-
-    def setup_method(self):
-        """テストメソッドの前処理"""
-        log_msg("test start", LogLevel.INFO)
-
-    def teardown_method(self):
-        """テストメソッドの後処理"""
-        log_msg(f"test end\n{'-'*80}\n", LogLevel.INFO)
-
-    def test_add_bpr_flag_C0_valid_configuration(self, integrated_layout_df, reference_table_df):
-        """正常系: 有効な設定での基本機能テスト"""
-        test_doc = """
-        テスト区分: UT
-        テストカテゴリ: C0
-        テスト内容: 正常系 - 基本的なBPRフラグ付与処理の確認
-        """
-        log_msg(f"\n{test_doc}", LogLevel.DEBUG)
-
-        result = PreparationPreMapping.add_bpr_target_flag_from_reference(
-            integrated_layout_df,
-            reference_table_df,
-        )
-
-        assert isinstance(result, pd.DataFrame)
-        assert not result.empty
-        assert 'reference_bpr_target_flag' in result.columns
-
-        # 変更/廃止の場合はリファレンスの値が設定されている
-        change_delete_mask = result['application_type'].isin(['変更', '削除'])
-        assert result.loc[change_delete_mask, 'reference_bpr_target_flag'].notna().all()
-
-    def test_add_bpr_flag_C1_dt1_successful_merge(self, integrated_layout_df, reference_table_df):
-        """C1: 全条件を満たす正常系テスト(DT1)"""
-        test_doc = """
-        テスト区分: UT
-        テストカテゴリ: C1
-        テスト内容: 正常系 - DT1の全条件満たすケース
-        """
-        log_msg(f"\n{test_doc}", LogLevel.DEBUG)
-
-        result = PreparationPreMapping.add_bpr_target_flag_from_reference(
-            integrated_layout_df,
-            reference_table_df,
-        )
-
-        assert isinstance(result, pd.DataFrame)
-        assert not result.empty
-        assert 'reference_bpr_target_flag' in result.columns
-        assert result['reference_bpr_target_flag'].notna().any()
-
-    def test_add_bpr_flag_C1_dt2_new_record(self, integrated_layout_df, reference_table_df):
-        """C1: 新設レコードのテスト(DT2)"""
-        test_doc = """
-        テスト区分: UT
-        テストカテゴリ: C1
-        テスト内容: 異常系 - DT2の新設レコードケース
-        """
-        log_msg(f"\n{test_doc}", LogLevel.DEBUG)
-
-        # 全て新設に変更
-        integrated_layout_df['application_type'] = ApplicationType.NEW.value
-        reference_table_df['bpr_target_flag'] = '' # 新設なのですくなくともBPRADフラグは値なし
-        log_msg('reference_table_df', LogLevel.DEBUG)
-        tabulate_dataframe(reference_table_df)
-
-        result = PreparationPreMapping.add_bpr_target_flag_from_reference(
-            integrated_layout_df,
-            reference_table_df,
-        )
-
-        assert 'reference_bpr_target_flag' in result.columns
-        assert result['reference_bpr_target_flag'].eq('').all()
-
-    def test_add_bpr_flag_C2_area_code_combinations(self, integrated_layout_df, reference_table_df):
-        """C2: エリアコードの組み合わせテスト"""
-        test_doc = """
-        テスト区分: UT
-        テストカテゴリ: C2
-        テスト内容: 条件組み合わせ - エリアコードの一致/不一致
-        """
-        log_msg(f"\n{test_doc}", LogLevel.DEBUG)
-
-        # エリアコード一致
-        result1 = PreparationPreMapping.add_bpr_target_flag_from_reference(
-            integrated_layout_df,
-            reference_table_df,
-        )
-        assert 'reference_bpr_target_flag' in result1.columns
-        change_delete_mask = result1['application_type'].isin(['変更', '削除'])
-        assert result1.loc[change_delete_mask, 'reference_bpr_target_flag'].notna().any()
-
-        # エリアコード不一致
-        integrated_layout_df['area_code'] = 'XXXXX'
-        result2  = PreparationPreMapping.add_bpr_target_flag_from_reference(
-                integrated_layout_df,
-                reference_table_df,
-            )
-        log_msg('reference_table_df', LogLevel.DEBUG)
-        tabulate_dataframe(reference_table_df)
-        log_msg('integrated', LogLevel.DEBUG)
-        tabulate_dataframe(integrated_layout_df)
-        log_msg('result2', LogLevel.DEBUG)
-        tabulate_dataframe(result2)
-        # データの内4件はエリアコードに依存しない
-        assert len(result2) == 4
-        # reference_bpr_target_flagは値設定されず空振り
-        assert all(result2['reference_bpr_target_flag'] == '')
-
-    def test_add_bpr_flag_BVT_area_code_boundary(self, integrated_layout_df, reference_table_df):
-        """境界値: エリアコードの境界値テスト"""
-        test_doc = """
-        テスト区分: UT
-        テストカテゴリ: BVT
-        テスト内容: エリアコードの境界値テスト
-            - 最小値: "A0000"
-            - 最大値: "Z9999"
-            - 空文字列
-        """
-        log_msg(f"\n{test_doc}", LogLevel.DEBUG)
-
-        # 最小値テスト
-        integrated_layout_df['area_code'] = 'A0000'
-        reference_table_df['area_code'] = 'A0000'
-        result = PreparationPreMapping.add_bpr_target_flag_from_reference(
-            integrated_layout_df,
-            reference_table_df,
-        )
-        assert isinstance(result, pd.DataFrame)
-        assert 'reference_bpr_target_flag' in result.columns
-
-        # 最大値テスト
-        integrated_layout_df['area_code'] = 'Z9999'
-        reference_table_df['area_code'] = 'Z9999'
-        result = PreparationPreMapping.add_bpr_target_flag_from_reference(
-            integrated_layout_df,
-            reference_table_df,
-        )
-        assert isinstance(result, pd.DataFrame)
-        assert 'reference_bpr_target_flag' in result.columns
-
-        # 空文字列テスト
-        integrated_layout_df['area_code'] = ''
-        reference_table_df['area_code'] = ''
-        result =   PreparationPreMapping.add_bpr_target_flag_from_reference(
-                integrated_layout_df,
-                reference_table_df,
-            )
-        # データの内4件はエリアコードに依存しない
-        assert len(result) == 4
-        assert result.loc[0, 'reference_bpr_target_flag'] == '5'
-        assert result.loc[1, 'reference_bpr_target_flag'] == ''  # ヒットしない
-        assert result.loc[2, 'reference_bpr_target_flag'] == '7'
-        assert result.loc[3, 'reference_bpr_target_flag'] == ''  # ヒットしない
-
-    def test_add_bpr_flag_BVT_flag_value_boundary(self, integrated_layout_df, reference_table_df):
-        """境界値: BPRフラグ値の境界値テスト"""
-        test_doc = """
-        テスト区分: UT
-        テストカテゴリ: BVT
-        テスト内容: BPRフラグ値の境界値テスト
-            - 最小値: "0"
-            - 最大値: "1"
-            - NULL値
-        """
-        log_msg(f"\n{test_doc}", LogLevel.DEBUG)
-
-        # 最小値テスト
-        reference_table_df['bpr_target_flag'] = '0'
-        result = PreparationPreMapping.add_bpr_target_flag_from_reference(
-            integrated_layout_df,
-            reference_table_df,
-        )
-        log_msg('reference_table_df', LogLevel.DEBUG)
-        tabulate_dataframe(reference_table_df)
-        log_msg('integrated', LogLevel.DEBUG)
-        tabulate_dataframe(integrated_layout_df)
-        log_msg('result', LogLevel.DEBUG)
-        tabulate_dataframe(result)
-
-        assert isinstance(result, pd.DataFrame)
-        assert 'reference_bpr_target_flag' in result.columns
-        #change_delete_mask = result['application_type'].isin(['変更', '削除'])
-        #assert result.loc[change_delete_mask, 'reference_bpr_target_flag'].eq('0').all()
-        # 変更・削除レコードの検証
-        change_delete_mask = result['application_type'].isin(['変更', '削除'])
-        change_delete_base_mask = change_delete_mask & (result['section_gr_code'] == '0')
-        change_delete_detail_mask = change_delete_mask & (result['section_gr_code'] != '0')
-
-        # 基準レコード(部)の検証
-        assert result.loc[change_delete_base_mask, 'reference_bpr_target_flag'].eq('0').all(), \
-            "変更・削除の基準レコードのフラグ値が'0'ではありません"
-
-        # 明細レコード(課)の検証
-        assert result.loc[change_delete_detail_mask, 'reference_bpr_target_flag'].eq('').all(), \
-            "変更・削除の明細レコードのフラグ値が空文字ではありません"
-
-        # 新設レコードの検証
-        new_mask = result['application_type'] == ApplicationType.NEW.value
-        assert result.loc[new_mask, 'reference_bpr_target_flag'].eq('').all(), \
-            "新設レコードのフラグ値が空文字ではありません"
-
-        # 最大値テスト
-        reference_table_df['bpr_target_flag'] = '1'
-        result = PreparationPreMapping.add_bpr_target_flag_from_reference(
-            integrated_layout_df,
-            reference_table_df,
-        )
-
-        # 変更・削除レコードの検証(部/課で分けて検証)
-        change_delete_mask = result['application_type'].isin(['変更', '削除'])
-        change_delete_base_mask = change_delete_mask & (result['section_gr_code'] == '0')
-        change_delete_detail_mask = change_delete_mask & (result['section_gr_code'] != '0')
-
-        # 部レコード(section_gr_code = '0')の検証
-        assert result.loc[change_delete_base_mask, 'reference_bpr_target_flag'].eq('1').all(), \
-            "変更・削除の部レコードのフラグ値が'1'ではありません"
-
-        # 課レコード(section_gr_code != '0')の検証
-        assert result.loc[change_delete_detail_mask, 'reference_bpr_target_flag'].eq('').all(), \
-            "変更・削除の課レコードのフラグ値が空文字ではありません"
-
-        # 新設レコードの検証
-        new_mask = result['application_type'] == '新設'
-        assert result.loc[new_mask, 'reference_bpr_target_flag'].eq('').all(), \
-        "新設レコードのフラグ値が空文字ではありません"
-
-        ## NULL値テスト
-        reference_table_df['bpr_target_flag'] = None
-        result = PreparationPreMapping.add_bpr_target_flag_from_reference(
-                integrated_layout_df,
-                reference_table_df,
-            )
-        log_msg('result', LogLevel.DEBUG)
-        tabulate_dataframe(result)
-
-        assert all(result['reference_bpr_target_flag'] == '')
+#class TestReferenceMergersAddBprTargetFlag:
+#    """PreparationPreMappingクラスのadd_bpr_target_flag_from_referenceメソッドのテスト
+#
+#    テスト対象: PreparationPreMapping.add_bpr_target_flag_from_reference()
+#    │   ├── C0: 基本機能テスト
+#    │   │   ├── 正常系: 新設以外の申請に対するBPRADフラグ付与
+#    │   │   ├── 異常系: データロード失敗
+#    │   │   └── 異常系: マージ処理失敗
+#    │   ├── C1: 分岐カバレッジ
+#    │   │   ├── データロード分岐
+#    │   │   └── マージ処理分岐
+#    │   ├── C2: 条件組み合わせ
+#    │   │   ├── 新設申請
+#    │   │   ├── 変更申請
+#    │   │   └── 廃止申請
+#    │   ├── DT: ディシジョンテーブル
+#    │   │   ├── 申請種類
+#    │   │   └── BPRADフラグ状態
+#    │   └── BVT: 境界値テスト
+#    │       ├── エリアコード境界
+#    │       └── フラグ値境界
+#
+#    C1のディシジョンテーブル:
+#    | 条件                                   | DT1 | DT2 | DT3 | DT4 | DT5 |
+#    |----------------------------------------|-----|-----|-----|-----|-----|
+#    | 申請種類が新設以外                     | Y   | N   | Y   | Y   | Y   |
+#    | リファレンスに対応レコードが存在する   | Y   | -   | N   | Y   | Y   |
+#    | エリアコードが一致する                 | Y   | -   | -   | N   | Y   |
+#    | BPRフラグ値が存在する                  | Y   | -   | -   | -   | N   |
+#    | 期待される動作                         | 成功| 成功| 成功| 成功| 成功|
+#
+#    境界値検証ケース一覧:
+#    | ケースID | テストケース     | テスト値 | 期待結果 | テストの目的       | 実装状況                                       |
+#    |----------|------------------|----------|----------|--------------------|------------------------------------------------|
+#    | BVT_001  | 最小エリアコード | "A"      | 正常終了 | 最小有効値の確認   | 実装済み (test_add_bpr_flag_BVT_area_code_min) |
+#    | BVT_002  | 最大エリアコード | "Z"      | 正常終了 | 最大有効値の確認   | 実装済み (test_add_bpr_flag_BVT_area_code_max) |
+#    | BVT_003  | 空エリアコード   | ""       | 正常終了 | 空値の確認         | 実装済み (test_add_bpr_flag_BVT_area_code_empty) |
+#    | BVT_004  | BPRフラグ最小値  | "0"      | 正常終了 | フラグ最小値の確認 | 実装済み (test_add_bpr_flag_BVT_flag_min) |
+#    | BVT_005  | BPRフラグ最大値  | "1"      | 正常終了 | フラグ最大値の確認 | 実装済み (test_add_bpr_flag_BVT_flag_max) |
+#    """
+#
+#    @pytest.fixture()
+#    def integrated_layout_df(self) -> pd.DataFrame:
+#        """統合レイアウトデータのfixture"""
+#        columns = [
+#            'ulid', 'form_type', 'application_type', 'target_org', 'business_unit_code',
+#            'parent_branch_code', 'branch_code', 'branch_name', 'section_gr_code',
+#            'section_gr_name', 'section_name_en', 'resident_branch_code',
+#            'resident_branch_name', 'aaa_transfer_date', 'internal_sales_dept_code',
+#            'internal_sales_dept_name', 'area_code', 'area_name', 'remarks',
+#            'branch_name_kana', 'section_gr_name_kana', 'section_gr_name_abbr',
+#            'bpr_target_flag',
+#        ]
+#
+#        data = [
+#            ['add_bpr_target_flag_from_reference', '2', '変更', '部', '339', '*', '0001', 'AAA支店', '0', '部署5', 'Department', '36', '60515', '常駐支店50', '', '', 'BFBFT10', 'エリア10', '', '', '', '', ''],
+#            ['add_bpr_target_flag_from_reference', '2', '変更', '課', '339', '*', '0001', 'AAA支店', '00011', '部署5', 'Department', '36', '60515', '常駐支店50', '', '', 'BFBFT10', 'エリア10', '', '', '', '', ''],
+#            ['add_bpr_target_flag_from_reference', '2', '削除', '部', '339', '*', '0002', 'AAA支店', '0', '部署5', 'Department', '36', '60515', '常駐支店50', '', '', 'BFBFT10', 'エリア10', '', '', '', '', ''],
+#            ['add_bpr_target_flag_from_reference', '2', '新設', '課', '339', '*', '0002', 'AAA支店', '00021', '部署5', 'Department', '36', '60515', '常駐支店50', '', '', 'BFBFT10', 'エリア10', '', '', '', '', ''],
+#        ]
+#
+#        return pd.DataFrame(data, columns=columns)
+#
+#    @pytest.fixture()
+#    def reference_table_df(self) -> pd.DataFrame:
+#        """リファレンステーブルのfixture"""
+#        columns = [
+#            'reference_db_update_datetime', 'organization_change_date', 'ulid',
+#            'branch_code_bpr', 'branch_name_bpr', 'section_gr_code_bpr', 'section_gr_name_bpr',
+#            'business_unit_code_bpr', 'parent_branch_code', 'internal_sales_dept_code',
+#            'internal_sales_dept_name', 'branch_code_jinji', 'branch_name_jinji',
+#            'section_gr_code_jinji', 'section_gr_name_jinji', 'branch_code_area',
+#            'branch_name_area', 'section_gr_code_area', 'section_gr_name_area',
+#            'sub_branch_code', 'sub_branch_name', 'business_code', 'area_code',
+#            'area_name', 'resident_branch_code', 'resident_branch_name', 'portal_use',
+#            'portal_send', 'hq_sales_branch_flag', 'organization_classification',
+#            'organization_classification_code', 'branch_sort_number', 'branch_sort_number2',
+#            'organization_name_kana', 'dp_code', 'dp_code_bp', 'gr_code', 'gr_code_bp',
+#            'grps_code', 'bpr_target_flag', 'secondment_recovery_flag', 'remarks',
+#            'sort',
+#        ]
+#
+#        data = [
+#            ['add_bpr_target_flag_from_reference', '20241211', 'ULID000009', '00100', '支店10', '00107', 'グループ10', '3', '00040', 'S0009', '営業部10', '0001', '支店10', '0', 'グループ10', '00100', '支店10', '00107', 'グループ10', 'SB009', '出張所10', 'B', 'FBFT10', 'エリア10', '00040', '常駐支店10', '1', '0', '0', 'DOMESTIC', '2', '0010', '0010', 'シテン10', 'DP009', 'DPB009', 'GR009', 'GRB009', 'GRPS009', '5', '0', '備考10', '10'],
+#            ['add_bpr_target_flag_from_reference', '20241211', 'ULID000009', '00100', '支店10', '00107', 'グループ10', '3', '00040', 'S0009', '営業部10', '00011', '支店10', '00011', 'グループ10', '00100', '支店10', '00107', 'グループ10', 'SB009', '出張所10', 'B', 'FBFT10', 'エリア10', '00040', '常駐支店10', '1', '0', '0', 'DOMESTIC', '2', '0010', '0010', 'シテン10', 'DP009', 'DPB009', 'GR009', 'GRB009', 'GRPS009', '6', '0', '備考10', '10'],
+#            ['add_bpr_target_flag_from_reference', '20241211', 'ULID000009', '00100', '支店10', '00107', 'グループ10', '3', '', 'S0009', '営業部10', '0002', '支店20', '0', 'グループ10', '00100', '支店20', '00107', 'グループ10', 'SB009', '出張所10', 'B', 'FBFT10', 'エリア10', '00040', '常駐支店10', '1', '0', '0', 'DOMESTIC', '2', '0010', '0010', 'シテン10', 'DP009', 'DPB009', 'GR009', 'GRB009', 'GRPS009', '7', '0', '備考10', '10'],
+#            ['add_bpr_target_flag_from_reference', '20241211', 'ULID000009', '00100', '支店10', '00107', 'グループ10', '3', '', 'S0009', '営業部10', '00021', '支店20', '00021', 'グループ10', '00100', '支店20', '00107', 'グループ10', 'SB009', '出張所10', 'B', 'FBFT10', 'エリア10', '00040', '常駐支店10', '1', '0', '0', 'DOMESTIC', '2', '0010', '0010', 'シテン10', 'DP009', 'DPB009', 'GR009', 'GRB009', 'GRPS009', '8', '0', '備考10', '10'],
+#        ]
+#
+#        return pd.DataFrame(data, columns=columns)
+#
+#    def setup_method(self):
+#        """テストメソッドの前処理"""
+#        log_msg("test start", LogLevel.INFO)
+#
+#    def teardown_method(self):
+#        """テストメソッドの後処理"""
+#        log_msg(f"test end\n{'-'*80}\n", LogLevel.INFO)
+#
+#    def test_add_bpr_flag_C0_valid_configuration(self, integrated_layout_df, reference_table_df):
+#        """正常系: 有効な設定での基本機能テスト"""
+#        test_doc = """
+#        テスト区分: UT
+#        テストカテゴリ: C0
+#        テスト内容: 正常系 - 基本的なBPRフラグ付与処理の確認
+#        """
+#        log_msg(f"\n{test_doc}", LogLevel.DEBUG)
+#
+#        result = PreparationPreMapping.add_bpr_target_flag_from_reference(
+#            integrated_layout_df,
+#            reference_table_df,
+#        )
+#
+#        assert isinstance(result, pd.DataFrame)
+#        assert not result.empty
+#        assert 'reference_bpr_target_flag' in result.columns
+#
+#        # 変更/廃止の場合はリファレンスの値が設定されている
+#        change_delete_mask = result['application_type'].isin(['変更', '削除'])
+#        assert result.loc[change_delete_mask, 'reference_bpr_target_flag'].notna().all()
+#
+#    def test_add_bpr_flag_C1_dt1_successful_merge(self, integrated_layout_df, reference_table_df):
+#        """C1: 全条件を満たす正常系テスト(DT1)"""
+#        test_doc = """
+#        テスト区分: UT
+#        テストカテゴリ: C1
+#        テスト内容: 正常系 - DT1の全条件満たすケース
+#        """
+#        log_msg(f"\n{test_doc}", LogLevel.DEBUG)
+#
+#        result = PreparationPreMapping.add_bpr_target_flag_from_reference(
+#            integrated_layout_df,
+#            reference_table_df,
+#        )
+#
+#        assert isinstance(result, pd.DataFrame)
+#        assert not result.empty
+#        assert 'reference_bpr_target_flag' in result.columns
+#        assert result['reference_bpr_target_flag'].notna().any()
+#
+#    def test_add_bpr_flag_C1_dt2_new_record(self, integrated_layout_df, reference_table_df):
+#        """C1: 新設レコードのテスト(DT2)"""
+#        test_doc = """
+#        テスト区分: UT
+#        テストカテゴリ: C1
+#        テスト内容: 異常系 - DT2の新設レコードケース
+#        """
+#        log_msg(f"\n{test_doc}", LogLevel.DEBUG)
+#
+#        # 全て新設に変更
+#        integrated_layout_df['application_type'] = ApplicationType.NEW.value
+#        reference_table_df['bpr_target_flag'] = '' # 新設なのですくなくともBPRADフラグは値なし
+#        log_msg('reference_table_df', LogLevel.DEBUG)
+#        tabulate_dataframe(reference_table_df)
+#
+#        result = PreparationPreMapping.add_bpr_target_flag_from_reference(
+#            integrated_layout_df,
+#            reference_table_df,
+#        )
+#
+#        assert 'reference_bpr_target_flag' in result.columns
+#        assert result['reference_bpr_target_flag'].eq('').all()
+#
+#    def test_add_bpr_flag_C2_area_code_combinations(self, integrated_layout_df, reference_table_df):
+#        """C2: エリアコードの組み合わせテスト"""
+#        test_doc = """
+#        テスト区分: UT
+#        テストカテゴリ: C2
+#        テスト内容: 条件組み合わせ - エリアコードの一致/不一致
+#        """
+#        log_msg(f"\n{test_doc}", LogLevel.DEBUG)
+#
+#        # エリアコード一致
+#        result1 = PreparationPreMapping.add_bpr_target_flag_from_reference(
+#            integrated_layout_df,
+#            reference_table_df,
+#        )
+#        assert 'reference_bpr_target_flag' in result1.columns
+#        change_delete_mask = result1['application_type'].isin(['変更', '削除'])
+#        assert result1.loc[change_delete_mask, 'reference_bpr_target_flag'].notna().any()
+#
+#        # エリアコード不一致
+#        integrated_layout_df['area_code'] = 'XXXXX'
+#        result2  = PreparationPreMapping.add_bpr_target_flag_from_reference(
+#                integrated_layout_df,
+#                reference_table_df,
+#            )
+#        log_msg('reference_table_df', LogLevel.DEBUG)
+#        tabulate_dataframe(reference_table_df)
+#        log_msg('integrated', LogLevel.DEBUG)
+#        tabulate_dataframe(integrated_layout_df)
+#        log_msg('result2', LogLevel.DEBUG)
+#        tabulate_dataframe(result2)
+#        # データの内4件はエリアコードに依存しない
+#        assert len(result2) == 4
+#        # reference_bpr_target_flagは値設定されず空振り
+#        assert all(result2['reference_bpr_target_flag'] == '')
+#
+#    def test_add_bpr_flag_BVT_area_code_boundary(self, integrated_layout_df, reference_table_df):
+#        """境界値: エリアコードの境界値テスト"""
+#        test_doc = """
+#        テスト区分: UT
+#        テストカテゴリ: BVT
+#        テスト内容: エリアコードの境界値テスト
+#            - 最小値: "A0000"
+#            - 最大値: "Z9999"
+#            - 空文字列
+#        """
+#        log_msg(f"\n{test_doc}", LogLevel.DEBUG)
+#
+#        # 最小値テスト
+#        integrated_layout_df['area_code'] = 'A0000'
+#        reference_table_df['area_code'] = 'A0000'
+#        result = PreparationPreMapping.add_bpr_target_flag_from_reference(
+#            integrated_layout_df,
+#            reference_table_df,
+#        )
+#        assert isinstance(result, pd.DataFrame)
+#        assert 'reference_bpr_target_flag' in result.columns
+#
+#        # 最大値テスト
+#        integrated_layout_df['area_code'] = 'Z9999'
+#        reference_table_df['area_code'] = 'Z9999'
+#        result = PreparationPreMapping.add_bpr_target_flag_from_reference(
+#            integrated_layout_df,
+#            reference_table_df,
+#        )
+#        assert isinstance(result, pd.DataFrame)
+#        assert 'reference_bpr_target_flag' in result.columns
+#
+#        # 空文字列テスト
+#        integrated_layout_df['area_code'] = ''
+#        reference_table_df['area_code'] = ''
+#        result =   PreparationPreMapping.add_bpr_target_flag_from_reference(
+#                integrated_layout_df,
+#                reference_table_df,
+#            )
+#        # データの内4件はエリアコードに依存しない
+#        assert len(result) == 4
+#        assert result.loc[0, 'reference_bpr_target_flag'] == '5'
+#        assert result.loc[1, 'reference_bpr_target_flag'] == ''  # ヒットしない
+#        assert result.loc[2, 'reference_bpr_target_flag'] == '7'
+#        assert result.loc[3, 'reference_bpr_target_flag'] == ''  # ヒットしない
+#
+#    def test_add_bpr_flag_BVT_flag_value_boundary(self, integrated_layout_df, reference_table_df):
+#        """境界値: BPRフラグ値の境界値テスト"""
+#        test_doc = """
+#        テスト区分: UT
+#        テストカテゴリ: BVT
+#        テスト内容: BPRフラグ値の境界値テスト
+#            - 最小値: "0"
+#            - 最大値: "1"
+#            - NULL値
+#        """
+#        log_msg(f"\n{test_doc}", LogLevel.DEBUG)
+#
+#        # 最小値テスト
+#        reference_table_df['bpr_target_flag'] = '0'
+#        result = PreparationPreMapping.add_bpr_target_flag_from_reference(
+#            integrated_layout_df,
+#            reference_table_df,
+#        )
+#        log_msg('reference_table_df', LogLevel.DEBUG)
+#        tabulate_dataframe(reference_table_df)
+#        log_msg('integrated', LogLevel.DEBUG)
+#        tabulate_dataframe(integrated_layout_df)
+#        log_msg('result', LogLevel.DEBUG)
+#        tabulate_dataframe(result)
+#
+#        assert isinstance(result, pd.DataFrame)
+#        assert 'reference_bpr_target_flag' in result.columns
+#        #change_delete_mask = result['application_type'].isin(['変更', '削除'])
+#        #assert result.loc[change_delete_mask, 'reference_bpr_target_flag'].eq('0').all()
+#        # 変更・削除レコードの検証
+#        change_delete_mask = result['application_type'].isin(['変更', '削除'])
+#        change_delete_base_mask = change_delete_mask & (result['section_gr_code'] == '0')
+#        change_delete_detail_mask = change_delete_mask & (result['section_gr_code'] != '0')
+#
+#        # 基準レコード(部)の検証
+#        assert result.loc[change_delete_base_mask, 'reference_bpr_target_flag'].eq('0').all(), \
+#            "変更・削除の基準レコードのフラグ値が'0'ではありません"
+#
+#        # 明細レコード(課)の検証
+#        assert result.loc[change_delete_detail_mask, 'reference_bpr_target_flag'].eq('').all(), \
+#            "変更・削除の明細レコードのフラグ値が空文字ではありません"
+#
+#        # 新設レコードの検証
+#        new_mask = result['application_type'] == ApplicationType.NEW.value
+#        assert result.loc[new_mask, 'reference_bpr_target_flag'].eq('').all(), \
+#            "新設レコードのフラグ値が空文字ではありません"
+#
+#        # 最大値テスト
+#        reference_table_df['bpr_target_flag'] = '1'
+#        result = PreparationPreMapping.add_bpr_target_flag_from_reference(
+#            integrated_layout_df,
+#            reference_table_df,
+#        )
+#
+#        # 変更・削除レコードの検証(部/課で分けて検証)
+#        change_delete_mask = result['application_type'].isin(['変更', '削除'])
+#        change_delete_base_mask = change_delete_mask & (result['section_gr_code'] == '0')
+#        change_delete_detail_mask = change_delete_mask & (result['section_gr_code'] != '0')
+#
+#        # 部レコード(section_gr_code = '0')の検証
+#        assert result.loc[change_delete_base_mask, 'reference_bpr_target_flag'].eq('1').all(), \
+#            "変更・削除の部レコードのフラグ値が'1'ではありません"
+#
+#        # 課レコード(section_gr_code != '0')の検証
+#        assert result.loc[change_delete_detail_mask, 'reference_bpr_target_flag'].eq('').all(), \
+#            "変更・削除の課レコードのフラグ値が空文字ではありません"
+#
+#        # 新設レコードの検証
+#        new_mask = result['application_type'] == '新設'
+#        assert result.loc[new_mask, 'reference_bpr_target_flag'].eq('').all(), \
+#        "新設レコードのフラグ値が空文字ではありません"
+#
+#        ## NULL値テスト
+#        reference_table_df['bpr_target_flag'] = None
+#        result = PreparationPreMapping.add_bpr_target_flag_from_reference(
+#                integrated_layout_df,
+#                reference_table_df,
+#            )
+#        log_msg('result', LogLevel.DEBUG)
+#        tabulate_dataframe(result)
+#
+#        assert all(result['reference_bpr_target_flag'] == '')
 
 class TestPreparationPreMappingSetupInternalSales:
     """PreparationPreMappingクラスのsetup_internal_sales_to_integrated_dataメソッドのテスト
