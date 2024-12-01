@@ -1,422 +1,278 @@
-"""和暦であっても西暦であってもdatetimeに変換する"""
+# config共有
+import sys
 from dataclasses import dataclass
 from datetime import datetime
 from enum import Enum, auto
-from typing import NamedTuple
+
 import pytz
 
-class DateFormat(Enum):
-    """日付フォーマットの分類を定義するEnum
+from src.lib.common_utils.ibr_decorator_config import initialize_config
+from src.lib.common_utils.ibr_enums import LogLevel
 
-    Class Overview:
-        日付文字列のフォーマットを西暦、和暦、不明の3種類に分類します。
-
-    Attributes:
-        WESTERN (auto): 西暦形式
-        JAPANESE (auto): 和暦形式
-        UNKNOWN (auto): 不明な形式
-
-    Usage Example:
-        >>> format = DateFormat.WESTERN
-        >>> format
-        <DateFormat.WESTERN: 1>
-
-    Notes:
-        - このEnumは日付文字列の形式を判別する際に使用されます。
-
-    ResourceLocation:
-        - [本体]
-            - src/lib/converter/ibr_convert_western_cal_japanese_cal_to_datetime.py
-        - [テストコード]
-            - tests/lib/converter/test_ibr_convert_western_cal_japanese_cal_to_datetime.py
-
-    Chage History:
-    | No   | 修正理由     | 修正点   | 対応日     | 担当            |
-    |------|--------------|----------|------------|-----------------|
-    | v0.1 | 初期定義作成 | 新規作成 | 2024/08/11 |                 |
-    """
-    WESTERN = auto()
-    JAPANESE = auto()
-    UNKNOWN = auto()
+config = initialize_config(sys.modules[__name__])
+package_config = config.package_config
+log_msg = config.log_message
 
 class DateParseError(Exception):
-    """日付解析時のカスタムエラー
+    """日付解析時のカスタムエラー"""
 
-    Class Overview:
-        日付文字列の解析中に発生するエラーを表現するための例外クラスです。
-
-    Usage Example:
-        >>> raise DateParseError("無効な日付形式です")
-        DateParseError: 無効な日付形式です
-
-    """
-
-class JapaneseEra(NamedTuple):
-    """日本の元号情報を表現するNamedTuple
-
-    Class Overview:
-        日本の元号に関する情報(名前、コード、開始年)を保持します。
+class OutputFormat(Enum):
+    """日付文字列の出力形式を定義する列挙型
 
     Attributes:
-        name (str): 元号の名前
-        code (int): 元号のコード
-        start_year (int): 元号の開始年(西暦)
-        max_year (Optional[int]): 元号の最大年(Noneの場合は現在進行中)
-
-    Usage Example:
-        >>> reiwa = JapaneseEra("令和", 5, 2018)
-        >>> reiwa.name
-        '令和'
-
-    ResourceLocation:
-        - [本体]
-            - src/lib/converter/ibr_convert_western_cal_japanese_cal_to_datetime.py
-        - [テストコード]
-            - tests/lib/converter/test_ibr_convert_western_cal_japanese_cal_to_datetime.py
-
-    Chage History:
-    | No   | 修正理由     | 修正点   | 対応日     | 担当            |
-    |------|--------------|----------|------------|-----------------|
-    | v0.1 | 初期定義作成 | 新規作成 | 2024/08/11 |                 |
+        WESTERN: YYYY/MM/DD形式
+        YYYYMMDD: YYYYMMDD形式
+        JAPANESE: GYYMMDD形式(G:元号コード)
     """
-    name: str
-    code: int
-    start_year: int
-    max_year: int | None
+    WESTERN = 'western'
+    YYYYMMDD = 'yyyymmdd'
+    JAPANESE = 'japanese'
 
-class Era(Enum):
-    """日本の元号を管理するEnum
+class DateConverter:
+    """日付文字列をdatetime型に変換するユーティリティクラス
 
-    Class Overview:
-        日本の主要な元号(令和、平成、昭和)を定義し、和暦と西暦の変換機能を提供します。
+    このクラスは以下の形式日付文字列を処理できます
+    YYYY/MM/DD(西暦形式)
+    YYYYMMDD(8桁数字形式)
+    GYYMMDD(和暦形式、G: 元号コード)
 
-    Attributes:
-        REIWA (JapaneseEra): 令和の情報
-        HEISEI (JapaneseEra): 平成の情報
-        SHOWA (JapaneseEra): 昭和の情報
+    全てのメソッドはstaticメソッドと定義する
 
-    Methods:
-        from_code(code: int): 元号コードからEraオブジェクトを取得
-        convert_japanese_year_to_western(era_code: int, era_year: int): 和暦年を西暦年に変換
-
-    Usage Example:
-        >>> Era.REIWA.value.name
-        '令和'
-        >>> Era.convert_japanese_year_to_western(5, 1)
-        2019
-
-    Notes:
-        - 新しい元号を追加する場合は、このEnumに新しい要素を追加してください。
-
-    ResourceLocation:
-        - [本体]
-            - src/lib/converter/ibr_convert_western_cal_japanese_cal_to_datetime.py
-        - [テストコード]
-            - tests/lib/converter/test_ibr_convert_western_cal_japanese_cal_to_datetime.py
-
-    Chage History:
-    | No   | 修正理由     | 修正点   | 対応日     | 担当            |
-    |------|--------------|----------|------------|-----------------|
-    | v0.1 | 初期定義作成 | 新規作成 | 2024/08/11 |                 |
+    Usage:
+        dt = DateConverter.parse('2024/11/30')
+        dt = DateConverter.parse('20241130')
+        dt = DateConverter.parse('5061130')
+        dt = DateConverter.parse('5061130', 'UTC')
     """
-    REIWA = JapaneseEra("令和", 5, 2019, max_year=None)
-    HEISEI = JapaneseEra("平成", 4, 1989, max_year=31)
-    SHOWA = JapaneseEra("昭和", 3, 1926, max_year=64)
+    class _DateFormat(Enum):
+        """日付フォーマットの内部分類"""
+        WESTERN = auto()
+        JAPANESE = auto()
+        YYYYMMDD = auto()
+        UNKNOWN = auto()
 
-    @classmethod
-    def from_code(cls, code: int) -> 'Era':
-        """元号コードからEraオブジェクトを取得する
+    @dataclass(frozen=True)
+    class _DateConstants:
+        """日付処理に関する内部定数"""
+        WESTERN_DATE_LENGTH: int = 10
+        JAPANESE_DATE_LENGTH: int = 7
+        YYYYMMDD_DATE_LENGTH: int = 8
+        #
+        WESTERN_DATE_SEPARATOR: str = '/'
+        WESTERN_YEAR_INDEX: int = 4
+        WESTERN_MONTH_INDEX: int = 7
+        #
+        YYYYMMDD_YEAR_END: int = 4
+        YYYYMMDD_MONTH_END: int = 6
+        #
+        ERA_INDEX: int = 0
+        YEAR_START_INDEX: int = 1
+        YEAR_END_INDEX: int = 3
+        MONTH_START_INDEX: int = 3
+        MONTH_END_INDEX: int = 5
+        DAY_START_INDEX: int = 5
+        DAY_END_INDEX: int = 7
+        #
+        YEAR_REIWA: int = 2019
+        MIN_YEAR: int = 1926  # 昭和元年
+        MAX_YEAR: int = 2100  # システム上限
 
-        Arguments:
-            code (int): 元号コード
 
-        Return Value:
-            Era: 対応するEraオブジェクト
+    _CONSTANTS = _DateConstants()
 
-        Exceptions:
-            ValueError: 不明な元号コードの場合
+    @staticmethod
+    def parse(date_string: str, timezone_name: str='Asia/Tokyo') -> datetime:
+        """日付文字列をdatetimeオブジェクトに変換します
 
-        Usage Example:
-            >>> Era.from_code(5)
-            <Era.REIWA: JapaneseEra(name='令和', code=5, start_year=2018)>
+        Args:
+            date_string: 変換対象の日付文字列
+            timezone_name: タイムゾーン名(デフォルト: 'Asia/Tokyo')
 
-        Algorithm:
-            1. 全てのEra要素を走査
-            2. 指定されたコードと一致する要素を返す
-            3. 一致する要素がない場合はValueErrorを発生
+        Returns:
+            datetime: 変換後のdatetimeオブジェクト
 
-        Notes:
-            - この方法は、新しい元号が追加されても自動的に対応します。
-
-        ResourceLocation:
-            - [本体]
-                - src/lib/converter/ibr_convert_western_cal_japanese_cal_to_datetime.py
-            - [テストコード]
-                - tests/lib/converter/test_ibr_convert_western_cal_japanese_cal_to_datetime.py
-
-        Chage History:
-        | No   | 修正理由     | 修正点   | 対応日     | 担当            |
-        |------|--------------|----------|------------|-----------------|
-        | v0.1 | 初期定義作成 | 新規作成 | 2024/08/11 |                 |
+        Raises:
+            DateParseError: 日付文字列の解析に失敗した場合
         """
-        for era in cls:
-            if era.value.code == code:
-                return era
-        err_msg = f"Invalid era code: {code}"
-        raise ValueError(err_msg) from None
+        date_format = DateConverter._determine_format(str(date_string))
+        timezone = pytz.timezone(timezone_name)
+        try:
+            year, month, day = DateConverter._parse_components(date_string, date_format)
+            return DateConverter._create_datetime(year, month, day, timezone)
+        except DateParseError:
+            raise
+        except Exception as e:
+            err_msg = f"AAA提供日解析に失敗しました: {str(e)}"
+            raise DateParseError(err_msg) from None
 
-    @classmethod
-    def convert_japanese_year_to_western(cls, era_code: int, era_year: int) -> int:
-        """和暦年を西暦年に変換する
+    @staticmethod
+    def is_valid_date(date_string: str) -> bool:
+        """日付文字列が有効な形式かどうかを判定する
 
-        Arguments:
-            era_code (int): 元号コード
-            era_year (int): 和暦年
+        一括申請Validationでの使用を想定して提供
 
-        Return Value:
-            int: 変換後の西暦年
+        Args:
+            date_string: 検証対象の日付文字列
 
-        Exceptions:
-            ValueError: 不明な元号コードの場合
-
-        Usage Example:
-            >>> Era.convert_japanese_year_to_western(5, 1)
-            2019
-
-        Algorithm:
-            1. from_code メソッドを使用して元号を特定
-            2. 元号の開始年に、和暦年から1を引いた値を加算
-
-        Notes:
-            - 元年は1として扱われるため、計算時に1を引いています。
-
-        ResourceLocation:
-            - [本体]
-                - src/lib/converter/ibr_convert_western_cal_japanese_cal_to_datetime.py
-            - [テストコード]
-                - tests/lib/converter/test_ibr_convert_western_cal_japanese_cal_to_datetime.py
-
-        Chage History:
-        | No   | 修正理由     | 修正点   | 対応日     | 担当            |
-        |------|--------------|----------|------------|-----------------|
-        | v0.1 | 初期定義作成 | 新規作成 | 2024/08/11 |                 |
+        Returns:
+            bool: 有効な日付形式の場合True
         """
-        if era_year <= 0:
-            err_msg = f"Invalid era year: {era_year}. Era year must be positive."
-            raise ValueError(err_msg) from None
+        try:
+            DateConverter.parse(date_string)
+        except DateParseError:
+            return False
+        else:
+            return True
 
-        era = cls.from_code(era_code)
+    @staticmethod
+    def to_string(dt: datetime, output_format: OutputFormat = OutputFormat.WESTERN) -> str:
+        """datetimeオブジェクトを指定された形式の文字列に変換する
 
-        # 元号ごとの最大年チェック
-        if era.value.max_year is not None and era_year > era.value.max_year:
-            err_msg = f"Invalid era year: {era_year}. Maximum year for {era.value.name} is {era.value.max_year}."
-            raise ValueError(err_msg) from None
+        Args:
+            dt: 変換対象のdatetimeオブジェクト
+            output_format: 出力形式(OutputFormat列挙型の値)
 
-        # 現在進行中の元号の場合、来年までを許容
-        if era.value.max_year is None:
-            current_year = datetime.now().year
-            max_allowed_year = current_year - era.value.start_year + 2  # +2 for  year from now
-            if era_year > max_allowed_year:
-                err_msg = f"Invalid era year: {era_year}. Maximum allowed year for {era.value.name} is {max_allowed_year} (next year)."
+        Returns:
+            str: 変換後の日付文字列
+
+        Raises:
+            ValueError: 未対応の出力形式が指定された場合
+        """
+        const = DateConverter._CONSTANTS
+
+        if output_format == OutputFormat.WESTERN:
+            return dt.strftime('%Y/%m/%d')
+
+        if output_format == OutputFormat.YYYYMMDD:
+            return dt.strftime('%Y%m%d')
+
+        if output_format == OutputFormat.JAPANESE:
+            year = dt.year
+            if year >= const.YEAR_REIWA:
+                era_code = 5  # 令和
+                era_year = year - const.YEAR_REIWA + 1
+            else:
+                err_msg = "Date is too old for Japanese era conversion"
                 raise ValueError(err_msg) from None
 
-        return era.value.start_year + era_year - 1
+            return f"{era_code}{era_year:02d}{dt.month:02d}{dt.day:02d}"
 
+        err_msg = f"Unsupported output format: {output_format}"
+        raise ValueError(err_msg) from None
 
-@dataclass(frozen=True)
-class DateConstants:
-    """日付処理に関する定数を定義するクラス
+    @staticmethod
+    def _determine_format(date_string: str) -> _DateFormat:
+        """日付文字列のフォーマットを判定"""
+        if not isinstance(date_string, str):
+            return DateConverter._DateFormat.UNKNOWN
 
-    Class Overview:
-        日付文字列の解析に必要な各種定数を提供します。
+        const = DateConverter._CONSTANTS
 
-    Attributes:
-        WESTERN_DATE_LENGTH (int): 西暦形式の日付文字列の長さ
-        JAPANESE_DATE_LENGTH (int): 和暦形式の日付文字列の長さ
-        WESTERN_DATE_SEPARATOR (str): 西暦形式の日付区切り文字
-        WESTERN_YEAR_INDEX (int): 西暦形式の年の区切り位置
-        WESTERN_MONTH_INDEX (int): 西暦形式の月の区切り位置
-        ERA_INDEX (int): 和暦形式の元号コードの位置
-        YEAR_START_INDEX (int): 和暦形式の年の開始位置
-        YEAR_END_INDEX (int): 和暦形式の年の終了位置
-        MONTH_START_INDEX (int): 和暦形式の月の開始位置
-        MONTH_END_INDEX (int): 和暦形式の月の終了位置
-        DAY_START_INDEX (int): 和暦形式の日の開始位置
-        DAY_END_INDEX (int): 和暦形式の日の終了位置
+        if (len(date_string) == const.WESTERN_DATE_LENGTH and
+            date_string[const.WESTERN_YEAR_INDEX] == const.WESTERN_DATE_SEPARATOR and
+            date_string[const.WESTERN_MONTH_INDEX] == const.WESTERN_DATE_SEPARATOR
+            ):
+            return DateConverter._DateFormat.WESTERN
 
-    Usage Example:
-        >>> DateConstants.WESTERN_DATE_LENGTH
-        10
+        if (len(date_string) == const.YYYYMMDD_DATE_LENGTH and
+            date_string.isdigit()
+            ):
+            return DateConverter._DateFormat.YYYYMMDD
 
-    Notes:
-        - これらの定数は日付文字列の解析時に使用されます。
+        if (len(date_string) == const.JAPANESE_DATE_LENGTH and
+            date_string.isdigit()
+        ):
+            return DateConverter._DateFormat.JAPANESE
 
-    ResourceLocation:
-        - [本体]
-            - src/lib/converter/ibr_convert_western_cal_japanese_cal_to_datetime.py
-        - [テストコード]
-            - tests/lib/converter/test_ibr_convert_western_cal_japanese_cal_to_datetime.py
+        err_msg = "Unsupported date format"
+        return DateParseError(err_msg)
 
-    Chage History:
-    | No   | 修正理由     | 修正点   | 対応日     | 担当            |
-    |------|--------------|----------|------------|-----------------|
-    | v0.1 | 初期定義作成 | 新規作成 | 2024/08/11 |                 |
+    @staticmethod
+    def _parse_components(date_string: str, format_date: _DateFormat) -> tuple[int, int, int]:
+        """日付文字列から年月日の要素を抽出"""
+        if format_date == DateConverter._DateFormat.WESTERN:
+            return DateConverter._parse_western(date_string)
+        if format_date == DateConverter._DateFormat.YYYYMMDD:
+            return DateConverter._parse_yyyymmdd(date_string)
+        if format_date == DateConverter._DateFormat.JAPANESE:
+            return DateConverter._parse_japanese(date_string)
 
-    """
-    WESTERN_DATE_LENGTH: int = 10
-    JAPANESE_DATE_LENGTH: int = 7
-    WESTERN_DATE_SEPARATOR: str = '/'
-    WESTERN_YEAR_INDEX: int = 4
-    WESTERN_MONTH_INDEX: int = 7
-    ERA_INDEX: int = 0
-    YEAR_START_INDEX: int = 1
-    YEAR_END_INDEX: int = 3
-    MONTH_START_INDEX: int = 3
-    MONTH_END_INDEX: int = 5
-    DAY_START_INDEX: int = 5
-    DAY_END_INDEX: int = 7
+        err_msg = "Unsupported date_format"
+        raise DateParseError(err_msg) from None
 
-def determine_date_format(date_string: str) -> DateFormat:
-    """日付文字列のフォーマットを判定する
-
-    Function Overview:
-        与えられた日付文字列が西暦形式、和暦形式、または不明な形式のいずれかであるかを判定します。
-
-    Arguments:
-        date_string (str): 判定対象の日付文字列
-
-    Return Value:
-        DateFormat: 判定されたDateFormatオブジェクト
-
-    Usage Example:
-        >>> determine_date_format("2023/05/01")
-        <DateFormat.WESTERN: 1>
-        >>> determine_date_format("5050501")
-        <DateFormat.JAPANESE: 2>
-
-    Algorithm:
-        1. 文字列の長さと区切り文字を確認して西暦形式かどうかを判定
-        2. 文字列の長さと数字のみかどうかを確認して和暦形式かどうかを判定
-        3. 上記のいずれにも該当しない場合は不明な形式と判定
-
-    Notes:
-        - この関数は日付文字列の形式のみを判定し、日付としての妥当性は確認しません。
-
-    ResourceLocation:
-        - [本体]
-            - src/lib/converter/ibr_convert_western_cal_japanese_cal_to_datetime.py
-        - [テストコード]
-            - tests/lib/converter/test_ibr_convert_western_cal_japanese_cal_to_datetime.py
-
-    Chage History:
-    | No   | 修正理由     | 修正点   | 対応日     | 担当            |
-    |------|--------------|----------|------------|-----------------|
-    | v0.1 | 初期定義作成 | 新規作成 | 2024/08/11 |                 |
-
-    """
-    if date_string is None or not isinstance(date_string, str):
-        return DateFormat.UNKNOWN
-
-    western_conditions = (
-        len(date_string) == DateConstants.WESTERN_DATE_LENGTH
-        and date_string[DateConstants.WESTERN_YEAR_INDEX] == DateConstants.WESTERN_DATE_SEPARATOR
-        and date_string[DateConstants.WESTERN_MONTH_INDEX] == DateConstants.WESTERN_DATE_SEPARATOR
-    )
-
-    if western_conditions:
-        return DateFormat.WESTERN
-
-    japanese_conditions = (
-        len(date_string) == DateConstants.JAPANESE_DATE_LENGTH
-        and date_string.isdigit()
-    )
-
-    if japanese_conditions:
-        return DateFormat.JAPANESE
-
-    return DateFormat.UNKNOWN
-
-
-def parse_str_to_datetime(date_string: str) -> datetime:
-    """文字列形式の日付をdatetimeオブジェクトに変換する
-
-    Function Overview:
-        西暦形式(YYYY/MM/DD)または和暦形式(GYYMMDD)の日付文字列をdatetimeオブジェクトに変換します。
-
-    Arguments:
-        date_string (str): 'YYYY/MM/DD' または 'GYYMMDD' 形式の日付文字列
-
-    Return Value:
-        datetime.datetime: 変換されたdatetimeオブジェクト
-
-    Usage Example:
-        >>> parse_str_to_datetime("2023/05/01")
-        datetime.datetime(2023, 5, 1, 0, 0)
-        >>> parse_str_to_datetime("5050501")
-        datetime.datetime(2023, 5, 1, 0, 0)
-
-    Algorithm:
-        1. 日付文字列のフォーマットを判定
-        2. 西暦形式の場合、strptimeを使用して直接変換
-        3. 和暦形式の場合、元号、年、月、日を抽出し、西暦に変換してからdatetimeオブジェクトを生成
-        4. 不明な形式の場合、エラーを発生
-
-    Exception:
-        DateParseError: 無効な日付形式や存在しない日付の場合
-
-    Notes:
-        - 和暦形式の場合、元号コードは1桁、年は2桁、月と日はそれぞれ2桁である必要があります。
-
-    ResourceLocation:
-        - [本体]
-            - src/lib/converter/ibr_convert_western_cal_japanese_cal_to_datetime.py
-        - [テストコード]
-            - tests/lib/converter/test_ibr_convert_western_cal_japanese_cal_to_datetime.py
-
-    Chage History:
-    | No   | 修正理由     | 修正点   | 対応日     | 担当            |
-    |------|--------------|----------|------------|-----------------|
-    | v0.1 | 初期定義作成 | 新規作成 | 2024/08/11 |                 |
-
-    """
-    date_string = str(date_string)
-    date_format = determine_date_format(date_string)
-
-    # Tokyo/Azia timezone
-    jst = pytz.timezone('Asia/Tokyo')
-
-    if date_format == DateFormat.WESTERN:
+    @staticmethod
+    def _parse_western(date_string: str) -> tuple[int, int, int]:
+        """YYYY/MM/DD形式を解析"""
         try:
-            return jst.localize(datetime.strptime(date_string, '%Y/%m/%d'))  # noqa: DTZ007
-        except ValueError as e:
-            err_msg = f"無効な西暦日付: {e}"
+            year_str, month_str, day_str = date_string.split(DateConverter._CONSTANTS.WESTERN_DATE_SEPARATOR)
+            return int(year_str), int(month_str), int(day_str)
+        except (ValueError, IndentationError) as e:
+            err_msg = f'Invalid western date format: {str(e)}'
+            raise DateParseError(err_msg) from e
+
+    @staticmethod
+    def _parse_yyyymmdd(date_string: str) -> tuple[int, int, int]:
+        """YYYYMMDD形式を解析"""
+        const = DateConverter._CONSTANTS
+        try:
+            year_str = date_string[:const.YYYYMMDD_YEAR_END]
+            month_str = date_string[const.YYYYMMDD_YEAR_END:const.YYYYMMDD_MONTH_END]
+            day_str = date_string[const.YYYYMMDD_MONTH_END:]
+            return int(year_str), int(month_str), int(day_str)
+        except (ValueError, IndentationError) as e:
+            err_msg = f'Invalid YYYYMMDD date format: {str(e)}'
+            raise DateParseError(err_msg) from e
+
+    @staticmethod
+    def _parse_japanese(date_string: str) -> tuple[int, int, int]:
+        """和暦形式を解析"""
+        const = DateConverter._CONSTANTS
+        try:
+            era_code_str = date_string[const.ERA_INDEX]
+            year_str = date_string[const.YEAR_START_INDEX:const.YEAR_END_INDEX]
+            month_str = date_string[const.MONTH_START_INDEX:const.MONTH_END_INDEX]
+            day_str = date_string[const.DAY_START_INDEX:const.DAY_END_INDEX]
+
+            year = max(int(year_str), 1)  # 年が00の場合は1年としてあつかう
+            western_year = DateConverter._convert_japanese_to_western(int(era_code_str), year)
+            return western_year, int(month_str), int(day_str)
+        except (ValueError, IndexError) as e:
+            err_msg = f"Invalid Japanese date format: {str(e)}"
             raise DateParseError(err_msg) from None
 
-    if date_format == DateFormat.JAPANESE:
-        try:
-            era_code = int(date_string[DateConstants.ERA_INDEX])
-            year = int(date_string[DateConstants.YEAR_START_INDEX:DateConstants.YEAR_END_INDEX])
-            month = int(date_string[DateConstants.MONTH_START_INDEX:DateConstants.MONTH_END_INDEX])
-            day = int(date_string[DateConstants.DAY_START_INDEX:DateConstants.DAY_END_INDEX])
+    @staticmethod
+    def _convert_japanese_to_western(era_code: int, year: int) -> int:
+        """和暦年を西暦年に変換"""
+        era_start_years = {
+            5: 2019,  # 令和
+            4: 1989,  # 平成
+            3: 1926,  # 昭和
+        }
 
-            # 年が00の場合(正しくないが元年を00と認識されるケース)は1年として扱う
-            year = max(year, 1)
-
-        except ValueError as e:
-            err_msg = f"和暦日付の解析エラー: {e}"
+        if era_code not in era_start_years:
+            err_msg = f'Unknown era code: {era_code}'
             raise DateParseError(err_msg) from None
 
-        try:
-            western_year = Era.convert_japanese_year_to_western(era_code, year)
-        except ValueError as e:
-            err_msg = f"無効な和暦年: {str(e)}"
-            raise DateParseError(err_msg) from None
+        # 年号元年のケースは入力ルールに留意が必要
+        # 担当部署と意思確認すること
+        if year < 1:
+            err_msg = f'無効な年 "{year}" (年号コード {era_code})'
+            raise ValueError(err_msg) from None
 
-        try:
-            return jst.localize(datetime(western_year, month, day))  # noqa: DTZ001
-        except ValueError as e:
-            err_msg = f"無効な和暦日付: {e}"
-            raise DateParseError(err_msg) from None
+        return era_start_years[era_code] + year - 1
 
-    err_msg = "無効な日付形式です"
-    raise DateParseError(err_msg) from None
+    @staticmethod
+    def _create_datetime(year: int, month: int, day: int, timezone: pytz.timezone) -> datetime:
+        """年月日からdatetimeオブジェクトを生成"""
+        try:
+            const = DateConverter._CONSTANTS
+            if not (const.MIN_YEAR <= year <= const.MAX_YEAR):
+                err_msg = f"Year {year} is out of valid range"
+                raise DateParseError(err_msg) from None
+            #dt = timezone.localize(datetime(year, month, day, tzinfo=timezone))
+            dt = timezone.localize(datetime(year, month, day))
+        except ValueError as e:
+            err_msg = f"Invalid date components: {str(e)}"
+            raise DateParseError(err_msg) from None
+        else:
+            return dt
