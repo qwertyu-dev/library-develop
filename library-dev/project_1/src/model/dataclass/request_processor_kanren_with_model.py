@@ -20,7 +20,7 @@ from src.lib.validator_utils.ibr_model_validator import (
 )
 
 
-class KanrenModel(BaseModel):
+class KanrenWithModel(BaseModel):
     """関連レイアウト: Validator,整合性チェック"""
     # Item定義
     application_type: str = Field(...)

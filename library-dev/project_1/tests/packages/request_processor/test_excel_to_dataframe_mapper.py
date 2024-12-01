@@ -1500,14 +1500,14 @@ class TestKanrenExcelMappingWithDummyInit:
         with patch('src.packages.request_processor.excel_to_dataframe_mapper.initialize_config') as mock_init_config:
             mock_config = MagicMock()
             mock_config.package_config = {
-                'excel_definition_mapping_kanren': expected_mapping,
+                'excel_definition_mapping_kanren_with': expected_mapping,
                 'layout': unified_output_layout,
             }
             mock_init_config.return_value = mock_config
 
             kanren_mapping = KanrenExcelMappingWithDummy()
 
-            assert kanren_mapping.config.package_config['excel_definition_mapping_kanren'] == expected_mapping
+            assert kanren_mapping.config.package_config['excel_definition_mapping_kanren_with'] == expected_mapping
             assert callable(kanren_mapping.log_msg)
             assert kanren_mapping.column_mapping == expected_mapping
 
@@ -1525,7 +1525,7 @@ class TestKanrenExcelMappingWithDummyInit:
 
         custom_config = MagicMock()
         custom_config.package_config = {
-            'excel_definition_mapping_kanren': expected_mapping,
+            'excel_definition_mapping_kanren_with': expected_mapping,
             'layout': {
                 'unified_layout': unified_output_layout,
             },
@@ -1533,7 +1533,7 @@ class TestKanrenExcelMappingWithDummyInit:
 
         kanren_mapping = KanrenExcelMappingWithDummy(custom_config)
 
-        assert kanren_mapping.config.package_config['excel_definition_mapping_kanren'] == expected_mapping
+        assert kanren_mapping.config.package_config['excel_definition_mapping_kanren_with'] == expected_mapping
         assert callable(kanren_mapping.log_msg)
         assert kanren_mapping.column_mapping == expected_mapping
 
@@ -1552,14 +1552,14 @@ class TestKanrenExcelMappingWithDummyInit:
         with patch('src.packages.request_processor.excel_to_dataframe_mapper.initialize_config') as mock_init_config:
             mock_config = MagicMock()
             mock_config.package_config = {
-                'excel_definition_mapping_kanren': expected_mapping,
+                'excel_definition_mapping_kanren_with': expected_mapping,
                 'layout': unified_output_layout,
             }
             mock_init_config.return_value = mock_config
 
             kanren_mapping = KanrenExcelMappingWithDummy(None)
 
-            assert kanren_mapping.config.package_config['excel_definition_mapping_kanren'] == expected_mapping
+            assert kanren_mapping.config.package_config['excel_definition_mapping_kanren_with'] == expected_mapping
             assert callable(kanren_mapping.log_msg)
             assert kanren_mapping.column_mapping == expected_mapping
 
@@ -1576,13 +1576,13 @@ class TestKanrenExcelMappingWithDummyInit:
         minimal_mapping = {'key1': 'value1'}
         minimal_config = MagicMock()
         minimal_config.package_config = {
-            'excel_definition_mapping_kanren': minimal_mapping,
+            'excel_definition_mapping_kanren_with': minimal_mapping,
             'layout': {'unified_layout': []},
         }
 
         kanren_mapping = KanrenExcelMappingWithDummy(minimal_config)
 
-        assert kanren_mapping.config.package_config['excel_definition_mapping_kanren'] == minimal_mapping
+        assert kanren_mapping.config.package_config['excel_definition_mapping_kanren_with'] == minimal_mapping
         assert callable(kanren_mapping.log_msg)
         assert kanren_mapping.column_mapping == minimal_mapping
 

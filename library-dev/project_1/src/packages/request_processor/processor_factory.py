@@ -13,10 +13,15 @@ from .kokuki_processor import (
     KokukiPostProcessor,
 )
 
-from .kanren_processor import (
-    KanrenPreProcessor,
-    KanrenPostProcessor,
+from .kanren_with_processor import (
+    KanrenWithPreProcessor,
+    KanrenWithPostProcessor,
 )
+from .kanren_without_processor import (
+    KanrenWithoutPreProcessor,
+    KanrenWithoutPostProcessor,
+)
+
 
 # config共有
 from src.lib.common_utils.ibr_decorator_config import with_config
@@ -48,11 +53,19 @@ class KokukiProcessorFactory(ProcessorFactory):
         return KokukiPostProcessor()
 
 
-class KanrenProcessorFactory(ProcessorFactory):
+class KanrenWithProcessorFactory(ProcessorFactory):
     def create_pre_processor(self) -> PreProcessor:
-        return KanrenPreProcessor()
+        return KanrenWithPreProcessor()
 
     def create_post_processor(self) -> PostProcessor:
-        return KanrenPostProcessor()
+        return KanrenWithPostProcessor()
+
+class KanrenWithoutProcessorFactory(ProcessorFactory):
+    def create_pre_processor(self) -> PreProcessor:
+        return KanrenWithoutPreProcessor()
+
+    def create_post_processor(self) -> PostProcessor:
+        return KanrenWithoutPostProcessor()
+
 
 

@@ -3,7 +3,8 @@ from typing import Type
 
 from src.model.dataclass.request_processor_jinji_model import JinjiModel
 from src.model.dataclass.request_processor_kokuki_model import KokukiModel
-from src.model.dataclass.request_processor_kanren_model import KanrenModel
+from src.model.dataclass.request_processor_kanren_with_model import KanrenWithModel
+from src.model.dataclass.request_processor_kanren_without_model import KanrenWithoutModel
 
 # config共有
 from src.lib.common_utils.ibr_decorator_config import with_config
@@ -23,6 +24,11 @@ class KokukiModelFactory(ModelFactory):
     def create_model(self) -> Type[BaseModel]:
         return KokukiModel
 
-class KanrenModelFactory(ModelFactory):
+class KanrenWithModelFactory(ModelFactory):
     def create_model(self) -> Type[BaseModel]:
-        return KanrenModel
+        return KanrenWithModel
+
+class KanrenWithoutModelFactory(ModelFactory):
+    def create_model(self) -> Type[BaseModel]:
+        return KanrenWithoutModel
+

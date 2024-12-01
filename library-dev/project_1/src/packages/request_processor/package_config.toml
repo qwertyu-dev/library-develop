@@ -32,10 +32,15 @@ UPDATE_RECORD_KOKUKI_SHEET_NAME = '海外組織入力シート(変更登録)'
 UPDATE_RECORD_KOKUKI_SHEET_SKIPROWS = 0
 UPDATE_RECORD_KOKUKI_SHEET_USECOLS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
 #
-UPDATE_RECORD_KANREN = '一括申請/関連/関連*一括申請フォーム*.xlsx'
-UPDATE_RECORD_KANREN_SHEET_NAME = '関連会社入力シート'
-UPDATE_RECORD_KANREN_SHEET_SKIPROWS = 0
-UPDATE_RECORD_KANREN_SHEET_USECOLS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+UPDATE_RECORD_KANREN_WITH = '一括申請/関連ダミー課あり/関連*一括申請フォーム*.xlsx'
+UPDATE_RECORD_KANREN_WITH_SHEET_NAME = '関連会社入力シート'
+UPDATE_RECORD_KANREN_WITH_SHEET_SKIPROWS = 0
+UPDATE_RECORD_KANREN_WITH_SHEET_USECOLS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+#
+UPDATE_RECORD_KANREN_WITHOUT = '一括申請/関連ダミー課なし/人事データのコード情報報告*.xlsx'
+UPDATE_RECORD_KANREN_WITHOUT_SHEET_NAME = 'SLKBTNJH'
+UPDATE_RECORD_KANREN_WITHOUT_SHEET_SKIPROWS = 0
+UPDATE_RECORD_KANREN_WITHOUT_SHEET_USECOLS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
 
 # 日本語ExcelColumnをPythonColumnに変換/人事
 [local.excel_definition_mapping_jinji]
@@ -83,7 +88,7 @@ UPDATE_RECORD_KANREN_SHEET_USECOLS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
 '変更種別・詳細旧名称・略語' = 'change_details'
 
 # 日本語ExcelColumnをPythonColumnに変換/関連
-[local.excel_definition_mapping_kanren]
+[local.excel_definition_mapping_kanren_with]
 '種類' = 'application_type'
 '部門コード' = 'business_unit_code'
 '親部店コード' = 'parent_branch_code'
@@ -130,14 +135,17 @@ unified_layout = [
 [local.processor_factory]
 jinji = "src.packages.request_processor.processor_factory.JinjiProcessorFactory"
 kokuki = "src.packages.request_processor.processor_factory.KokukiProcessorFactory"
-kanren = "src.packages.request_processor.processor_factory.KanrenProcessorFactory"
+kanren_with = "src.packages.request_processor.processor_factory.KanrenWithProcessorFactory"
+kanren_without = "src.packages.request_processor.processor_factory.KanrenWithoutProcessorFactory"
 
 [local.model_factory]
 jinji = "src.packages.request_processor.model_factory.JinjiModelFactory"
 kokuki = "src.packages.request_processor.model_factory.KokukiModelFactory"
-kanren = "src.packages.request_processor.model_factory.KanrenModelFactory"
+kanren_with = "src.packages.request_processor.model_factory.KanrenWithModelFactory"
+kanren_without = "src.packages.request_processor.model_factory.KanrenWithoutModelFactory"
 
 [local.file_configuration_factory]
 jinji = "src.packages.request_processor.file_configuration_factory.JinjiFileConfigurationFactory"
 kokuki = "src.packages.request_processor.file_configuration_factory.KokukiFileConfigurationFactory"
-kanren = "src.packages.request_processor.file_configuration_factory.KanrenFileConfigurationFactory"
+kanren_with = "src.packages.request_processor.file_configuration_factory.KanrenWithFileConfigurationFactory"
+kanren_without = "src.packages.request_processor.file_configuration_factory.KanrenWithoutFileConfigurationFactory"

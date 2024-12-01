@@ -98,6 +98,8 @@ class ExcelMapping:
         if not all(col in _df.columns for col in self.column_mapping):
             err_msg = "Excel file does not contain all required columns"
             self.log_msg(err_msg, LogLevel.ERROR)
+            self.log_msg(f'{df.columns.to_list()}', LogLevel.ERROR)
+            self.log_msg(f'{self.column_mapping.keys()}', LogLevel.ERROR)
             raise InvalidDataError(err_msg) from None
         return _df.rename(columns=self.column_mapping)
 
@@ -344,7 +346,7 @@ class KanrenExcelMappingWithDummy(ExcelMapping):
     """
     def __init__(self, conf: dict|None = None):
         super().__init__(conf)
-        self.column_mapping = self.config.package_config['excel_definition_mapping_kanren']
+        self.column_mapping = self.config.package_config['excel_definition_mapping_kanren_with']
 
     def map_to_unified_layout(self, df: pd.DataFrame) -> pd.DataFrame:
         """関連会社データを統一レイアウトに変換します
