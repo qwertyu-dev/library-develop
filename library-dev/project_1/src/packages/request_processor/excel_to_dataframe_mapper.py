@@ -5,6 +5,9 @@ import ulid
 
 from src.lib.common_utils.ibr_decorator_config import initialize_config
 from src.lib.common_utils.ibr_logger_helper import format_config
+from src.lib.converter_utils.ibr_convert_western_cal_japanese_cal_to_datetime import (
+    DateConverter, DateParseError,OutputFormat
+)
 
 # config共有
 #from src.lib.common_utils.ibr_decorator_config import with_config
@@ -198,8 +201,8 @@ class JinjiExcelMapping(ExcelMapping):
             # 常駐部店コード,常駐部店名称の設定振り分け
             unified_df['resident_branch_code'] = df.apply(lambda row: row['resident_branch_code'] if row['target_org'] == 'エリア' else '', axis=1)
             unified_df['resident_branch_name'] = df.apply(lambda row: row['resident_branch_name'] if row['target_org'] == 'エリア' else '', axis=1)
-            #
-            unified_df['aaa_transfer_date'] = df['aaa_transfer_date']
+            # datetime型に変換して格納
+            unified_df['aaa_transfer_date'] = df['aaa_transfer_date'].apply(lambda x: DateConverter.parse(x))
             #
             # 拠点内営業部コード,拠点内営業部名称の設定振り分け
             unified_df['internal_sales_dept_code'] = df.apply(lambda row: row['branch_code'] if row['target_org'] == '拠点内営業部' else '', axis=1)
@@ -296,8 +299,8 @@ class KokukiExcelMapping(ExcelMapping):
             # 課Grコード,課Gr名称
             unified_df['section_gr_code'] = df['section_area_code']
             unified_df['section_gr_name'] = df['section_area_name_ja']
-            #
-            unified_df['aaa_transfer_date'] = df['aaa_transfer_date']
+            # datetime型に変換して格納
+            unified_df['aaa_transfer_date'] = df['aaa_transfer_date'].apply(lambda x: DateConverter.parse(x))
 
         except Exception as e:
             err_msg = f"Error occurred while mapping to unified layout: {str(e)}"
@@ -385,7 +388,8 @@ class KanrenExcelMappingWithDummy(ExcelMapping):
             unified_df['branch_name'] = df['branch_name']
             unified_df['section_gr_code'] = df['section_gr_code']
             unified_df['section_gr_name'] = df['section_gr_name']
-            unified_df['aaa_transfer_date'] = df['aaa_transfer_date']
+            # datetime型に変換して格納
+            unified_df['aaa_transfer_date'] = df['aaa_transfer_date'].apply(lambda x: DateConverter.parse(x))
             #
             # 課名称(英語,カナ,略称)
             unified_df['section_name_en'] = df['section_name_en']
@@ -481,7 +485,8 @@ class KanrenExcelMappingWithoutDummy(ExcelMapping):
             unified_df['branch_name'] = df['branch_name']
             unified_df['section_gr_code'] = df['section_area_code']
             unified_df['section_gr_name'] = df['section_area_name']
-            unified_df['aaa_transfer_date'] = df['aaa_transfer_date']
+            # datetime型に変換して格納
+            unified_df['aaa_transfer_date'] = df['aaa_transfer_date'].apply(lambda x: DateConverter.parse(x))
             unified_df['remarks'] = df['remarks']
 
         except Exception as e:

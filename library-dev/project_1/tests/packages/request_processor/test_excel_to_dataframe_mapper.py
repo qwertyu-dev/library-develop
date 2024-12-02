@@ -1,21 +1,23 @@
 # 統合レイアウトへのデータマッピングテストコード
 import sys
+from datetime import datetime
 from unittest.mock import MagicMock, patch
 
 import pandas as pd
 import pytest
+import pytz
 
 from src.lib.common_utils.ibr_dataframe_helper import tabulate_dataframe
 from src.lib.common_utils.ibr_decorator_config import initialize_config
 from src.lib.common_utils.ibr_enums import LogLevel
 from src.packages.request_processor.excel_to_dataframe_mapper import (
-    ExcelMapping,
-    ExcelMappingError,
-    InvalidDataError,
-    JinjiExcelMapping,
-    KanrenExcelMappingWithDummy,
-    KanrenExcelMappingWithoutDummy,
-    KokukiExcelMapping,
+        ExcelMapping,
+        ExcelMappingError,
+        InvalidDataError,
+        JinjiExcelMapping,
+        KanrenExcelMappingWithDummy,
+        KanrenExcelMappingWithoutDummy,
+        KokukiExcelMapping,
 )
 
 config = initialize_config(sys.modules[__name__])
@@ -879,7 +881,8 @@ class TestJinjiExcelMapping:
             'section_area_name_en': ['Test Section'],
             'resident_branch_code': ['R001'],
             'resident_branch_name': ['常駐支店'],
-            'aaa_transfer_date': ['2023-01-01'],
+            #'aaa_transfer_date': ['2023-01-01'],
+            'aaa_transfer_date': ['2023/01/01'],
             'remarks': ['備考'],
             'organization_name_kana': ['テストシテン'],
         })
@@ -909,6 +912,7 @@ class TestJinjiExcelMapping:
         assert result['organization_name_kana'].iloc[0] == '' # 課設定なのでセットされない
         assert result['business_and_area_code'].iloc[0] == ''
         assert result['area_name'].iloc[0] == ''
+        assert result['aaa_transfer_date'].iloc[0] == pd.Timestamp('2023-01-01', tz='Asia/Tokyo')
 
         log_msg(f"Resulting DataFrame:\n{result}", LogLevel.DEBUG)
 
@@ -962,6 +966,8 @@ class TestJinjiExcelMapping:
         assert result['area_name'].iloc[0] == ''
         # 部店カナ
         assert result['organization_name_kana'].iloc[0] == 'テストシテン'
+        # AAA提供日
+        assert result['aaa_transfer_date'].iloc[0] == pd.Timestamp('2023-01-01', tz='Asia/Tokyo')
 
         log_msg(f"Resulting DataFrame:\n{result}", LogLevel.DEBUG)
 
@@ -995,6 +1001,8 @@ class TestJinjiExcelMapping:
         assert result['area_name'].iloc[0] == ''
         # 部店カナ
         assert result['organization_name_kana'].iloc[0] == ''
+        # AAA提供日
+        assert result['aaa_transfer_date'].iloc[0] == pd.Timestamp('2023-01-01', tz='Asia/Tokyo')
 
 
         log_msg(f"Resulting DataFrame:\n{result}", LogLevel.DEBUG)
@@ -1028,6 +1036,8 @@ class TestJinjiExcelMapping:
         assert result['area_name'].iloc[0] == ''
         # 部店カナ
         assert result['organization_name_kana'].iloc[0] == ''
+        # AAA提供日
+        assert result['aaa_transfer_date'].iloc[0] == pd.Timestamp('2023-01-01', tz='Asia/Tokyo')
 
         log_msg(f"Resulting DataFrame:\n{result}", LogLevel.DEBUG)
 
@@ -1060,6 +1070,8 @@ class TestJinjiExcelMapping:
         assert result['area_name'].iloc[0] == 'テスト課'
         # 部店カナ
         assert result['organization_name_kana'].iloc[0] == ''
+        # AAA提供日
+        assert result['aaa_transfer_date'].iloc[0] == pd.Timestamp('2023-01-01', tz='Asia/Tokyo')
 
         log_msg(f"Resulting DataFrame:\n{result}", LogLevel.DEBUG)
 
@@ -1253,7 +1265,7 @@ class TestKokukiExcelMapping:
             'section_area_code': ['S001'],
             'section_area_name_ja': ['テスト課'],
             'section_area_name_en': ['Test Section'],
-            'aaa_transfer_date': ['2023-01-01'],
+            'aaa_transfer_date': ['2023/01/01'],
             'change_details': ['詳細変更'],
         })
 
@@ -1270,6 +1282,7 @@ class TestKokukiExcelMapping:
         with patch('ulid.new', return_value='dummy_ulid'):
             result = kokuki_mapping.map_to_unified_layout(_df)
 
+        log_msg(f'{result.dtypes}')
         expected_layout = unified_output_layout
 
         assert list(result.columns) == expected_layout
@@ -1285,7 +1298,8 @@ class TestKokukiExcelMapping:
         assert result['organization_name_kana'].iloc[0] == ''
         assert result['resident_branch_code'].iloc[0] == ''
         assert result['resident_branch_name'].iloc[0] == ''
-        assert result['aaa_transfer_date'].iloc[0] == '2023-01-01'
+        #assert result['aaa_transfer_date'].iloc[0] == '2023-01-01'
+        assert result['aaa_transfer_date'].iloc[0] == pd.Timestamp('2023-01-01', tz='Asia/Tokyo')
         assert result['internal_sales_dept_code'].iloc[0] == ''
         assert result['internal_sales_dept_name'].iloc[0] == ''
         assert result['business_and_area_code'].iloc[0] == ''
@@ -1342,7 +1356,8 @@ class TestKokukiExcelMapping:
         assert result['organization_name_kana'].iloc[0] == ''
         assert result['resident_branch_code'].iloc[0] == ''
         assert result['resident_branch_name'].iloc[0] == ''
-        assert result['aaa_transfer_date'].iloc[0] == '2023-01-01'
+        #assert result['aaa_transfer_date'].iloc[0] == '2023-01-01'
+        assert result['aaa_transfer_date'].iloc[0] == pd.Timestamp('2023-01-01', tz='Asia/Tokyo')
         assert result['internal_sales_dept_code'].iloc[0] == ''
         assert result['internal_sales_dept_name'].iloc[0] == ''
         assert result['business_and_area_code'].iloc[0] == ''
@@ -1380,7 +1395,8 @@ class TestKokukiExcelMapping:
         assert result['organization_name_kana'].iloc[0] == ''
         assert result['resident_branch_code'].iloc[0] == ''
         assert result['resident_branch_name'].iloc[0] == ''
-        assert result['aaa_transfer_date'].iloc[0] == '2023-01-01'
+        #assert result['aaa_transfer_date'].iloc[0] == '2023-01-01'
+        assert result['aaa_transfer_date'].iloc[0] == pd.Timestamp('2023-01-01', tz='Asia/Tokyo')
         assert result['internal_sales_dept_code'].iloc[0] == ''
         assert result['internal_sales_dept_name'].iloc[0] == ''
         assert result['business_and_area_code'].iloc[0] == ''
@@ -1419,7 +1435,8 @@ class TestKokukiExcelMapping:
         assert result['organization_name_kana'].iloc[0] == ''
         assert result['resident_branch_code'].iloc[0] == ''
         assert result['resident_branch_name'].iloc[0] == ''
-        assert result['aaa_transfer_date'].iloc[0] == '2023-01-01'
+        #assert result['aaa_transfer_date'].iloc[0] == '2023-01-01'
+        assert result['aaa_transfer_date'].iloc[0] == pd.Timestamp('2023-01-01', tz='Asia/Tokyo')
         assert result['internal_sales_dept_code'].iloc[0] == ''
         assert result['internal_sales_dept_name'].iloc[0] == ''
         assert result['business_and_area_code'].iloc[0] == ''
@@ -1617,7 +1634,7 @@ class TestKanrenExcelMappingWithDummy:
             'section_gr_code': ['S001'],
             'section_gr_name': ['テスト課'],
             'section_name_en': ['Test Section'],
-            'aaa_transfer_date': ['2023-01-01'],
+            'aaa_transfer_date': ['2023/01/01'],
             'section_name_kana': ['テストカ'],
             'section_name_abbr': ['テスト'],
             'bpr_target_flag': ['1'],
@@ -1652,7 +1669,8 @@ class TestKanrenExcelMappingWithDummy:
         assert result['organization_name_kana'].iloc[0] == ''
         assert result['resident_branch_code'].iloc[0] == ''
         assert result['resident_branch_name'].iloc[0] == ''
-        assert result['aaa_transfer_date'].iloc[0] == '2023-01-01'
+        #assert result['aaa_transfer_date'].iloc[0] == '2023-01-01'
+        assert result['aaa_transfer_date'].iloc[0] == pd.Timestamp('2023-01-01', tz='Asia/Tokyo')
         assert result['internal_sales_dept_code'].iloc[0] == ''
         assert result['internal_sales_dept_name'].iloc[0] == ''
         assert result['business_and_area_code'].iloc[0] == ''
@@ -1715,7 +1733,8 @@ class TestKanrenExcelMappingWithDummy:
         assert result['organization_name_kana'].iloc[0] == ''
         assert result['resident_branch_code'].iloc[0] == ''
         assert result['resident_branch_name'].iloc[0] == ''
-        assert result['aaa_transfer_date'].iloc[0] == '2023-01-01'
+        #assert result['aaa_transfer_date'].iloc[0] == '2023-01-01'
+        assert result['aaa_transfer_date'].iloc[0] == pd.Timestamp('2023-01-01', tz='Asia/Tokyo')
         assert result['internal_sales_dept_code'].iloc[0] == ''
         assert result['internal_sales_dept_name'].iloc[0] == ''
         assert result['business_and_area_code'].iloc[0] == ''
@@ -1848,7 +1867,7 @@ class TestKanrenExcelMappingWithoutDummy:
             'resident_branch_code': ['R001'],
             'resident_branch_name': ['常駐支店'],
             'new_org_info_transfer_date': ['yyyy-mm-xx'],
-            'aaa_transfer_date': ['2023-01-01'],
+            'aaa_transfer_date': ['2023/01/01'],
             'remarks': ['備考'],
             'organization_name_kana': ['テストシテン'],
         })
@@ -1870,7 +1889,8 @@ class TestKanrenExcelMappingWithoutDummy:
         assert result['organization_name_kana'].iloc[0] == ''
         assert result['resident_branch_code'].iloc[0] == ''
         assert result['resident_branch_name'].iloc[0] == ''
-        assert result['aaa_transfer_date'].iloc[0] == '2023-01-01'
+        #assert result['aaa_transfer_date'].iloc[0] == '2023-01-01'
+        assert result['aaa_transfer_date'].iloc[0] == pd.Timestamp('2023-01-01', tz='Asia/Tokyo')
         assert result['internal_sales_dept_code'].iloc[0] == ''
         assert result['internal_sales_dept_name'].iloc[0] == ''
         assert result['business_and_area_code'].iloc[0] == ''
@@ -1926,7 +1946,7 @@ class TestKanrenExcelMappingWithoutDummy:
             'section_area_name_en': ['Test Section'],
             'resident_branch_code': ['R001'],
             'resident_branch_name': ['常駐支店'],
-            'aaa_transfer_date': ['2023-01-01'],
+            'aaa_transfer_date': ['2023/01/01'],
             'remarks': ['備考'],
             'organization_name_kana': ['テストシテン'],
         })
@@ -1947,6 +1967,7 @@ class TestKanrenExcelMappingWithoutDummy:
         assert result['section_gr_name'].iloc[0] == 'テスト課'
         assert result['business_and_area_code'].iloc[0] == ''
         assert result['area_name'].iloc[0] == ''
+        assert result['aaa_transfer_date'].iloc[0] == pd.Timestamp('2023-01-01', tz='Asia/Tokyo')
 
         log_msg(f"Resulting DataFrame:\n{result}", LogLevel.DEBUG)
 
@@ -1990,7 +2011,7 @@ class TestKanrenExcelMappingWithoutDummy:
             'section_area_name_en': ['Test Section', 'Test Area'],
             'resident_branch_code': ['R001', 'R002'],
             'resident_branch_name': ['常駐支店1', '常駐支店2'],
-            'aaa_transfer_date': ['2023-01-01', '2023-01-02'],
+            'aaa_transfer_date': ['2023/01/01', '2023/01/02'],
             'remarks': ['備考1', '備考2'],
             'organization_name_kana': ['テストシテン1', 'テストシテン2'],
         })
@@ -2005,6 +2026,8 @@ class TestKanrenExcelMappingWithoutDummy:
         assert result['section_gr_name'].tolist() == ['テスト課', 'テストエリア']
         assert result['business_and_area_code'].tolist() == ['', '']
         assert result['area_name'].tolist() == ['', '']
+        # AAA提供日
+        assert result['aaa_transfer_date'].tolist()== [pd.Timestamp('2023-01-01', tz='Asia/Tokyo'), pd.Timestamp('2023-01-02', tz='Asia/Tokyo')]
 
         log_msg(f"Resulting DataFrame:\n{result}", LogLevel.DEBUG)
 
@@ -2030,7 +2053,7 @@ class TestKanrenExcelMappingWithoutDummy:
             'section_area_name_en': ['Test Section'],
             'resident_branch_code': ['R001'],  # この行を追加
             'resident_branch_name': ['常駐支店'],  # この行を追加
-            'aaa_transfer_date': ['2023-01-01'],
+            'aaa_transfer_date': ['2023/01/01'],
             'remarks': ['備考'],
             'organization_name_kana': ['テストシテン'],
         })
