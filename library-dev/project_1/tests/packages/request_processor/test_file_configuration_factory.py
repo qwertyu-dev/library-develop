@@ -9,7 +9,8 @@ from src.lib.common_utils.ibr_enums import LogLevel
 from src.packages.request_processor.file_configuration_factory import (
     FileConfigurationFactory,
     JinjiFileConfigurationFactory,
-    KanrenFileConfigurationFactory,
+    KanrenWithFileConfigurationFactory,
+    KanrenWithoutFileConfigurationFactory,
     KokukiFileConfigurationFactory,
 )
 
@@ -789,8 +790,8 @@ class TestKokukiFileConfigurationFactory:
             assert len(result) == 1
             assert str(result[0]).endswith(long_pattern)
 
-class TestKanrenFileConfigurationFactory:
-    """KanrenFileConfigurationFactoryのテスト
+class TestKanrenWithFileConfigurationFactory:
+    """KanrenWithFileConfigurationFactoryのテスト
 
     テスト構造:
     ├── __init__メソッド
@@ -849,7 +850,7 @@ class TestKanrenFileConfigurationFactory:
 
     注記:
     すべての境界値検証ケースが実装されています。テストケースは、空の辞書、None、
-    空文字列や最大長の文字列など、様々な入力に対するKanrenFileConfigurationFactoryの
+    空文字列や最大長の文字列など、様々な入力に対するKanrenWithFileConfigurationFactoryの
     動作を検証します。
     """
 
@@ -879,7 +880,7 @@ class TestKanrenFileConfigurationFactory:
         """
         log_msg(f"\n{test_doc}", LogLevel.DEBUG)
 
-        factory = KanrenFileConfigurationFactory(config=self.mock_config)
+        factory = KanrenWithFileConfigurationFactory(config=self.mock_config)
         assert factory.config == self.mock_config
 
     #def test_init_C1_no_config(self):
@@ -906,7 +907,7 @@ class TestKanrenFileConfigurationFactory:
             'common_config': {'optional_path': {}},
             'package_config': {},
         }
-        factory = KanrenFileConfigurationFactory(config=partial_config)
+        factory = KanrenWithFileConfigurationFactory(config=partial_config)
         assert factory.config == partial_config
 
     #def test_init_BVT_empty_config(self):
@@ -930,7 +931,7 @@ class TestKanrenFileConfigurationFactory:
         """
         log_msg(f"\n{test_doc}", LogLevel.DEBUG)
 
-        factory = KanrenFileConfigurationFactory(config=self.mock_config)
+        factory = KanrenWithFileConfigurationFactory(config=self.mock_config)
         with patch('pathlib.Path.glob') as mock_glob:
             mock_glob.return_value = [Path('/path/to/share/kanren_001.xlsx'), Path('/path/to/share/kanren_002.xlsx')]
             result = factory.create_file_pattern()
@@ -947,7 +948,7 @@ class TestKanrenFileConfigurationFactory:
         log_msg(f"\n{test_doc}", LogLevel.DEBUG)
 
         self.mock_config.common_config['optional_path']['SHARE_RECEIVE_PATH'] = ''
-        factory = KanrenFileConfigurationFactory(config=self.mock_config)
+        factory = KanrenWithFileConfigurationFactory(config=self.mock_config)
         with patch('pathlib.Path.glob') as mock_glob:
             mock_glob.return_value = []
             result = factory.create_file_pattern()
@@ -969,7 +970,7 @@ class TestKanrenFileConfigurationFactory:
 
         self.mock_config.common_config['optional_path']['SHARE_RECEIVE_PATH'] = share_path
         self.mock_config.package_config['excel_definition']['UPDATE_RECORD_KANREN'] = update_record
-        factory = KanrenFileConfigurationFactory(config=self.mock_config)
+        factory = KanrenWithFileConfigurationFactory(config=self.mock_config)
         with patch('pathlib.Path.glob') as mock_glob:
             mock_glob.return_value = [Path(path) for path in expected]
             result = factory.create_file_pattern()
@@ -985,7 +986,7 @@ class TestKanrenFileConfigurationFactory:
 
         long_path = 'a' * 240  # Windowsのパス長制限に近い値
         self.mock_config.common_config['optional_path']['SHARE_RECEIVE_PATH'] = long_path
-        factory = KanrenFileConfigurationFactory(config=self.mock_config)
+        factory = KanrenWithFileConfigurationFactory(config=self.mock_config)
         with patch('pathlib.Path.glob') as mock_glob:
             mock_glob.return_value = [Path(f"{long_path}/kanren_001.xlsx")]
             result = factory.create_file_pattern()
@@ -1002,7 +1003,228 @@ class TestKanrenFileConfigurationFactory:
 
         long_pattern = 'a' * 240 + '.xlsx'  # 拡張子を含む長いパターン
         self.mock_config.package_config['excel_definition']['UPDATE_RECORD_KANREN'] = long_pattern
-        factory = KanrenFileConfigurationFactory(config=self.mock_config)
+        factory = KanrenWithFileConfigurationFactory(config=self.mock_config)
+        with patch('pathlib.Path.glob') as mock_glob:
+            mock_glob.return_value = [Path(f"/path/to/share/{long_pattern}")]
+            result = factory.create_file_pattern()
+            assert len(result) == 1
+            assert str(result[0]).endswith(long_pattern)
+
+
+class TestKanrenWithoutFileConfigurationFactory:
+    """KanrenWithoutoutFileConfigurationFactoryのテスト
+
+    テスト構造:
+    ├── __init__メソッド
+    │   ├── C0: 基本機能テスト
+    │   │   └── 正常系: 有効なconfigでインスタンス生成
+    │   ├── C1: 分岐カバレッジ
+    │   │   ├── 正常系: configパラメータあり
+    │   │   └── 正常系: configパラメータなし(デフォルト設定使用)
+    │   ├── C2: 条件組み合わせ
+    │   │   ├── 正常系: configが完全な構造を持つ
+    │   │   └── 正常系: configが一部の設定のみを持つ
+    │   └── BVT: 境界値テスト
+    │       ├── 正常系: 最小限の有効なconfig
+    │       └── 正常系: 空のconfig辞書
+    │
+    └── create_file_patternメソッド
+        ├── C0: 基本機能テスト
+        │   └── 正常系: 正常なconfig設定での動作確認
+        ├── C1: 分岐カバレッジ
+        │   ├── 正常系: SHARE_RECEIVE_PATHが設定されている場合
+        │   ├── 正常系: SHARE_RECEIVE_PATHが設定されていない場合
+        │   ├── 正常系: UPDATE_RECORD_KANRENが設定されている場合
+        │   └── 正常系: UPDATE_RECORD_KANRENが設定されていない場合
+        ├── C2: 条件組み合わせ
+        │   ├── 正常系: SHARE_RECEIVE_PATHとUPDATE_RECORD_KANRENの両方が設定されている
+        │   ├── 正常系: SHARE_RECEIVE_PATHのみ設定されている
+        │   ├── 正常系: UPDATE_RECORD_KANRENのみ設定されている
+        │   └── 正常系: 両方とも設定されていない
+        └── BVT: 境界値テスト
+            ├── 正常系: SHARE_RECEIVE_PATHが空文字列
+            ├── 正常系: UPDATE_RECORD_KANRENが空文字列
+            ├── 正常系: SHARE_RECEIVE_PATHが非常に長いパス
+            └── 正常系: UPDATE_RECORD_KANRENが非常に長いパターン
+
+    C1のディシジョンテーブル (create_file_pattern):
+    | 条件                           | ケース1 | ケース2 | ケース3 | ケース4 |
+    |--------------------------------|---------|---------|---------|---------|
+    | SHARE_RECEIVE_PATHが設定されている | Y       | N       | Y       | N       |
+    | UPDATE_RECORD_KANRENが設定されている | Y       | Y       | N       | N       |
+    | 出力                           | 正常    | 空リスト | 空リスト | 空リスト |
+
+    境界値検証ケース一覧:
+    | ケースID | 入力パラメータ      | テスト値                    | 期待される結果                | テストの目的/検証ポイント           | 実装状況 | 対応するテストケース                    |
+    |----------|--------------------|---------------------------|-------------------------------|-------------------------------------|----------|----------------------------------------|
+    | BVT_001  | config             | {}                        | 正常                           | 空の辞書での初期化                   | 実装済み | test_init_BVT_empty_config             |
+    | BVT_002  | config             | None                      | 正常                           | Noneでの初期化                       | 実装済み | test_init_C1_no_config                 |
+    | BVT_003  | SHARE_RECEIVE_PATH | ""                        | 空のリスト                     | 空文字列の処理を確認                 | 実装済み | test_create_file_pattern_BVT_empty_path |
+    | BVT_004  | UPDATE_RECORD_KANREN| ""                       | 空のリスト                     | 空文字列の処理を確認                 | 実装済み | test_create_file_pattern_BVT_empty_pattern |
+    | BVT_005  | SHARE_RECEIVE_PATH | "a" * 255                 | 非常に長いパスを含むリスト      | 最大長のパス処理を確認               | 実装済み | test_create_file_pattern_BVT_max_length_path |
+    | BVT_006  | UPDATE_RECORD_KANREN| "a" * 255                | 非常に長いパターンを含むリスト  | 最大長のパターン処理を確認           | 実装済み | test_create_file_pattern_BVT_max_length_pattern |
+
+    境界値検証ケースの実装状況サマリー:
+    - 実装済み: 6
+    - 未実装: 0
+    - 一部実装: 0
+
+    注記:
+    すべての境界値検証ケースが実装されています。テストケースは、空の辞書、None、
+    空文字列や最大長の文字列など、様々な入力に対するKanrenWithoutFileConfigurationFactoryの
+    動作を検証します。
+    """
+
+    def setup_method(self):
+        log_msg("test start", LogLevel.INFO)
+        self.mock_config = MagicMock()
+        self.mock_config.common_config = {
+            'optional_path': {
+                'SHARE_RECEIVE_PATH': '/path/to/share',
+            },
+        }
+        self.mock_config.package_config = {
+            'excel_definition': {
+                'UPDATE_RECORD_KANREN': 'kanren_*.xlsx',
+            },
+        }
+
+    def teardown_method(self):
+        log_msg(f"test end\n{'-'*80}\n", LogLevel.INFO)
+
+    # __init__メソッドのテスト
+    def test_init_C0_valid_config(self):
+        test_doc = """
+        テスト区分: UT
+        テストカテゴリ: C0
+        テスト内容: 有効なconfigでインスタンス生成
+        """
+        log_msg(f"\n{test_doc}", LogLevel.DEBUG)
+
+        factory = KanrenWithoutFileConfigurationFactory(config=self.mock_config)
+        assert factory.config == self.mock_config
+
+    #def test_init_C1_no_config(self):
+    #    test_doc = """
+    #    テスト区分: UT
+    #    テストカテゴリ: C1
+    #    テスト内容: configパラメータなしの初期化
+    #    """
+    #    log_msg(f"\n{test_doc}", LogLevel.DEBUG)
+
+    #    with patch('src.lib.common_utils.ibr_decorator_config.initialize_config', return_value=self.mock_config):
+    #        factory = KanrenFileConfigurationFactory()
+    #        assert factory.config == self.mock_config
+
+    def test_init_C2_partial_config(self):
+        test_doc = """
+        テスト区分: UT
+        テストカテゴリ: C2
+        テスト内容: 一部の設定のみを持つconfigでの初期化
+        """
+        log_msg(f"\n{test_doc}", LogLevel.DEBUG)
+
+        partial_config = {
+            'common_config': {'optional_path': {}},
+            'package_config': {},
+        }
+        factory = KanrenWithoutFileConfigurationFactory(config=partial_config)
+        assert factory.config == partial_config
+
+    #def test_init_BVT_empty_config(self):
+    #    test_doc = """
+    #    テスト区分: UT
+    #    テストカテゴリ: BVT
+    #    テスト内容: 空のconfig辞書での初期化
+    #    """
+    #    log_msg(f"\n{test_doc}", LogLevel.DEBUG)
+
+    #    empty_config = {}
+    #    factory = KanrenFileConfigurationFactory(config=empty_config)
+    #    assert factory.config == empty_config
+
+    # create_file_patternメソッドのテスト
+    def test_create_file_pattern_C0_normal(self):
+        test_doc = """
+        テスト区分: UT
+        テストカテゴリ: C0
+        テスト内容: 正常なconfig設定での動作確認
+        """
+        log_msg(f"\n{test_doc}", LogLevel.DEBUG)
+
+        factory = KanrenWithoutFileConfigurationFactory(config=self.mock_config)
+        with patch('pathlib.Path.glob') as mock_glob:
+            mock_glob.return_value = [Path('/path/to/share/kanren_001.xlsx'), Path('/path/to/share/kanren_002.xlsx')]
+            result = factory.create_file_pattern()
+            assert len(result) == 2
+            assert all(isinstance(path, Path) for path in result)
+            assert all(str(path).startswith('/path/to/share/kanren_') for path in result)
+
+    def test_create_file_pattern_C1_without_share_path(self):
+        test_doc = """
+        テスト区分: UT
+        テストカテゴリ: C1
+        テスト内容: SHARE_RECEIVE_PATHが設定されていない場合
+        """
+        log_msg(f"\n{test_doc}", LogLevel.DEBUG)
+
+        self.mock_config.common_config['optional_path']['SHARE_RECEIVE_PATH'] = ''
+        factory = KanrenWithoutFileConfigurationFactory(config=self.mock_config)
+        with patch('pathlib.Path.glob') as mock_glob:
+            mock_glob.return_value = []
+            result = factory.create_file_pattern()
+            assert len(result) == 0
+
+    @pytest.mark.parametrize(("share_path","update_record","expected"), [
+        ('/path/to/share', 'kanren_*.xlsx', ['/path/to/share/kanren_001.xlsx']),
+        ('/path/to/share', '', []),
+        ('', 'kanren_*.xlsx', []),
+        ('', '', []),
+    ])
+    def test_create_file_pattern_C2_combinations(self, share_path, update_record, expected):
+        test_doc = """
+        テスト区分: UT
+        テストカテゴリ: C2
+        テスト内容: SHARE_RECEIVE_PATHとUPDATE_RECORD_KANRENの組み合わせテスト
+        """
+        log_msg(f"\n{test_doc}", LogLevel.DEBUG)
+
+        self.mock_config.common_config['optional_path']['SHARE_RECEIVE_PATH'] = share_path
+        self.mock_config.package_config['excel_definition']['UPDATE_RECORD_KANREN'] = update_record
+        factory = KanrenWithoutFileConfigurationFactory(config=self.mock_config)
+        with patch('pathlib.Path.glob') as mock_glob:
+            mock_glob.return_value = [Path(path) for path in expected]
+            result = factory.create_file_pattern()
+            assert [str(path) for path in result] == expected
+
+    def test_create_file_pattern_BVT_max_length_path(self):
+        test_doc = """
+        テスト区分: UT
+        テストカテゴリ: BVT
+        テスト内容: SHARE_RECEIVE_PATHが非常に長いパスの場合
+        """
+        log_msg(f"\n{test_doc}", LogLevel.DEBUG)
+
+        long_path = 'a' * 240  # Windowsのパス長制限に近い値
+        self.mock_config.common_config['optional_path']['SHARE_RECEIVE_PATH'] = long_path
+        factory = KanrenWithoutFileConfigurationFactory(config=self.mock_config)
+        with patch('pathlib.Path.glob') as mock_glob:
+            mock_glob.return_value = [Path(f"{long_path}/kanren_001.xlsx")]
+            result = factory.create_file_pattern()
+            assert len(result) == 1
+            assert str(result[0]).startswith(long_path)
+
+    def test_create_file_pattern_BVT_max_length_pattern(self):
+        test_doc = """
+        テスト区分: UT
+        テストカテゴリ: BVT
+        テスト内容: UPDATE_RECORD_KANRENが非常に長いパターンの場合
+        """
+        log_msg(f"\n{test_doc}", LogLevel.DEBUG)
+
+        long_pattern = 'a' * 240 + '.xlsx'  # 拡張子を含む長いパターン
+        self.mock_config.package_config['excel_definition']['UPDATE_RECORD_KANREN'] = long_pattern
+        factory = KanrenWithoutFileConfigurationFactory(config=self.mock_config)
         with patch('pathlib.Path.glob') as mock_glob:
             mock_glob.return_value = [Path(f"/path/to/share/{long_pattern}")]
             result = factory.create_file_pattern()

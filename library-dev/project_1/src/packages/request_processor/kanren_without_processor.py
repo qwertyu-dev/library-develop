@@ -12,8 +12,8 @@ from src.model.processor_chain.processor_interface import (
 from .excel_to_dataframe_mapper import (
     #JinjiExcelMapping,
     #KokukiExcelMapping,
-    KanrenExcelMappingWithDummy,
-    #KanrenExcelMappingWithoutDummy,
+    #KanrenExcelMappingWithDummy,
+    KanrenExcelMappingWithoutDummy,
 )
 
 # chain詰め込み定義 Pre
@@ -40,9 +40,10 @@ class MapperProcessExcelColtoPythonColKanren(PreProcessor):
     """日本語ExcelColをPython変数名にmapping"""
     def process(self, data: pd.DataFrame) -> pd.DataFrame:
         self.log_msg = self.config.log_message
-        column_mapping_kanren_with_dummy = KanrenExcelMappingWithDummy()
+        column_mapping_kanren_without_dummy = KanrenExcelMappingWithoutDummy()
+
         processed_data = data.copy()
-        return column_mapping_kanren_with_dummy.column_map(processed_data)
+        return column_mapping_kanren_without_dummy.column_map(processed_data)
 
 
 class DummyPreProcess1(PreProcessor):

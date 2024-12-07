@@ -141,7 +141,8 @@ if __name__ == '__main__':
     processes = [
         'jinji',
         'kokuki',
-        'kanren',
+        'kanren_with',
+        'kanren_without',
         ]
 
     for process in processes:

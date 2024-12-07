@@ -7,11 +7,13 @@ from pydantic import BaseModel
 from src.lib.common_utils.ibr_decorator_config import initialize_config
 from src.lib.common_utils.ibr_enums import LogLevel
 from src.model.dataclass.request_processor_jinji_model import JinjiModel
-from src.model.dataclass.request_processor_kanren_model import KanrenModel
+from src.model.dataclass.request_processor_kanren_with_model import KanrenWithModel
+from src.model.dataclass.request_processor_kanren_without_model import KanrenWithoutModel
 from src.model.dataclass.request_processor_kokuki_model import KokukiModel
 from src.packages.request_processor.model_factory import (
     JinjiModelFactory,
-    KanrenModelFactory,
+    KanrenWithModelFactory,
+    KanrenWithoutModelFactory,
     KokukiModelFactory,
     ModelFactory,
 )
@@ -28,7 +30,8 @@ class TestModelFactory:
     │   ├── ModelFactory.create_model: NotImplementedErrorの発生確認
     │   ├── JinjiModelFactory.create_model: 正しいモデルの返却確認
     │   ├── KokukiModelFactory.create_model: 正しいモデルの返却確認
-    │   └── KanrenModelFactory.create_model: 正しいモデルの返却確認
+    │   └── KanrenWithModelFactory.create_model: 正しいモデルの返却確認
+    │   └── KanrenWithoutModelFactory.create_model: 正しいモデルの返却確認
     └── C1: 分岐カバレッジ (該当なし)
 
     C1のディシジョンテーブル:
@@ -60,7 +63,8 @@ class TestModelFactory:
     @pytest.mark.parametrize(("factory_class", "expected_model"), [
         (JinjiModelFactory, JinjiModel),
         (KokukiModelFactory, KokukiModel),
-        (KanrenModelFactory, KanrenModel),
+        (KanrenWithModelFactory, KanrenWithModel),
+        (KanrenWithoutModelFactory, KanrenWithoutModel),
     ])
     def test_concrete_factory_create_model_C0(self, factory_class, expected_model):
         test_doc = f"""
@@ -226,12 +230,12 @@ class TestKokukiModelFactory:
 
         log_msg(f"Model type: {type(model)}", LogLevel.DEBUG)
 
-class TestKanrenModelFactory:
-    """KanrenModelFactoryクラスのテスト
+class TestKanrenWithModelFactory:
+    """KanrenWithModelFactoryクラスのテスト
 
     テスト構造:
     ├── C0: 基本機能テスト
-    │   └── create_model: KanrenModelを返すことの確認
+    │   └── create_model: KanrenWithModelを返すことの確認
     ├── C1: 分岐カバレッジ
     │   └── 該当なし(分岐がないため)
     ├── C2: 条件カバレッジ
@@ -253,25 +257,25 @@ class TestKanrenModelFactory:
         log_msg(f"test end\n{'-'*80}\n", LogLevel.INFO)
 
     def test_create_model_C0_returns_kanren_model(self):
-        """KanrenModelFactoryのcreate_modelメソッドのテスト"""
+        """KanrenWithModelFactoryのcreate_modelメソッドのテスト"""
         test_doc = """
         テスト区分: UT
         テストカテゴリ: C0
-        テストシナリオ: create_modelメソッドがKanrenModelを返すことを確認
-        期待結果: KanrenModelクラスが返される
+        テストシナリオ: create_modelメソッドがKanrenWithModelを返すことを確認
+        期待結果: KanrenWithModelクラスが返される
         """
         log_msg(f"\n{test_doc}", LogLevel.DEBUG)
 
-        factory = KanrenModelFactory()
+        factory = KanrenWithModelFactory()
         model = factory.create_model()
 
-        assert model == KanrenModel
+        assert model == KanrenWithModel
         assert issubclass(model, BaseModel)
 
         log_msg(f"Returned model: {model}", LogLevel.DEBUG)
 
     def test_create_model_C0_instance_check(self):
-        """KanrenModelFactoryのcreate_modelメソッドの戻り値型チェック"""
+        """KanrenWithModelFactoryのcreate_modelメソッドの戻り値型チェック"""
         test_doc = """
         テスト区分: UT
         テストカテゴリ: C0
@@ -280,7 +284,7 @@ class TestKanrenModelFactory:
         """
         log_msg(f"\n{test_doc}", LogLevel.DEBUG)
 
-        factory = KanrenModelFactory()
+        factory = KanrenWithModelFactory()
         model = factory.create_model()
 
         assert isinstance(model, type)
@@ -288,3 +292,64 @@ class TestKanrenModelFactory:
 
         log_msg(f"Model type: {type(model)}", LogLevel.DEBUG)
 
+class TestKanrenWithoutModelFactory:
+    """KanrenWithModelFactoryクラスのテスト
+
+    テスト構造:
+    ├── C0: 基本機能テスト
+    │   └── create_model: KanrenWithoutModelを返すことの確認
+    ├── C1: 分岐カバレッジ
+    │   └── 該当なし(分岐がないため)
+    ├── C2: 条件カバレッジ
+    │   └── 該当なし(条件分岐がないため)
+    └── BVT: 境界値テスト
+        └── 該当なし(入力パラメータがないため)
+
+    C1のディシジョンテーブル:
+    該当なし(条件分岐がないため)
+
+    境界値検証ケース一覧:
+    該当なし(入力パラメータがないため)
+    """
+
+    def setup_method(self):
+        log_msg("test start", LogLevel.INFO)
+
+    def teardown_method(self):
+        log_msg(f"test end\n{'-'*80}\n", LogLevel.INFO)
+
+    def test_create_model_C0_returns_kanren_model(self):
+        """KanrenWithModelFactoryのcreate_modelメソッドのテスト"""
+        test_doc = """
+        テスト区分: UT
+        テストカテゴリ: C0
+        テストシナリオ: create_modelメソッドがKanrenWithModelを返すことを確認
+        期待結果: KanrenWithModelクラスが返される
+        """
+        log_msg(f"\n{test_doc}", LogLevel.DEBUG)
+
+        factory = KanrenWithoutModelFactory()
+        model = factory.create_model()
+
+        assert model == KanrenWithoutModel
+        assert issubclass(model, BaseModel)
+
+        log_msg(f"Returned model: {model}", LogLevel.DEBUG)
+
+    def test_create_model_C0_instance_check(self):
+        """KanrenWithModelFactoryのcreate_modelメソッドの戻り値型チェック"""
+        test_doc = """
+        テスト区分: UT
+        テストカテゴリ: C0
+        テストシナリオ: create_modelメソッドの戻り値が適切な型であることを確認
+        期待結果: 戻り値がType[BaseModel]のインスタンスである
+        """
+        log_msg(f"\n{test_doc}", LogLevel.DEBUG)
+
+        factory = KanrenWithoutModelFactory()
+        model = factory.create_model()
+
+        assert isinstance(model, type)
+        assert issubclass(model, BaseModel)
+
+        log_msg(f"Model type: {type(model)}", LogLevel.DEBUG)
