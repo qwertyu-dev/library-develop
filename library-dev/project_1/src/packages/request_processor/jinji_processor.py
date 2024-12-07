@@ -22,6 +22,7 @@ class JinjiPreProcessor(PreProcessor):
     def chain_pre_process(self) -> list[PreProcessor]:
         return [
             MapperProcessExcelColtoPythonColJinji(),
+            MapperProcessToIntegratedLayoutJinji(),
             #DummyPreProcess1(),
             #DummyPreProcess2(),
         ]
@@ -45,47 +46,54 @@ class JinjiPostProcessor(PostProcessor):
 class MapperProcessExcelColtoPythonColJinji(PreProcessor):
     """日本語ExcelColをPython変数名にmapping"""
     def process(self, df: pd.DataFrame) -> pd.DataFrame:
-        self.log_msg = self.config.log_message
+        _df = df.copy()
         column_mapping_jinji = JinjiExcelMapping()
-        processed_data = df.copy()
-        return column_mapping_jinji.column_map(processed_data)
+        return column_mapping_jinji.column_map(_df)
 
-class DummyPreProcess1(PreProcessor):
+class MapperProcessToIntegratedLayoutJinji(PreProcessor):
+    """日本語ExcelColをPython変数名にmapping"""
     def process(self, df: pd.DataFrame) -> pd.DataFrame:
-        self.log_msg = self.config.log_message
-        processed_data = df.copy()
-        # 何かしらの処理(processed_dataに対する軽微な編集処理を想定)
-        # 次のClassに処理済データを渡す
-        self.log_msg('execute pre process1', LogLevel.INFO)
-        processed_data['new_column1'] = 'DummyPreProcess1'
-        self.log_msg(f"{self.config.package_config['excel_definition_mapping_jinji']}", LogLevel.DEBUG)
-        self.log_msg(f"{self.config.package_config['layout']['unified_layout']}", LogLevel.DEBUG)
-        return processed_data
+        _df = df.copy()
+        column_mapping_jinji = JinjiExcelMapping()
+        return column_mapping_jinji.map_to_unified_layout(_df)
 
-class DummyPreProcess2(PreProcessor):
-    def process(self, data: pd.DataFrame) -> pd.DataFrame:
-        self.log_msg = self.config.log_message
-        processed_data = data.copy()
-        # 何かしらの処理(processed_dataに対する軽微な編集処理を想定)
-        self.log_msg('execute pre process2', LogLevel.INFO)
-        processed_data['new_column2'] = 'DummyPreProcess2'
-        return processed_data
-
-class DummyPostProcess1(PostProcessor):
-    def process(self, data: pd.DataFrame) -> pd.DataFrame:
-        self.log_msg = self.config.log_message
-        processed_data = data.copy()
-        # 何かしらの処理(軽微な編集処理を想定)
-        # 何かしらの処理(processed_dataに対する軽微な編集処理を想定)
-        self.log_msg('execute post process1', LogLevel.INFO)
-        processed_data['new_column3'] = 'DummyPostProcess1'
-        return processed_data
-
-class DummyPostProcess2(PostProcessor):
-    def process(self, data: pd.DataFrame) -> pd.DataFrame:
-        self.log_msg = self.config.log_message
-        processed_data = data.copy()
-        # 何かしらの処理(processed_dataに対する軽微な編集処理を想定)
-        self.log_msg('execute post process2', LogLevel.INFO)
-        processed_data['new_column4'] = 'DummyPostProcess2'
-        return processed_data
+#class DummyPreProcess1(PreProcessor):
+#    def process(self, df: pd.DataFrame) -> pd.DataFrame:
+#        self.log_msg = self.config.log_message
+#        processed_data = df.copy()
+#        # 何かしらの処理(processed_dataに対する軽微な編集処理を想定)
+#        # 次のClassに処理済データを渡す
+#        self.log_msg('execute pre process1', LogLevel.INFO)
+#        processed_data['new_column1'] = 'DummyPreProcess1'
+#        self.log_msg(f"{self.config.package_config['excel_definition_mapping_jinji']}", LogLevel.DEBUG)
+#        self.log_msg(f"{self.config.package_config['layout']['unified_layout']}", LogLevel.DEBUG)
+#        return processed_data
+#
+#class DummyPreProcess2(PreProcessor):
+#    def process(self, data: pd.DataFrame) -> pd.DataFrame:
+#        self.log_msg = self.config.log_message
+#        processed_data = data.copy()
+#        # 何かしらの処理(processed_dataに対する軽微な編集処理を想定)
+#        self.log_msg('execute pre process2', LogLevel.INFO)
+#        processed_data['new_column2'] = 'DummyPreProcess2'
+#        return processed_data
+#
+#class DummyPostProcess1(PostProcessor):
+#    def process(self, data: pd.DataFrame) -> pd.DataFrame:
+#        self.log_msg = self.config.log_message
+#        processed_data = data.copy()
+#        # 何かしらの処理(軽微な編集処理を想定)
+#        # 何かしらの処理(processed_dataに対する軽微な編集処理を想定)
+#        self.log_msg('execute post process1', LogLevel.INFO)
+#        processed_data['new_column3'] = 'DummyPostProcess1'
+#        return processed_data
+#
+#class DummyPostProcess2(PostProcessor):
+#    def process(self, data: pd.DataFrame) -> pd.DataFrame:
+#        self.log_msg = self.config.log_message
+#        processed_data = data.copy()
+#        # 何かしらの処理(processed_dataに対する軽微な編集処理を想定)
+#        self.log_msg('execute post process2', LogLevel.INFO)
+#        processed_data['new_column4'] = 'DummyPostProcess2'
+#        return processed_data
+#

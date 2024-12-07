@@ -12,9 +12,11 @@ from .factory_registry import FactoryRegistry
 # config共有
 from src.lib.common_utils.ibr_decorator_config import with_config
 
-#import sys
-#from src.lib.common_utils.ibr_decorator_config import initialize_config
-#config = initialize_config(sys.modules[__name__])
+import sys
+from src.lib.common_utils.ibr_decorator_config import initialize_config
+config = initialize_config(sys.modules[__name__])
+
+log_msg = config.log_message
 
 # パッケージ例外定義
 class ExcelProcessorError(Exception):
@@ -109,10 +111,6 @@ class RequestProcessExecutor:
             return
 
         # 前処理 chain
-        ## 日本語Column→PythonColumn変換
-        ## 部店,課Gr申請凸凹チェック
-        ## 部店,課Gr申請リクエスト更新明細チェック(存在,AAA反映日相関)
-        ## REF FIND処理(申請相関)
         _df = processor_chain.execute_pre_processor(_df)
 
         # Validator/整合性チェク
@@ -123,8 +121,6 @@ class RequestProcessExecutor:
 
         # 後処理 chain
         ## 統合レイアウト変換
-        ## 受付向けの編集処理(ULID,申請部署情報)
-        ## 動的ブラックリストチェック
         self._df = processor_chain.execute_post_processor(_df)
 
 
@@ -133,10 +129,6 @@ class RequestProcessExecutor:
         self.log_msg("IBRDEV-I-0000002")
 
 if __name__ == '__main__':
-    # 入れ物
-    total_dataframe = []
-
-    # 一括申請実行
     executor = RequestProcessExecutor()
     processes = [
         'jinji',
@@ -145,11 +137,18 @@ if __name__ == '__main__':
         'kanren_without',
         ]
 
+    # form_typeg単位に一括申請実行
+    total_dataframe = []
     for process in processes:
         executor.execute(process)
         # 各区分での結果を蓄積
         total_dataframe.append(executor.get_integrated_dataframe())
 
-    # ファイルのマージ(jinji, kokuki, kanren処理結果)
-    ## 人事・国企・関連の統合レイアウト変換碁データを１つのファイルにマージする
-    ## total_dataframeに人事・国企・関連それぞれの統合レイアウトDataFrameが最大1つづつ格納されて入れる
+    # TODO():全体Post処理として定義
+    # form_type別Dataframeを1つのDataFrameにマージ
+    merged_df = pd.concat(total_dataframe, axis=0, ignore_index=True)
+    tabulate_dataframe(merged_df)
+
+    # 整合性チェック実行
+
+    # ファイル書き出し

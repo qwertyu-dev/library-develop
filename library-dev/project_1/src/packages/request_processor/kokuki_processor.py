@@ -21,6 +21,7 @@ class KokukiPreProcessor(PreProcessor):
     def chain_pre_process(self) -> list[PreProcessor]:
         return [
             MapperProcessExcelColtoPythonColKokuki(),
+            MapperProcessToIntegratedLayoutKokuki(),
             #DummyPreProcess1(),
             #DummyPreProcess2(),
         ]
@@ -44,47 +45,56 @@ class MapperProcessExcelColtoPythonColKokuki(PreProcessor):
         processed_data = data.copy()
         return column_mapping_kokuki.column_map(processed_data)
 
-class DummyPreProcess1(PreProcessor):
-    def process(self, data: pd.DataFrame) -> pd.DataFrame:
-        self.log_msg = self.config.log_message
-        processed_data = data.copy()
-        # 何かしらの処理(processed_dataに対する軽微な編集処理を想定)
-        # 次のClassに処理済データを渡す
-        self.log_msg('execute pre process1', LogLevel.INFO)
-        processed_data['new_column1'] = 'DummyPreProcess1'
-        return processed_data
+class MapperProcessToIntegratedLayoutKokuki(PreProcessor):
+    """日本語ExcelColをPython変数名にmapping"""
+    def process(self, df: pd.DataFrame) -> pd.DataFrame:
+        _df = df.copy()
+        column_mapping_jinji = KokukiExcelMapping()
+        return column_mapping_jinji.map_to_unified_layout(_df)
 
-class DummyPreProcess2(PreProcessor):
-    def process(self, data: pd.DataFrame) -> pd.DataFrame:
-        self.log_msg = self.config.log_message
-        processed_data = data.copy()
-        # 何かしらの処理(processed_dataに対する軽微な編集処理を想定)
-        self.log_msg('execute pre process2', LogLevel.INFO)
-        processed_data['new_column2'] = 'DummyPreProcess2'
-        return processed_data
 
-class DummyPostProcess1(PostProcessor):
-    def process(self, data: pd.DataFrame) -> pd.DataFrame:
-        self.log_msg = self.config.log_message
-        if data.empty:
-            # 処理はバイパスして継続する
-            err_msg = "Target DataFrame is empty..."
-            self.log_msg(err_msg, LogLevel.INFO)
-            return data
-
-        processed_data = data.copy()
-        # 何かしらの処理(軽微な編集処理を想定)
-        # 何かしらの処理(processed_dataに対する軽微な編集処理を想定)
-        self.log_msg('execute post process1', LogLevel.INFO)
-        processed_data['new_column3'] = 'DummyPostProcess1'
-        return processed_data
-
-class DummyPostProcess2(PostProcessor):
-    def process(self, data: pd.DataFrame) -> pd.DataFrame:
-        self.log_msg = self.config.log_message
-        processed_data = data.copy()
-        # 何かしらの処理(processed_dataに対する軽微な編集処理を想定)
-        self.log_msg('execute post process2', LogLevel.INFO)
-        processed_data['new_column4'] = 'DummyPostProcess2'
-        return processed_data
-
+#class DummyPreProcess1(PreProcessor):
+#    def process(self, data: pd.DataFrame) -> pd.DataFrame:
+#        self.log_msg = self.config.log_message
+#        processed_data = data.copy()
+#        # 何かしらの処理(processed_dataに対する軽微な編集処理を想定)
+#        # 次のClassに処理済データを渡す
+#        self.log_msg('execute pre process1', LogLevel.INFO)
+#        processed_data['new_column1'] = 'DummyPreProcess1'
+#        return processed_data
+#
+#class DummyPreProcess2(PreProcessor):
+#    def process(self, data: pd.DataFrame) -> pd.DataFrame:
+#        self.log_msg = self.config.log_message
+#        processed_data = data.copy()
+#        # 何かしらの処理(processed_dataに対する軽微な編集処理を想定)
+#        self.log_msg('execute pre process2', LogLevel.INFO)
+#        processed_data['new_column2'] = 'DummyPreProcess2'
+#        return processed_data
+#
+#class DummyPostProcess1(PostProcessor):
+#    def process(self, data: pd.DataFrame) -> pd.DataFrame:
+#        self.log_msg = self.config.log_message
+#        if data.empty:
+#            # 処理はバイパスして継続する
+#            err_msg = "Target DataFrame is empty..."
+#            self.log_msg(err_msg, LogLevel.INFO)
+#            return data
+#
+#        processed_data = data.copy()
+#        # 何かしらの処理(軽微な編集処理を想定)
+#        # 何かしらの処理(processed_dataに対する軽微な編集処理を想定)
+#        self.log_msg('execute post process1', LogLevel.INFO)
+#        processed_data['new_column3'] = 'DummyPostProcess1'
+#        return processed_data
+#
+#class DummyPostProcess2(PostProcessor):
+#    def process(self, data: pd.DataFrame) -> pd.DataFrame:
+#        self.log_msg = self.config.log_message
+#        processed_data = data.copy()
+#        # 何かしらの処理(processed_dataに対する軽微な編集処理を想定)
+#        self.log_msg('execute post process2', LogLevel.INFO)
+#        processed_data['new_column4'] = 'DummyPostProcess2'
+#        return processed_data
+#
+#

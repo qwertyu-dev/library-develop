@@ -90,6 +90,7 @@ UPDATE_RECORD_KANREN_WITHOUT_SHEET_USECOLS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 
 # 日本語ExcelColumnをPythonColumnに変換/関連
 [local.excel_definition_mapping_kanren_with]
 '種類' = 'application_type'
+'対象' = 'target_org'
 '部門コード' = 'business_unit_code'
 '親部店コード' = 'parent_branch_code'
 '部店コード' = 'branch_code'
@@ -101,7 +102,7 @@ UPDATE_RECORD_KANREN_WITHOUT_SHEET_USECOLS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 
 #'部店カナ' = 'organization_name_kana'
 '課名称(カナ)' = 'section_name_kana'
 '課名称(略称)' = 'section_name_abbr'
-'BPR対象/対象外フラグ' = 'bpr_target_flag'
+#'BPR対象/対象外フラグ' = 'bpr_target_flag'
 
 # 一括申請データを統合レイアウトへ変換定義,column順定義 
 [local.layout]

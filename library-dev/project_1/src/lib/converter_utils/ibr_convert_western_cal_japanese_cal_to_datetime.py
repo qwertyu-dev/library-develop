@@ -94,6 +94,7 @@ class DateConverter:
         Raises:
             DateParseError: 日付文字列の解析に失敗した場合
         """
+        date_string = str(date_string).strip("'")  # シングルクォートを除去
         date_format = DateConverter._determine_format(str(date_string))
         timezone = pytz.timezone(timezone_name)
         try:

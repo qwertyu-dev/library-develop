@@ -202,7 +202,14 @@ class JinjiExcelMapping(ExcelMapping):
             unified_df['resident_branch_code'] = df.apply(lambda row: row['resident_branch_code'] if row['target_org'] == 'エリア' else '', axis=1)
             unified_df['resident_branch_name'] = df.apply(lambda row: row['resident_branch_name'] if row['target_org'] == 'エリア' else '', axis=1)
             # datetime型に変換して格納
-            unified_df['aaa_transfer_date'] = df['aaa_transfer_date'].apply(lambda x: DateConverter.parse(x))
+            #unified_df['aaa_transfer_date'] = df['aaa_transfer_date'].apply(lambda x: DateConverter.parse(x))
+            try:
+                unified_df['aaa_transfer_date'] = df['aaa_transfer_date'].apply(lambda x: DateConverter.parse(x))
+            except Exception as e:
+                self.log_msg(f"Error parsing date: {str(e)}", LogLevel.ERROR)
+                self.log_msg(f"Problematic date value: {df['aaa_transfer_date'].to_list()}", LogLevel.ERROR)
+                err_msg = f"Error parsing date: {str(e)}"
+                raise ExcelMappingError(err_msg) from None
             #
             # 拠点内営業部コード,拠点内営業部名称の設定振り分け
             unified_df['internal_sales_dept_code'] = df.apply(lambda row: row['branch_code'] if row['target_org'] == '拠点内営業部' else '', axis=1)
