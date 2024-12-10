@@ -44,7 +44,7 @@ class PostProcessorRequest(PostProcessor):
     def chain_post_processor(self) -> list[PostProcessor]:
         return [
             ValidationResult(),
-            WritePreparationResult(),
+            WritePatternResult(),
         ]
 
 class ReadDecisionTable(PreProcessor):
@@ -98,9 +98,9 @@ class AddDecisionJudgeColumns(PreProcessor):
         df['branch_code'] = df['branch_code'].astype(str)
         df['specific_department_code'] = df['branch_code']
         df['branch_code_first_2_digit'] = df['branch_code'].astype(str).str[:2]
-        df['parent_branch_code_and_branch_code_first_4_digits_match'] = df.apply(
-            lambda row: 'exists' if row['parent_branch_code'] == row['branch_code'][:4] else '', axis=1
-        )
+        #df['parent_branch_code_and_branch_code_first_4_digits_match'] = df.apply(
+        #    lambda row: 'exists' if row['parent_branch_code'] == row['branch_code'][:4] else '', axis=1)
+        df['parent_branch_code_and_branch_code_first_4_digits_match'] = (df['parent_branch_code'] == df['branch_code'].str[:4]).map({True: 'exists', False: ''})
         return df
 
 class ValidationResult(PostProcessorRequest):
@@ -114,7 +114,7 @@ class ValidationResult(PostProcessorRequest):
             raise PatternChainProcessorError(err_msg) from None
         return df
 
-class WritePreparationResult(PostProcessorRequest):
+class WritePatternResult(PostProcessorRequest):
     def process(self, df: pd.DataFrame) -> None:
         df = df.copy()
         try:
